@@ -21,6 +21,8 @@
 		659A5AF3255404F100E13B77 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */; };
 		659A5AF4255404F100E13B77 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */; };
 		659A5AF5255404F200E13B77 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */; };
+		659A5AFA255457B600E13B77 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AF9255457B600E13B77 /* Extensions.swift */; };
+		65D1A29325549A0600D71965 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1A29225549A0600D71965 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Regular.otf"; sourceTree = "<group>"; };
 		659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
 		659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		659A5AF9255457B600E13B77 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		65D1A29225549A0600D71965 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,9 +115,11 @@
 		659A5AAF255401EA00E13B77 /* GTA */ = {
 			isa = PBXGroup;
 			children = (
+				659A5AF9255457B600E13B77 /* Extensions.swift */,
 				659A5AB0255401EA00E13B77 /* AppDelegate.swift */,
 				659A5AB2255401EA00E13B77 /* SceneDelegate.swift */,
 				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
+				65D1A29225549A0600D71965 /* MainViewController.swift */,
 				659A5AB6255401EA00E13B77 /* Main.storyboard */,
 				659A5AE9255404BB00E13B77 /* Supporting Files */,
 				659A5AB9255401ED00E13B77 /* Assets.xcassets */,
@@ -293,6 +299,8 @@
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
 				659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */,
 				659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */,
+				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
+				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
