@@ -95,7 +95,7 @@
                                     <action selector="onLoginButtonTapWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9gg-wN-zsv"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-dS-SrK">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-dS-SrK">
                                 <rect key="frame" x="24" y="411.5" width="366" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="DiP-x7-6Fo"/>
