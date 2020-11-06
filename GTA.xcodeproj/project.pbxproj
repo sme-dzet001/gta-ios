@@ -26,6 +26,13 @@
 		65D1A2A12554BE3700D71965 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2A02554BE3700D71965 /* Home.storyboard */; };
 		65D1A2AC2554CE5E00D71965 /* HelpDesk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */; };
 		65D1A2B12554CF1F00D71965 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2B02554CF1F00D71965 /* Apps.storyboard */; };
+		9FE0CDDE2555A1910074D381 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE0CDDD2555A1910074D381 /* AppsViewController.swift */; };
+		9FE0CDE42555A1D90074D381 /* AppsServiceAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE0CDE22555A1D90074D381 /* AppsServiceAlertCell.swift */; };
+		9FE0CDE52555A1D90074D381 /* AppsServiceAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE0CDE32555A1D90074D381 /* AppsServiceAlertCell.xib */; };
+		9FE0CDEF2555AEE90074D381 /* ApplicationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE0CDED2555AEE90074D381 /* ApplicationCell.swift */; };
+		9FE0CDF02555AEE90074D381 /* ApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE0CDEE2555AEE90074D381 /* ApplicationCell.xib */; };
+		9FE0CDF52555B8DC0074D381 /* AppsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE0CDF42555B8DC0074D381 /* AppsTableViewHeader.swift */; };
+		9FE0CDFA2555B8E40074D381 /* AppsTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE0CDF92555B8E40074D381 /* AppsTableViewHeader.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +78,13 @@
 		65D1A2A02554BE3700D71965 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelpDesk.storyboard; sourceTree = "<group>"; };
 		65D1A2B02554CF1F00D71965 /* Apps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Apps.storyboard; sourceTree = "<group>"; };
+		9FE0CDDD2555A1910074D381 /* AppsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsViewController.swift; sourceTree = "<group>"; };
+		9FE0CDE22555A1D90074D381 /* AppsServiceAlertCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsServiceAlertCell.swift; sourceTree = "<group>"; };
+		9FE0CDE32555A1D90074D381 /* AppsServiceAlertCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppsServiceAlertCell.xib; sourceTree = "<group>"; };
+		9FE0CDED2555AEE90074D381 /* ApplicationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCell.swift; sourceTree = "<group>"; };
+		9FE0CDEE2555AEE90074D381 /* ApplicationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApplicationCell.xib; sourceTree = "<group>"; };
+		9FE0CDF42555B8DC0074D381 /* AppsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsTableViewHeader.swift; sourceTree = "<group>"; };
+		9FE0CDF92555B8E40074D381 /* AppsTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppsTableViewHeader.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +140,7 @@
 				659A5AB2255401EA00E13B77 /* SceneDelegate.swift */,
 				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
 				65D1A29225549A0600D71965 /* MainViewController.swift */,
+				9FE0CDDC2555A14E0074D381 /* MyAppsSection */,
 				659A5AB6255401EA00E13B77 /* Main.storyboard */,
 				65D1A2B02554CF1F00D71965 /* Apps.storyboard */,
 				65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */,
@@ -167,6 +182,44 @@
 				659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9FE0CDDC2555A14E0074D381 /* MyAppsSection */ = {
+			isa = PBXGroup;
+			children = (
+				9FE0CE312555C5D10074D381 /* AppsScreen */,
+			);
+			path = MyAppsSection;
+			sourceTree = "<group>";
+		};
+		9FE0CE312555C5D10074D381 /* AppsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9FE0CDDD2555A1910074D381 /* AppsViewController.swift */,
+				9FE0CE322555C5EC0074D381 /* AppScreenCells */,
+			);
+			path = AppsScreen;
+			sourceTree = "<group>";
+		};
+		9FE0CE322555C5EC0074D381 /* AppScreenCells */ = {
+			isa = PBXGroup;
+			children = (
+				9FE0CDF42555B8DC0074D381 /* AppsTableViewHeader.swift */,
+				9FE0CDED2555AEE90074D381 /* ApplicationCell.swift */,
+				9FE0CDE22555A1D90074D381 /* AppsServiceAlertCell.swift */,
+				9FE0CE332555C6060074D381 /* xib's */,
+			);
+			path = AppScreenCells;
+			sourceTree = "<group>";
+		};
+		9FE0CE332555C6060074D381 /* xib's */ = {
+			isa = PBXGroup;
+			children = (
+				9FE0CDF92555B8E40074D381 /* AppsTableViewHeader.xib */,
+				9FE0CDEE2555AEE90074D381 /* ApplicationCell.xib */,
+				9FE0CDE32555A1D90074D381 /* AppsServiceAlertCell.xib */,
+			);
+			path = "xib's";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,8 +326,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				659A5AF1255404F100E13B77 /* SF-Pro-Display-Thin.otf in Resources */,
+				9FE0CDFA2555B8E40074D381 /* AppsTableViewHeader.xib in Resources */,
 				65D1A2A12554BE3700D71965 /* Home.storyboard in Resources */,
 				659A5AF0255404F100E13B77 /* SF-Pro-Display-Medium.otf in Resources */,
+				9FE0CDE52555A1D90074D381 /* AppsServiceAlertCell.xib in Resources */,
 				65D1A2AC2554CE5E00D71965 /* HelpDesk.storyboard in Resources */,
 				659A5AF2255404F100E13B77 /* SF-Pro-Display-Bold.otf in Resources */,
 				659A5ABD255401ED00E13B77 /* LaunchScreen.storyboard in Resources */,
@@ -283,6 +338,7 @@
 				659A5AF5255404F200E13B77 /* SF-Pro-Text-Regular.otf in Resources */,
 				659A5AF3255404F100E13B77 /* SF-Pro-Display-Regular.otf in Resources */,
 				65D1A2B12554CF1F00D71965 /* Apps.storyboard in Resources */,
+				9FE0CDF02555AEE90074D381 /* ApplicationCell.xib in Resources */,
 				659A5AB8255401EA00E13B77 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,9 +366,13 @@
 			files = (
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
 				659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */,
+				9FE0CDDE2555A1910074D381 /* AppsViewController.swift in Sources */,
+				9FE0CDF52555B8DC0074D381 /* AppsTableViewHeader.swift in Sources */,
 				659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */,
+				9FE0CDEF2555AEE90074D381 /* ApplicationCell.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
+				9FE0CDE42555A1D90074D381 /* AppsServiceAlertCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
