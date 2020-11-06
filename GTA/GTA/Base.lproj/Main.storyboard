@@ -196,37 +196,35 @@
             </objects>
             <point key="canvasLocation" x="1962" y="74"/>
         </scene>
-        <!--Help Desk-->
-        <scene sceneID="rSF-tD-ofd">
+        <!--HomePageTab-->
+        <scene sceneID="s2d-wz-7pa">
             <objects>
-                <viewController id="5df-di-tL4" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ydZ-ff-h1h">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="nJl-nK-gas"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Help Desk" image="helpdesk_tab_icon" id="Frk-tU-zj5"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dag-FJ-vhy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="HomePageTab" id="5Kk-U0-z9t" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="homepage_tab_icon" id="8md-Zh-bRi"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s1F-AJ-2Cv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3738" y="-311"/>
+            <point key="canvasLocation" x="3509" y="-319"/>
         </scene>
-        <!--Home-->
-        <scene sceneID="eSR-cL-Nbe">
+        <!--HelpDeskTab-->
+        <scene sceneID="JxX-cg-5QO">
             <objects>
-                <viewController id="yeG-qJ-UoR" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="xhW-Ge-IBE">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="K8y-xA-sR5"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Home" image="homepage_tab_icon" id="t81-eD-DDF"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UPR-6J-zjo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="HelpDesk" referencedIdentifier="HelpDeskTab" id="fPF-Lg-c73" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Help Desk" image="helpdesk_tab_icon" id="5Fw-yR-Kq9"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F6A-GY-Qr5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3738" y="-926"/>
+            <point key="canvasLocation" x="3509" y="-280"/>
+        </scene>
+        <!--ApplicationsTab-->
+        <scene sceneID="zYe-8r-5wz">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Apps" referencedIdentifier="ApplicationsTab" id="GHa-vp-tdW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Apps" image="apps_tab_icon" id="VS3-9q-65G"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vkw-Rc-fYD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3515" y="-238"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="TlM-xG-mnu">
@@ -240,9 +238,9 @@
                         <color key="selectedImageTintColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="yeG-qJ-UoR" kind="relationship" relationship="viewControllers" id="b4F-bf-6J2"/>
-                        <segue destination="5df-di-tL4" kind="relationship" relationship="viewControllers" id="aLk-HL-tfi"/>
-                        <segue destination="niV-6W-N6i" kind="relationship" relationship="viewControllers" id="N3K-Fv-cLX"/>
+                        <segue destination="5Kk-U0-z9t" kind="relationship" relationship="viewControllers" id="Yrt-sG-URQ"/>
+                        <segue destination="fPF-Lg-c73" kind="relationship" relationship="viewControllers" id="qLJ-VR-YPx"/>
+                        <segue destination="GHa-vp-tdW" kind="relationship" relationship="viewControllers" id="Pcy-Iq-xNy"/>
                         <segue destination="AmN-Zc-VMG" kind="relationship" relationship="viewControllers" id="5cr-ly-uBw"/>
                         <segue destination="Id3-YA-WU9" kind="relationship" relationship="viewControllers" id="sYY-o1-wgD"/>
                     </connections>
@@ -250,22 +248,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yh2-Lr-uTb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2839" y="74"/>
-        </scene>
-        <!--Apps-->
-        <scene sceneID="doH-sF-9wv">
-            <objects>
-                <viewController id="niV-6W-N6i" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="O5b-Zi-kbV">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="Yhj-hs-8Ue"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Apps" image="apps_tab_icon" id="64Y-vt-rd8"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wBH-U2-fJE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3738" y="315"/>
         </scene>
         <!--Collaboration-->
         <scene sceneID="THd-wm-UQY">
@@ -281,7 +263,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Av3-Nv-ZnP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3738" y="938"/>
+            <point key="canvasLocation" x="3728" y="100"/>
         </scene>
         <!--General-->
         <scene sceneID="v41-tN-vox">
@@ -297,7 +279,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aj6-b0-tyA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3738" y="1599"/>
+            <point key="canvasLocation" x="3723" y="745"/>
         </scene>
     </scenes>
     <resources>
