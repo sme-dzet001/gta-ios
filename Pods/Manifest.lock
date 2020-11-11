@@ -1,0 +1,24 @@
+PODS:
+  - AdvancedPageControl (0.1.4)
+  - PanModal (1.2.7)
+  - SkyFloatingLabelTextField (3.8.0)
+
+DEPENDENCIES:
+  - AdvancedPageControl
+  - PanModal
+  - SkyFloatingLabelTextField (~> 3.0)
+
+SPEC REPOS:
+  trunk:
+    - AdvancedPageControl
+    - PanModal
+    - SkyFloatingLabelTextField
+
+SPEC CHECKSUMS:
+  AdvancedPageControl: 2bb63992260869ef665e47da39001a432fb48c49
+  PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
+  SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
+
+PODFILE CHECKSUM: 1886832c2f6bbbe866cb599bbcaa0a089fd1cd37
+
+COCOAPODS: 1.10.0
