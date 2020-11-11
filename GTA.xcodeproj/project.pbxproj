@@ -26,6 +26,40 @@
 		65D1A2A12554BE3700D71965 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2A02554BE3700D71965 /* Home.storyboard */; };
 		65D1A2AC2554CE5E00D71965 /* HelpDesk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */; };
 		65D1A2B12554CF1F00D71965 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2B02554CF1F00D71965 /* Apps.storyboard */; };
+		9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
+		9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
+		9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
+		9F819A93255C1572007C1739 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AF9255457B600E13B77 /* Extensions.swift */; };
+		9F819A94255C1572007C1739 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1A29225549A0600D71965 /* MainViewController.swift */; };
+		9F819A97255C1572007C1739 /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEB255404F100E13B77 /* SF-Pro-Display-Thin.otf */; };
+		9F819A98255C1572007C1739 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2A02554BE3700D71965 /* Home.storyboard */; };
+		9F819A99255C1572007C1739 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEA255404F100E13B77 /* SF-Pro-Display-Medium.otf */; };
+		9F819A9A255C1572007C1739 /* HelpDesk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */; };
+		9F819A9B255C1572007C1739 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEC255404F100E13B77 /* SF-Pro-Display-Bold.otf */; };
+		9F819A9C255C1572007C1739 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5ABB255401ED00E13B77 /* LaunchScreen.storyboard */; };
+		9F819A9D255C1572007C1739 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */; };
+		9F819A9E255C1572007C1739 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB9255401ED00E13B77 /* Assets.xcassets */; };
+		9F819A9F255C1572007C1739 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */; };
+		9F819AA0255C1572007C1739 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */; };
+		9F819AA1255C1572007C1739 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2B02554CF1F00D71965 /* Apps.storyboard */; };
+		9F819AA2255C1572007C1739 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB6255401EA00E13B77 /* Main.storyboard */; };
+		9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
+		9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
+		9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
+		9F819ABD255C1646007C1739 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AF9255457B600E13B77 /* Extensions.swift */; };
+		9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1A29225549A0600D71965 /* MainViewController.swift */; };
+		9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEB255404F100E13B77 /* SF-Pro-Display-Thin.otf */; };
+		9F819AC2255C1646007C1739 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2A02554BE3700D71965 /* Home.storyboard */; };
+		9F819AC3255C1646007C1739 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEA255404F100E13B77 /* SF-Pro-Display-Medium.otf */; };
+		9F819AC4255C1646007C1739 /* HelpDesk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */; };
+		9F819AC5255C1646007C1739 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEC255404F100E13B77 /* SF-Pro-Display-Bold.otf */; };
+		9F819AC6255C1646007C1739 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5ABB255401ED00E13B77 /* LaunchScreen.storyboard */; };
+		9F819AC7255C1646007C1739 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */; };
+		9F819AC8255C1646007C1739 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB9255401ED00E13B77 /* Assets.xcassets */; };
+		9F819AC9255C1646007C1739 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */; };
+		9F819ACA255C1646007C1739 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */; };
+		9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2B02554CF1F00D71965 /* Apps.storyboard */; };
+		9F819ACC255C1646007C1739 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB6255401EA00E13B77 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +105,10 @@
 		65D1A2A02554BE3700D71965 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelpDesk.storyboard; sourceTree = "<group>"; };
 		65D1A2B02554CF1F00D71965 /* Apps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Apps.storyboard; sourceTree = "<group>"; };
+		9F819AA6255C1572007C1739 /* GTAStage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTAStage.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F819AA7255C1572007C1739 /* GTAStage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTAStage-Info.plist"; sourceTree = "<group>"; };
+		9F819AD0255C1646007C1739 /* GTADev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTADev.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F819AD1255C1646007C1739 /* GTADev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTADev-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +127,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		659A5ACB255401EE00E13B77 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F819A95255C1572007C1739 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F819ABF255C1646007C1739 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -114,6 +166,8 @@
 				659A5AAD255401EA00E13B77 /* GTA.app */,
 				659A5AC3255401EE00E13B77 /* GTATests.xctest */,
 				659A5ACE255401EE00E13B77 /* GTAUITests.xctest */,
+				9F819AA6255C1572007C1739 /* GTAStage.app */,
+				9F819AD0255C1646007C1739 /* GTADev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,6 +188,8 @@
 				659A5AB9255401ED00E13B77 /* Assets.xcassets */,
 				659A5ABB255401ED00E13B77 /* LaunchScreen.storyboard */,
 				659A5ABE255401ED00E13B77 /* Info.plist */,
+				9F819AA7255C1572007C1739 /* GTAStage-Info.plist */,
+				9F819AD1255C1646007C1739 /* GTADev-Info.plist */,
 			);
 			path = GTA;
 			sourceTree = "<group>";
@@ -225,6 +281,40 @@
 			productReference = 659A5ACE255401EE00E13B77 /* GTAUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		9F819A8E255C1572007C1739 /* GTAStage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F819AA3255C1572007C1739 /* Build configuration list for PBXNativeTarget "GTAStage" */;
+			buildPhases = (
+				9F819A8F255C1572007C1739 /* Sources */,
+				9F819A95255C1572007C1739 /* Frameworks */,
+				9F819A96255C1572007C1739 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GTAStage;
+			productName = GTA;
+			productReference = 9F819AA6255C1572007C1739 /* GTAStage.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9F819AB8255C1646007C1739 /* GTADev */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F819ACD255C1646007C1739 /* Build configuration list for PBXNativeTarget "GTADev" */;
+			buildPhases = (
+				9F819AB9255C1646007C1739 /* Sources */,
+				9F819ABF255C1646007C1739 /* Frameworks */,
+				9F819AC0255C1646007C1739 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GTADev;
+			productName = GTA;
+			productReference = 9F819AD0255C1646007C1739 /* GTADev.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -261,6 +351,8 @@
 			projectRoot = "";
 			targets = (
 				659A5AAC255401EA00E13B77 /* GTA */,
+				9F819A8E255C1572007C1739 /* GTAStage */,
+				9F819AB8255C1646007C1739 /* GTADev */,
 				659A5AC2255401EE00E13B77 /* GTATests */,
 				659A5ACD255401EE00E13B77 /* GTAUITests */,
 			);
@@ -301,6 +393,44 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9F819A96255C1572007C1739 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F819A97255C1572007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
+				9F819A98255C1572007C1739 /* Home.storyboard in Resources */,
+				9F819A99255C1572007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
+				9F819A9A255C1572007C1739 /* HelpDesk.storyboard in Resources */,
+				9F819A9B255C1572007C1739 /* SF-Pro-Display-Bold.otf in Resources */,
+				9F819A9C255C1572007C1739 /* LaunchScreen.storyboard in Resources */,
+				9F819A9D255C1572007C1739 /* SF-Pro-Text-Medium.otf in Resources */,
+				9F819A9E255C1572007C1739 /* Assets.xcassets in Resources */,
+				9F819A9F255C1572007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
+				9F819AA0255C1572007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
+				9F819AA1255C1572007C1739 /* Apps.storyboard in Resources */,
+				9F819AA2255C1572007C1739 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F819AC0255C1646007C1739 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
+				9F819AC2255C1646007C1739 /* Home.storyboard in Resources */,
+				9F819AC3255C1646007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
+				9F819AC4255C1646007C1739 /* HelpDesk.storyboard in Resources */,
+				9F819AC5255C1646007C1739 /* SF-Pro-Display-Bold.otf in Resources */,
+				9F819AC6255C1646007C1739 /* LaunchScreen.storyboard in Resources */,
+				9F819AC7255C1646007C1739 /* SF-Pro-Text-Medium.otf in Resources */,
+				9F819AC8255C1646007C1739 /* Assets.xcassets in Resources */,
+				9F819AC9255C1646007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
+				9F819ACA255C1646007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
+				9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */,
+				9F819ACC255C1646007C1739 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -329,6 +459,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				659A5AD3255401EE00E13B77 /* GTAUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F819A8F255C1572007C1739 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
+				9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */,
+				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
+				9F819A93255C1572007C1739 /* Extensions.swift in Sources */,
+				9F819A94255C1572007C1739 /* MainViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F819AB9255C1646007C1739 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,
+				9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */,
+				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
+				9F819ABD255C1646007C1739 /* Extensions.swift in Sources */,
+				9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +648,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.GTA;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -512,7 +666,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.GTA;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -599,6 +753,78 @@
 			};
 			name = Release;
 		};
+		9F819AA4255C1572007C1739 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "GTA/GTAStage-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtastage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		9F819AA5255C1572007C1739 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "GTA/GTAStage-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtastage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		9F819ACE255C1646007C1739 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "GTA/GTADev-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtadev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		9F819ACF255C1646007C1739 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "GTA/GTADev-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtadev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -634,6 +860,24 @@
 			buildConfigurations = (
 				659A5ADE255401EE00E13B77 /* Debug */,
 				659A5ADF255401EE00E13B77 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F819AA3255C1572007C1739 /* Build configuration list for PBXNativeTarget "GTAStage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F819AA4255C1572007C1739 /* Debug */,
+				9F819AA5255C1572007C1739 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F819ACD255C1646007C1739 /* Build configuration list for PBXNativeTarget "GTADev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F819ACE255C1646007C1739 /* Debug */,
+				9F819ACF255C1646007C1739 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
