@@ -85,6 +85,39 @@
 		9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AE0255C22D6004489C6 /* AppsViewController.swift */; };
 		9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AE0255C22D6004489C6 /* AppsViewController.swift */; };
 		9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AE0255C22D6004489C6 /* AppsViewController.swift */; };
+		9F895B0F255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B0D255C244D004489C6 /* ApplicationStatusViewController.swift */; };
+		9F895B10255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B0D255C244D004489C6 /* ApplicationStatusViewController.swift */; };
+		9F895B11255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B0D255C244D004489C6 /* ApplicationStatusViewController.swift */; };
+		9F895B12255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B0E255C244D004489C6 /* ApplicationStatusViewController.xib */; };
+		9F895B13255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B0E255C244D004489C6 /* ApplicationStatusViewController.xib */; };
+		9F895B14255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B0E255C244D004489C6 /* ApplicationStatusViewController.xib */; };
+		9F895B28255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B26255C2E38004489C6 /* SystemUpdatesCell.swift */; };
+		9F895B29255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B26255C2E38004489C6 /* SystemUpdatesCell.swift */; };
+		9F895B2A255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B26255C2E38004489C6 /* SystemUpdatesCell.swift */; };
+		9F895B2B255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B27255C2E38004489C6 /* SystemUpdatesCell.xib */; };
+		9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B27255C2E38004489C6 /* SystemUpdatesCell.xib */; };
+		9F895B2D255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B27255C2E38004489C6 /* SystemUpdatesCell.xib */; };
+		9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B33255C337B004489C6 /* SystemStatusHeader.swift */; };
+		9F895B35255C337B004489C6 /* SystemStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B33255C337B004489C6 /* SystemStatusHeader.swift */; };
+		9F895B36255C337B004489C6 /* SystemStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B33255C337B004489C6 /* SystemStatusHeader.swift */; };
+		9F895B3D255C3383004489C6 /* SystemStatusHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */; };
+		9F895B3E255C3383004489C6 /* SystemStatusHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */; };
+		9F895B3F255C3383004489C6 /* SystemStatusHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */; };
+		9F895B5B255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B59255C95AC004489C6 /* SystemStatusChartCell.swift */; };
+		9F895B5C255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B59255C95AC004489C6 /* SystemStatusChartCell.swift */; };
+		9F895B5D255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B59255C95AC004489C6 /* SystemStatusChartCell.swift */; };
+		9F895B5E255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B5A255C95AC004489C6 /* SystemStatusChartCell.xib */; };
+		9F895B5F255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B5A255C95AC004489C6 /* SystemStatusChartCell.xib */; };
+		9F895B60255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B5A255C95AC004489C6 /* SystemStatusChartCell.xib */; };
+		9F895B6A255D3D27004489C6 /* ReportScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B68255D3D27004489C6 /* ReportScreenViewController.swift */; };
+		9F895B6B255D3D27004489C6 /* ReportScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B68255D3D27004489C6 /* ReportScreenViewController.swift */; };
+		9F895B6C255D3D27004489C6 /* ReportScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B68255D3D27004489C6 /* ReportScreenViewController.swift */; };
+		9F895B6D255D3D27004489C6 /* ReportScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B69255D3D27004489C6 /* ReportScreenViewController.xib */; };
+		9F895B6E255D3D27004489C6 /* ReportScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B69255D3D27004489C6 /* ReportScreenViewController.xib */; };
+		9F895B6F255D3D27004489C6 /* ReportScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B69255D3D27004489C6 /* ReportScreenViewController.xib */; };
+		9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
+		9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
+		9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
 		A33AE28E63E33ED4DBECEE14 /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F523F57E1E563901BF596E /* Pods_GTADev.framework */; };
 /* End PBXBuildFile section */
 
@@ -152,6 +185,17 @@
 		9F895ADE255C22D6004489C6 /* AppsTableViewHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppsTableViewHeader.xib; sourceTree = "<group>"; };
 		9F895ADF255C22D6004489C6 /* AppsServiceAlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppsServiceAlertCell.xib; sourceTree = "<group>"; };
 		9F895AE0255C22D6004489C6 /* AppsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsViewController.swift; sourceTree = "<group>"; };
+		9F895B0D255C244D004489C6 /* ApplicationStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationStatusViewController.swift; sourceTree = "<group>"; };
+		9F895B0E255C244D004489C6 /* ApplicationStatusViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApplicationStatusViewController.xib; sourceTree = "<group>"; };
+		9F895B26255C2E38004489C6 /* SystemUpdatesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemUpdatesCell.swift; sourceTree = "<group>"; };
+		9F895B27255C2E38004489C6 /* SystemUpdatesCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemUpdatesCell.xib; sourceTree = "<group>"; };
+		9F895B33255C337B004489C6 /* SystemStatusHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemStatusHeader.swift; sourceTree = "<group>"; };
+		9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemStatusHeader.xib; sourceTree = "<group>"; };
+		9F895B59255C95AC004489C6 /* SystemStatusChartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemStatusChartCell.swift; sourceTree = "<group>"; };
+		9F895B5A255C95AC004489C6 /* SystemStatusChartCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemStatusChartCell.xib; sourceTree = "<group>"; };
+		9F895B68255D3D27004489C6 /* ReportScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportScreenViewController.swift; sourceTree = "<group>"; };
+		9F895B69255D3D27004489C6 /* ReportScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportScreenViewController.xib; sourceTree = "<group>"; };
+		9F895B7A255D8810004489C6 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		A5433B3CA873FF45A7DCD945 /* Pods-GTADev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.release.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.release.xcconfig"; sourceTree = "<group>"; };
 		B426A1A9FFC9D5E48D51730C /* Pods-GTA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.debug.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.debug.xcconfig"; sourceTree = "<group>"; };
 		C1A798AC2BACC8D6E1547A09 /* Pods-GTADev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.debug.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.debug.xcconfig"; sourceTree = "<group>"; };
@@ -301,7 +345,9 @@
 		9F895AD6255C22D6004489C6 /* MyAppsSection */ = {
 			isa = PBXGroup;
 			children = (
+				9F895B67255D3CCB004489C6 /* reportScreen */,
 				9F895AD7255C22D6004489C6 /* AppsScreen */,
+				9F895B24255C2DDF004489C6 /* ApplicationStatus */,
 			);
 			path = MyAppsSection;
 			sourceTree = "<group>";
@@ -334,6 +380,47 @@
 				9F895ADF255C22D6004489C6 /* AppsServiceAlertCell.xib */,
 			);
 			path = "xib's";
+			sourceTree = "<group>";
+		};
+		9F895B24255C2DDF004489C6 /* ApplicationStatus */ = {
+			isa = PBXGroup;
+			children = (
+				9F895B25255C2E0D004489C6 /* ApplicationStatusCells */,
+				9F895B0D255C244D004489C6 /* ApplicationStatusViewController.swift */,
+				9F895B0E255C244D004489C6 /* ApplicationStatusViewController.xib */,
+			);
+			path = ApplicationStatus;
+			sourceTree = "<group>";
+		};
+		9F895B25255C2E0D004489C6 /* ApplicationStatusCells */ = {
+			isa = PBXGroup;
+			children = (
+				9F895B26255C2E38004489C6 /* SystemUpdatesCell.swift */,
+				9F895B33255C337B004489C6 /* SystemStatusHeader.swift */,
+				9F895B59255C95AC004489C6 /* SystemStatusChartCell.swift */,
+				9F895B66255D3B98004489C6 /* xib's */,
+			);
+			path = ApplicationStatusCells;
+			sourceTree = "<group>";
+		};
+		9F895B66255D3B98004489C6 /* xib's */ = {
+			isa = PBXGroup;
+			children = (
+				9F895B27255C2E38004489C6 /* SystemUpdatesCell.xib */,
+				9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */,
+				9F895B5A255C95AC004489C6 /* SystemStatusChartCell.xib */,
+			);
+			path = "xib's";
+			sourceTree = "<group>";
+		};
+		9F895B67255D3CCB004489C6 /* reportScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9F895B7A255D8810004489C6 /* CustomTextField.swift */,
+				9F895B68255D3D27004489C6 /* ReportScreenViewController.swift */,
+				9F895B69255D3D27004489C6 /* ReportScreenViewController.xib */,
+			);
+			path = reportScreen;
 			sourceTree = "<group>";
 		};
 		C4EF77F4D748F06CF62A7BAF /* Frameworks */ = {
@@ -497,8 +584,10 @@
 			files = (
 				659A5AF1255404F100E13B77 /* SF-Pro-Display-Thin.otf in Resources */,
 				65D1A2A12554BE3700D71965 /* Home.storyboard in Resources */,
+				9F895B12255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9F895AEA255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				659A5AF0255404F100E13B77 /* SF-Pro-Display-Medium.otf in Resources */,
+				9F895B3D255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
 				65D1A2AC2554CE5E00D71965 /* HelpDesk.storyboard in Resources */,
 				659A5AF2255404F100E13B77 /* SF-Pro-Display-Bold.otf in Resources */,
 				659A5ABD255401ED00E13B77 /* LaunchScreen.storyboard in Resources */,
@@ -507,7 +596,10 @@
 				659A5AF5255404F200E13B77 /* SF-Pro-Text-Regular.otf in Resources */,
 				9F895AF0255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				659A5AF3255404F100E13B77 /* SF-Pro-Display-Regular.otf in Resources */,
+				9F895B6D255D3D27004489C6 /* ReportScreenViewController.xib in Resources */,
 				65D1A2B12554CF1F00D71965 /* Apps.storyboard in Resources */,
+				9F895B5E255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */,
+				9F895B2B255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AED255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				659A5AB8255401EA00E13B77 /* Main.storyboard in Resources */,
 			);
@@ -533,8 +625,10 @@
 			files = (
 				9F819A97255C1572007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
 				9F819A98255C1572007C1739 /* Home.storyboard in Resources */,
+				9F895B13255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9F895AEB255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F819A99255C1572007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
+				9F895B3E255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
 				9F819A9A255C1572007C1739 /* HelpDesk.storyboard in Resources */,
 				9F819A9B255C1572007C1739 /* SF-Pro-Display-Bold.otf in Resources */,
 				9F819A9C255C1572007C1739 /* LaunchScreen.storyboard in Resources */,
@@ -543,7 +637,10 @@
 				9F819A9F255C1572007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
 				9F895AF1255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				9F819AA0255C1572007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
+				9F895B6E255D3D27004489C6 /* ReportScreenViewController.xib in Resources */,
 				9F819AA1255C1572007C1739 /* Apps.storyboard in Resources */,
+				9F895B5F255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */,
+				9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F819AA2255C1572007C1739 /* Main.storyboard in Resources */,
 			);
@@ -555,8 +652,10 @@
 			files = (
 				9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
 				9F819AC2255C1646007C1739 /* Home.storyboard in Resources */,
+				9F895B14255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9F895AEC255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F819AC3255C1646007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
+				9F895B3F255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
 				9F819AC4255C1646007C1739 /* HelpDesk.storyboard in Resources */,
 				9F819AC5255C1646007C1739 /* SF-Pro-Display-Bold.otf in Resources */,
 				9F819AC6255C1646007C1739 /* LaunchScreen.storyboard in Resources */,
@@ -565,7 +664,10 @@
 				9F819AC9255C1646007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
 				9F895AF2255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				9F819ACA255C1646007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
+				9F895B6F255D3D27004489C6 /* ReportScreenViewController.xib in Resources */,
 				9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */,
+				9F895B60255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */,
+				9F895B2D255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AEF255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F819ACC255C1646007C1739 /* Main.storyboard in Resources */,
 			);
@@ -742,6 +844,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F895B0F255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
 				659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */,
@@ -749,8 +852,13 @@
 				9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
+				9F895B28255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
+				9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
+				9F895B5B255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */,
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
+				9F895B6A255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
+				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,6 +882,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F895B10255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
 				9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */,
@@ -781,8 +890,13 @@
 				9F895AE8255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F819A93255C1572007C1739 /* Extensions.swift in Sources */,
+				9F895B29255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
+				9F895B35255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
+				9F895B5C255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */,
 				9F819A94255C1572007C1739 /* MainViewController.swift in Sources */,
+				9F895B6B255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
+				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,6 +904,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F895B11255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,
 				9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */,
@@ -797,8 +912,13 @@
 				9F895AE9255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F819ABD255C1646007C1739 /* Extensions.swift in Sources */,
+				9F895B2A255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
+				9F895B36255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
+				9F895B5D255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */,
 				9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */,
+				9F895B6C255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
+				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

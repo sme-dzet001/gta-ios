@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Igf-nW-hMu" customClass="SystemStatusHeader" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="254"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="System Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="jSA-c1-wHW">
+                    <rect key="frame" x="134.5" y="20" width="145" height="80"/>
+                    <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="24"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Everything Online, Looking Good!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ydj-3i-Go6">
+                    <rect key="frame" x="109.5" y="164.5" width="195" height="17"/>
+                    <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="10:30 +5 GTM Wed 15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4A-WP-Qv1">
+                    <rect key="frame" x="144" y="191.5" width="126" height="14.5"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sha-JN-6VE">
+                    <rect key="frame" x="155.5" y="110" width="103.5" height="34.5"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZMA-U0-bSE">
+                            <rect key="frame" x="5" y="4" width="25.5" height="26"/>
+                            <color key="backgroundColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="ZMA-U0-bSE" secondAttribute="height" multiplier="1:1" id="x5l-zJ-FJn"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vvy-AT-uHD">
+                            <rect key="frame" x="38.5" y="4" width="26" height="26"/>
+                            <color key="backgroundColor" red="1" green="0.59999999999999998" blue="0.0" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="vvy-AT-uHD" secondAttribute="height" multiplier="1:1" id="KYP-XS-xMT"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TbA-RN-9tk">
+                            <rect key="frame" x="72.5" y="4" width="26" height="26"/>
+                            <color key="backgroundColor" red="1" green="0.24313725490196078" blue="0.20000000000000001" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="TbA-RN-9tk" secondAttribute="height" multiplier="1:1" id="aJd-cH-IM8"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="TbA-RN-9tk" secondAttribute="trailing" constant="5" id="ATk-fp-jsb"/>
+                        <constraint firstAttribute="width" secondItem="sha-JN-6VE" secondAttribute="height" multiplier="3:1" id="Ffe-zT-Gkq"/>
+                        <constraint firstItem="TbA-RN-9tk" firstAttribute="width" secondItem="ZMA-U0-bSE" secondAttribute="width" id="K39-Fb-Keg"/>
+                        <constraint firstItem="vvy-AT-uHD" firstAttribute="centerY" secondItem="sha-JN-6VE" secondAttribute="centerY" id="KBr-7q-ekU"/>
+                        <constraint firstItem="ZMA-U0-bSE" firstAttribute="centerY" secondItem="sha-JN-6VE" secondAttribute="centerY" id="N4Y-Sk-yJm"/>
+                        <constraint firstItem="vvy-AT-uHD" firstAttribute="centerX" secondItem="sha-JN-6VE" secondAttribute="centerX" id="UBi-Mg-IIl"/>
+                        <constraint firstItem="TbA-RN-9tk" firstAttribute="centerY" secondItem="sha-JN-6VE" secondAttribute="centerY" id="Uky-X6-wuk"/>
+                        <constraint firstItem="vvy-AT-uHD" firstAttribute="width" secondItem="ZMA-U0-bSE" secondAttribute="width" id="cPj-WR-2Id"/>
+                        <constraint firstItem="ZMA-U0-bSE" firstAttribute="width" secondItem="sha-JN-6VE" secondAttribute="width" multiplier="0.25" id="qAF-dY-YHN"/>
+                        <constraint firstItem="ZMA-U0-bSE" firstAttribute="leading" secondItem="sha-JN-6VE" secondAttribute="leading" constant="5" id="tct-4l-k4V"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="roN-0Z-Sgk"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="sha-JN-6VE" firstAttribute="centerY" secondItem="roN-0Z-Sgk" secondAttribute="centerY" id="6DF-A8-2mo"/>
+                <constraint firstItem="roN-0Z-Sgk" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="E4A-WP-Qv1" secondAttribute="bottom" constant="20" id="6t8-gD-1oH"/>
+                <constraint firstItem="jSA-c1-wHW" firstAttribute="centerX" secondItem="roN-0Z-Sgk" secondAttribute="centerX" id="9BK-hg-SFO"/>
+                <constraint firstItem="E4A-WP-Qv1" firstAttribute="centerX" secondItem="roN-0Z-Sgk" secondAttribute="centerX" id="FQW-zJ-WsF"/>
+                <constraint firstItem="sha-JN-6VE" firstAttribute="top" secondItem="jSA-c1-wHW" secondAttribute="bottom" constant="10" id="W62-d4-EdU"/>
+                <constraint firstItem="Ydj-3i-Go6" firstAttribute="centerX" secondItem="roN-0Z-Sgk" secondAttribute="centerX" id="XRV-kd-3Tq"/>
+                <constraint firstItem="sha-JN-6VE" firstAttribute="centerX" secondItem="roN-0Z-Sgk" secondAttribute="centerX" id="Yb6-fD-v6s"/>
+                <constraint firstItem="sha-JN-6VE" firstAttribute="width" secondItem="roN-0Z-Sgk" secondAttribute="width" multiplier="0.25" id="Zik-fj-Edu"/>
+                <constraint firstItem="jSA-c1-wHW" firstAttribute="top" secondItem="roN-0Z-Sgk" secondAttribute="top" constant="20" id="iFU-DF-Ojo"/>
+                <constraint firstItem="Ydj-3i-Go6" firstAttribute="top" secondItem="sha-JN-6VE" secondAttribute="bottom" constant="20" id="w4M-6C-Wa6"/>
+                <constraint firstItem="E4A-WP-Qv1" firstAttribute="top" secondItem="Ydj-3i-Go6" secondAttribute="bottom" constant="10" id="zL6-h8-L8p"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="appStatusDescription" destination="Ydj-3i-Go6" id="p8A-C7-24I"/>
+                <outlet property="dateLabel" destination="E4A-WP-Qv1" id="jU0-1d-3qQ"/>
+                <outlet property="offlineStatusView" destination="TbA-RN-9tk" id="4ae-zt-CIL"/>
+                <outlet property="onlineStatusView" destination="ZMA-U0-bSE" id="pVv-nY-Mz7"/>
+                <outlet property="otherStatusView" destination="vvy-AT-uHD" id="GXm-N4-mgR"/>
+                <outlet property="statusParentView" destination="sha-JN-6VE" id="h3v-WP-bF0"/>
+            </connections>
+            <point key="canvasLocation" x="282.60869565217394" y="-106.47321428571428"/>
+        </view>
+    </objects>
+</document>

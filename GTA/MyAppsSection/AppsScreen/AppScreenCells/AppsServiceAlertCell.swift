@@ -9,18 +9,25 @@ import UIKit
 
 class AppsServiceAlertCell: UITableViewCell {
     
-    @IBOutlet weak var alertTimeLabel: UILabel!
-    @IBOutlet weak var alertMainLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var mainLabel: UILabel!
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var parentView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
-    func setUpCell(with data: CellData) {
-        alertTimeLabel.text = data.additionalText
-        alertMainLabel.text = data.mainText
-       
+    func setUpCell(with data: CellData, isNeedCornerRadius: Bool = false) {
+        descriptionLabel.text = data.additionalText
+        mainLabel.text = data.mainText
+        if let image = data.image {
+            iconImageView.image = UIImage(data: image)
+        }
+        if isNeedCornerRadius {
+            self.parentView.layer.cornerRadius = 20
+            self.parentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        }
     }
     
 }
