@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -64,6 +64,27 @@
 		9F819ACA255C1646007C1739 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */; };
 		9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2B02554CF1F00D71965 /* Apps.storyboard */; };
 		9F819ACC255C1646007C1739 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB6255401EA00E13B77 /* Main.storyboard */; };
+		9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */; };
+		9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */; };
+		9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */; };
+		9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */; };
+		9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */; };
+		9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */; };
+		9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADB255C22D6004489C6 /* ApplicationCell.swift */; };
+		9F895AE8255C22D7004489C6 /* ApplicationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADB255C22D6004489C6 /* ApplicationCell.swift */; };
+		9F895AE9255C22D7004489C6 /* ApplicationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADB255C22D6004489C6 /* ApplicationCell.swift */; };
+		9F895AEA255C22D7004489C6 /* ApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADD255C22D6004489C6 /* ApplicationCell.xib */; };
+		9F895AEB255C22D7004489C6 /* ApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADD255C22D6004489C6 /* ApplicationCell.xib */; };
+		9F895AEC255C22D7004489C6 /* ApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADD255C22D6004489C6 /* ApplicationCell.xib */; };
+		9F895AED255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADE255C22D6004489C6 /* AppsTableViewHeader.xib */; };
+		9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADE255C22D6004489C6 /* AppsTableViewHeader.xib */; };
+		9F895AEF255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADE255C22D6004489C6 /* AppsTableViewHeader.xib */; };
+		9F895AF0255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADF255C22D6004489C6 /* AppsServiceAlertCell.xib */; };
+		9F895AF1255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADF255C22D6004489C6 /* AppsServiceAlertCell.xib */; };
+		9F895AF2255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADF255C22D6004489C6 /* AppsServiceAlertCell.xib */; };
+		9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AE0255C22D6004489C6 /* AppsViewController.swift */; };
+		9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AE0255C22D6004489C6 /* AppsViewController.swift */; };
+		9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AE0255C22D6004489C6 /* AppsViewController.swift */; };
 		A33AE28E63E33ED4DBECEE14 /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F523F57E1E563901BF596E /* Pods_GTADev.framework */; };
 /* End PBXBuildFile section */
 
@@ -124,6 +145,13 @@
 		9F819AA7255C1572007C1739 /* GTAStage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTAStage-Info.plist"; sourceTree = "<group>"; };
 		9F819AD0255C1646007C1739 /* GTADev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTADev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F819AD1255C1646007C1739 /* GTADev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTADev-Info.plist"; sourceTree = "<group>"; };
+		9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsTableViewHeader.swift; sourceTree = "<group>"; };
+		9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsServiceAlertCell.swift; sourceTree = "<group>"; };
+		9F895ADB255C22D6004489C6 /* ApplicationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationCell.swift; sourceTree = "<group>"; };
+		9F895ADD255C22D6004489C6 /* ApplicationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplicationCell.xib; sourceTree = "<group>"; };
+		9F895ADE255C22D6004489C6 /* AppsTableViewHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppsTableViewHeader.xib; sourceTree = "<group>"; };
+		9F895ADF255C22D6004489C6 /* AppsServiceAlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppsServiceAlertCell.xib; sourceTree = "<group>"; };
+		9F895AE0255C22D6004489C6 /* AppsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsViewController.swift; sourceTree = "<group>"; };
 		A5433B3CA873FF45A7DCD945 /* Pods-GTADev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.release.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.release.xcconfig"; sourceTree = "<group>"; };
 		B426A1A9FFC9D5E48D51730C /* Pods-GTA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.debug.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.debug.xcconfig"; sourceTree = "<group>"; };
 		C1A798AC2BACC8D6E1547A09 /* Pods-GTADev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.debug.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.debug.xcconfig"; sourceTree = "<group>"; };
@@ -207,6 +235,7 @@
 				659A5AB2255401EA00E13B77 /* SceneDelegate.swift */,
 				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
 				65D1A29225549A0600D71965 /* MainViewController.swift */,
+				9F895AD6255C22D6004489C6 /* MyAppsSection */,
 				659A5AB6255401EA00E13B77 /* Main.storyboard */,
 				65D1A2B02554CF1F00D71965 /* Apps.storyboard */,
 				65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */,
@@ -266,8 +295,45 @@
 				2A81D17183897C26E91E6B8F /* Pods-GTAUITests.debug.xcconfig */,
 				9A72FA34C48FCA29A5107694 /* Pods-GTAUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		9F895AD6255C22D6004489C6 /* MyAppsSection */ = {
+			isa = PBXGroup;
+			children = (
+				9F895AD7255C22D6004489C6 /* AppsScreen */,
+			);
+			path = MyAppsSection;
+			sourceTree = "<group>";
+		};
+		9F895AD7255C22D6004489C6 /* AppsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9F895AD8255C22D6004489C6 /* AppScreenCells */,
+				9F895AE0255C22D6004489C6 /* AppsViewController.swift */,
+			);
+			path = AppsScreen;
+			sourceTree = "<group>";
+		};
+		9F895AD8255C22D6004489C6 /* AppScreenCells */ = {
+			isa = PBXGroup;
+			children = (
+				9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */,
+				9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */,
+				9F895ADB255C22D6004489C6 /* ApplicationCell.swift */,
+				9F895ADC255C22D6004489C6 /* xib's */,
+			);
+			path = AppScreenCells;
+			sourceTree = "<group>";
+		};
+		9F895ADC255C22D6004489C6 /* xib's */ = {
+			isa = PBXGroup;
+			children = (
+				9F895ADD255C22D6004489C6 /* ApplicationCell.xib */,
+				9F895ADE255C22D6004489C6 /* AppsTableViewHeader.xib */,
+				9F895ADF255C22D6004489C6 /* AppsServiceAlertCell.xib */,
+			);
+			path = "xib's";
 			sourceTree = "<group>";
 		};
 		C4EF77F4D748F06CF62A7BAF /* Frameworks */ = {
@@ -431,6 +497,7 @@
 			files = (
 				659A5AF1255404F100E13B77 /* SF-Pro-Display-Thin.otf in Resources */,
 				65D1A2A12554BE3700D71965 /* Home.storyboard in Resources */,
+				9F895AEA255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				659A5AF0255404F100E13B77 /* SF-Pro-Display-Medium.otf in Resources */,
 				65D1A2AC2554CE5E00D71965 /* HelpDesk.storyboard in Resources */,
 				659A5AF2255404F100E13B77 /* SF-Pro-Display-Bold.otf in Resources */,
@@ -438,8 +505,10 @@
 				659A5AF4255404F100E13B77 /* SF-Pro-Text-Medium.otf in Resources */,
 				659A5ABA255401ED00E13B77 /* Assets.xcassets in Resources */,
 				659A5AF5255404F200E13B77 /* SF-Pro-Text-Regular.otf in Resources */,
+				9F895AF0255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				659A5AF3255404F100E13B77 /* SF-Pro-Display-Regular.otf in Resources */,
 				65D1A2B12554CF1F00D71965 /* Apps.storyboard in Resources */,
+				9F895AED255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				659A5AB8255401EA00E13B77 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -464,6 +533,7 @@
 			files = (
 				9F819A97255C1572007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
 				9F819A98255C1572007C1739 /* Home.storyboard in Resources */,
+				9F895AEB255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F819A99255C1572007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
 				9F819A9A255C1572007C1739 /* HelpDesk.storyboard in Resources */,
 				9F819A9B255C1572007C1739 /* SF-Pro-Display-Bold.otf in Resources */,
@@ -471,8 +541,10 @@
 				9F819A9D255C1572007C1739 /* SF-Pro-Text-Medium.otf in Resources */,
 				9F819A9E255C1572007C1739 /* Assets.xcassets in Resources */,
 				9F819A9F255C1572007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
+				9F895AF1255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				9F819AA0255C1572007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F819AA1255C1572007C1739 /* Apps.storyboard in Resources */,
+				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F819AA2255C1572007C1739 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,6 +555,7 @@
 			files = (
 				9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
 				9F819AC2255C1646007C1739 /* Home.storyboard in Resources */,
+				9F895AEC255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F819AC3255C1646007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
 				9F819AC4255C1646007C1739 /* HelpDesk.storyboard in Resources */,
 				9F819AC5255C1646007C1739 /* SF-Pro-Display-Bold.otf in Resources */,
@@ -490,8 +563,10 @@
 				9F819AC7255C1646007C1739 /* SF-Pro-Text-Medium.otf in Resources */,
 				9F819AC8255C1646007C1739 /* Assets.xcassets in Resources */,
 				9F819AC9255C1646007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
+				9F895AF2255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				9F819ACA255C1646007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */,
+				9F895AEF255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F819ACC255C1646007C1739 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -667,11 +742,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
 				659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */,
 				659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */,
+				9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */,
+				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
+				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,11 +774,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
 				9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */,
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
+				9F895AE8255C22D7004489C6 /* ApplicationCell.swift in Sources */,
+				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F819A93255C1572007C1739 /* Extensions.swift in Sources */,
 				9F819A94255C1572007C1739 /* MainViewController.swift in Sources */,
+				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,11 +790,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,
 				9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
+				9F895AE9255C22D7004489C6 /* ApplicationCell.swift in Sources */,
+				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F819ABD255C1646007C1739 /* Extensions.swift in Sources */,
 				9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */,
+				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
