@@ -67,6 +67,14 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         return 60
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.section != 0 else { return }
+        let appVC = ApplicationStatusViewController()
+        appVC.appName = dataSource[indexPath.section].cellData[indexPath.row].mainText
+        appVC.systemStatus = dataSource[indexPath.section].cellData[indexPath.row].systemStatus
+        self.navigationController?.pushViewController(appVC, animated: true)
+    }
+    
 }
 
 struct AppsDataSource {
