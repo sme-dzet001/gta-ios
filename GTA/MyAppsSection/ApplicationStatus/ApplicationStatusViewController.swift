@@ -21,6 +21,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         setUpNavigationItem()
         setHardCodeData()
         setUpTableView()
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1)//UIColor(red: 229.0 / 255.0, green: 229.0 / 255.0, blue: 229.0 / 255.0, alpha: 1.0)
     }
     
     private func setUpNavigationItem() {

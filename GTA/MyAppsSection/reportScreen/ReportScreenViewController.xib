@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,8 +23,8 @@
             <connections>
                 <outlet property="mainLabel" destination="Exn-ID-OKM" id="DGf-kd-ryd"/>
                 <outlet property="submitButton" destination="080-tf-hpZ" id="Lcx-5T-SV4"/>
-                <outlet property="submitButtonBottom" destination="muq-nQ-7ve" id="a5s-Gl-OQ3"/>
-                <outlet property="textView" destination="a3a-bX-rOP" id="8CV-oo-P7b"/>
+                <outlet property="textView" destination="a3a-bX-rOP" id="oak-me-oYW"/>
+                <outlet property="textViewHeight" destination="mf9-YM-fJW" id="eNJ-rV-jAM"/>
                 <outlet property="titleLabel" destination="x1o-dE-dnU" id="uCE-wZ-Zfs"/>
                 <outlet property="typeTextField" destination="dsw-ax-wpj" id="Uw4-qj-g0B"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -35,14 +35,17 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Type" textAlignment="natural" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="dsw-ax-wpj" customClass="CustomTextField" customModule="GTA" customModuleProvider="target">
-                    <rect key="frame" x="30" y="186" width="354" height="20.5"/>
-                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Type" textAlignment="justified" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="dsw-ax-wpj" customClass="CustomTextField" customModule="GTA" customModuleProvider="target">
+                    <rect key="frame" x="30" y="188.5" width="354" height="55"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="55" id="0AJ-Jr-xsd"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                     <textInputTraits key="textInputTraits"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="shrinkSizeOfPlaceholder">
-                            <real key="value" value="10"/>
+                            <real key="value" value="0.0"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="shakeIntensity">
                             <real key="value" value="5"/>
@@ -50,17 +53,49 @@
                         <userDefinedRuntimeAttribute type="number" keyPath="heightOfBottomLine">
                             <real key="value" value="0.0"/>
                         </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" red="0.88235294117647056" green="0.88235294117647056" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
+                            <color key="value" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </textField>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Lorem ipsum " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="a3a-bX-rOP">
-                    <rect key="frame" x="30" y="226.5" width="354" height="550.5"/>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="a3a-bX-rOP" customClass="CustomTextView" customModule="GTA" customModuleProvider="target">
+                    <rect key="frame" x="30" y="262" width="354" height="100"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="mf9-YM-fJW"/>
+                    </constraints>
                     <color key="textColor" systemColor="labelColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" red="0.88235294117647056" green="0.88235294117647056" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </textView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If this is an emergency you can contact SFTS support 000-000-000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="Exn-ID-OKM">
-                    <rect key="frame" x="30" y="128.5" width="354" height="37.5"/>
+                    <rect key="frame" x="30" y="128.5" width="354" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="1g1-Uk-Nvm"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -93,10 +128,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="080-tf-hpZ">
-                    <rect key="frame" x="30" y="797" width="354" height="50"/>
+                    <rect key="frame" x="30" y="382" width="354" height="56"/>
                     <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="gnw-8L-l0W"/>
+                        <constraint firstAttribute="height" constant="56" id="gnw-8L-l0W"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="16"/>
                     <state key="normal" title="Submit">
@@ -118,31 +153,30 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="080-tf-hpZ" secondAttribute="trailing" constant="30" id="1yi-pQ-Aug"/>
                 <constraint firstItem="6ll-s8-ANI" firstAttribute="leading" secondItem="x1o-dE-dnU" secondAttribute="trailing" constant="10" id="2Q2-CA-OQd"/>
                 <constraint firstItem="Exn-ID-OKM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="7WI-H2-pix"/>
+                <constraint firstItem="dsw-ax-wpj" firstAttribute="top" secondItem="Exn-ID-OKM" secondAttribute="bottom" constant="20" id="9Cq-aU-ADR"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="a3a-bX-rOP" secondAttribute="trailing" constant="30" id="CgX-6d-RuK"/>
                 <constraint firstItem="6ll-s8-ANI" firstAttribute="centerY" secondItem="x1o-dE-dnU" secondAttribute="centerY" id="GVS-aL-6Xz"/>
                 <constraint firstItem="dsw-ax-wpj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="Jef-ui-0S8"/>
+                <constraint firstItem="a3a-bX-rOP" firstAttribute="top" secondItem="dsw-ax-wpj" secondAttribute="bottom" constant="18.5" id="Kdt-Qx-FLK"/>
                 <constraint firstItem="a3a-bX-rOP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="Ral-Ym-GHw"/>
-                <constraint firstItem="080-tf-hpZ" firstAttribute="top" secondItem="a3a-bX-rOP" secondAttribute="bottom" constant="20" id="SmL-7L-nqK"/>
                 <constraint firstItem="Exn-ID-OKM" firstAttribute="top" secondItem="nG9-kE-QvV" secondAttribute="bottom" constant="20" id="Ybz-O8-ucX"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="dsw-ax-wpj" secondAttribute="trailing" constant="30" id="YvE-yx-9nb"/>
                 <constraint firstItem="x1o-dE-dnU" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Zvq-l4-WbR"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Exn-ID-OKM" secondAttribute="trailing" constant="30" id="bc8-b0-k0v"/>
                 <constraint firstItem="080-tf-hpZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="bfT-L3-SN3"/>
                 <constraint firstItem="nG9-kE-QvV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="cRM-dX-sYm"/>
-                <constraint firstItem="a3a-bX-rOP" firstAttribute="top" secondItem="dsw-ax-wpj" secondAttribute="bottom" constant="20" id="fVj-SX-lUe"/>
+                <constraint firstItem="080-tf-hpZ" firstAttribute="top" secondItem="a3a-bX-rOP" secondAttribute="bottom" constant="20" id="cdf-SR-QsM"/>
                 <constraint firstItem="nG9-kE-QvV" firstAttribute="top" secondItem="x1o-dE-dnU" secondAttribute="bottom" constant="20" id="ijl-PH-Srv"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6ll-s8-ANI" secondAttribute="trailing" constant="30" id="k6R-J4-zbF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nG9-kE-QvV" secondAttribute="trailing" id="lP0-ze-8DQ"/>
                 <constraint firstItem="x1o-dE-dnU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="loZ-ak-GG9"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="080-tf-hpZ" secondAttribute="bottom" constant="15" id="muq-nQ-7ve"/>
-                <constraint firstItem="dsw-ax-wpj" firstAttribute="top" secondItem="Exn-ID-OKM" secondAttribute="bottom" constant="20" id="oew-1B-xKV"/>
             </constraints>
             <point key="canvasLocation" x="121.73913043478262" y="97.767857142857139"/>
         </view>
     </objects>
     <designables>
         <designable name="dsw-ax-wpj">
-            <size key="intrinsicContentSize" width="5" height="20.5"/>
+            <size key="intrinsicContentSize" width="25" height="40.5"/>
         </designable>
     </designables>
     <resources>

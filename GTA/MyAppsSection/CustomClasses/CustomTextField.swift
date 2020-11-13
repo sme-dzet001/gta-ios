@@ -1,74 +1,82 @@
 //
-//  File.swift
-//  customTextField
+//  CustomTextField.swift
+//  GTA
 //
-//  Created by indrajit on 17/08/18.
-//  Copyright © 2018 indrajit. All rights reserved.
+//  Created by Kostiantyn Dzetsiuk on 12.11.2020.
 //
 
 import UIKit
 @IBDesignable
-open class CustomTextField:UITextField{
+open class CustomTextField: UITextField {
     
-   private var labelPlaceholderTitleTop:NSLayoutConstraint!
-   private var labelPlaceholderTitleCenterY:NSLayoutConstraint!
-   private var labelPlaceholderTitleLeft:NSLayoutConstraint!
+   private var labelPlaceholderTitleTop: NSLayoutConstraint!
+   private var labelPlaceholderTitleCenterY: NSLayoutConstraint!
+   private var labelPlaceholderTitleLeft: NSLayoutConstraint!
     
     @IBInspectable var allowToShrinkPlaceholderSizeOnEditing = true
     @IBInspectable var shrinkSizeOfPlaceholder:CGFloat = 0
     
-    @IBInspectable var placeHolderColor:UIColor = .lightGray{
-        didSet{
+    @IBInspectable var placeHolderColor: UIColor = .lightGray {
+        didSet {
             labelPlaceholderTitle.textColor = placeHolderColor
         }
     }
-    open override var font: UIFont?{
-        didSet{
+    open override var font: UIFont? {
+        didSet {
             labelPlaceholderTitle.font = font
         }
     }
-    @IBInspectable var heightOfBottomLine:CGFloat = 1{
-        didSet{
+    @IBInspectable var heightOfBottomLine:CGFloat = 1 {
+        didSet {
             heightAnchorOfBottomLine.constant = heightOfBottomLine
         }
     }
     
-    open override var leftView: UIView?{
-        didSet{
-            if let lv = leftView{
-                labelPlaceholderTitleLeft.constant = lv.frame.width+leftPadding
+    open override var leftView: UIView? {
+        didSet {
+            if let lv = leftView {
+                labelPlaceholderTitleLeft.constant = lv.frame.width + leftPadding
             }
         }
     }
     
-    @IBInspectable var leftPadding:CGFloat = 0{
-        didSet{
+    @IBInspectable var leftPadding: CGFloat = 0 {
+        didSet {
             labelPlaceholderTitleLeft.constant = leftPadding
         }
     }
     
+    open override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.editingRect(forBounds: bounds)
+        return rect.insetBy(dx: leftPadding, dy: leftPadding)
+    }
     
-    @IBInspectable var errorText:String = ""{
-        didSet{
+    open override func textRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.textRect(forBounds: bounds)
+        return rect.insetBy(dx: leftPadding, dy: leftPadding)
+    }
+    
+    @IBInspectable var errorText: String = "" {
+        didSet {
             self.labelError.text = errorText
         }
     }
-    @IBInspectable var errorColor:UIColor = .red{
-        didSet{
+    @IBInspectable var errorColor: UIColor = .red {
+        didSet {
             labelError.textColor = errorColor
         }
     }
-    @IBInspectable var errorFont:UIFont = UIFont.systemFont(ofSize: 10){
-        didSet{
+    @IBInspectable var errorFont: UIFont = UIFont.systemFont(ofSize: 10) {
+        didSet {
             self.labelError.font = errorFont
         }
     }
     
-    @IBInspectable var shakeIntensity:CGFloat = 5
+    @IBInspectable var shakeIntensity: CGFloat = 5
     
-   private var heightAnchorOfBottomLine:NSLayoutConstraint!
+   private var heightAnchorOfBottomLine: NSLayoutConstraint!
     
-    lazy var labelPlaceholderTitle:UILabel={
+    lazy var labelPlaceholderTitle: UILabel={
         let label = UILabel()
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +85,7 @@ open class CustomTextField:UITextField{
         return label
     }()
     
-    lazy var labelError:UILabel={
+    lazy var labelError: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -89,7 +97,7 @@ open class CustomTextField:UITextField{
         return label
     }()
     
-    let bottonLineView:UIView={
+    let bottonLineView: UIView = {
         let view = UIView()
         view.backgroundColor = .red
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -113,8 +121,19 @@ open class CustomTextField:UITextField{
         self.labelError.isHidden = true
     }
     
-    func initalSetup(){
+    private func setIcon() {
+        let yPoint = (self.frame.height - 40) / 2
+        let xPoint = self.frame.width - 50
+        let imageFrame = CGRect(x: xPoint, y: yPoint, width: 40, height: 40)
         
+        
+        let imageView = UIImageView(frame: imageFrame)
+        imageView.image = UIImage(named: "down_arrow")
+        self.addSubview(imageView)
+    }
+    
+    func initalSetup() {
+        setIcon()
         self.labelPlaceholderTitle.text = placeholder
         placeholder = nil
         borderStyle = .none
@@ -144,34 +163,30 @@ open class CustomTextField:UITextField{
         labelError.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
         labelError.topAnchor.constraint(equalTo: bottonLineView.bottomAnchor, constant: 2).isActive = true
         
-        
         addTarget(self, action: #selector(self.textFieldDidChange), for: .editingChanged)
-        
-        
     }
     
     
-    @objc func textFieldDidChange(){
+    @objc func textFieldDidChange() {
         
-        func animateLabel(){
+        func animateLabel() {
             UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.layoutIfNeeded()
             }, completion: nil)
         }
         
-        if let enteredText = text,enteredText != ""{
-            if labelPlaceholderTitleCenterY.isActive{
+        if let enteredText = text,enteredText != "" {
+            if labelPlaceholderTitleCenterY.isActive {
                 labelPlaceholderTitleCenterY.isActive = false
                 labelPlaceholderTitleTop.isActive = true
-                labelPlaceholderTitleTop.constant = -5
-                if allowToShrinkPlaceholderSizeOnEditing{
-                    let currentFont = font == nil ? UIFont.systemFont(ofSize: 16) : font!
-                    let shrinkSize = shrinkSizeOfPlaceholder == 0 ? currentFont.pointSize-3 : shrinkSizeOfPlaceholder
-                    labelPlaceholderTitle.font = UIFont.init(descriptor: currentFont.fontDescriptor, size:shrinkSize)
+                labelPlaceholderTitleTop.constant = 2
+                if allowToShrinkPlaceholderSizeOnEditing {
+                    let currentFont = font == nil ? UIFont.systemFont(ofSize: 12) : font!
+                    labelPlaceholderTitle.font = UIFont.init(descriptor: currentFont.fontDescriptor, size: 12.0)
                 }
                 animateLabel()
             }
-        }else{
+        } else {
             labelPlaceholderTitleCenterY.isActive = true
             labelPlaceholderTitleTop.isActive = false
             labelPlaceholderTitleTop.constant = 0
@@ -180,9 +195,7 @@ open class CustomTextField:UITextField{
         }
     }
     
-    
-    
-    @objc public func showError(){
+    @objc public func showError() {
         self.labelError.isHidden = false
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
@@ -193,7 +206,7 @@ open class CustomTextField:UITextField{
         layer.add(animation, forKey: "position")
     }
     
-    @objc public func hideError(){
+    @objc public func hideError() {
         self.labelError.isHidden = true
     }
     

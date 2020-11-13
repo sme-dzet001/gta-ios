@@ -118,6 +118,9 @@
 		9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
 		9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
 		9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
+		9F8AEAE4255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
+		9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
+		9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
 		A33AE28E63E33ED4DBECEE14 /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F523F57E1E563901BF596E /* Pods_GTADev.framework */; };
 /* End PBXBuildFile section */
 
@@ -196,6 +199,7 @@
 		9F895B68255D3D27004489C6 /* ReportScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportScreenViewController.swift; sourceTree = "<group>"; };
 		9F895B69255D3D27004489C6 /* ReportScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportScreenViewController.xib; sourceTree = "<group>"; };
 		9F895B7A255D8810004489C6 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		9F8AEAE3255EB88500B62072 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 		A5433B3CA873FF45A7DCD945 /* Pods-GTADev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.release.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.release.xcconfig"; sourceTree = "<group>"; };
 		B426A1A9FFC9D5E48D51730C /* Pods-GTA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.debug.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.debug.xcconfig"; sourceTree = "<group>"; };
 		C1A798AC2BACC8D6E1547A09 /* Pods-GTADev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.debug.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.debug.xcconfig"; sourceTree = "<group>"; };
@@ -345,6 +349,7 @@
 		9F895AD6255C22D6004489C6 /* MyAppsSection */ = {
 			isa = PBXGroup;
 			children = (
+				9F8AEAE2255EB86000B62072 /* CustomClasses */,
 				9F895B67255D3CCB004489C6 /* reportScreen */,
 				9F895AD7255C22D6004489C6 /* AppsScreen */,
 				9F895B24255C2DDF004489C6 /* ApplicationStatus */,
@@ -416,11 +421,19 @@
 		9F895B67255D3CCB004489C6 /* reportScreen */ = {
 			isa = PBXGroup;
 			children = (
-				9F895B7A255D8810004489C6 /* CustomTextField.swift */,
 				9F895B68255D3D27004489C6 /* ReportScreenViewController.swift */,
 				9F895B69255D3D27004489C6 /* ReportScreenViewController.xib */,
 			);
 			path = reportScreen;
+			sourceTree = "<group>";
+		};
+		9F8AEAE2255EB86000B62072 /* CustomClasses */ = {
+			isa = PBXGroup;
+			children = (
+				9F895B7A255D8810004489C6 /* CustomTextField.swift */,
+				9F8AEAE3255EB88500B62072 /* CustomTextView.swift */,
+			);
+			path = CustomClasses;
 			sourceTree = "<group>";
 		};
 		C4EF77F4D748F06CF62A7BAF /* Frameworks */ = {
@@ -854,6 +867,7 @@
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
 				9F895B28255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
+				9F8AEAE4255EB88500B62072 /* CustomTextView.swift in Sources */,
 				9F895B5B255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */,
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
 				9F895B6A255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
@@ -892,6 +906,7 @@
 				9F819A93255C1572007C1739 /* Extensions.swift in Sources */,
 				9F895B29255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				9F895B35255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
+				9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */,
 				9F895B5C255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */,
 				9F819A94255C1572007C1739 /* MainViewController.swift in Sources */,
 				9F895B6B255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
@@ -914,6 +929,7 @@
 				9F819ABD255C1646007C1739 /* Extensions.swift in Sources */,
 				9F895B2A255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				9F895B36255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
+				9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */,
 				9F895B5D255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */,
 				9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */,
 				9F895B6C255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
