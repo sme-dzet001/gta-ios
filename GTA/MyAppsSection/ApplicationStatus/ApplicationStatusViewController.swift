@@ -21,7 +21,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         setUpNavigationItem()
         setHardCodeData()
         setUpTableView()
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1)//UIColor(red: 229.0 / 255.0, green: 229.0 / 255.0, blue: 229.0 / 255.0, alpha: 1.0)
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1)
     }
     
     private func setUpNavigationItem() {
@@ -71,7 +71,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let statusHeader = SystemStatusHeader.instanceFromNib()
-            statusHeader.setUpSignalViews(for: systemStatus)
+            statusHeader.systemStatus = systemStatus
             return statusHeader
         }
         let header = AppsTableViewHeader.instanceFromNib()
@@ -91,12 +91,14 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let dataArray = dataSource[indexPath.section].cellData
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
-            cell.setUpCell(with: dataSource[indexPath.section].cellData[indexPath.row], isNeedCornerRadius: indexPath.row == 0)
+            cell.separator.isHidden = indexPath.row == dataArray.count - 1
+            cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0)
             return cell
         }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "SystemUpdatesCell", for: indexPath) as? SystemUpdatesCell {
-            cell.setUpCell(with: dataSource[indexPath.section].cellData[indexPath.row])
+            cell.setUpCell(with: dataArray[indexPath.row], hideSeparator: indexPath.row == dataArray.count - 1)
             return cell
         }
         return UITableViewCell()

@@ -16,13 +16,15 @@ class SystemStatusHeader: UIView {
     @IBOutlet weak var offlineStatusView: UIView!
     @IBOutlet weak var otherStatusView: UIView!
     
+    var systemStatus: SystemStatus = .none
+    
     class func instanceFromNib() -> SystemStatusHeader {
         let header = UINib(nibName: "SystemStatusHeader", bundle: nil).instantiate(withOwner: self, options: nil).first as! SystemStatusHeader
         return header
     }
     
-    func setUpSignalViews(for status: SystemStatus) { // temp name
-        switch status {
+    func setUpSignalViews() { // temp name
+        switch systemStatus {
         case .online:
             onlineStatusView.backgroundColor = onlineStatusView.backgroundColor?.withAlphaComponent(1.0) //layer.opacity = 1.0
         case .offline:
@@ -46,6 +48,10 @@ class SystemStatusHeader: UIView {
         onlineStatusView.layer.cornerRadius = onlineStatusView.frame.size.width / 2
         offlineStatusView.layer.cornerRadius = offlineStatusView.frame.size.width / 2
         otherStatusView.layer.cornerRadius = otherStatusView.frame.size.width / 2
+    }
+    
+    override func draw(_ rect: CGRect) {
+        setUpSignalViews()
     }
     
 }

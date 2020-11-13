@@ -13,6 +13,7 @@ class AppsServiceAlertCell: UITableViewCell {
     @IBOutlet weak var mainLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var parentView: UIView!
+    @IBOutlet weak var separator: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
