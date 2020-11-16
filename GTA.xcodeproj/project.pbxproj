@@ -304,12 +304,12 @@
 		659A5AAF255401EA00E13B77 /* GTA */ = {
 			isa = PBXGroup;
 			children = (
-				6583BC8A2559AD4300C80673 /* Homepage */,
 				659A5AF9255457B600E13B77 /* Extensions.swift */,
 				659A5AB0255401EA00E13B77 /* AppDelegate.swift */,
 				659A5AB2255401EA00E13B77 /* SceneDelegate.swift */,
 				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
 				65D1A29225549A0600D71965 /* MainViewController.swift */,
+				6583BC8A2559AD4300C80673 /* Homepage */,
 				9F895AD6255C22D6004489C6 /* MyAppsSection */,
 				659A5AB6255401EA00E13B77 /* Main.storyboard */,
 				65D1A2B02554CF1F00D71965 /* Apps.storyboard */,
