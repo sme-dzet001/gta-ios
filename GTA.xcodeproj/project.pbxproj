@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6583BC8F2559BA9800C80673 /* Nordique Pro Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6583BC8E2559BA9800C80673 /* Nordique Pro Bold.otf */; };
+		6583BC972559BEF000C80673 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6583BC962559BEF000C80673 /* HomepageViewController.swift */; };
+		6583BC9C2559BF2B00C80673 /* HomepageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6583BC9B2559BF2B00C80673 /* HomepageTableViewController.swift */; };
 		659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
 		659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
 		659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
@@ -46,6 +49,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6583BC8E2559BA9800C80673 /* Nordique Pro Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nordique Pro Bold.otf"; sourceTree = "<group>"; };
+		6583BC962559BEF000C80673 /* HomepageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
+		6583BC9B2559BF2B00C80673 /* HomepageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageTableViewController.swift; sourceTree = "<group>"; };
 		659A5AAD255401EA00E13B77 /* GTA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		659A5AB0255401EA00E13B77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		659A5AB2255401EA00E13B77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +104,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6583BC8A2559AD4300C80673 /* Homepage */ = {
+			isa = PBXGroup;
+			children = (
+				65D1A2A02554BE3700D71965 /* Home.storyboard */,
+				6583BC962559BEF000C80673 /* HomepageViewController.swift */,
+				6583BC9B2559BF2B00C80673 /* HomepageTableViewController.swift */,
+			);
+			path = Homepage;
+			sourceTree = "<group>";
+		};
 		659A5AA4255401EA00E13B77 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +137,7 @@
 		659A5AAF255401EA00E13B77 /* GTA */ = {
 			isa = PBXGroup;
 			children = (
+				6583BC8A2559AD4300C80673 /* Homepage */,
 				659A5AF9255457B600E13B77 /* Extensions.swift */,
 				659A5AB0255401EA00E13B77 /* AppDelegate.swift */,
 				659A5AB2255401EA00E13B77 /* SceneDelegate.swift */,
@@ -129,7 +146,6 @@
 				659A5AB6255401EA00E13B77 /* Main.storyboard */,
 				65D1A2B02554CF1F00D71965 /* Apps.storyboard */,
 				65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */,
-				65D1A2A02554BE3700D71965 /* Home.storyboard */,
 				659A5AE9255404BB00E13B77 /* Supporting Files */,
 				659A5AB9255401ED00E13B77 /* Assets.xcassets */,
 				659A5ABB255401ED00E13B77 /* LaunchScreen.storyboard */,
@@ -165,6 +181,7 @@
 				659A5AEB255404F100E13B77 /* SF-Pro-Display-Thin.otf */,
 				659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */,
 				659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */,
+				6583BC8E2559BA9800C80673 /* Nordique Pro Bold.otf */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -274,6 +291,7 @@
 			files = (
 				659A5AF1255404F100E13B77 /* SF-Pro-Display-Thin.otf in Resources */,
 				65D1A2A12554BE3700D71965 /* Home.storyboard in Resources */,
+				6583BC8F2559BA9800C80673 /* Nordique Pro Bold.otf in Resources */,
 				659A5AF0255404F100E13B77 /* SF-Pro-Display-Medium.otf in Resources */,
 				65D1A2AC2554CE5E00D71965 /* HelpDesk.storyboard in Resources */,
 				659A5AF2255404F100E13B77 /* SF-Pro-Display-Bold.otf in Resources */,
@@ -309,7 +327,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
+				6583BC9C2559BF2B00C80673 /* HomepageTableViewController.swift in Sources */,
 				659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */,
+				6583BC972559BEF000C80673 /* HomepageViewController.swift in Sources */,
 				659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,

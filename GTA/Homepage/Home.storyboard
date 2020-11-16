@@ -4,10 +4,12 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Nordique Pro Bold.otf">
+            <string>NordiquePro-Bold</string>
+        </array>
         <array key="SF-Pro-Text-Regular.otf">
             <string>SFProText-Regular</string>
         </array>
@@ -16,42 +18,82 @@
         <!--Home-->
         <scene sceneID="e96-dU-AW5">
             <objects>
-                <viewController storyboardIdentifier="HomePageTab" id="RcL-i2-3qg" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomePageTab" id="RcL-i2-3qg" customClass="HomepageViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EAh-Zl-95x">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rwc-F4-LiA">
                                 <rect key="frame" x="0.0" y="446" width="414" height="450"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="450" id="rLG-Ex-0oI"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="ib8-M3-rFG" kind="embed" id="GXE-CY-EIR"/>
+                                    <segue destination="ib8-M3-rFG" kind="embed" identifier="embedTable" id="GXE-CY-EIR"/>
                                 </connections>
                             </containerView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DeH-Z1-Yr9">
+                                <rect key="frame" x="122.5" y="52" width="169.5" height="32"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mission " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yDC-cE-tEh">
+                                        <rect key="frame" x="0.0" y="0.0" width="92.5" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="NBV-74-wfv"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="NordiquePro-Bold" family="Nordique Pro" pointSize="26"/>
+                                        <color key="textColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="control" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRw-6b-KLA">
+                                        <rect key="frame" x="92.5" y="0.0" width="77" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="dIE-me-B5D"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="NordiquePro-Bold" family="Nordique Pro" pointSize="26"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WOX-S5-YeY">
+                                <rect key="frame" x="366" y="56" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="Gre-c5-O7i"/>
+                                    <constraint firstAttribute="width" constant="24" id="nmg-gQ-GPf"/>
+                                </constraints>
+                                <state key="normal" image="settings_icon"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="9CN-qS-fad"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Rwc-F4-LiA" firstAttribute="trailing" secondItem="9CN-qS-fad" secondAttribute="trailing" id="EX1-Ao-SZr"/>
+                            <constraint firstItem="WOX-S5-YeY" firstAttribute="centerY" secondItem="DeH-Z1-Yr9" secondAttribute="centerY" id="aGL-Ek-dh3"/>
+                            <constraint firstItem="WOX-S5-YeY" firstAttribute="top" secondItem="9CN-qS-fad" secondAttribute="top" constant="12" id="fAz-uy-4Dv"/>
+                            <constraint firstItem="WOX-S5-YeY" firstAttribute="trailing" secondItem="9CN-qS-fad" secondAttribute="trailing" constant="-24" id="fBi-vx-H3v"/>
                             <constraint firstItem="Rwc-F4-LiA" firstAttribute="leading" secondItem="9CN-qS-fad" secondAttribute="leading" id="hqt-ZW-MJN"/>
-                            <constraint firstItem="Rwc-F4-LiA" firstAttribute="height" secondItem="9CN-qS-fad" secondAttribute="height" multiplier="0.55" id="x0z-mf-NIv"/>
+                            <constraint firstItem="DeH-Z1-Yr9" firstAttribute="centerX" secondItem="9CN-qS-fad" secondAttribute="centerX" id="pDU-iW-wnT"/>
                             <constraint firstItem="Rwc-F4-LiA" firstAttribute="bottom" secondItem="EAh-Zl-95x" secondAttribute="bottom" id="y1y-bY-5ZA"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="homepage_tab_icon" id="LgG-vL-DZb"/>
+                    <connections>
+                        <segue destination="bS4-p4-daj" kind="show" identifier="showOfficeStatus" id="jbm-Wb-CJV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gqa-Vw-Kt5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3032" y="-926"/>
+            <point key="canvasLocation" x="3031.884057971015" y="-926.11607142857133"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Homepage Table View Controller-->
         <scene sceneID="ySN-Bz-2am">
             <objects>
-                <tableViewController id="ib8-M3-rFG" sceneMemberID="viewController">
+                <tableViewController id="ib8-M3-rFG" customClass="HomepageTableViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Pkv-ms-Cgb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="450"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -255,7 +297,7 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow" translatesAutoresizingMaskIntoConstraints="NO" id="eTr-y2-CeZ">
                                                     <rect key="frame" x="366" y="28" width="24" height="24"/>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CeJ-hg-Uxp">
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CeJ-hg-Uxp">
                                                     <rect key="frame" x="0.0" y="79" width="414" height="1"/>
                                                     <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -292,33 +334,46 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TAQ-PR-xB9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3849" y="-926"/>
+            <point key="canvasLocation" x="3862" y="-910"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="cfs-IZ-4eC">
             <objects>
                 <viewController id="bS4-p4-daj" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fDe-bp-Ohs">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9l-jM-FUb">
+                                <rect key="frame" x="24" y="12" width="24" height="24"/>
+                                <state key="normal" image="back_icon"/>
+                                <connections>
+                                    <segue destination="nkN-WE-gSH" kind="unwind" unwindAction="unwindToHomePageWithSegue:" id="aTv-3F-4w6"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="2Yd-nx-CmZ"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="C9l-jM-FUb" firstAttribute="top" secondItem="2Yd-nx-CmZ" secondAttribute="top" constant="12" id="L7h-NR-o4R"/>
+                            <constraint firstItem="C9l-jM-FUb" firstAttribute="leading" secondItem="2Yd-nx-CmZ" secondAttribute="leading" constant="24" id="WlZ-Tp-Oui"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="I3b-06-tAk"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M9j-fr-TEu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="nkN-WE-gSH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4678" y="-926"/>
+            <point key="canvasLocation" x="4668" y="-942"/>
         </scene>
     </scenes>
     <resources>
         <image name="arrow" width="24" height="24"/>
+        <image name="back_icon" width="24" height="24"/>
         <image name="covid19_update_icon" width="18" height="18"/>
         <image name="desk_finder" width="24" height="24"/>
         <image name="homepage_tab_icon" width="24" height="24"/>
         <image name="return_to_work" width="24" height="24"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="settings_icon" width="20" height="20"/>
     </resources>
 </document>

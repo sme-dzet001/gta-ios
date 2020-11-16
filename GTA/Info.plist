@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -43,6 +45,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Nordique Pro Bold.otf</string>
 		<string>SF-Pro-Display-Medium.otf</string>
 		<string>SF-Pro-Text-Medium.otf</string>
 		<string>SF-Pro-Text-Regular.otf</string>
