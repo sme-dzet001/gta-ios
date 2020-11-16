@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EcR-AN-4mG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EcR-AN-4mG">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="SF-Pro-Display-Regular.otf">
-            <string>SFProDisplay-Regular</string>
+        <array key="SF-Pro-Display-Light.ttf">
+            <string>SFProDisplay-Light</string>
         </array>
-        <array key="SF-Pro-Display-Thin.otf">
-            <string>SFProDisplay-Thin</string>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
         </array>
-        <array key="SF-Pro-Text-Medium.otf">
-            <string>SFProText-Medium</string>
+        <array key="SF-Pro-Text-Semibold.ttf">
+            <string>SFProText-Semibold</string>
         </array>
     </customFonts>
     <scenes>
@@ -58,30 +58,30 @@
                                 </constraints>
                                 <state key="normal" image="help"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sony Music Global Technology" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cg-mN-F74">
-                                <rect key="frame" x="24" y="124" width="366" height="95.5"/>
-                                <fontDescription key="fontDescription" name="SFProDisplay-Thin" family="SF Pro Display" pointSize="40"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Sony Music Global Technology" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cg-mN-F74">
+                                <rect key="frame" x="24" y="124" width="366" height="76.5"/>
+                                <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Xr-Ki-8uN">
-                                <rect key="frame" x="24" y="339.5" width="366" height="48"/>
-                                <fontDescription key="fontDescription" name="SFProDisplay-Thin" family="SF Pro Display" pointSize="40"/>
+                                <rect key="frame" x="24" y="320.5" width="366" height="74.5"/>
+                                <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I forgot my password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0TU-dU-UZZ">
-                                <rect key="frame" x="146.5" y="829" width="121.5" height="17"/>
-                                <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="14"/>
+                                <rect key="frame" x="138" y="829" width="138.5" height="17"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0p5-Sa-qVW">
-                                <rect key="frame" x="24" y="693" width="366" height="56"/>
+                                <rect key="frame" x="24" y="521" width="366" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="ctK-rA-hmT"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
                                 <state key="normal" title="Continue"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -95,12 +95,13 @@
                                     <action selector="onLoginButtonTapWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9gg-wN-zsv"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-dS-SrK">
-                                <rect key="frame" x="24" y="411.5" width="366" height="56"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-dS-SrK" customClass="CustomTextField" customModule="GTA" customModuleProvider="target">
+                                <rect key="frame" x="24" y="425" width="366" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="DiP-x7-6Fo"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -112,6 +113,15 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                         <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shakeIntensity">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
+                                        <color key="value" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
                         </subviews>
@@ -120,23 +130,24 @@
                         <constraints>
                             <constraint firstItem="0p5-Sa-qVW" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="13D-3Q-Hyd"/>
                             <constraint firstItem="3cg-mN-F74" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="2A6-la-ga6"/>
-                            <constraint firstItem="7Xr-Ki-8uN" firstAttribute="top" secondItem="3cg-mN-F74" secondAttribute="bottom" constant="120" id="72H-up-tQ1"/>
+                            <constraint firstItem="7Xr-Ki-8uN" firstAttribute="top" relation="lessThanOrEqual" secondItem="3cg-mN-F74" secondAttribute="bottom" constant="120" id="72H-up-tQ1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0p5-Sa-qVW" secondAttribute="trailing" constant="24" id="92m-v5-tTp"/>
                             <constraint firstItem="0TU-dU-UZZ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-16" id="9cw-eV-2Kh"/>
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Odm-Zn-f5Q"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="W8k-S3-PNz"/>
                             <constraint firstItem="3cg-mN-F74" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-24" id="Xsx-Zw-2wc"/>
                             <constraint firstItem="3cg-mN-F74" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="Yfp-UX-ne4"/>
-                            <constraint firstItem="JCo-dS-SrK" firstAttribute="top" secondItem="7Xr-Ki-8uN" secondAttribute="bottom" constant="24" id="coV-tC-vql"/>
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="dWi-3n-PWU"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-24" id="guk-gv-XEZ"/>
+                            <constraint firstItem="JCo-dS-SrK" firstAttribute="top" secondItem="7Xr-Ki-8uN" secondAttribute="bottom" constant="30" id="i93-tF-XP5"/>
                             <constraint firstItem="0TU-dU-UZZ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="iIU-HA-qVo"/>
+                            <constraint firstItem="JCo-dS-SrK" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="ijo-Ne-Unq"/>
                             <constraint firstItem="hOh-kP-jbd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="kjN-7v-3d1"/>
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="centerY" secondItem="hOh-kP-jbd" secondAttribute="centerY" id="nDB-L7-VwV"/>
                             <constraint firstItem="0p5-Sa-qVW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="pA4-W7-fSM"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="7Xr-Ki-8uN" secondAttribute="trailing" constant="24" id="qbC-qX-m26"/>
                             <constraint firstItem="7Xr-Ki-8uN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="sJh-wA-cDi"/>
-                            <constraint firstItem="7Xr-Ki-8uN" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-24" id="uoI-eN-ugG"/>
-                            <constraint firstItem="0p5-Sa-qVW" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-24" id="wZf-hh-a72"/>
-                            <constraint firstItem="0TU-dU-UZZ" firstAttribute="top" secondItem="0p5-Sa-qVW" secondAttribute="bottom" constant="80" id="wdf-Xh-gzV"/>
+                            <constraint firstItem="0p5-Sa-qVW" firstAttribute="top" secondItem="JCo-dS-SrK" secondAttribute="bottom" constant="40" id="vCv-fh-4Lz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="StN-4C-H86"/>
@@ -282,6 +293,11 @@
             <point key="canvasLocation" x="3723" y="745"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="JCo-dS-SrK">
+            <size key="intrinsicContentSize" width="40.5" height="21"/>
+        </designable>
+    </designables>
     <resources>
         <image name="apps_tab_icon" width="24" height="24"/>
         <image name="collaboration_tab_icon" width="24" height="24"/>

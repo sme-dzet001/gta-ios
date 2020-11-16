@@ -14,7 +14,7 @@ open class CustomTextField: UITextField {
    private var labelPlaceholderTitleLeft: NSLayoutConstraint!
     
     @IBInspectable var allowToShrinkPlaceholderSizeOnEditing = true
-    @IBInspectable var shrinkSizeOfPlaceholder:CGFloat = 0
+    @IBInspectable var shrinkSizeOfPlaceholder: CGFloat = 0
     
     @IBInspectable var placeHolderColor: UIColor = .lightGray {
         didSet {
@@ -26,7 +26,7 @@ open class CustomTextField: UITextField {
             labelPlaceholderTitle.font = font
         }
     }
-    @IBInspectable var heightOfBottomLine:CGFloat = 1 {
+    @IBInspectable var heightOfBottomLine: CGFloat = 1 {
         didSet {
             heightAnchorOfBottomLine.constant = heightOfBottomLine
         }
@@ -121,7 +121,7 @@ open class CustomTextField: UITextField {
         self.labelError.isHidden = true
     }
     
-    private func setIcon() {
+    func setIconForPicker() {
         let yPoint = (self.frame.height - 40) / 2
         let xPoint = self.frame.width - 50
         let imageFrame = CGRect(x: xPoint, y: yPoint, width: 40, height: 40)
@@ -133,7 +133,7 @@ open class CustomTextField: UITextField {
     }
     
     func initalSetup() {
-        setIcon()
+        //setIconIfNeeded()
         self.labelPlaceholderTitle.text = placeholder
         placeholder = nil
         borderStyle = .none

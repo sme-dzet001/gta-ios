@@ -84,6 +84,7 @@ class ReportScreenViewController: UIViewController, PanModalPresentable {
     private func setUpTextField() {
         pickerView.delegate = self
         pickerView.dataSource = self
+        typeTextField.setIconForPicker()
         typeTextField.inputView = pickerView
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
         toolbar.barStyle = .default
