@@ -36,6 +36,12 @@
 		9F36D43C2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */; };
 		9F36D43D2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */; };
 		9F36D43E2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */; };
+		9F36D4652562C286000EE0F1 /* HomepageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */; };
+		9F36D4662562C286000EE0F1 /* HomepageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */; };
+		9F36D4672562C286000EE0F1 /* HomepageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */; };
+		9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4642562C286000EE0F1 /* HomepageViewController.swift */; };
+		9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4642562C286000EE0F1 /* HomepageViewController.swift */; };
+		9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4642562C286000EE0F1 /* HomepageViewController.swift */; };
 		9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
 		9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
 		9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
@@ -185,6 +191,8 @@
 		9ED2AC0BF2A369E0AC6786A4 /* Pods-GTAStage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.release.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.release.xcconfig"; sourceTree = "<group>"; };
 		9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.ttf"; sourceTree = "<group>"; };
 		9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.ttf"; sourceTree = "<group>"; };
+		9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageTableViewController.swift; sourceTree = "<group>"; };
+		9F36D4642562C286000EE0F1 /* HomepageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
 		9F819AA6255C1572007C1739 /* GTAStage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTAStage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F819AA7255C1572007C1739 /* GTAStage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTAStage-Info.plist"; sourceTree = "<group>"; };
 		9F819AD0255C1646007C1739 /* GTADev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTADev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -263,8 +271,8 @@
 			isa = PBXGroup;
 			children = (
 				65D1A2A02554BE3700D71965 /* Home.storyboard */,
-				6583BC962559BEF000C80673 /* HomepageViewController.swift */,
-				6583BC9B2559BF2B00C80673 /* HomepageTableViewController.swift */,
+				9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */,
+				9F36D4642562C286000EE0F1 /* HomepageViewController.swift */,
 			);
 			path = Homepage;
 			sourceTree = "<group>";
@@ -345,7 +353,6 @@
 				9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */,
 				659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */,
 				659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */,
-				6583BC8E2559BA9800C80673 /* Nordique Pro Bold.otf */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -885,14 +892,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F895B0F255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
+				9F36D4652562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
-				6583BC9C2559BF2B00C80673 /* HomepageTableViewController.swift in Sources */,
 				659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */,
-				6583BC972559BEF000C80673 /* HomepageViewController.swift in Sources */,
 				659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */,
 				9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
 				9F895B28255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
@@ -926,12 +933,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F895B10255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
+				9F36D4662562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
 				9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */,
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
 				9F895AE8255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9F819A93255C1572007C1739 /* Extensions.swift in Sources */,
 				9F895B29255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				9F895B35255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
@@ -949,12 +958,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F895B11255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
+				9F36D4672562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,
 				9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
 				9F895AE9255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9F819ABD255C1646007C1739 /* Extensions.swift in Sources */,
 				9F895B2A255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				9F895B36255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
