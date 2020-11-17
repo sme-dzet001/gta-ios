@@ -59,19 +59,19 @@
                                 <state key="normal" image="help"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Sony Music Global Technology" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cg-mN-F74">
-                                <rect key="frame" x="24" y="124" width="366" height="76.5"/>
+                                <rect key="frame" x="24" y="124" width="366" height="75"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Xr-Ki-8uN">
-                                <rect key="frame" x="24" y="320.5" width="366" height="74.5"/>
+                                <rect key="frame" x="24" y="319" width="366" height="76"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I forgot my password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0TU-dU-UZZ">
-                                <rect key="frame" x="138" y="829" width="138.5" height="17"/>
+                                <rect key="frame" x="141" y="829" width="132.5" height="17"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -154,58 +154,11 @@
                     <connections>
                         <outlet property="emailTextField" destination="JCo-dS-SrK" id="6HH-VZ-WQ0"/>
                         <outlet property="loginButton" destination="0p5-Sa-qVW" id="VQy-dc-DCh"/>
-                        <segue destination="fGm-EI-AJe" kind="show" identifier="showMainScreen" id="vRR-QY-yez"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="138" y="74"/>
-        </scene>
-        <!--Main View Controller-->
-        <scene sceneID="ecA-5K-CDF">
-            <objects>
-                <viewController id="fGm-EI-AJe" customClass="MainViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="XDI-jg-eom">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9t-wm-14m">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <connections>
-                                    <segue destination="b7i-tb-usz" kind="embed" identifier="embedTabBar" id="cTe-Zc-IUj"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="rb2-7q-CCu"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="q9t-wm-14m" firstAttribute="top" secondItem="XDI-jg-eom" secondAttribute="top" id="Ium-iB-Wxl"/>
-                            <constraint firstAttribute="trailing" secondItem="q9t-wm-14m" secondAttribute="trailing" id="VPT-cm-iLp"/>
-                            <constraint firstAttribute="bottom" secondItem="q9t-wm-14m" secondAttribute="bottom" id="eod-iZ-84c"/>
-                            <constraint firstItem="q9t-wm-14m" firstAttribute="leading" secondItem="XDI-jg-eom" secondAttribute="leading" id="zeS-j3-ac8"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="TFL-aC-NhI"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7k6-Se-Txo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1075" y="74"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="0Ir-mu-n1n">
-            <objects>
-                <navigationController navigationBarHidden="YES" id="b7i-tb-usz" sceneMemberID="viewController">
-                    <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ROn-vJ-r6s">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="2fU-G9-hR4" kind="relationship" relationship="rootViewController" id="SAv-aI-OFf"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qBq-Lx-y6Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1962" y="74"/>
         </scene>
         <!--HomePageTab-->
         <scene sceneID="s2d-wz-7pa">
@@ -215,7 +168,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s1F-AJ-2Cv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3509" y="-319"/>
+            <point key="canvasLocation" x="1778" y="-247"/>
         </scene>
         <!--HelpDeskTab-->
         <scene sceneID="JxX-cg-5QO">
@@ -225,7 +178,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F6A-GY-Qr5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3509" y="-280"/>
+            <point key="canvasLocation" x="1781" y="-192"/>
         </scene>
         <!--ApplicationsTab-->
         <scene sceneID="zYe-8r-5wz">
@@ -235,12 +188,12 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vkw-Rc-fYD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3515" y="-247"/>
+            <point key="canvasLocation" x="1785" y="-133"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="TlM-xG-mnu">
             <objects>
-                <tabBarController id="2fU-G9-hR4" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" id="2fU-G9-hR4" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="ogV-gh-BnP"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HsF-tP-v1d">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -258,7 +211,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yh2-Lr-uTb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2839" y="74"/>
+            <point key="canvasLocation" x="1070" y="75"/>
         </scene>
         <!--Collaboration-->
         <scene sceneID="THd-wm-UQY">
@@ -274,7 +227,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Av3-Nv-ZnP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3728" y="100"/>
+            <point key="canvasLocation" x="2381" y="123"/>
         </scene>
         <!--General-->
         <scene sceneID="v41-tN-vox">
@@ -290,12 +243,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aj6-b0-tyA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3723" y="745"/>
+            <point key="canvasLocation" x="1786" y="812"/>
         </scene>
     </scenes>
     <designables>
         <designable name="JCo-dS-SrK">
-            <size key="intrinsicContentSize" width="40.5" height="21"/>
+            <size key="intrinsicContentSize" width="39.5" height="20.5"/>
         </designable>
     </designables>
     <resources>

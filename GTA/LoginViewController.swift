@@ -48,7 +48,9 @@ class LoginViewController: UIViewController {
             present(alert, animated: true)
             return
         }
-        performSegue(withIdentifier: "showMainScreen", sender: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainScreen = storyboard.instantiateViewController(withIdentifier: "TabBarController")
+        self.navigationController?.pushViewController(mainScreen, animated: true)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
