@@ -143,6 +143,18 @@
 		C91F708E2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */; };
 		C91F708F2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */; };
 		C91F70902562FEC5002F17B1 /* HelpDeskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */; };
+		C9424E0125642632003C247E /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424DFF25642632003C247E /* MyDevicesViewController.swift */; };
+		C9424E0225642632003C247E /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424DFF25642632003C247E /* MyDevicesViewController.swift */; };
+		C9424E0325642632003C247E /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424DFF25642632003C247E /* MyDevicesViewController.swift */; };
+		C9424E0425642632003C247E /* MyDevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E0025642632003C247E /* MyDevicesViewController.xib */; };
+		C9424E0525642632003C247E /* MyDevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E0025642632003C247E /* MyDevicesViewController.xib */; };
+		C9424E0625642632003C247E /* MyDevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E0025642632003C247E /* MyDevicesViewController.xib */; };
+		C9424E14256427F0003C247E /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424E12256427F0003C247E /* DeviceCell.swift */; };
+		C9424E15256427F0003C247E /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424E12256427F0003C247E /* DeviceCell.swift */; };
+		C9424E16256427F0003C247E /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424E12256427F0003C247E /* DeviceCell.swift */; };
+		C9424E17256427F0003C247E /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E13256427F0003C247E /* DeviceCell.xib */; };
+		C9424E18256427F0003C247E /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E13256427F0003C247E /* DeviceCell.xib */; };
+		C9424E19256427F0003C247E /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E13256427F0003C247E /* DeviceCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -231,6 +243,10 @@
 		C91F707B2562FE98002F17B1 /* HelpDeskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskViewController.swift; sourceTree = "<group>"; };
 		C91F70892562FEC5002F17B1 /* HelpDeskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskCell.swift; sourceTree = "<group>"; };
 		C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpDeskCell.xib; sourceTree = "<group>"; };
+		C9424DFF25642632003C247E /* MyDevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDevicesViewController.swift; sourceTree = "<group>"; };
+		C9424E0025642632003C247E /* MyDevicesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyDevicesViewController.xib; sourceTree = "<group>"; };
+		C9424E12256427F0003C247E /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
+		C9424E13256427F0003C247E /* DeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
 		D3387A52A0F8F88F9F876531 /* Pods-GTATests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.debug.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.debug.xcconfig"; sourceTree = "<group>"; };
 		E99FE5D7739905AF03A6B886 /* Pods_GTA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -493,6 +509,7 @@
 			isa = PBXGroup;
 			children = (
 				C91F709C2562FEEC002F17B1 /* HelpDeskScreen */,
+				C9424E0C2564263A003C247E /* MyDevicesScreen */,
 			);
 			path = HelpDeskSection;
 			sourceTree = "<group>";
@@ -513,6 +530,25 @@
 				C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */,
 			);
 			path = HelpDeskCells;
+			sourceTree = "<group>";
+		};
+		C9424E0C2564263A003C247E /* MyDevicesScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C9424E1F25642803003C247E /* MyDevicesCells */,
+				C9424DFF25642632003C247E /* MyDevicesViewController.swift */,
+				C9424E0025642632003C247E /* MyDevicesViewController.xib */,
+			);
+			path = MyDevicesScreen;
+			sourceTree = "<group>";
+		};
+		C9424E1F25642803003C247E /* MyDevicesCells */ = {
+			isa = PBXGroup;
+			children = (
+				C9424E12256427F0003C247E /* DeviceCell.swift */,
+				C9424E13256427F0003C247E /* DeviceCell.xib */,
+			);
+			path = MyDevicesCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -682,9 +718,11 @@
 				9F895B6D255D3D27004489C6 /* ReportScreenViewController.xib in Resources */,
 				65D1A2B12554CF1F00D71965 /* Apps.storyboard in Resources */,
 				9F895B5E255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */,
+				C9424E0425642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2B255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AED255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				659A5AB8255401EA00E13B77 /* Main.storyboard in Resources */,
+				C9424E17256427F0003C247E /* DeviceCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -726,9 +764,11 @@
 				9F895B6E255D3D27004489C6 /* ReportScreenViewController.xib in Resources */,
 				9F819AA1255C1572007C1739 /* Apps.storyboard in Resources */,
 				9F895B5F255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */,
+				C9424E0525642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F819AA2255C1572007C1739 /* Main.storyboard in Resources */,
+				C9424E18256427F0003C247E /* DeviceCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,9 +796,11 @@
 				9F895B6F255D3D27004489C6 /* ReportScreenViewController.xib in Resources */,
 				9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */,
 				9F895B60255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */,
+				C9424E0625642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2D255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AEF255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F819ACC255C1646007C1739 /* Main.storyboard in Resources */,
+				C9424E19256427F0003C247E /* DeviceCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -951,6 +993,8 @@
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
 				9F895B6A255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
 				C91F707C2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
+				C9424E0125642632003C247E /* MyDevicesViewController.swift in Sources */,
+				C9424E14256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
@@ -994,6 +1038,8 @@
 				9F819A94255C1572007C1739 /* MainViewController.swift in Sources */,
 				9F895B6B255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
 				C91F707D2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
+				C9424E0225642632003C247E /* MyDevicesViewController.swift in Sources */,
+				C9424E15256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
@@ -1021,6 +1067,8 @@
 				9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */,
 				9F895B6C255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
 				C91F707E2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
+				C9424E0325642632003C247E /* MyDevicesViewController.swift in Sources */,
+				C9424E16256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
