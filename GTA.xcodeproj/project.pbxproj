@@ -149,6 +149,30 @@
 		C91F708E2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */; };
 		C91F708F2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */; };
 		C91F70902562FEC5002F17B1 /* HelpDeskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */; };
+		C93FCF0625648FA0001E86F6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF0425648FA0001E86F6 /* AboutViewController.swift */; };
+		C93FCF0725648FA0001E86F6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF0425648FA0001E86F6 /* AboutViewController.swift */; };
+		C93FCF0825648FA0001E86F6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF0425648FA0001E86F6 /* AboutViewController.swift */; };
+		C93FCF0925648FA0001E86F6 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF0525648FA0001E86F6 /* AboutViewController.xib */; };
+		C93FCF0A25648FA0001E86F6 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF0525648FA0001E86F6 /* AboutViewController.xib */; };
+		C93FCF0B25648FA0001E86F6 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF0525648FA0001E86F6 /* AboutViewController.xib */; };
+		C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF172564901E001E86F6 /* AboutInfoCell.swift */; };
+		C93FCF1A2564901E001E86F6 /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF172564901E001E86F6 /* AboutInfoCell.swift */; };
+		C93FCF1B2564901E001E86F6 /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF172564901E001E86F6 /* AboutInfoCell.swift */; };
+		C93FCF1C2564901E001E86F6 /* AboutInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF182564901E001E86F6 /* AboutInfoCell.xib */; };
+		C93FCF1D2564901E001E86F6 /* AboutInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF182564901E001E86F6 /* AboutInfoCell.xib */; };
+		C93FCF1E2564901E001E86F6 /* AboutInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF182564901E001E86F6 /* AboutInfoCell.xib */; };
+		C93FCF312564906F001E86F6 /* AboutContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF2F2564906F001E86F6 /* AboutContactsCell.swift */; };
+		C93FCF322564906F001E86F6 /* AboutContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF2F2564906F001E86F6 /* AboutContactsCell.swift */; };
+		C93FCF332564906F001E86F6 /* AboutContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF2F2564906F001E86F6 /* AboutContactsCell.swift */; };
+		C93FCF342564906F001E86F6 /* AboutContactsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF302564906F001E86F6 /* AboutContactsCell.xib */; };
+		C93FCF352564906F001E86F6 /* AboutContactsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF302564906F001E86F6 /* AboutContactsCell.xib */; };
+		C93FCF362564906F001E86F6 /* AboutContactsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF302564906F001E86F6 /* AboutContactsCell.xib */; };
+		C93FCF3D2564911A001E86F6 /* AboutContactsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF3C2564911A001E86F6 /* AboutContactsHeader.swift */; };
+		C93FCF3E2564911A001E86F6 /* AboutContactsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF3C2564911A001E86F6 /* AboutContactsHeader.swift */; };
+		C93FCF3F2564911A001E86F6 /* AboutContactsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF3C2564911A001E86F6 /* AboutContactsHeader.swift */; };
+		C93FCF6225649220001E86F6 /* AboutContactsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF6125649220001E86F6 /* AboutContactsHeader.xib */; };
+		C93FCF6325649220001E86F6 /* AboutContactsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF6125649220001E86F6 /* AboutContactsHeader.xib */; };
+		C93FCF6425649220001E86F6 /* AboutContactsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF6125649220001E86F6 /* AboutContactsHeader.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -239,6 +263,14 @@
 		C91F707B2562FE98002F17B1 /* HelpDeskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskViewController.swift; sourceTree = "<group>"; };
 		C91F70892562FEC5002F17B1 /* HelpDeskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskCell.swift; sourceTree = "<group>"; };
 		C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpDeskCell.xib; sourceTree = "<group>"; };
+		C93FCF0425648FA0001E86F6 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		C93FCF0525648FA0001E86F6 /* AboutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
+		C93FCF172564901E001E86F6 /* AboutInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInfoCell.swift; sourceTree = "<group>"; };
+		C93FCF182564901E001E86F6 /* AboutInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutInfoCell.xib; sourceTree = "<group>"; };
+		C93FCF2F2564906F001E86F6 /* AboutContactsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutContactsCell.swift; sourceTree = "<group>"; };
+		C93FCF302564906F001E86F6 /* AboutContactsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutContactsCell.xib; sourceTree = "<group>"; };
+		C93FCF3C2564911A001E86F6 /* AboutContactsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutContactsHeader.swift; sourceTree = "<group>"; };
+		C93FCF6125649220001E86F6 /* AboutContactsHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutContactsHeader.xib; sourceTree = "<group>"; };
 		D3387A52A0F8F88F9F876531 /* Pods-GTATests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.debug.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.debug.xcconfig"; sourceTree = "<group>"; };
 		E99FE5D7739905AF03A6B886 /* Pods_GTA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -410,6 +442,7 @@
 				9F8AEAE2255EB86000B62072 /* CustomClasses */,
 				9F895B67255D3CCB004489C6 /* reportScreen */,
 				9F895B24255C2DDF004489C6 /* ApplicationStatus */,
+				C93FCF1125648FAF001E86F6 /* AboutScreen */,
 			);
 			path = MyAppsSection;
 			sourceTree = "<group>";
@@ -531,6 +564,37 @@
 				C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */,
 			);
 			path = HelpDeskCells;
+			sourceTree = "<group>";
+		};
+		C93FCF1125648FAF001E86F6 /* AboutScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C93FCF2925649028001E86F6 /* AboutCells */,
+				C93FCF0425648FA0001E86F6 /* AboutViewController.swift */,
+				C93FCF0525648FA0001E86F6 /* AboutViewController.xib */,
+			);
+			path = AboutScreen;
+			sourceTree = "<group>";
+		};
+		C93FCF2925649028001E86F6 /* AboutCells */ = {
+			isa = PBXGroup;
+			children = (
+				C93FCF172564901E001E86F6 /* AboutInfoCell.swift */,
+				C93FCF3C2564911A001E86F6 /* AboutContactsHeader.swift */,
+				C93FCF2F2564906F001E86F6 /* AboutContactsCell.swift */,
+				C93FCF6A25649244001E86F6 /* xib's */,
+			);
+			path = AboutCells;
+			sourceTree = "<group>";
+		};
+		C93FCF6A25649244001E86F6 /* xib's */ = {
+			isa = PBXGroup;
+			children = (
+				C93FCF6125649220001E86F6 /* AboutContactsHeader.xib */,
+				C93FCF302564906F001E86F6 /* AboutContactsCell.xib */,
+				C93FCF182564901E001E86F6 /* AboutInfoCell.xib */,
+			);
+			path = "xib's";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -690,6 +754,8 @@
 				9F895B3D255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
 				65D1A2AC2554CE5E00D71965 /* HelpDesk.storyboard in Resources */,
 				659A5AF2255404F100E13B77 /* SF-Pro-Display-Bold.otf in Resources */,
+				C93FCF342564906F001E86F6 /* AboutContactsCell.xib in Resources */,
+				C93FCF6225649220001E86F6 /* AboutContactsHeader.xib in Resources */,
 				659A5ABD255401ED00E13B77 /* LaunchScreen.storyboard in Resources */,
 				659A5AF4255404F100E13B77 /* SF-Pro-Text-Medium.otf in Resources */,
 				659A5ABA255401ED00E13B77 /* Assets.xcassets in Resources */,
@@ -704,6 +770,8 @@
 				9F895AED255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				659A5AB8255401EA00E13B77 /* Main.storyboard in Resources */,
 				9F78CFE82564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
+				C93FCF0925648FA0001E86F6 /* AboutViewController.xib in Resources */,
+				C93FCF1C2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +803,8 @@
 				9F895B3E255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
 				9F819A9A255C1572007C1739 /* HelpDesk.storyboard in Resources */,
 				9F819A9B255C1572007C1739 /* SF-Pro-Display-Bold.otf in Resources */,
+				C93FCF352564906F001E86F6 /* AboutContactsCell.xib in Resources */,
+				C93FCF6325649220001E86F6 /* AboutContactsHeader.xib in Resources */,
 				9F819A9C255C1572007C1739 /* LaunchScreen.storyboard in Resources */,
 				9F819A9D255C1572007C1739 /* SF-Pro-Text-Medium.otf in Resources */,
 				9F819A9E255C1572007C1739 /* Assets.xcassets in Resources */,
@@ -749,6 +819,8 @@
 				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F819AA2255C1572007C1739 /* Main.storyboard in Resources */,
 				9F78CFE92564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
+				C93FCF0A25648FA0001E86F6 /* AboutViewController.xib in Resources */,
+				C93FCF1D2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -766,6 +838,8 @@
 				9F895B3F255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
 				9F819AC4255C1646007C1739 /* HelpDesk.storyboard in Resources */,
 				9F819AC5255C1646007C1739 /* SF-Pro-Display-Bold.otf in Resources */,
+				C93FCF362564906F001E86F6 /* AboutContactsCell.xib in Resources */,
+				C93FCF6425649220001E86F6 /* AboutContactsHeader.xib in Resources */,
 				9F819AC6255C1646007C1739 /* LaunchScreen.storyboard in Resources */,
 				9F819AC7255C1646007C1739 /* SF-Pro-Text-Medium.otf in Resources */,
 				9F819AC8255C1646007C1739 /* Assets.xcassets in Resources */,
@@ -780,6 +854,8 @@
 				9F895AEF255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F819ACC255C1646007C1739 /* Main.storyboard in Resources */,
 				9F78CFEA2564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
+				C93FCF0B25648FA0001E86F6 /* AboutViewController.xib in Resources */,
+				C93FCF1E2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -956,6 +1032,7 @@
 			files = (
 				9F895B0F255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				9F78CFCD25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
+				C93FCF0625648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F36D4652562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
@@ -965,13 +1042,16 @@
 				9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
+				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
 				9F895B28255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
+				C93FCF3D2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,
 				9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE4255EB88500B62072 /* CustomTextView.swift in Sources */,
 				9F895B5B255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */,
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
 				9F895B6A255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
+				C93FCF312564906F001E86F6 /* AboutContactsCell.swift in Sources */,
 				C91F707C2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
@@ -1000,6 +1080,7 @@
 			files = (
 				9F895B10255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				9F78CFCE25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
+				C93FCF0725648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F36D4662562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
@@ -1009,13 +1090,16 @@
 				9F895AE8255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
+				C93FCF1A2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				9F819A93255C1572007C1739 /* Extensions.swift in Sources */,
 				9F895B29255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
+				C93FCF3E2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,
 				9F895B35255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */,
 				9F895B5C255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */,
 				9F819A94255C1572007C1739 /* MainViewController.swift in Sources */,
 				9F895B6B255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
+				C93FCF322564906F001E86F6 /* AboutContactsCell.swift in Sources */,
 				C91F707D2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
@@ -1028,6 +1112,7 @@
 			files = (
 				9F895B11255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				9F78CFCF25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
+				C93FCF0825648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F36D4672562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,
@@ -1037,13 +1122,16 @@
 				9F895AE9255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
+				C93FCF1B2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				9F819ABD255C1646007C1739 /* Extensions.swift in Sources */,
 				9F895B2A255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
+				C93FCF3F2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,
 				9F895B36255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */,
 				9F895B5D255C95AC004489C6 /* SystemStatusChartCell.swift in Sources */,
 				9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */,
 				9F895B6C255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
+				C93FCF332564906F001E86F6 /* AboutContactsCell.swift in Sources */,
 				C91F707E2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,

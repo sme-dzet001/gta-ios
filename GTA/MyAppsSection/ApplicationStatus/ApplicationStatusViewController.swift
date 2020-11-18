@@ -21,6 +21,10 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         setUpNavigationItem()
         setHardCodeData()
         setUpTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1)
     }
     
@@ -42,8 +46,9 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     private func setHardCodeData() {
         let bellData = UIImage(named: "report_icon")
         let loginHelpData = UIImage(named: "login_help")
+        let aboutData = UIImage(named: "about_icon")
         
-        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData:[CellData(mainText: "Report Issue", additionalText: "Report Outages, System Issues", image: bellData?.pngData(), systemStatus: .none), CellData(mainText: "Login Help", additionalText: "Reset Account Accesss & login Assistance", image: loginHelpData?.pngData(), systemStatus: .none)]), AppsDataSource(sectionName: "System Updates", description: nil, cellData: [CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "System restore", systemStatus: .none), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "Sheduled maintanence", systemStatus: .other), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "System restore",  systemStatus: .offline), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "AWS outage reported",  systemStatus: .offline)])]
+        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData:[CellData(mainText: "Report Issue", additionalText: "Report Outages, System Issues", image: bellData?.pngData(), systemStatus: .none), CellData(mainText: "Login Help", additionalText: "Reset Account Accesss & login Assistance", image: loginHelpData?.pngData(), systemStatus: .none), CellData(mainText: "About", additionalText: "Description and list of app contacts", image: aboutData?.pngData(), systemStatus: .none)]), AppsDataSource(sectionName: "System Updates", description: nil, cellData: [CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "System restore", systemStatus: .none), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "Sheduled maintanence", systemStatus: .other), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "System restore",  systemStatus: .offline), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "AWS outage reported",  systemStatus: .offline)])]
     }
 
     @objc private func backPressed() {
@@ -110,10 +115,14 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
-        let reportScreen = ReportScreenViewController()
-        reportScreen.delegate = self
-        presentPanModal(reportScreen)
-        
+        if indexPath.row == 2 {
+            let aboutScreen = AboutViewController()
+            navigationController?.pushViewController(aboutScreen, animated: true)
+        } else {
+            let reportScreen = ReportScreenViewController()
+            reportScreen.delegate = self
+            presentPanModal(reportScreen)
+        }
     }
     
 }
