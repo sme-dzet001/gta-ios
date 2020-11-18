@@ -86,6 +86,7 @@ struct AppsDataSource {
     var sectionName: String?
     var description: String?
     var cellData: [CellData]
+    var metricsData: MetricsData? = nil
 }
 
 struct CellData {
@@ -100,4 +101,16 @@ enum SystemStatus {
     case offline
     case other // temporary
     case none
+}
+
+struct MetricsData {
+    var dailyData: [ChartData]
+    var weeklyData: [ChartData]
+    var monthlyData: [ChartData]
+}
+
+struct ChartData {
+    var legendTitle: String?
+    var periodFullTitle: String?
+    var value: Int?
 }
