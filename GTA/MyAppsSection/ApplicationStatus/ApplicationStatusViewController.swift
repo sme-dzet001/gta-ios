@@ -40,7 +40,6 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         tableView.register(UINib(nibName: "SystemUpdatesCell", bundle: nil), forCellReuseIdentifier: "SystemUpdatesCell")
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "SystemStatusChartCell", bundle: nil), forCellReuseIdentifier: "SystemStatusChartCell")
-        
     }
     
     private func setHardCodeData() {

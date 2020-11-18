@@ -7,9 +7,11 @@
 
 import UIKit
 import AdvancedPageControl
+import PanModal
 
 class HomepageViewController: UIViewController {
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pageControl: AdvancedPageControlView!
     
@@ -19,9 +21,14 @@ class HomepageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
+        setUpPageControl()
+        setNeedsStatusBarAppearanceUpdate()
+        //showViewController(HomepageTableViewController())
+    }
+    
+    private func setUpPageControl() {
         pageControl.drawer = ExtendedDotDrawer(numberOfPages: dataSource.count,  height: 5, width: CGFloat(dataSource.count) * 1.5, dotsColor: .white)
         pageControl.drawer.currentItem = 0
-        setNeedsStatusBarAppearanceUpdate()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -37,27 +44,6 @@ class HomepageViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "NewsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NewsCollectionViewCell")
-    }
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-        if segue.identifier == "embedTable" {
-            homepageTableVC = segue.destination as? HomepageTableViewController
-            homepageTableVC?.delegate = self
-        }
-    }
-    
-    @IBAction func unwindToHomePage(segue: UIStoryboardSegue) {
-    }
-}
-
-extension HomepageViewController: HomepageMainDelegate {
-    func navigateToOfficeStatus() {
-        performSegue(withIdentifier: "showOfficeStatus", sender: nil)
     }
 }
 
@@ -80,6 +66,43 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let articleViewController = ArticleViewController()
+        articleViewController.appearanceDelegate = self
+        var statusBarHeight: CGFloat = 0.0
+        if #available(iOS 13.0, *) {
+            statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        } else {
+            statusBarHeight = self.containerView.bounds.height - UIApplication.shared.statusBarFrame.height
+        }
+        articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
+        articleViewController.articleText = dataSource[indexPath.row].articleText
+        presentPanModal(articleViewController)
+    }
+    
+    private func showViewController(_ vc: UIViewController) {
+        let someView = UIView()
+        someView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(someView)
+        NSLayoutConstraint.activate([
+            someView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 0),
+            someView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 0),
+            someView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 0),
+            someView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0),
+        ])
+        addChild(vc)
+        vc.view.translatesAutoresizingMaskIntoConstraints = false
+        someView.addSubview(vc.view)
+        someView.layoutIfNeeded()
+        NSLayoutConstraint.activate([
+            vc.view.leadingAnchor.constraint(equalTo: someView.leadingAnchor),
+            vc.view.trailingAnchor.constraint(equalTo: someView.trailingAnchor),
+            vc.view.topAnchor.constraint(equalTo: someView.topAnchor),
+            vc.view.bottomAnchor.constraint(equalTo: someView.bottomAnchor)
+        ])
+        vc.didMove(toParent: self)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.collectionView.frame.width, height: self.collectionView.frame.height)
     }
@@ -95,9 +118,26 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     }
 }
 
+extension HomepageViewController: PanModalAppearanceDelegate {
+    
+    func panModalWillShow() {
+        pageControl.isHidden = true
+    }
+    
+    func panModalDidDissmiss() {
+        pageControl.isHidden = false
+    }
+}
+
+protocol PanModalAppearanceDelegate: class {
+    func panModalWillShow()
+    func panModalDidDissmiss()
+}
+
 // temp
 struct NewsItem {
     var image: String
     var newsLabel: String
     var newsDate: Date? = nil
+    var articleText: String = "On 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases reported on 11 September 2020. \n\nAs of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests. In addition, the total number of reported COVID-19 deaths has shifted to include both probable and confirmed deaths, which lead to a steep increase on the 7 Sep. \n\nAs of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests. In addition, the total number of reported COVID-19 deaths has shifted to include both probable and confirmed deaths, which lead to a steep increase on the 7 Sep."
 }
