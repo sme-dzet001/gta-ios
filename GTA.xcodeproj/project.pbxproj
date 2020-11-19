@@ -223,6 +223,12 @@
 		C962D82B2566D21100727949 /* TicketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8272566D21100727949 /* TicketCell.xib */; };
 		C962D82C2566D21100727949 /* TicketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8272566D21100727949 /* TicketCell.xib */; };
 		C962D82D2566D21100727949 /* TicketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8272566D21100727949 /* TicketCell.xib */; };
+		C962D8442566E1FA00727949 /* MyTicketsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C962D8432566E1FA00727949 /* MyTicketsHeader.swift */; };
+		C962D8452566E1FA00727949 /* MyTicketsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C962D8432566E1FA00727949 /* MyTicketsHeader.swift */; };
+		C962D8462566E1FA00727949 /* MyTicketsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C962D8432566E1FA00727949 /* MyTicketsHeader.swift */; };
+		C962D8522566E21400727949 /* MyTicketsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8512566E21400727949 /* MyTicketsHeader.xib */; };
+		C962D8532566E21400727949 /* MyTicketsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8512566E21400727949 /* MyTicketsHeader.xib */; };
+		C962D8542566E21400727949 /* MyTicketsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8512566E21400727949 /* MyTicketsHeader.xib */; };
 		C9705B7C2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9705B7A2566CE4E007A7F68 /* MyTicketsViewController.swift */; };
 		C9705B7D2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9705B7A2566CE4E007A7F68 /* MyTicketsViewController.swift */; };
 		C9705B7E2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9705B7A2566CE4E007A7F68 /* MyTicketsViewController.swift */; };
@@ -366,6 +372,8 @@
 		C9424E13256427F0003C247E /* DeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
 		C962D8262566D21100727949 /* TicketCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketCell.swift; sourceTree = "<group>"; };
 		C962D8272566D21100727949 /* TicketCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TicketCell.xib; sourceTree = "<group>"; };
+		C962D8432566E1FA00727949 /* MyTicketsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketsHeader.swift; sourceTree = "<group>"; };
+		C962D8512566E21400727949 /* MyTicketsHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyTicketsHeader.xib; sourceTree = "<group>"; };
 		C9705B7A2566CE4E007A7F68 /* MyTicketsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketsViewController.swift; sourceTree = "<group>"; };
 		C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyTicketsViewController.xib; sourceTree = "<group>"; };
 		C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricStatsCell.swift; sourceTree = "<group>"; };
@@ -790,10 +798,20 @@
 		C962D8332566D24C00727949 /* MyTicketsCells */ = {
 			isa = PBXGroup;
 			children = (
+				C962D8432566E1FA00727949 /* MyTicketsHeader.swift */,
 				C962D8262566D21100727949 /* TicketCell.swift */,
-				C962D8272566D21100727949 /* TicketCell.xib */,
+				C962D85A2566E22100727949 /* xib's */,
 			);
 			path = MyTicketsCells;
+			sourceTree = "<group>";
+		};
+		C962D85A2566E22100727949 /* xib's */ = {
+			isa = PBXGroup;
+			children = (
+				C962D8512566E21400727949 /* MyTicketsHeader.xib */,
+				C962D8272566D21100727949 /* TicketCell.xib */,
+			);
+			path = "xib's";
 			sourceTree = "<group>";
 		};
 		C9705B872566CE5F007A7F68 /* MyTicketsScreen */ = {
@@ -986,6 +1004,7 @@
 				659A5ABA255401ED00E13B77 /* Assets.xcassets in Resources */,
 				659A5AF5255404F200E13B77 /* SF-Pro-Text-Regular.otf in Resources */,
 				C9DFD49B25657B7600BF1740 /* MetricStatsHeader.xib in Resources */,
+				C962D8522566E21400727949 /* MyTicketsHeader.xib in Resources */,
 				C91F708E2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
 				9F895AF0255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				659A5AF3255404F100E13B77 /* SF-Pro-Display-Regular.otf in Resources */,
@@ -1050,6 +1069,7 @@
 				9F78D0E2256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				9F819AA1255C1572007C1739 /* Apps.storyboard in Resources */,
 				9F0CA5512566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
+				C962D8532566E21400727949 /* MyTicketsHeader.xib in Resources */,
 				C9424E0525642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				C9705B802566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
@@ -1096,6 +1116,7 @@
 				9F78D0E3256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */,
 				9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
+				C962D8542566E21400727949 /* MyTicketsHeader.xib in Resources */,
 				C9424E0625642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2D255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				C9705B812566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
@@ -1312,6 +1333,7 @@
 				9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE4255EB88500B62072 /* CustomTextView.swift in Sources */,
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
+				C962D8442566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
 				9F895B6A255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
 				C9705B7C2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
 				9F0CA54D2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
@@ -1384,6 +1406,7 @@
 				C9424E0225642632003C247E /* MyDevicesViewController.swift in Sources */,
 				C9424E15256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
+				C962D8452566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1430,6 +1453,7 @@
 				C9424E0325642632003C247E /* MyDevicesViewController.swift in Sources */,
 				C9424E16256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
+				C962D8462566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
