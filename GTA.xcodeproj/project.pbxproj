@@ -36,9 +36,21 @@
 		9F0CA5502566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
 		9F0CA5512566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
 		9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
-		9F1620752566952B003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620742566952B003AFE68 /* PanModalNavigationController.swift */; };
-		9F1620762566952B003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620742566952B003AFE68 /* PanModalNavigationController.swift */; };
-		9F1620772566952B003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620742566952B003AFE68 /* PanModalNavigationController.swift */; };
+		9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
+		9F1620C22566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
+		9F1620C32566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
+		9F1620D42566BB32003AFE68 /* InfoArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */; };
+		9F1620D52566BB32003AFE68 /* InfoArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */; };
+		9F1620D62566BB32003AFE68 /* InfoArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */; };
+		9F1620D72566BB32003AFE68 /* OfficeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */; };
+		9F1620D82566BB32003AFE68 /* OfficeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */; };
+		9F1620D92566BB32003AFE68 /* OfficeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */; };
+		9F1620DA2566BB32003AFE68 /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */; };
+		9F1620DB2566BB32003AFE68 /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */; };
+		9F1620DC2566BB32003AFE68 /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */; };
+		9F1620DD2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
+		9F1620DE2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
+		9F1620DF2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
 		9F36D4332562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
 		9F36D4342562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
 		9F36D4352562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
@@ -159,18 +171,6 @@
 		9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
 		9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		9FFD5F102565A1F900B6A65C /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
-		9FFD5F68256673CA00B6A65C /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F66256673CA00B6A65C /* InfoArticleCell.swift */; };
-		9FFD5F69256673CA00B6A65C /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F66256673CA00B6A65C /* InfoArticleCell.swift */; };
-		9FFD5F6A256673CA00B6A65C /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F66256673CA00B6A65C /* InfoArticleCell.swift */; };
-		9FFD5F6B256673CA00B6A65C /* InfoArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F67256673CA00B6A65C /* InfoArticleCell.xib */; };
-		9FFD5F6C256673CA00B6A65C /* InfoArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F67256673CA00B6A65C /* InfoArticleCell.xib */; };
-		9FFD5F6D256673CA00B6A65C /* InfoArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F67256673CA00B6A65C /* InfoArticleCell.xib */; };
-		9FFD5F75256680CD00B6A65C /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F73256680CD00B6A65C /* OfficeInfoCell.swift */; };
-		9FFD5F76256680CD00B6A65C /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F73256680CD00B6A65C /* OfficeInfoCell.swift */; };
-		9FFD5F77256680CD00B6A65C /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F73256680CD00B6A65C /* OfficeInfoCell.swift */; };
-		9FFD5F78256680CD00B6A65C /* OfficeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F74256680CD00B6A65C /* OfficeInfoCell.xib */; };
-		9FFD5F79256680CD00B6A65C /* OfficeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F74256680CD00B6A65C /* OfficeInfoCell.xib */; };
-		9FFD5F7A256680CD00B6A65C /* OfficeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F74256680CD00B6A65C /* OfficeInfoCell.xib */; };
 		A33AE28E63E33ED4DBECEE14 /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F523F57E1E563901BF596E /* Pods_GTADev.framework */; };
 		C91F707C2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91F707B2562FE98002F17B1 /* HelpDeskViewController.swift */; };
 		C91F707D2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91F707B2562FE98002F17B1 /* HelpDeskViewController.swift */; };
@@ -283,7 +283,11 @@
 		9ED2AC0BF2A369E0AC6786A4 /* Pods-GTAStage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.release.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.release.xcconfig"; sourceTree = "<group>"; };
 		9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeLocationViewController.swift; sourceTree = "<group>"; };
 		9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfficeLocationViewController.xib; sourceTree = "<group>"; };
-		9F1620742566952B003AFE68 /* PanModalNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanModalNavigationController.swift; sourceTree = "<group>"; };
+		9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanModalNavigationController.swift; sourceTree = "<group>"; };
+		9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoArticleCell.xib; sourceTree = "<group>"; };
+		9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeInfoCell.xib; sourceTree = "<group>"; };
+		9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoArticleCell.swift; sourceTree = "<group>"; };
+		9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficeInfoCell.swift; sourceTree = "<group>"; };
 		9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.ttf"; sourceTree = "<group>"; };
 		9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.ttf"; sourceTree = "<group>"; };
 		9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageTableViewController.swift; sourceTree = "<group>"; };
@@ -318,10 +322,6 @@
 		9F8AEAE3255EB88500B62072 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 		9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
-		9FFD5F66256673CA00B6A65C /* InfoArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoArticleCell.swift; sourceTree = "<group>"; };
-		9FFD5F67256673CA00B6A65C /* InfoArticleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoArticleCell.xib; sourceTree = "<group>"; };
-		9FFD5F73256680CD00B6A65C /* OfficeInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeInfoCell.swift; sourceTree = "<group>"; };
-		9FFD5F74256680CD00B6A65C /* OfficeInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfficeInfoCell.xib; sourceTree = "<group>"; };
 		A5433B3CA873FF45A7DCD945 /* Pods-GTADev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.release.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.release.xcconfig"; sourceTree = "<group>"; };
 		B426A1A9FFC9D5E48D51730C /* Pods-GTA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.debug.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.debug.xcconfig"; sourceTree = "<group>"; };
 		C1A798AC2BACC8D6E1547A09 /* Pods-GTADev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.debug.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.debug.xcconfig"; sourceTree = "<group>"; };
@@ -502,26 +502,36 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		9F0CA549256686DE00275B25 /* xibs */ = {
-			isa = PBXGroup;
-			children = (
-				9FFD5F67256673CA00B6A65C /* InfoArticleCell.xib */,
-				9FFD5F74256680CD00B6A65C /* OfficeInfoCell.xib */,
-			);
-			path = xibs;
-			sourceTree = "<group>";
-		};
 		9F0CA54A256686F600275B25 /* InfoScreen */ = {
 			isa = PBXGroup;
 			children = (
-				9FFD5F602566738D00B6A65C /* InfoScreenCells */,
+				9F1620CE2566BB32003AFE68 /* InfoScreenCells */,
+				9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */,
 				9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */,
-				9F1620742566952B003AFE68 /* PanModalNavigationController.swift */,
+				9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */,
 				9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */,
 				9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */,
-				9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */,
 			);
 			path = InfoScreen;
+			sourceTree = "<group>";
+		};
+		9F1620CE2566BB32003AFE68 /* InfoScreenCells */ = {
+			isa = PBXGroup;
+			children = (
+				9F1620CF2566BB32003AFE68 /* xibs */,
+				9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */,
+				9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */,
+			);
+			path = InfoScreenCells;
+			sourceTree = "<group>";
+		};
+		9F1620CF2566BB32003AFE68 /* xibs */ = {
+			isa = PBXGroup;
+			children = (
+				9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */,
+				9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */,
+			);
+			path = xibs;
 			sourceTree = "<group>";
 		};
 		9F78CFCA256409D500BCD38F /* HomepageCollectionViewCell */ = {
@@ -652,16 +662,6 @@
 				C9DFD4C825659DB400BF1740 /* BarChart */,
 			);
 			path = CustomClasses;
-			sourceTree = "<group>";
-		};
-		9FFD5F602566738D00B6A65C /* InfoScreenCells */ = {
-			isa = PBXGroup;
-			children = (
-				9FFD5F66256673CA00B6A65C /* InfoArticleCell.swift */,
-				9FFD5F73256680CD00B6A65C /* OfficeInfoCell.swift */,
-				9F0CA549256686DE00275B25 /* xibs */,
-			);
-			path = InfoScreenCells;
 			sourceTree = "<group>";
 		};
 		C4EF77F4D748F06CF62A7BAF /* Frameworks */ = {
@@ -894,8 +894,10 @@
 				659A5AF1255404F100E13B77 /* SF-Pro-Display-Thin.otf in Resources */,
 				65D1A2A12554BE3700D71965 /* Home.storyboard in Resources */,
 				9F0CA5502566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
+				9F1620D72566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
 				9F895B12255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9F36D43C2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
+				9F1620D42566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
 				9F895AEA255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F36D4332562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */,
 				9FFD5F102565A1F900B6A65C /* InfoViewController.xib in Resources */,
@@ -906,7 +908,6 @@
 				659A5AF2255404F100E13B77 /* SF-Pro-Display-Bold.otf in Resources */,
 				C93FCF342564906F001E86F6 /* AboutContactsCell.xib in Resources */,
 				C93FCF6225649220001E86F6 /* AboutContactsHeader.xib in Resources */,
-				9FFD5F6B256673CA00B6A65C /* InfoArticleCell.xib in Resources */,
 				659A5ABD255401ED00E13B77 /* LaunchScreen.storyboard in Resources */,
 				659A5AF4255404F100E13B77 /* SF-Pro-Text-Medium.otf in Resources */,
 				659A5ABA255401ED00E13B77 /* Assets.xcassets in Resources */,
@@ -948,12 +949,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F819A97255C1572007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
+				9F1620D82566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
 				9F819A98255C1572007C1739 /* Home.storyboard in Resources */,
 				9F895B13255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9F36D43D2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F895AEB255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F36D4342562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */,
-				9FFD5F79256680CD00B6A65C /* OfficeInfoCell.xib in Resources */,
 				9F819A99255C1572007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
 				9F895B3E255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
 				9F819A9A255C1572007C1739 /* HelpDesk.storyboard in Resources */,
@@ -969,11 +970,9 @@
 				C91F708F2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
 				9F895AF1255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				9F819AA0255C1572007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
-				9FFD5F6C256673CA00B6A65C /* InfoArticleCell.xib in Resources */,
 				9F895B6E255D3D27004489C6 /* ReportScreenViewController.xib in Resources */,
 				9F78D0E2256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				9F819AA1255C1572007C1739 /* Apps.storyboard in Resources */,
-				9F895B5F255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */,
 				9F0CA5512566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
 				9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
@@ -982,6 +981,7 @@
 				9F78CFE92564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
 				C9DFD4802565721F00BF1740 /* MetricStatsCell.xib in Resources */,
 				C93FCF0A25648FA0001E86F6 /* AboutViewController.xib in Resources */,
+				9F1620D52566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
 				C93FCF1D2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -991,12 +991,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
+				9F1620D92566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
 				9F819AC2255C1646007C1739 /* Home.storyboard in Resources */,
 				9F895B14255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9F36D43E2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F895AEC255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F36D4352562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */,
-				9FFD5F7A256680CD00B6A65C /* OfficeInfoCell.xib in Resources */,
 				9F819AC3255C1646007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
 				9F895B3F255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
 				9F819AC4255C1646007C1739 /* HelpDesk.storyboard in Resources */,
@@ -1012,11 +1012,9 @@
 				C91F70902562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
 				9F895AF2255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				9F819ACA255C1646007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
-				9FFD5F6D256673CA00B6A65C /* InfoArticleCell.xib in Resources */,
 				9F895B6F255D3D27004489C6 /* ReportScreenViewController.xib in Resources */,
 				9F78D0E3256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */,
-				9F895B60255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */,
 				9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
 				9F895B2D255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AEF255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
@@ -1025,6 +1023,7 @@
 				9F78CFEA2564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
 				C9DFD4812565721F00BF1740 /* MetricStatsCell.xib in Resources */,
 				C93FCF0B25648FA0001E86F6 /* AboutViewController.xib in Resources */,
+				9F1620D62566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
 				C93FCF1E2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1208,8 +1207,10 @@
 				9F36D4652562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				C9DFD4C025659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
+				9F1620DA2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
 				9F78D07B256530CD00BCD38F /* ArticleViewController.swift in Sources */,
+				9F1620DD2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
 				C9DFD4AE25659BE400BF1740 /* StatsBarChart.swift in Sources */,
 				659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */,
 				C9DFD47C2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
@@ -1221,8 +1222,6 @@
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9DFD4B725659C1100BF1740 /* StatsBarView.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
-				9FFD5F68256673CA00B6A65C /* InfoArticleCell.swift in Sources */,
-				9FFD5F75256680CD00B6A65C /* OfficeInfoCell.swift in Sources */,
 				9F895B28255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				C93FCF3D2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,
 				9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
@@ -1233,6 +1232,7 @@
 				C93FCF312564906F001E86F6 /* AboutContactsCell.swift in Sources */,
 				C91F707C2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F78D0DE256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
+				9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
@@ -1260,7 +1260,7 @@
 			files = (
 				C9DFD48E25657B0800BF1740 /* MetricStatsHeader.swift in Sources */,
 				9F895B10255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
-				9FFD5F76256680CD00B6A65C /* OfficeInfoCell.swift in Sources */,
+				9F1620DB2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				9F78CFCE25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				9F0CA54E2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
 				C93FCF0725648FA0001E86F6 /* AboutViewController.swift in Sources */,
@@ -1268,7 +1268,6 @@
 				C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
-				9F1620762566952B003AFE68 /* PanModalNavigationController.swift in Sources */,
 				9F78D07C256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				C9DFD4AF25659BE400BF1740 /* StatsBarChart.swift in Sources */,
 				9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */,
@@ -1286,10 +1285,12 @@
 				9F895B35255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */,
 				9F819A94255C1572007C1739 /* MainViewController.swift in Sources */,
+				9F1620DE2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
 				9F895B6B255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
 				C93FCF322564906F001E86F6 /* AboutContactsCell.swift in Sources */,
 				C91F707D2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F78D0DF256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
+				9F1620C22566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
@@ -1301,7 +1302,7 @@
 			files = (
 				C9DFD48F25657B0800BF1740 /* MetricStatsHeader.swift in Sources */,
 				9F895B11255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
-				9FFD5F77256680CD00B6A65C /* OfficeInfoCell.swift in Sources */,
+				9F1620DC2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				9F78CFCF25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				9F0CA54F2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
 				C93FCF0825648FA0001E86F6 /* AboutViewController.swift in Sources */,
@@ -1309,7 +1310,6 @@
 				C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,
-				9F1620772566952B003AFE68 /* PanModalNavigationController.swift in Sources */,
 				9F78D07D256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				C9DFD4B025659BE400BF1740 /* StatsBarChart.swift in Sources */,
 				9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */,
@@ -1327,10 +1327,12 @@
 				9F895B36255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */,
 				9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */,
+				9F1620DF2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
 				9F895B6C255D3D27004489C6 /* ReportScreenViewController.swift in Sources */,
 				C93FCF332564906F001E86F6 /* AboutContactsCell.swift in Sources */,
 				C91F707E2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F78D0E0256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
+				9F1620C32566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
