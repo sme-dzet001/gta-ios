@@ -226,6 +226,18 @@
 		C9DFD4C025659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
 		C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
 		C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
+		C9424E0125642632003C247E /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424DFF25642632003C247E /* MyDevicesViewController.swift */; };
+		C9424E0225642632003C247E /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424DFF25642632003C247E /* MyDevicesViewController.swift */; };
+		C9424E0325642632003C247E /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424DFF25642632003C247E /* MyDevicesViewController.swift */; };
+		C9424E0425642632003C247E /* MyDevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E0025642632003C247E /* MyDevicesViewController.xib */; };
+		C9424E0525642632003C247E /* MyDevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E0025642632003C247E /* MyDevicesViewController.xib */; };
+		C9424E0625642632003C247E /* MyDevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E0025642632003C247E /* MyDevicesViewController.xib */; };
+		C9424E14256427F0003C247E /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424E12256427F0003C247E /* DeviceCell.swift */; };
+		C9424E15256427F0003C247E /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424E12256427F0003C247E /* DeviceCell.swift */; };
+		C9424E16256427F0003C247E /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424E12256427F0003C247E /* DeviceCell.swift */; };
+		C9424E17256427F0003C247E /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E13256427F0003C247E /* DeviceCell.xib */; };
+		C9424E18256427F0003C247E /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E13256427F0003C247E /* DeviceCell.xib */; };
+		C9424E19256427F0003C247E /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E13256427F0003C247E /* DeviceCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -343,6 +355,10 @@
 		C9DFD4AD25659BE400BF1740 /* StatsBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsBarChart.swift; sourceTree = "<group>"; };
 		C9DFD4B625659C1100BF1740 /* StatsBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsBarView.swift; sourceTree = "<group>"; };
 		C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartLayoutHelper.swift; sourceTree = "<group>"; };
+		C9424DFF25642632003C247E /* MyDevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDevicesViewController.swift; sourceTree = "<group>"; };
+		C9424E0025642632003C247E /* MyDevicesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyDevicesViewController.xib; sourceTree = "<group>"; };
+		C9424E12256427F0003C247E /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
+		C9424E13256427F0003C247E /* DeviceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
 		D3387A52A0F8F88F9F876531 /* Pods-GTATests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.debug.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.debug.xcconfig"; sourceTree = "<group>"; };
 		E99FE5D7739905AF03A6B886 /* Pods_GTA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -680,6 +696,7 @@
 			isa = PBXGroup;
 			children = (
 				C91F709C2562FEEC002F17B1 /* HelpDeskScreen */,
+				C9424E0C2564263A003C247E /* MyDevicesScreen */,
 			);
 			path = HelpDeskSection;
 			sourceTree = "<group>";
@@ -742,6 +759,25 @@
 				C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */,
 			);
 			path = BarChart;
+			sourceTree = "<group>";
+		};
+		C9424E0C2564263A003C247E /* MyDevicesScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C9424E1F25642803003C247E /* MyDevicesCells */,
+				C9424DFF25642632003C247E /* MyDevicesViewController.swift */,
+				C9424E0025642632003C247E /* MyDevicesViewController.xib */,
+			);
+			path = MyDevicesScreen;
+			sourceTree = "<group>";
+		};
+		C9424E1F25642803003C247E /* MyDevicesCells */ = {
+			isa = PBXGroup;
+			children = (
+				C9424E12256427F0003C247E /* DeviceCell.swift */,
+				C9424E13256427F0003C247E /* DeviceCell.xib */,
+			);
+			path = MyDevicesCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -919,6 +955,8 @@
 				9F895B6D255D3D27004489C6 /* ReportScreenViewController.xib in Resources */,
 				9F78D0E1256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				65D1A2B12554CF1F00D71965 /* Apps.storyboard in Resources */,
+				9F895B5E255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */,
+				C9424E0425642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2B255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AED255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F78D07E256530CD00BCD38F /* ArticleViewController.xib in Resources */,
@@ -927,6 +965,7 @@
 				C9DFD47F2565721F00BF1740 /* MetricStatsCell.xib in Resources */,
 				C93FCF0925648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				C93FCF1C2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
+				C9424E17256427F0003C247E /* DeviceCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -974,6 +1013,8 @@
 				9F78D0E2256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				9F819AA1255C1572007C1739 /* Apps.storyboard in Resources */,
 				9F0CA5512566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
+				9F895B5F255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */,
+				C9424E0525642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F78D07F256530CD00BCD38F /* ArticleViewController.xib in Resources */,
@@ -983,6 +1024,7 @@
 				C93FCF0A25648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				9F1620D52566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
 				C93FCF1D2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
+				C9424E18256427F0003C247E /* DeviceCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1016,6 +1058,8 @@
 				9F78D0E3256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */,
 				9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
+				9F895B60255C95AC004489C6 /* SystemStatusChartCell.xib in Resources */,
+				C9424E0625642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2D255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AEF255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F78D080256530CE00BCD38F /* ArticleViewController.xib in Resources */,
@@ -1025,6 +1069,7 @@
 				C93FCF0B25648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				9F1620D62566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
 				C93FCF1E2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
+				C9424E19256427F0003C247E /* DeviceCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1233,6 +1278,8 @@
 				C91F707C2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F78D0DE256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
+				C9424E0125642632003C247E /* MyDevicesViewController.swift in Sources */,
+				C9424E14256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
@@ -1291,6 +1338,8 @@
 				C91F707D2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F78D0DF256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C22566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
+				C9424E0225642632003C247E /* MyDevicesViewController.swift in Sources */,
+				C9424E15256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
@@ -1333,6 +1382,8 @@
 				C91F707E2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F78D0E0256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C32566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
+				C9424E0325642632003C247E /* MyDevicesViewController.swift in Sources */,
+				C9424E16256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
