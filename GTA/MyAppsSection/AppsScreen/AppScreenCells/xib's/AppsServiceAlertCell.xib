@@ -33,13 +33,13 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Service Alert: VPN Outage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aYU-wk-pGE">
-                                <rect key="frame" x="55" y="32.5" width="199" height="19.5"/>
+                                <rect key="frame" x="55" y="38" width="199" height="19.5"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:30 +5 GTM Wed 15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="3FG-AM-rsA">
-                                <rect key="frame" x="55" y="57" width="126" height="14.5"/>
+                                <rect key="frame" x="55" y="62.5" width="126" height="14.5"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                 <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -73,7 +73,7 @@
                             <constraint firstItem="eRv-4L-FYW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aYU-wk-pGE" secondAttribute="trailing" constant="10" id="QYf-LW-o2w"/>
                             <constraint firstAttribute="trailing" secondItem="cgv-4g-xLI" secondAttribute="trailing" id="ZFP-Ck-R32"/>
                             <constraint firstItem="aYU-wk-pGE" firstAttribute="leading" secondItem="hDh-Cz-1qF" secondAttribute="trailing" constant="20" id="hgA-UI-Chr"/>
-                            <constraint firstItem="aYU-wk-pGE" firstAttribute="centerY" secondItem="FmA-2v-IWb" secondAttribute="centerY" multiplier="0.75" id="ii9-nw-Juw"/>
+                            <constraint firstItem="aYU-wk-pGE" firstAttribute="centerY" secondItem="FmA-2v-IWb" secondAttribute="centerY" multiplier="0.85" id="ii9-nw-Juw"/>
                             <constraint firstItem="eRv-4L-FYW" firstAttribute="centerY" secondItem="FmA-2v-IWb" secondAttribute="centerY" constant="4" id="ktg-z4-fSj"/>
                             <constraint firstItem="3FG-AM-rsA" firstAttribute="leading" secondItem="aYU-wk-pGE" secondAttribute="leading" id="mQS-X3-hlu"/>
                             <constraint firstAttribute="trailing" secondItem="eRv-4L-FYW" secondAttribute="trailing" constant="20" id="qFg-2j-2hh"/>
@@ -93,6 +93,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="arrowIcon" destination="eRv-4L-FYW" id="grR-Lp-t5x"/>
                 <outlet property="descriptionLabel" destination="3FG-AM-rsA" id="oUL-w7-mYW"/>
                 <outlet property="iconImageView" destination="hDh-Cz-1qF" id="EO2-bU-ZY1"/>
                 <outlet property="mainLabel" destination="aYU-wk-pGE" id="BmZ-3O-e4K"/>

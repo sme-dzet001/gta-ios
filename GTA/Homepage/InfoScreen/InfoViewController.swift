@@ -101,8 +101,12 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
             statusBarHeight = self.view.bounds.height - UIApplication.shared.statusBarFrame.height
             statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
         }
-        officeLocation.initialHeight = self.tableView.bounds.height - statusBarHeight
-        presentPanModal(officeLocation)
+        officeLocation.title = "Select a Sony Music Office Location"
+        let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
+        panModalNavigationController.setNavigationBarHidden(true, animated: true)
+        panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight
+        
+        presentPanModal(panModalNavigationController)
     }
     
 }
@@ -113,3 +117,5 @@ struct Hardcode {
     var text: String
     var additionalText: String? = nil
 }
+
+

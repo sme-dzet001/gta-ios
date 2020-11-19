@@ -58,7 +58,6 @@ class HomepageTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let infoViewController = InfoViewController()
         infoViewController.infoType = dataSource[indexPath.row].infoType
-        
         self.navigationController?.pushViewController(infoViewController, animated: true)
     }
 

@@ -36,6 +36,9 @@
 		9F0CA5502566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
 		9F0CA5512566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
 		9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
+		9F1620752566952B003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620742566952B003AFE68 /* PanModalNavigationController.swift */; };
+		9F1620762566952B003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620742566952B003AFE68 /* PanModalNavigationController.swift */; };
+		9F1620772566952B003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620742566952B003AFE68 /* PanModalNavigationController.swift */; };
 		9F36D4332562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
 		9F36D4342562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
 		9F36D4352562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
@@ -265,6 +268,7 @@
 		9ED2AC0BF2A369E0AC6786A4 /* Pods-GTAStage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.release.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.release.xcconfig"; sourceTree = "<group>"; };
 		9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeLocationViewController.swift; sourceTree = "<group>"; };
 		9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfficeLocationViewController.xib; sourceTree = "<group>"; };
+		9F1620742566952B003AFE68 /* PanModalNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanModalNavigationController.swift; sourceTree = "<group>"; };
 		9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.ttf"; sourceTree = "<group>"; };
 		9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.ttf"; sourceTree = "<group>"; };
 		9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageTableViewController.swift; sourceTree = "<group>"; };
@@ -492,6 +496,7 @@
 			children = (
 				9FFD5F602566738D00B6A65C /* InfoScreenCells */,
 				9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */,
+				9F1620742566952B003AFE68 /* PanModalNavigationController.swift */,
 				9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */,
 				9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */,
 				9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */,
@@ -1163,6 +1168,7 @@
 				9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */,
 				C93FCF0625648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F36D4652562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
+				9F1620752566952B003AFE68 /* PanModalNavigationController.swift in Sources */,
 				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
 				9F78D07B256530CD00BCD38F /* ArticleViewController.swift in Sources */,
@@ -1220,6 +1226,7 @@
 				9F36D4662562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
+				9F1620762566952B003AFE68 /* PanModalNavigationController.swift in Sources */,
 				9F78D07C256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */,
 				9FFD5F69256673CA00B6A65C /* InfoArticleCell.swift in Sources */,
@@ -1257,6 +1264,7 @@
 				9F36D4672562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,
+				9F1620772566952B003AFE68 /* PanModalNavigationController.swift in Sources */,
 				9F78D07D256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */,
 				9FFD5F6A256673CA00B6A65C /* InfoArticleCell.swift in Sources */,
