@@ -25,14 +25,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SLR-ue-C68">
-                    <rect key="frame" x="0.0" y="102" width="414" height="760"/>
+                    <rect key="frame" x="0.0" y="121" width="414" height="741"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="KhB-xJ-Btt"/>
                         <outlet property="delegate" destination="-1" id="peo-bx-xVC"/>
                     </connections>
                 </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Registered with SME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="Sy2-xj-Q1y">
-                    <rect key="frame" x="24" y="68" width="207.5" height="29"/>
+                    <rect key="frame" x="24" y="76" width="207.5" height="29"/>
                     <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="24"/>
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -41,9 +41,9 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="Sy2-xj-Q1y" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="24" id="9Hw-co-FnE"/>
+                <constraint firstItem="Sy2-xj-Q1y" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="9Hw-co-FnE"/>
                 <constraint firstItem="SLR-ue-C68" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="OXe-pd-T4O"/>
-                <constraint firstItem="SLR-ue-C68" firstAttribute="top" secondItem="Sy2-xj-Q1y" secondAttribute="bottom" constant="5" id="Wzf-OD-SKa"/>
+                <constraint firstItem="SLR-ue-C68" firstAttribute="top" secondItem="Sy2-xj-Q1y" secondAttribute="bottom" constant="16" id="Wzf-OD-SKa"/>
                 <constraint firstItem="Sy2-xj-Q1y" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="jgM-ed-6G2"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Sy2-xj-Q1y" secondAttribute="trailing" constant="24" id="qTD-Si-7jZ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="SLR-ue-C68" secondAttribute="trailing" id="uQw-pH-fIM"/>
