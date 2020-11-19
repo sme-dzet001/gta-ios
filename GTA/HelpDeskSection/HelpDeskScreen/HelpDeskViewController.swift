@@ -50,9 +50,13 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.row == 1 else { return }
-        let myDevicesVC = MyDevicesViewController()
-        navigationController?.pushViewController(myDevicesVC, animated: true)
+        if indexPath.row == 1 {
+            let myDevicesVC = MyDevicesViewController()
+            navigationController?.pushViewController(myDevicesVC, animated: true)
+        } else if indexPath.row == 2 {
+            let myTicketsVC = MyTicketsViewController()
+            navigationController?.pushViewController(myTicketsVC, animated: true)
+        }
     }
     
 }
