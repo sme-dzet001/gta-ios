@@ -18,6 +18,5 @@ class NewsCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
     
-    
 
 }

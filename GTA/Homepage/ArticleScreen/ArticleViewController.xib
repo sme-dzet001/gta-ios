@@ -15,9 +15,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ArticleViewController" customModule="GTA" customModuleProvider="target">
             <connections>
-                <outlet property="articleLabel" destination="3CX-9o-0yc" id="LYA-lN-Nc1"/>
+                <outlet property="articleTextView" destination="hqn-HG-Ows" id="fZ4-GI-9hs"/>
+                <outlet property="articleTextViewBottom" destination="dBx-Zo-1Rb" id="j4x-vB-ENG"/>
                 <outlet property="closeButton" destination="qZB-c8-5HW" id="Nqb-bY-caB"/>
-                <outlet property="scrollView" destination="sHD-me-gqi" id="P5E-P5-P7O"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,6 +26,14 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hqn-HG-Ows">
+                    <rect key="frame" x="0.0" y="35" width="414" height="727"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <color key="textColor" systemColor="labelColor"/>
+                    <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="16"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qZB-c8-5HW">
                     <rect key="frame" x="365" y="10" width="25" height="25"/>
                     <constraints>
@@ -37,53 +45,25 @@
                         <action selector="closeButtonDidPressed:" destination="-1" eventType="touchUpInside" id="iHK-Ok-qFp"/>
                     </connections>
                 </button>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sHD-me-gqi">
-                    <rect key="frame" x="0.0" y="30" width="414" height="866"/>
-                    <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ux-pD-MmM">
-                            <rect key="frame" x="0.0" y="-10" width="414" height="886"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3CX-9o-0yc">
-                                    <rect key="frame" x="20" y="10" width="374" height="134"/>
-                                    <string key="text">As of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests. In addition, the total number of reported COVID-19 deaths has shifted to include both probable and confirmed deaths, which lead to a steep increase on the 7 Sep.</string>
-                                    <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="16"/>
-                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="3CX-9o-0yc" secondAttribute="trailing" constant="20" id="6ef-fN-qge"/>
-                                <constraint firstItem="3CX-9o-0yc" firstAttribute="leading" secondItem="0Ux-pD-MmM" secondAttribute="leading" constant="20" id="HzE-h6-oPt"/>
-                                <constraint firstItem="3CX-9o-0yc" firstAttribute="top" secondItem="0Ux-pD-MmM" secondAttribute="top" constant="10" id="elL-Ew-666"/>
-                            </constraints>
-                        </view>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="0Ux-pD-MmM" firstAttribute="centerY" secondItem="sHD-me-gqi" secondAttribute="centerY" id="18H-qb-ser"/>
-                        <constraint firstAttribute="bottom" secondItem="0Ux-pD-MmM" secondAttribute="bottom" id="KOK-9x-Kdg"/>
-                        <constraint firstItem="0Ux-pD-MmM" firstAttribute="top" secondItem="sHD-me-gqi" secondAttribute="top" constant="-10" id="Sto-IL-E5g"/>
-                        <constraint firstAttribute="trailing" secondItem="0Ux-pD-MmM" secondAttribute="trailing" id="box-70-uV7"/>
-                        <constraint firstItem="0Ux-pD-MmM" firstAttribute="centerX" secondItem="sHD-me-gqi" secondAttribute="centerX" id="fhD-R5-17J"/>
-                        <constraint firstItem="0Ux-pD-MmM" firstAttribute="leading" secondItem="sHD-me-gqi" secondAttribute="leading" id="uuA-TV-MzW"/>
-                    </constraints>
-                </scrollView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="hqn-HG-Ows" firstAttribute="top" secondItem="qZB-c8-5HW" secondAttribute="bottom" id="6IP-tR-oAe"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qZB-c8-5HW" secondAttribute="trailing" constant="24" id="8vD-1m-lCs"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="sHD-me-gqi" secondAttribute="trailing" id="HA5-20-3Vt"/>
-                <constraint firstItem="sHD-me-gqi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="Wqd-wE-rct"/>
-                <constraint firstAttribute="bottom" secondItem="sHD-me-gqi" secondAttribute="bottom" id="fCp-wB-jIC"/>
-                <constraint firstItem="sHD-me-gqi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="plM-eV-N7Q"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hqn-HG-Ows" secondAttribute="trailing" id="YVI-Lx-I0V"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="hqn-HG-Ows" secondAttribute="bottom" constant="100" id="dBx-Zo-1Rb"/>
                 <constraint firstItem="qZB-c8-5HW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="vdz-pc-7xu"/>
+                <constraint firstItem="hqn-HG-Ows" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="w0s-Rw-I7r"/>
             </constraints>
             <point key="canvasLocation" x="81" y="50"/>
         </view>
     </objects>
     <resources>
         <image name="close_icon" width="40" height="40"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

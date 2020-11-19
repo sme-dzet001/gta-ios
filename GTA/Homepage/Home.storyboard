@@ -12,10 +12,25 @@
         </array>
     </customFonts>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="tSX-vM-6Qk">
+            <objects>
+                <navigationController storyboardIdentifier="HomePageTab" navigationBarHidden="YES" id="OWd-V7-9YO" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eg3-VF-Q5b">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="RcL-i2-3qg" kind="relationship" relationship="rootViewController" id="MTz-Ex-hUX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dVl-TA-z6h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2178" y="-927"/>
+        </scene>
         <!--Home-->
         <scene sceneID="e96-dU-AW5">
             <objects>
-                <viewController storyboardIdentifier="HomePageTab" id="RcL-i2-3qg" customClass="HomepageViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="RcL-i2-3qg" customClass="HomepageViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EAh-Zl-95x">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -102,6 +117,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="homepage_tab_icon" id="LgG-vL-DZb"/>
+                    <navigationItem key="navigationItem" id="o7j-HC-El0"/>
                     <connections>
                         <outlet property="collectionView" destination="eVF-gW-Cgr" id="ZdK-CA-rKP"/>
                         <outlet property="containerView" destination="Rwc-F4-LiA" id="eTA-yX-epK"/>

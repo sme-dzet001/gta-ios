@@ -15,15 +15,17 @@ class HomepageViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pageControl: AdvancedPageControlView!
     
+    var selectedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     var dataSource: [NewsItem] = [NewsItem(image: "covid", newsLabel: "What is the current situation?"), NewsItem(image: "music", newsLabel: "New Sony Music Metrics Report Available"), NewsItem(image: "tech", newsLabel: "Latest Global Technology News")]
     var homepageTableVC: HomepageTableViewController?
+    
+    private var presentedVC: ArticleViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
         setUpPageControl()
         setNeedsStatusBarAppearanceUpdate()
-        //showViewController(HomepageTableViewController())
     }
     
     private func setUpPageControl() {
@@ -45,6 +47,18 @@ class HomepageViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "NewsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NewsCollectionViewCell")
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        if segue.identifier == "embedTable" {
+            homepageTableVC = segue.destination as? HomepageTableViewController
+        }
+    }
+    
+    @IBAction func unwindToHomePage(segue: UIStoryboardSegue) {
+    }
+    
 }
 
 extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -72,35 +86,16 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         var statusBarHeight: CGFloat = 0.0
         if #available(iOS 13.0, *) {
             statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
         } else {
             statusBarHeight = self.containerView.bounds.height - UIApplication.shared.statusBarFrame.height
+            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
         }
         articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
         articleViewController.articleText = dataSource[indexPath.row].articleText
+        selectedIndexPath.row = indexPath.row
+        presentedVC = articleViewController
         presentPanModal(articleViewController)
-    }
-    
-    private func showViewController(_ vc: UIViewController) {
-        let someView = UIView()
-        someView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(someView)
-        NSLayoutConstraint.activate([
-            someView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 0),
-            someView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 0),
-            someView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 0),
-            someView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0),
-        ])
-        addChild(vc)
-        vc.view.translatesAutoresizingMaskIntoConstraints = false
-        someView.addSubview(vc.view)
-        someView.layoutIfNeeded()
-        NSLayoutConstraint.activate([
-            vc.view.leadingAnchor.constraint(equalTo: someView.leadingAnchor),
-            vc.view.trailingAnchor.constraint(equalTo: someView.trailingAnchor),
-            vc.view.topAnchor.constraint(equalTo: someView.topAnchor),
-            vc.view.bottomAnchor.constraint(equalTo: someView.bottomAnchor)
-        ])
-        vc.didMove(toParent: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -116,22 +111,43 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         let width = scrollView.frame.width
         pageControl.setCurrentItem(offset: CGFloat(offSet),width: CGFloat(width))
     }
+    
 }
 
 extension HomepageViewController: PanModalAppearanceDelegate {
     
-    func panModalWillShow() {
-        pageControl.isHidden = true
+    func needScrollToDirection(_ scrollPosition: UICollectionView.ScrollPosition) {
+        if scrollPosition == .left && selectedIndexPath.row < dataSource.count - 1 {
+            selectedIndexPath.row += 1
+        } else if scrollPosition == .right && selectedIndexPath.row > 0 {
+            selectedIndexPath.row -= 1
+        } else {
+            return
+        }
+        collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: scrollPosition)
+        UIView.animate(withDuration: 0.2) {
+            self.presentedVC?.articleTextView.alpha = 0
+        } completion: { (_) in
+            UIView.animate(withDuration: 0.2) {
+                self.presentedVC?.articleText = self.dataSource[self.selectedIndexPath.row].articleText
+                self.presentedVC?.articleTextView.alpha = 1
+            }
+        }
     }
     
     func panModalDidDissmiss() {
-        pageControl.isHidden = false
+        //pageControl.isHidden = false
     }
 }
 
 protocol PanModalAppearanceDelegate: class {
-    func panModalWillShow()
+    func needScrollToDirection(_ direction: UICollectionView.ScrollPosition)
     func panModalDidDissmiss()
+}
+
+enum scrollDirection {
+    case left
+    case right
 }
 
 // temp

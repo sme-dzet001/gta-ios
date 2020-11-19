@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Medium.otf">
+            <string>SFProDisplay-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OfficeLocationViewController" customModule="GTA" customModuleProvider="target">
+            <connections>
+                <outlet property="backArrow" destination="REx-L1-PWQ" id="JB4-H7-Jpr"/>
+                <outlet property="closeButton" destination="QbJ-Wz-vk7" id="5RQ-DL-d0S"/>
+                <outlet property="tableView" destination="1dl-Vj-rQd" id="txD-mk-BYr"/>
+                <outlet property="titleLabel" destination="G6j-Gm-GTm" id="w4C-96-Mhc"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6j-Gm-GTm">
+                    <rect key="frame" x="59" y="55" width="296" height="48"/>
+                    <string key="text">Select a Sony Music
+Office Location</string>
+                    <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QbJ-Wz-vk7">
+                    <rect key="frame" x="365" y="66.5" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="6U0-qO-H6l"/>
+                        <constraint firstAttribute="width" secondItem="QbJ-Wz-vk7" secondAttribute="height" multiplier="1:1" id="kNX-ED-oHv"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="close_icon"/>
+                    <connections>
+                        <action selector="closeButtonDidPressed:" destination="-1" eventType="touchUpInside" id="0ef-Vr-lyw"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-Vj-rQd">
+                    <rect key="frame" x="0.0" y="113" width="414" height="749"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REx-L1-PWQ">
+                    <rect key="frame" x="24" y="66.5" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="WVz-DH-8kM"/>
+                        <constraint firstAttribute="width" secondItem="REx-L1-PWQ" secondAttribute="height" multiplier="1:1" id="XZ1-5h-oJF"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="back_arrow"/>
+                    <connections>
+                        <action selector="backButtonDidPressed:" destination="-1" eventType="touchUpInside" id="cgA-KQ-xr9"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="1dl-Vj-rQd" secondAttribute="bottom" id="Asc-UK-W7i"/>
+                <constraint firstItem="QbJ-Wz-vk7" firstAttribute="leading" secondItem="G6j-Gm-GTm" secondAttribute="trailing" constant="10" id="RQb-9a-nDJ"/>
+                <constraint firstItem="1dl-Vj-rQd" firstAttribute="top" secondItem="G6j-Gm-GTm" secondAttribute="bottom" constant="10" id="WT0-g8-Fh8"/>
+                <constraint firstItem="G6j-Gm-GTm" firstAttribute="leading" secondItem="REx-L1-PWQ" secondAttribute="trailing" constant="10" id="XSx-uX-C4u"/>
+                <constraint firstItem="QbJ-Wz-vk7" firstAttribute="centerY" secondItem="G6j-Gm-GTm" secondAttribute="centerY" id="XZx-bW-nZJ"/>
+                <constraint firstItem="REx-L1-PWQ" firstAttribute="centerY" secondItem="G6j-Gm-GTm" secondAttribute="centerY" id="boJ-5d-ctJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QbJ-Wz-vk7" secondAttribute="trailing" constant="24" id="qf3-HM-GAK"/>
+                <constraint firstItem="G6j-Gm-GTm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="11" id="tZh-ej-FZz"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1dl-Vj-rQd" secondAttribute="trailing" id="xXF-fv-TqS"/>
+                <constraint firstItem="1dl-Vj-rQd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="xcl-4J-iek"/>
+                <constraint firstItem="REx-L1-PWQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="zQY-fv-02u"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="118"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="back_arrow" width="29" height="29"/>
+        <image name="close_icon" width="40" height="40"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
