@@ -17,7 +17,7 @@ class ReportScreenViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     
-    var heightObserver: NSKeyValueObservation?
+    private var heightObserver: NSKeyValueObservation?
     
     private var pickerDataSource: [String] = ["Reactivate Account", "Site Down"] //temp
     var panScrollable: UIScrollView?
@@ -62,7 +62,6 @@ class ReportScreenViewController: UIViewController, PanModalPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTextField()
-        
         setUpTextView()
     }
     
@@ -102,7 +101,6 @@ class ReportScreenViewController: UIViewController, PanModalPresentable {
         textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
         textView.setPlaceholder()
         self.view.layoutIfNeeded()
-        
     }
     
     @IBAction func submitButtonDidPressed(_ sender: UIButton) {

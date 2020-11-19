@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
+        emailTextField.text = "dssdsdsd@sdds.dd"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,6 +27,7 @@ class LoginViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        onLoginButtonTap(sender: loginButton)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

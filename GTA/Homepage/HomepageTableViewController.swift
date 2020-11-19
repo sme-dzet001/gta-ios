@@ -14,7 +14,7 @@ protocol HomepageMainDelegate: AnyObject {
 class HomepageTableViewController: UITableViewController {
         
     var dataSource: [HomepageCellData] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
@@ -22,7 +22,7 @@ class HomepageTableViewController: UITableViewController {
     }
     
     private func setHardcodedData() {
-        dataSource = [HomepageCellData(mainText: "COVID-19 Info Updated", additionalText: "10:30 +5 GTM Wed 15", image: "alert_icon"), HomepageCellData(mainText: "Closed", address: OfficeAddress(address: "9 Derry Street, London, W8 5HY, United Kindom", phoneNumber: "(480) 555-0103", email: "deanna.curtis@example.com")), HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautiongs ets...", image: "return_to_work"), HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")]
+        dataSource = [HomepageCellData(mainText: "COVID-19 Info Updated", additionalText: "10:30 +5 GTM Wed 15", image: "alert_icon"), HomepageCellData(mainText: "Closed", address: OfficeAddress(address: "9 Derry Street, London, W8 5HY, United Kindom", phoneNumber: "(480) 555-0103", email: "deanna.curtis@example.com"), infoType : .office), HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautiongs ets...", image: "return_to_work"), HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")]
     }
     
     private func setUpTableView() {
@@ -56,7 +56,9 @@ class HomepageTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let infoViewController = InfoViewController()
+        infoViewController.infoType = dataSource[indexPath.row].infoType
+        self.navigationController?.pushViewController(infoViewController, animated: true)
     }
 
 }
@@ -66,10 +68,19 @@ struct HomepageCellData {
     var additionalText: String? = nil
     var image: String? = nil
     var address: OfficeAddress? = nil
+    var infoType: infoType = .info
+    
 }
 
 struct OfficeAddress {
     var address: String
     var phoneNumber: String
     var email: String
+}
+
+enum infoType {
+    case office
+    case info
+    case deskFinder
+    case returnToWork
 }
