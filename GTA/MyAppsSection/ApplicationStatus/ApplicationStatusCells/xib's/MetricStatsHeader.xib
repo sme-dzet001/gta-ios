@@ -56,9 +56,9 @@
                         <constraint firstAttribute="height" constant="1" id="TYw-tm-UPV"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eBW-nB-Ynp">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eBW-nB-Ynp" customClass="StatsBarChart" customModule="GTA" customModuleProvider="target">
                     <rect key="frame" x="30" y="141" width="338" height="175"/>
-                    <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stats" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VOM-N7-LPo">
                     <rect key="frame" x="30" y="24" width="52" height="29"/>

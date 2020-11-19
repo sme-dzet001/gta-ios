@@ -179,6 +179,15 @@
 		C9DFD49B25657B7600BF1740 /* MetricStatsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DFD49A25657B7600BF1740 /* MetricStatsHeader.xib */; };
 		C9DFD49C25657B7600BF1740 /* MetricStatsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DFD49A25657B7600BF1740 /* MetricStatsHeader.xib */; };
 		C9DFD49D25657B7600BF1740 /* MetricStatsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DFD49A25657B7600BF1740 /* MetricStatsHeader.xib */; };
+		C9DFD4AE25659BE400BF1740 /* StatsBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4AD25659BE400BF1740 /* StatsBarChart.swift */; };
+		C9DFD4AF25659BE400BF1740 /* StatsBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4AD25659BE400BF1740 /* StatsBarChart.swift */; };
+		C9DFD4B025659BE400BF1740 /* StatsBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4AD25659BE400BF1740 /* StatsBarChart.swift */; };
+		C9DFD4B725659C1100BF1740 /* StatsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4B625659C1100BF1740 /* StatsBarView.swift */; };
+		C9DFD4B825659C1100BF1740 /* StatsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4B625659C1100BF1740 /* StatsBarView.swift */; };
+		C9DFD4B925659C1100BF1740 /* StatsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4B625659C1100BF1740 /* StatsBarView.swift */; };
+		C9DFD4C025659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
+		C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
+		C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -279,6 +288,9 @@
 		C9DFD47B2565721F00BF1740 /* MetricStatsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MetricStatsCell.xib; sourceTree = "<group>"; };
 		C9DFD48C25657B0800BF1740 /* MetricStatsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricStatsHeader.swift; sourceTree = "<group>"; };
 		C9DFD49A25657B7600BF1740 /* MetricStatsHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MetricStatsHeader.xib; sourceTree = "<group>"; };
+		C9DFD4AD25659BE400BF1740 /* StatsBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsBarChart.swift; sourceTree = "<group>"; };
+		C9DFD4B625659C1100BF1740 /* StatsBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsBarView.swift; sourceTree = "<group>"; };
+		C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartLayoutHelper.swift; sourceTree = "<group>"; };
 		D3387A52A0F8F88F9F876531 /* Pods-GTATests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.debug.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.debug.xcconfig"; sourceTree = "<group>"; };
 		E99FE5D7739905AF03A6B886 /* Pods_GTA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -533,6 +545,7 @@
 			children = (
 				9F895B7A255D8810004489C6 /* CustomTextField.swift */,
 				9F8AEAE3255EB88500B62072 /* CustomTextView.swift */,
+				C9DFD4C825659DB400BF1740 /* BarChart */,
 			);
 			path = CustomClasses;
 			sourceTree = "<group>";
@@ -605,6 +618,16 @@
 				C93FCF182564901E001E86F6 /* AboutInfoCell.xib */,
 			);
 			path = "xib's";
+			sourceTree = "<group>";
+		};
+		C9DFD4C825659DB400BF1740 /* BarChart */ = {
+			isa = PBXGroup;
+			children = (
+				C9DFD4AD25659BE400BF1740 /* StatsBarChart.swift */,
+				C9DFD4B625659C1100BF1740 /* StatsBarView.swift */,
+				C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */,
+			);
+			path = BarChart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1048,8 +1071,10 @@
 				9F78CFCD25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				C93FCF0625648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F36D4652562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
+				C9DFD4C025659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
+				C9DFD4AE25659BE400BF1740 /* StatsBarChart.swift in Sources */,
 				659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */,
 				C9DFD47C2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
 				C91F708B2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
@@ -1058,6 +1083,7 @@
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
+				C9DFD4B725659C1100BF1740 /* StatsBarView.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
 				9F895B28255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				C93FCF3D2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,
@@ -1097,8 +1123,10 @@
 				9F78CFCE25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				C93FCF0725648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F36D4662562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
+				C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
+				C9DFD4AF25659BE400BF1740 /* StatsBarChart.swift in Sources */,
 				9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */,
 				C9DFD47D2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
 				C91F708C2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
@@ -1107,6 +1135,7 @@
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C93FCF1A2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
+				C9DFD4B825659C1100BF1740 /* StatsBarView.swift in Sources */,
 				9F819A93255C1572007C1739 /* Extensions.swift in Sources */,
 				9F895B29255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				C93FCF3E2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,
@@ -1130,8 +1159,10 @@
 				9F78CFCF25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				C93FCF0825648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F36D4672562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
+				C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,
+				C9DFD4B025659BE400BF1740 /* StatsBarChart.swift in Sources */,
 				9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */,
 				C9DFD47E2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
 				C91F708D2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
@@ -1140,6 +1171,7 @@
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C93FCF1B2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
+				C9DFD4B925659C1100BF1740 /* StatsBarView.swift in Sources */,
 				9F819ABD255C1646007C1739 /* Extensions.swift in Sources */,
 				9F895B2A255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				C93FCF3F2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,

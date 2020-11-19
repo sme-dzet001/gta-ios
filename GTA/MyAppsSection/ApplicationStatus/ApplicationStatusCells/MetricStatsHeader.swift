@@ -8,14 +8,14 @@
 import UIKit
 
 protocol MetricStatsHeaderDelegate: class {
-    func periodWasChanged(to period: MetricsPeriod)
+    func periodWasChanged(_ header: MetricStatsHeader, to period: MetricsPeriod)
 }
 
 class MetricStatsHeader: UIView {
 
     @IBOutlet weak var headerTitleLabel: UILabel!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
-    @IBOutlet weak var barChartView: UIView!
+    @IBOutlet weak var barChartView: StatsBarChart!
     @IBOutlet weak var periodSubtitleLabel: UILabel!
     
     weak var delegate: MetricStatsHeaderDelegate?
@@ -38,6 +38,17 @@ class MetricStatsHeader: UIView {
             periodSubtitleLabel.text = "Month"
         }
     }
+    
+    func setChartData(selectedPeriod: MetricsPeriod, data: MetricsData?) {
+        switch selectedPeriod {
+        case .daily:
+            barChartView.setDataList(with: data?.dailyData.reversed() ?? [])
+        case .weekly:
+            barChartView.setDataList(with: data?.weeklyData.reversed() ?? [])
+        case .monthly:
+            barChartView.setDataList(with: data?.monthlyData.reversed() ?? [])
+        }
+    }
 
     @IBAction func segmentedControlValueDidChanged(_ sender: UISegmentedControl) {
         let periodsSubtitles = ["Day", "Week", "Month"]
@@ -50,7 +61,7 @@ class MetricStatsHeader: UIView {
         } else {
             selectedPeriod = .monthly
         }
-        delegate?.periodWasChanged(to: selectedPeriod)
+        delegate?.periodWasChanged(self, to: selectedPeriod)
     }
     
 }

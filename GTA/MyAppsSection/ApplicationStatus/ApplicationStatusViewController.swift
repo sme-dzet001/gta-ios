@@ -55,9 +55,9 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         let aboutData = UIImage(named: "about_icon")
         
         let metricsData = MetricsData(
-            dailyData: [ChartData(legendTitle: "18/11/20", periodFullTitle: "18 November 2020", value: 85), ChartData(legendTitle: "17/11/20", periodFullTitle: "17 November 2020", value: 92), ChartData(legendTitle: "16/11/20", periodFullTitle: "16 November 2020", value: 105), ChartData(legendTitle: "15/11/20", periodFullTitle: "15 November 2020", value: 100), ChartData(legendTitle: "14/11/20", periodFullTitle: "14 November 2020", value: 90), ChartData(legendTitle: "13/11/20", periodFullTitle: "13 November 2020", value: 95), ChartData(legendTitle: "12/11/20", periodFullTitle: "12 November 2020", value: 100)],
-            weeklyData: [ChartData(legendTitle: "18 Nov W/E", periodFullTitle: "18 Nov W/E", value: 690), ChartData(legendTitle: "11 Nov W/E", periodFullTitle: "11 Nov W/E", value: 705), ChartData(legendTitle: "4 Nov W/E", periodFullTitle: "4 Nov W/E", value: 740), ChartData(legendTitle: "28 Oct W/E", periodFullTitle: "28 Oct W/E", value: 720), ChartData(legendTitle: "21 Oct W/E", periodFullTitle: "21 Oct W/E", value: 730), ChartData(legendTitle: "14 Oct W/E", periodFullTitle: "14 Oct W/E", value: 720), ChartData(legendTitle: "7 Oct W/E", periodFullTitle: "7 Oct W/E", value: 730)],
-            monthlyData: [ChartData(legendTitle: "11/2020", periodFullTitle: "November 2020", value: 5000), ChartData(legendTitle: "10/2020", periodFullTitle: "October 2020", value: 5150), ChartData(legendTitle: "9/2020", periodFullTitle: "September 2020", value: 5200), ChartData(legendTitle: "8/2020", periodFullTitle: "August 2020", value: 5300), ChartData(legendTitle: "7/2020", periodFullTitle: "July 2020", value: 5100), ChartData(legendTitle: "6/2020", periodFullTitle: "June 2020", value: 5100), ChartData(legendTitle: "5/2020", periodFullTitle: "May 2020", value: 5050)]
+            dailyData: [ChartData(legendTitle: "18/11/20", periodFullTitle: "18 November 2020", value: 85), ChartData(legendTitle: "17/11/20", periodFullTitle: "17 November 2020", value: 62), ChartData(legendTitle: "16/11/20", periodFullTitle: "16 November 2020", value: 105), ChartData(legendTitle: "15/11/20", periodFullTitle: "15 November 2020", value: 100), ChartData(legendTitle: "14/11/20", periodFullTitle: "14 November 2020", value: 70), ChartData(legendTitle: "13/11/20", periodFullTitle: "13 November 2020", value: 95), ChartData(legendTitle: "12/11/20", periodFullTitle: "12 November 2020", value: 100)],
+            weeklyData: [ChartData(legendTitle: "18 Nov W/E", periodFullTitle: "18 Nov W/E", value: 690), ChartData(legendTitle: "11 Nov W/E", periodFullTitle: "11 Nov W/E", value: 705), ChartData(legendTitle: "4 Nov W/E", periodFullTitle: "4 Nov W/E", value: 740), ChartData(legendTitle: "28 Oct W/E", periodFullTitle: "28 Oct W/E", value: 520), ChartData(legendTitle: "21 Oct W/E", periodFullTitle: "21 Oct W/E", value: 730), ChartData(legendTitle: "14 Oct W/E", periodFullTitle: "14 Oct W/E", value: 720), ChartData(legendTitle: "7 Oct W/E", periodFullTitle: "7 Oct W/E", value: 430)],
+            monthlyData: [ChartData(legendTitle: "11/2020", periodFullTitle: "November 2020", value: 5000), ChartData(legendTitle: "10/2020", periodFullTitle: "October 2020", value: 5450), ChartData(legendTitle: "9/2020", periodFullTitle: "September 2020", value: 5900), ChartData(legendTitle: "8/2020", periodFullTitle: "August 2020", value: 5300), ChartData(legendTitle: "7/2020", periodFullTitle: "July 2020", value: 4100), ChartData(legendTitle: "6/2020", periodFullTitle: "June 2020", value: 5100), ChartData(legendTitle: "5/2020", periodFullTitle: "May 2020", value: 2050)]
         )
         
         dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData:[CellData(mainText: "Report Issue", additionalText: "Report Outages, System Issues", image: bellData?.pngData(), systemStatus: .none), CellData(mainText: "Login Help", additionalText: "Reset Account Accesss & login Assistance", image: loginHelpData?.pngData(), systemStatus: .none), CellData(mainText: "About", additionalText: "Description and list of app contacts", image: aboutData?.pngData(), systemStatus: .none)]), AppsDataSource(sectionName: "System Updates", description: nil, cellData: [CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "System restore", systemStatus: .none), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "Sheduled maintanence", systemStatus: .other), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "System restore",  systemStatus: .offline), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "AWS outage reported",  systemStatus: .offline)]), AppsDataSource(sectionName: "Stats", description: nil, cellData: [], metricsData: metricsData)]
@@ -104,6 +104,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             let metricStatsHeader = MetricStatsHeader.instanceFromNib()
             metricStatsHeader.delegate = self
             metricStatsHeader.setUpHeaderData(selectedPeriod: selectedMetricsPeriod)
+            metricStatsHeader.setChartData(selectedPeriod: selectedMetricsPeriod, data: metricsData)
             return metricStatsHeader
         }
         let header = AppsTableViewHeader.instanceFromNib()
@@ -173,11 +174,12 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
 }
 
 extension ApplicationStatusViewController: MetricStatsHeaderDelegate {
-    func periodWasChanged(to period: MetricsPeriod) {
+    func periodWasChanged(_ header: MetricStatsHeader, to period: MetricsPeriod) {
         selectedMetricsPeriod = period
         let sectionIndexToReload = 2
         let indexPaths = tableView.visibleCells.compactMap { tableView.indexPath(for: $0) }.filter { $0.section == sectionIndexToReload
         }
+        header.setChartData(selectedPeriod: period, data: dataSource[sectionIndexToReload].metricsData)
         tableView.reloadRows(at: indexPaths, with: .none)
     }
 }
