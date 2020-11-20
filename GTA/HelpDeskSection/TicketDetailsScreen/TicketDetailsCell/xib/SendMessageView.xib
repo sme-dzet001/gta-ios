@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="nyd-mk-mrG" customClass="SendMessageView" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="267"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="e39-3O-t6Z" customClass="CustomTextView" customModule="GTA" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="364" height="267"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="textColor" systemColor="labelColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0n-jO-mjU">
+                    <rect key="frame" x="374" y="123.5" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="e0n-jO-mjU" secondAttribute="height" multiplier="1:1" id="Aod-G1-iaG"/>
+                        <constraint firstAttribute="width" constant="20" id="rfD-9j-wWc"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="send_icon"/>
+                    <connections>
+                        <action selector="sendButtonDidPressed:" destination="nyd-mk-mrG" eventType="touchUpInside" id="RNS-rJ-kzD"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="cSR-aR-ATK"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="e39-3O-t6Z" firstAttribute="leading" secondItem="cSR-aR-ATK" secondAttribute="leading" id="StA-M0-0Os"/>
+                <constraint firstItem="cSR-aR-ATK" firstAttribute="trailing" secondItem="e0n-jO-mjU" secondAttribute="trailing" constant="20" id="X1X-uY-Bl3"/>
+                <constraint firstItem="e0n-jO-mjU" firstAttribute="centerY" secondItem="e39-3O-t6Z" secondAttribute="centerY" id="hCf-1g-cJB"/>
+                <constraint firstAttribute="bottom" secondItem="e39-3O-t6Z" secondAttribute="bottom" id="pPj-D9-hZv"/>
+                <constraint firstItem="e0n-jO-mjU" firstAttribute="leading" secondItem="e39-3O-t6Z" secondAttribute="trailing" constant="10" id="tdC-PO-hcj"/>
+                <constraint firstItem="e39-3O-t6Z" firstAttribute="top" secondItem="nyd-mk-mrG" secondAttribute="top" id="yxa-ri-bou"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                    <integer key="value" value="10"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="sendButton" destination="e0n-jO-mjU" id="Zbd-zA-07p"/>
+                <outlet property="textView" destination="e39-3O-t6Z" id="kIQ-Qu-KFg"/>
+            </connections>
+            <point key="canvasLocation" x="-136.23188405797103" y="316.40625"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="send_icon" width="40" height="40"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

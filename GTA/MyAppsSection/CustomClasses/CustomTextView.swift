@@ -10,8 +10,7 @@ import UIKit
 class CustomTextView: UITextView {
     
     private var placeholder: UILabel = UILabel()
-    private var labelPlaceholderTitleCenterY: NSLayoutConstraint!
-    private var labelPlaceholderTitleTop: NSLayoutConstraint!
+    var placeHolderText: String?
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
@@ -24,10 +23,10 @@ class CustomTextView: UITextView {
     
     func setPlaceholder() {
         self.textContainerInset = UIEdgeInsets(top: 20, left: 5, bottom: 10, right: 10)
-        placeholder.frame = CGRect(x: 10, y: text.isEmpty ? 20 : 2, width: self.frame.width, height: 15)
+        placeholder.frame = CGRect(x: 10, y: text.isEmpty ? 20 : 2, width: self.frame.width, height: 18)
         let textSize: CGFloat = text.isEmpty ? 16.0 : 12.0
         placeholder.font = UIFont(name: "SFProText-Regular", size: textSize)
-        placeholder.text = "Comments"
+        placeholder.text = placeHolderText ?? "Comments"
         placeholder.textColor = UIColor(red: 142.0 / 255.0, green: 142.0 / 255.0, blue: 147.0 / 255.0, alpha: 1.0)
         self.addSubview(placeholder)
     }

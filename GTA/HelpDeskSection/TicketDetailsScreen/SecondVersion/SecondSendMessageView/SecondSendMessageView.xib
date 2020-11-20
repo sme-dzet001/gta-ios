@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Semibold.ttf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="n2U-OF-bfY" customClass="SecondSendMessageView" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="352"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qg9-JL-nEo">
+                    <rect key="frame" x="24" y="10" width="366" height="266"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="textColor" systemColor="labelColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wO-cw-bJR">
+                    <rect key="frame" x="24" y="286" width="366" height="56"/>
+                    <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56" id="2c9-nU-yfv"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
+                    <state key="normal" title="Submit">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="5aI-dd-6Hx"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="5aI-dd-6Hx" firstAttribute="trailing" secondItem="6wO-cw-bJR" secondAttribute="trailing" constant="24" id="14x-LP-1WZ"/>
+                <constraint firstItem="qg9-JL-nEo" firstAttribute="top" secondItem="n2U-OF-bfY" secondAttribute="top" constant="10" id="n8D-Eq-0QZ"/>
+                <constraint firstItem="5aI-dd-6Hx" firstAttribute="trailing" secondItem="qg9-JL-nEo" secondAttribute="trailing" constant="24" id="nXD-yB-ON0"/>
+                <constraint firstItem="6wO-cw-bJR" firstAttribute="top" secondItem="qg9-JL-nEo" secondAttribute="bottom" constant="10" id="pWN-Hl-Rwe"/>
+                <constraint firstItem="5aI-dd-6Hx" firstAttribute="bottom" secondItem="6wO-cw-bJR" secondAttribute="bottom" constant="10" id="taT-GE-4WW"/>
+                <constraint firstItem="qg9-JL-nEo" firstAttribute="leading" secondItem="5aI-dd-6Hx" secondAttribute="leading" constant="24" id="v75-ci-CUR"/>
+                <constraint firstItem="6wO-cw-bJR" firstAttribute="leading" secondItem="5aI-dd-6Hx" secondAttribute="leading" constant="24" id="zp5-cc-Y3P"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="submitButton" destination="6wO-cw-bJR" id="jvB-k3-bdB"/>
+                <outlet property="textView" destination="qg9-JL-nEo" id="mK1-Rp-km5"/>
+            </connections>
+            <point key="canvasLocation" x="315.94202898550725" y="-24.107142857142858"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

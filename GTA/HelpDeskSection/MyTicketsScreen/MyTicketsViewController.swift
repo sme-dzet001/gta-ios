@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PanModal
 
 class MyTicketsViewController: UIViewController {
     
@@ -71,6 +72,40 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = MyTicketsHeader.instanceFromNib()
         return header
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 2, 5:
+            let ticketDetailsVC = SecondTicketDetailsViewController()
+            ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
+            if myTicketsData[indexPath.row].status == .closed && !UIDevice.current.iPhone5_se {
+                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / 1.5)
+            }
+            presentPanModal(ticketDetailsVC)
+        default:
+            let ticketDetailsVC = TicketDetailsViewController()
+            ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
+            if myTicketsData[indexPath.row].status == .closed && !UIDevice.current.iPhone5_se {
+                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / 1.5)
+            }
+            presentPanModal(ticketDetailsVC)
+        }
+        //if indexPath.row == 2, indexPath.row == 5 {
+//            let ticketDetailsVC = SecondTicketDetailsViewController()
+//            ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
+//            if myTicketsData[indexPath.row].status == .closed && !UIDevice.current.iPhone5_se {
+//                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / 1.5)
+//            }
+//            presentPanModal(ticketDetailsVC)
+//        } else {
+//            let ticketDetailsVC = TicketDetailsViewController()
+//            ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
+//            if myTicketsData[indexPath.row].status == .closed && !UIDevice.current.iPhone5_se {
+//                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / 1.5)
+//            }
+//            presentPanModal(ticketDetailsVC)
+//        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
