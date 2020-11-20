@@ -103,7 +103,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         }
         officeLocation.title = "Select a Sony Music Office Location"
         let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
-        //panModalNavigationController.setNavigationBarHidden(true, animated: true)
+        panModalNavigationController.setNavigationBarHidden(true, animated: true)
         panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight
         
         presentPanModal(panModalNavigationController)
