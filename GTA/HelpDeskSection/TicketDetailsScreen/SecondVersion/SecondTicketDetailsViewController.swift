@@ -15,6 +15,8 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
     
+    var messageHeaderView: SecondSendMessageView = SecondSendMessageView.instanceFromNib()
+    
     var panScrollable: UIScrollView? {
         return tableView
     }
@@ -42,6 +44,11 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +74,35 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
         dismiss(animated: true, completion: nil)
     }
     
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
+            var overlay: CGFloat = keyboardSize.height
+            if UIDevice.current.iPhone4_4s || UIDevice.current.iPhone5_se || UIDevice.current.iPhone7_8_Zoomed {
+                overlay = overlay - 145
+            }
+            guard keyboardSize.height > 0 else { return }
+            let headerRect = tableView.rectForHeader(inSection: 0)
+            let rectToSuperview = tableView.convert(headerRect, to: tableView.superview)
+            let difference = self.view.frame.height - (rectToSuperview.origin.y + rectToSuperview.height)
+            UIView.animate(withDuration: 0.3, animations: {
+                guard keyboardSize.height > difference else {return}
+                self.view.frame.origin.y = -(keyboardSize.height - difference)
+            })
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        self.view.frame.origin.y = 0
+    }
+    
+    @objc func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
 }
 
@@ -76,9 +112,8 @@ extension SecondTicketDetailsViewController: UITableViewDataSource, UITableViewD
         if dataSource?.status == .closed {
             return nil
         }
-        let header = SecondSendMessageView.instanceFromNib()
-        header.setUpView()
-        return header
+        messageHeaderView.setUpView()
+        return messageHeaderView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

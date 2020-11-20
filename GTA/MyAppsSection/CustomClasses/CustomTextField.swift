@@ -121,12 +121,10 @@ open class CustomTextField: UITextField {
         self.labelError.isHidden = true
     }
     
-    func setIconForPicker() {
+    func setIconForPicker(for width: CGFloat) {
         let yPoint = (self.frame.height - 40) / 2
-        let xPoint = self.frame.width - 50
+        let xPoint = width - 110
         let imageFrame = CGRect(x: xPoint, y: yPoint, width: 40, height: 40)
-        
-        
         let imageView = UIImageView(frame: imageFrame)
         imageView.image = UIImage(named: "down_arrow")
         self.addSubview(imageView)
