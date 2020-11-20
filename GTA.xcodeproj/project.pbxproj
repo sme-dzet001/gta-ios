@@ -235,6 +235,8 @@
 		C9705B7F2566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */; };
 		C9705B802566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */; };
 		C9705B812566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */; };
+		C9D859392567FE850025F544 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
+		C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		C9DFD47C2565721F00BF1740 /* MetricStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */; };
 		C9DFD47D2565721F00BF1740 /* MetricStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */; };
 		C9DFD47E2565721F00BF1740 /* MetricStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */; };
@@ -1386,6 +1388,7 @@
 				C9DFD47D2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
 				C91F708C2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
+				C9D859392567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F895AE8255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
@@ -1433,6 +1436,7 @@
 				C9DFD47E2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
 				C91F708D2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
+				C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F895AE9255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
