@@ -91,21 +91,6 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
             }
             presentPanModal(ticketDetailsVC)
         }
-        //if indexPath.row == 2, indexPath.row == 5 {
-//            let ticketDetailsVC = SecondTicketDetailsViewController()
-//            ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
-//            if myTicketsData[indexPath.row].status == .closed && !UIDevice.current.iPhone5_se {
-//                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / 1.5)
-//            }
-//            presentPanModal(ticketDetailsVC)
-//        } else {
-//            let ticketDetailsVC = TicketDetailsViewController()
-//            ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
-//            if myTicketsData[indexPath.row].status == .closed && !UIDevice.current.iPhone5_se {
-//                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / 1.5)
-//            }
-//            presentPanModal(ticketDetailsVC)
-//        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
