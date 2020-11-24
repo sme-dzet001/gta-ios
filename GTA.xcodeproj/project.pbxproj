@@ -294,6 +294,8 @@
 		C9DFD4C025659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
 		C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
 		C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
+		C9EFEBC4256D1F4800112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
+		C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1211,6 +1213,7 @@
 				9F819AA0255C1572007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F895B6E255D3D27004489C6 /* ReportScreenViewController.xib in Resources */,
 				9F78D0E2256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
+				C9EFEBC4256D1F4800112B23 /* InfoViewController.xib in Resources */,
 				9F819AA1255C1572007C1739 /* Apps.storyboard in Resources */,
 				9F0CA5512566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
 				C962D8532566E21400727949 /* MyTicketsHeader.xib in Resources */,
@@ -1264,6 +1267,7 @@
 				9F819ACA255C1646007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F895B6F255D3D27004489C6 /* ReportScreenViewController.xib in Resources */,
 				9F78D0E3256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
+				C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */,
 				9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */,
 				9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
 				C962D8542566E21400727949 /* MyTicketsHeader.xib in Resources */,
