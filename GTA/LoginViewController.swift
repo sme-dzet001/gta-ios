@@ -10,7 +10,7 @@ import UIKit
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var emailTextField: CustomTextField!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!

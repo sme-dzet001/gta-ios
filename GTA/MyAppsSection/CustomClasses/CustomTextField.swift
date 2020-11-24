@@ -164,8 +164,20 @@ open class CustomTextField: UITextField {
         addTarget(self, action: #selector(self.textFieldDidChange), for: .editingChanged)
     }
     
+    open override func resignFirstResponder() -> Bool {
+        super.resignFirstResponder()
+        textFieldDidChange(makePlaceHolderSmall: !(text ?? "").isEmpty)
+        return true
+    }
     
-    @objc func textFieldDidChange() {
+    open override func becomeFirstResponder() -> Bool {
+        super.becomeFirstResponder()
+        textFieldDidChange(makePlaceHolderSmall: true)
+        return true
+    }
+    
+    
+    @objc func textFieldDidChange(makePlaceHolderSmall: Bool = false) {
         
         func animateLabel() {
             UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -173,7 +185,8 @@ open class CustomTextField: UITextField {
             }, completion: nil)
         }
         
-        if let enteredText = text,enteredText != "" {
+        let isNeedPlaceholderAnimation =  makePlaceHolderSmall || (isFirstResponder && text != nil)
+        if let _ = text, isNeedPlaceholderAnimation {
             if labelPlaceholderTitleCenterY.isActive {
                 labelPlaceholderTitleCenterY.isActive = false
                 labelPlaceholderTitleTop.isActive = true

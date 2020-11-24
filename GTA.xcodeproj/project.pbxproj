@@ -719,7 +719,7 @@
 			children = (
 				9F895AD7255C22D6004489C6 /* AppsScreen */,
 				9F8AEAE2255EB86000B62072 /* CustomClasses */,
-				9F895B67255D3CCB004489C6 /* reportScreen */,
+				9F895B67255D3CCB004489C6 /* ReportScreen */,
 				9F895B24255C2DDF004489C6 /* ApplicationStatus */,
 				C93FCF1125648FAF001E86F6 /* AboutScreen */,
 			);
@@ -790,13 +790,13 @@
 			path = "xib's";
 			sourceTree = "<group>";
 		};
-		9F895B67255D3CCB004489C6 /* reportScreen */ = {
+		9F895B67255D3CCB004489C6 /* ReportScreen */ = {
 			isa = PBXGroup;
 			children = (
 				9F895B68255D3D27004489C6 /* ReportScreenViewController.swift */,
 				9F895B69255D3D27004489C6 /* ReportScreenViewController.xib */,
 			);
-			path = reportScreen;
+			path = ReportScreen;
 			sourceTree = "<group>";
 		};
 		9F8AEAE2255EB86000B62072 /* CustomClasses */ = {
