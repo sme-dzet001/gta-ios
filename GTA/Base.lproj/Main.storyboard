@@ -71,12 +71,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I forgot my password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0TU-dU-UZZ">
-                                <rect key="frame" x="141" y="829" width="132.5" height="17"/>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0p5-Sa-qVW">
                                 <rect key="frame" x="24" y="521" width="366" height="56"/>
                                 <constraints>
@@ -125,15 +119,26 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0p-Sp-geY">
+                                <rect key="frame" x="140.5" y="814" width="133" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="8bd-UY-ZGo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                <state key="normal" title="I forgot my password">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="0p5-Sa-qVW" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="13D-3Q-Hyd"/>
                             <constraint firstItem="3cg-mN-F74" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="2A6-la-ga6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="x0p-Sp-geY" secondAttribute="bottom" constant="16" id="3Ou-ib-wtc"/>
                             <constraint firstItem="7Xr-Ki-8uN" firstAttribute="top" relation="lessThanOrEqual" secondItem="3cg-mN-F74" secondAttribute="bottom" constant="120" id="72H-up-tQ1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0p5-Sa-qVW" secondAttribute="trailing" constant="24" id="92m-v5-tTp"/>
-                            <constraint firstItem="0TU-dU-UZZ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-16" id="9cw-eV-2Kh"/>
+                            <constraint firstItem="x0p-Sp-geY" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="MVE-BI-5jd"/>
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Odm-Zn-f5Q"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="W8k-S3-PNz"/>
                             <constraint firstItem="3cg-mN-F74" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-24" id="Xsx-Zw-2wc"/>
@@ -141,7 +146,6 @@
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="dWi-3n-PWU"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-24" id="guk-gv-XEZ"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="top" secondItem="7Xr-Ki-8uN" secondAttribute="bottom" constant="30" id="i93-tF-XP5"/>
-                            <constraint firstItem="0TU-dU-UZZ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="iIU-HA-qVo"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="ijo-Ne-Unq"/>
                             <constraint firstItem="hOh-kP-jbd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="kjN-7v-3d1"/>
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="centerY" secondItem="hOh-kP-jbd" secondAttribute="centerY" id="nDB-L7-VwV"/>
@@ -154,7 +158,12 @@
                     <navigationItem key="navigationItem" id="StN-4C-H86"/>
                     <connections>
                         <outlet property="emailTextField" destination="JCo-dS-SrK" id="6HH-VZ-WQ0"/>
+                        <outlet property="forgotPasswordBottom" destination="3Ou-ib-wtc" id="4Rr-Zr-PpC"/>
+                        <outlet property="forgotPasswordButton" destination="x0p-Sp-geY" id="izh-PG-K3j"/>
                         <outlet property="loginButton" destination="0p5-Sa-qVW" id="VQy-dc-DCh"/>
+                        <outlet property="loginLabel" destination="7Xr-Ki-8uN" id="Qkg-Ng-6Ot"/>
+                        <outlet property="logoImageView" destination="vsT-Ui-lpa" id="lPH-gL-xV0"/>
+                        <outlet property="titleLabel" destination="3cg-mN-F74" id="Hcn-pT-U87"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
