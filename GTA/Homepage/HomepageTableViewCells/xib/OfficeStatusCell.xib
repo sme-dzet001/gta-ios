@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -21,7 +22,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9 Derry Street, London, W8 5HY, United Kindom" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9t-Uf-0dC">
-                        <rect key="frame" x="24" y="48" width="337" height="14.5"/>
+                        <rect key="frame" x="24" y="48" width="335" height="14.5"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                         <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -32,10 +33,10 @@
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow" translatesAutoresizingMaskIntoConstraints="NO" id="nzW-fD-7gZ">
-                        <rect key="frame" x="366" y="28" width="24" height="24"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_icon" translatesAutoresizingMaskIntoConstraints="NO" id="nzW-fD-7gZ">
+                        <rect key="frame" x="364" y="28" width="30" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="24" id="9ZW-Bk-eeS"/>
+                            <constraint firstAttribute="width" constant="30" id="9ZW-Bk-eeS"/>
                             <constraint firstAttribute="width" secondItem="nzW-fD-7gZ" secondAttribute="height" multiplier="1:1" id="BYj-Di-xsg"/>
                         </constraints>
                     </imageView>
@@ -46,13 +47,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(480) 555-0103" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmx-Ig-l11">
-                        <rect key="frame" x="24" y="72" width="337" height="14.5"/>
+                        <rect key="frame" x="24" y="72" width="335" height="14.5"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                         <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="deanna.curtis@example.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R9P-k2-m9N">
-                        <rect key="frame" x="24" y="96" width="332" height="14.5"/>
+                        <rect key="frame" x="24" y="96" width="330" height="14.5"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                         <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -85,7 +86,7 @@
                     <constraint firstItem="nzW-fD-7gZ" firstAttribute="leading" secondItem="bmx-Ig-l11" secondAttribute="trailing" constant="5" id="dam-cg-nS5"/>
                     <constraint firstItem="84p-gl-Gqp" firstAttribute="centerY" secondItem="ayQ-To-8HK" secondAttribute="centerY" id="eeE-zn-wIz"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="R9P-k2-m9N" secondAttribute="bottom" constant="18" id="gd3-mn-8BU"/>
-                    <constraint firstAttribute="trailing" secondItem="nzW-fD-7gZ" secondAttribute="trailing" constant="24" id="vFb-l8-1oy"/>
+                    <constraint firstAttribute="trailing" secondItem="nzW-fD-7gZ" secondAttribute="trailing" constant="20" id="vFb-l8-1oy"/>
                     <constraint firstItem="B9t-Uf-0dC" firstAttribute="top" secondItem="ayQ-To-8HK" secondAttribute="bottom" constant="10" id="vR7-Og-8ja"/>
                     <constraint firstItem="OkM-bA-6ew" firstAttribute="leading" secondItem="eYx-1Z-qqH" secondAttribute="leading" id="y4L-v6-KOK"/>
                 </constraints>
@@ -102,6 +103,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="arrow" width="24" height="24"/>
+        <image name="arrow_icon" width="40" height="40"/>
     </resources>
 </document>
