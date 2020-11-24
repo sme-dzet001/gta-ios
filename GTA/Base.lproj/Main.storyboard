@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EcR-AN-4mG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EcR-AN-4mG">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,7 +39,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -169,6 +169,56 @@
             </objects>
             <point key="canvasLocation" x="138" y="74"/>
         </scene>
+        <!--LoginUSM View Controller-->
+        <scene sceneID="6ce-dN-Ckb">
+            <objects>
+                <viewController storyboardIdentifier="LoginUSMViewController" id="luN-tu-EDy" customClass="LoginUSMViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gKM-XL-mAd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFK-IN-Mxh" customClass="APHeaderView" customModule="GTA" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="62" width="414" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PhJ-iM-7Py">
+                                        <rect key="frame" x="24" y="10" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="P99-15-KtE"/>
+                                            <constraint firstAttribute="width" constant="24" id="Wkc-ml-VwJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" image="back_arrow"/>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="luN-tu-EDy" eventType="touchUpInside" id="xUk-Wt-VbT"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="PhJ-iM-7Py" firstAttribute="leading" secondItem="xFK-IN-Mxh" secondAttribute="leading" constant="24" id="Y9S-la-JNN"/>
+                                    <constraint firstItem="PhJ-iM-7Py" firstAttribute="centerY" secondItem="xFK-IN-Mxh" secondAttribute="centerY" id="l2C-CI-ldm"/>
+                                    <constraint firstAttribute="height" constant="44" id="srg-WY-zWt"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Xwp-eM-qBS"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Xwp-eM-qBS" firstAttribute="leading" secondItem="xFK-IN-Mxh" secondAttribute="leading" id="58a-Qe-s62"/>
+                            <constraint firstItem="Xwp-eM-qBS" firstAttribute="trailing" secondItem="xFK-IN-Mxh" secondAttribute="trailing" id="OOb-pp-Bid"/>
+                            <constraint firstItem="xFK-IN-Mxh" firstAttribute="top" secondItem="Xwp-eM-qBS" secondAttribute="top" constant="18" id="UI0-ld-y82"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="headerView" destination="xFK-IN-Mxh" id="ch4-xq-6Pv"/>
+                        <segue destination="aMC-om-Izk" kind="unwind" identifier="unwindToLogin" unwindAction="unwindToLoginWithSegue:" id="0n2-li-gqy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QKZ-Hj-nN3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="aMC-om-Izk" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="135" y="747"/>
+        </scene>
         <!--HomePageTab-->
         <scene sceneID="s2d-wz-7pa">
             <objects>
@@ -246,12 +296,38 @@
         <!--General-->
         <scene sceneID="v41-tN-vox">
             <objects>
-                <viewController id="Id3-YA-WU9" sceneMemberID="viewController">
+                <viewController id="Id3-YA-WU9" customClass="GeneralViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8HA-VV-aXc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZD-Fw-3R5">
+                                <rect key="frame" x="24" y="709" width="366" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="dZc-Iv-9GT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
+                                <state key="normal" title="Logout"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                        <color key="value" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onLogoutButtonTapWithSender:" destination="Id3-YA-WU9" eventType="touchUpInside" id="98B-5j-0ZV"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="wtV-db-6nF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rZD-Fw-3R5" firstAttribute="bottom" secondItem="wtV-db-6nF" secondAttribute="bottom" constant="-48" id="JBa-0N-IcR"/>
+                            <constraint firstItem="rZD-Fw-3R5" firstAttribute="trailing" secondItem="wtV-db-6nF" secondAttribute="trailing" constant="-24" id="Q2z-z0-q65"/>
+                            <constraint firstItem="rZD-Fw-3R5" firstAttribute="leading" secondItem="wtV-db-6nF" secondAttribute="leading" constant="24" id="ryb-Ec-hsz"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="General" image="general_tab_icon" id="Yfo-Ct-jJr"/>
                 </viewController>
@@ -262,11 +338,12 @@
     </scenes>
     <designables>
         <designable name="JCo-dS-SrK">
-            <size key="intrinsicContentSize" width="40.5" height="21"/>
+            <size key="intrinsicContentSize" width="25" height="41"/>
         </designable>
     </designables>
     <resources>
         <image name="apps_tab_icon" width="24" height="24"/>
+        <image name="back_arrow" width="29" height="29"/>
         <image name="collaboration_tab_icon" width="24" height="24"/>
         <image name="general_tab_icon" width="24" height="24"/>
         <image name="gta_logo" width="48" height="48"/>

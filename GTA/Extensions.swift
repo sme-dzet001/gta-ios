@@ -99,6 +99,15 @@ extension UIView {
     }
 }
 
+extension UIViewController {
+    func displayError(errorMessage: String, title: String? = "Error", onClose: @escaping ((UIAlertAction) -> Void) = { _ in }) {
+        let alertController = UIAlertController(title: title, message: errorMessage, preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "OK", style: .default, handler: onClose)
+        alertController.addAction(closeAction)
+        present(alertController, animated: true, completion: nil)
+    }
+}
+
 extension String {
     var sha512: String {
         let data = Data(self.utf8)
