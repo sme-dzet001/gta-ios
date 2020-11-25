@@ -8,7 +8,7 @@
 import UIKit
 import PanModal
 
-class ReportScreenViewController: UIViewController, PanModalPresentable {
+class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var mainLabel: UILabel!
@@ -27,6 +27,10 @@ class ReportScreenViewController: UIViewController, PanModalPresentable {
     var isShortFormEnabled = true
     var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
+    }
+    
+    var showDragIndicator: Bool {
+        return false
     }
     
     var shortFormHeight: PanModalHeight {
@@ -161,7 +165,7 @@ class ReportScreenViewController: UIViewController, PanModalPresentable {
     
 }
 
-extension ReportScreenViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension HelpReportScreenViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
     // MARK: - UIPickerView Delegate and DataSource implementation
     
@@ -182,7 +186,7 @@ extension ReportScreenViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
 }
 
-extension ReportScreenViewController: UITextViewDelegate {
+extension HelpReportScreenViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         self.textView.textViewDidChange()
     }

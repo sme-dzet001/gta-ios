@@ -165,7 +165,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             let aboutScreen = AboutViewController()
             navigationController?.pushViewController(aboutScreen, animated: true)
         } else {
-            let reportScreen = ReportScreenViewController()
+            let reportScreen = HelpReportScreenViewController()
             reportScreen.delegate = self
             presentPanModal(reportScreen)
         }
