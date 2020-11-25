@@ -19,6 +19,10 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         return tableView
     }
     
+    var showDragIndicator: Bool {
+        return false
+    }
+    
     var shortFormHeight: PanModalHeight {
         return initialHeight
     }

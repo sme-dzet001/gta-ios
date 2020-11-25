@@ -14,11 +14,16 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
+    @IBOutlet weak var headerView: UIView!
     
     var messageHeaderView: SecondSendMessageView = SecondSendMessageView.instanceFromNib()
     
     var panScrollable: UIScrollView? {
         return tableView
+    }
+    
+    var showDragIndicator: Bool {
+        return false
     }
     
     var shortFormHeight: PanModalHeight {
@@ -59,7 +64,8 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     private func addDetailsView() {
         let detailsView = TicketDatailsHeader.instanceFromNib()
         detailsView.fillHeaderLabels(with: dataSource)
-        detailsView.frame = CGRect(x: 0, y: 70, width: self.view.frame.width, height: 190)
+        let sdsdd = self.headerView.frame.height + self.headerView.frame.origin.y
+        detailsView.frame = CGRect(x: 0, y: sdsdd, width: self.view.frame.width, height: 190)
         view.addSubview(detailsView)
     }
     

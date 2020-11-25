@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -28,12 +29,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-Vj-rQd">
-                    <rect key="frame" x="0.0" y="114" width="414" height="748"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V4D-Rv-b6b">
-                    <rect key="frame" x="0.0" y="44" width="414" height="70"/>
+                    <rect key="frame" x="0.0" y="54" width="414" height="70"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6j-Gm-GTm">
                             <rect key="frame" x="69" y="11" width="276" height="48"/>
@@ -78,15 +75,34 @@ Office Location</string>
                         <constraint firstItem="G6j-Gm-GTm" firstAttribute="centerY" secondItem="V4D-Rv-b6b" secondAttribute="centerY" id="sOT-oc-cM7"/>
                     </constraints>
                 </view>
+                <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-Vj-rQd">
+                    <rect key="frame" x="0.0" y="124" width="414" height="738"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jne-DP-cx2">
+                    <rect key="frame" x="183" y="50" width="48" height="4"/>
+                    <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="48" id="K6c-tG-OEv"/>
+                        <constraint firstAttribute="height" constant="4" id="YEJ-sB-Ohb"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="3"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="V4D-Rv-b6b" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4i8-3T-dmS"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="V4D-Rv-b6b" secondAttribute="top" id="A7I-13-u7m"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="1dl-Vj-rQd" secondAttribute="bottom" id="Asc-UK-W7i"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="V4D-Rv-b6b" secondAttribute="trailing" id="DfL-Ua-JRm"/>
                 <constraint firstItem="1dl-Vj-rQd" firstAttribute="top" secondItem="V4D-Rv-b6b" secondAttribute="bottom" id="Ogo-72-1kk"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="V4D-Rv-b6b" secondAttribute="top" constant="-10" id="XTQ-iz-cXL"/>
+                <constraint firstItem="V4D-Rv-b6b" firstAttribute="top" secondItem="Jne-DP-cx2" secondAttribute="bottom" id="auD-As-F2q"/>
+                <constraint firstItem="Jne-DP-cx2" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="by3-Vc-hto"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1dl-Vj-rQd" secondAttribute="trailing" id="xXF-fv-TqS"/>
                 <constraint firstItem="1dl-Vj-rQd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="xcl-4J-iek"/>
             </constraints>

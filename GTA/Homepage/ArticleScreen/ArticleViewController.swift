@@ -20,6 +20,10 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         }
     }
     var panScrollable: UIScrollView?
+    
+    var showDragIndicator: Bool {
+        return false
+    }
     var initialHeight: CGFloat = 0.0
     weak var appearanceDelegate: PanModalAppearanceDelegate?
     

@@ -21,4 +21,8 @@ class PanModalNavigationController: UINavigationController, PanModalPresentable 
         return 20
     }
     
+    var showDragIndicator: Bool {
+        return false
+    }
+    
 }

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -27,23 +28,17 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Guf-J0-V8D">
-                    <rect key="frame" x="0.0" y="70" width="414" height="826"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2bW-lx-lmw">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
+                    <rect key="frame" x="0.0" y="19" width="414" height="50"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBa-uP-u6W">
-                            <rect key="frame" x="69" y="11" width="276" height="48"/>
-                            <string key="text">Select a Sony Music
-Office Location</string>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ticket Details" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBa-uP-u6W">
+                            <rect key="frame" x="69" y="13" width="276" height="24"/>
                             <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AkM-Gy-J0A">
-                            <rect key="frame" x="365" y="22.5" width="25" height="25"/>
+                            <rect key="frame" x="365" y="12.5" width="25" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="AkM-Gy-J0A" secondAttribute="height" multiplier="1:1" id="MTr-LC-hEz"/>
                                 <constraint firstAttribute="width" constant="25" id="OwD-1Z-Zzx"/>
@@ -60,9 +55,26 @@ Office Location</string>
                         <constraint firstItem="AkM-Gy-J0A" firstAttribute="centerY" secondItem="tBa-uP-u6W" secondAttribute="centerY" id="L2c-ww-XFr"/>
                         <constraint firstItem="AkM-Gy-J0A" firstAttribute="leading" secondItem="tBa-uP-u6W" secondAttribute="trailing" constant="20" id="ili-0t-rWn"/>
                         <constraint firstItem="tBa-uP-u6W" firstAttribute="centerY" secondItem="2bW-lx-lmw" secondAttribute="centerY" id="kbZ-qT-KAa"/>
-                        <constraint firstAttribute="height" constant="70" id="nb8-NJ-obe"/>
+                        <constraint firstAttribute="height" constant="50" id="nb8-NJ-obe"/>
                         <constraint firstAttribute="trailing" secondItem="AkM-Gy-J0A" secondAttribute="trailing" constant="24" id="xNe-wr-O0N"/>
                     </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Guf-J0-V8D">
+                    <rect key="frame" x="0.0" y="69" width="414" height="827"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g5b-nM-NPD">
+                    <rect key="frame" x="183" y="10" width="48" height="4"/>
+                    <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="4" id="4Zy-4o-lGy"/>
+                        <constraint firstAttribute="width" constant="48" id="hDE-pB-mor"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="3"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -72,9 +84,11 @@ Office Location</string>
                 <constraint firstItem="2bW-lx-lmw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ESe-Fs-3aC"/>
                 <constraint firstAttribute="bottom" secondItem="Guf-J0-V8D" secondAttribute="bottom" id="JYP-3M-mPV"/>
                 <constraint firstItem="Guf-J0-V8D" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Sp4-mC-YH0"/>
+                <constraint firstItem="2bW-lx-lmw" firstAttribute="top" secondItem="g5b-nM-NPD" secondAttribute="bottom" constant="5" id="Tmb-sP-TWA"/>
+                <constraint firstItem="g5b-nM-NPD" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="aWg-kg-pS2"/>
+                <constraint firstItem="g5b-nM-NPD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="aue-z5-Otc"/>
                 <constraint firstItem="Guf-J0-V8D" firstAttribute="top" secondItem="2bW-lx-lmw" secondAttribute="bottom" id="iHj-qk-DbV"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Guf-J0-V8D" secondAttribute="trailing" id="q5s-mg-zrK"/>
-                <constraint firstItem="2bW-lx-lmw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="v9u-MU-bZ2"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="121.875"/>
         </view>
