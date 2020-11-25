@@ -530,6 +530,7 @@
 				659A5AB2255401EA00E13B77 /* SceneDelegate.swift */,
 				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
 				65D1A29225549A0600D71965 /* MainViewController.swift */,
+				9F8AEAE2255EB86000B62072 /* CustomUIElements */,
 				6583BC8A2559AD4300C80673 /* Homepage */,
 				C91F70962562FECD002F17B1 /* HelpDeskSection */,
 				9F895AD6255C22D6004489C6 /* MyAppsSection */,
@@ -718,7 +719,6 @@
 			isa = PBXGroup;
 			children = (
 				9F895AD7255C22D6004489C6 /* AppsScreen */,
-				9F8AEAE2255EB86000B62072 /* CustomClasses */,
 				9F895B67255D3CCB004489C6 /* ReportScreen */,
 				9F895B24255C2DDF004489C6 /* ApplicationStatus */,
 				C93FCF1125648FAF001E86F6 /* AboutScreen */,
@@ -799,14 +799,14 @@
 			path = ReportScreen;
 			sourceTree = "<group>";
 		};
-		9F8AEAE2255EB86000B62072 /* CustomClasses */ = {
+		9F8AEAE2255EB86000B62072 /* CustomUIElements */ = {
 			isa = PBXGroup;
 			children = (
 				9F895B7A255D8810004489C6 /* CustomTextField.swift */,
 				9F8AEAE3255EB88500B62072 /* CustomTextView.swift */,
 				C9DFD4C825659DB400BF1740 /* BarChart */,
 			);
-			path = CustomClasses;
+			path = CustomUIElements;
 			sourceTree = "<group>";
 		};
 		9FF0542C2567E1A00071E596 /* TicketDetailsCell */ = {
