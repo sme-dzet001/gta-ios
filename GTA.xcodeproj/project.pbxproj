@@ -11,6 +11,12 @@
 		08DD42AB44AEA79C258F7859 /* Pods_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739BB9A2FBAFC3247B247CBA /* Pods_GTAStage.framework */; };
 		440FDF77234ADC62245DC9CA /* Pods_GTA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99FE5D7739905AF03A6B886 /* Pods_GTA.framework */; };
 		52F3B5B0BEEA12AA44E11F65 /* Pods_GTATests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883FCD5CF54E37AB18CEBE36 /* Pods_GTATests.framework */; };
+		65398BCC256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
+		65398BCD256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
+		65398BCE256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
+		65398BD5256D59D60039C24E /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BD4256D59D50039C24E /* LoginResponses.swift */; };
+		65398BD6256D59D60039C24E /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BD4256D59D50039C24E /* LoginResponses.swift */; };
+		65398BD7256D59D60039C24E /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BD4256D59D50039C24E /* LoginResponses.swift */; };
 		659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
 		659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
 		659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
@@ -26,10 +32,22 @@
 		659A5AF4255404F100E13B77 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */; };
 		659A5AF5255404F200E13B77 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */; };
 		659A5AFA255457B600E13B77 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AF9255457B600E13B77 /* Extensions.swift */; };
+		65D14CB9256DA877004DFA70 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
+		65D14CBA256DA877004DFA70 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
+		65D14CBB256DA877004DFA70 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
 		65D1A29325549A0600D71965 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1A29225549A0600D71965 /* MainViewController.swift */; };
 		65D1A2A12554BE3700D71965 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2A02554BE3700D71965 /* Home.storyboard */; };
 		65D1A2AC2554CE5E00D71965 /* HelpDesk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */; };
 		65D1A2B12554CF1F00D71965 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2B02554CF1F00D71965 /* Apps.storyboard */; };
+		65D2905B25682E76001B658A /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2905A25682E76001B658A /* LoginUSMViewController.swift */; };
+		65D2905C25682E76001B658A /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2905A25682E76001B658A /* LoginUSMViewController.swift */; };
+		65D2905D25682E76001B658A /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2905A25682E76001B658A /* LoginUSMViewController.swift */; };
+		65D29083256C0DA6001B658A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D29082256C0DA6001B658A /* APIManager.swift */; };
+		65D2908E256C0DBC001B658A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D29082256C0DA6001B658A /* APIManager.swift */; };
+		65D29094256C0DBD001B658A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D29082256C0DA6001B658A /* APIManager.swift */; };
+		65D2909B256C0DDD001B658A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2909A256C0DDD001B658A /* KeychainManager.swift */; };
+		65D2909C256C0DDD001B658A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2909A256C0DDD001B658A /* KeychainManager.swift */; };
+		65D2909D256C0DDD001B658A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2909A256C0DDD001B658A /* KeychainManager.swift */; };
 		9F0CA54D2566875F00275B25 /* OfficeLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */; };
 		9F0CA54E2566875F00275B25 /* OfficeLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */; };
 		9F0CA54F2566875F00275B25 /* OfficeLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */; };
@@ -320,6 +338,8 @@
 		2A81D17183897C26E91E6B8F /* Pods-GTAUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAUITests.debug.xcconfig"; path = "Target Support Files/Pods-GTAUITests/Pods-GTAUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		32CD469F4721B25AB5FCA92F /* Pods-GTA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.release.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.release.xcconfig"; sourceTree = "<group>"; };
 		36A01C2B3BD99917F474E04F /* Pods-GTATests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.release.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.release.xcconfig"; sourceTree = "<group>"; };
+		65398BCB256D4C5E0039C24E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		65398BD4256D59D50039C24E /* LoginResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponses.swift; sourceTree = "<group>"; };
 		659A5AAD255401EA00E13B77 /* GTA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		659A5AB0255401EA00E13B77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		659A5AB2255401EA00E13B77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -341,10 +361,14 @@
 		659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
 		659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		659A5AF9255457B600E13B77 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		65D14CB8256DA877004DFA70 /* GeneralViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralViewController.swift; sourceTree = "<group>"; };
 		65D1A29225549A0600D71965 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		65D1A2A02554BE3700D71965 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelpDesk.storyboard; sourceTree = "<group>"; };
 		65D1A2B02554CF1F00D71965 /* Apps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Apps.storyboard; sourceTree = "<group>"; };
+		65D2905A25682E76001B658A /* LoginUSMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUSMViewController.swift; sourceTree = "<group>"; };
+		65D29082256C0DA6001B658A /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		65D2909A256C0DDD001B658A /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		6EB077646F36AA7D3D1D97AB /* Pods_GTAUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTAUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		739BB9A2FBAFC3247B247CBA /* Pods_GTAStage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTAStage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		883FCD5CF54E37AB18CEBE36 /* Pods_GTATests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTATests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -525,15 +549,18 @@
 		659A5AAF255401EA00E13B77 /* GTA */ = {
 			isa = PBXGroup;
 			children = (
+				65D29081256C0D8F001B658A /* Utils */,
+				65D29080256C0D7E001B658A /* Communication */,
+				65D2905425682E45001B658A /* Login */,
 				659A5AF9255457B600E13B77 /* Extensions.swift */,
 				659A5AB0255401EA00E13B77 /* AppDelegate.swift */,
 				659A5AB2255401EA00E13B77 /* SceneDelegate.swift */,
-				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
 				65D1A29225549A0600D71965 /* MainViewController.swift */,
 				9F8AEAE2255EB86000B62072 /* CustomUIElements */,
 				6583BC8A2559AD4300C80673 /* Homepage */,
 				C91F70962562FECD002F17B1 /* HelpDeskSection */,
 				9F895AD6255C22D6004489C6 /* MyAppsSection */,
+				65D14CB7256DA832004DFA70 /* GeneralSection */,
 				659A5AB6255401EA00E13B77 /* Main.storyboard */,
 				659A5AE9255404BB00E13B77 /* Supporting Files */,
 				659A5AB9255401ED00E13B77 /* Assets.xcassets */,
@@ -577,6 +604,41 @@
 				9F78D0942565321100BCD38F /* SF-Pro-Text-Light.ttf */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		65D14CB7256DA832004DFA70 /* GeneralSection */ = {
+			isa = PBXGroup;
+			children = (
+				65D14CB8256DA877004DFA70 /* GeneralViewController.swift */,
+			);
+			path = GeneralSection;
+			sourceTree = "<group>";
+		};
+		65D2905425682E45001B658A /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
+				65D2905A25682E76001B658A /* LoginUSMViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		65D29080256C0D7E001B658A /* Communication */ = {
+			isa = PBXGroup;
+			children = (
+				65D29082256C0DA6001B658A /* APIManager.swift */,
+				65398BD4256D59D50039C24E /* LoginResponses.swift */,
+			);
+			path = Communication;
+			sourceTree = "<group>";
+		};
+		65D29081256C0D8F001B658A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				65D2909A256C0DDD001B658A /* KeychainManager.swift */,
+				65398BCB256D4C5E0039C24E /* Utils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		859404A3899213CC1A467C10 /* Pods */ = {
@@ -1470,6 +1532,7 @@
 				C9DFD4C025659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				C962D8282566D21100727949 /* TicketCell.swift in Sources */,
 				9FF0546625681F4A0071E596 /* SecondTicketDetailsViewController.swift in Sources */,
+				65D2905B25682E76001B658A /* LoginUSMViewController.swift in Sources */,
 				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F1620DA2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
@@ -1481,6 +1544,7 @@
 				C91F708B2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */,
 				9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */,
+				65398BCC256D4C5F0039C24E /* Utils.swift in Sources */,
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9F5B105D2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
@@ -1500,12 +1564,16 @@
 				C9705B7C2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
 				9F0CA54D2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
 				C93FCF312564906F001E86F6 /* AboutContactsCell.swift in Sources */,
+				65D29083256C0DA6001B658A /* APIManager.swift in Sources */,
 				C91F707C2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F78D0DE256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
+				65D14CB9256DA877004DFA70 /* GeneralViewController.swift in Sources */,
+				65D2909B256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E0125642632003C247E /* MyDevicesViewController.swift in Sources */,
 				C9424E14256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
+				65398BD5256D59D60039C24E /* LoginResponses.swift in Sources */,
 				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1540,6 +1608,7 @@
 				9F0CA54E2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
 				C962D8292566D21100727949 /* TicketCell.swift in Sources */,
 				C93FCF0725648FA0001E86F6 /* AboutViewController.swift in Sources */,
+				65D2905C25682E76001B658A /* LoginUSMViewController.swift in Sources */,
 				9F36D4662562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9FF054302567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
@@ -1553,6 +1622,7 @@
 				C91F708C2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
 				C9D859392567FE850025F544 /* InfoViewController.swift in Sources */,
+				65398BCD256D4C5F0039C24E /* Utils.swift in Sources */,
 				9F895AE8255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
@@ -1570,12 +1640,16 @@
 				9F895B6B255D3D27004489C6 /* HelpReportScreenViewController.swift in Sources */,
 				C93FCF322564906F001E86F6 /* AboutContactsCell.swift in Sources */,
 				C91F707D2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
+				65D2908E256C0DBC001B658A /* APIManager.swift in Sources */,
 				9F78D0DF256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C22566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				C9424E0225642632003C247E /* MyDevicesViewController.swift in Sources */,
+				65D14CBA256DA877004DFA70 /* GeneralViewController.swift in Sources */,
+				65D2909C256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E15256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				C962D8452566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
+				65398BD6256D59D60039C24E /* LoginResponses.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1594,6 +1668,7 @@
 				9F0CA54F2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
 				C962D82A2566D21100727949 /* TicketCell.swift in Sources */,
 				C93FCF0825648FA0001E86F6 /* AboutViewController.swift in Sources */,
+				65D2905D25682E76001B658A /* LoginUSMViewController.swift in Sources */,
 				9F36D4672562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9FF054312567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
@@ -1607,6 +1682,7 @@
 				C91F708D2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
 				C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */,
+				65398BCE256D4C5F0039C24E /* Utils.swift in Sources */,
 				9F895AE9255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
@@ -1624,12 +1700,16 @@
 				9F895B6C255D3D27004489C6 /* HelpReportScreenViewController.swift in Sources */,
 				C93FCF332564906F001E86F6 /* AboutContactsCell.swift in Sources */,
 				C91F707E2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
+				65D29094256C0DBD001B658A /* APIManager.swift in Sources */,
 				9F78D0E0256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C32566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				C9424E0325642632003C247E /* MyDevicesViewController.swift in Sources */,
+				65D14CBB256DA877004DFA70 /* GeneralViewController.swift in Sources */,
+				65D2909D256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E16256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				C962D8462566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
+				65398BD7256D59D60039C24E /* LoginResponses.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

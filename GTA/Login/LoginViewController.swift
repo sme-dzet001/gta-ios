@@ -48,6 +48,12 @@ class LoginViewController: UIViewController {
         return .default
     }
     
+    @IBAction func unwindToLogin(segue:UIStoryboardSegue) {
+        /*if KeychainManager.getSessionId() != nil && KeychainManager.getVerificationsAttemptsLeft() > 0 {
+            self.logout()
+        }*/
+    }
+    
     @IBAction func onLoginButtonTap(sender: UIButton) {
         guard let emailText = emailTextField.text, emailText.isValidEmail else {
             let alert = UIAlertController(title: "Enter a valid email address", message: "", preferredStyle: .alert)
@@ -56,8 +62,10 @@ class LoginViewController: UIViewController {
             return
         }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainScreen = storyboard.instantiateViewController(withIdentifier: "TabBarController")
-        self.navigationController?.pushViewController(mainScreen, animated: true)
+        if let usmLoginScreen = storyboard.instantiateViewController(withIdentifier: "LoginUSMViewController") as? LoginUSMViewController {
+            usmLoginScreen.emailAddress = emailText
+            self.navigationController?.pushViewController(usmLoginScreen, animated: true)
+        }
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
