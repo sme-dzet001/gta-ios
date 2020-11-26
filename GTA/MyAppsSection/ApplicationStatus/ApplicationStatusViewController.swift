@@ -32,7 +32,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1)
+        self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
     }
     
     private func setUpNavigationItem() {

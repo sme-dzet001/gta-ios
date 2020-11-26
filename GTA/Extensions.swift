@@ -18,6 +18,7 @@ extension UIColor {
         )
         self.init(red: components.R, green: components.G, blue: components.B, alpha: 1)
     }
+    
     convenience init(hex: Int, alpha: CGFloat) {
         let components = (
             R: CGFloat((hex >> 16) & 0xff) / 255,
@@ -25,6 +26,16 @@ extension UIColor {
             B: CGFloat((hex >> 00) & 0xff) / 255
         )
         self.init(red: components.R, green: components.G, blue: components.B, alpha: alpha)
+    }
+    
+    /// Converts UIColor to 1x1 image and returns it
+    func as1ptImage() -> UIImage {
+        UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
+        setFill()
+        UIGraphicsGetCurrentContext()?.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        let image = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
+        UIGraphicsEndImageContext()
+        return image
     }
 }
 
@@ -161,6 +172,10 @@ extension String {
 extension UINavigationController {
     var rootViewController : UIViewController? {
         return self.viewControllers.first
+    }
+    
+    func setNavigationBarBottomShadowColor(_ color: UIColor) {
+        self.navigationBar.shadowImage = color.as1ptImage()
     }
 }
 

@@ -17,6 +17,7 @@ class HelpDeskViewController: UIViewController {
         super.viewDidLoad()
         setUpTableView()
         setHelpDeskCellsData()
+        navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
     }
 
     private func setUpTableView() {
