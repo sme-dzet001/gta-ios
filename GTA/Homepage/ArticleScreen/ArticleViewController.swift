@@ -37,6 +37,14 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         return .contentHeight(initialHeight + 10)
     }
     
+    var topOffset: CGFloat {
+        if let keyWindow = UIWindow.key {
+            return keyWindow.safeAreaInsets.top
+        } else {
+            return 0
+        }
+    }
+    
     var allowsTapToDismiss: Bool {
         return false
     }
