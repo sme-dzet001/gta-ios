@@ -116,6 +116,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
             // logout was made
             KeychainManager.deleteUsername()
             KeychainManager.deleteToken()
+            KeychainManager.deleteTokenExpirationDate()
             
             usmWebView.isHidden = false
             loadUsmLogon()

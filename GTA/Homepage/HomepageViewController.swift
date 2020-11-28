@@ -26,6 +26,8 @@ class HomepageViewController: UIViewController {
         setUpCollectionView()
         setUpPageControl()
         setNeedsStatusBarAppearanceUpdate()
+        
+        print(KeychainManager.getToken())
     }
     
     private func setUpPageControl() {

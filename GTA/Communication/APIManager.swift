@@ -14,6 +14,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     private enum requestEndpoint: String {
         case validateToken
+        // TODO
         
         var endpoint: String {
             switch self {
@@ -44,6 +45,8 @@ class APIManager: NSObject, URLSessionDelegate {
                     if let validationResponse: AccessTokenValidationResponse = try self.parse(data: responseData) {
                         _ = KeychainManager.saveUsername(username: validationResponse.data.username)
                         _ = KeychainManager.saveToken(token: validationResponse.data.token)
+                        let tokenExpirationDate = Date().addingTimeInterval(TimeInterval(validationResponse.data.lifetime))
+                        _ = KeychainManager.saveTokenExpirationDate(tokenExpirationDate: tokenExpirationDate)
                     }
                 } catch {
                     retErr = error

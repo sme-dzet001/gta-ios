@@ -17,13 +17,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        var tokenIsExpired = true
+        if let tokenExpirationDate = KeychainManager.getTokenExpirationDate(), Date() < tokenExpirationDate {
+            tokenIsExpired = false
+        }
         if let _ = KeychainManager.getToken() {
-            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let mainViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarController")
-            let navController = UINavigationController(rootViewController: mainViewController)
-            navController.isNavigationBarHidden = true
-            navController.isToolbarHidden = true
-            window?.rootViewController = navController
+            if tokenIsExpired {
+                KeychainManager.deleteUsername()
+                KeychainManager.deleteToken()
+                KeychainManager.deleteTokenExpirationDate()
+                startLoginFlow(sessionExpired: true)
+            } else {
+                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let mainViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarController")
+                let navController = UINavigationController(rootViewController: mainViewController)
+                navController.isNavigationBarHidden = true
+                navController.isToolbarHidden = true
+                window?.rootViewController = navController
+            }
         }
     }
 
@@ -55,9 +66,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-    func startLoginFlow(forInternalUser: Bool = false, sessionExpired: Bool = false) {
+    func startLoginFlow(sessionExpired: Bool = false) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let loginViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        loginViewController.sessionExpired = sessionExpired
         let navController = UINavigationController(rootViewController: loginViewController as UIViewController)
         navController.isNavigationBarHidden = true
         navController.isToolbarHidden = true

@@ -18,6 +18,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var forgotPasswordBottom: NSLayoutConstraint!
     
     private let defaultForgotPasswordBottom: CGFloat = 16
+    var sessionExpired = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,13 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if sessionExpired {
+            showSessionExpiredAlert()
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -49,9 +57,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func unwindToLogin(segue:UIStoryboardSegue) {
-        /*if KeychainManager.getSessionId() != nil && KeychainManager.getVerificationsAttemptsLeft() > 0 {
-            self.logout()
-        }*/
     }
     
     @IBAction func onLoginButtonTap(sender: UIButton) {
@@ -78,7 +83,14 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func handleKeyboardAppearance(overlay: CGFloat) {
+    private func showSessionExpiredAlert() {
+        let title = "Your session has expired"
+        displayError(errorMessage: "", title: title) { [weak self] (UIAlertAction) in
+            self?.sessionExpired = false
+        }
+    }
+    
+    private func handleKeyboardAppearance(overlay: CGFloat) {
         let yPointLoginBtn = self.view.frame.height - (loginButton.frame.origin.y + loginButton.frame.height)
         forgotPasswordBottom.constant = yPointLoginBtn - self.forgotPasswordButton.frame.height - 10 - self.view.safeAreaInsets.bottom - 20
         if overlay > forgotPasswordBottom.constant {
