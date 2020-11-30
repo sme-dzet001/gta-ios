@@ -21,7 +21,10 @@ class MetricStatsCell: UITableViewCell {
     func setUpCell(with data: ChartData, hideSeparator: Bool = false) {
         periodLabel.text = data.periodFullTitle
         let amount = data.value ?? 0
-        amountLabel.text = "\(amount)"
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        let decimalFormattedAmount = numberFormatter.string(from: NSNumber(value: amount))
+        amountLabel.text = decimalFormattedAmount
         separator.isHidden = hideSeparator
     }
     
