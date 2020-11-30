@@ -59,6 +59,7 @@ class HomepageTableViewController: UITableViewController {
         guard indexPath.row < 2 else { return }
         let infoViewController = InfoViewController()
         infoViewController.infoType = dataSource[indexPath.row].infoType
+        infoViewController.title = "Office Status"
         self.navigationController?.pushViewController(infoViewController, animated: true)
     }
 

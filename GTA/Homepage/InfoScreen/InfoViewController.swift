@@ -11,6 +11,7 @@ class InfoViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var officeStatusLabel: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var screenTitleLabel: UILabel!
     var infoType: infoType = .info
@@ -39,6 +40,7 @@ class InfoViewController: UIViewController {
         officeStatusLabel.isHidden = infoType != .office
         officeStatusLabel.layer.cornerRadius = 5
         officeStatusLabel.layer.masksToBounds = true
+        infoLabel.text = self.title
     }
     
     private func setUpTableView() {
@@ -65,6 +67,10 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
             return 1
         default: return officeDataSoure.count
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
