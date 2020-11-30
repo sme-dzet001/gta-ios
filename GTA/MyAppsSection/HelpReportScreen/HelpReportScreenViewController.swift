@@ -24,7 +24,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     weak var delegate: ShowAlertDelegate?
     private let pickerView = UIPickerView()
     var screenTitle: String?
-
+    var selectedText: String? = ""
     var isShortFormEnabled = true
     var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
@@ -85,11 +85,14 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
         
     @objc private func doneAction() {
+        selectedText = self.typeTextField.text
         self.view.endEditing(true)
     }
     
     @objc private func cancelAction() {
-        self.typeTextField.text = ""
+        let index = pickerDataSource.firstIndex(of: selectedText ?? "") ?? 0
+        pickerView.selectRow(index, inComponent: 0, animated: false)
+        self.typeTextField.text = selectedText
         self.view.endEditing(true)
     }
     
