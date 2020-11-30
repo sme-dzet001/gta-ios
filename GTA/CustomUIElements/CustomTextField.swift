@@ -28,7 +28,7 @@ open class CustomTextField: UITextField {
     }
     @IBInspectable var heightOfBottomLine: CGFloat = 1 {
         didSet {
-            heightAnchorOfBottomLine.constant = heightOfBottomLine
+            //heightAnchorOfBottomLine.constant = heightOfBottomLine
         }
     }
     

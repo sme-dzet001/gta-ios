@@ -108,15 +108,9 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         typeTextField.setIconForPicker(for: self.view.frame.width)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //typeTextField.setIconForPicker(for: self.view.frame.width)
-    }
-    
     private func setUpTextViewLayout() {
         let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 300 : 340
         textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
-        textView.setPlaceholder()
         self.view.layoutIfNeeded()
     }
     
