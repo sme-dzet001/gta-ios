@@ -137,13 +137,13 @@ open class CustomTextField: UITextField {
         borderStyle = .none
         bottonLineView.removeFromSuperview()
         
-        addSubview(bottonLineView)
-        bottonLineView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
-        bottonLineView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
-        bottonLineView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+//        addSubview(bottonLineView)
+//        bottonLineView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
+//        bottonLineView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+//        bottonLineView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
         
-        heightAnchorOfBottomLine = bottonLineView.heightAnchor.constraint(equalToConstant: heightOfBottomLine)
-        heightAnchorOfBottomLine.isActive = true
+//        heightAnchorOfBottomLine = bottonLineView.heightAnchor.constraint(equalToConstant: heightOfBottomLine)
+//        heightAnchorOfBottomLine.isActive = true
         
         addSubview(labelPlaceholderTitle)
         labelPlaceholderTitleLeft = labelPlaceholderTitle.leftAnchor.constraint(equalTo: leftAnchor, constant: leftPadding)
@@ -156,10 +156,10 @@ open class CustomTextField: UITextField {
         labelPlaceholderTitleCenterY.isActive = true
         
         
-        addSubview(labelError)
-        labelError.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
-        labelError.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
-        labelError.topAnchor.constraint(equalTo: bottonLineView.bottomAnchor, constant: 2).isActive = true
+//        addSubview(labelError)
+//        labelError.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
+//        labelError.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+//        labelError.topAnchor.constraint(equalTo: bottonLineView.bottomAnchor, constant: 2).isActive = true
         
         addTarget(self, action: #selector(self.textFieldDidChange), for: .editingChanged)
     }
