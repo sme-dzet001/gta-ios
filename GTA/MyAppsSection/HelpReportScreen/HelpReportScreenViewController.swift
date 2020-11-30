@@ -24,7 +24,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     weak var delegate: ShowAlertDelegate?
     private let pickerView = UIPickerView()
     var screenTitle: String?
-
+    var selectedText: String? = ""
     var isShortFormEnabled = true
     var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
@@ -85,6 +85,14 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
         
     @objc private func doneAction() {
+        selectedText = self.typeTextField.text
+        self.view.endEditing(true)
+    }
+    
+    @objc private func cancelAction() {
+        let index = pickerDataSource.firstIndex(of: selectedText ?? "") ?? 0
+        pickerView.selectRow(index, inComponent: 0, animated: false)
+        self.typeTextField.text = selectedText
         self.view.endEditing(true)
     }
     
@@ -102,27 +110,23 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(doneAction))
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
         toolbar.setItems([doneButton, flexible, cancelButton], animated: true)
         typeTextField.inputAccessoryView = toolbar
         typeTextField.setIconForPicker(for: self.view.frame.width)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //typeTextField.setIconForPicker(for: self.view.frame.width)
-    }
-    
     private func setUpTextViewLayout() {
         let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 300 : 340
         textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
-        textView.setPlaceholder()
         self.view.layoutIfNeeded()
     }
     
     @IBAction func submitButtonDidPressed(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
-        delegate?.showAlert(title: "Issue has been submitted", message: "Wed 15 10:30 -5 GMT")
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.neededDateFormat
+        delegate?.showAlert(title: "Issue has been submitted", message: dateFormatterPrint.string(from: Date()))
     }
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
