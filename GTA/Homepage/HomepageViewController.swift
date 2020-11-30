@@ -73,7 +73,8 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
             cell.titleLabel.text = dataSource[indexPath.row].newsLabel
             let dateFormatterPrint = DateFormatter()
             dateFormatterPrint.dateFormat = String.neededDateFormat
-            cell.dateLabel.text = dateFormatterPrint.string(from: Date())
+            // hardcoding date similar to Figma for now
+            cell.dateLabel.text = "10:30 +5 GTM Wed 15" //dateFormatterPrint.string(from: Date())
             return cell
         } else {
             return UICollectionViewCell()

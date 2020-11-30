@@ -132,6 +132,10 @@ extension String {
         return "HH:mm zzz E d"
     }
     
+    static var ticketsSectionDateFormat: String {
+        return "E d, yyyy HH:mm zzz"
+    }
+    
     var isValidEmail: Bool {
         let emailRegEx = "(?:[a-zA-Z0-9!#$%\\&‘*+/=?\\^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%\\&'*+/=?\\^_`{|}" +
         "~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\" +

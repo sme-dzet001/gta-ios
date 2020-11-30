@@ -21,8 +21,9 @@ class TicketDetailsMessageCell: UITableViewCell {
     func fillCell(with data: TicketComment?) {
         nameLabel.text = data?.author
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = String.neededDateFormat
-        dateLabel.text = dateFormatterPrint.string(from: data?.date ?? Date())
+        dateFormatterPrint.dateFormat = String.ticketsSectionDateFormat
+        // hardcoding date similar to Figma for now
+        dateLabel.text = "Wed 15, 2020 10:30 -5 GMT" //dateFormatterPrint.string(from: data?.date ?? Date())
         messageLabel.text = data?.text
     }
     
