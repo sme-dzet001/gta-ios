@@ -14,7 +14,7 @@ class PanModalNavigationController: UINavigationController, PanModalPresentable 
     var panScrollable: UIScrollView?
     
     var shortFormHeight: PanModalHeight {
-        return .contentHeight(initialHeight + 10)
+        return .contentHeight(initialHeight)
     }
     
     var topOffset: CGFloat {
