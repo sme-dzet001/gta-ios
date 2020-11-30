@@ -60,7 +60,7 @@ class HomepageTableViewController: UITableViewController {
         let data = dataSource[indexPath.row]
         let infoViewController = InfoViewController()
         infoViewController.infoType = data.infoType
-        infoViewController.title = data.infoType == .office ? "Office Status" : "What is the current situation?"
+        infoViewController.title = data.infoType == .office ? "Sony Music UK" : "What is the current situation?"
         self.navigationController?.pushViewController(infoViewController, animated: true)
     }
 
