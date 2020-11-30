@@ -1,5 +1,5 @@
 PODS:
-  - AdvancedPageControl (0.1.4)
+  - AdvancedPageControl (0.1.5)
   - PanModal (1.2.7)
   - SkyFloatingLabelTextField (3.8.0)
 
@@ -15,7 +15,7 @@ SPEC REPOS:
     - SkyFloatingLabelTextField
 
 SPEC CHECKSUMS:
-  AdvancedPageControl: 2bb63992260869ef665e47da39001a432fb48c49
+  AdvancedPageControl: df5912b03c7b78a7719d4f479b79f7eb3a2966bb
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
 

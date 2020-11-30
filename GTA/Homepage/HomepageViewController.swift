@@ -29,7 +29,9 @@ class HomepageViewController: UIViewController {
     }
     
     private func setUpPageControl() {
-        pageControl.drawer = ExtendedDotDrawer(numberOfPages: dataSource.count,  height: 5, width: CGFloat(dataSource.count) * 1.5, dotsColor: .white)
+        
+        let inactiveColor = UIColor(red: 147.0 / 255.0, green: 130.0 / 255.0, blue: 134.0 / 255.0, alpha: 1.0)
+        pageControl.drawer = ExtendedDotDrawer(numberOfPages: dataSource.count,  height: 5, width: CGFloat(dataSource.count) * 1.3, dotsColor: inactiveColor, borderColor: inactiveColor, indicatorBorderColor: .white)
         pageControl.drawer.currentItem = 0
     }
     
