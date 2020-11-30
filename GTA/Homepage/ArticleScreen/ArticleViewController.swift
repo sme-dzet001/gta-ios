@@ -45,9 +45,30 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         }
     }
     
+    var allowsDragToDismiss: Bool {
+        return false
+    }
+    
     var allowsTapToDismiss: Bool {
         return false
     }
+    
+    var cornerRadius: CGFloat {
+        return 20
+    }
+    
+    var panModalBackgroundColor: UIColor {
+        return .clear
+    }
+    
+//    private var fullInitialHeight: CGFloat {
+//        return (view.window?.safeAreaInsets.top ?? 0) + self.initialHeight
+//    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +80,10 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
+//            let position = UIScreen.main.bounds.height - (self?.presentationController?.presentedView?.frame.origin.y ?? 0.0)
+//            if position <= self?.fullInitialHeight ?? 0 {
+//                print("sddssdsd")
+//            }
             self?.setUpTextViewLayout()
         })
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(newsDidScroll))
@@ -88,20 +113,19 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         }
     }
     
-    var cornerRadius: CGFloat {
-        return 20
-    }
+//    func shouldRespond(to panModalGestureRecognizer: UIPanGestureRecognizer) -> Bool {
+//        let velocity = panModalGestureRecognizer.velocity(in: self.view)
+//        let position = UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0) - velocity.y
+//        if position < self.fullInitialHeight {
+//            return false
+//        }
+//        return true
+//    }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    var panModalBackgroundColor: UIColor {
-        return .clear
     }
     
     func panModalWillDismiss() {
