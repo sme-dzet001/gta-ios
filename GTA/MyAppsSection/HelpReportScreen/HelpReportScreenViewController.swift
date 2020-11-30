@@ -124,7 +124,9 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     
     @IBAction func submitButtonDidPressed(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
-        delegate?.showAlert(title: "Issue has been submitted", message: "Wed 15 10:30 -5 GMT")
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.neededDateFormat
+        delegate?.showAlert(title: "Issue has been submitted", message: dateFormatterPrint.string(from: Date()))
     }
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
