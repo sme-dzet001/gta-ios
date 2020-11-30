@@ -23,6 +23,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     var panScrollable: UIScrollView?
     weak var delegate: ShowAlertDelegate?
     private let pickerView = UIPickerView()
+    var screenTitle: String?
 
     var isShortFormEnabled = true
     var position: CGFloat {
@@ -65,6 +66,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        titleLabel.text = screenTitle
         //setUpTextField()
         setUpTextView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
