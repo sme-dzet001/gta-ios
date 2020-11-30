@@ -8,7 +8,6 @@
 def shared_pods
   pod 'PanModal'
   pod 'AdvancedPageControl'
-  pod 'SkyFloatingLabelTextField', '~> 3.0'
 end
 
 target 'GTA' do
