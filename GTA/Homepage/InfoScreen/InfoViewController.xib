@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,6 +23,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InfoViewController" customModule="GTA" customModuleProvider="target">
             <connections>
                 <outlet property="headerImageView" destination="8OW-0v-f8F" id="GXK-5X-sDu"/>
+                <outlet property="infoLabel" destination="QLI-2z-WNx" id="eZn-6p-VVM"/>
                 <outlet property="officeStatusLabel" destination="vRF-Yl-tE0" id="asY-FN-yUs"/>
                 <outlet property="screenTitleLabel" destination="yWB-SD-fxK" id="dgC-9P-xqg"/>
                 <outlet property="tableView" destination="Dj3-g3-kNV" id="v5M-uj-AWQ"/>
@@ -38,7 +39,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="335.5"/>
                 </imageView>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CLOSED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vRF-Yl-tE0">
-                    <rect key="frame" x="30" y="103" width="50" height="16"/>
+                    <rect key="frame" x="30" y="136.5" width="50" height="16"/>
                     <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="0RY-qK-sWa"/>
@@ -49,15 +50,15 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QLI-2z-WNx">
-                    <rect key="frame" x="30" y="139" width="354" height="57.5"/>
+                    <rect key="frame" x="30" y="172.5" width="354" height="57.5"/>
                     <string key="text">What is the current
 situation?</string>
                     <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="24"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updates 10:30 +5 GTM Wed 15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCL-lV-oEM">
-                    <rect key="frame" x="30" y="216.5" width="210" height="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update: 10:30 +5 GTM Wed 15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCL-lV-oEM">
+                    <rect key="frame" x="30" y="250" width="207" height="17"/>
                     <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="14"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -90,7 +91,7 @@ situation?</string>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="yWB-SD-fxK" secondAttribute="trailing" constant="53" id="9W1-xq-1B3"/>
                 <constraint firstItem="Dj3-g3-kNV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="A7J-Y6-mTA"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QLI-2z-WNx" secondAttribute="trailing" constant="30" id="DsE-Ob-g5d"/>
-                <constraint firstItem="QLI-2z-WNx" firstAttribute="centerY" secondItem="8OW-0v-f8F" secondAttribute="centerY" id="IXh-PG-ht1"/>
+                <constraint firstItem="QLI-2z-WNx" firstAttribute="centerY" secondItem="8OW-0v-f8F" secondAttribute="centerY" multiplier="1.2" id="IXh-PG-ht1"/>
                 <constraint firstItem="QLI-2z-WNx" firstAttribute="top" secondItem="vRF-Yl-tE0" secondAttribute="bottom" constant="20" id="IbZ-Ep-A9w"/>
                 <constraint firstItem="yWB-SD-fxK" firstAttribute="leading" secondItem="XXY-vF-2Iu" secondAttribute="trailing" constant="5" id="JfD-Uc-Nee"/>
                 <constraint firstItem="QLI-2z-WNx" firstAttribute="leading" secondItem="cCL-lV-oEM" secondAttribute="leading" id="Ujq-XS-8fj"/>

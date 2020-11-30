@@ -11,6 +11,7 @@ class InfoViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var officeStatusLabel: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var screenTitleLabel: UILabel!
     var infoType: infoType = .info
@@ -39,6 +40,7 @@ class InfoViewController: UIViewController {
         officeStatusLabel.isHidden = infoType != .office
         officeStatusLabel.layer.cornerRadius = 5
         officeStatusLabel.layer.masksToBounds = true
+        infoLabel.text = self.title
     }
     
     private func setUpTableView() {
@@ -65,6 +67,10 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
             return 1
         default: return officeDataSoure.count
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return infoType == .info ? UITableView.automaticDimension : 80
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -96,10 +102,10 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         var statusBarHeight: CGFloat = 0.0
         if #available(iOS 13.0, *) {
             statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
+            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 11 : statusBarHeight - 21
         } else {
             statusBarHeight = self.view.bounds.height - UIApplication.shared.statusBarFrame.height
-            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
+            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 11 : statusBarHeight - 21
         }
         officeLocation.title = "Select a Sony Music Office Location"
         let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)

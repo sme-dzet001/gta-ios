@@ -57,8 +57,10 @@ class HomepageTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.row < 2 else { return }
+        let data = dataSource[indexPath.row]
         let infoViewController = InfoViewController()
-        infoViewController.infoType = dataSource[indexPath.row].infoType
+        infoViewController.infoType = data.infoType
+        infoViewController.title = data.infoType == .office ? "Sony Music UK" : "What is the current situation?"
         self.navigationController?.pushViewController(infoViewController, animated: true)
     }
 

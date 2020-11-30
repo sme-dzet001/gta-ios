@@ -29,11 +29,15 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-Vj-rQd">
+                    <rect key="frame" x="0.0" y="129" width="414" height="733"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V4D-Rv-b6b">
-                    <rect key="frame" x="0.0" y="54" width="414" height="70"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="85"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6j-Gm-GTm">
-                            <rect key="frame" x="69" y="11" width="276" height="48"/>
+                            <rect key="frame" x="69" y="23" width="276" height="48"/>
                             <string key="text">Select a Sony Music
 Office Location</string>
                             <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
@@ -41,7 +45,7 @@ Office Location</string>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QbJ-Wz-vk7">
-                            <rect key="frame" x="365" y="22.5" width="25" height="25"/>
+                            <rect key="frame" x="365" y="34.5" width="25" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="25" id="6U0-qO-H6l"/>
                                 <constraint firstAttribute="width" secondItem="QbJ-Wz-vk7" secondAttribute="height" multiplier="1:1" id="kNX-ED-oHv"/>
@@ -52,7 +56,7 @@ Office Location</string>
                             </connections>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REx-L1-PWQ">
-                            <rect key="frame" x="24" y="22.5" width="25" height="25"/>
+                            <rect key="frame" x="24" y="34.5" width="25" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="25" id="WVz-DH-8kM"/>
                                 <constraint firstAttribute="width" secondItem="REx-L1-PWQ" secondAttribute="height" multiplier="1:1" id="XZ1-5h-oJF"/>
@@ -62,35 +66,33 @@ Office Location</string>
                                 <action selector="backButtonDidPressed:" destination="-1" eventType="touchUpInside" id="cgA-KQ-xr9"/>
                             </connections>
                         </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jne-DP-cx2">
+                            <rect key="frame" x="183" y="10" width="48" height="4"/>
+                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="48" id="K6c-tG-OEv"/>
+                                <constraint firstAttribute="height" constant="4" id="YEJ-sB-Ohb"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="Jne-DP-cx2" firstAttribute="top" secondItem="V4D-Rv-b6b" secondAttribute="top" constant="10" id="9ZV-lM-HuQ"/>
                         <constraint firstItem="G6j-Gm-GTm" firstAttribute="leading" secondItem="REx-L1-PWQ" secondAttribute="trailing" constant="20" id="FVa-0C-ORV"/>
                         <constraint firstAttribute="trailing" secondItem="QbJ-Wz-vk7" secondAttribute="trailing" constant="24" id="LBA-vo-Ulq"/>
-                        <constraint firstAttribute="height" constant="70" id="OzI-BU-Ho1"/>
+                        <constraint firstAttribute="height" constant="85" id="OzI-BU-Ho1"/>
                         <constraint firstItem="QbJ-Wz-vk7" firstAttribute="leading" secondItem="G6j-Gm-GTm" secondAttribute="trailing" constant="20" id="VjD-0Z-dQa"/>
                         <constraint firstItem="REx-L1-PWQ" firstAttribute="leading" secondItem="V4D-Rv-b6b" secondAttribute="leading" constant="24" id="gge-9i-pXN"/>
                         <constraint firstItem="REx-L1-PWQ" firstAttribute="centerY" secondItem="G6j-Gm-GTm" secondAttribute="centerY" id="ipZ-zk-XXf"/>
                         <constraint firstItem="QbJ-Wz-vk7" firstAttribute="centerY" secondItem="G6j-Gm-GTm" secondAttribute="centerY" id="oeY-U4-KlL"/>
-                        <constraint firstItem="G6j-Gm-GTm" firstAttribute="centerY" secondItem="V4D-Rv-b6b" secondAttribute="centerY" id="sOT-oc-cM7"/>
+                        <constraint firstItem="G6j-Gm-GTm" firstAttribute="centerY" secondItem="V4D-Rv-b6b" secondAttribute="centerY" multiplier="1.1" id="sOT-oc-cM7"/>
+                        <constraint firstItem="Jne-DP-cx2" firstAttribute="centerX" secondItem="V4D-Rv-b6b" secondAttribute="centerX" id="tdE-Ds-E5o"/>
                     </constraints>
-                </view>
-                <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-Vj-rQd">
-                    <rect key="frame" x="0.0" y="124" width="414" height="738"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jne-DP-cx2">
-                    <rect key="frame" x="183" y="50" width="48" height="4"/>
-                    <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="48" id="K6c-tG-OEv"/>
-                        <constraint firstAttribute="height" constant="4" id="YEJ-sB-Ohb"/>
-                    </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="3"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -100,9 +102,7 @@ Office Location</string>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="1dl-Vj-rQd" secondAttribute="bottom" id="Asc-UK-W7i"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="V4D-Rv-b6b" secondAttribute="trailing" id="DfL-Ua-JRm"/>
                 <constraint firstItem="1dl-Vj-rQd" firstAttribute="top" secondItem="V4D-Rv-b6b" secondAttribute="bottom" id="Ogo-72-1kk"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="V4D-Rv-b6b" secondAttribute="top" constant="-10" id="XTQ-iz-cXL"/>
-                <constraint firstItem="V4D-Rv-b6b" firstAttribute="top" secondItem="Jne-DP-cx2" secondAttribute="bottom" id="auD-As-F2q"/>
-                <constraint firstItem="Jne-DP-cx2" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="by3-Vc-hto"/>
+                <constraint firstItem="V4D-Rv-b6b" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="rnL-1k-2NT"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1dl-Vj-rQd" secondAttribute="trailing" id="xXF-fv-TqS"/>
                 <constraint firstItem="1dl-Vj-rQd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="xcl-4J-iek"/>
             </constraints>
