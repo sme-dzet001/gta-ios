@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "help_desk@1x.png",
+      "filename" : "calling@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "help_desk@2x.png",
+      "filename" : "calling@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "help_desk@3x.png",
+      "filename" : "calling@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

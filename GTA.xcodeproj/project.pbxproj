@@ -294,6 +294,18 @@
 		C9DFD4C025659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
 		C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
 		C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
+		C9EC9E9925756BA400315AAE /* HelpDeskContactOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9E9725756BA400315AAE /* HelpDeskContactOptionCell.swift */; };
+		C9EC9E9A25756BA400315AAE /* HelpDeskContactOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9E9725756BA400315AAE /* HelpDeskContactOptionCell.swift */; };
+		C9EC9E9B25756BA400315AAE /* HelpDeskContactOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9E9725756BA400315AAE /* HelpDeskContactOptionCell.swift */; };
+		C9EC9E9C25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9E9825756BA400315AAE /* HelpDeskContactOptionCell.xib */; };
+		C9EC9E9D25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9E9825756BA400315AAE /* HelpDeskContactOptionCell.xib */; };
+		C9EC9E9E25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9E9825756BA400315AAE /* HelpDeskContactOptionCell.xib */; };
+		C9EC9EA625756C0300315AAE /* HelpDeskHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9EA525756C0300315AAE /* HelpDeskHeader.swift */; };
+		C9EC9EA725756C0300315AAE /* HelpDeskHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9EA525756C0300315AAE /* HelpDeskHeader.swift */; };
+		C9EC9EA825756C0300315AAE /* HelpDeskHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9EA525756C0300315AAE /* HelpDeskHeader.swift */; };
+		C9EC9EB425756C1400315AAE /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
+		C9EC9EB525756C1400315AAE /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
+		C9EC9EB625756C1400315AAE /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
 		C9EFEBC4256D1F4800112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 /* End PBXBuildFile section */
@@ -435,6 +447,10 @@
 		C9DFD4AD25659BE400BF1740 /* StatsBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsBarChart.swift; sourceTree = "<group>"; };
 		C9DFD4B625659C1100BF1740 /* StatsBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsBarView.swift; sourceTree = "<group>"; };
 		C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartLayoutHelper.swift; sourceTree = "<group>"; };
+		C9EC9E9725756BA400315AAE /* HelpDeskContactOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskContactOptionCell.swift; sourceTree = "<group>"; };
+		C9EC9E9825756BA400315AAE /* HelpDeskContactOptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpDeskContactOptionCell.xib; sourceTree = "<group>"; };
+		C9EC9EA525756C0300315AAE /* HelpDeskHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskHeader.swift; sourceTree = "<group>"; };
+		C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpDeskHeader.xib; sourceTree = "<group>"; };
 		D3387A52A0F8F88F9F876531 /* Pods-GTATests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.debug.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.debug.xcconfig"; sourceTree = "<group>"; };
 		E99FE5D7739905AF03A6B886 /* Pods_GTA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -876,7 +892,9 @@
 			isa = PBXGroup;
 			children = (
 				C91F70892562FEC5002F17B1 /* HelpDeskCell.swift */,
-				C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */,
+				C9EC9E9725756BA400315AAE /* HelpDeskContactOptionCell.swift */,
+				C9EC9EA525756C0300315AAE /* HelpDeskHeader.swift */,
+				C9EC9EA425756BB600315AAE /* xib's */,
 			);
 			path = HelpDeskCells;
 			sourceTree = "<group>";
@@ -968,6 +986,16 @@
 				C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */,
 			);
 			path = BarChart;
+			sourceTree = "<group>";
+		};
+		C9EC9EA425756BB600315AAE /* xib's */ = {
+			isa = PBXGroup;
+			children = (
+				C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */,
+				C9EC9E9825756BA400315AAE /* HelpDeskContactOptionCell.xib */,
+				C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */,
+			);
+			path = "xib's";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1125,6 +1153,7 @@
 				9FF054322567E1D80071E596 /* TicketDetailsMessageCell.xib in Resources */,
 				9F36D43C2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F1620D42566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
+				C9EC9EB425756C1400315AAE /* HelpDeskHeader.xib in Resources */,
 				9F895AEA255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				C9705B7F2566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
 				9FF0548125681FCD0071E596 /* SecondSendMessageView.xib in Resources */,
@@ -1152,6 +1181,7 @@
 				659A5AF3255404F100E13B77 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F895B6D255D3D27004489C6 /* HelpReportScreenViewController.xib in Resources */,
 				9F78D0E1256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
+				C9EC9E9C25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
 				65D1A2B12554CF1F00D71965 /* Apps.storyboard in Resources */,
 				C9424E0425642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2B255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
@@ -1193,6 +1223,7 @@
 				9F36D43D2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F895AEB255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F36D4342562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */,
+				C9EC9EB525756C1400315AAE /* HelpDeskHeader.xib in Resources */,
 				9FF0544B2567F70B0071E596 /* TicketDatailsHeader.xib in Resources */,
 				9F819A99255C1572007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
 				9F895B3E255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
@@ -1220,6 +1251,7 @@
 				C9424E0525642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				C9705B802566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
+				C9EC9E9D25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
 				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9FF0546A25681F4A0071E596 /* SecondTicketDetailsViewController.xib in Resources */,
 				9F5B10612567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */,
@@ -1247,6 +1279,7 @@
 				9F36D43E2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F895AEC255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F36D4352562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */,
+				C9EC9EB625756C1400315AAE /* HelpDeskHeader.xib in Resources */,
 				9FF0544C2567F70B0071E596 /* TicketDatailsHeader.xib in Resources */,
 				9F819AC3255C1646007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
 				9F895B3F255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
@@ -1274,6 +1307,7 @@
 				C9424E0625642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2D255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				C9705B812566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
+				C9EC9E9E25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
 				9F895AEF255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9FF0546B25681F4A0071E596 /* SecondTicketDetailsViewController.xib in Resources */,
 				9F5B10622567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */,
@@ -1462,6 +1496,7 @@
 			files = (
 				C9DFD48D25657B0800BF1740 /* MetricStatsHeader.swift in Sources */,
 				9F895B0F255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
+				C9EC9EA625756C0300315AAE /* HelpDeskHeader.swift in Sources */,
 				9F78CFCD25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				9FF0543C2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */,
@@ -1475,6 +1510,7 @@
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
 				9F78D07B256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				9F1620DD2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
+				C9EC9E9925756BA400315AAE /* HelpDeskContactOptionCell.swift in Sources */,
 				C9DFD4AE25659BE400BF1740 /* StatsBarChart.swift in Sources */,
 				659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */,
 				C9DFD47C2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
@@ -1532,6 +1568,7 @@
 			files = (
 				C9DFD48E25657B0800BF1740 /* MetricStatsHeader.swift in Sources */,
 				9F895B10255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
+				C9EC9EA725756C0300315AAE /* HelpDeskHeader.swift in Sources */,
 				C9705B7D2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
 				9F1620DB2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				9F5B105E2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
@@ -1545,6 +1582,7 @@
 				C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
+				C9EC9E9A25756BA400315AAE /* HelpDeskContactOptionCell.swift in Sources */,
 				9FF0546725681F4A0071E596 /* SecondTicketDetailsViewController.swift in Sources */,
 				9F78D07C256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				C9DFD4AF25659BE400BF1740 /* StatsBarChart.swift in Sources */,
@@ -1586,6 +1624,7 @@
 			files = (
 				C9DFD48F25657B0800BF1740 /* MetricStatsHeader.swift in Sources */,
 				9F895B11255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
+				C9EC9EA825756C0300315AAE /* HelpDeskHeader.swift in Sources */,
 				C9705B7E2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
 				9F1620DC2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				9F5B105F2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
@@ -1599,6 +1638,7 @@
 				C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,
+				C9EC9E9B25756BA400315AAE /* HelpDeskContactOptionCell.swift in Sources */,
 				9FF0546825681F4A0071E596 /* SecondTicketDetailsViewController.swift in Sources */,
 				9F78D07D256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				C9DFD4B025659BE400BF1740 /* StatsBarChart.swift in Sources */,
