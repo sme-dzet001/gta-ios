@@ -29,6 +29,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-Vj-rQd">
+                    <rect key="frame" x="0.0" y="124" width="414" height="738"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V4D-Rv-b6b">
                     <rect key="frame" x="0.0" y="54" width="414" height="70"/>
                     <subviews>
@@ -75,10 +79,6 @@ Office Location</string>
                         <constraint firstItem="G6j-Gm-GTm" firstAttribute="centerY" secondItem="V4D-Rv-b6b" secondAttribute="centerY" id="sOT-oc-cM7"/>
                     </constraints>
                 </view>
-                <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-Vj-rQd">
-                    <rect key="frame" x="0.0" y="124" width="414" height="738"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jne-DP-cx2">
                     <rect key="frame" x="183" y="50" width="48" height="4"/>
                     <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
