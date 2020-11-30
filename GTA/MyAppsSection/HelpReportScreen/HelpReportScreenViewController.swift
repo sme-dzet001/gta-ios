@@ -88,6 +88,11 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         self.view.endEditing(true)
     }
     
+    @objc private func cancelAction() {
+        self.typeTextField.text = ""
+        self.view.endEditing(true)
+    }
+    
     private func setUpTextView() {
         textView.delegate = self
     }
@@ -102,7 +107,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(doneAction))
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
         toolbar.setItems([doneButton, flexible, cancelButton], animated: true)
         typeTextField.inputAccessoryView = toolbar
         typeTextField.setIconForPicker(for: self.view.frame.width)
