@@ -36,13 +36,13 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     
     var shortFormHeight: PanModalHeight {
         if UIDevice.current.iPhone5_se {
-            return .maxHeightWithTopInset(50)
+            return .maxHeightWithTopInset(20)
         }
         return .contentHeight(height)
     }
         
     var longFormHeight: PanModalHeight {
-        return .maxHeightWithTopInset(50)
+        return .maxHeightWithTopInset(20)
     }
     
     private var defaultHeight: CGFloat {
@@ -74,7 +74,16 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: UIApplication.willResignActiveNotification, object: nil)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -116,9 +125,15 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         typeTextField.setIconForPicker(for: self.view.frame.width)
     }
     
-    private func setUpTextViewLayout() {
+    private func setUpTextViewLayout(isNeedCompact: Bool = false) {
         let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 300 : 340
-        textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
+        if isNeedCompact && UIDevice.current.iPhone5_se {
+            textViewHeight.constant = 60
+        } else if isNeedCompact {
+            textViewHeight.constant = defaultHeight - coefficient > 0 ? defaultHeight - coefficient : 0
+        } else {
+            textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
+        }
         self.view.layoutIfNeeded()
     }
     
@@ -142,21 +157,26 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
-//            var overlay: CGFloat = keyboardSize.height
-//            if UIDevice.current.iPhone4_4s || UIDevice.current.iPhone5_se || UIDevice.current.iPhone7_8_Zoomed {
-//                overlay = overlay - 145
-//            }
-//            guard keyboardSize.height > 0 else { return }
-//            UIView.animate(withDuration: 0.3, animations: {
-//                guard overlay > 0 else {return}
-//                self.view.frame.origin.y = -overlay
-//            })
-//        }
+        panModalTransition(to: .longForm)
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
+            var overlay: CGFloat = keyboardSize.height
+            if UIDevice.current.iPhone4_4s || UIDevice.current.iPhone5_se || UIDevice.current.iPhone7_8 {
+                overlay = overlay - 145
+            }
+            if textView.isFirstResponder {
+                setUpTextViewLayout(isNeedCompact: true)
+            }
+            guard keyboardSize.height > 0 else { return }
+            UIView.animate(withDuration: 0.3, animations: {
+                guard overlay > 0, UIDevice.current.iPhone5_se || UIDevice.current.iPhone7_8 else {return}
+                self.view.frame.origin.y = -overlay
+            })
+        }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         self.view.frame.origin.y = 0
+        setUpTextViewLayout()
     }
     
     @objc func hideKeyboard() {
