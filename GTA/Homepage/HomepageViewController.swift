@@ -47,6 +47,9 @@ class HomepageViewController: UIViewController {
         collectionView.isPagingEnabled = true
         collectionView.dataSource = self
         collectionView.delegate = self
+        if let layout = collectionView?.collectionViewLayout as? AnimatedCollectionViewLayout {
+            layout.scrollDirection = .horizontal
+        }
         collectionView.register(UINib(nibName: "NewsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NewsCollectionViewCell")
     }
     
@@ -127,15 +130,9 @@ extension HomepageViewController: PanModalAppearanceDelegate {
         } else {
             return
         }
+        collectionView.collectionViewLayout.invalidateLayout()
         collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: scrollPosition)
-        UIView.animate(withDuration: 0.2) {
-            self.presentedVC?.articleTextView.alpha = 0
-        } completion: { (_) in
-            UIView.animate(withDuration: 0.2) {
-                self.presentedVC?.articleText = self.dataSource[self.selectedIndexPath.row].articleText
-                self.presentedVC?.articleTextView.alpha = 1
-            }
-        }
+        self.presentedVC?.articleText = selectedIndexPath.row % 2 == 0 ? self.dataSource[self.selectedIndexPath.row].articleText : "From end of August 2020, Swedish authorities are performing daily data consolidation leading to data retro-corrections. From week 38, the Swedish Public Health Agency will update COVID-19 daily data four times per week on Tuesday–Friday. \n\nHence, the cumulative figures and related outputs include cases and deaths from the previous 14 days with available data at the time of data collection.\n\nOn 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases reported on 11 September 2020. \n\nAs of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests. In addition, the total number of reported COVID-19 deaths has shifted to include both probable and confirmed deaths, which lead to a steep increase on the 7 Sep. \n\nAs of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests."// for d
     }
     
     func panModalDidDissmiss() {
@@ -146,11 +143,6 @@ extension HomepageViewController: PanModalAppearanceDelegate {
 protocol PanModalAppearanceDelegate: class {
     func needScrollToDirection(_ direction: UICollectionView.ScrollPosition)
     func panModalDidDissmiss()
-}
-
-enum scrollDirection {
-    case left
-    case right
 }
 
 // temp

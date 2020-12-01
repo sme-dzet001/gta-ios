@@ -262,7 +262,7 @@
     </scenes>
     <designables>
         <designable name="JCo-dS-SrK">
-            <size key="intrinsicContentSize" width="25" height="40.5"/>
+            <size key="intrinsicContentSize" width="39.5" height="20.5"/>
         </designable>
     </designables>
     <resources>

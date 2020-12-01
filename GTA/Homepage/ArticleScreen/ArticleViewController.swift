@@ -14,12 +14,20 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var articleTextViewBottom: NSLayoutConstraint!
     
-    var articleText: String = "" {
+    var articleText: String? = "" {
         didSet {
+            let animation = CATransition()
+            animation.type = .fade
+            animation.duration = 0.3
+            animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            articleTextView?.layer.add(animation, forKey: "changeTextTransition")
             articleTextView?.text = articleText
         }
     }
-    var panScrollable: UIScrollView?
+    
+    var panScrollable: UIScrollView? {
+        return articleTextView
+    }
     
     var showDragIndicator: Bool {
         return false
@@ -27,10 +35,13 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     var initialHeight: CGFloat = 0.0
     weak var appearanceDelegate: PanModalAppearanceDelegate?
     
-    private var heightObserver: NSKeyValueObservation?
     private var gestureStartPoint: CGPoint = CGPoint(x: 0, y: 0)
     private var presentationView: UIView? {
         return self.presentationController?.containerView?.subviews.filter({$0 is DimmedView}).first
+    }
+    
+    var longFormHeight: PanModalHeight {
+        return .maxHeightWithTopInset(20)
     }
     
     var shortFormHeight: PanModalHeight {
@@ -61,14 +72,9 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         return .clear
     }
     
-//    private var fullInitialHeight: CGFloat {
-//        return (view.window?.safeAreaInsets.top ?? 0) + self.initialHeight
-//    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,23 +85,10 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
-//            let position = UIScreen.main.bounds.height - (self?.presentationController?.presentedView?.frame.origin.y ?? 0.0)
-//            if position <= self?.fullInitialHeight ?? 0 {
-//                print("sddssdsd")
-//            }
-            self?.setUpTextViewLayout()
-        })
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(newsDidScroll))
         panGesture.minimumNumberOfTouches = 1
         panGesture.cancelsTouchesInView = false
         presentationView?.addGestureRecognizer(panGesture)
-    }
-    
-    private func setUpTextViewLayout() {
-        let position = UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
-        articleTextViewBottom.constant = position > 0 ? self.view.frame.height - position : 0
-        self.view.layoutIfNeeded()
     }
     
     @objc func newsDidScroll(gesture: UIPanGestureRecognizer) {
@@ -113,26 +106,11 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         }
     }
     
-//    func shouldRespond(to panModalGestureRecognizer: UIPanGestureRecognizer) -> Bool {
-//        let velocity = panModalGestureRecognizer.velocity(in: self.view)
-//        let position = UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0) - velocity.y
-//        if position < self.fullInitialHeight {
-//            return false
-//        }
-//        return true
-//    }
-    
-
-    
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
     
     func panModalWillDismiss() {
         appearanceDelegate?.panModalDidDissmiss()
-    }
- 
-    deinit {
-        heightObserver?.invalidate()
     }
 }
