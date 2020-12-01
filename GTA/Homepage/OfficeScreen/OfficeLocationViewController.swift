@@ -62,7 +62,7 @@ class OfficeLocationViewController: UIViewController {
     }
     
     @IBAction func backButtonDidPressed(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popWithFadeAnimation()
     }
     
     deinit {
@@ -127,7 +127,8 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         let office = OfficeLocationViewController()
         office.selectionIsOn = false
         office.title = countryDataSource[indexPath.row].text
-        self.navigationController?.pushViewController(office, animated: true)
+        self.navigationController?.pushWithFadeAnimationVC(office)
+        //self.navigationController?.pushViewController(office, animated: true)
     }
     
 }
