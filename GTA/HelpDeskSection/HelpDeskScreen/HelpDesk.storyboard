@@ -45,7 +45,7 @@
                             <constraint firstItem="dgO-Iy-sSg" firstAttribute="top" secondItem="VQY-2b-btO" secondAttribute="top" id="riG-Nr-BwO"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Help Desk" image="helpdesk_tab_icon" id="Bkv-ay-b2Q"/>
+                    <tabBarItem key="tabBarItem" title="Service Desk" image="helpdesk_tab_icon" id="Bkv-ay-b2Q"/>
                     <navigationItem key="navigationItem" title="Help Desk" id="r71-do-NAE"/>
                     <connections>
                         <outlet property="headerView" destination="dgO-Iy-sSg" id="Crl-Xy-sCH"/>
