@@ -98,7 +98,8 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == 1 else { return }
         if indexPath.row == 0 {
-            // open quick help screen
+            let quickHelpVC = QuickHelpViewController()
+            navigationController?.pushViewController(quickHelpVC, animated: true)
         } else if indexPath.row == 2 {
             let contactsVC = ServiceDeskContactsViewController()
             navigationController?.pushViewController(contactsVC, animated: true)
