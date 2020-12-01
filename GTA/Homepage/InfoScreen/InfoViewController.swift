@@ -110,10 +110,10 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         var statusBarHeight: CGFloat = 0.0
         if #available(iOS 13.0, *) {
             statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 15 : statusBarHeight - 21
+            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
         } else {
             statusBarHeight = self.view.bounds.height - UIApplication.shared.statusBarFrame.height
-            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 15 : statusBarHeight - 21
+            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
         }
         officeLocation.title = "Select a Sony Music Office Location"
         let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
