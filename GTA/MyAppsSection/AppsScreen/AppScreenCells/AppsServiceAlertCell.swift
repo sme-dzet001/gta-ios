@@ -14,6 +14,7 @@ class AppsServiceAlertCell: UITableViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var separator: UILabel!
+    @IBOutlet weak var topSeparator: UILabel!
     @IBOutlet weak var arrowIcon: UIImageView!
     
     override func awakeFromNib() {

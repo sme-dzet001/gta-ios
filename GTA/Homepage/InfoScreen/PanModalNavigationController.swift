@@ -34,3 +34,25 @@ class PanModalNavigationController: UINavigationController, PanModalPresentable 
     }
     
 }
+
+extension UINavigationController {
+    
+    func pushWithFadeAnimationVC(_ vc: UIViewController) {
+        addTransitionAnimation()
+        self.pushViewController(vc, animated: false)
+    }
+    
+    func popWithFadeAnimation() {
+        addTransitionAnimation()
+        self.popViewController(animated: false)
+    }
+    
+    private func addTransitionAnimation() {
+        let transition: CATransition = CATransition()
+        transition.duration = 0.4
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.fade
+        self.view.layer.add(transition, forKey: nil)
+    }
+    
+}
