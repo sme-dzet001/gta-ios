@@ -41,6 +41,14 @@ class InfoViewController: UIViewController {
         officeStatusLabel.layer.cornerRadius = 5
         officeStatusLabel.layer.masksToBounds = true
         infoLabel.text = self.title
+        if infoType == .info {
+            self.tabBarController?.tabBar.isHidden = true
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     private func setUpTableView() {
