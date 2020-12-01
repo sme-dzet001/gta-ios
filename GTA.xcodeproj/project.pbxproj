@@ -175,6 +175,9 @@
 		9F8AEAE4255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
 		9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
 		9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
+		9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
+		9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
+		9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FF0542F2567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */; };
 		9FF054302567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */; };
 		9FF054312567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */; };
@@ -422,6 +425,7 @@
 		9F895B69255D3D27004489C6 /* HelpReportScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpReportScreenViewController.xib; sourceTree = "<group>"; };
 		9F895B7A255D8810004489C6 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9F8AEAE3255EB88500B62072 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
+		9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsMessageCell.swift; sourceTree = "<group>"; };
 		9FF0542E2567E1D80071E596 /* TicketDetailsMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TicketDetailsMessageCell.xib; sourceTree = "<group>"; };
 		9FF0543B2567F6FF0071E596 /* TicketDatailsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDatailsHeader.swift; sourceTree = "<group>"; };
@@ -531,6 +535,7 @@
 				9F78D0DB256557BA00BCD38F /* HomepageTableViewCells */,
 				9F78D0C8256556CB00BCD38F /* ArticleScreen */,
 				9F78CFCA256409D500BCD38F /* HomepageCollectionViewCell */,
+				9FB59FA62576AB4900E14D7E /* CollectionViewLayout */,
 				65D1A2A02554BE3700D71965 /* Home.storyboard */,
 				9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */,
 				9F36D4642562C286000EE0F1 /* HomepageViewController.swift */,
@@ -847,6 +852,14 @@
 				C9DFD4C825659DB400BF1740 /* BarChart */,
 			);
 			path = CustomUIElements;
+			sourceTree = "<group>";
+		};
+		9FB59FA62576AB4900E14D7E /* CollectionViewLayout */ = {
+			isa = PBXGroup;
+			children = (
+				9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */,
+			);
+			path = CollectionViewLayout;
 			sourceTree = "<group>";
 		};
 		9FF0542C2567E1A00071E596 /* TicketDetailsCell */ = {
@@ -1587,6 +1600,7 @@
 				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9F5B105D2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
 				9FF0542F2567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
+				9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				9FF0545C25680ED30071E596 /* SendMessageView.swift in Sources */,
 				C9DFD4B725659C1100BF1740 /* StatsBarView.swift in Sources */,
@@ -1662,6 +1676,7 @@
 				C9D859392567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F895AE8255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9FF0543D2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				9FF0547425681FC60071E596 /* SecondSendMessageView.swift in Sources */,
@@ -1721,6 +1736,7 @@
 				C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F895AE9255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9FF0543E2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				9FF0547525681FC60071E596 /* SecondSendMessageView.swift in Sources */,

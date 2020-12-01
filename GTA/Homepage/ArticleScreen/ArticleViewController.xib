@@ -28,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hqn-HG-Ows">
-                    <rect key="frame" x="0.0" y="45" width="414" height="717"/>
+                    <rect key="frame" x="0.0" y="45" width="414" height="817"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                     <color key="textColor" systemColor="labelColor"/>
@@ -67,7 +67,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qZB-c8-5HW" secondAttribute="trailing" constant="24" id="8vD-1m-lCs"/>
                 <constraint firstItem="E0k-G8-Efq" firstAttribute="centerX" secondItem="hqn-HG-Ows" secondAttribute="centerX" id="C1d-AS-iD5"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hqn-HG-Ows" secondAttribute="trailing" id="YVI-Lx-I0V"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="hqn-HG-Ows" secondAttribute="bottom" constant="100" id="dBx-Zo-1Rb"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="hqn-HG-Ows" secondAttribute="bottom" id="dBx-Zo-1Rb"/>
                 <constraint firstItem="E0k-G8-Efq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="gi3-Qj-Yac"/>
                 <constraint firstItem="qZB-c8-5HW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="vdz-pc-7xu"/>
                 <constraint firstItem="hqn-HG-Ows" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="w0s-Rw-I7r"/>
