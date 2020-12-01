@@ -271,6 +271,12 @@
 		C9705B7F2566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */; };
 		C9705B802566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */; };
 		C9705B812566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */; };
+		C9766FAC2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9766FAA2576394500E9E697 /* ServiceDeskContactsViewController.swift */; };
+		C9766FAD2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9766FAA2576394500E9E697 /* ServiceDeskContactsViewController.swift */; };
+		C9766FAE2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9766FAA2576394500E9E697 /* ServiceDeskContactsViewController.swift */; };
+		C9766FAF2576394500E9E697 /* ServiceDeskContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9766FAB2576394500E9E697 /* ServiceDeskContactsViewController.xib */; };
+		C9766FB02576394500E9E697 /* ServiceDeskContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9766FAB2576394500E9E697 /* ServiceDeskContactsViewController.xib */; };
+		C9766FB12576394500E9E697 /* ServiceDeskContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9766FAB2576394500E9E697 /* ServiceDeskContactsViewController.xib */; };
 		C9D859392567FE850025F544 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		C9DFD47C2565721F00BF1740 /* MetricStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */; };
@@ -440,6 +446,8 @@
 		C962D8512566E21400727949 /* MyTicketsHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyTicketsHeader.xib; sourceTree = "<group>"; };
 		C9705B7A2566CE4E007A7F68 /* MyTicketsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTicketsViewController.swift; sourceTree = "<group>"; };
 		C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyTicketsViewController.xib; sourceTree = "<group>"; };
+		C9766FAA2576394500E9E697 /* ServiceDeskContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDeskContactsViewController.swift; sourceTree = "<group>"; };
+		C9766FAB2576394500E9E697 /* ServiceDeskContactsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceDeskContactsViewController.xib; sourceTree = "<group>"; };
 		C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricStatsCell.swift; sourceTree = "<group>"; };
 		C9DFD47B2565721F00BF1740 /* MetricStatsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MetricStatsCell.xib; sourceTree = "<group>"; };
 		C9DFD48C25657B0800BF1740 /* MetricStatsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricStatsHeader.swift; sourceTree = "<group>"; };
@@ -872,6 +880,7 @@
 			children = (
 				9F5B10582567BE03000A3CFD /* TicketDetailsScreen */,
 				C91F709C2562FEEC002F17B1 /* HelpDeskScreen */,
+				C9766FB72576394E00E9E697 /* ServiceDeskContactsScreen */,
 				C9424E0C2564263A003C247E /* MyDevicesScreen */,
 				C9705B872566CE5F007A7F68 /* MyTicketsScreen */,
 			);
@@ -976,6 +985,15 @@
 				C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */,
 			);
 			path = MyTicketsScreen;
+			sourceTree = "<group>";
+		};
+		C9766FB72576394E00E9E697 /* ServiceDeskContactsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C9766FAA2576394500E9E697 /* ServiceDeskContactsViewController.swift */,
+				C9766FAB2576394500E9E697 /* ServiceDeskContactsViewController.xib */,
+			);
+			path = ServiceDeskContactsScreen;
 			sourceTree = "<group>";
 		};
 		C9DFD4C825659DB400BF1740 /* BarChart */ = {
@@ -1167,6 +1185,7 @@
 				9F78D0952565321100BCD38F /* SF-Pro-Text-Light.ttf in Resources */,
 				659A5AF2255404F100E13B77 /* SF-Pro-Display-Bold.otf in Resources */,
 				C93FCF342564906F001E86F6 /* AboutContactsCell.xib in Resources */,
+				C9766FAF2576394500E9E697 /* ServiceDeskContactsViewController.xib in Resources */,
 				C93FCF6225649220001E86F6 /* AboutContactsHeader.xib in Resources */,
 				659A5ABD255401ED00E13B77 /* LaunchScreen.storyboard in Resources */,
 				659A5AF4255404F100E13B77 /* SF-Pro-Text-Medium.otf in Resources */,
@@ -1237,6 +1256,7 @@
 				9F819A9D255C1572007C1739 /* SF-Pro-Text-Medium.otf in Resources */,
 				9FF054332567E1D80071E596 /* TicketDetailsMessageCell.xib in Resources */,
 				9F819A9E255C1572007C1739 /* Assets.xcassets in Resources */,
+				C9766FB02576394500E9E697 /* ServiceDeskContactsViewController.xib in Resources */,
 				9F819A9F255C1572007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
 				C9DFD49C25657B7600BF1740 /* MetricStatsHeader.xib in Resources */,
 				C91F708F2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
@@ -1293,6 +1313,7 @@
 				9F819AC7255C1646007C1739 /* SF-Pro-Text-Medium.otf in Resources */,
 				9FF054342567E1D80071E596 /* TicketDetailsMessageCell.xib in Resources */,
 				9F819AC8255C1646007C1739 /* Assets.xcassets in Resources */,
+				C9766FB12576394500E9E697 /* ServiceDeskContactsViewController.xib in Resources */,
 				9F819AC9255C1646007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
 				C9DFD49D25657B7600BF1740 /* MetricStatsHeader.xib in Resources */,
 				C91F70902562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
@@ -1516,6 +1537,7 @@
 				C9DFD47C2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
 				C91F708B2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */,
+				C9766FAC2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
@@ -1588,6 +1610,7 @@
 				C9DFD4AF25659BE400BF1740 /* StatsBarChart.swift in Sources */,
 				9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */,
 				C9DFD47D2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
+				C9766FAD2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708C2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
 				C9D859392567FE850025F544 /* InfoViewController.swift in Sources */,
@@ -1644,6 +1667,7 @@
 				C9DFD4B025659BE400BF1740 /* StatsBarChart.swift in Sources */,
 				9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */,
 				C9DFD47E2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
+				C9766FAE2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708D2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
 				C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */,

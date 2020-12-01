@@ -100,7 +100,8 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             // open quick help screen
         } else if indexPath.row == 2 {
-            // open service desk contacts screen
+            let contactsVC = ServiceDeskContactsViewController()
+            navigationController?.pushViewController(contactsVC, animated: true)
         } else if indexPath.row == 3 {
             let myTicketsVC = MyTicketsViewController()
             navigationController?.pushViewController(myTicketsVC, animated: true)
