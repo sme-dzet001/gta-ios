@@ -34,15 +34,23 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         return false
     }
     
+    var topOffset: CGFloat {
+        if let keyWindow = UIWindow.key {
+            return keyWindow.safeAreaInsets.top
+        } else {
+            return 0
+        }
+    }
+    
     var shortFormHeight: PanModalHeight {
         if UIDevice.current.iPhone5_se {
-            return .maxHeightWithTopInset(20)
+            return .maxHeight
         }
         return .contentHeight(height)
     }
         
     var longFormHeight: PanModalHeight {
-        return .maxHeightWithTopInset(20)
+        return .maxHeight
     }
     
     private var defaultHeight: CGFloat {
