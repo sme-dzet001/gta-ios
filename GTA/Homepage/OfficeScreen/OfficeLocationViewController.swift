@@ -118,6 +118,7 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         cell?.iconImageView.image = UIImage(named: "location")
         cell?.separator.isHidden = false
         cell?.arrowIcon.isHidden = true
+        cell?.topSeparator.isHidden = indexPath.row != 0
         return cell ?? UITableViewCell()
     }
     
