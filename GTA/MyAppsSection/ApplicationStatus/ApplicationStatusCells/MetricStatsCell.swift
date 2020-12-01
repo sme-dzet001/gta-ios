@@ -23,6 +23,7 @@ class MetricStatsCell: UITableViewCell {
         let amount = data.value ?? 0
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
+        numberFormatter.locale = Locale(identifier: "en_US")
         let decimalFormattedAmount = numberFormatter.string(from: NSNumber(value: amount))
         amountLabel.text = decimalFormattedAmount
         separator.isHidden = hideSeparator
