@@ -14,9 +14,20 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
+    @IBOutlet weak var screenTitleView: UIView!
     
+    lazy var textView = SendMessageView.instanceFromNib()
+        
     var panScrollable: UIScrollView? {
         return tableView
+    }
+    
+    var topOffset: CGFloat {
+        if let keyWindow = UIWindow.key {
+            return keyWindow.safeAreaInsets.top + 50
+        } else {
+            return 0
+        }
     }
     
     var showDragIndicator: Bool {
@@ -51,6 +62,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,7 +72,6 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     
     private func setUpTextViewIfNeeded() {
         guard dataSource?.status == .open else { return }
-        let textView = SendMessageView.instanceFromNib()
         textView.setUpTextView()
         var coefficient: CGFloat = 0
         if #available(iOS 13.0, *) {
@@ -88,20 +99,20 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
-            var overlay: CGFloat = keyboardSize.height
-            if UIDevice.current.iPhone4_4s || UIDevice.current.iPhone5_se || UIDevice.current.iPhone7_8_Zoomed {
-                overlay = overlay - 145
-            }
+            let overlay: CGFloat = keyboardSize.height
             guard keyboardSize.height > 0 else { return }
             
             UIView.animate(withDuration: 0.3, animations: {
                 guard overlay > 0 else {return}
                 self.view.frame.origin.y = -overlay
+                self.view.layoutIfNeeded()
+                self.screenTitleView.frame.origin.y = overlay
             })
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
+        self.screenTitleView.frame.origin.y = 0
         self.view.frame.origin.y = 0
     }
     
@@ -112,6 +123,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
     }
     
 }
