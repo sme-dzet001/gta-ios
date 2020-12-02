@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "quick_help_icon@1x.png",
+      "filename" : "help_desk@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "quick_help_icon@2x.png",
+      "filename" : "help_desk@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "quick_help_icon@3x.png",
+      "filename" : "help_desk@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "my_devices_icon@1x.png",
+      "filename" : "devices@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "my_devices_icon@2x.png",
+      "filename" : "devices@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "my_devices_icon@3x.png",
+      "filename" : "devices@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

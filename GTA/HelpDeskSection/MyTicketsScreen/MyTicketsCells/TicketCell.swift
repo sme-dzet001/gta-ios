@@ -29,8 +29,9 @@ class TicketCell: UITableViewCell {
         }
         numberLabel.text = data.number
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = String.neededDateFormat
-        dateLabel.text = dateFormatterPrint.string(from: data.date ?? Date())
+        dateFormatterPrint.dateFormat = String.ticketsSectionDateFormat
+        // hardcoding date similar to Figma for now
+        dateLabel.text = "Wed 15, 2020 10:30 -5 GMT" //dateFormatterPrint.string(from: data.date ?? Date())
     }
     
 }

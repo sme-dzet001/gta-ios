@@ -23,7 +23,8 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     var panScrollable: UIScrollView?
     weak var delegate: ShowAlertDelegate?
     private let pickerView = UIPickerView()
-
+    var screenTitle: String?
+    var selectedText: String? = ""
     var isShortFormEnabled = true
     var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
@@ -33,15 +34,23 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         return false
     }
     
+    var topOffset: CGFloat {
+        if let keyWindow = UIWindow.key {
+            return keyWindow.safeAreaInsets.top
+        } else {
+            return 0
+        }
+    }
+    
     var shortFormHeight: PanModalHeight {
         if UIDevice.current.iPhone5_se {
-            return .maxHeightWithTopInset(50)
+            return .maxHeight
         }
         return .contentHeight(height)
     }
         
     var longFormHeight: PanModalHeight {
-        return .maxHeightWithTopInset(50)
+        return .maxHeight
     }
     
     private var defaultHeight: CGFloat {
@@ -65,6 +74,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        titleLabel.text = screenTitle
         //setUpTextField()
         setUpTextView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
@@ -72,7 +82,16 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: UIApplication.willResignActiveNotification, object: nil)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -83,6 +102,14 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
         
     @objc private func doneAction() {
+        selectedText = self.typeTextField.text
+        self.view.endEditing(true)
+    }
+    
+    @objc private func cancelAction() {
+        let index = pickerDataSource.firstIndex(of: selectedText ?? "") ?? 0
+        pickerView.selectRow(index, inComponent: 0, animated: false)
+        self.typeTextField.text = selectedText
         self.view.endEditing(true)
     }
     
@@ -100,27 +127,36 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(doneAction))
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
         toolbar.setItems([doneButton, flexible, cancelButton], animated: true)
         typeTextField.inputAccessoryView = toolbar
         typeTextField.setIconForPicker(for: self.view.frame.width)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //typeTextField.setIconForPicker(for: self.view.frame.width)
-    }
-    
-    private func setUpTextViewLayout() {
+    private func setUpTextViewLayout(isNeedCompact: Bool = false) {
         let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 300 : 340
-        textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
-        textView.setPlaceholder()
+        if isNeedCompact && UIDevice.current.iPhone5_se {
+            textViewHeight.constant = 60
+        } else if isNeedCompact {
+            textViewHeight.constant = defaultHeight - coefficient > 0 ? defaultHeight - coefficient : 0
+        } else {
+            textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
+        }
         self.view.layoutIfNeeded()
     }
     
     @IBAction func submitButtonDidPressed(_ sender: UIButton) {
+        if textView.text.isEmpty || (typeTextField.text?.isEmpty ?? true) {
+            panModalTransition(to: .longForm)
+            let alert = UIAlertController(title: nil, message: "Please make sure all fields are filled in", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
         self.dismiss(animated: true, completion: nil)
-        delegate?.showAlert(title: "Issue has been submitted", message: "Wed 15 10:30 -5 GMT")
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "E d HH:mm zzz"
+        delegate?.showAlert(title: "Issue has been submitted", message: dateFormatterPrint.string(from: Date()))
     }
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
@@ -136,21 +172,26 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
-//            var overlay: CGFloat = keyboardSize.height
-//            if UIDevice.current.iPhone4_4s || UIDevice.current.iPhone5_se || UIDevice.current.iPhone7_8_Zoomed {
-//                overlay = overlay - 145
-//            }
-//            guard keyboardSize.height > 0 else { return }
-//            UIView.animate(withDuration: 0.3, animations: {
-//                guard overlay > 0 else {return}
-//                self.view.frame.origin.y = -overlay
-//            })
-//        }
+        panModalTransition(to: .longForm)
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
+            var overlay: CGFloat = keyboardSize.height
+            if UIDevice.current.iPhone4_4s || UIDevice.current.iPhone5_se || UIDevice.current.iPhone7_8 {
+                overlay = overlay - 145
+            }
+            if textView.isFirstResponder {
+                setUpTextViewLayout(isNeedCompact: true)
+            }
+            guard keyboardSize.height > 0 else { return }
+            UIView.animate(withDuration: 0.3, animations: {
+                guard overlay > 0, UIDevice.current.iPhone5_se || UIDevice.current.iPhone7_8 else {return}
+                self.view.frame.origin.y = -overlay
+            })
+        }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         self.view.frame.origin.y = 0
+        setUpTextViewLayout()
     }
     
     @objc func hideKeyboard() {
