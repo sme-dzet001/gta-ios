@@ -54,9 +54,9 @@
 		9F0CA5502566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
 		9F0CA5512566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
 		9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
-		9F0D26862577A56D002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */; };
-		9F0D26872577A56D002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */; };
-		9F0D26882577A56D002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */; };
+		9F0D269F2577AF75002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D269E2577AF74002CC2C2 /* LoginDataProvider.swift */; };
+		9F0D26A02577AF75002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D269E2577AF74002CC2C2 /* LoginDataProvider.swift */; };
+		9F0D26A12577AF75002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D269E2577AF74002CC2C2 /* LoginDataProvider.swift */; };
 		9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
 		9F1620C22566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
 		9F1620C32566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
@@ -386,7 +386,7 @@
 		9ED2AC0BF2A369E0AC6786A4 /* Pods-GTAStage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.release.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.release.xcconfig"; sourceTree = "<group>"; };
 		9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeLocationViewController.swift; sourceTree = "<group>"; };
 		9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfficeLocationViewController.xib; sourceTree = "<group>"; };
-		9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDataProvider.swift; sourceTree = "<group>"; };
+		9F0D269E2577AF74002CC2C2 /* LoginDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginDataProvider.swift; sourceTree = "<group>"; };
 		9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanModalNavigationController.swift; sourceTree = "<group>"; };
 		9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoArticleCell.xib; sourceTree = "<group>"; };
 		9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeInfoCell.xib; sourceTree = "<group>"; };
@@ -629,7 +629,7 @@
 		65D2905425682E45001B658A /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				9F0D26842577A555002CC2C2 /* DataProvider */,
+				9F0D269D2577AF74002CC2C2 /* DataProvider */,
 				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
 				65D2905A25682E76001B658A /* LoginUSMViewController.swift */,
 			);
@@ -682,10 +682,10 @@
 			path = InfoScreen;
 			sourceTree = "<group>";
 		};
-		9F0D26842577A555002CC2C2 /* DataProvider */ = {
+		9F0D269D2577AF74002CC2C2 /* DataProvider */ = {
 			isa = PBXGroup;
 			children = (
-				9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */,
+				9F0D269E2577AF74002CC2C2 /* LoginDataProvider.swift */,
 			);
 			path = DataProvider;
 			sourceTree = "<group>";
@@ -1577,6 +1577,7 @@
 				9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				65398BCC256D4C5F0039C24E /* Utils.swift in Sources */,
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				9F0D269F2577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9B0DD69257147C400662674 /* CommonResponses.swift in Sources */,
 				9F5B105D2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
@@ -1655,6 +1656,7 @@
 				C91F708C2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
 				C9D859392567FE850025F544 /* InfoViewController.swift in Sources */,
+				9F0D26A02577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				65398BCD256D4C5F0039C24E /* Utils.swift in Sources */,
 				C9B0DD6A257147C400662674 /* CommonResponses.swift in Sources */,
 				9F895AE8255C22D7004489C6 /* ApplicationCell.swift in Sources */,
@@ -1717,6 +1719,7 @@
 				C91F708D2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
 				C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */,
+				9F0D26A12577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				65398BCE256D4C5F0039C24E /* Utils.swift in Sources */,
 				C9B0DD6B257147C400662674 /* CommonResponses.swift in Sources */,
 				9F895AE9255C22D7004489C6 /* ApplicationCell.swift in Sources */,
