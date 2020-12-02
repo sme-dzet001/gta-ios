@@ -10,8 +10,8 @@ import Foundation
 class APIManager: NSObject, URLSessionDelegate {
     
     typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool, _ curlRequestLine: String) -> Void)?
-    
-    var baseUrl = "https://gtastageapi.smedsp.com:8888"
+
+    var baseUrl = "https://gtastageinternal.smedsp.com:8888"
     
     private enum requestEndpoint: String {
         case validateToken
