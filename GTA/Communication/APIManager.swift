@@ -8,7 +8,8 @@
 import Foundation
 
 class APIManager: NSObject, URLSessionDelegate {
-    static let shared = APIManager()
+    
+    typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool, _ curlRequestLine: String) -> Void)?
     
     var baseUrl = "https://gtastageapi.smedsp.com:8888"
     
@@ -37,7 +38,7 @@ class APIManager: NSObject, URLSessionDelegate {
     }
     
     func validateToken(token: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        makeRequest(endpoint: .validateToken, method: "POST", params: ["token" : token], completion:  { (responseData: Data?, fromCache: Bool, errorCode: Int, error: Error?, isResponseSuccessful: Bool, curlRequestLine: String) in
+        makeRequest(endpoint: .validateToken, method: "POST", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?, isResponseSuccessful: Bool, curlRequestLine: String) in
             var retErr = error
             if let responseData = responseData {
                 do {
@@ -55,7 +56,7 @@ class APIManager: NSObject, URLSessionDelegate {
         })
     }
     
-    private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, cacheResponse: Bool = true, forceUpdate: Bool = false, timeout: Double = 30, immediateCachedDataCallback: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool) -> Void)? = nil, completion: ((_ responseData: Data?, _ fromCache: Bool, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool, _ curlRequestLine: String) -> Void)? = nil) {
+    private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, forceUpdate: Bool = false, timeout: Double = 30, completion: RequestCompletion = nil) {
         var requestUrlStr = baseUrl + endpoint.endpoint
         
         var queryStr = ""
@@ -105,26 +106,26 @@ class APIManager: NSObject, URLSessionDelegate {
         performURLSession(request: request, completion: completion)
     }
     
-    private func performURLSession(request: URLRequest, completion: ((_ responseData: Data?, _ fromCache: Bool, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool, _ curlRequestLine: String) -> Void)? = nil) {
+    private func performURLSession(request: URLRequest, completion: RequestCompletion = nil) {
         let sessionConfig = URLSessionConfiguration.default
         
-        let session = URLSession(configuration: sessionConfig, delegate: self, delegateQueue: .main)
+        let session = URLSession(configuration: sessionConfig)
         let sessionTask = session.dataTask(with: request) { [weak self] (data: Data?, response: URLResponse?, error: Error?) in
             guard let self = self else { return }
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 && error == nil && data != nil {
                     if let completion = completion {
-                        completion(data, false, 200, nil, true, "")
+                        completion(data, 200, nil, true, "")
                     }
                     return
                 }
                 if let completion = completion {
-                    completion(nil, false, httpResponse.statusCode, error, false, "")
+                    completion(nil, httpResponse.statusCode, error, false, "")
                 }
             }
             //TODO: add error handling
             if let completion = completion {
-                completion(nil, false, 0, error, false, "")
+                completion(nil, 0, error, false, "")
             }
         }
         sessionTask.resume()

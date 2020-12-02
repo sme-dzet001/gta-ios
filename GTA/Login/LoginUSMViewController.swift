@@ -14,6 +14,8 @@ class LoginUSMViewController: UIViewController {
     
     private var usmWebView: WKWebView!
     
+    private var dataProvider: LoginDataProvider = LoginDataProvider()
+    
     private let usmBasicURL = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
     private let usmRedirectURL = "https://gtastageapi.smedsp.com:8888/validate"
     private let usmClientID = "NVdmOTlSc2txN3ByUmozbVNQSGs"
@@ -135,14 +137,16 @@ extension LoginUSMViewController: WKNavigationDelegate {
                 decisionHandler(.cancel)
                 return
             }
-            APIManager.shared.validateToken(token: aToken) { [weak self] (_ errorCode: Int, _ error: Error?) in
+            dataProvider.validateToken(token: aToken) { [weak self] (_ errorCode: Int, _ error: Error?) in
                 guard let self = self else { return }
-                if error == nil && errorCode == 200 {
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let mainScreen = storyboard.instantiateViewController(withIdentifier: "TabBarController")
-                    self.navigationController?.pushViewController(mainScreen, animated: true)
-                } else {
-                    self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
+                DispatchQueue.main.async {
+                    if error == nil && errorCode == 200 {
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let mainScreen = storyboard.instantiateViewController(withIdentifier: "TabBarController")
+                            self.navigationController?.pushViewController(mainScreen, animated: true)
+                    } else {
+                        self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
+                    }
                 }
             }
             decisionHandler(.cancel)

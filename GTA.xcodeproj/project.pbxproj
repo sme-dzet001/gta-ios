@@ -54,6 +54,9 @@
 		9F0CA5502566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
 		9F0CA5512566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
 		9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
+		9F0D26862577A56D002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */; };
+		9F0D26872577A56D002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */; };
+		9F0D26882577A56D002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */; };
 		9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
 		9F1620C22566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
 		9F1620C32566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
@@ -377,6 +380,7 @@
 		9ED2AC0BF2A369E0AC6786A4 /* Pods-GTAStage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.release.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.release.xcconfig"; sourceTree = "<group>"; };
 		9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeLocationViewController.swift; sourceTree = "<group>"; };
 		9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfficeLocationViewController.xib; sourceTree = "<group>"; };
+		9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDataProvider.swift; sourceTree = "<group>"; };
 		9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanModalNavigationController.swift; sourceTree = "<group>"; };
 		9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoArticleCell.xib; sourceTree = "<group>"; };
 		9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeInfoCell.xib; sourceTree = "<group>"; };
@@ -617,6 +621,7 @@
 		65D2905425682E45001B658A /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				9F0D26842577A555002CC2C2 /* DataProvider */,
 				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
 				65D2905A25682E76001B658A /* LoginUSMViewController.swift */,
 			);
@@ -667,6 +672,14 @@
 				9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */,
 			);
 			path = InfoScreen;
+			sourceTree = "<group>";
+		};
+		9F0D26842577A555002CC2C2 /* DataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */,
+			);
+			path = DataProvider;
 			sourceTree = "<group>";
 		};
 		9F1620CE2566BB32003AFE68 /* InfoScreenCells */ = {
@@ -1552,6 +1565,7 @@
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				9FF0545C25680ED30071E596 /* SendMessageView.swift in Sources */,
 				C9DFD4B725659C1100BF1740 /* StatsBarView.swift in Sources */,
+				9F0D26862577A56D002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9FF0547325681FC60071E596 /* SecondSendMessageView.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
 				9F895B28255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
@@ -1628,6 +1642,7 @@
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9FF0543D2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				9FF0547425681FC60071E596 /* SecondSendMessageView.swift in Sources */,
+				9F0D26872577A56D002CC2C2 /* LoginDataProvider.swift in Sources */,
 				C93FCF1A2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9DFD4B825659C1100BF1740 /* StatsBarView.swift in Sources */,
 				9F819A93255C1572007C1739 /* Extensions.swift in Sources */,
@@ -1688,6 +1703,7 @@
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9FF0543E2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				9FF0547525681FC60071E596 /* SecondSendMessageView.swift in Sources */,
+				9F0D26882577A56D002CC2C2 /* LoginDataProvider.swift in Sources */,
 				C93FCF1B2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9DFD4B925659C1100BF1740 /* StatsBarView.swift in Sources */,
 				9F819ABD255C1646007C1739 /* Extensions.swift in Sources */,
