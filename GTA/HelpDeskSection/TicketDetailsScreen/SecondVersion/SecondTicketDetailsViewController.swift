@@ -15,11 +15,20 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
     @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var navigationView: UIView!
     
     var messageHeaderView: SecondSendMessageView = SecondSendMessageView.instanceFromNib()
     
     var panScrollable: UIScrollView? {
         return tableView
+    }
+    
+    var topOffset: CGFloat {
+        if let keyWindow = UIWindow.key {
+            return keyWindow.safeAreaInsets.top + 50
+        } else {
+            return 0
+        }
     }
     
     var showDragIndicator: Bool {
@@ -54,6 +63,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
         view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +76,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
         detailsView.fillHeaderLabels(with: dataSource)
         let sdsdd = self.headerView.frame.height + self.headerView.frame.origin.y
         detailsView.frame = CGRect(x: 0, y: sdsdd, width: self.view.frame.width, height: 190)
-        view.addSubview(detailsView)
+        view.insertSubview(detailsView, belowSubview: navigationView) //addSubview(detailsView)
     }
     
     private func setUpTableView() {
@@ -93,12 +103,14 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
             UIView.animate(withDuration: 0.3, animations: {
                 guard keyboardSize.height > difference else {return}
                 self.view.frame.origin.y = -(keyboardSize.height - difference)
+                self.navigationView.frame.origin.y = keyboardSize.height - difference
             })
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         self.view.frame.origin.y = 0
+        self.navigationView.frame.origin.y = 0
     }
     
     @objc func hideKeyboard() {
@@ -108,6 +120,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
     }
     
 }

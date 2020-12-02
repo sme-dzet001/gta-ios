@@ -24,6 +24,7 @@ class MyTicketsViewController: UIViewController {
     private func setUpNavigationItem() {
         navigationItem.title = "My Tickets"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_icon"), style: .plain, target: self, action: #selector(searchPressed))
     }
     
     private func setUpTableView() {
@@ -51,6 +52,10 @@ class MyTicketsViewController: UIViewController {
     
     @objc private func backPressed() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func searchPressed() {
+        // not implemented yet
     }
     
 }

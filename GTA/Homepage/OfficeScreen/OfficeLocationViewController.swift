@@ -40,7 +40,6 @@ class OfficeLocationViewController: UIViewController {
     private func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "OfficeInfoCell", bundle: nil), forCellReuseIdentifier: "OfficeInfoCell")
     }
@@ -63,7 +62,7 @@ class OfficeLocationViewController: UIViewController {
     }
     
     @IBAction func backButtonDidPressed(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popWithFadeAnimation()
     }
     
     deinit {
@@ -76,6 +75,10 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return selectionIsOn ? countryDataSource.count : regionDataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -115,6 +118,7 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         cell?.iconImageView.image = UIImage(named: "location")
         cell?.separator.isHidden = false
         cell?.arrowIcon.isHidden = true
+        cell?.topSeparator.isHidden = indexPath.row != 0
         return cell ?? UITableViewCell()
     }
     
@@ -123,7 +127,8 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         let office = OfficeLocationViewController()
         office.selectionIsOn = false
         office.title = countryDataSource[indexPath.row].text
-        self.navigationController?.pushViewController(office, animated: true)
+        self.navigationController?.pushWithFadeAnimationVC(office)
+        //self.navigationController?.pushViewController(office, animated: true)
     }
     
 }
