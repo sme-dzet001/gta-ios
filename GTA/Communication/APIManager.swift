@@ -59,7 +59,7 @@ class APIManager: NSObject, URLSessionDelegate {
         })
     }
     
-    private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, forceUpdate: Bool = false, timeout: Double = 30, completion: RequestCompletion = nil) {
+    private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, completion: RequestCompletion = nil) {
         var requestUrlStr = baseUrl + endpoint.endpoint
         
         var queryStr = ""
@@ -111,24 +111,10 @@ class APIManager: NSObject, URLSessionDelegate {
     
     private func performURLSession(request: URLRequest, completion: RequestCompletion = nil) {
         let sessionConfig = URLSessionConfiguration.default
-        
         let session = URLSession(configuration: sessionConfig)
-        let sessionTask = session.dataTask(with: request) { [weak self] (data: Data?, response: URLResponse?, error: Error?) in
-            guard let self = self else { return }
+        let sessionTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 && error == nil && data != nil {
-                    if let completion = completion {
-                        completion(data, 200, nil, true, "")
-                    }
-                    return
-                }
-                if let completion = completion {
-                    completion(nil, httpResponse.statusCode, error, false, "")
-                }
-            }
-            //TODO: add error handling
-            if let completion = completion {
-                completion(nil, 0, error, false, "")
+                completion?(data, httpResponse.statusCode, error, httpResponse.statusCode == 200 && data != nil, "")
             }
         }
         sessionTask.resume()
