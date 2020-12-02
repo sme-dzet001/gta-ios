@@ -139,14 +139,13 @@ extension LoginUSMViewController: WKNavigationDelegate {
                 return
             }
             dataProvider.validateToken(token: aToken) { [weak self] (_ errorCode: Int, _ error: Error?) in
-                guard let self = self else { return }
                 DispatchQueue.main.async {
                     if error == nil && errorCode == 200 {
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                         let mainScreen = storyboard.instantiateViewController(withIdentifier: "TabBarController")
-                        self.navigationController?.pushViewController(mainScreen, animated: true)
+                        self?.navigationController?.pushViewController(mainScreen, animated: true)
                     } else {
-                        self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
+                        self?.performSegue(withIdentifier: "unwindToLogin", sender: nil)
                     }
                 }
             }
