@@ -34,6 +34,7 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: UIApplication.willResignActiveNotification, object: nil)
+        setDefaultElementsState()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -103,6 +104,10 @@ class LoginViewController: UIViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         self.view.frame.origin.y = 0
+        setDefaultElementsState()
+    }
+    
+    private func setDefaultElementsState() {
         forgotPasswordBottom.constant = defaultForgotPasswordBottom
         logoImageView.isHidden = false
         titleLabel.isHidden = false

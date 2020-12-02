@@ -685,8 +685,8 @@
 		65D29080256C0D7E001B658A /* Communication */ = {
 			isa = PBXGroup;
 			children = (
-				9FBAF4692577D5A200B43F96 /* APIResponses */,
 				65D29082256C0DA6001B658A /* APIManager.swift */,
+				9FBAF4692577D5A200B43F96 /* APIResponses */,
 			);
 			path = Communication;
 			sourceTree = "<group>";

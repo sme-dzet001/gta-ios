@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EcR-AN-4mG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EcR-AN-4mG">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -246,18 +246,89 @@
         <!--General-->
         <scene sceneID="v41-tN-vox">
             <objects>
-                <viewController id="Id3-YA-WU9" sceneMemberID="viewController">
+                <viewController id="Id3-YA-WU9" customClass="GeneralViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8HA-VV-aXc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmT-Om-NUy">
+                                <rect key="frame" x="20" y="737" width="374" height="56"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="n8D-vw-CBx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="onLogoutButtonTapWithSender:" destination="Id3-YA-WU9" eventType="touchUpInside" id="Eoh-3r-7rU"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="wtV-db-6nF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wtV-db-6nF" firstAttribute="trailing" secondItem="tmT-Om-NUy" secondAttribute="trailing" constant="20" id="Tqm-el-doK"/>
+                            <constraint firstItem="tmT-Om-NUy" firstAttribute="leading" secondItem="wtV-db-6nF" secondAttribute="leading" constant="20" id="qUd-ur-Emj"/>
+                            <constraint firstItem="wtV-db-6nF" firstAttribute="bottom" secondItem="tmT-Om-NUy" secondAttribute="bottom" constant="20" id="zKp-uE-aba"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="General" image="general_tab_icon" id="Yfo-Ct-jJr"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aj6-b0-tyA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1786" y="812"/>
+        </scene>
+        <!--LoginUSM View Controller-->
+        <scene sceneID="PWb-dP-BE3">
+            <objects>
+                <viewController storyboardIdentifier="LoginUSMViewController" id="0Yq-6b-oow" customClass="LoginUSMViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jAR-Of-DU6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CLZ-Qu-tWI" customClass="APHeaderView" customModule="GTA" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="62" width="414" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ft-O2-nHT">
+                                        <rect key="frame" x="24" y="10" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="rR3-ZJ-dEm"/>
+                                            <constraint firstAttribute="height" constant="24" id="uSL-JE-phc"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" image="back_arrow"/>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="0Yq-6b-oow" eventType="touchUpInside" id="uUF-bw-9If"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="0ft-O2-nHT" firstAttribute="centerY" secondItem="CLZ-Qu-tWI" secondAttribute="centerY" id="du5-Fc-XOO"/>
+                                    <constraint firstItem="0ft-O2-nHT" firstAttribute="leading" secondItem="CLZ-Qu-tWI" secondAttribute="leading" constant="24" id="fKX-7i-MJn"/>
+                                    <constraint firstAttribute="height" constant="44" id="vXg-I0-Yfl"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Bm8-mO-dJo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Bm8-mO-dJo" firstAttribute="leading" secondItem="CLZ-Qu-tWI" secondAttribute="leading" id="flQ-Ad-uZK"/>
+                            <constraint firstItem="Bm8-mO-dJo" firstAttribute="trailing" secondItem="CLZ-Qu-tWI" secondAttribute="trailing" id="grH-CG-o5D"/>
+                            <constraint firstItem="CLZ-Qu-tWI" firstAttribute="top" secondItem="Bm8-mO-dJo" secondAttribute="top" constant="18" id="hgh-2G-KgV"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="headerView" destination="CLZ-Qu-tWI" id="fUe-Yc-QQj"/>
+                        <segue destination="yHG-yW-IY9" kind="unwind" identifier="unwindToLogin" unwindAction="unwindToLoginWithSegue:" id="kED-PS-lT0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nIK-VU-3yZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="yHG-yW-IY9" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="135" y="747"/>
         </scene>
     </scenes>
     <designables>
@@ -267,6 +338,7 @@
     </designables>
     <resources>
         <image name="apps_tab_icon" width="24" height="24"/>
+        <image name="back_arrow" width="29" height="29"/>
         <image name="collaboration_tab_icon" width="24" height="24"/>
         <image name="general_tab_icon" width="24" height="24"/>
         <image name="gta_logo" width="48" height="48"/>
