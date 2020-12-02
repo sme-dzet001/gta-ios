@@ -9,19 +9,37 @@ import Foundation
 
 class APIManager: NSObject, URLSessionDelegate {
     
-    typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool, _ curlRequestLine: String) -> Void)?
-
-    var baseUrl = "https://gtastageinternal.smedsp.com:8888"
+    typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool) -> Void)?
+    
+    private let baseUrl = "https://gtastageinternal.smedsp.com:8888"
+    private let accessToken: String?
     
     private enum requestEndpoint: String {
         case validateToken
-        // TODO
+        case getSectionReport
         
         var endpoint: String {
             switch self {
                 case .validateToken: return "/v1/me"
+                case .getSectionReport: return "/v3/reports/"
             }
         }
+    }
+    
+    enum SectionId: String {
+        case home = "5fbbd382cead87a5b8400767"
+        case apps = "5fbbd382cead87a5b8400768"
+        case serviceDesk = "5fbbd382cead87a5b8400769"
+    }
+    
+    enum WidgetId: String {
+        case globalNews = "global_news"
+        case specialAlerts = "special_alerts"
+        case gsdProfile = "gsd_profile"
+    }
+    
+    init(accessToken: String?) {
+        self.accessToken = accessToken
     }
     
     func parse<T>(data: Data, decodingStrategy: JSONDecoder.KeyDecodingStrategy? = nil) throws -> T? where T : Codable {
@@ -38,24 +56,35 @@ class APIManager: NSObject, URLSessionDelegate {
         return res
     }
     
-    func validateToken(token: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        makeRequest(endpoint: .validateToken, method: "POST", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?, isResponseSuccessful: Bool, curlRequestLine: String) in
+    func getSectionReport(sectionId: String, completion: ((_ reportData: ReportDataResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        let requestParams = ["section_id": sectionId]
+        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, params: requestParams) { (responseData, errorCode, error, isResponseSuccessful) in
+            var reportDataResponse: ReportDataResponse?
             var retErr = error
             if let responseData = responseData {
                 do {
-                    if let validationResponse: AccessTokenValidationResponse = try self.parse(data: responseData) {
-                        _ = KeychainManager.saveUsername(username: validationResponse.data.username)
-                        _ = KeychainManager.saveToken(token: validationResponse.data.token)
-                        let tokenExpirationDate = Date().addingTimeInterval(TimeInterval(validationResponse.data.lifetime))
-                        _ = KeychainManager.saveTokenExpirationDate(tokenExpirationDate: tokenExpirationDate)
-                    }
+                    reportDataResponse = try self.parse(data: responseData)
                 } catch {
                     retErr = error
                 }
             }
-            if let completion = completion {
-                completion(errorCode, retErr)
+            completion?(reportDataResponse, errorCode, retErr)
+        }
+    }
+    
+    func validateToken(token: String, completion: ((_ tokenData: AccessTokenValidationResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        makeRequest(endpoint: .validateToken, method: "POST", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?, isResponseSuccessful: Bool) in
+            var tokenValidationResponse: AccessTokenValidationResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    tokenValidationResponse = try self.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
             }
+            completion?(tokenValidationResponse, errorCode, retErr)
         })
     }
     
@@ -82,10 +111,10 @@ class APIManager: NSObject, URLSessionDelegate {
         var request = URLRequest(url: requestUrl)
         request.httpMethod = method
         for (param, value) in headers {
-            request.setValue(value, forHTTPHeaderField:param)
+            request.setValue(value, forHTTPHeaderField: param)
         }
         if !headers.keys.contains("Content-Type") {
-            request.setValue("text/plain", forHTTPHeaderField:"Content-Type")
+            request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
         }
         request.setValue("UTF-8", forHTTPHeaderField:"charset")
         
@@ -114,7 +143,7 @@ class APIManager: NSObject, URLSessionDelegate {
         let session = URLSession(configuration: sessionConfig)
         let sessionTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let httpResponse = response as? HTTPURLResponse {
-                completion?(data, httpResponse.statusCode, error, httpResponse.statusCode == 200 && data != nil, "")
+                completion?(data, httpResponse.statusCode, error, httpResponse.statusCode == 200 && data != nil)
             }
         }
         sessionTask.resume()
