@@ -54,6 +54,9 @@
 		9F0CA5502566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
 		9F0CA5512566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
 		9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
+		9F0D26862577A56D002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */; };
+		9F0D26872577A56D002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */; };
+		9F0D26882577A56D002CC2C2 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */; };
 		9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
 		9F1620C22566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
 		9F1620C32566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
@@ -383,6 +386,7 @@
 		9ED2AC0BF2A369E0AC6786A4 /* Pods-GTAStage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.release.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.release.xcconfig"; sourceTree = "<group>"; };
 		9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeLocationViewController.swift; sourceTree = "<group>"; };
 		9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfficeLocationViewController.xib; sourceTree = "<group>"; };
+		9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDataProvider.swift; sourceTree = "<group>"; };
 		9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanModalNavigationController.swift; sourceTree = "<group>"; };
 		9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoArticleCell.xib; sourceTree = "<group>"; };
 		9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeInfoCell.xib; sourceTree = "<group>"; };
@@ -625,6 +629,7 @@
 		65D2905425682E45001B658A /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				9F0D26842577A555002CC2C2 /* DataProvider */,
 				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
 				65D2905A25682E76001B658A /* LoginUSMViewController.swift */,
 			);
@@ -675,6 +680,14 @@
 				9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */,
 			);
 			path = InfoScreen;
+			sourceTree = "<group>";
+		};
+		9F0D26842577A555002CC2C2 /* DataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				9F0D26852577A56D002CC2C2 /* LoginDataProvider.swift */,
+			);
+			path = DataProvider;
 			sourceTree = "<group>";
 		};
 		9F1620CE2566BB32003AFE68 /* InfoScreenCells */ = {
