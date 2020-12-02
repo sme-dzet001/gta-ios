@@ -14,9 +14,6 @@
 		65398BCC256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
 		65398BCD256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
 		65398BCE256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
-		65398BD5256D59D60039C24E /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BD4256D59D50039C24E /* LoginResponses.swift */; };
-		65398BD6256D59D60039C24E /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BD4256D59D50039C24E /* LoginResponses.swift */; };
-		65398BD7256D59D60039C24E /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BD4256D59D50039C24E /* LoginResponses.swift */; };
 		659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
 		659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
 		659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
@@ -39,9 +36,6 @@
 		65D1A2A12554BE3700D71965 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2A02554BE3700D71965 /* Home.storyboard */; };
 		65D1A2AC2554CE5E00D71965 /* HelpDesk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */; };
 		65D1A2B12554CF1F00D71965 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2B02554CF1F00D71965 /* Apps.storyboard */; };
-		65D2905B25682E76001B658A /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2905A25682E76001B658A /* LoginUSMViewController.swift */; };
-		65D2905C25682E76001B658A /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2905A25682E76001B658A /* LoginUSMViewController.swift */; };
-		65D2905D25682E76001B658A /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2905A25682E76001B658A /* LoginUSMViewController.swift */; };
 		65D29083256C0DA6001B658A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D29082256C0DA6001B658A /* APIManager.swift */; };
 		65D2908E256C0DBC001B658A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D29082256C0DA6001B658A /* APIManager.swift */; };
 		65D29094256C0DBD001B658A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D29082256C0DA6001B658A /* APIManager.swift */; };
@@ -199,6 +193,18 @@
 		9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
+		9FBAF46D2577D5A200B43F96 /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF46A2577D5A200B43F96 /* CommonResponses.swift */; };
+		9FBAF46E2577D5A200B43F96 /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF46A2577D5A200B43F96 /* CommonResponses.swift */; };
+		9FBAF46F2577D5A300B43F96 /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF46A2577D5A200B43F96 /* CommonResponses.swift */; };
+		9FBAF4702577D5A300B43F96 /* GlobalNewsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF46B2577D5A200B43F96 /* GlobalNewsResponses.swift */; };
+		9FBAF4712577D5A300B43F96 /* GlobalNewsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF46B2577D5A200B43F96 /* GlobalNewsResponses.swift */; };
+		9FBAF4722577D5A300B43F96 /* GlobalNewsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF46B2577D5A200B43F96 /* GlobalNewsResponses.swift */; };
+		9FBAF4732577D5A300B43F96 /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF46C2577D5A200B43F96 /* LoginResponses.swift */; };
+		9FBAF4742577D5A300B43F96 /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF46C2577D5A200B43F96 /* LoginResponses.swift */; };
+		9FBAF4752577D5A300B43F96 /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF46C2577D5A200B43F96 /* LoginResponses.swift */; };
+		9FBAF4862577D65E00B43F96 /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
+		9FBAF4872577D65E00B43F96 /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
+		9FBAF4882577D65E00B43F96 /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
 		9FF0542F2567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */; };
 		9FF054302567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */; };
 		9FF054312567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */; };
@@ -375,7 +381,6 @@
 		32CD469F4721B25AB5FCA92F /* Pods-GTA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.release.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.release.xcconfig"; sourceTree = "<group>"; };
 		36A01C2B3BD99917F474E04F /* Pods-GTATests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.release.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.release.xcconfig"; sourceTree = "<group>"; };
 		65398BCB256D4C5E0039C24E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		65398BD4256D59D50039C24E /* LoginResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponses.swift; sourceTree = "<group>"; };
 		659A5AAD255401EA00E13B77 /* GTA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		659A5AB0255401EA00E13B77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		659A5AB2255401EA00E13B77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -402,7 +407,6 @@
 		65D1A2A02554BE3700D71965 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelpDesk.storyboard; sourceTree = "<group>"; };
 		65D1A2B02554CF1F00D71965 /* Apps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Apps.storyboard; sourceTree = "<group>"; };
-		65D2905A25682E76001B658A /* LoginUSMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUSMViewController.swift; sourceTree = "<group>"; };
 		65D29082256C0DA6001B658A /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		65D2909A256C0DDD001B658A /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		6EB077646F36AA7D3D1D97AB /* Pods_GTAUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTAUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -454,6 +458,10 @@
 		9F895B7A255D8810004489C6 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9F8AEAE3255EB88500B62072 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 		9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCollectionViewLayout.swift; sourceTree = "<group>"; };
+		9FBAF46A2577D5A200B43F96 /* CommonResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonResponses.swift; sourceTree = "<group>"; };
+		9FBAF46B2577D5A200B43F96 /* GlobalNewsResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalNewsResponses.swift; sourceTree = "<group>"; };
+		9FBAF46C2577D5A200B43F96 /* LoginResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginResponses.swift; sourceTree = "<group>"; };
+		9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginUSMViewController.swift; path = GTA/Login/LoginUSMViewController.swift; sourceTree = SOURCE_ROOT; };
 		9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsMessageCell.swift; sourceTree = "<group>"; };
 		9FF0542E2567E1D80071E596 /* TicketDetailsMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TicketDetailsMessageCell.xib; sourceTree = "<group>"; };
 		9FF0543B2567F6FF0071E596 /* TicketDatailsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDatailsHeader.swift; sourceTree = "<group>"; };
@@ -580,6 +588,7 @@
 				659A5AAE255401EA00E13B77 /* Products */,
 				859404A3899213CC1A467C10 /* Pods */,
 				C4EF77F4D748F06CF62A7BAF /* Frameworks */,
+				9FBAF4632577D55B00B43F96 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -668,7 +677,7 @@
 			children = (
 				9F0D269D2577AF74002CC2C2 /* DataProvider */,
 				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
-				65D2905A25682E76001B658A /* LoginUSMViewController.swift */,
+				9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -676,8 +685,8 @@
 		65D29080256C0D7E001B658A /* Communication */ = {
 			isa = PBXGroup;
 			children = (
+				9FBAF4692577D5A200B43F96 /* APIResponses */,
 				65D29082256C0DA6001B658A /* APIManager.swift */,
-				C9B0DD71257147F000662674 /* APIResponses */,
 			);
 			path = Communication;
 			sourceTree = "<group>";
@@ -935,6 +944,24 @@
 				9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */,
 			);
 			path = CollectionViewLayout;
+			sourceTree = "<group>";
+		};
+		9FBAF4632577D55B00B43F96 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		9FBAF4692577D5A200B43F96 /* APIResponses */ = {
+			isa = PBXGroup;
+			children = (
+				9FBAF46A2577D5A200B43F96 /* CommonResponses.swift */,
+				9FBAF46B2577D5A200B43F96 /* GlobalNewsResponses.swift */,
+				9FBAF46C2577D5A200B43F96 /* LoginResponses.swift */,
+			);
+			name = APIResponses;
+			path = ../../../APIResponses;
 			sourceTree = "<group>";
 		};
 		9FF0542C2567E1A00071E596 /* TicketDetailsCell */ = {
@@ -1657,6 +1684,7 @@
 				C9DFD4C025659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				C962D8282566D21100727949 /* TicketCell.swift in Sources */,
 				9FF0546625681F4A0071E596 /* SecondTicketDetailsViewController.swift in Sources */,
+				9FBAF4702577D5A300B43F96 /* GlobalNewsResponses.swift in Sources */,
 				C993A2C62576686500F9146A /* QuickHelpCell.swift in Sources */,
 				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F1620DA2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
@@ -1674,15 +1702,15 @@
 				65398BCC256D4C5F0039C24E /* Utils.swift in Sources */,
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F0D269F2577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
+				9FBAF4862577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
-				C9B0DD69257147C400662674 /* CommonResponses.swift in Sources */,
 				9F5B105D2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
 				9FF0542F2567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				9FF0545C25680ED30071E596 /* SendMessageView.swift in Sources */,
+				9FBAF46D2577D5A200B43F96 /* CommonResponses.swift in Sources */,
 				C9DFD4B725659C1100BF1740 /* StatsBarView.swift in Sources */,
-				C9B0DD602571311000662674 /* GlobalNewsResponses.swift in Sources */,
 				9FF0547325681FC60071E596 /* SecondSendMessageView.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
 				9F895B28255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
@@ -1701,10 +1729,10 @@
 				9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				65D14CB9256DA877004DFA70 /* GeneralViewController.swift in Sources */,
 				65D2909B256C0DDD001B658A /* KeychainManager.swift in Sources */,
+				9FBAF4732577D5A300B43F96 /* LoginResponses.swift in Sources */,
 				C9424E0125642632003C247E /* MyDevicesViewController.swift in Sources */,
 				C9424E14256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
-				65398BD5256D59D60039C24E /* LoginResponses.swift in Sources */,
 				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1741,6 +1769,7 @@
 				9F0CA54E2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
 				C962D8292566D21100727949 /* TicketCell.swift in Sources */,
 				C93FCF0725648FA0001E86F6 /* AboutViewController.swift in Sources */,
+				9FBAF4712577D5A300B43F96 /* GlobalNewsResponses.swift in Sources */,
 				C993A2C72576686500F9146A /* QuickHelpCell.swift in Sources */,
 				9F36D4662562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9FF054302567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
@@ -1758,15 +1787,15 @@
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
 				C9D859392567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F0D26A02577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
+				9FBAF4872577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				65398BCD256D4C5F0039C24E /* Utils.swift in Sources */,
-				C9B0DD6A257147C400662674 /* CommonResponses.swift in Sources */,
 				9F895AE8255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9FF0543D2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
+				9FBAF46E2577D5A200B43F96 /* CommonResponses.swift in Sources */,
 				9FF0547425681FC60071E596 /* SecondSendMessageView.swift in Sources */,
-				C9B0DD612571311000662674 /* GlobalNewsResponses.swift in Sources */,
 				C93FCF1A2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9DFD4B825659C1100BF1740 /* StatsBarView.swift in Sources */,
 				9F819A93255C1572007C1739 /* Extensions.swift in Sources */,
@@ -1785,10 +1814,10 @@
 				C9424E0225642632003C247E /* MyDevicesViewController.swift in Sources */,
 				65D14CBA256DA877004DFA70 /* GeneralViewController.swift in Sources */,
 				65D2909C256C0DDD001B658A /* KeychainManager.swift in Sources */,
+				9FBAF4742577D5A300B43F96 /* LoginResponses.swift in Sources */,
 				C9424E15256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				C962D8452566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
-				65398BD6256D59D60039C24E /* LoginResponses.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1809,6 +1838,7 @@
 				9F0CA54F2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
 				C962D82A2566D21100727949 /* TicketCell.swift in Sources */,
 				C93FCF0825648FA0001E86F6 /* AboutViewController.swift in Sources */,
+				9FBAF4722577D5A300B43F96 /* GlobalNewsResponses.swift in Sources */,
 				C993A2C82576686500F9146A /* QuickHelpCell.swift in Sources */,
 				9F36D4672562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9FF054312567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
@@ -1826,15 +1856,15 @@
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
 				C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F0D26A12577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
+				9FBAF4882577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				65398BCE256D4C5F0039C24E /* Utils.swift in Sources */,
-				C9B0DD6B257147C400662674 /* CommonResponses.swift in Sources */,
 				9F895AE9255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9FF0543E2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
+				9FBAF46F2577D5A300B43F96 /* CommonResponses.swift in Sources */,
 				9FF0547525681FC60071E596 /* SecondSendMessageView.swift in Sources */,
-				C9B0DD622571311000662674 /* GlobalNewsResponses.swift in Sources */,
 				C93FCF1B2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9DFD4B925659C1100BF1740 /* StatsBarView.swift in Sources */,
 				9F819ABD255C1646007C1739 /* Extensions.swift in Sources */,
@@ -1853,10 +1883,10 @@
 				C9424E0325642632003C247E /* MyDevicesViewController.swift in Sources */,
 				65D14CBB256DA877004DFA70 /* GeneralViewController.swift in Sources */,
 				65D2909D256C0DDD001B658A /* KeychainManager.swift in Sources */,
+				9FBAF4752577D5A300B43F96 /* LoginResponses.swift in Sources */,
 				C9424E16256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				C962D8462566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
-				65398BD7256D59D60039C24E /* LoginResponses.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
