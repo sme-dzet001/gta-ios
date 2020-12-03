@@ -41,7 +41,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     }
     
     var longFormHeight: PanModalHeight {
-        return .maxHeightWithTopInset(20)
+        return .maxHeight
     }
     
     var shortFormHeight: PanModalHeight {
