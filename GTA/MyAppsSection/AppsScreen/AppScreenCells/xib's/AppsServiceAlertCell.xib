@@ -80,7 +80,7 @@
                             <constraint firstAttribute="trailing" secondItem="m02-aB-zKY" secondAttribute="trailing" id="Hau-mE-JiG"/>
                             <constraint firstItem="m02-aB-zKY" firstAttribute="top" secondItem="FmA-2v-IWb" secondAttribute="top" id="JJ6-0N-KID"/>
                             <constraint firstAttribute="bottom" secondItem="cgv-4g-xLI" secondAttribute="bottom" id="KIj-G5-FMj"/>
-                            <constraint firstItem="aYU-wk-pGE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="FmA-2v-IWb" secondAttribute="top" constant="20" id="M7V-6a-1Nq"/>
+                            <constraint firstItem="aYU-wk-pGE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="FmA-2v-IWb" secondAttribute="top" constant="10" id="M7V-6a-1Nq"/>
                             <constraint firstItem="eRv-4L-FYW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3FG-AM-rsA" secondAttribute="trailing" constant="10" id="N4S-LZ-YmK"/>
                             <constraint firstItem="3FG-AM-rsA" firstAttribute="top" secondItem="aYU-wk-pGE" secondAttribute="bottom" constant="5" id="OuI-Vg-Gdf"/>
                             <constraint firstItem="eRv-4L-FYW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aYU-wk-pGE" secondAttribute="trailing" constant="10" id="QYf-LW-o2w"/>
@@ -92,7 +92,7 @@
                             <constraint firstItem="3FG-AM-rsA" firstAttribute="leading" secondItem="aYU-wk-pGE" secondAttribute="leading" id="mQS-X3-hlu"/>
                             <constraint firstAttribute="trailing" secondItem="eRv-4L-FYW" secondAttribute="trailing" constant="20" id="qFg-2j-2hh"/>
                             <constraint firstItem="hDh-Cz-1qF" firstAttribute="leading" secondItem="FmA-2v-IWb" secondAttribute="leading" constant="20" id="sod-hK-NCZ"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3FG-AM-rsA" secondAttribute="bottom" constant="20" id="t1I-R6-6zr"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3FG-AM-rsA" secondAttribute="bottom" constant="10" id="t1I-R6-6zr"/>
                         </constraints>
                     </view>
                 </subviews>
