@@ -21,7 +21,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
             animation.duration = 0.3
             animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
             articleTextView?.layer.add(animation, forKey: "changeTextTransition")
-            articleTextView?.text = articleText
+            articleTextView?.attributedText = articleText?.htmlToAttributedString
         }
     }
     
@@ -79,7 +79,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
-        articleTextView.text = articleText
+        articleTextView.attributedText = articleText?.htmlToAttributedString
         articleTextView.textContainerInset = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
     }
     

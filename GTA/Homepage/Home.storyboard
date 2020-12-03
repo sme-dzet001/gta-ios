@@ -78,6 +78,10 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="QDX-0N-PvK">
+                                <rect key="frame" x="197" y="187.5" width="20" height="20"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WOX-S5-YeY">
                                 <rect key="frame" x="366" y="56" width="24" height="24"/>
                                 <constraints>
@@ -96,6 +100,8 @@
                             <constraint firstItem="Rwc-F4-LiA" firstAttribute="trailing" secondItem="9CN-qS-fad" secondAttribute="trailing" id="EX1-Ao-SZr"/>
                             <constraint firstItem="9CN-qS-fad" firstAttribute="trailing" secondItem="1GO-lO-K0o" secondAttribute="trailing" id="IDY-HO-Mlb"/>
                             <constraint firstItem="9CN-qS-fad" firstAttribute="trailing" secondItem="eVF-gW-Cgr" secondAttribute="trailing" id="SH1-29-4eG"/>
+                            <constraint firstItem="QDX-0N-PvK" firstAttribute="centerX" secondItem="eVF-gW-Cgr" secondAttribute="centerX" id="VYi-8v-l81"/>
+                            <constraint firstItem="QDX-0N-PvK" firstAttribute="centerY" secondItem="eVF-gW-Cgr" secondAttribute="centerY" constant="32" id="W83-f5-70R"/>
                             <constraint firstItem="1GO-lO-K0o" firstAttribute="top" secondItem="eVF-gW-Cgr" secondAttribute="bottom" constant="-20" id="YE7-ef-viM"/>
                             <constraint firstItem="WOX-S5-YeY" firstAttribute="centerY" secondItem="DeH-Z1-Yr9" secondAttribute="centerY" id="aGL-Ek-dh3"/>
                             <constraint firstItem="1GO-lO-K0o" firstAttribute="leading" secondItem="9CN-qS-fad" secondAttribute="leading" id="bXG-tI-66u"/>
@@ -111,6 +117,7 @@
                     <tabBarItem key="tabBarItem" title="Home" image="homepage_tab_icon" id="LgG-vL-DZb"/>
                     <navigationItem key="navigationItem" id="o7j-HC-El0"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="QDX-0N-PvK" id="HHj-52-lQc"/>
                         <outlet property="collectionView" destination="eVF-gW-Cgr" id="ZdK-CA-rKP"/>
                         <outlet property="containerView" destination="Rwc-F4-LiA" id="eTA-yX-epK"/>
                         <outlet property="pageControl" destination="1GO-lO-K0o" id="ivv-zl-Axd"/>

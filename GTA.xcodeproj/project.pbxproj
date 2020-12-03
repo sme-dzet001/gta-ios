@@ -319,6 +319,9 @@
 		C9D0359C2578095A0068441F /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035952578095A0068441F /* LoginResponses.swift */; };
 		C9D0359D2578095A0068441F /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035952578095A0068441F /* LoginResponses.swift */; };
 		C9D0359E2578095A0068441F /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035952578095A0068441F /* LoginResponses.swift */; };
+		C9D035A52578100D0068441F /* HomeDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035A42578100D0068441F /* HomeDataProvider.swift */; };
+		C9D035A62578100D0068441F /* HomeDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035A42578100D0068441F /* HomeDataProvider.swift */; };
+		C9D035A72578100D0068441F /* HomeDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035A42578100D0068441F /* HomeDataProvider.swift */; };
 		C9D859392567FE850025F544 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		C9DFD47C2565721F00BF1740 /* MetricStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */; };
@@ -504,6 +507,7 @@
 		C9D035932578095A0068441F /* CommonResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonResponses.swift; sourceTree = "<group>"; };
 		C9D035942578095A0068441F /* GlobalNewsResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalNewsResponses.swift; sourceTree = "<group>"; };
 		C9D035952578095A0068441F /* LoginResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginResponses.swift; sourceTree = "<group>"; };
+		C9D035A42578100D0068441F /* HomeDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataProvider.swift; sourceTree = "<group>"; };
 		C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricStatsCell.swift; sourceTree = "<group>"; };
 		C9DFD47B2565721F00BF1740 /* MetricStatsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MetricStatsCell.xib; sourceTree = "<group>"; };
 		C9DFD48C25657B0800BF1740 /* MetricStatsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricStatsHeader.swift; sourceTree = "<group>"; };
@@ -566,6 +570,7 @@
 		6583BC8A2559AD4300C80673 /* Homepage */ = {
 			isa = PBXGroup;
 			children = (
+				C9D035AD257810130068441F /* DataProvider */,
 				9F5B10682567C057000A3CFD /* OfficeScreen */,
 				9F0CA54A256686F600275B25 /* InfoScreen */,
 				9F78D0DB256557BA00BCD38F /* HomepageTableViewCells */,
@@ -1146,6 +1151,14 @@
 			path = APIResponses;
 			sourceTree = "<group>";
 		};
+		C9D035AD257810130068441F /* DataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				C9D035A42578100D0068441F /* HomeDataProvider.swift */,
+			);
+			path = DataProvider;
+			sourceTree = "<group>";
+		};
 		C9DFD4C825659DB400BF1740 /* BarChart */ = {
 			isa = PBXGroup;
 			children = (
@@ -1712,6 +1725,7 @@
 				C9DFD4B725659C1100BF1740 /* StatsBarView.swift in Sources */,
 				9FF0547325681FC60071E596 /* SecondSendMessageView.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
+				C9D035A52578100D0068441F /* HomeDataProvider.swift in Sources */,
 				9F895B28255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				C93FCF3D2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,
 				9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
@@ -1797,6 +1811,7 @@
 				9FF0547425681FC60071E596 /* SecondSendMessageView.swift in Sources */,
 				C93FCF1A2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9DFD4B825659C1100BF1740 /* StatsBarView.swift in Sources */,
+				C9D035A62578100D0068441F /* HomeDataProvider.swift in Sources */,
 				9F819A93255C1572007C1739 /* Extensions.swift in Sources */,
 				9F895B29255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				C93FCF3E2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,
@@ -1866,6 +1881,7 @@
 				9FF0547525681FC60071E596 /* SecondSendMessageView.swift in Sources */,
 				C93FCF1B2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9DFD4B925659C1100BF1740 /* StatsBarView.swift in Sources */,
+				C9D035A72578100D0068441F /* HomeDataProvider.swift in Sources */,
 				9F819ABD255C1646007C1739 /* Extensions.swift in Sources */,
 				9F895B2A255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				C93FCF3F2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,

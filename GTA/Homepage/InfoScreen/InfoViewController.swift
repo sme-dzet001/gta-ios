@@ -14,16 +14,19 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var screenTitleLabel: UILabel!
+    
     var infoType: infoType = .info
     var officeDataSoure: [Hardcode] = []
+    var specialAlertData: SpecialAlertRow?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         officeDataSoure = [Hardcode(imageName: "phone_icon", text: "(480) 555-0103"), Hardcode(imageName: "email_icon", text: "deanna.curtis@example.com"), Hardcode(imageName: "location", text: "9 Derry Street, London, W8 5HY, United Kindom"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a Sony location to see current status")]
         setUpTableView()
-        if infoType == .info {
-            headerImageView.image = UIImage(named: "covid")
-            screenTitleLabel.text = "Covid-19 Info"
+        if let alertData = specialAlertData {
+            // TODO show real image here
+            headerImageView.image = UIImage()
+            screenTitleLabel.text = specialAlertData?.alertHeadline
         } else {
             headerImageView.image = UIImage(named: "office")
             screenTitleLabel.text = "Office Status"
@@ -85,7 +88,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         switch infoType {
         case .info:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InfoArticleCell", for: indexPath) as? InfoArticleCell
-            cell?.infoLabel.text = "On 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases reported on 11 September 2020. \n\nAs of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests. In addition, the total number of reported COVID-19 deaths has shifted to include both probable and confirmed deaths, which lead to a steep increase on the 7 Sep.\n\nFrom end of August 2020, Swedish authorities are performing daily data consolidation leading to data retro-corrections. From week 38, the Swedish Public Health Agency will update COVID-19 daily data four times per week on Tuesday–Friday. Hence, the cumulative figures and related outputs include cases and deaths from the previous 14 days with available data at the time of data collection."
+            cell?.infoLabel.text = specialAlertData?.alertBody
             return cell ?? UITableViewCell()
         default:
             let data = officeDataSoure[indexPath.row]

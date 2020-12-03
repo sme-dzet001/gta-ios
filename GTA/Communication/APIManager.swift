@@ -14,14 +14,18 @@ class APIManager: NSObject, URLSessionDelegate {
     private let baseUrl = "https://gtastageinternal.smedsp.com:8888"
     private let accessToken: String?
     
-    private enum requestEndpoint: String {
+    private enum requestEndpoint {
         case validateToken
         case getSectionReport
+        case getGlobalNews(generatioNumber: Int)
+        case getSpecialAlerts(generatioNumber: Int)
         
         var endpoint: String {
             switch self {
                 case .validateToken: return "/v1/me"
                 case .getSectionReport: return "/v3/reports/"
+                case .getGlobalNews(let generatioNumber): return "/v3/widgets/global_news/data/\(generatioNumber)"
+                case .getSpecialAlerts(let generatioNumber): return "/v3/widgets/special_alerts/data/\(generatioNumber)"
             }
         }
     }
@@ -70,6 +74,38 @@ class APIManager: NSObject, URLSessionDelegate {
                 }
             }
             completion?(reportDataResponse, errorCode, retErr)
+        }
+    }
+    
+    func getGlobalNews(generationNumber: Int, completion: ((_ newsData: GlobalNewsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getGlobalNews(generatioNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+            var newsDataResponse: GlobalNewsResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    newsDataResponse = try self.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(newsDataResponse, errorCode, retErr)
+        }
+    }
+    
+    func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: SpecialAlertsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getSpecialAlerts(generatioNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+            var specialAlertsDataResponse: SpecialAlertsResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    specialAlertsDataResponse = try self.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(specialAlertsDataResponse, errorCode, retErr)
         }
     }
     
