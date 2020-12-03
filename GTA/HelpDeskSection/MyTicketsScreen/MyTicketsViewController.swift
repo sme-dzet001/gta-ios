@@ -84,14 +84,14 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
         case 2, 5:
             let ticketDetailsVC = SecondTicketDetailsViewController()
             ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
-            if myTicketsData[indexPath.row].status == .closed && !UIDevice.current.iPhone5_se {
+            if !UIDevice.current.iPhone5_se {
                 ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / 1.5)
             }
             presentPanModal(ticketDetailsVC)
         default:
             let ticketDetailsVC = TicketDetailsViewController()
             ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
-            if myTicketsData[indexPath.row].status == .closed && !UIDevice.current.iPhone5_se {
+            if !UIDevice.current.iPhone5_se {
                 ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / 1.5)
             }
             presentPanModal(ticketDetailsVC)
