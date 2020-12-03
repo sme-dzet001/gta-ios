@@ -11,7 +11,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool) -> Void)?
     
-    let baseUrl = "https://gtastageinternal.smedsp.com:8888"
+    private let baseUrl = "https://gtastageinternal.smedsp.com:8888"
     private let accessToken: String?
     
     private enum requestEndpoint {
