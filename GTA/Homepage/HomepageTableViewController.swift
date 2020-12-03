@@ -97,6 +97,7 @@ class HomepageTableViewController: UITableViewController {
             guard let alertsData = dataProvider?.alertsData, indexPath.row < alertsData.count else { return }
             let data = alertsData[indexPath.row]
             let infoViewController = InfoViewController()
+            infoViewController.dataProvider = dataProvider
             infoViewController.specialAlertData = data
             infoViewController.infoType = .info
             infoViewController.title = data.alertSubHeadline

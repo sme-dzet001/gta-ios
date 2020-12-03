@@ -11,7 +11,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool) -> Void)?
     
-    private let baseUrl = "https://gtastageinternal.smedsp.com:8888"
+    let baseUrl = "https://gtastageinternal.smedsp.com:8888"
     private let accessToken: String?
     
     private enum requestEndpoint {
@@ -122,6 +122,27 @@ class APIManager: NSObject, URLSessionDelegate {
             }
             completion?(tokenValidationResponse, errorCode, retErr)
         })
+    }
+    
+    func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+        // loading from cache if it possible
+        if let cachedResponse = URLCache.shared.cachedResponse(for: URLRequest(url: url)) {
+            completion(cachedResponse.data, nil)
+            return
+        }
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: url) { (data, response, error) in
+            DispatchQueue.main.async {
+                if let data = data, let responseURL = response?.url, let response = response {
+                    // saving to cache
+                    let cachedResponse = CachedURLResponse(response: response, data: data)
+                    URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: responseURL))
+                }
+                completion(data, error)
+            }
+        }
+        dataTask.resume()
     }
     
     private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, completion: RequestCompletion = nil) {

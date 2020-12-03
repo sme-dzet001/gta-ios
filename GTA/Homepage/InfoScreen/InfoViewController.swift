@@ -15,6 +15,8 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var screenTitleLabel: UILabel!
     
+    var dataProvider: HomeDataProvider?
+    
     var infoType: infoType = .info
     var officeDataSoure: [Hardcode] = []
     var specialAlertData: SpecialAlertRow?
@@ -23,14 +25,7 @@ class InfoViewController: UIViewController {
         super.viewDidLoad()
         officeDataSoure = [Hardcode(imageName: "phone_icon", text: "(480) 555-0103"), Hardcode(imageName: "email_icon", text: "deanna.curtis@example.com"), Hardcode(imageName: "location", text: "9 Derry Street, London, W8 5HY, United Kindom"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a Sony location to see current status")]
         setUpTableView()
-        if let alertData = specialAlertData {
-            // TODO show real image here
-            headerImageView.image = UIImage()
-            screenTitleLabel.text = specialAlertData?.alertHeadline
-        } else {
-            headerImageView.image = UIImage(named: "office")
-            screenTitleLabel.text = "Office Status"
-        }
+        setupHeaderImageView()
         setNeedsStatusBarAppearanceUpdate()
     }
     
@@ -52,6 +47,24 @@ class InfoViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    private func setupHeaderImageView() {
+        if let alertData = specialAlertData {
+            headerImageView.image = nil
+            if let imageURL = dataProvider?.formImageURL(from: alertData.posterUrl), let url = URL(string: imageURL) {
+                dataProvider?.getPosterImageData(from: url) { [weak self] (data, error) in
+                    if let imageData = data, error == nil {
+                        let image = UIImage(data: imageData)
+                        self?.headerImageView.image = image
+                    }
+                }
+            }
+            screenTitleLabel.text = specialAlertData?.alertHeadline
+        } else {
+            headerImageView.image = UIImage(named: "office")
+            screenTitleLabel.text = "Office Status"
+        }
     }
     
     private func setUpTableView() {
