@@ -98,10 +98,10 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
+        panModalTransition(to: .longForm)
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
             let overlay: CGFloat = keyboardSize.height
             guard keyboardSize.height > 0 else { return }
-            
             UIView.animate(withDuration: 0.3, animations: {
                 guard overlay > 0 else {return}
                 self.view.frame.origin.y = -overlay
