@@ -78,6 +78,9 @@
 		9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4642562C286000EE0F1 /* HomepageViewController.swift */; };
 		9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4642562C286000EE0F1 /* HomepageViewController.swift */; };
 		9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4642562C286000EE0F1 /* HomepageViewController.swift */; };
+		9F37C96F257929C0002284B6 /* HelpDeskResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */; };
+		9F37C970257929C0002284B6 /* HelpDeskResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */; };
+		9F37C971257929C0002284B6 /* HelpDeskResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */; };
 		9F5B105D2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */; };
 		9F5B105E2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */; };
 		9F5B105F2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */; };
@@ -139,6 +142,9 @@
 		9F819ACA255C1646007C1739 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */; };
 		9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2B02554CF1F00D71965 /* Apps.storyboard */; };
 		9F819ACC255C1646007C1739 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB6255401EA00E13B77 /* Main.storyboard */; };
+		9F83A8EB2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */; };
+		9F83A8EC2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */; };
+		9F83A8ED2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */; };
 		9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */; };
 		9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */; };
 		9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */; };
@@ -427,6 +433,7 @@
 		9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.ttf"; sourceTree = "<group>"; };
 		9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageTableViewController.swift; sourceTree = "<group>"; };
 		9F36D4642562C286000EE0F1 /* HomepageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
+		9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpDeskResponses.swift; sourceTree = "<group>"; };
 		9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsViewController.swift; sourceTree = "<group>"; };
 		9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TicketDetailsViewController.xib; sourceTree = "<group>"; };
 		9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -440,6 +447,7 @@
 		9F819AA7255C1572007C1739 /* GTAStage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTAStage-Info.plist"; sourceTree = "<group>"; };
 		9F819AD0255C1646007C1739 /* GTADev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTADev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F819AD1255C1646007C1739 /* GTADev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTADev-Info.plist"; sourceTree = "<group>"; };
+		9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskDataProvider.swift; sourceTree = "<group>"; };
 		9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsTableViewHeader.swift; sourceTree = "<group>"; };
 		9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsServiceAlertCell.swift; sourceTree = "<group>"; };
 		9F895ADB255C22D6004489C6 /* ApplicationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationCell.swift; sourceTree = "<group>"; };
@@ -844,6 +852,14 @@
 			path = xib;
 			sourceTree = "<group>";
 		};
+		9F83A8F32578FF2500F9CFF0 /* HelpDeskDataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */,
+			);
+			path = HelpDeskDataProvider;
+			sourceTree = "<group>";
+		};
 		9F895AD6255C22D6004489C6 /* MyAppsSection */ = {
 			isa = PBXGroup;
 			children = (
@@ -998,6 +1014,7 @@
 		C91F70962562FECD002F17B1 /* HelpDeskSection */ = {
 			isa = PBXGroup;
 			children = (
+				9F83A8F32578FF2500F9CFF0 /* HelpDeskDataProvider */,
 				9F5B10582567BE03000A3CFD /* TicketDetailsScreen */,
 				C91F709C2562FEEC002F17B1 /* HelpDeskScreen */,
 				C9766FB72576394E00E9E697 /* ServiceDeskContactsScreen */,
@@ -1142,6 +1159,7 @@
 				C9D035932578095A0068441F /* CommonResponses.swift */,
 				C9D035942578095A0068441F /* GlobalNewsResponses.swift */,
 				C9D035952578095A0068441F /* LoginResponses.swift */,
+				9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */,
 			);
 			path = APIResponses;
 			sourceTree = "<group>";
@@ -1671,9 +1689,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F83A8EB2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
 				C9DFD48D25657B0800BF1740 /* MetricStatsHeader.swift in Sources */,
 				9F895B0F255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA625756C0300315AAE /* HelpDeskHeader.swift in Sources */,
+				9F37C96F257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
 				9F78CFCD25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				9FF0543C2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				C993A2AE2576664300F9146A /* QuickHelpViewController.swift in Sources */,
@@ -1756,9 +1776,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F83A8EC2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
 				C9DFD48E25657B0800BF1740 /* MetricStatsHeader.swift in Sources */,
 				9F895B10255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA725756C0300315AAE /* HelpDeskHeader.swift in Sources */,
+				9F37C970257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
 				C9705B7D2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
 				9F1620DB2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				C993A2AF2576664300F9146A /* QuickHelpViewController.swift in Sources */,
@@ -1825,9 +1847,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F83A8ED2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
 				C9DFD48F25657B0800BF1740 /* MetricStatsHeader.swift in Sources */,
 				9F895B11255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA825756C0300315AAE /* HelpDeskHeader.swift in Sources */,
+				9F37C971257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
 				C9705B7E2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
 				9F1620DC2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				C993A2B02576664300F9146A /* QuickHelpViewController.swift in Sources */,

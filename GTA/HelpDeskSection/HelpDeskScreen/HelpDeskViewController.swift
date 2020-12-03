@@ -12,6 +12,8 @@ class HelpDeskViewController: UIViewController {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
+    private var dataProvider: HelpDeskDataProvider = HelpDeskDataProvider()
+    
     private var helpDeskCellsData: [[HelpDeskCellData]] = []
 
     override func viewDidLoad() {

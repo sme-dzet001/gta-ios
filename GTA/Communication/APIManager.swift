@@ -14,14 +14,20 @@ class APIManager: NSObject, URLSessionDelegate {
     private let baseUrl = "https://gtastageinternal.smedsp.com:8888"
     private let accessToken: String?
     
-    private enum requestEndpoint: String {
+    private enum requestEndpoint {
         case validateToken
         case getSectionReport
+        case getGlobalNews(generationNumber: Int)
+        case getSpecialAlerts
+        case getSerivceDeskData(generationNumber: Int)
         
         var endpoint: String {
             switch self {
                 case .validateToken: return "/v1/me"
                 case .getSectionReport: return "/v3/reports/"
+                case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)"
+                case .getSpecialAlerts: return "/v3/widgets/special_alerts/data/"
+                case .getSerivceDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)"
             }
         }
     }
@@ -55,6 +61,29 @@ class APIManager: NSObject, URLSessionDelegate {
         }
         return res
     }
+    
+    func getServiceDeskData(completion: ((_ serviceDeskResponse: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getSectionReport(sectionId: SectionId.serviceDesk.rawValue) { [weak self] (reportResponse, code, error) in
+            if let report = reportResponse, error == nil {
+                let generationNumber = report.data?.first(where: {$0.sectionId == SectionId.serviceDesk.rawValue})?.widgets?.first?.generationNumber
+                let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self?.accessToken ?? ""]
+                self?.makeRequest(endpoint: .getSerivceDeskData(generationNumber: generationNumber ?? 0), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+                    var reportDataResponse: HelpDeskResponse?
+                    var retErr = error
+                    if let responseData = responseData {
+                        do {
+                            reportDataResponse = try self?.parse(data: responseData)
+                        } catch {
+                            retErr = error
+                        }
+                    }
+                    completion?(reportDataResponse, errorCode, retErr)
+                }
+            } else {
+                
+            }
+        }
+     }
     
     func getSectionReport(sectionId: String, completion: ((_ reportData: ReportDataResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
@@ -149,3 +178,6 @@ class APIManager: NSObject, URLSessionDelegate {
         sessionTask.resume()
     }
 }
+
+
+
