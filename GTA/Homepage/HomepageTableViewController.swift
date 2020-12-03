@@ -22,7 +22,7 @@ class HomepageTableViewController: UITableViewController {
     }
     
     private func setHardcodedData() {
-        dataSource = [HomepageCellData(mainText: "COVID-19 Info Updated", additionalText: "10:30 +5 GTM Wed 15", image: "alert_icon"), HomepageCellData(mainText: "Closed", address: OfficeAddress(address: "9 Derry Street, London, W8 5HY, United Kindom", phoneNumber: "(480) 555-0103", email: "deanna.curtis@example.com"), infoType : .office), HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautiongs ets...", image: "return_to_work"), HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")]
+        dataSource = [HomepageCellData(mainText: "COVID-19 Info Updated", additionalText: "10:30 +5 GTM Wed 15", image: "alert_icon"), HomepageCellData(mainText: "Closed", address: OfficeAddress(address: "9 Derry Street, London, W8 5HY, United Kingdom", phoneNumber: "(480) 555-0103", email: "deanna.curtis@example.com"), infoType : .office), HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautions, etc...", image: "return_to_work"), HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")]
     }
     
     private func setUpTableView() {
