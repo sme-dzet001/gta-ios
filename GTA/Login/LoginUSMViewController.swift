@@ -112,6 +112,14 @@ extension LoginUSMViewController: WKNavigationDelegate {
         }
     }
     
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print("")
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("")
+    }
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         guard let navigationRequestURL = navigationAction.request.url else { return }
         if navigationRequestURL.absoluteString.hasPrefix(usmLogoutURL) {
@@ -145,7 +153,9 @@ extension LoginUSMViewController: WKNavigationDelegate {
                         let mainScreen = storyboard.instantiateViewController(withIdentifier: "TabBarController")
                         self?.navigationController?.pushViewController(mainScreen, animated: true)
                     } else {
-                        self?.performSegue(withIdentifier: "unwindToLogin", sender: nil)
+                        self?.displayError(errorMessage: "/me request failed", title: "Login Failed") { (_) in
+                            self?.performSegue(withIdentifier: "unwindToLogin", sender: nil)
+                        }
                     }
                 }
             }

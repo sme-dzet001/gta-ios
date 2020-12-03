@@ -201,6 +201,8 @@ class APIManager: NSObject, URLSessionDelegate {
         let sessionTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let httpResponse = response as? HTTPURLResponse {
                 completion?(data, httpResponse.statusCode, error, httpResponse.statusCode == 200 && data != nil)
+            } else {
+                completion?(nil, 0, error, false)
             }
         }
         sessionTask.resume()
