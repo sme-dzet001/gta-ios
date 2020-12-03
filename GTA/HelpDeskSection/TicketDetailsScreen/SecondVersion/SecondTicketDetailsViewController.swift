@@ -91,6 +91,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
+        panModalTransition(to: .longForm)
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
             var overlay: CGFloat = keyboardSize.height
             if UIDevice.current.iPhone4_4s || UIDevice.current.iPhone5_se || UIDevice.current.iPhone7_8_Zoomed {

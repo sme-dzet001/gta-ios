@@ -49,11 +49,11 @@ class HelpDeskViewController: UIViewController {
             [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: "+1 (212) 833-6767", updatesNumber: nil),
             HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: "helpdesk.request@sonymusic.com", updatesNumber: nil),
             HelpDeskCellData(imageName: "teams_chat_icon", cellTitle: "Teams Chat", cellSubtitle: "Teams mobile app is required", updatesNumber: nil)],
-            [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, Report Security", updatesNumber: nil),
+            [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, Report Security...", updatesNumber: nil),
             HelpDeskCellData(imageName: "about_red_icon", cellTitle: "About", cellSubtitle: "Overview of the mission, hours, etc.", updatesNumber: nil),
             HelpDeskCellData(imageName: "contacts_icon", cellTitle: "Service Desk Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil),
             HelpDeskCellData(imageName: "my_tickets_icon", cellTitle: "My Tickets", cellSubtitle: "Help Desk Ticket History", updatesNumber: 3),
-            HelpDeskCellData(imageName: "my_devices_icon", cellTitle: "My Devices", cellSubtitle: "Manage Devices, Request Upgrades, etc", updatesNumber: 5)]
+            HelpDeskCellData(imageName: "my_devices_icon", cellTitle: "My Devices", cellSubtitle: "Manage Devices, Request Upgrades, etc.", updatesNumber: 5)]
         ]
     }
 }

@@ -29,7 +29,7 @@ class HomepageTableViewController: UITableViewController {
     }
     
     private func setHardcodedData() {
-        dataSource = [HomepageCellData(mainText: "Closed", address: OfficeAddress(address: "9 Derry Street, London, W8 5HY, United Kindom", phoneNumber: "(480) 555-0103", email: "deanna.curtis@example.com"), infoType : .office), HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautiongs ets...", image: "return_to_work"), HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")]
+        dataSource = [HomepageCellData(mainText: "Closed", address: OfficeAddress(address: "9 Derry Street, London, W8 5HY, United Kingdom", phoneNumber: "(480) 555-0103", email: "deanna.curtis@example.com"), infoType : .office), HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautions, etc...", image: "return_to_work"), HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")]
     }
     
     private func setUpTableView() {
@@ -60,6 +60,13 @@ class HomepageTableViewController: UITableViewController {
         } else {
             return dataSource.count
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 80
+        }
+        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -13,6 +13,7 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var officeStatusLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var blurView: UIView!
     @IBOutlet weak var screenTitleLabel: UILabel!
     
     var dataProvider: HomeDataProvider?
@@ -32,6 +33,9 @@ class InfoViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -40,6 +44,8 @@ class InfoViewController: UIViewController {
         officeStatusLabel.layer.masksToBounds = true
         infoLabel.text = self.title
         if infoType == .info {
+            self.blurView.isHidden = false
+            addBlurToView()
             self.tabBarController?.tabBar.isHidden = true
         }
     }
@@ -137,6 +143,14 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight
         
         presentPanModal(panModalNavigationController)
+    }
+    
+    func addBlurToView() {
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.frame = blurView.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(0.3) .cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.locations = [0, 0.1, 0.9, 1]
+        blurView.layer.mask = gradientMaskLayer
     }
     
 }

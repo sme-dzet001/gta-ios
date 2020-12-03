@@ -102,14 +102,11 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
         
     @objc private func doneAction() {
-        selectedText = self.typeTextField.text
+        self.typeTextField.text = selectedText
         self.view.endEditing(true)
     }
     
     @objc private func cancelAction() {
-        let index = pickerDataSource.firstIndex(of: selectedText ?? "") ?? 0
-        pickerView.selectRow(index, inComponent: 0, animated: false)
-        self.typeTextField.text = selectedText
         self.view.endEditing(true)
     }
     
@@ -223,7 +220,7 @@ extension HelpReportScreenViewController: UIPickerViewDelegate, UIPickerViewData
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        typeTextField.text = pickerDataSource[row]
+        selectedText = pickerDataSource[row]
     }
 }
 
