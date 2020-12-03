@@ -25,8 +25,7 @@ class HomeDataProvider {
     func formImageURL(from imagePath: String?) -> String {
         guard let imagePath = imagePath else { return "" }
         guard !imagePath.contains("https://") else  { return imagePath }
-        // chnage here to base url from api manager
-        let imageURL = "https://gtastageapi.smedsp.com:8888/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
+        let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
         return imageURL
     }
     

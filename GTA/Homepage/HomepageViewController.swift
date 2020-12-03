@@ -97,7 +97,8 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewsCollectionViewCell", for: indexPath) as? NewsCollectionViewCell {
             let cellDataSource = dataProvider.newsData[indexPath.row]
-            cell.imageView.image = UIImage() //dataProvider.formImageURL(from: cellDataSource.posterUrl)
+            let imageURL = dataProvider.formImageURL(from: cellDataSource.posterUrl)
+            cell.imageView.set(imageURL: imageURL)
             cell.titleLabel.text = cellDataSource.newsTitle
             let newsDate = cellDataSource.newsDate
             cell.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")

@@ -12,7 +12,7 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var officeStatusLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
-    @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var headerImageView: WebImageView!
     @IBOutlet weak var screenTitleLabel: UILabel!
     
     var infoType: infoType = .info
@@ -24,9 +24,9 @@ class InfoViewController: UIViewController {
         officeDataSoure = [Hardcode(imageName: "phone_icon", text: "(480) 555-0103"), Hardcode(imageName: "email_icon", text: "deanna.curtis@example.com"), Hardcode(imageName: "location", text: "9 Derry Street, London, W8 5HY, United Kindom"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a Sony location to see current status")]
         setUpTableView()
         if let alertData = specialAlertData {
-            // TODO show real image here
-            headerImageView.image = UIImage()
-            screenTitleLabel.text = specialAlertData?.alertHeadline
+            headerImageView.set(imageURL: nil)
+            headerImageView.set(imageURL: alertData.posterUrl)
+            screenTitleLabel.text = alertData.alertHeadline
         } else {
             headerImageView.image = UIImage(named: "office")
             screenTitleLabel.text = "Office Status"
