@@ -21,7 +21,7 @@ class LoginUSMViewController: UIViewController {
     private let usmClientID = "NVdmOTlSc2txN3ByUmozbVNQSGs"
     private let usmClientSecret = "WURSdzdjKk5tK0J3UVp3OGNZcTM"
     private let usmInternalRedirectURL = "https://gtastage.smedsp.com/charts-ui2/#/auth/processor"
-    private let usmLogoutURL = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/logout"
+    private let usmLogoutURL = "https://gtastageapi.smedsp.com:8888/logout/oauth2"
     
     private let shortRequestTimeoutInterval: Double = 4
     
@@ -62,10 +62,7 @@ class LoginUSMViewController: UIViewController {
         
         let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
         guard let redirectURIStr = usmRedirectURL.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else { return }
-        let stateParamsDict = ["r": usmInternalRedirectURL, "n": nonceStr, "c": usmClientID];
-        guard let stateData = try? JSONSerialization.data(withJSONObject: stateParamsDict, options: []) else { return }
-        let stateStr = stateData.base64EncodedString()
-        let authURLString = "\(usmBasicURL)?response_type=code&scope=openid&client_id=\(usmClientID)&state=\(stateStr)&nonce=\(nonceStr)&redirect_uri=\(redirectURIStr)&email=\(emailAddress)"
+        let authURLString = "\(usmBasicURL)?response_type=code&scope=openid&client_id=\(usmClientID)&state=\(Utils.stateStr(nonceStr))&nonce=\(nonceStr)&redirect_uri=\(redirectURIStr)&email=\(emailAddress)"
         if let authURL = URL(string: authURLString) {
             let authRequest = URLRequest(url: authURL, timeoutInterval: shortRequestTimeoutInterval)
             usmWebView.load(authRequest)
@@ -73,7 +70,9 @@ class LoginUSMViewController: UIViewController {
     }
     
     private func logout() {
-        guard let logoutURL = URL(string: usmLogoutURL) else { return }
+        guard let accessToken = KeychainManager.getToken() else { return }
+        let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
+        guard let logoutURL = URL(string: "\(usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
         let logoutRequest = URLRequest(url: logoutURL)
         usmWebView.load(logoutRequest)
     }
@@ -110,14 +109,6 @@ extension LoginUSMViewController: WKNavigationDelegate {
         displayError(errorMessage: error.localizedDescription, title: "Error") { (_) in
             self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
         }
-    }
-    
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        print("")
-    }
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("")
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
