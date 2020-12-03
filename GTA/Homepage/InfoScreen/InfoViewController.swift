@@ -15,6 +15,7 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var blurView: UIView!
     @IBOutlet weak var screenTitleLabel: UILabel!
+    @IBOutlet weak var updateTitleLabel: UILabel!
     
     var dataProvider: HomeDataProvider?
     
@@ -44,6 +45,9 @@ class InfoViewController: UIViewController {
         officeStatusLabel.layer.masksToBounds = true
         infoLabel.text = self.title
         if infoType == .info {
+            if let updateDate = dataProvider?.formatDateString(dateString: specialAlertData?.alertDate, initialDateFormat: "yyyy-MM-dd") {
+                self.updateTitleLabel.text = "Updates \(updateDate)"
+            }
             self.blurView.isHidden = false
             addBlurToView()
             self.tabBarController?.tabBar.isHidden = true
