@@ -11,7 +11,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool) -> Void)?
     
-    let baseUrl = "https://gtastageinternal.smedsp.com:8888"
+    let baseUrl = "https://gtastageapi.smedsp.com:8888"
     private let accessToken: String?
     
     private enum requestEndpoint {
@@ -110,7 +110,7 @@ class APIManager: NSObject, URLSessionDelegate {
     }
     
     func validateToken(token: String, completion: ((_ tokenData: AccessTokenValidationResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        makeRequest(endpoint: .validateToken, method: "POST", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?, isResponseSuccessful: Bool) in
+        makeRequest(endpoint: .validateToken, method: "GET", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?, isResponseSuccessful: Bool) in
             var tokenValidationResponse: AccessTokenValidationResponse?
             var retErr = error
             if let responseData = responseData {

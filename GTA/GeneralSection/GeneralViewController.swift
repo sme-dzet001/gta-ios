@@ -25,7 +25,9 @@ class GeneralViewController: UIViewController {
     @IBAction func onLogoutButtonTap(sender: UIButton) {
         let alert = UIAlertController(title: "Confirm Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (_) in
-            let logoutURLStr = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/logout"
+            guard let accessToken = KeychainManager.getToken() else { return }
+            let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
+            let logoutURLStr = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/logout?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))"
             if let logoutURL = URL(string: logoutURLStr) {
                 let logoutRequest = URLRequest(url: logoutURL)
                 self?.usmLogoutWebView.load(logoutRequest)
