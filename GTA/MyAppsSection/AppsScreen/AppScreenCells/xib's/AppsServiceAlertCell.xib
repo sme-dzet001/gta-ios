@@ -110,6 +110,7 @@
                 <outlet property="arrowIcon" destination="eRv-4L-FYW" id="grR-Lp-t5x"/>
                 <outlet property="descriptionLabel" destination="3FG-AM-rsA" id="oUL-w7-mYW"/>
                 <outlet property="iconImageView" destination="hDh-Cz-1qF" id="EO2-bU-ZY1"/>
+                <outlet property="iconWidth" destination="ORC-1Y-SD2" id="e6A-XS-SCt"/>
                 <outlet property="mainLabel" destination="aYU-wk-pGE" id="BmZ-3O-e4K"/>
                 <outlet property="parentView" destination="FmA-2v-IWb" id="MDX-gs-OSy"/>
                 <outlet property="separator" destination="cgv-4g-xLI" id="xKO-q5-zCC"/>

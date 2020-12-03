@@ -90,9 +90,13 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == 0 && selectionIsOn {
-            let cell  = cell as? AppsServiceAlertCell
+            let cell = cell as? AppsServiceAlertCell
             cell?.parentView.backgroundColor = UIColor(red: 247.0 / 255.0, green: 247.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0)
+        } else if !selectionIsOn {
+            let cell = cell as? AppsServiceAlertCell
+            cell?.iconWidth.constant = 17
         }
+        
     }
     
     func provideCountryCell(for indexPath: IndexPath) -> UITableViewCell {
