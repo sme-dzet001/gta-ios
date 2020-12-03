@@ -35,6 +35,13 @@ class HomepageTableViewController: UITableViewController {
         return dataSource.count
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 80
+        }
+        return UITableView.automaticDimension
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let data = dataSource[indexPath.row]
         if let _ = data.address {
