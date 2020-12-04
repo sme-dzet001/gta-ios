@@ -133,7 +133,6 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
                 guard let email = sectionData[indexPath.row].cellSubtitle else { return }
                 makeEmailForAddress(email)
             case 2:
-                guard let chatLink = sectionData[indexPath.row].cellSubtitle else { return }
                 openMSTeamsChat()
             default:
                 return
