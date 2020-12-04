@@ -29,7 +29,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hqn-HG-Ows">
-                    <rect key="frame" x="0.0" y="45" width="414" height="817"/>
+                    <rect key="frame" x="0.0" y="55" width="414" height="807"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                     <color key="textColor" systemColor="labelColor"/>
@@ -71,7 +71,7 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="hqn-HG-Ows" firstAttribute="top" secondItem="qZB-c8-5HW" secondAttribute="bottom" id="6IP-tR-oAe"/>
+                <constraint firstItem="hqn-HG-Ows" firstAttribute="top" secondItem="qZB-c8-5HW" secondAttribute="bottom" constant="10" id="6IP-tR-oAe"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="4Vb-08-FAd" secondAttribute="bottom" id="7Y4-rJ-iko"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qZB-c8-5HW" secondAttribute="trailing" constant="24" id="8vD-1m-lCs"/>
                 <constraint firstItem="E0k-G8-Efq" firstAttribute="centerX" secondItem="hqn-HG-Ows" secondAttribute="centerX" id="C1d-AS-iD5"/>

@@ -25,7 +25,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     
     var topOffset: CGFloat {
         if let keyWindow = UIWindow.key {
-            return keyWindow.safeAreaInsets.top + 50
+            return keyWindow.safeAreaInsets.top
         } else {
             return 0
         }
