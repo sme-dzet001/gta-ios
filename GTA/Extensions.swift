@@ -182,6 +182,13 @@ extension String {
     }
 }
 
+extension NSAttributedString {
+    func height(containerWidth: CGFloat) -> CGFloat {
+        let rect = self.boundingRect(with: CGSize.init(width: containerWidth, height: CGFloat.greatestFiniteMagnitude), options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)
+        return ceil(rect.size.height)
+    }
+}
+
 extension UINavigationController {
     var rootViewController : UIViewController? {
         return self.viewControllers.first

@@ -17,17 +17,19 @@ class APIManager: NSObject, URLSessionDelegate {
     private enum requestEndpoint {
         case validateToken
         case getSectionReport
-        case getGlobalNews(generatioNumber: Int)
-        case getSpecialAlerts(generatioNumber: Int)
+        case getGlobalNews(generationNumber: Int)
+        case getSpecialAlerts(generationNumber: Int)
         case getHelpDeskData(generationNumber: Int)
+        case getQuickHelpData(generationNumber: Int)
         
         var endpoint: String {
             switch self {
                 case .validateToken: return "/v1/me"
                 case .getSectionReport: return "/v3/reports/"
-                case .getGlobalNews(let generatioNumber): return "/v3/widgets/global_news/data/\(generatioNumber)"
-                case .getSpecialAlerts(let generatioNumber): return "/v3/widgets/special_alerts/data/\(generatioNumber)"
+                case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)"
+                case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)"
                 case .getHelpDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)"
+                case .getQuickHelpData(let generationNumber): return "/v3/widgets/gsd_quick_help/data/\(generationNumber)"
             }
         }
     }
@@ -42,6 +44,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case globalNews = "global_news"
         case specialAlerts = "special_alerts"
         case gsdProfile = "gsd_profile"
+        case gsdQuickHelp = "gsd_quick_help"
     }
     
     init(accessToken: String?) {
@@ -66,7 +69,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func getGlobalNews(generationNumber: Int, completion: ((_ newsData: GlobalNewsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getGlobalNews(generatioNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+        makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
             var newsDataResponse: GlobalNewsResponse?
             var retErr = error
             if let responseData = responseData {
@@ -82,7 +85,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: SpecialAlertsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getSpecialAlerts(generatioNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
             var specialAlertsDataResponse: SpecialAlertsResponse?
             var retErr = error
             if let responseData = responseData {
@@ -132,6 +135,22 @@ class APIManager: NSObject, URLSessionDelegate {
                 }
             }
             completion?(reportDataResponse, errorCode, retErr)
+        }
+    }
+    
+    func getQuickHelp(generationNumber: Int, completion: ((_ quickHelpData: QuickHelpResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getQuickHelpData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+            var quickHelpDataResponse: QuickHelpResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    quickHelpDataResponse = try self.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(quickHelpDataResponse, errorCode, retErr)
         }
     }
     

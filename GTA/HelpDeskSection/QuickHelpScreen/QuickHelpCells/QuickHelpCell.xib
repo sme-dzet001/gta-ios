@@ -32,7 +32,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EaC-sN-4bg">
-                        <rect key="frame" x="24" y="60" width="349" height="191"/>
+                        <rect key="frame" x="24" y="64" width="349" height="191"/>
                         <string key="text">From end of August 2020, Swedish authorities are performing daily data consolidation leading to data retro-corrections. From week 38, the Swedish Public Health Agency will update COVID-19 daily data four times per week on Tuesday–Friday. Hence, the cumulative figures and related outputs include cases and deaths from the previous 14 days with available data at the time of data collection.</string>
                         <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="16"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -60,7 +60,7 @@
                     <constraint firstItem="EaC-sN-4bg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="bjQ-iT-fln"/>
                     <constraint firstItem="4VD-Kk-p0A" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="kjU-wG-6IU"/>
                     <constraint firstAttribute="bottom" secondItem="WGP-dx-t9w" secondAttribute="bottom" id="qMX-RJ-4Az"/>
-                    <constraint firstItem="EaC-sN-4bg" firstAttribute="top" secondItem="uuO-05-CaX" secondAttribute="bottom" constant="16" id="xpk-vp-Xpr"/>
+                    <constraint firstItem="EaC-sN-4bg" firstAttribute="top" secondItem="uuO-05-CaX" secondAttribute="bottom" constant="20" id="xpk-vp-Xpr"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

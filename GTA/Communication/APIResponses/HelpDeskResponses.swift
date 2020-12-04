@@ -35,4 +35,29 @@ struct HelpDeskValues: Codable {
     var values: [String]?
 }
 
+// MARK: - Quick Help Response
+
+struct QuickHelpRow: Codable {
+    var values: [QuantumValue]?
+    
+    var question: String? {
+        guard let valuesArr = values, valuesArr.count >= 6 else { return nil }
+        return valuesArr[5].stringValue
+    }
+    
+    var answer: String? {
+        guard let valuesArr = values, valuesArr.count >= 7 else { return nil }
+        return valuesArr[6].stringValue
+    }
+}
+
+struct QuickHelpData: Codable {
+    var rows: [QuickHelpRow]?
+}
+
+struct QuickHelpResponse: Codable {
+    var meta: ResponseMetaData
+    var data: QuickHelpData?
+}
+
 

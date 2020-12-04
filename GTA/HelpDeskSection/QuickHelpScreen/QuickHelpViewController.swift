@@ -10,15 +10,20 @@ import UIKit
 class QuickHelpViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    private var quickHelpDataSource = [QuickHelpData]()
+    var dataProvider: HelpDeskDataProvider?
     private var expandedRowsIndex = [Int]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationItem()
-        setHardCodeData()
         setUpTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadQuickHelpData()
     }
     
     private func setUpNavigationItem() {
@@ -30,9 +35,23 @@ class QuickHelpViewController: UIViewController {
         tableView.register(UINib(nibName: "QuickHelpCell", bundle: nil), forCellReuseIdentifier: "QuickHelpCell")
     }
     
-    private func setHardCodeData() {
-        let quickHelpItem = QuickHelpData(question: "What is Global Service Desk?", answer: "From end of August 2020, Swedish authorities are performing daily data consolidation leading to data retro-corrections. From week 38, the Swedish Public Health Agency will update COVID-19 daily data four times per week on Tuesday–Friday. Hence, the cumulative figures and related outputs include cases and deaths from the previous 14 days with available data at the time of data collection.")
-        quickHelpDataSource = Array(repeating: quickHelpItem, count: 7)
+    private func loadQuickHelpData() {
+        guard let dataProvider = dataProvider else { return }
+        if dataProvider.quickHelpDataIsEmpty {
+            activityIndicator.startAnimating()
+            tableView.isHidden = true
+        }
+        dataProvider.getQuickHelpData { [weak self] (errorCode, error) in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                if error == nil && errorCode == 200 {
+                    self?.tableView.isHidden = false
+                    self?.tableView.reloadData()
+                } else {
+                    self?.displayError(errorMessage: "Error was happened!")
+                }
+            }
+        }
     }
     
     @objc private func backPressed() {
@@ -44,36 +63,41 @@ class QuickHelpViewController: UIViewController {
 extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return quickHelpDataSource.count
+        return dataProvider?.quickHelpData.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "QuickHelpCell", for: indexPath) as? QuickHelpCell {
-            let cellDataSource = quickHelpDataSource[indexPath.row]
+            let data = dataProvider?.quickHelpData ?? []
+            let cellDataSource = data[indexPath.row]
             cell.delegate = self
-            cell.setUpCell(with: cellDataSource, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .minus : .plus)
+            let answerEncoded = cellDataSource.answer
+            let answerDecoded = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded)
+            cell.setUpCell(question: cellDataSource.question, answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .minus : .plus)
             return cell
         }
         return UITableViewCell()
     }
     
     private func heightForAnswerAt(indexPath: IndexPath) -> CGFloat {
-        guard let answerTextFont = UIFont(name: "SFProText-Light", size: 16) else { return 0 }
-        let answerText = quickHelpDataSource[indexPath.row].answer
-        let textHeight = answerText.height(width: view.frame.width - 48, font: answerTextFont)
+        let data = dataProvider?.quickHelpData ?? []
+        guard let answerEncoded = data[indexPath.row].answer else { return 0 }
+        let answerDecoded = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded)
+        guard let answerBody = answerDecoded?.htmlToAttributedString else { return 0 }
+        let textHeight = answerBody.height(containerWidth: view.frame.width - 48)
         return textHeight
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if expandedRowsIndex.contains(indexPath.row) {
-            return 80 + heightForAnswerAt(indexPath: indexPath)
+            return 64 + heightForAnswerAt(indexPath: indexPath)
         }
         return 64
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if expandedRowsIndex.contains(indexPath.row) {
-            return 80 + heightForAnswerAt(indexPath: indexPath)
+            return 64 + heightForAnswerAt(indexPath: indexPath)
         }
         return 64
     }
@@ -113,11 +137,6 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
             }
         }
     }
-}
-
-struct QuickHelpData {
-    var question: String
-    var answer: String
 }
 
 enum ExpandButtonType {
