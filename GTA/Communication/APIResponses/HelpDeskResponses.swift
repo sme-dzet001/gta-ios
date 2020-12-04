@@ -19,10 +19,16 @@ struct HelpDeskResponse: Codable {
         guard let values = values, values.count >= 5 else { return nil }
         return values[4]
     }
-    var serviceDeskEmail: String?{
+    var serviceDeskEmail: String? {
         guard let values = values, values.count >= 6 else { return nil }
         return values[5]
     }
+    
+    var teamsChatLink: String? {
+        guard let values = values, values.count >= 7 else { return nil }
+        return values[6]
+    }
+    
 }
 
 struct HelpDeskValues: Codable {

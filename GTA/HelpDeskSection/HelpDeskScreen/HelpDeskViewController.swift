@@ -121,10 +121,17 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
+            let sectionData: [HelpDeskCellData] = helpDeskCellsData.count != 0 ? helpDeskCellsData[indexPath.section] : []
             switch indexPath.row {
             case 0:
-                guard let number = helpDeskCellsData[indexPath.section][indexPath.row].cellSubtitle, let numberURL = URL(string: "tel://" + number) else { return }
-                UIApplication.shared.open(numberURL, options: [:], completionHandler: nil)
+                guard let number = sectionData[indexPath.row].cellSubtitle else { return }
+                makeCallWithNumber(number)
+            case 1:
+                guard let email = sectionData[indexPath.row].cellSubtitle else { return }
+                makeEmailForAddress(email)
+            case 2:
+                guard let chatLink = sectionData[indexPath.row].cellSubtitle else { return }
+                openMSTeamsChat(chatLink)
             default:
                 return
             }
@@ -144,6 +151,26 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(myDevicesVC, animated: true)
         }
     }
+    
+    private func makeCallWithNumber(_ number: String?) {
+        if let _ = number, let numberURL = URL(string: "tel://" + number!) {
+            UIApplication.shared.open(numberURL, options: [:], completionHandler: nil)
+        }
+    }
+    
+    private func makeEmailForAddress(_ address: String?) {
+        if let _ = address, let addressURL = URL(string: "mailto://" + address!) {
+            UIApplication.shared.open(addressURL, options: [:], completionHandler: nil)
+        }
+    }
+    
+    private func openMSTeamsChat(_ chatLink: String?) {
+        if let _ = chatLink, let addressURL = URL(string: "msteams://" + chatLink!) {
+            UIApplication.shared.open(addressURL, options: [:], completionHandler: nil)
+        }
+    }
+    
+    
     
 }
 
