@@ -13,10 +13,16 @@ class NewsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
+    var imageUrl: String?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
 
 }

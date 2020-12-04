@@ -13,10 +13,12 @@ class HomepageViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var pageControl: AdvancedPageControlView!
     
+    private var dataProvider: HomeDataProvider = HomeDataProvider()
+    
     var selectedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
-    var dataSource: [NewsItem] = [NewsItem(image: "covid", newsLabel: "What is the current situation?"), NewsItem(image: "music", newsLabel: "New Sony Music Metrics Report Available"), NewsItem(image: "tech", newsLabel: "Latest Global Technology News")]
     var homepageTableVC: HomepageTableViewController?
     
     private var presentedVC: ArticleViewController?
@@ -26,23 +28,38 @@ class HomepageViewController: UIViewController {
         setUpCollectionView()
         setUpPageControl()
         setNeedsStatusBarAppearanceUpdate()
-        
-        print(KeychainManager.getToken())
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadNewsData()
+    }
+    
+    private func loadNewsData() {
+        if dataProvider.newsDataIsEmpty {
+            activityIndicator.startAnimating()
+            pageControl.isHidden = true
+        }
+        dataProvider.getGlobalNewsData { [weak self] (errorCode, error) in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                if error == nil && errorCode == 200 {
+                    self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
+                    self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
+                    self?.collectionView.reloadData()
+                } else {
+                    self?.displayError(errorMessage: "Error was happened!")
+                }
+            }
+        }
     }
     
     private func setUpPageControl() {
         
         let inactiveColor = UIColor(red: 147.0 / 255.0, green: 130.0 / 255.0, blue: 134.0 / 255.0, alpha: 1.0)
-        pageControl.drawer = ExtendedDotDrawer(numberOfPages: dataSource.count,  height: 4, width: 6, space: 6, dotsColor: inactiveColor, borderColor: inactiveColor, indicatorBorderColor: .white)
+        let newsCount = dataProvider.newsData.count
+        pageControl.drawer = ExtendedDotDrawer(numberOfPages: newsCount,  height: 4, width: 6, space: 6, dotsColor: inactiveColor, borderColor: inactiveColor, indicatorBorderColor: .white)
         pageControl.drawer.currentItem = 0
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     private func setUpCollectionView() {
@@ -55,11 +72,14 @@ class HomepageViewController: UIViewController {
         collectionView.register(UINib(nibName: "NewsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NewsCollectionViewCell")
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
         if segue.identifier == "embedTable" {
             homepageTableVC = segue.destination as? HomepageTableViewController
+            homepageTableVC?.dataProvider = dataProvider
         }
     }
     
@@ -71,17 +91,26 @@ class HomepageViewController: UIViewController {
 extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.count
+        return dataProvider.newsData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewsCollectionViewCell", for: indexPath) as? NewsCollectionViewCell {
-            cell.imageView.image = UIImage(named: dataSource[indexPath.row].image)
-            cell.titleLabel.text = dataSource[indexPath.row].newsLabel
-            let dateFormatterPrint = DateFormatter()
-            dateFormatterPrint.dateFormat = String.neededDateFormat
-            // hardcoding date similar to Figma for now
-            cell.dateLabel.text = "10:30 +5 GTM Wed 15" //dateFormatterPrint.string(from: Date())
+            let cellDataSource = dataProvider.newsData[indexPath.row]
+            let imageURL = dataProvider.formImageURL(from: cellDataSource.posterUrl)
+            if let url = URL(string: imageURL) {
+                cell.imageUrl = imageURL
+                dataProvider.getPosterImageData(from: url) { (data, error) in
+                    if cell.imageUrl != imageURL { return }
+                    if let imageData = data, error == nil {
+                        let image = UIImage(data: imageData)
+                        cell.imageView.image = image
+                    }
+                }
+            }
+            cell.titleLabel.text = cellDataSource.newsTitle
+            let newsDate = cellDataSource.newsDate
+            cell.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
             return cell
         } else {
             return UICollectionViewCell()
@@ -100,7 +129,8 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
             statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
         }
         articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
-        articleViewController.articleText = dataSource[indexPath.row].articleText
+        let newsBody = dataProvider.newsData[indexPath.row].newsBody
+        articleViewController.articleText = dataProvider.formNewsBody(from: newsBody)
         selectedIndexPath.row = indexPath.row
         presentedVC = articleViewController
         presentPanModal(articleViewController)
@@ -125,7 +155,7 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
 extension HomepageViewController: PanModalAppearanceDelegate {
     
     func needScrollToDirection(_ scrollPosition: UICollectionView.ScrollPosition) {
-        if scrollPosition == .left && selectedIndexPath.row < dataSource.count - 1 {
+        if scrollPosition == .left && selectedIndexPath.row < dataProvider.newsData.count - 1 {
             selectedIndexPath.row += 1
         } else if scrollPosition == .right && selectedIndexPath.row > 0 {
             selectedIndexPath.row -= 1
@@ -134,7 +164,7 @@ extension HomepageViewController: PanModalAppearanceDelegate {
         }
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: scrollPosition)
-        self.presentedVC?.articleText = selectedIndexPath.row % 2 == 0 ? self.dataSource[self.selectedIndexPath.row].articleText : "From end of August 2020, Swedish authorities are performing daily data consolidation leading to data retro-corrections. From week 38, the Swedish Public Health Agency will update COVID-19 daily data four times per week on Tuesday–Friday. \n\nHence, the cumulative figures and related outputs include cases and deaths from the previous 14 days with available data at the time of data collection.\n\nOn 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases reported on 11 September 2020. \n\nAs of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests. In addition, the total number of reported COVID-19 deaths has shifted to include both probable and confirmed deaths, which lead to a steep increase on the 7 Sep. \n\nAs of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests."// for d
+        self.presentedVC?.articleText = dataProvider.formNewsBody(from: dataProvider.newsData[selectedIndexPath.row].newsBody)
     }
     
     func panModalDidDissmiss() {
@@ -145,12 +175,4 @@ extension HomepageViewController: PanModalAppearanceDelegate {
 protocol PanModalAppearanceDelegate: class {
     func needScrollToDirection(_ direction: UICollectionView.ScrollPosition)
     func panModalDidDissmiss()
-}
-
-// temp
-struct NewsItem {
-    var image: String
-    var newsLabel: String
-    var newsDate: Date? = nil
-    var articleText: String = "On 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases reported on 11 September 2020. \n\nAs of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests. In addition, the total number of reported COVID-19 deaths has shifted to include both probable and confirmed deaths, which lead to a steep increase on the 7 Sep. \n\nAs of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests. In addition, the total number of reported COVID-19 deaths has shifted to include both probable and confirmed deaths, which lead to a steep increase on the 7 Sep."
 }

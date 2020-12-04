@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,14 +28,18 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F6l-Fs-PaI">
                         <rect key="frame" x="0.0" y="0.0" width="295" height="445"/>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L5Y-Fq-Lbk">
+                        <rect key="frame" x="0.0" y="0.0" width="295" height="445"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.50484267979452058" colorSpace="calibratedRGB"/>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Sony Music Metrics Report Available" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Aj-k5-GIZ">
-                        <rect key="frame" x="30" y="179.5" width="235" height="86"/>
+                        <rect key="frame" x="30" y="224" width="235" height="86"/>
                         <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="24"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:30 +5 GTM Wed 15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCA-C4-WiG">
-                        <rect key="frame" x="30" y="285.5" width="235" height="17"/>
+                        <rect key="frame" x="30" y="330" width="235" height="17"/>
                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="14"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -42,16 +47,20 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="F6l-Fs-PaI" firstAttribute="top" secondItem="0o8-LU-qUa" secondAttribute="top" id="5e5-bh-g88"/>
+                    <constraint firstAttribute="bottom" secondItem="L5Y-Fq-Lbk" secondAttribute="bottom" id="6SN-G7-bNQ"/>
                     <constraint firstItem="0Aj-k5-GIZ" firstAttribute="leading" secondItem="0o8-LU-qUa" secondAttribute="leading" constant="30" id="8fr-JC-4eZ"/>
                     <constraint firstAttribute="trailing" secondItem="qCA-C4-WiG" secondAttribute="trailing" constant="30" id="AYw-Np-NKS"/>
                     <constraint firstItem="F6l-Fs-PaI" firstAttribute="trailing" secondItem="0Aj-k5-GIZ" secondAttribute="trailing" constant="30" id="Fss-eJ-56f"/>
                     <constraint firstItem="F6l-Fs-PaI" firstAttribute="leading" secondItem="0o8-LU-qUa" secondAttribute="leading" id="JUx-s9-fVy"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qCA-C4-WiG" secondAttribute="bottom" constant="20" id="Ki4-iw-xuR"/>
+                    <constraint firstItem="L5Y-Fq-Lbk" firstAttribute="top" secondItem="0o8-LU-qUa" secondAttribute="top" id="MNS-fd-3GO"/>
                     <constraint firstAttribute="bottom" secondItem="F6l-Fs-PaI" secondAttribute="bottom" id="P3o-Hu-kAi"/>
                     <constraint firstItem="qCA-C4-WiG" firstAttribute="top" secondItem="0Aj-k5-GIZ" secondAttribute="bottom" constant="20" id="PGr-6U-UY8"/>
                     <constraint firstAttribute="trailing" secondItem="F6l-Fs-PaI" secondAttribute="trailing" id="RFz-Lq-sL2"/>
-                    <constraint firstItem="0Aj-k5-GIZ" firstAttribute="centerY" secondItem="0o8-LU-qUa" secondAttribute="centerY" id="Tc4-U6-z38"/>
+                    <constraint firstItem="0Aj-k5-GIZ" firstAttribute="centerY" secondItem="0o8-LU-qUa" secondAttribute="centerY" multiplier="1.2" id="Tc4-U6-z38"/>
+                    <constraint firstAttribute="trailing" secondItem="L5Y-Fq-Lbk" secondAttribute="trailing" id="mPl-9h-34u"/>
                     <constraint firstItem="0Aj-k5-GIZ" firstAttribute="leading" secondItem="qCA-C4-WiG" secondAttribute="leading" id="u7m-91-Utq"/>
+                    <constraint firstItem="L5Y-Fq-Lbk" firstAttribute="leading" secondItem="0o8-LU-qUa" secondAttribute="leading" id="v7B-Ag-JA9"/>
                 </constraints>
                 <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
             </collectionViewCellContentView>

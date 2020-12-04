@@ -11,12 +11,14 @@ class APIManager: NSObject, URLSessionDelegate {
     
     typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool) -> Void)?
     
-    private let baseUrl = "https://gtastageinternal.smedsp.com:8888"
+    let baseUrl = "https://gtastageapi.smedsp.com:8888"
     private let accessToken: String?
     
     private enum requestEndpoint {
         case validateToken
         case getSectionReport
+        case getGlobalNews(generatioNumber: Int)
+        case getSpecialAlerts(generatioNumber: Int)
         case getGlobalNews(generationNumber: Int)
         case getSpecialAlerts
         case getSerivceDeskData(generationNumber: Int)
@@ -25,6 +27,8 @@ class APIManager: NSObject, URLSessionDelegate {
             switch self {
                 case .validateToken: return "/v1/me"
                 case .getSectionReport: return "/v3/reports/"
+                case .getGlobalNews(let generatioNumber): return "/v3/widgets/global_news/data/\(generatioNumber)"
+                case .getSpecialAlerts(let generatioNumber): return "/v3/widgets/special_alerts/data/\(generatioNumber)"
                 case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)"
                 case .getSpecialAlerts: return "/v3/widgets/special_alerts/data/"
                 case .getSerivceDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)"
@@ -102,8 +106,40 @@ class APIManager: NSObject, URLSessionDelegate {
         }
     }
     
+    func getGlobalNews(generationNumber: Int, completion: ((_ newsData: GlobalNewsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getGlobalNews(generatioNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+            var newsDataResponse: GlobalNewsResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    newsDataResponse = try self.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(newsDataResponse, errorCode, retErr)
+        }
+    }
+    
+    func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: SpecialAlertsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getSpecialAlerts(generatioNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+            var specialAlertsDataResponse: SpecialAlertsResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    specialAlertsDataResponse = try self.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(specialAlertsDataResponse, errorCode, retErr)
+        }
+    }
+    
     func validateToken(token: String, completion: ((_ tokenData: AccessTokenValidationResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        makeRequest(endpoint: .validateToken, method: "POST", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?, isResponseSuccessful: Bool) in
+        makeRequest(endpoint: .validateToken, method: "GET", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?, isResponseSuccessful: Bool) in
             var tokenValidationResponse: AccessTokenValidationResponse?
             var retErr = error
             if let responseData = responseData {
@@ -115,6 +151,27 @@ class APIManager: NSObject, URLSessionDelegate {
             }
             completion?(tokenValidationResponse, errorCode, retErr)
         })
+    }
+    
+    func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+        // loading from cache if it possible
+        if let cachedResponse = URLCache.shared.cachedResponse(for: URLRequest(url: url)) {
+            completion(cachedResponse.data, nil)
+            return
+        }
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: url) { (data, response, error) in
+            DispatchQueue.main.async {
+                if let data = data, let responseURL = response?.url, let response = response {
+                    // saving to cache
+                    let cachedResponse = CachedURLResponse(response: response, data: data)
+                    URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: responseURL))
+                }
+                completion(data, error)
+            }
+        }
+        dataTask.resume()
     }
     
     private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, completion: RequestCompletion = nil) {
@@ -173,6 +230,8 @@ class APIManager: NSObject, URLSessionDelegate {
         let sessionTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let httpResponse = response as? HTTPURLResponse {
                 completion?(data, httpResponse.statusCode, error, httpResponse.statusCode == 200 && data != nil)
+            } else {
+                completion?(nil, 0, error, false)
             }
         }
         sessionTask.resume()

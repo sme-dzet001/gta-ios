@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Semibold.ttf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ServiceDeskContactCell" rowHeight="219" id="KGk-i7-Jjw" customClass="ServiceDeskContactCell" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="358" height="219"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="358" height="219"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8eG-Ef-tqd">
+                        <rect key="frame" x="24" y="24" width="48" height="48"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="48" id="KSJ-zZ-WVb"/>
+                            <constraint firstAttribute="width" constant="48" id="nQ8-Cm-9MI"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="f32-DC-AeN">
+                        <rect key="frame" x="88" y="29" width="99.5" height="38.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jane Cooper" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CmF-ut-7EF">
+                                <rect key="frame" x="0.0" y="0.0" width="99.5" height="19.5"/>
+                                <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Administrator" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qe-2B-OS9">
+                                <rect key="frame" x="0.0" y="21.5" width="99.5" height="17"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPQ-wa-G6K">
+                        <rect key="frame" x="24" y="88" width="310" height="33.5"/>
+                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Uag-ci-6zq">
+                        <rect key="frame" x="24" y="133.5" width="177.5" height="61.5"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="uwD-du-yft">
+                                <rect key="frame" x="0.0" y="0.0" width="177.5" height="24"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email_grey_icon" translatesAutoresizingMaskIntoConstraints="NO" id="tWG-Hm-VxL">
+                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="ZeR-vU-CPM"/>
+                                            <constraint firstAttribute="width" constant="24" id="jb1-PY-ShJ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="janecooper@mail.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWH-Un-jZc">
+                                        <rect key="frame" x="32" y="0.0" width="145.5" height="24"/>
+                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pLf-aw-2wE">
+                                <rect key="frame" x="0.0" y="37.5" width="128.5" height="24"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location_grey_icon" translatesAutoresizingMaskIntoConstraints="NO" id="XLt-pU-rtB">
+                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="12r-ra-R3d"/>
+                                            <constraint firstAttribute="width" constant="24" id="844-sZ-JTg"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="US - New York" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S4r-vI-Kfr">
+                                        <rect key="frame" x="32" y="0.0" width="96.5" height="24"/>
+                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4C5-ZB-Qee">
+                        <rect key="frame" x="0.0" y="218" width="358" height="1"/>
+                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="u7d-uX-YCp"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Uag-ci-6zq" firstAttribute="top" secondItem="NPQ-wa-G6K" secondAttribute="bottom" constant="12" id="3uq-YD-bmj"/>
+                    <constraint firstAttribute="trailing" secondItem="NPQ-wa-G6K" secondAttribute="trailing" constant="24" id="3wf-DW-OiQ"/>
+                    <constraint firstItem="8eG-Ef-tqd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="8KJ-iI-M2S"/>
+                    <constraint firstAttribute="bottom" secondItem="Uag-ci-6zq" secondAttribute="bottom" constant="24" id="A8V-w8-Rvk"/>
+                    <constraint firstAttribute="trailing" secondItem="4C5-ZB-Qee" secondAttribute="trailing" id="Sx7-9a-vVW"/>
+                    <constraint firstAttribute="bottom" secondItem="4C5-ZB-Qee" secondAttribute="bottom" id="Tg9-BF-7AB"/>
+                    <constraint firstItem="8eG-Ef-tqd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="Zij-CS-cyH"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Uag-ci-6zq" secondAttribute="trailing" constant="24" id="ap7-WW-Csj"/>
+                    <constraint firstItem="f32-DC-AeN" firstAttribute="leading" secondItem="8eG-Ef-tqd" secondAttribute="trailing" constant="16" id="e6M-hQ-AVx"/>
+                    <constraint firstItem="NPQ-wa-G6K" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="nXf-5J-EH3"/>
+                    <constraint firstItem="NPQ-wa-G6K" firstAttribute="top" secondItem="8eG-Ef-tqd" secondAttribute="bottom" constant="16" id="opb-IJ-Wdx"/>
+                    <constraint firstItem="Uag-ci-6zq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="rDf-Cb-O4e"/>
+                    <constraint firstItem="4C5-ZB-Qee" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="vhb-oH-9AJ"/>
+                    <constraint firstItem="f32-DC-AeN" firstAttribute="centerY" secondItem="8eG-Ef-tqd" secondAttribute="centerY" id="wGd-68-w4z"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="contactNameLabel" destination="CmF-ut-7EF" id="42N-iP-7Wn"/>
+                <outlet property="descriptionLabel" destination="NPQ-wa-G6K" id="wX4-sd-HJE"/>
+                <outlet property="emailLabel" destination="EWH-Un-jZc" id="ABy-85-tOz"/>
+                <outlet property="locationLabel" destination="S4r-vI-Kfr" id="Vu9-HY-jLK"/>
+                <outlet property="photoImageView" destination="8eG-Ef-tqd" id="jWE-3Z-DPM"/>
+                <outlet property="positionLabel" destination="8qe-2B-OS9" id="eF1-wS-CDM"/>
+            </connections>
+            <point key="canvasLocation" x="-227.536231884058" y="43.861607142857139"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="email_grey_icon" width="24" height="24"/>
+        <image name="location_grey_icon" width="24" height="24"/>
+    </resources>
+</document>
