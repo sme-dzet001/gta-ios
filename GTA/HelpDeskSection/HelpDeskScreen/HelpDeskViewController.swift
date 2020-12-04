@@ -15,23 +15,45 @@ class HelpDeskViewController: UIViewController {
     private var dataProvider: HelpDeskDataProvider = HelpDeskDataProvider()
     
     private var helpDeskCellsData: [[HelpDeskCellData]] = []
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpHeaderView()
         setUpTableView()
-        setHelpDeskCellsData()
         navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        startAnimation()
+        dataProvider.getServiceDeskData { [weak self] (response, code, error) in
+            self?.setHelpDeskCellsData(phoneNumber: response?.serviceDeskPhoneNumber, email: response?.serviceDeskEmail)
+            self?.stopAnimation()
+        }
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
+    private func startAnimation() {
+        self.tableView.alpha = 0
+        self.activityIndicator.center = self.view.center
+        self.activityIndicator.hidesWhenStopped = true
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+    }
+    
+    private func stopAnimation() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.tableView.alpha = 1
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.removeFromSuperview()
+        }
     }
     
     private func setUpHeaderView() {
@@ -46,10 +68,10 @@ class HelpDeskViewController: UIViewController {
         tableView.register(UINib(nibName: "HelpDeskContactOptionCell", bundle: nil), forCellReuseIdentifier: "HelpDeskContactOptionCell")
     }
     
-    private func setHelpDeskCellsData() {
+    private func setHelpDeskCellsData(phoneNumber: String?, email: String?) {
         helpDeskCellsData = [
-            [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: "+1 (212) 833-6767", updatesNumber: nil),
-            HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: "helpdesk.request@sonymusic.com", updatesNumber: nil),
+            [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: phoneNumber ?? "+1 (212) 833-6767", updatesNumber: nil),
+            HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: email ??  "helpdesk.request@sonymusic.com", updatesNumber: nil),
             HelpDeskCellData(imageName: "teams_chat_icon", cellTitle: "Teams Chat", cellSubtitle: "Teams mobile app is required", updatesNumber: nil)],
             [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, Report Security...", updatesNumber: nil),
             HelpDeskCellData(imageName: "about_red_icon", cellTitle: "About", cellSubtitle: "Overview of the mission, hours, etc.", updatesNumber: nil),

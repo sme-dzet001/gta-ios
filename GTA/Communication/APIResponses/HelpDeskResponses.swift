@@ -27,7 +27,6 @@ struct HelpDeskResponse: Codable {
 
 struct HelpDeskValues: Codable {
     var values: [String]?
-    
 }
 
 

@@ -19,8 +19,6 @@ class APIManager: NSObject, URLSessionDelegate {
         case getSectionReport
         case getGlobalNews(generatioNumber: Int)
         case getSpecialAlerts(generatioNumber: Int)
-        case getGlobalNews(generationNumber: Int)
-        case getSpecialAlerts
         case getSerivceDeskData(generationNumber: Int)
         
         var endpoint: String {
@@ -29,8 +27,6 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getSectionReport: return "/v3/reports/"
                 case .getGlobalNews(let generatioNumber): return "/v3/widgets/global_news/data/\(generatioNumber)"
                 case .getSpecialAlerts(let generatioNumber): return "/v3/widgets/special_alerts/data/\(generatioNumber)"
-                case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)"
-                case .getSpecialAlerts: return "/v3/widgets/special_alerts/data/"
                 case .getSerivceDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)"
             }
         }
@@ -66,45 +62,7 @@ class APIManager: NSObject, URLSessionDelegate {
         return res
     }
     
-    func getServiceDeskData(completion: ((_ serviceDeskResponse: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        getSectionReport(sectionId: SectionId.serviceDesk.rawValue) { [weak self] (reportResponse, code, error) in
-            if let report = reportResponse, error == nil {
-                let generationNumber = report.data?.first(where: {$0.sectionId == SectionId.serviceDesk.rawValue})?.widgets?.first?.generationNumber
-                let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self?.accessToken ?? ""]
-                self?.makeRequest(endpoint: .getSerivceDeskData(generationNumber: generationNumber ?? 0), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
-                    var reportDataResponse: HelpDeskResponse?
-                    var retErr = error
-                    if let responseData = responseData {
-                        do {
-                            reportDataResponse = try self?.parse(data: responseData)
-                        } catch {
-                            retErr = error
-                        }
-                    }
-                    completion?(reportDataResponse, errorCode, retErr)
-                }
-            } else {
-                
-            }
-        }
-     }
-    
-    func getSectionReport(sectionId: String, completion: ((_ reportData: ReportDataResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        let requestParams = ["section_id": sectionId]
-        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, params: requestParams) { (responseData, errorCode, error, isResponseSuccessful) in
-            var reportDataResponse: ReportDataResponse?
-            var retErr = error
-            if let responseData = responseData {
-                do {
-                    reportDataResponse = try self.parse(data: responseData)
-                } catch {
-                    retErr = error
-                }
-            }
-            completion?(reportDataResponse, errorCode, retErr)
-        }
-    }
+    //MARK: - Homescreen methods
     
     func getGlobalNews(generationNumber: Int, completion: ((_ newsData: GlobalNewsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
@@ -138,21 +96,6 @@ class APIManager: NSObject, URLSessionDelegate {
         }
     }
     
-    func validateToken(token: String, completion: ((_ tokenData: AccessTokenValidationResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        makeRequest(endpoint: .validateToken, method: "GET", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?, isResponseSuccessful: Bool) in
-            var tokenValidationResponse: AccessTokenValidationResponse?
-            var retErr = error
-            if let responseData = responseData {
-                do {
-                    tokenValidationResponse = try self.parse(data: responseData)
-                } catch {
-                    retErr = error
-                }
-            }
-            completion?(tokenValidationResponse, errorCode, retErr)
-        })
-    }
-    
     func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
         // loading from cache if it possible
         if let cachedResponse = URLCache.shared.cachedResponse(for: URLRequest(url: url)) {
@@ -172,6 +115,58 @@ class APIManager: NSObject, URLSessionDelegate {
             }
         }
         dataTask.resume()
+    }
+    
+    //MARK: - Service Desk methods
+    
+    func getServiceDeskData(for generationNumber: Int, completion: ((_ serviceDeskResponse: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        self.makeRequest(endpoint: .getSerivceDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
+            var reportDataResponse: HelpDeskResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    reportDataResponse = try self?.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(reportDataResponse, errorCode, retErr)
+        }
+    }
+    
+    //MARK: - Common methods
+    
+    func validateToken(token: String, completion: ((_ tokenData: AccessTokenValidationResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        makeRequest(endpoint: .validateToken, method: "GET", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?, isResponseSuccessful: Bool) in
+            var tokenValidationResponse: AccessTokenValidationResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    tokenValidationResponse = try self.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(tokenValidationResponse, errorCode, retErr)
+        })
+    }
+    
+    func getSectionReport(sectionId: String, completion: ((_ reportData: ReportDataResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        let requestParams = ["section_id": sectionId]
+        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, params: requestParams) { (responseData, errorCode, error, isResponseSuccessful) in
+            var reportDataResponse: ReportDataResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    reportDataResponse = try self.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(reportDataResponse, errorCode, retErr)
+        }
     }
     
     private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, completion: RequestCompletion = nil) {
