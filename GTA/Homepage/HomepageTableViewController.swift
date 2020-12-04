@@ -76,7 +76,7 @@ class HomepageTableViewController: UITableViewController {
             cell?.separator.isHidden = false
             cell?.iconImageView.image = UIImage(named: "alert_icon")
             cell?.mainLabel.text = data[indexPath.row].alertHeadline
-            cell?.descriptionLabel.text = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd")
+            cell?.descriptionLabel.text = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
             return cell ?? UITableViewCell()
         } else {
             let data = dataSource[indexPath.row]
