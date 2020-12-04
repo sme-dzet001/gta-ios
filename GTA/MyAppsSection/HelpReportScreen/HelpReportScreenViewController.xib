@@ -43,7 +43,7 @@
                         <constraint firstAttribute="height" constant="55" id="0AJ-Jr-xsd"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="shrinkSizeOfPlaceholder">
                             <real key="value" value="0.0"/>

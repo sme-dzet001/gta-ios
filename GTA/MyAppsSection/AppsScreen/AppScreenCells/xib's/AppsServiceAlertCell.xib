@@ -36,10 +36,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alert_icon" translatesAutoresizingMaskIntoConstraints="NO" id="hDh-Cz-1qF">
-                                <rect key="frame" x="20" y="48.5" width="15" height="15"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="about_icon" translatesAutoresizingMaskIntoConstraints="NO" id="hDh-Cz-1qF">
+                                <rect key="frame" x="20" y="49" width="15" height="14"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="hDh-Cz-1qF" secondAttribute="height" multiplier="1:1" id="OBX-EK-vae"/>
+                                    <constraint firstAttribute="width" secondItem="hDh-Cz-1qF" secondAttribute="height" multiplier="1.04:1" id="OBX-EK-vae"/>
                                     <constraint firstAttribute="width" constant="15" id="ORC-1Y-SD2"/>
                                 </constraints>
                             </imageView>
@@ -120,7 +120,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="alert_icon" width="40" height="40"/>
+        <image name="about_icon" width="18" height="18"/>
         <image name="arrow_icon" width="40" height="40"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

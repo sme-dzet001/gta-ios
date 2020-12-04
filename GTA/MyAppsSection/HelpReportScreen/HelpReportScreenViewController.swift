@@ -107,6 +107,8 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
     
     @objc private func cancelAction() {
+        let index = pickerDataSource.firstIndex(of: self.typeTextField.text ?? "") ?? 0
+        pickerView.selectRow(index, inComponent: 0, animated: false)
         self.view.endEditing(true)
     }
     
