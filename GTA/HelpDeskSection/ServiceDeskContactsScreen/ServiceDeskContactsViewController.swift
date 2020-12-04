@@ -11,7 +11,7 @@ class ServiceDeskContactsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private var contactsDataSource = [ContactData]()
+    private var contactsDataSource = [ServiceDeskContact]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,19 +26,15 @@ class ServiceDeskContactsViewController: UIViewController {
     }
     
     private func setUpTableView() {
-        tableView.rowHeight = 90
-        tableView.register(UINib(nibName: "AboutContactsCell", bundle: nil), forCellReuseIdentifier: "AboutContactsCell")
-        let tableHeaderView = UIView()
-        tableHeaderView.frame.size.height = 24
-        tableHeaderView.backgroundColor = .white
-        tableView.tableHeaderView = tableHeaderView
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.register(UINib(nibName: "ServiceDeskContactCell", bundle: nil), forCellReuseIdentifier: "ServiceDeskContactCell")
     }
     
     private func setHardCodeData() {
         contactsDataSource = [
-            ContactData(contactName: "Jane Cooper", contactPosition: "Administrator", phoneNumber: "(480) 555-0103", email: "janecooper@mail.com"),
-            ContactData(contactName: "Marvin McKinney", contactPosition: "Administrator", phoneNumber: "(480) 555-0103", email: "marvinmckinney@mail.com"),
-            ContactData(contactName: "Ronald Richards", contactPosition: "Administrator", phoneNumber: "(480) 555-0103", email: "ronaldrichards@mail.com")
+            ServiceDeskContact(photoImageName: "jane_cooper_photo", contactName: "Jane Cooper", contactPosition: "Administrator", description: "Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.", email: "janecooper@mail.com", location: "US - New York"),
+            ServiceDeskContact(photoImageName: "ralph_edwards_photo", contactName: "Ralph Edwards", contactPosition: "Administrator", description: "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim.", email: "janecooper@mail.com", location: "US - New York"),
+            ServiceDeskContact(photoImageName: "leslie_alexander_photo", contactName: "Leslie Alexander", contactPosition: "Administrator", description: "Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.", email: "janecooper@mail.com", location: "US - New York")
         ]
     }
     
@@ -55,7 +51,7 @@ extension ServiceDeskContactsViewController: UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "AboutContactsCell", for: indexPath) as? AboutContactsCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "ServiceDeskContactCell", for: indexPath) as? ServiceDeskContactCell {
             let cellDataSource = contactsDataSource[indexPath.row]
             cell.setUpCell(with: cellDataSource)
             return cell
@@ -63,4 +59,13 @@ extension ServiceDeskContactsViewController: UITableViewDelegate, UITableViewDat
         return UITableViewCell()
     }
     
+}
+
+struct ServiceDeskContact {
+    var photoImageName: String?
+    var contactName: String?
+    var contactPosition: String?
+    var description: String?
+    var email: String?
+    var location: String?
 }

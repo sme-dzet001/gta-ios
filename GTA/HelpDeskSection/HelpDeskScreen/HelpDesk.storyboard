@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Udk-yr-ScC">
-                                <rect key="frame" x="0.0" y="115" width="414" height="659"/>
+                                <rect key="frame" x="0.0" y="80" width="414" height="694"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="emg-U7-4qg" id="Kig-J7-Cza"/>
@@ -26,10 +26,10 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgO-Iy-sSg">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="115"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="115" id="pgf-e6-00j"/>
+                                    <constraint firstAttribute="height" constant="80" id="pgf-e6-00j"/>
                                 </constraints>
                             </view>
                         </subviews>
