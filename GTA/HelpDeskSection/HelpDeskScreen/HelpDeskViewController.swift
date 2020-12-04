@@ -21,16 +21,12 @@ class HelpDeskViewController: UIViewController {
         super.viewDidLoad()
         setUpHeaderView()
         setUpTableView()
+        setHelpDeskCellsData()
         navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        startAnimation()
-        dataProvider.getHelpDeskData { [weak self] (response, code, error) in
-            self?.setHelpDeskCellsData(phoneNumber: response?.serviceDeskPhoneNumber, email: response?.serviceDeskEmail)
-            self?.stopAnimation()
-        }
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
@@ -68,10 +64,10 @@ class HelpDeskViewController: UIViewController {
         tableView.register(UINib(nibName: "HelpDeskContactOptionCell", bundle: nil), forCellReuseIdentifier: "HelpDeskContactOptionCell")
     }
     
-    private func setHelpDeskCellsData(phoneNumber: String?, email: String?) {
+    private func setHelpDeskCellsData() {
         helpDeskCellsData = [
-            [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: phoneNumber ?? "+1 (212) 833-6767", updatesNumber: nil),
-            HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: email ??  "helpdesk.request@sonymusic.com", updatesNumber: nil),
+            [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: "+1 (212) 833-6767", updatesNumber: nil),
+            HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: "helpdesk.request@sonymusic.com", updatesNumber: nil),
             HelpDeskCellData(imageName: "teams_chat_icon", cellTitle: "Teams Chat", cellSubtitle: "Teams mobile app is required", updatesNumber: nil)],
             [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, Report Security...", updatesNumber: nil),
             HelpDeskCellData(imageName: "about_red_icon", cellTitle: "About", cellSubtitle: "Overview of the mission, hours, etc.", updatesNumber: nil),
@@ -120,22 +116,6 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            let sectionData: [HelpDeskCellData] = helpDeskCellsData.count != 0 ? helpDeskCellsData[indexPath.section] : []
-            switch indexPath.row {
-            case 0:
-                guard let number = sectionData[indexPath.row].cellSubtitle else { return }
-                makeCallWithNumber(number)
-            case 1:
-                guard let email = sectionData[indexPath.row].cellSubtitle else { return }
-                makeEmailForAddress(email)
-            case 2:
-                guard let chatLink = sectionData[indexPath.row].cellSubtitle else { return }
-                openMSTeamsChat(chatLink)
-            default:
-                return
-            }
-        }
         guard indexPath.section == 1 else { return }
         if indexPath.row == 0 {
             let quickHelpVC = QuickHelpViewController()
