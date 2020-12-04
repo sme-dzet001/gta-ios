@@ -27,7 +27,7 @@ class HelpDeskViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         startAnimation()
-        dataProvider.getServiceDeskData { [weak self] (response, code, error) in
+        dataProvider.getHelpDeskData { [weak self] (response, code, error) in
             self?.setHelpDeskCellsData(phoneNumber: response?.serviceDeskPhoneNumber, email: response?.serviceDeskEmail)
             self?.stopAnimation()
         }

@@ -19,7 +19,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getSectionReport
         case getGlobalNews(generatioNumber: Int)
         case getSpecialAlerts(generatioNumber: Int)
-        case getServiceDeskData(generationNumber: Int)
+        case getHelpDeskData(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -27,7 +27,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getSectionReport: return "/v3/reports/"
                 case .getGlobalNews(let generatioNumber): return "/v3/widgets/global_news/data/\(generatioNumber)"
                 case .getSpecialAlerts(let generatioNumber): return "/v3/widgets/special_alerts/data/\(generatioNumber)"
-                case .getServiceDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)"
+                case .getHelpDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)"
             }
         }
     }
@@ -119,9 +119,9 @@ class APIManager: NSObject, URLSessionDelegate {
     
     //MARK: - Service Desk methods
     
-    func getServiceDeskData(for generationNumber: Int, completion: ((_ serviceDeskResponse: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getHelpDeskData(for generationNumber: Int, completion: ((_ serviceDeskResponse: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getServiceDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
+        self.makeRequest(endpoint: .getHelpDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
             var reportDataResponse: HelpDeskResponse?
             var retErr = error
             if let responseData = responseData {
@@ -134,6 +134,22 @@ class APIManager: NSObject, URLSessionDelegate {
             completion?(reportDataResponse, errorCode, retErr)
         }
     }
+    
+//    func getServiceDeskData(for generationNumber: Int, completion: ((_ serviceDeskResponse: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+//        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+//        self.makeRequest(endpoint: .getServiceDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
+//            var reportDataResponse: HelpDeskResponse?
+//            var retErr = error
+//            if let responseData = responseData {
+//                do {
+//                    reportDataResponse = try self?.parse(data: responseData)
+//                } catch {
+//                    retErr = error
+//                }
+//            }
+//            completion?(reportDataResponse, errorCode, retErr)
+//        }
+//    }
     
     //MARK: - Common methods
     
