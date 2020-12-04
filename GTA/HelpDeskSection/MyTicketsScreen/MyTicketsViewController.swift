@@ -28,7 +28,7 @@ class MyTicketsViewController: UIViewController {
     }
     
     private func setUpTableView() {
-        tableView.rowHeight = 150
+        tableView.rowHeight = 158
         tableView.register(UINib(nibName: "TicketCell", bundle: nil), forCellReuseIdentifier: "TicketCell")
     }
 
@@ -68,7 +68,7 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TicketCell", for: indexPath) as? TicketCell {
-            cell.setUpCell(with: myTicketsData[indexPath.row])
+            cell.setUpCell(with: myTicketsData[indexPath.row], hideSeparator: indexPath.row == myTicketsData.count - 1)
             return cell
         }
         return UITableViewCell()
