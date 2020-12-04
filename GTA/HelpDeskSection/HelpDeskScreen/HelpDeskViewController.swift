@@ -120,6 +120,15 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            switch indexPath.row {
+            case 0:
+                guard let number = helpDeskCellsData[indexPath.section][indexPath.row].cellSubtitle, let numberURL = URL(string: "tel://" + number) else { return }
+                UIApplication.shared.open(numberURL, options: [:], completionHandler: nil)
+            default:
+                return
+            }
+        }
         guard indexPath.section == 1 else { return }
         if indexPath.row == 0 {
             let quickHelpVC = QuickHelpViewController()
