@@ -14,6 +14,8 @@ class HelpDeskViewController: UIViewController {
     
     private var dataProvider: HelpDeskDataProvider = HelpDeskDataProvider()
     
+    var dataResponse: HelpDeskResponse?
+    
     private var helpDeskCellsData: [[HelpDeskCellData]] = []
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
 
@@ -28,7 +30,8 @@ class HelpDeskViewController: UIViewController {
         super.viewWillAppear(animated)
         startAnimation()
         dataProvider.getHelpDeskData { [weak self] (response, code, error) in
-            self?.setHelpDeskCellsData(phoneNumber: response?.serviceDeskPhoneNumber, email: response?.serviceDeskEmail)
+            self?.dataResponse = response
+            self?.setHelpDeskCellsData()
             self?.stopAnimation()
         }
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -68,10 +71,10 @@ class HelpDeskViewController: UIViewController {
         tableView.register(UINib(nibName: "HelpDeskContactOptionCell", bundle: nil), forCellReuseIdentifier: "HelpDeskContactOptionCell")
     }
     
-    private func setHelpDeskCellsData(phoneNumber: String?, email: String?) {
+    private func setHelpDeskCellsData() {
         helpDeskCellsData = [
-            [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: phoneNumber ?? "+1 (212) 833-6767", updatesNumber: nil),
-            HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: email ??  "helpdesk.request@sonymusic.com", updatesNumber: nil),
+            [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: dataResponse?.serviceDeskPhoneNumber ?? "+1 (212) 833-6767", updatesNumber: nil),
+             HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: dataResponse?.serviceDeskEmail ??  "helpdesk.request@sonymusic.com", updatesNumber: nil),
             HelpDeskCellData(imageName: "teams_chat_icon", cellTitle: "Teams Chat", cellSubtitle: "Teams mobile app is required", updatesNumber: nil)],
             [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, Report Security...", updatesNumber: nil),
             HelpDeskCellData(imageName: "about_red_icon", cellTitle: "About", cellSubtitle: "Overview of the mission, hours, etc.", updatesNumber: nil),
@@ -131,7 +134,7 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
                 makeEmailForAddress(email)
             case 2:
                 guard let chatLink = sectionData[indexPath.row].cellSubtitle else { return }
-                openMSTeamsChat(chatLink)
+                openMSTeamsChat()
             default:
                 return
             }
@@ -164,8 +167,8 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    private func openMSTeamsChat(_ chatLink: String?) {
-        if let _ = chatLink, let addressURL = URL(string: "msteams://" + chatLink!) {
+    private func openMSTeamsChat() {
+        if let chatLink = dataResponse?.teamsChatLink, let addressURL = URL(string: "msteams://" + chatLink) {
             UIApplication.shared.open(addressURL, options: [:], completionHandler: nil)
         }
     }
