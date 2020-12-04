@@ -98,10 +98,14 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
             statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
         }
         articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
-        articleViewController.articleText = dataSource[indexPath.row].articleText
+        articleViewController.articleText = indexPath.row % 2 == 0 ? dataSource[indexPath.row].articleText : tempText
         selectedIndexPath.row = indexPath.row
         presentedVC = articleViewController
         presentPanModal(articleViewController)
+    }
+    
+    var tempText: String {
+        return "From end of August 2020, Swedish authorities are performing daily data consolidation leading to data retro-corrections. From week 38, the Swedish Public Health Agency will update COVID-19 daily data four times per week on Tuesday–Friday. Hence, the cumulative figures and related outputs include cases and deaths from the previous 14 days with available data at the time of data collection. \n\nAs of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests. In addition, the total number of reported COVID-19 deaths has shifted to include both probable and confirmed deaths, which lead to a steep increase on the 7 Sep."
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -132,7 +136,7 @@ extension HomepageViewController: PanModalAppearanceDelegate {
         }
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: scrollPosition)
-        self.presentedVC?.articleText = self.dataSource[self.selectedIndexPath.row].articleText
+        self.presentedVC?.articleText = selectedIndexPath.row % 2 == 0 ? self.dataSource[self.selectedIndexPath.row].articleText : tempText
     }
     
     func panModalDidDissmiss() {
