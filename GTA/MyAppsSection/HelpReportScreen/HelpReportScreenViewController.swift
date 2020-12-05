@@ -194,6 +194,8 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
     
     @objc func hideKeyboard() {
+        let index = pickerDataSource.firstIndex(of: self.typeTextField.text ?? "") ?? 0
+        pickerView.selectRow(index, inComponent: 0, animated: false)
         view.endEditing(true)
     }
     
