@@ -101,6 +101,10 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         configureBlurViewPosition(isInitial: true)
     }
     
+    override func viewDidLayoutSubviews() {
+        configureBlurViewPosition()
+    }
+    
     @objc func newsDidScroll(gesture: UIPanGestureRecognizer) {
         let velocity = gesture.velocity(in: presentationView)
         if gesture.state == .began {

@@ -41,7 +41,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     var shortFormHeight: PanModalHeight {
-        return initialHeight
+        return PanModalHeight.contentHeight(initialHeight)
     }
     
     var allowsExtendedPanScrolling: Bool {
@@ -52,7 +52,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         return .maxHeight
     }
     
-    var initialHeight: PanModalHeight = .maxHeight
+    var initialHeight: CGFloat = 0.0
     
     var cornerRadius: CGFloat {
         return 20
@@ -78,12 +78,15 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
             self?.configureBlurViewPosition()
         })
         setUpTextViewIfNeeded()
-        configureBlurViewPosition(isInitial: true)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        configureBlurViewPosition()
     }
     
     private func configureBlurViewPosition(isInitial: Bool = false) {
         guard position > 0 else { return }
-        blurView.frame.origin.y = !isInitial ? position - blurView.frame.height: (self.view.frame.height / 1.5) - 44
+        blurView.frame.origin.y = !isInitial ? position - blurView.frame.height : initialHeight - 44
         self.view.layoutIfNeeded()
     }
         
@@ -154,6 +157,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        heightObserver?.invalidate()
     }
     
 }
