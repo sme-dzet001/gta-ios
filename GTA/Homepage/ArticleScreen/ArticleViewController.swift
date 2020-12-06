@@ -61,10 +61,6 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         }
     }
     
-    var allowsDragToDismiss: Bool {
-        return false
-    }
-    
     var allowsTapToDismiss: Bool {
         return false
     }
