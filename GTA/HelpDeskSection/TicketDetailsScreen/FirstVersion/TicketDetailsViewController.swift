@@ -15,8 +15,14 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
     @IBOutlet weak var screenTitleView: UIView!
+    @IBOutlet weak var blurView: UIView!
     
+    private var heightObserver: NSKeyValueObservation?
     lazy var textView = SendMessageView.instanceFromNib()
+    
+    private var position: CGFloat {
+        return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
+    }
         
     var panScrollable: UIScrollView? {
         return tableView
@@ -67,7 +73,27 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addBlurToView()
+        heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
+            self?.configureBlurViewPosition()
+        })
         setUpTextViewIfNeeded()
+        configureBlurViewPosition(isInitial: true)
+    }
+    
+    private func configureBlurViewPosition(isInitial: Bool = false) {
+        guard position > 0 else { return }
+        blurView.frame.origin.y = !isInitial ? position - blurView.frame.height: (self.view.frame.height / 1.5) - 44
+        self.view.layoutIfNeeded()
+    }
+        
+    func addBlurToView() {
+        blurView.isHidden = false
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.frame = blurView.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(0.3) .cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.locations = [0, 0.1, 0.9, 1]
+        blurView.layer.mask = gradientMaskLayer
     }
     
     private func setUpTextViewIfNeeded() {
@@ -109,6 +135,10 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
                 self.screenTitleView.frame.origin.y = overlay
             })
         }
+    }
+    
+    func willRespond(to panModalGestureRecognizer: UIPanGestureRecognizer) {
+        hideKeyboard()
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {

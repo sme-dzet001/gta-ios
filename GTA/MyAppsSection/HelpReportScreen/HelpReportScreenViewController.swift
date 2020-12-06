@@ -164,6 +164,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     
     func willRespond(to panModalGestureRecognizer: UIPanGestureRecognizer) {
         isShortFormEnabled = false
+        hideKeyboard()
     }
     
     func willTransition(to state: PanModalPresentationController.PresentationState) {

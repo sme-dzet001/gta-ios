@@ -114,6 +114,10 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
         self.navigationView.frame.origin.y = 0
     }
     
+    func willRespond(to panModalGestureRecognizer: UIPanGestureRecognizer) {
+        hideKeyboard()
+    }
+    
     @objc func hideKeyboard() {
         view.endEditing(true)
     }

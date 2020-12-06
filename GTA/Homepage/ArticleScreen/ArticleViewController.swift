@@ -123,7 +123,6 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     }
         
     func addBlurToView() {
-       // blurView.backgroundColor = .blue
         let gradientMaskLayer = CAGradientLayer()
         gradientMaskLayer.frame = blurView.bounds
         gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(0.3) .cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
