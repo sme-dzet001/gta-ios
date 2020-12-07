@@ -15,8 +15,14 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
     @IBOutlet weak var screenTitleView: UIView!
+    @IBOutlet weak var blurView: UIView!
     
+    private var heightObserver: NSKeyValueObservation?
     lazy var textView = SendMessageView.instanceFromNib()
+    
+    private var position: CGFloat {
+        return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
+    }
         
     var panScrollable: UIScrollView? {
         return tableView
@@ -24,7 +30,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     
     var topOffset: CGFloat {
         if let keyWindow = UIWindow.key {
-            return keyWindow.safeAreaInsets.top + 50
+            return keyWindow.safeAreaInsets.top
         } else {
             return 0
         }
@@ -45,8 +51,10 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     var longFormHeight: PanModalHeight {
         return .maxHeight
     }
-    
+        
     var initialHeight: PanModalHeight = .maxHeight
+    
+    private var isFirstTime: Bool = true
     
     var cornerRadius: CGFloat {
         return 20
@@ -67,7 +75,51 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addBlurToView()
         setUpTextViewIfNeeded()
+        heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
+            self?.configureBlurViewPosition()
+            self?.configurePosition()
+        })
+    }
+    
+    override func viewDidLayoutSubviews() {
+        configureBlurViewPosition()
+        //self.configurePosition()
+        if dataSource?.status == .open && isFirstTime {
+            panModalTransition(to: .longForm)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        isFirstTime = false
+    }
+    
+    func willTransition(to state: PanModalPresentationController.PresentationState) {
+//        switch state {
+//        case .shortForm:
+//            textView.frame.origin.y = position - textView.frame.height
+//            tableViewBottom.constant = textView.frame.origin.y - 66
+//        default:
+//            setUpTextViewIfNeeded()
+//        }
+        
+    }
+    
+    private func configureBlurViewPosition() {
+        guard position > 0 else { return }
+        blurView.frame.origin.y = position - blurView.frame.height
+        self.view.layoutIfNeeded()
+    }
+        
+    func addBlurToView() {
+        blurView.isHidden = false
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.frame = blurView.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(0.3) .cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.locations = [0, 0.1, 0.9, 1]
+        blurView.layer.mask = gradientMaskLayer
     }
     
     private func setUpTextViewIfNeeded() {
@@ -84,6 +136,12 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         self.view.addSubview(textView)
         textView.textView.delegate = self
         textView.sendButtonDelegate = self
+    }
+    
+    private func configurePosition() {
+        textView.frame.origin.y = position - textView.frame.height - 10
+        let subtract = self.view.frame.height - position + 66 + 10
+        tableViewBottom.constant = subtract <= 66 ? 66 : subtract
     }
     
     private func setUpTableView() {
@@ -111,6 +169,10 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         }
     }
     
+    func willRespond(to panModalGestureRecognizer: UIPanGestureRecognizer) {
+        hideKeyboard()
+    }
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         self.screenTitleView.frame.origin.y = 0
         self.view.frame.origin.y = 0
@@ -124,6 +186,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        heightObserver?.invalidate()
     }
     
 }

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Group-40.png",
+      "filename" : "Union.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Group-40@2x.png",
+      "filename" : "Union-1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Group-40@3x.png",
+      "filename" : "Union-2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

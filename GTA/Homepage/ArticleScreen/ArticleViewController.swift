@@ -61,10 +61,6 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         }
     }
     
-    var allowsDragToDismiss: Bool {
-        return false
-    }
-    
     var allowsTapToDismiss: Bool {
         return false
     }
@@ -101,6 +97,10 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         configureBlurViewPosition(isInitial: true)
     }
     
+    override func viewDidLayoutSubviews() {
+        configureBlurViewPosition()
+    }
+    
     @objc func newsDidScroll(gesture: UIPanGestureRecognizer) {
         let velocity = gesture.velocity(in: presentationView)
         if gesture.state == .began {
@@ -123,7 +123,6 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     }
         
     func addBlurToView() {
-       // blurView.backgroundColor = .blue
         let gradientMaskLayer = CAGradientLayer()
         gradientMaskLayer.frame = blurView.bounds
         gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(0.3) .cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]

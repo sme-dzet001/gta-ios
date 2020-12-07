@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,7 +35,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Lfq-jI-ua7">
-                        <rect key="frame" x="24" y="61.5" width="352" height="64.5"/>
+                        <rect key="frame" x="24" y="61.5" width="352" height="56.5"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kHZ-7N-niX">
                                 <rect key="frame" x="0.0" y="0.0" width="352" height="17"/>
@@ -54,14 +55,14 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nr0-bw-1Jk">
-                                <rect key="frame" x="0.0" y="32" width="352" height="1"/>
+                                <rect key="frame" x="0.0" y="28" width="352" height="1"/>
                                 <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="sDd-cB-b8n"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bWZ-wS-wgT">
-                                <rect key="frame" x="0.0" y="47.5" width="352" height="17"/>
+                                <rect key="frame" x="0.0" y="39.5" width="352" height="17"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hkf-rp-ZQW">
                                         <rect key="frame" x="0.0" y="0.0" width="157.5" height="17"/>
@@ -87,14 +88,24 @@
                             <constraint firstItem="nr0-bw-1Jk" firstAttribute="leading" secondItem="Lfq-jI-ua7" secondAttribute="leading" id="zDO-xy-1V1"/>
                         </constraints>
                     </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zb3-hu-81X">
+                        <rect key="frame" x="0.0" y="142" width="400" height="8"/>
+                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="8kF-zu-ycv"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Lfq-jI-ua7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="0Nq-KG-djm"/>
-                    <constraint firstAttribute="bottom" secondItem="Lfq-jI-ua7" secondAttribute="bottom" constant="24" id="86e-Fw-ORD"/>
+                    <constraint firstItem="Zb3-hu-81X" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="6bc-Wi-Kbh"/>
                     <constraint firstAttribute="trailing" secondItem="zA0-Jc-fhq" secondAttribute="trailing" constant="24" id="CB0-ps-0n9"/>
                     <constraint firstItem="Lfq-jI-ua7" firstAttribute="top" secondItem="FLH-DT-8m0" secondAttribute="bottom" constant="18" id="IVI-JW-kCH"/>
+                    <constraint firstAttribute="bottom" secondItem="Zb3-hu-81X" secondAttribute="bottom" id="LCu-ox-UiU"/>
                     <constraint firstItem="zA0-Jc-fhq" firstAttribute="centerY" secondItem="FLH-DT-8m0" secondAttribute="centerY" id="Oth-mY-Fl3"/>
+                    <constraint firstItem="Zb3-hu-81X" firstAttribute="top" secondItem="Lfq-jI-ua7" secondAttribute="bottom" constant="24" id="Q5R-9U-lUc"/>
                     <constraint firstAttribute="trailing" secondItem="Lfq-jI-ua7" secondAttribute="trailing" constant="24" id="jO9-AH-C8W"/>
+                    <constraint firstAttribute="trailing" secondItem="Zb3-hu-81X" secondAttribute="trailing" id="qe6-wG-L7K"/>
                     <constraint firstItem="FLH-DT-8m0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="sVt-i4-n6i"/>
                     <constraint firstItem="FLH-DT-8m0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="vdb-kE-WvP"/>
                 </constraints>
@@ -103,6 +114,7 @@
             <connections>
                 <outlet property="dateLabel" destination="RD8-c7-1qF" id="fQS-q9-QSj"/>
                 <outlet property="numberLabel" destination="oab-N6-Yq5" id="zXG-vo-507"/>
+                <outlet property="separatorView" destination="Zb3-hu-81X" id="AZl-Zi-p7w"/>
                 <outlet property="statusLabel" destination="zA0-Jc-fhq" id="ZM9-qx-IjA"/>
             </connections>
             <point key="canvasLocation" x="8.6956521739130448" y="96.428571428571431"/>

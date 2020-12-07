@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,31 +17,31 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="Y6b-vf-yFj" customClass="MyTicketsHeader" customModule="GTA" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="418" height="88"/>
+            <rect key="frame" x="0.0" y="0.0" width="341" height="92"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="raise_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Zaa-pe-hlW">
-                    <rect key="frame" x="20" y="32" width="24" height="24"/>
+                    <rect key="frame" x="20" y="30" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="24" id="e8d-dw-d8s"/>
                         <constraint firstAttribute="height" constant="24" id="qF9-CY-4gx"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Raise new support ticket" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uLX-9I-xWY">
-                    <rect key="frame" x="60" y="34" width="186.5" height="20"/>
+                    <rect key="frame" x="60" y="32" width="186.5" height="20"/>
                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_icon" translatesAutoresizingMaskIntoConstraints="NO" id="sN9-eh-IVC">
-                    <rect key="frame" x="374" y="32" width="24" height="24"/>
+                    <rect key="frame" x="297" y="30" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="24" id="d4b-r6-ZqT"/>
                         <constraint firstAttribute="height" constant="24" id="dX9-qQ-Dtk"/>
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7fy-PH-7qG">
-                    <rect key="frame" x="0.0" y="80" width="418" height="8"/>
+                    <rect key="frame" x="0.0" y="84" width="341" height="8"/>
                     <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="8" id="dEc-Yc-aGG"/>
@@ -51,21 +52,21 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="uLX-9I-xWY" firstAttribute="leading" secondItem="Zaa-pe-hlW" secondAttribute="trailing" constant="16" id="8KF-zt-czz"/>
-                <constraint firstItem="sN9-eh-IVC" firstAttribute="centerY" secondItem="44E-LF-UYG" secondAttribute="centerY" constant="-5" id="BCN-C1-sru"/>
                 <constraint firstItem="7fy-PH-7qG" firstAttribute="leading" secondItem="Y6b-vf-yFj" secondAttribute="leading" id="HzM-Fz-7TA"/>
-                <constraint firstItem="Zaa-pe-hlW" firstAttribute="centerY" secondItem="44E-LF-UYG" secondAttribute="centerY" constant="-5" id="R8W-FD-pHS"/>
+                <constraint firstItem="Zaa-pe-hlW" firstAttribute="centerY" secondItem="Y6b-vf-yFj" secondAttribute="centerY" constant="-4" id="R8W-FD-pHS"/>
                 <constraint firstItem="Zaa-pe-hlW" firstAttribute="leading" secondItem="44E-LF-UYG" secondAttribute="leading" constant="20" id="Ufj-nF-GwK"/>
                 <constraint firstItem="sN9-eh-IVC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uLX-9I-xWY" secondAttribute="trailing" constant="8" id="dEh-5N-ze5"/>
                 <constraint firstAttribute="trailing" secondItem="7fy-PH-7qG" secondAttribute="trailing" id="e87-UU-dMb"/>
                 <constraint firstAttribute="bottom" secondItem="7fy-PH-7qG" secondAttribute="bottom" id="hJu-Bu-UtY"/>
                 <constraint firstItem="44E-LF-UYG" firstAttribute="trailing" secondItem="sN9-eh-IVC" secondAttribute="trailing" constant="20" id="mQx-pz-7Ff"/>
                 <constraint firstItem="uLX-9I-xWY" firstAttribute="centerY" secondItem="Zaa-pe-hlW" secondAttribute="centerY" id="tRe-9b-HdY"/>
+                <constraint firstItem="sN9-eh-IVC" firstAttribute="centerY" secondItem="Y6b-vf-yFj" secondAttribute="centerY" constant="-4" id="yNY-ed-DkZ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="headerTitleLabel" destination="uLX-9I-xWY" id="AUD-Qx-ExN"/>
             </connections>
-            <point key="canvasLocation" x="92.753623188405811" y="-152.00892857142856"/>
+            <point key="canvasLocation" x="36.956521739130437" y="-150.66964285714286"/>
         </view>
     </objects>
     <resources>

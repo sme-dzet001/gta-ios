@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iFx-JC-FFT">
-                        <rect key="frame" x="24" y="30" width="272" height="92"/>
+                        <rect key="frame" x="24" y="26" width="272" height="96"/>
                         <attributedString key="attributedText">
                             <fragment content="Label ">
                                 <attributes>
@@ -34,7 +34,7 @@
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="iFx-JC-FFT" secondAttribute="bottom" constant="10" id="3rY-z5-IQc"/>
                     <constraint firstItem="iFx-JC-FFT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="5W8-KF-2NZ"/>
-                    <constraint firstItem="iFx-JC-FFT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="8iW-gk-1fg"/>
+                    <constraint firstItem="iFx-JC-FFT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="26" id="8iW-gk-1fg"/>
                     <constraint firstAttribute="trailing" secondItem="iFx-JC-FFT" secondAttribute="trailing" constant="24" id="WDJ-vk-wxk"/>
                 </constraints>
             </tableViewCellContentView>

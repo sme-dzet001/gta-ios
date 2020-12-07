@@ -16,8 +16,14 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var navigationView: UIView!
+    @IBOutlet weak var blurView: UIView!
     
     var messageHeaderView: SecondSendMessageView = SecondSendMessageView.instanceFromNib()
+    
+    private var heightObserver: NSKeyValueObservation?
+    private var position: CGFloat {
+        return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
+    }
     
     var panScrollable: UIScrollView? {
         return tableView
@@ -25,7 +31,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     
     var topOffset: CGFloat {
         if let keyWindow = UIWindow.key {
-            return keyWindow.safeAreaInsets.top + 50
+            return keyWindow.safeAreaInsets.top
         } else {
             return 0
         }
@@ -69,6 +75,32 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addDetailsView()
+        addBlurToView()
+        heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
+            self?.configureBlurViewPosition()
+        })
+    }
+    
+    override func viewDidLayoutSubviews() {
+        configureBlurViewPosition()
+        if dataSource?.status == .open {
+            panModalTransition(to: .longForm)
+        }
+    }
+    
+    private func configureBlurViewPosition() {
+        guard position > 0 else { return }
+        blurView.frame.origin.y = position - blurView.frame.height
+        self.view.layoutIfNeeded()
+    }
+        
+    func addBlurToView() {
+        blurView.isHidden = false
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.frame = blurView.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(0.3) .cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.locations = [0, 0.1, 0.9, 1]
+        blurView.layer.mask = gradientMaskLayer
     }
     
     private func addDetailsView() {
@@ -114,6 +146,10 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
         self.navigationView.frame.origin.y = 0
     }
     
+    func willRespond(to panModalGestureRecognizer: UIPanGestureRecognizer) {
+        hideKeyboard()
+    }
+    
     @objc func hideKeyboard() {
         view.endEditing(true)
     }
@@ -122,6 +158,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        heightObserver?.invalidate()
     }
     
 }

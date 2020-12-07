@@ -12,13 +12,14 @@ class TicketCell: UITableViewCell {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var separatorView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    func setUpCell(with data: TicketData) {
+    func setUpCell(with data: TicketData, hideSeparator: Bool = false) {
         switch data.status {
         case .open:
             statusLabel.text = "Open"
@@ -32,6 +33,7 @@ class TicketCell: UITableViewCell {
         dateFormatterPrint.dateFormat = String.ticketsSectionDateFormat
         // hardcoding date similar to Figma for now
         dateLabel.text = "Wed 15, 2020 10:30 -5 GMT" //dateFormatterPrint.string(from: data.date ?? Date())
+        separatorView.isHidden = hideSeparator
     }
     
 }
