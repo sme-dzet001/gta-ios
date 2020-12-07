@@ -33,10 +33,9 @@ class HomeDataProvider {
         apiManager.loadImageData(from: url, completion: completion)
     }
     
-    func formNewsBody(from base64EncodedText: String?) -> String? {
-        guard let encodedText = base64EncodedText else { return nil }
-        guard let data = Data(base64Encoded: encodedText) else { return encodedText }
-        return String(data: data, encoding: .utf8)
+    func formNewsBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
+        guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
+        return NSMutableAttributedString(attributedString: htmlAttrString)
     }
     
     func formatDateString(dateString: String?, initialDateFormat: String) -> String? {

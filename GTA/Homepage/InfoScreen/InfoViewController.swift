@@ -112,7 +112,10 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         case .info:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InfoArticleCell", for: indexPath) as? InfoArticleCell
             let htmlBody = dataProvider?.formNewsBody(from: specialAlertData?.alertBody)
-            cell?.infoLabel.attributedText = htmlBody?.htmlToAttributedString
+            if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+                htmlBody?.setFontFace(font: neededFont)
+            }
+            cell?.infoLabel.attributedText = htmlBody
             return cell ?? UITableViewCell()
         default:
             let data = officeDataSoure[indexPath.row]
