@@ -42,7 +42,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     var shortFormHeight: PanModalHeight {
-        return PanModalHeight.contentHeight(initialHeight)
+        return initialHeight
     }
     
     var allowsExtendedPanScrolling: Bool {
@@ -53,7 +53,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
         return .maxHeight
     }
     
-    var initialHeight: CGFloat = 0.0
+    var initialHeight: PanModalHeight = .maxHeight
     
     var cornerRadius: CGFloat {
         return 20
@@ -83,11 +83,14 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     
     override func viewDidLayoutSubviews() {
         configureBlurViewPosition()
+        if dataSource?.status == .open {
+            panModalTransition(to: .longForm)
+        }
     }
     
-    private func configureBlurViewPosition(isInitial: Bool = false) {
+    private func configureBlurViewPosition() {
         guard position > 0 else { return }
-        blurView.frame.origin.y = !isInitial ? position - blurView.frame.height : initialHeight - 44
+        blurView.frame.origin.y = position - blurView.frame.height
         self.view.layoutIfNeeded()
     }
         

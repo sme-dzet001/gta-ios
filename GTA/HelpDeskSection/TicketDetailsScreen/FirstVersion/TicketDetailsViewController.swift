@@ -41,7 +41,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     var shortFormHeight: PanModalHeight {
-        return PanModalHeight.contentHeight(initialHeight)
+        return initialHeight
     }
     
     var allowsExtendedPanScrolling: Bool {
@@ -51,8 +51,10 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     var longFormHeight: PanModalHeight {
         return .maxHeight
     }
+        
+    var initialHeight: PanModalHeight = .maxHeight
     
-    var initialHeight: CGFloat = 0.0
+    private var isFirstTime: Bool = true
     
     var cornerRadius: CGFloat {
         return 20
@@ -74,19 +76,40 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addBlurToView()
+        setUpTextViewIfNeeded()
         heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
             self?.configureBlurViewPosition()
+            self?.configurePosition()
         })
-        setUpTextViewIfNeeded()
     }
     
     override func viewDidLayoutSubviews() {
         configureBlurViewPosition()
+        //self.configurePosition()
+        if dataSource?.status == .open && isFirstTime {
+            panModalTransition(to: .longForm)
+        }
     }
     
-    private func configureBlurViewPosition(isInitial: Bool = false) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        isFirstTime = false
+    }
+    
+    func willTransition(to state: PanModalPresentationController.PresentationState) {
+//        switch state {
+//        case .shortForm:
+//            textView.frame.origin.y = position - textView.frame.height
+//            tableViewBottom.constant = textView.frame.origin.y - 66
+//        default:
+//            setUpTextViewIfNeeded()
+//        }
+        
+    }
+    
+    private func configureBlurViewPosition() {
         guard position > 0 else { return }
-        blurView.frame.origin.y = !isInitial ? position - blurView.frame.height : initialHeight - 44
+        blurView.frame.origin.y = position - blurView.frame.height
         self.view.layoutIfNeeded()
     }
         
@@ -113,6 +136,12 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         self.view.addSubview(textView)
         textView.textView.delegate = self
         textView.sendButtonDelegate = self
+    }
+    
+    private func configurePosition() {
+        textView.frame.origin.y = position - textView.frame.height - 10
+        let subtract = self.view.frame.height - position + 66 + 10
+        tableViewBottom.constant = subtract <= 66 ? 66 : subtract
     }
     
     private func setUpTableView() {
