@@ -10,14 +10,19 @@ import UIKit
 class ServiceDeskContactsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    private var contactsDataSource = [ServiceDeskContact]()
+    var dataProvider: HelpDeskDataProvider?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationItem()
-        setHardCodeData()
         setUpTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadContactsData()
     }
     
     private func setUpNavigationItem() {
@@ -30,12 +35,23 @@ class ServiceDeskContactsViewController: UIViewController {
         tableView.register(UINib(nibName: "ServiceDeskContactCell", bundle: nil), forCellReuseIdentifier: "ServiceDeskContactCell")
     }
     
-    private func setHardCodeData() {
-        contactsDataSource = [
-            ServiceDeskContact(photoImageName: "jane_cooper_photo", contactName: "Jane Cooper", contactPosition: "Administrator", description: "Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.", email: "janecooper@mail.com", location: "US - New York"),
-            ServiceDeskContact(photoImageName: "ralph_edwards_photo", contactName: "Ralph Edwards", contactPosition: "Administrator", description: "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim.", email: "janecooper@mail.com", location: "US - New York"),
-            ServiceDeskContact(photoImageName: "leslie_alexander_photo", contactName: "Leslie Alexander", contactPosition: "Administrator", description: "Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.", email: "janecooper@mail.com", location: "US - New York")
-        ]
+    private func loadContactsData() {
+        guard let dataProvider = dataProvider else { return }
+        if dataProvider.teamContactsDataIsEmpty {
+            activityIndicator.startAnimating()
+            tableView.isHidden = true
+        }
+        dataProvider.getTeamContactsData { [weak self] (errorCode, error) in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                if error == nil && errorCode == 200 {
+                    self?.tableView.isHidden = false
+                    self?.tableView.reloadData()
+                } else {
+                    self?.displayError(errorMessage: "Error was happened!")
+                }
+            }
+        }
     }
     
     @objc private func backPressed() {
@@ -47,25 +63,27 @@ class ServiceDeskContactsViewController: UIViewController {
 extension ServiceDeskContactsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contactsDataSource.count
+        return dataProvider?.teamContactsData.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ServiceDeskContactCell", for: indexPath) as? ServiceDeskContactCell {
-            let cellDataSource = contactsDataSource[indexPath.row]
+            let data = dataProvider?.teamContactsData ?? []
+            let cellDataSource = data[indexPath.row]
             cell.setUpCell(with: cellDataSource)
+            if let imageURL = dataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl), let url = URL(string: imageURL) {
+                cell.imageUrl = imageURL
+                dataProvider?.getContactImageData(from: url) { (data, error) in
+                    if cell.imageUrl != imageURL { return }
+                    if let imageData = data, error == nil {
+                        let image = UIImage(data: imageData)
+                        cell.photoImageView.image = image
+                    }
+                }
+            }
             return cell
         }
         return UITableViewCell()
     }
     
-}
-
-struct ServiceDeskContact {
-    var photoImageName: String?
-    var contactName: String?
-    var contactPosition: String?
-    var description: String?
-    var email: String?
-    var location: String?
 }

@@ -60,4 +60,38 @@ struct QuickHelpResponse: Codable {
     var data: QuickHelpData?
 }
 
+// MARK: - Team Contacts Response
+
+struct TeamContactsRow: Codable {
+    var values: [QuantumValue]?
+    
+    var contactPhotoUrl: String? {
+        guard let valuesArr = values, valuesArr.count >= 2 else { return nil }
+        return valuesArr[1].stringValue
+    }
+    
+    var contactName: String? {
+        guard let valuesArr = values, valuesArr.count >= 3 else { return nil }
+        return valuesArr[2].stringValue
+    }
+    
+    var contactEmail: String? {
+        guard let valuesArr = values, valuesArr.count >= 4 else { return nil }
+        return valuesArr[3].stringValue
+    }
+    
+    var contactBio: String? {
+        guard let valuesArr = values, valuesArr.count >= 5 else { return nil }
+        return valuesArr[4].stringValue
+    }
+}
+
+struct TeamContactsData: Codable {
+    var rows: [TeamContactsRow]?
+}
+
+struct TeamContactsResponse: Codable {
+    var meta: ResponseMetaData
+    var data: TeamContactsData?
+}
 

@@ -21,6 +21,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getSpecialAlerts(generationNumber: Int)
         case getHelpDeskData(generationNumber: Int)
         case getQuickHelpData(generationNumber: Int)
+        case getTeamContactsData(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -30,6 +31,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)"
                 case .getHelpDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)"
                 case .getQuickHelpData(let generationNumber): return "/v3/widgets/gsd_quick_help/data/\(generationNumber)"
+                case .getTeamContactsData(let generationNumber): return "/v3/widgets/gsd_team_contacts/data/\(generationNumber)"
             }
         }
     }
@@ -45,6 +47,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case specialAlerts = "special_alerts"
         case gsdProfile = "gsd_profile"
         case gsdQuickHelp = "gsd_quick_help"
+        case gsdTeamContacts = "gsd_team_contacts"
     }
     
     init(accessToken: String?) {
@@ -154,21 +157,21 @@ class APIManager: NSObject, URLSessionDelegate {
         }
     }
     
-//    func getServiceDeskData(for generationNumber: Int, completion: ((_ serviceDeskResponse: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-//        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-//        self.makeRequest(endpoint: .getServiceDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
-//            var reportDataResponse: HelpDeskResponse?
-//            var retErr = error
-//            if let responseData = responseData {
-//                do {
-//                    reportDataResponse = try self?.parse(data: responseData)
-//                } catch {
-//                    retErr = error
-//                }
-//            }
-//            completion?(reportDataResponse, errorCode, retErr)
-//        }
-//    }
+    func getTeamContacts(generationNumber: Int, completion: ((_ teamContactsData: TeamContactsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+            var teamContactsDataResponse: TeamContactsResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    teamContactsDataResponse = try self.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(teamContactsDataResponse, errorCode, retErr)
+        }
+    }
     
     //MARK: - Common methods
     
