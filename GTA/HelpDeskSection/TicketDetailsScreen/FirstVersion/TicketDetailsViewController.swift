@@ -128,8 +128,9 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     
     private func configurePosition() {
         guard dataSource?.status == .open else { return }
-        textView.frame.origin.y = position - textView.frame.height - 10
-        let subtract = self.view.frame.height - position + 66 + 10
+        let coefficient: CGFloat = UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se ? 10 : 0
+        textView.frame.origin.y = position - textView.frame.height - (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) - coefficient
+        let subtract = self.view.frame.height - position + 66 + (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) + coefficient
         tableViewBottom.constant = subtract <= 66 ? 66 : subtract
     }
     
