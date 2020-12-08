@@ -164,6 +164,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     
     func willRespond(to panModalGestureRecognizer: UIPanGestureRecognizer) {
         isShortFormEnabled = false
+        hideKeyboard()
     }
     
     func willTransition(to state: PanModalPresentationController.PresentationState) {
@@ -194,6 +195,8 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
     
     @objc func hideKeyboard() {
+        let index = pickerDataSource.firstIndex(of: self.typeTextField.text ?? "") ?? 0
+        pickerView.selectRow(index, inComponent: 0, animated: false)
         view.endEditing(true)
     }
     

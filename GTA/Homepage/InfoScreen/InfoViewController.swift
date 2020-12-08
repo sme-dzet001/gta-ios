@@ -45,7 +45,7 @@ class InfoViewController: UIViewController {
         officeStatusLabel.layer.masksToBounds = true
         infoLabel.text = self.title
         if infoType == .info {
-            if let updateDate = dataProvider?.formatDateString(dateString: specialAlertData?.alertDate, initialDateFormat: "yyyy-MM-dd") {
+            if let updateDate = dataProvider?.formatDateString(dateString: specialAlertData?.alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
                 self.updateTitleLabel.text = "Updates \(updateDate)"
             }
             self.blurView.isHidden = false
@@ -111,7 +111,11 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         switch infoType {
         case .info:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InfoArticleCell", for: indexPath) as? InfoArticleCell
-            cell?.infoLabel.text = specialAlertData?.alertBody
+            let htmlBody = dataProvider?.formNewsBody(from: specialAlertData?.alertBody)
+            if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+                htmlBody?.setFontFace(font: neededFont)
+            }
+            cell?.infoLabel.attributedText = htmlBody
             return cell ?? UITableViewCell()
         default:
             let data = officeDataSoure[indexPath.row]

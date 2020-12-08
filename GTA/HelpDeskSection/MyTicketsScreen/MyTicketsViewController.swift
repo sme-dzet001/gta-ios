@@ -28,7 +28,7 @@ class MyTicketsViewController: UIViewController {
     }
     
     private func setUpTableView() {
-        tableView.rowHeight = 150
+        tableView.rowHeight = 158
         tableView.register(UINib(nibName: "TicketCell", bundle: nil), forCellReuseIdentifier: "TicketCell")
     }
 
@@ -68,7 +68,7 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TicketCell", for: indexPath) as? TicketCell {
-            cell.setUpCell(with: myTicketsData[indexPath.row])
+            cell.setUpCell(with: myTicketsData[indexPath.row], hideSeparator: indexPath.row == myTicketsData.count - 1)
             return cell
         }
         return UITableViewCell()
@@ -85,14 +85,16 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
             let ticketDetailsVC = SecondTicketDetailsViewController()
             ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
             if !UIDevice.current.iPhone5_se {
-                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / 1.5)
+                let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
+                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / coefficient)
             }
             presentPanModal(ticketDetailsVC)
         default:
             let ticketDetailsVC = TicketDetailsViewController()
             ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
             if !UIDevice.current.iPhone5_se {
-                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / 1.5)
+                let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
+                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / coefficient)
             }
             presentPanModal(ticketDetailsVC)
         }

@@ -221,4 +221,16 @@ open class CustomTextField: UITextField {
         self.labelError.isHidden = true
     }
     
+    open override func caretRect(for position: UITextPosition) -> CGRect {
+        return inputView != nil ? .zero : super.caretRect(for: position)
+    }
+    
+    open override func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
+        return inputView != nil ? [] : super.selectionRects(for: range)
+    }
+    
+    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return inputView != nil ? false : super.canPerformAction(action, withSender: sender)
+    }
+    
 }

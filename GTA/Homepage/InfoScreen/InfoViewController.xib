@@ -91,7 +91,7 @@ situation?</string>
                         <constraint firstAttribute="height" constant="44" id="PjU-BI-E2y"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Covid-19 Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWB-SD-fxK">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Covid-19 Info" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWB-SD-fxK">
                     <rect key="frame" x="53" y="49" width="308" height="24"/>
                     <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -102,6 +102,7 @@ situation?</string>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZTg-WM-pUj" secondAttribute="trailing" id="2oB-Iv-K2a"/>
+                <constraint firstItem="QLI-2z-WNx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="yWB-SD-fxK" secondAttribute="bottom" constant="8" id="5MF-AW-8PJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="yWB-SD-fxK" secondAttribute="trailing" constant="53" id="9W1-xq-1B3"/>
                 <constraint firstItem="Dj3-g3-kNV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="A7J-Y6-mTA"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QLI-2z-WNx" secondAttribute="trailing" constant="30" id="DsE-Ob-g5d"/>
@@ -120,8 +121,8 @@ situation?</string>
                 <constraint firstItem="Dj3-g3-kNV" firstAttribute="top" secondItem="8OW-0v-f8F" secondAttribute="bottom" constant="-10" id="f8L-jV-0SC"/>
                 <constraint firstItem="cCL-lV-oEM" firstAttribute="top" secondItem="QLI-2z-WNx" secondAttribute="bottom" constant="20" id="fyy-iH-Ogj"/>
                 <constraint firstItem="XXY-vF-2Iu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="nz5-ed-uVs"/>
-                <constraint firstItem="yWB-SD-fxK" firstAttribute="centerY" secondItem="XXY-vF-2Iu" secondAttribute="centerY" id="oRy-di-Hhw"/>
                 <constraint firstItem="8OW-0v-f8F" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ogE-Id-9vb"/>
+                <constraint firstItem="yWB-SD-fxK" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="puA-mT-cgH"/>
                 <constraint firstItem="8OW-0v-f8F" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.81" id="rb8-ys-GZk"/>
                 <constraint firstItem="vRF-Yl-tE0" firstAttribute="leading" secondItem="QLI-2z-WNx" secondAttribute="leading" id="sf7-KE-bg9"/>
                 <constraint firstItem="8OW-0v-f8F" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tLK-px-JgA"/>

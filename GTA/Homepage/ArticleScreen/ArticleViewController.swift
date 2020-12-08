@@ -19,14 +19,14 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
     }
-    var articleText: String? = "" {
+    var articleText: NSMutableAttributedString? {
         didSet {
             let animation = CATransition()
             animation.type = .fade
             animation.duration = 0.3
             animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
             articleTextView?.layer.add(animation, forKey: "changeTextTransition")
-            articleTextView?.attributedText = articleText?.htmlToAttributedString
+            articleTextView?.attributedText = articleText
         }
     }
     
@@ -61,10 +61,6 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         }
     }
     
-    var allowsDragToDismiss: Bool {
-        return false
-    }
-    
     var allowsTapToDismiss: Bool {
         return false
     }
@@ -84,7 +80,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
-        articleTextView.attributedText = articleText?.htmlToAttributedString
+        articleTextView.attributedText = articleText
         articleTextView.textContainerInset = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
     }
     
@@ -99,6 +95,10 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         panGesture.cancelsTouchesInView = false
         presentationView?.addGestureRecognizer(panGesture)
         configureBlurViewPosition(isInitial: true)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        configureBlurViewPosition()
     }
     
     @objc func newsDidScroll(gesture: UIPanGestureRecognizer) {
@@ -123,7 +123,6 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     }
         
     func addBlurToView() {
-       // blurView.backgroundColor = .blue
         let gradientMaskLayer = CAGradientLayer()
         gradientMaskLayer.frame = blurView.bounds
         gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(0.3) .cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]

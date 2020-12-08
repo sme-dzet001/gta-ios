@@ -16,6 +16,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SecondTicketDetailsViewController">
             <connections>
+                <outlet property="blurView" destination="ZBz-y7-2Wl" id="vPR-ZY-6D7"/>
                 <outlet property="closeButton" destination="AkM-Gy-J0A" id="qh6-4e-yBd"/>
                 <outlet property="headerView" destination="2bW-lx-lmw" id="RRv-Y2-fQN"/>
                 <outlet property="mainTitleLabel" destination="tBa-uP-u6W" id="haX-06-dHW"/>
@@ -34,6 +35,13 @@
                     <rect key="frame" x="0.0" y="245" width="414" height="651"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZBz-y7-2Wl">
+                    <rect key="frame" x="0.0" y="818" width="414" height="44"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="O1B-wU-fmV"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2bW-lx-lmw">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                     <subviews>
@@ -86,11 +94,14 @@
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2bW-lx-lmw" secondAttribute="trailing" id="Csw-hF-koz"/>
                 <constraint firstItem="2bW-lx-lmw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ESe-Fs-3aC"/>
+                <constraint firstItem="ZBz-y7-2Wl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="JMd-6z-m5i"/>
                 <constraint firstAttribute="bottom" secondItem="Guf-J0-V8D" secondAttribute="bottom" id="JYP-3M-mPV"/>
                 <constraint firstItem="Guf-J0-V8D" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Sp4-mC-YH0"/>
                 <constraint firstItem="Guf-J0-V8D" firstAttribute="top" secondItem="tBa-uP-u6W" secondAttribute="bottom" constant="200" id="Tqu-VW-JDK"/>
                 <constraint firstAttribute="top" secondItem="2bW-lx-lmw" secondAttribute="top" id="Ufy-Bl-E8d"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZBz-y7-2Wl" secondAttribute="trailing" id="oKV-SE-1io"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Guf-J0-V8D" secondAttribute="trailing" id="q5s-mg-zrK"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ZBz-y7-2Wl" secondAttribute="bottom" id="x9v-Oy-hFx"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="137.68115942028987" y="121.875"/>

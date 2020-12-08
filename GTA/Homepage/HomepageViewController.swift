@@ -130,7 +130,11 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         }
         articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
         let newsBody = dataProvider.newsData[indexPath.row].newsBody
-        articleViewController.articleText = dataProvider.formNewsBody(from: newsBody)
+        let htmlBody = dataProvider.formNewsBody(from: newsBody)
+        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+            htmlBody?.setFontFace(font: neededFont)
+        }
+        articleViewController.articleText = htmlBody
         selectedIndexPath.row = indexPath.row
         presentedVC = articleViewController
         presentPanModal(articleViewController)
@@ -164,7 +168,12 @@ extension HomepageViewController: PanModalAppearanceDelegate {
         }
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: scrollPosition)
-        self.presentedVC?.articleText = dataProvider.formNewsBody(from: dataProvider.newsData[selectedIndexPath.row].newsBody)
+        let newsBody = dataProvider.newsData[selectedIndexPath.row].newsBody
+        let htmlBody = dataProvider.formNewsBody(from: newsBody)
+        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+            htmlBody?.setFontFace(font: neededFont)
+        }
+        self.presentedVC?.articleText = htmlBody
     }
     
     func panModalDidDissmiss() {
