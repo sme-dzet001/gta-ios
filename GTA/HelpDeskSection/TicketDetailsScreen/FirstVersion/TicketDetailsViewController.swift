@@ -85,7 +85,6 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     
     override func viewDidLayoutSubviews() {
         configureBlurViewPosition()
-        //self.configurePosition()
         if dataSource?.status == .open && isFirstTime {
             panModalTransition(to: .longForm)
         }
@@ -94,17 +93,6 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         isFirstTime = false
-    }
-    
-    func willTransition(to state: PanModalPresentationController.PresentationState) {
-//        switch state {
-//        case .shortForm:
-//            textView.frame.origin.y = position - textView.frame.height
-//            tableViewBottom.constant = textView.frame.origin.y - 66
-//        default:
-//            setUpTextViewIfNeeded()
-//        }
-        
     }
     
     private func configureBlurViewPosition() {
@@ -139,8 +127,10 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     private func configurePosition() {
-        textView.frame.origin.y = position - textView.frame.height - 10
-        let subtract = self.view.frame.height - position + 66 + 10
+        guard dataSource?.status == .open else { return }
+        let coefficient: CGFloat = UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se ? 10 : 0
+        textView.frame.origin.y = position - textView.frame.height - (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) - coefficient
+        let subtract = self.view.frame.height - position + 66 + (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) + coefficient
         tableViewBottom.constant = subtract <= 66 ? 66 : subtract
     }
     
