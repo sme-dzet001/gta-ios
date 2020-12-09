@@ -21,6 +21,8 @@ class APIManager: NSObject, URLSessionDelegate {
         case getSpecialAlerts(generationNumber: Int)
         case getHelpDeskData(generationNumber: Int)
         case getQuickHelpData(generationNumber: Int)
+        case getMyAppsData(generationNumber: Int)
+        case getAllAppsData(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -30,6 +32,8 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)"
                 case .getHelpDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)"
                 case .getQuickHelpData(let generationNumber): return "/v3/widgets/gsd_quick_help/data/\(generationNumber)"
+                case .getMyAppsData(let generationNumber): return "/v3/widgets/my_apps_status/data/\(generationNumber)"
+                case .getAllAppsData(let generationNumber): return "/v3/widgets/all_apps/data/\(generationNumber)"
             }
         }
     }
@@ -45,6 +49,11 @@ class APIManager: NSObject, URLSessionDelegate {
         case specialAlerts = "special_alerts"
         case gsdProfile = "gsd_profile"
         case gsdQuickHelp = "gsd_quick_help"
+        case myApps = "my_apps"
+        case myAppsStatus = "my_apps_status"
+        case allApps = "all_apps"
+        case appDetails = "app_details"
+        case productionAlerts = "production_alerts"
     }
     
     init(accessToken: String?) {
@@ -154,10 +163,44 @@ class APIManager: NSObject, URLSessionDelegate {
         }
     }
     
-//    func getServiceDeskData(for generationNumber: Int, completion: ((_ serviceDeskResponse: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    //MARK: - My Apps methods
+    
+    func getMyAppsData(for generationNumber: Int, completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
+            var reportDataResponse: MyAppsResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    reportDataResponse = try self?.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(reportDataResponse, errorCode, retErr)
+        }
+    }
+    
+    func getAllApps(for generationNumber: Int, completion: ((_ serviceDeskResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
+            var reportDataResponse: AllAppsResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    reportDataResponse = try self?.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(reportDataResponse, errorCode, retErr)
+        }
+    }
+    
+//    func getAppsServiceAlert(for generationNumber: Int, completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
 //        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-//        self.makeRequest(endpoint: .getServiceDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
-//            var reportDataResponse: HelpDeskResponse?
+//        self.makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
+//            var reportDataResponse: MyAppsResponse?
 //            var retErr = error
 //            if let responseData = responseData {
 //                do {

@@ -8,11 +8,11 @@
 import Foundation
 
 struct HelpDeskResponse: Codable {
-    var data: [String : [HelpDeskValues]]?
+    var data: HelpDeskRows?//[String : [HelpDeskValues]]?
     
     private var values: [String]? {
-        guard let data = data, !data.isEmpty else { return [] }
-        return data["rows"]?.first?.values
+        guard let rows = data?.rows, !rows.isEmpty else { return [] }
+        return rows.first?.values //data["rows"]?.first?.values
     }
     
     var serviceDeskPhoneNumber: String? {
@@ -29,6 +29,10 @@ struct HelpDeskResponse: Codable {
         return values[6]
     }
     
+}
+
+struct HelpDeskRows: Codable {
+    var rows: [HelpDeskValues]?
 }
 
 struct HelpDeskValues: Codable {

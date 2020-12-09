@@ -18,12 +18,12 @@ class ApplicationCell: UITableViewCell {
         // Initialization code
     }
     
-    func setUpCell(with data: CellData) {
-        if let image = data.image {
+    func setUpCell(with data: AppInfo) {
+        if let image = data.imageData {
             appIcon.image = UIImage(data: image)
         }
-        appName.text = data.mainText
-        switch data.systemStatus {
+        appName.text = data.app_title
+        switch data.appStatus {
         case .online:
             appStatus.backgroundColor = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
         case .offline:

@@ -18,9 +18,9 @@ class SystemUpdatesCell: UITableViewCell {
         // Initialization code
     }
 
-    func setUpCell(with data: CellData, hideSeparator: Bool = false) {
-        descriptionLabel.text = data.additionalText
-        mainTitleLabel.text = data.mainText
+    func setUpCell(with data: AppInfo, hideSeparator: Bool = false) {
+        descriptionLabel.text = data.app_title
+        mainTitleLabel.text = data.app_name
         separator.isHidden = hideSeparator
     }
     

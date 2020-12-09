@@ -22,10 +22,10 @@ class AppsServiceAlertCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func setUpCell(with data: CellData, isNeedCornerRadius: Bool = false) {
-        descriptionLabel.text = data.additionalText
-        mainLabel.text = data.mainText
-        if let image = data.image {
+    func setUpCell(with data: AppInfo, isNeedCornerRadius: Bool = false) {
+        descriptionLabel.text = data.app_name
+        mainLabel.text = data.app_title
+        if let image = data.imageData {
             iconImageView.image = UIImage(data: image)
         }
         if isNeedCornerRadius {

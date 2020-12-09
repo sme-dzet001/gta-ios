@@ -108,6 +108,12 @@
 		9F78D0E1256557EE00BCD38F /* OfficeStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0DD256557EE00BCD38F /* OfficeStatusCell.xib */; };
 		9F78D0E2256557EE00BCD38F /* OfficeStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0DD256557EE00BCD38F /* OfficeStatusCell.xib */; };
 		9F78D0E3256557EE00BCD38F /* OfficeStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0DD256557EE00BCD38F /* OfficeStatusCell.xib */; };
+		9F8164AF257FA7D9001507BF /* MyAppsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164AE257FA7D9001507BF /* MyAppsResponses.swift */; };
+		9F8164B0257FA7D9001507BF /* MyAppsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164AE257FA7D9001507BF /* MyAppsResponses.swift */; };
+		9F8164B1257FA7D9001507BF /* MyAppsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164AE257FA7D9001507BF /* MyAppsResponses.swift */; };
+		9F8164B8257FA817001507BF /* MyAppsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164B7257FA817001507BF /* MyAppsDataProvider.swift */; };
+		9F8164B9257FA817001507BF /* MyAppsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164B7257FA817001507BF /* MyAppsDataProvider.swift */; };
+		9F8164BA257FA817001507BF /* MyAppsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164B7257FA817001507BF /* MyAppsDataProvider.swift */; };
 		9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
 		9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
 		9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
@@ -452,6 +458,8 @@
 		9F78D0942565321100BCD38F /* SF-Pro-Text-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.ttf"; sourceTree = "<group>"; };
 		9F78D0DC256557EE00BCD38F /* OfficeStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeStatusCell.swift; sourceTree = "<group>"; };
 		9F78D0DD256557EE00BCD38F /* OfficeStatusCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfficeStatusCell.xib; sourceTree = "<group>"; };
+		9F8164AE257FA7D9001507BF /* MyAppsResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppsResponses.swift; sourceTree = "<group>"; };
+		9F8164B7257FA817001507BF /* MyAppsDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppsDataProvider.swift; sourceTree = "<group>"; };
 		9F819AA6255C1572007C1739 /* GTAStage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTAStage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F819AA7255C1572007C1739 /* GTAStage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTAStage-Info.plist"; sourceTree = "<group>"; };
 		9F819AD0255C1646007C1739 /* GTADev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTADev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -630,12 +638,12 @@
 			children = (
 				65D29081256C0D8F001B658A /* Utils */,
 				65D29080256C0D7E001B658A /* Communication */,
-				65D2905425682E45001B658A /* Login */,
 				659A5AF9255457B600E13B77 /* Extensions.swift */,
 				659A5AB0255401EA00E13B77 /* AppDelegate.swift */,
 				659A5AB2255401EA00E13B77 /* SceneDelegate.swift */,
 				65D1A29225549A0600D71965 /* MainViewController.swift */,
 				9F8AEAE2255EB86000B62072 /* CustomUIElements */,
+				65D2905425682E45001B658A /* Login */,
 				6583BC8A2559AD4300C80673 /* Homepage */,
 				C91F70962562FECD002F17B1 /* HelpDeskSection */,
 				9F895AD6255C22D6004489C6 /* MyAppsSection */,
@@ -865,6 +873,14 @@
 			path = xib;
 			sourceTree = "<group>";
 		};
+		9F8164C0257FA81C001507BF /* MyAppsDataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				9F8164B7257FA817001507BF /* MyAppsDataProvider.swift */,
+			);
+			path = MyAppsDataProvider;
+			sourceTree = "<group>";
+		};
 		9F83A8F32578FF2500F9CFF0 /* HelpDeskDataProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -876,6 +892,7 @@
 		9F895AD6255C22D6004489C6 /* MyAppsSection */ = {
 			isa = PBXGroup;
 			children = (
+				9F8164C0257FA81C001507BF /* MyAppsDataProvider */,
 				9F895AD7255C22D6004489C6 /* AppsScreen */,
 				9F895B67255D3CCB004489C6 /* HelpReportScreen */,
 				9F895B24255C2DDF004489C6 /* ApplicationStatus */,
@@ -1174,6 +1191,7 @@
 				C9D035942578095A0068441F /* GlobalNewsResponses.swift */,
 				C9D035952578095A0068441F /* LoginResponses.swift */,
 				9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */,
+				9F8164AE257FA7D9001507BF /* MyAppsResponses.swift */,
 			);
 			path = APIResponses;
 			sourceTree = "<group>";
@@ -1732,6 +1750,7 @@
 				9FF0543C2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				C993A2AE2576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */,
+				9F8164AF257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
 				C93FCF0625648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F36D4652562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				C9DFD4C025659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
@@ -1752,6 +1771,7 @@
 				659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */,
 				C9766FAC2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */,
+				9F8164B8257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				65398BCC256D4C5F0039C24E /* Utils.swift in Sources */,
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F0D269F2577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
@@ -1821,6 +1841,7 @@
 				9F1620DB2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				C993A2AF2576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9F5B105E2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
+				9F8164B0257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
 				9F78CFCE25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				9FF0545D25680ED30071E596 /* SendMessageView.swift in Sources */,
 				9F0CA54E2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
@@ -1841,6 +1862,7 @@
 				C9DFD47D2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
 				C9766FAD2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708C2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
+				9F8164B9257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
 				C9D859392567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F0D26A02577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
@@ -1894,6 +1916,7 @@
 				9F1620DC2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				C993A2B02576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9F5B105F2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
+				9F8164B1257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
 				9F78CFCF25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				9FF0545E25680ED30071E596 /* SendMessageView.swift in Sources */,
 				9F0CA54F2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
@@ -1914,6 +1937,7 @@
 				C9DFD47E2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
 				C9766FAE2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708D2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
+				9F8164BA257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
 				C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F0D26A12577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
