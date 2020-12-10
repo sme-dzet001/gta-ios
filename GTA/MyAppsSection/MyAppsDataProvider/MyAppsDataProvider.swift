@@ -10,6 +10,8 @@ import Foundation
 class MyAppsDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
+    
+    weak var appImageDelegate: AppImageDelegate?
         
     func getAppsCommonData(completion: ((_ serviceDeskResponse: [AppsDataSource]?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getAllApps { [weak self] (allAppsResponse, allAppsCode, allAppsError) in
@@ -27,25 +29,16 @@ class MyAppsDataProvider {
     private func crateGeneralResponse(commonResponse: [AppInfo]?, appsStatus: MyAppsResponse?) -> [AppsDataSource]? {
         guard let _ = commonResponse, let _ = appsStatus else { return nil }
         var response = commonResponse
-        let group = DispatchGroup()
         var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
         for (index, info) in commonResponse!.enumerated() {
-            group.enter()
             let status = appsStatus!.values?.first(where: {$0.values?.first?.intValue == info.app_id})
             response![index].appStatus = SystemStatus(status: status?.values?[1].stringValue)
-            if let url = URL(string: formImageURL(from: info.app_icon)) {
-                getAppImageData(from: url) { (imageData, _) in
-                    response![index].imageData = imageData
-                    if let _ = status {
-                        myAppsSection.cellData.append(response![index])
-                    } else {
-                        otherAppsSection.cellData.append(response![index])
-                    }
-                    group.leave()
-                }
+            if let _ = status {
+                myAppsSection.cellData.append(response![index])
+            } else {
+                otherAppsSection.cellData.append(response![index])
             }
-            group.wait()
         }
         var result = [AppsDataSource]()
         if !myAppsSection.cellData.isEmpty {
@@ -55,6 +48,16 @@ class MyAppsDataProvider {
             result.append(otherAppsSection)
         }
         return result
+    }
+    
+    func getImageData(for appInfo: [AppInfo]) {
+        for info in appInfo {
+            if let url = URL(string: formImageURL(from: info.app_icon)) {
+                getAppImageData(from: url) { (imageData, _) in
+                    self.appImageDelegate?.setImage(with: imageData, for: info.app_id)
+                }
+            }
+        }
     }
     
     private func getAppImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
@@ -101,4 +104,8 @@ class MyAppsDataProvider {
 //        }
 //    }
     
+}
+
+protocol AppImageDelegate: class {
+    func setImage(with data: Data?, for appId: Int)
 }

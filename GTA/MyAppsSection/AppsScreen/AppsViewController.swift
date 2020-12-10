@@ -19,16 +19,18 @@ class AppsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
+        self.dataProvider.appImageDelegate = self
+        getAppsData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
-        
-        if dataSource.count <= 1 {
-            startAnimation()
-        }
+    }
+    
+    private func getAppsData() {
+        startAnimation()
         dataProvider.getAppsCommonData {[weak self] (response, code, error) in
             if let responseData = response {
                 self?.dataSource = []
@@ -36,6 +38,8 @@ class AppsViewController: UIViewController {
                 self?.dataSource.append(contentsOf: responseData)
             }
             self?.stopAnimation()
+            let appInfo = response?.map({$0.cellData}).reduce([], {$0 + $1})
+            self?.dataProvider.getImageData(for: appInfo ?? [])
         }
     }
     
@@ -120,6 +124,27 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         appVC.systemStatus = dataSource[indexPath.section].cellData[indexPath.row].appStatus
         self.navigationController?.pushViewController(appVC, animated: true)
     }
-    
+
 }
 
+extension AppsViewController: AppImageDelegate {
+    
+    func setImage(with data: Data?, for appId: Int) {
+        for (index, element) in dataSource.enumerated() {
+            for (cellDataIndex, cellDataObject) in element.cellData.enumerated() {
+                if cellDataObject.app_id == appId {
+                    dataSource[index].cellData[cellDataIndex].imageData = data
+                    dataSource[index].cellData[cellDataIndex].isImageDataEmpty = data == nil
+                    reloadTableViewRow(for: IndexPath(row: cellDataIndex, section: index))
+                }
+            }
+        }
+    }
+    
+    private func reloadTableViewRow(for indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
+    
+}

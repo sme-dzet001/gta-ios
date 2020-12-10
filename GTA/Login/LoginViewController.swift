@@ -24,7 +24,6 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
-        emailTextField.text = "kostiantyn.dzetsiuk.intimetechnologies@sonymusic.com"
     }
     
     override func viewWillAppear(_ animated: Bool) {

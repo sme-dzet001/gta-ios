@@ -45,6 +45,7 @@ struct AppInfo {
     var appStatus: SystemStatus
     var app_is_active: Bool
     var imageData: Data?
+    var isImageDataEmpty: Bool = false
 }
 
 
