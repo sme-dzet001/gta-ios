@@ -146,6 +146,7 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(quickHelpVC, animated: true)
         } else if indexPath.row == 2 {
             let contactsVC = ServiceDeskContactsViewController()
+            contactsVC.dataProvider = dataProvider
             navigationController?.pushViewController(contactsVC, animated: true)
         } else if indexPath.row == 3 {
             let myTicketsVC = MyTicketsViewController()

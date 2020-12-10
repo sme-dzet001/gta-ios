@@ -21,6 +21,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getSpecialAlerts(generationNumber: Int)
         case getHelpDeskData(generationNumber: Int)
         case getQuickHelpData(generationNumber: Int)
+        case getTeamContactsData(generationNumber: Int)
         case getMyAppsData(generationNumber: Int)
         case getAllAppsData(generationNumber: Int)
         
@@ -32,6 +33,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)"
                 case .getHelpDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)"
                 case .getQuickHelpData(let generationNumber): return "/v3/widgets/gsd_quick_help/data/\(generationNumber)"
+                case .getTeamContactsData(let generationNumber): return "/v3/widgets/gsd_team_contacts/data/\(generationNumber)"
                 case .getMyAppsData(let generationNumber): return "/v3/widgets/my_apps_status/data/\(generationNumber)"
                 case .getAllAppsData(let generationNumber): return "/v3/widgets/all_apps/data/\(generationNumber)"
             }
@@ -49,6 +51,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case specialAlerts = "special_alerts"
         case gsdProfile = "gsd_profile"
         case gsdQuickHelp = "gsd_quick_help"
+        case gsdTeamContacts = "gsd_team_contacts"
         case myApps = "my_apps"
         case myAppsStatus = "my_apps_status"
         case allApps = "all_apps"
@@ -163,6 +166,21 @@ class APIManager: NSObject, URLSessionDelegate {
         }
     }
     
+    func getTeamContacts(generationNumber: Int, completion: ((_ teamContactsData: TeamContactsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+            var teamContactsDataResponse: TeamContactsResponse?
+            var retErr = error
+            if let responseData = responseData {
+                do {
+                    teamContactsDataResponse = try self.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            completion?(teamContactsDataResponse, errorCode, retErr)
+        }
+    }
     //MARK: - My Apps methods
     
     func getMyAppsData(for generationNumber: Int, completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
