@@ -20,20 +20,19 @@ class AppsViewController: UIViewController {
         super.viewDidLoad()
         setUpTableView()
         self.dataProvider.appImageDelegate = self
-        getAppsData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+        self.getAppsData()
     }
     
     private func getAppsData() {
         startAnimation()
         dataProvider.getAppsCommonData {[weak self] (response, code, error) in
             if let responseData = response {
-                self?.dataSource = []
                 self?.setHardCodeData()
                 self?.dataSource.append(contentsOf: responseData)
             }
@@ -44,6 +43,7 @@ class AppsViewController: UIViewController {
     }
     
     private func startAnimation() {
+        self.dataSource = []
         self.tableView.alpha = 0
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.center = CGPoint(x: view.frame.size.width  / 2,
