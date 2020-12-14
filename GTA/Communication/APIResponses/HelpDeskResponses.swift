@@ -17,7 +17,7 @@ struct HelpDeskResponse: Codable {
     
     var serviceDeskPhoneNumber: String? {
         guard let values = values, values.count >= 5 else { return nil }
-        return values[4]
+        return convertPhoneNumber(number: values[4])
     }
     var serviceDeskEmail: String? {
         guard let values = values, values.count >= 6 else { return nil }
@@ -27,6 +27,10 @@ struct HelpDeskResponse: Codable {
     var teamsChatLink: String? {
         guard let values = values, values.count >= 7 else { return nil }
         return values[6]
+    }
+    
+    private func convertPhoneNumber(number: String) -> String {
+        return number.replacingOccurrences(of: "(\\d{1})(\\d{3})(\\d{3})(\\d+)", with: "$1 ($2) $3-$4", options: .regularExpression, range: nil)
     }
     
 }
