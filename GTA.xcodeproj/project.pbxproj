@@ -196,6 +196,12 @@
 		9F8AEAE4255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
 		9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
 		9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
+		9F9D9CB52588C59600DC4231 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB32588C59600DC4231 /* AuthViewController.swift */; };
+		9F9D9CB62588C59600DC4231 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB32588C59600DC4231 /* AuthViewController.swift */; };
+		9F9D9CB72588C59600DC4231 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB32588C59600DC4231 /* AuthViewController.swift */; };
+		9F9D9CB82588C59600DC4231 /* AuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB42588C59600DC4231 /* AuthViewController.xib */; };
+		9F9D9CB92588C59600DC4231 /* AuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB42588C59600DC4231 /* AuthViewController.xib */; };
+		9F9D9CBA2588C59600DC4231 /* AuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB42588C59600DC4231 /* AuthViewController.xib */; };
 		9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
@@ -474,6 +480,8 @@
 		9F895B69255D3D27004489C6 /* HelpReportScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpReportScreenViewController.xib; sourceTree = "<group>"; };
 		9F895B7A255D8810004489C6 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9F8AEAE3255EB88500B62072 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
+		9F9D9CB32588C59600DC4231 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		9F9D9CB42588C59600DC4231 /* AuthViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthViewController.xib; sourceTree = "<group>"; };
 		9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginUSMViewController.swift; path = GTA/Login/LoginUSMViewController.swift; sourceTree = SOURCE_ROOT; };
 		9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsMessageCell.swift; sourceTree = "<group>"; };
@@ -630,12 +638,12 @@
 			children = (
 				65D29081256C0D8F001B658A /* Utils */,
 				65D29080256C0D7E001B658A /* Communication */,
-				65D2905425682E45001B658A /* Login */,
 				659A5AF9255457B600E13B77 /* Extensions.swift */,
 				659A5AB0255401EA00E13B77 /* AppDelegate.swift */,
 				659A5AB2255401EA00E13B77 /* SceneDelegate.swift */,
 				65D1A29225549A0600D71965 /* MainViewController.swift */,
 				9F8AEAE2255EB86000B62072 /* CustomUIElements */,
+				65D2905425682E45001B658A /* Login */,
 				6583BC8A2559AD4300C80673 /* Homepage */,
 				C91F70962562FECD002F17B1 /* HelpDeskSection */,
 				9F895AD6255C22D6004489C6 /* MyAppsSection */,
@@ -697,6 +705,7 @@
 			isa = PBXGroup;
 			children = (
 				9F0D269D2577AF74002CC2C2 /* DataProvider */,
+				9F9D9CD92588FFAB00DC4231 /* AuthScreen */,
 				659A5AB4255401EA00E13B77 /* LoginViewController.swift */,
 				9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */,
 			);
@@ -965,6 +974,15 @@
 				C9DFD4C825659DB400BF1740 /* BarChart */,
 			);
 			path = CustomUIElements;
+			sourceTree = "<group>";
+		};
+		9F9D9CD92588FFAB00DC4231 /* AuthScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9F9D9CB32588C59600DC4231 /* AuthViewController.swift */,
+				9F9D9CB42588C59600DC4231 /* AuthViewController.xib */,
+			);
+			path = AuthScreen;
 			sourceTree = "<group>";
 		};
 		9FB59FA62576AB4900E14D7E /* CollectionViewLayout */ = {
@@ -1366,6 +1384,7 @@
 				65D1A2A12554BE3700D71965 /* Home.storyboard in Resources */,
 				9F0CA5502566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
 				9F1620D72566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
+				9F9D9CB82588C59600DC4231 /* AuthViewController.xib in Resources */,
 				9F895B12255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9FF054322567E1D80071E596 /* TicketDetailsMessageCell.xib in Resources */,
 				9F36D43C2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
@@ -1440,6 +1459,7 @@
 				9F1620D82566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
 				9FF0548225681FCD0071E596 /* SecondSendMessageView.xib in Resources */,
 				9F819A98255C1572007C1739 /* Home.storyboard in Resources */,
+				9F9D9CB92588C59600DC4231 /* AuthViewController.xib in Resources */,
 				9F895B13255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9F36D43D2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F895AEB255C22D7004489C6 /* ApplicationCell.xib in Resources */,
@@ -1500,6 +1520,7 @@
 				9F1620D92566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
 				9FF0548325681FCD0071E596 /* SecondSendMessageView.xib in Resources */,
 				9F819AC2255C1646007C1739 /* Home.storyboard in Resources */,
+				9F9D9CBA2588C59600DC4231 /* AuthViewController.xib in Resources */,
 				9F895B14255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9F36D43E2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F895AEC255C22D7004489C6 /* ApplicationCell.xib in Resources */,
@@ -1740,6 +1761,7 @@
 				C9D035992578095A0068441F /* GlobalNewsResponses.swift in Sources */,
 				C993A2C62576686500F9146A /* QuickHelpCell.swift in Sources */,
 				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
+				9F9D9CB52588C59600DC4231 /* AuthViewController.swift in Sources */,
 				9F1620DA2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
 				9F78D07B256530CD00BCD38F /* ArticleViewController.swift in Sources */,
@@ -1829,6 +1851,7 @@
 				C9D0359A2578095A0068441F /* GlobalNewsResponses.swift in Sources */,
 				C993A2C72576686500F9146A /* QuickHelpCell.swift in Sources */,
 				9F36D4662562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
+				9F9D9CB62588C59600DC4231 /* AuthViewController.swift in Sources */,
 				9FF054302567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
@@ -1902,6 +1925,7 @@
 				C9D0359B2578095A0068441F /* GlobalNewsResponses.swift in Sources */,
 				C993A2C82576686500F9146A /* QuickHelpCell.swift in Sources */,
 				9F36D4672562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
+				9F9D9CB72588C59600DC4231 /* AuthViewController.swift in Sources */,
 				9FF054312567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,

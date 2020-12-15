@@ -118,7 +118,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
             KeychainManager.deleteUsername()
             KeychainManager.deleteToken()
             KeychainManager.deleteTokenExpirationDate()
-            
+            UserDefaults.standard.set(false, forKey: "userLoggedIn")
             usmWebView.isHidden = false
             loadUsmLogon()
         }
@@ -141,6 +141,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
                 //guard let self = self else { return }
                 DispatchQueue.main.async {
                     if error == nil && errorCode == 200 {
+                        UserDefaults.standard.set(true, forKey: "userLoggedIn")
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                         let mainScreen = storyboard.instantiateViewController(withIdentifier: "TabBarController")
                         self?.navigationController?.pushViewController(mainScreen, animated: true)

@@ -17,25 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
-        var tokenIsExpired = true
-        if let tokenExpirationDate = KeychainManager.getTokenExpirationDate(), Date() < tokenExpirationDate {
-            tokenIsExpired = false
-        }
-        if let _ = KeychainManager.getToken() {
-            if tokenIsExpired {
-                KeychainManager.deleteUsername()
-                KeychainManager.deleteToken()
-                KeychainManager.deleteTokenExpirationDate()
-                startLoginFlow(sessionExpired: true)
-            } else {
-                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let mainViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarController")
-                let navController = UINavigationController(rootViewController: mainViewController)
-                navController.isNavigationBarHidden = true
-                navController.isToolbarHidden = true
-                window?.rootViewController = navController
-            }
-        }
+        showNeededScreen()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -58,6 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        showNeededScreen()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -65,8 +48,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
+    private func showNeededScreen() {
+        var tokenIsExpired = true
+        if let tokenExpirationDate = KeychainManager.getTokenExpirationDate(), Date() < tokenExpirationDate {
+            tokenIsExpired = false
+        }
+        if let _ = KeychainManager.getToken() {
+            if tokenIsExpired || !UserDefaults.standard.bool(forKey: "userLoggedIn") {
+                KeychainManager.deleteUsername()
+                KeychainManager.deleteToken()
+                KeychainManager.deleteTokenExpirationDate()
+                startLoginFlow(sessionExpired: tokenIsExpired)
+            } else {
+                let authVC = AuthViewController()
+                window?.rootViewController = authVC
+            }
+        }
+    }
 
     func startLoginFlow(sessionExpired: Bool = false) {
+        UserDefaults.standard.set(false, forKey: "userLoggedIn")
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let loginViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         loginViewController.sessionExpired = sessionExpired

@@ -20,6 +20,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSFaceIDUsageDescription</key>
+	<string>GTA app needs access to your face id to authenticate you.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Nordique Pro Bold.otf</string>

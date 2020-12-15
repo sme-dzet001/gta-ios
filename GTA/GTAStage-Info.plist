@@ -71,5 +71,7 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>GTA app needs access to your face id to authenticate you.</string>
 </dict>
 </plist>
