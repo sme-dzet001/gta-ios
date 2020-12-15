@@ -15,9 +15,8 @@ class SessionExpiredHandler {
         if let _ = data {
             metaData = try? DataParser.parse(data: data!)
         }
-        
         guard let meta = metaData, meta.meta?.userMessage == "Session expired", UserDefaults.standard.bool(forKey: "userLoggedIn") else { return }
-        
+        print("Session expired")
         KeychainManager.deleteUsername()
         KeychainManager.deleteToken()
         KeychainManager.deleteTokenExpirationDate()
