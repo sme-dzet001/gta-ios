@@ -9,7 +9,9 @@ import Foundation
 
 class APIManager: NSObject, URLSessionDelegate {
     
-    typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?, _ isResponseSuccessful: Bool) -> Void)?
+    private var sessionExpiredHandler: SessionExpiredHandler = SessionExpiredHandler()
+    
+    typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)?
     
     let baseUrl = "https://gtastageapi.smedsp.com:8888"
     private let accessToken: String?
@@ -72,7 +74,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func getGlobalNews(generationNumber: Int, completion: ((_ newsData: GlobalNewsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+        makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error) in
             var newsDataResponse: GlobalNewsResponse?
             var retErr = error
             if let responseData = responseData {
@@ -88,7 +90,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: SpecialAlertsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error) in
             var specialAlertsDataResponse: SpecialAlertsResponse?
             var retErr = error
             if let responseData = responseData {
@@ -127,7 +129,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func getHelpDeskData(for generationNumber: Int, completion: ((_ serviceDeskResponse: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getHelpDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
+        self.makeRequest(endpoint: .getHelpDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error) in
             var reportDataResponse: HelpDeskResponse?
             var retErr = error
             if let responseData = responseData {
@@ -143,7 +145,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func getQuickHelp(generationNumber: Int, completion: ((_ quickHelpData: QuickHelpResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getQuickHelpData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+        makeRequest(endpoint: .getQuickHelpData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error) in
             var quickHelpDataResponse: QuickHelpResponse?
             var retErr = error
             if let responseData = responseData {
@@ -159,7 +161,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func getTeamContacts(generationNumber: Int, completion: ((_ teamContactsData: TeamContactsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error, isResponseSuccessful) in
+        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error) in
             var teamContactsDataResponse: TeamContactsResponse?
             var retErr = error
             if let responseData = responseData {
@@ -176,7 +178,7 @@ class APIManager: NSObject, URLSessionDelegate {
     //MARK: - Common methods
     
     func validateToken(token: String, completion: ((_ tokenData: AccessTokenValidationResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        makeRequest(endpoint: .validateToken, method: "GET", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?, isResponseSuccessful: Bool) in
+        makeRequest(endpoint: .validateToken, method: "GET", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?) in
             var tokenValidationResponse: AccessTokenValidationResponse?
             var retErr = error
             if let responseData = responseData {
@@ -193,7 +195,7 @@ class APIManager: NSObject, URLSessionDelegate {
     func getSectionReport(sectionId: String, completion: ((_ reportData: ReportDataResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         let requestParams = ["section_id": sectionId]
-        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, params: requestParams) { (responseData, errorCode, error, isResponseSuccessful) in
+        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, params: requestParams) { (responseData, errorCode, error) in
             var reportDataResponse: ReportDataResponse?
             var retErr = error
             if let responseData = responseData {
@@ -260,12 +262,13 @@ class APIManager: NSObject, URLSessionDelegate {
     private func performURLSession(request: URLRequest, completion: RequestCompletion = nil) {
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        let sessionTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+        let sessionTask = session.dataTask(with: request) {[weak self] (data: Data?, response: URLResponse?, error: Error?) in
+            self?.sessionExpiredHandler.handleExpiredSessionIfNeeded(for: data)
+            var statusCode: Int = 0
             if let httpResponse = response as? HTTPURLResponse {
-                completion?(data, httpResponse.statusCode, error, httpResponse.statusCode == 200 && data != nil)
-            } else {
-                completion?(nil, 0, error, false)
+                statusCode = httpResponse.statusCode
             }
+            completion?(data, statusCode, error)
         }
         sessionTask.resume()
     }

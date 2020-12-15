@@ -202,6 +202,12 @@
 		9F9D9CB82588C59600DC4231 /* AuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB42588C59600DC4231 /* AuthViewController.xib */; };
 		9F9D9CB92588C59600DC4231 /* AuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB42588C59600DC4231 /* AuthViewController.xib */; };
 		9F9D9CBA2588C59600DC4231 /* AuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB42588C59600DC4231 /* AuthViewController.xib */; };
+		9F9D9CDB2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */; };
+		9F9D9CDC2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */; };
+		9F9D9CDD2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */; };
+		9F9D9CE925891E1800DC4231 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CE825891E1800DC4231 /* DataParser.swift */; };
+		9F9D9CEA25891E1800DC4231 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CE825891E1800DC4231 /* DataParser.swift */; };
+		9F9D9CEB25891E1800DC4231 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CE825891E1800DC4231 /* DataParser.swift */; };
 		9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
@@ -482,6 +488,8 @@
 		9F8AEAE3255EB88500B62072 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 		9F9D9CB32588C59600DC4231 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		9F9D9CB42588C59600DC4231 /* AuthViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthViewController.xib; sourceTree = "<group>"; };
+		9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionExpiredHandler.swift; sourceTree = "<group>"; };
+		9F9D9CE825891E1800DC4231 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginUSMViewController.swift; path = GTA/Login/LoginUSMViewController.swift; sourceTree = SOURCE_ROOT; };
 		9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsMessageCell.swift; sourceTree = "<group>"; };
@@ -716,6 +724,7 @@
 			isa = PBXGroup;
 			children = (
 				65D29082256C0DA6001B658A /* APIManager.swift */,
+				9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */,
 				C9D035922578095A0068441F /* APIResponses */,
 			);
 			path = Communication;
@@ -726,6 +735,7 @@
 			children = (
 				65D2909A256C0DDD001B658A /* KeychainManager.swift */,
 				65398BCB256D4C5E0039C24E /* Utils.swift */,
+				9F9D9CE825891E1800DC4231 /* DataParser.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1745,6 +1755,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F83A8EB2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
+				9F9D9CDB2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */,
 				C9DFD48D25657B0800BF1740 /* MetricStatsHeader.swift in Sources */,
 				9F895B0F255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA625756C0300315AAE /* HelpDeskHeader.swift in Sources */,
@@ -1805,6 +1816,7 @@
 				9F78D0DE256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				65D14CB9256DA877004DFA70 /* GeneralViewController.swift in Sources */,
+				9F9D9CE925891E1800DC4231 /* DataParser.swift in Sources */,
 				C9D0359C2578095A0068441F /* LoginResponses.swift in Sources */,
 				65D2909B256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E0125642632003C247E /* MyDevicesViewController.swift in Sources */,
@@ -1835,6 +1847,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F83A8EC2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
+				9F9D9CDC2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */,
 				C9DFD48E25657B0800BF1740 /* MetricStatsHeader.swift in Sources */,
 				9F895B10255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA725756C0300315AAE /* HelpDeskHeader.swift in Sources */,
@@ -1895,6 +1908,7 @@
 				9F1620C22566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				C9424E0225642632003C247E /* MyDevicesViewController.swift in Sources */,
 				65D14CBA256DA877004DFA70 /* GeneralViewController.swift in Sources */,
+				9F9D9CEA25891E1800DC4231 /* DataParser.swift in Sources */,
 				C9D0359D2578095A0068441F /* LoginResponses.swift in Sources */,
 				65D2909C256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E15256427F0003C247E /* DeviceCell.swift in Sources */,
@@ -1909,6 +1923,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F83A8ED2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
+				9F9D9CDD2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */,
 				C9DFD48F25657B0800BF1740 /* MetricStatsHeader.swift in Sources */,
 				9F895B11255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA825756C0300315AAE /* HelpDeskHeader.swift in Sources */,
@@ -1969,6 +1984,7 @@
 				9F1620C32566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				C9424E0325642632003C247E /* MyDevicesViewController.swift in Sources */,
 				65D14CBB256DA877004DFA70 /* GeneralViewController.swift in Sources */,
+				9F9D9CEB25891E1800DC4231 /* DataParser.swift in Sources */,
 				C9D0359E2578095A0068441F /* LoginResponses.swift in Sources */,
 				65D2909D256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E16256427F0003C247E /* DeviceCell.swift in Sources */,

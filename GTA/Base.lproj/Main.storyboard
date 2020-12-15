@@ -338,7 +338,7 @@
     </designables>
     <resources>
         <image name="apps_tab_icon" width="24" height="24"/>
-        <image name="back_arrow" width="29" height="29"/>
+        <image name="back_arrow" width="24" height="24"/>
         <image name="collaboration_tab_icon" width="24" height="24"/>
         <image name="general_tab_icon" width="24" height="24"/>
         <image name="gta_logo" width="48" height="48"/>
