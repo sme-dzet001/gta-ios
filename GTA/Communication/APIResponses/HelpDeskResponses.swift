@@ -30,7 +30,8 @@ struct HelpDeskResponse: Codable {
     }
     
     private func convertPhoneNumber(number: String) -> String {
-        return number.replacingOccurrences(of: "(\\d{1})(\\d{3})(\\d{3})(\\d+)", with: "$1 ($2) $3-$4", options: .regularExpression, range: nil)
+        let codeCount = number.replacingOccurrences(of: "+", with: "").count - 10
+        return number.replacingOccurrences(of: "(\\d{\(codeCount)})(\\d{3})(\\d{3})(\\d+)", with: "$1 ($2) $3-$4", options: .regularExpression, range: nil)
     }
     
 }
