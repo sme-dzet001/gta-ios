@@ -11,7 +11,6 @@ import UIKit
 class SessionExpiredHandler {
     
     func handleExpiredSessionIfNeeded(for data: Data?) {
-        print("saasasnasjknas \(UserDefaults.standard.bool(forKey: "userLoggedIn"))")
         var metaData: SessionExpired?
         if let _ = data {
             metaData = try? DataParser.parse(data: data!)
