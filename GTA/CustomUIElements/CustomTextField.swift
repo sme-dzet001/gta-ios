@@ -132,6 +132,7 @@ open class CustomTextField: UITextField {
     
     func initalSetup() {
         //setIconIfNeeded()
+        tintColor = UIColor(red: 204.0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 1.0)
         self.labelPlaceholderTitle.text = placeholder
         placeholder = nil
         borderStyle = .none

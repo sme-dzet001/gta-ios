@@ -22,6 +22,8 @@ class SecondSendMessageView: UIView {
         textView.layer.borderColor = UIColor(red: 229.0 / 255.0, green: 229.0 / 255.0, blue: 234.0 / 255.0, alpha: 1.0).cgColor
         textView.layer.cornerRadius = 10
         submitButton.layer.cornerRadius = 10
+        textView.tintColor = UIColor(red: 204.0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 1.0)
+        textView.textContainerInset = UIEdgeInsets(top: 20, left: 13, bottom: 10, right: 13)
     }
     
 }
