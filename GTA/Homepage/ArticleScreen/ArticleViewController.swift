@@ -26,6 +26,9 @@ class ArticleViewController: UIViewController, PanModalPresentable {
             animation.duration = 0.3
             animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
             articleTextView?.layer.add(animation, forKey: "changeTextTransition")
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 8
+            articleText?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, articleText?.length ?? 0))
             articleTextView?.attributedText = articleText
         }
     }

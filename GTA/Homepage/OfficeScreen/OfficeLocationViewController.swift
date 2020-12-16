@@ -71,7 +71,7 @@ class OfficeLocationViewController: UIViewController {
     
     @IBAction func backButtonDidPressed(_ sender: UIButton) {
         UIView.animate(withDuration: 0.3) {
-            self.backArrow.alpha = 0// isHidden = true
+            self.backArrow.alpha = 0
             self.backButtonLeading.constant = 60
             self.view.layoutIfNeeded()
         }
