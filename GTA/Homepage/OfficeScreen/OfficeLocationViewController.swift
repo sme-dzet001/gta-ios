@@ -70,7 +70,16 @@ class OfficeLocationViewController: UIViewController {
     }
     
     @IBAction func backButtonDidPressed(_ sender: UIButton) {
-        self.navigationController?.popWithFadeAnimation()
+        UIView.animate(withDuration: 0.3) {
+            self.backArrow.alpha = 0// isHidden = true
+            self.backButtonLeading.constant = 60
+            self.view.layoutIfNeeded()
+        }
+        
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
+            self.navigationController?.popWithFadeAnimation()
+        }
+        
     }
     
     deinit {
