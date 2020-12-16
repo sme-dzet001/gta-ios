@@ -7,11 +7,11 @@
 
 import Foundation
 
+typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)?
+
 class APIManager: NSObject, URLSessionDelegate {
-    
     private var sessionExpiredHandler: SessionExpiredHandler = SessionExpiredHandler()
-    
-    typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)?
+    private var networkManager: NetworkManager = NetworkManager()
     
     let baseUrl = "https://gtastageapi.smedsp.com:8888"
     private let accessToken: String?
@@ -54,6 +54,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     init(accessToken: String?) {
         self.accessToken = accessToken
+        self.networkManager.delegate = sessionExpiredHandler
     }
     
     func parse<T>(data: Data, decodingStrategy: JSONDecoder.KeyDecodingStrategy? = nil) throws -> T? where T : Codable {
@@ -256,22 +257,22 @@ class APIManager: NSObject, URLSessionDelegate {
             }
         }
         request.timeoutInterval = timeout
-        performURLSession(request: request, completion: completion)
+        networkManager.performURLRequest(request, completion: completion)
     }
     
-    private func performURLSession(request: URLRequest, completion: RequestCompletion = nil) {
-        let sessionConfig = URLSessionConfiguration.default
-        let session = URLSession(configuration: sessionConfig)
-        let sessionTask = session.dataTask(with: request) {[weak self] (data: Data?, response: URLResponse?, error: Error?) in
-            self?.sessionExpiredHandler.handleExpiredSessionIfNeeded(for: data)
-            var statusCode: Int = 0
-            if let httpResponse = response as? HTTPURLResponse {
-                statusCode = httpResponse.statusCode
-            }
-            completion?(data, statusCode, error)
-        }
-        sessionTask.resume()
-    }
+//    private func performURLSession(request: URLRequest, completion: RequestCompletion = nil) {
+//        let sessionConfig = URLSessionConfiguration.default
+//        let session = URLSession(configuration: sessionConfig)
+//        let sessionTask = session.dataTask(with: request) {[weak self] (data: Data?, response: URLResponse?, error: Error?) in
+//            self?.sessionExpiredHandler.handleExpiredSessionIfNeeded(for: data)
+//            var statusCode: Int = 0
+//            if let httpResponse = response as? HTTPURLResponse {
+//                statusCode = httpResponse.statusCode
+//            }
+//            completion?(data, statusCode, error)
+//        }
+//        sessionTask.resume()
+//    }
 }
 
 

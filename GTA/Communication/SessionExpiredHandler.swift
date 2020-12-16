@@ -8,14 +8,14 @@
 import Foundation
 import UIKit
 
-class SessionExpiredHandler {
+class SessionExpiredHandler: ExpiredSessionDelegate {
     
     func handleExpiredSessionIfNeeded(for data: Data?) {
         var metaData: SessionExpired?
         if let _ = data {
             metaData = try? DataParser.parse(data: data!)
         }
-        guard let meta = metaData, meta.meta?.userMessage == "Session expired", UserDefaults.standard.bool(forKey: "userLoggedIn") else { return }
+        guard let meta = metaData, meta.meta?.userMessage == "Session expired", let _ = KeychainManager.getToken() else { return }
         print("Session expired")
         KeychainManager.deleteUsername()
         KeychainManager.deleteToken()
@@ -42,4 +42,6 @@ struct SessionExpired: Codable {
     }
 }
 
-
+protocol ExpiredSessionDelegate: class {
+    func handleExpiredSessionIfNeeded(for data: Data?)
+}

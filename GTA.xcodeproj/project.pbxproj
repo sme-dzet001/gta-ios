@@ -208,6 +208,9 @@
 		9F9D9CE925891E1800DC4231 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CE825891E1800DC4231 /* DataParser.swift */; };
 		9F9D9CEA25891E1800DC4231 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CE825891E1800DC4231 /* DataParser.swift */; };
 		9F9D9CEB25891E1800DC4231 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CE825891E1800DC4231 /* DataParser.swift */; };
+		9F9D9CF7258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
+		9F9D9CF8258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
+		9F9D9CF9258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
 		9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
@@ -490,6 +493,7 @@
 		9F9D9CB42588C59600DC4231 /* AuthViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthViewController.xib; sourceTree = "<group>"; };
 		9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionExpiredHandler.swift; sourceTree = "<group>"; };
 		9F9D9CE825891E1800DC4231 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
+		9F9D9CF6258A063800DC4231 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginUSMViewController.swift; path = GTA/Login/LoginUSMViewController.swift; sourceTree = SOURCE_ROOT; };
 		9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsMessageCell.swift; sourceTree = "<group>"; };
@@ -723,6 +727,7 @@
 		65D29080256C0D7E001B658A /* Communication */ = {
 			isa = PBXGroup;
 			children = (
+				9F9D9CF6258A063800DC4231 /* NetworkManager.swift */,
 				65D29082256C0DA6001B658A /* APIManager.swift */,
 				9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */,
 				C9D035922578095A0068441F /* APIResponses */,
@@ -1806,6 +1811,7 @@
 				9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE4255EB88500B62072 /* CustomTextView.swift in Sources */,
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
+				9F9D9CF7258A063800DC4231 /* NetworkManager.swift in Sources */,
 				C962D8442566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
 				9F895B6A255D3D27004489C6 /* HelpReportScreenViewController.swift in Sources */,
 				C9705B7C2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
@@ -1898,6 +1904,7 @@
 				C93FCF3E2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,
 				9F895B35255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */,
+				9F9D9CF8258A063800DC4231 /* NetworkManager.swift in Sources */,
 				9F819A94255C1572007C1739 /* MainViewController.swift in Sources */,
 				9F1620DE2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
 				9F895B6B255D3D27004489C6 /* HelpReportScreenViewController.swift in Sources */,
@@ -1974,6 +1981,7 @@
 				C93FCF3F2564911A001E86F6 /* AboutContactsHeader.swift in Sources */,
 				9F895B36255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */,
+				9F9D9CF9258A063800DC4231 /* NetworkManager.swift in Sources */,
 				9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */,
 				9F1620DF2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
 				9F895B6C255D3D27004489C6 /* HelpReportScreenViewController.swift in Sources */,
