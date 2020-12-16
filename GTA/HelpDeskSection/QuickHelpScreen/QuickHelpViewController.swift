@@ -29,6 +29,7 @@ class QuickHelpViewController: UIViewController {
     private func setUpNavigationItem() {
         navigationItem.title = "Quick Help"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
+        navigationItem.leftBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
     }
     
     private func setUpTableView() {
