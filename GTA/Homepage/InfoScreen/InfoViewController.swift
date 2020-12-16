@@ -112,6 +112,9 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         case .info:
             let cell = tableView.dequeueReusableCell(withIdentifier: "InfoArticleCell", for: indexPath) as? InfoArticleCell
             let htmlBody = dataProvider?.formNewsBody(from: specialAlertData?.alertBody)
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 8
+            htmlBody?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, htmlBody?.length ?? 0))
             if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
                 htmlBody?.setFontFace(font: neededFont)
             }
