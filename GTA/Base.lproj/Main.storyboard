@@ -66,7 +66,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Xr-Ki-8uN">
-                                <rect key="frame" x="24" y="319" width="366" height="76"/>
+                                <rect key="frame" x="24" y="347.5" width="366" height="37.5"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -133,9 +133,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="3cg-mN-F74" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="2A6-la-ga6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="x0p-Sp-geY" secondAttribute="bottom" constant="16" id="3Ou-ib-wtc"/>
-                            <constraint firstItem="7Xr-Ki-8uN" firstAttribute="top" relation="lessThanOrEqual" secondItem="3cg-mN-F74" secondAttribute="bottom" constant="120" id="72H-up-tQ1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0p5-Sa-qVW" secondAttribute="trailing" constant="24" id="92m-v5-tTp"/>
                             <constraint firstItem="x0p-Sp-geY" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="MVE-BI-5jd"/>
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Odm-Zn-f5Q"/>
@@ -144,13 +142,14 @@
                             <constraint firstItem="3cg-mN-F74" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="Yfp-UX-ne4"/>
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="dWi-3n-PWU"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-24" id="guk-gv-XEZ"/>
-                            <constraint firstItem="JCo-dS-SrK" firstAttribute="top" secondItem="7Xr-Ki-8uN" secondAttribute="bottom" constant="30" id="i93-tF-XP5"/>
+                            <constraint firstItem="JCo-dS-SrK" firstAttribute="top" secondItem="7Xr-Ki-8uN" secondAttribute="bottom" constant="40" id="i93-tF-XP5"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="ijo-Ne-Unq"/>
                             <constraint firstItem="hOh-kP-jbd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="kjN-7v-3d1"/>
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="centerY" secondItem="hOh-kP-jbd" secondAttribute="centerY" id="nDB-L7-VwV"/>
                             <constraint firstItem="0p5-Sa-qVW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="pA4-W7-fSM"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="7Xr-Ki-8uN" secondAttribute="trailing" constant="24" id="qbC-qX-m26"/>
                             <constraint firstItem="7Xr-Ki-8uN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="sJh-wA-cDi"/>
+                            <constraint firstItem="3cg-mN-F74" firstAttribute="top" secondItem="vsT-Ui-lpa" secondAttribute="bottom" constant="22" id="sRa-Om-Xtc"/>
                             <constraint firstItem="0p5-Sa-qVW" firstAttribute="top" secondItem="JCo-dS-SrK" secondAttribute="bottom" constant="40" id="vCv-fh-4Lz"/>
                         </constraints>
                     </view>
@@ -161,6 +160,8 @@
                         <outlet property="forgotPasswordButton" destination="x0p-Sp-geY" id="izh-PG-K3j"/>
                         <outlet property="loginButton" destination="0p5-Sa-qVW" id="VQy-dc-DCh"/>
                         <outlet property="loginLabel" destination="7Xr-Ki-8uN" id="Qkg-Ng-6Ot"/>
+                        <outlet property="loginTitleBottom" destination="i93-tF-XP5" id="Zue-yC-U7u"/>
+                        <outlet property="logoImageTop" destination="Odm-Zn-f5Q" id="cOz-sC-Mf1"/>
                         <outlet property="logoImageView" destination="vsT-Ui-lpa" id="lPH-gL-xV0"/>
                         <outlet property="titleLabel" destination="3cg-mN-F74" id="Hcn-pT-U87"/>
                     </connections>

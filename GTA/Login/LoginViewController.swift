@@ -16,6 +16,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var forgotPasswordBottom: NSLayoutConstraint!
+    @IBOutlet weak var logoImageTop: NSLayoutConstraint!
+    @IBOutlet weak var loginTitleBottom: NSLayoutConstraint!
     
     private let defaultForgotPasswordBottom: CGFloat = 16
     var sessionExpired = false
@@ -91,27 +93,42 @@ class LoginViewController: UIViewController {
         }
     }
     
-    private func handleKeyboardAppearance(overlay: CGFloat) {
+    func handleKeyboardAppearance(overlay: CGFloat) {
         let yPointLoginBtn = self.view.frame.height - (loginButton.frame.origin.y + loginButton.frame.height)
-        forgotPasswordBottom.constant = yPointLoginBtn - self.forgotPasswordButton.frame.height - 10 - self.view.safeAreaInsets.bottom - 20
+        forgotPasswordBottom.constant = yPointLoginBtn - self.forgotPasswordButton.frame.height - self.view.safeAreaInsets.bottom - 20
         if overlay > forgotPasswordBottom.constant {
-            self.view.frame.origin.y = forgotPasswordBottom.constant - (overlay + 20)
-            logoImageView.isHidden = true
-            titleLabel.isHidden = true
-            loginLabel.isHidden = UIDevice.current.iPhone5_se
+            self.view.frame.origin.y = forgotPasswordBottom.constant - overlay
+            if UIScreen.main.nativeBounds.height >= 1334.0 { // greater or equal then iPhone 8
+                logoImageTop.constant = 10 + -self.view.frame.origin.y
+                loginTitleBottom.constant = 20
+            } else {
+                logoImageView.isHidden = true
+                titleLabel.isHidden = true
+            }
         }
+        self.view.layoutIfNeeded()
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        self.view.frame.origin.y = 0
-        setDefaultElementsState()
+        UIView.animate(withDuration: 0.3, animations: {
+//            self.view.frame.origin.y = 0
+//            self.logoImageTop.constant = 10
+//            self.loginTitleBottom.constant = 40
+//            self.forgotPasswordBottom.constant = self.defaultForgotPasswordBottom
+//            self.logoImageView.isHidden = false
+//            self.titleLabel.isHidden = false
+            self.setDefaultElementsState()
+            self.view.layoutIfNeeded()
+        })
     }
     
-    private func setDefaultElementsState() {
-        forgotPasswordBottom.constant = defaultForgotPasswordBottom
-        logoImageView.isHidden = false
-        titleLabel.isHidden = false
-        loginLabel.isHidden = false
+    func setDefaultElementsState() {
+        self.view.frame.origin.y = 0
+        self.logoImageTop.constant = 10
+        self.loginTitleBottom.constant = 40
+        self.forgotPasswordBottom.constant = self.defaultForgotPasswordBottom
+        self.logoImageView.isHidden = false
+        self.titleLabel.isHidden = false
     }
     
     @objc func hideKeyboard() {
