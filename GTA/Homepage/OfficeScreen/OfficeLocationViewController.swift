@@ -15,6 +15,9 @@ class OfficeLocationViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
+    @IBOutlet weak var backButtonLeading: NSLayoutConstraint!
+    
+    private let defaultBackButtonLeading: CGFloat = 24
     
     var selectionIsOn: Bool = true
     var countryDataSource: [Hardcode] = []
@@ -24,7 +27,12 @@ class OfficeLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
-        backArrow.isHidden = selectionIsOn
+        UIView.animate(withDuration: 0.4) {
+            self.backArrow.isHidden = self.selectionIsOn
+            self.backButtonLeading.constant = self.defaultBackButtonLeading
+            self.view.layoutIfNeeded()
+        }
+        
         setHardcodeData()
         titleLabel.text = title
     }
