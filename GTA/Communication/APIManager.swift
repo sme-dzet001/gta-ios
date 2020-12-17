@@ -179,7 +179,8 @@ class APIManager: NSObject, URLSessionDelegate {
     //MARK: - Common methods
     
     func validateToken(token: String, completion: ((_ tokenData: AccessTokenValidationResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        makeRequest(endpoint: .validateToken, method: "GET", params: ["token" : token], completion:  { (responseData: Data?, errorCode: Int, error: Error?) in
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": token]
+        makeRequest(endpoint: .validateToken, method: "GET", headers: requestHeaders, completion:  { (responseData: Data?, errorCode: Int, error: Error?) in
             var tokenValidationResponse: AccessTokenValidationResponse?
             var retErr = error
             if let responseData = responseData {
