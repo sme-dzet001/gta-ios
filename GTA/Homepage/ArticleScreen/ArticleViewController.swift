@@ -28,6 +28,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
             articleTextView?.layer.add(animation, forKey: "changeTextTransition")
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 8
+            paragraphStyle.paragraphSpacing = 22
             articleText?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, articleText?.length ?? 0))
             articleTextView?.attributedText = articleText
         }

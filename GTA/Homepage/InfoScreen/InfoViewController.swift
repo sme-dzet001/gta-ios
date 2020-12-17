@@ -114,6 +114,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
             let htmlBody = dataProvider?.formNewsBody(from: specialAlertData?.alertBody)
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 8
+            paragraphStyle.paragraphSpacing = 22
             htmlBody?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, htmlBody?.length ?? 0))
             if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
                 htmlBody?.setFontFace(font: neededFont)
