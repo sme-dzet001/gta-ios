@@ -42,7 +42,7 @@ class HomepageTableViewController: UITableViewController {
         dataProvider?.getSpecialAlertsData { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
                 if error == nil && errorCode == 200 {
-                    self?.tableView.reloadData()
+                    self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .automatic)
                 } else {
                     //self?.displayError(errorMessage: "Error was happened!")
                 }
