@@ -188,7 +188,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func getMyAppsData(for generationNumber: Int, completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
+        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error) in
             var reportDataResponse: MyAppsResponse?
             var retErr = error
             if let responseData = responseData {
@@ -204,7 +204,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func getAllApps(for generationNumber: Int, completion: ((_ serviceDeskResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
+        self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error) in
             var reportDataResponse: AllAppsResponse?
             var retErr = error
             if let responseData = responseData {
