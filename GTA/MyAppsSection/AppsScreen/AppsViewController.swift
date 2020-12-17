@@ -13,16 +13,52 @@ class AppsViewController: UIViewController {
     
     var dataSource: [AppsDataSource] = []
     
+    private var dataProvider: MyAppsDataProvider = MyAppsDataProvider()
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
-        setHardCodeData()
+        self.dataProvider.appImageDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+        self.getAppsData()
+    }
+    
+    private func getAppsData() {
+        startAnimation()
+        dataProvider.getAppsCommonData {[weak self] (response, code, error) in
+            if let responseData = response {
+                self?.setHardCodeData()
+                self?.dataSource.append(contentsOf: responseData)
+            }
+            self?.stopAnimation()
+            let appInfo = response?.map({$0.cellData}).reduce([], {$0 + $1})
+            self?.dataProvider.getImageData(for: appInfo ?? [])
+        }
+    }
+    
+    private func startAnimation() {
+        self.dataSource = []
+        self.tableView.alpha = 0
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.center = CGPoint(x: view.frame.size.width  / 2,
+                                                y: view.frame.size.height / 2)
+        self.activityIndicator.hidesWhenStopped = true
+        self.activityIndicator.startAnimating()
+    }
+    
+    private func stopAnimation() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.tableView.alpha = 1
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.removeFromSuperview()
+        }
     }
     
     private func setUpTableView() {
@@ -32,7 +68,8 @@ class AppsViewController: UIViewController {
     }
     
     private func setHardCodeData() {
-        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData:[CellData(mainText: "Service Alert: VPN Outage", additionalText: "10:30 +5 GTM Wed 15", systemStatus: .none)]), AppsDataSource(sectionName: "My Apps", description: nil, cellData: [CellData(mainText: "AOMA", systemStatus: .online), CellData(mainText: "PROMO PORTAL", systemStatus: .other), CellData(mainText: "SFTS", systemStatus: .offline)]), AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData:[CellData(mainText: "DX", systemStatus: .online), CellData(mainText: "Delivery Dashboard", systemStatus: .other)])]
+        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: [AppInfo(app_id: 0, app_name: "Service Alert: VPN Outage", app_title: "10:30 +5 GTM Wed 15", app_icon: nil, appStatus: .none, app_is_active: false, imageData: nil)])]
+        
     }
     
 }
@@ -83,42 +120,31 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section != 0 else { return }
         let appVC = ApplicationStatusViewController()
-        appVC.appName = dataSource[indexPath.section].cellData[indexPath.row].mainText
-        appVC.systemStatus = dataSource[indexPath.section].cellData[indexPath.row].systemStatus
+        appVC.appName = dataSource[indexPath.section].cellData[indexPath.row].app_title
+        appVC.systemStatus = dataSource[indexPath.section].cellData[indexPath.row].appStatus
         self.navigationController?.pushViewController(appVC, animated: true)
     }
+
+}
+
+extension AppsViewController: AppImageDelegate {
     
-}
-
-struct AppsDataSource {
-    var sectionName: String?
-    var description: String?
-    var cellData: [CellData]
-    var metricsData: MetricsData? = nil
-}
-
-struct CellData {
-    var mainText: String?
-    var additionalText: String? = nil
-    var image: Data? = nil
-    var systemStatus: SystemStatus
-}
-
-enum SystemStatus {
-    case online
-    case offline
-    case other // temporary
-    case none
-}
-
-struct MetricsData {
-    var dailyData: [ChartData]
-    var weeklyData: [ChartData]
-    var monthlyData: [ChartData]
-}
-
-struct ChartData {
-    var legendTitle: String?
-    var periodFullTitle: String?
-    var value: Int?
+    func setImage(with data: Data?, for appId: Int) {
+        for (index, element) in dataSource.enumerated() {
+            for (cellDataIndex, cellDataObject) in element.cellData.enumerated() {
+                if cellDataObject.app_id == appId {
+                    dataSource[index].cellData[cellDataIndex].imageData = data
+                    dataSource[index].cellData[cellDataIndex].isImageDataEmpty = data == nil
+                    reloadTableViewRow(for: IndexPath(row: cellDataIndex, section: index))
+                }
+            }
+        }
+    }
+    
+    private func reloadTableViewRow(for indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
+    
 }

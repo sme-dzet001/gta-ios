@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,6 +33,9 @@
                                     <constraint firstAttribute="width" constant="48" id="vFB-uW-KiU"/>
                                 </constraints>
                             </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="FAI-U9-as9">
+                                <rect key="frame" x="19" y="19" width="20" height="20"/>
+                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mq4-R7-yG1">
                                 <rect key="frame" x="39" y="0.0" width="19" height="19"/>
                                 <color key="backgroundColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
@@ -45,10 +49,12 @@
                             <constraint firstAttribute="trailing" secondItem="mq4-R7-yG1" secondAttribute="trailing" id="9H5-qA-NHr"/>
                             <constraint firstItem="FEH-Qe-7Ys" firstAttribute="centerX" secondItem="0ZE-SM-vhB" secondAttribute="centerX" id="ALd-ld-yu0"/>
                             <constraint firstAttribute="width" secondItem="0ZE-SM-vhB" secondAttribute="height" multiplier="1:1" id="RZZ-Mk-8pX"/>
+                            <constraint firstItem="FAI-U9-as9" firstAttribute="centerX" secondItem="FEH-Qe-7Ys" secondAttribute="centerX" id="c6i-gr-kkf"/>
                             <constraint firstItem="FEH-Qe-7Ys" firstAttribute="centerY" secondItem="0ZE-SM-vhB" secondAttribute="centerY" id="gln-0d-dh5"/>
                             <constraint firstItem="mq4-R7-yG1" firstAttribute="top" secondItem="0ZE-SM-vhB" secondAttribute="top" id="iKr-aD-Zlj"/>
                             <constraint firstAttribute="width" constant="58" id="o7Q-am-r06"/>
                             <constraint firstItem="mq4-R7-yG1" firstAttribute="width" secondItem="FEH-Qe-7Ys" secondAttribute="width" multiplier="0.4" id="qUX-sa-gen"/>
+                            <constraint firstItem="FAI-U9-as9" firstAttribute="centerY" secondItem="FEH-Qe-7Ys" secondAttribute="centerY" id="zEj-lT-W1i"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AOMA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="idg-Oi-FFL">
@@ -70,6 +76,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="activityIndicator" destination="FAI-U9-as9" id="kGu-bF-XNe"/>
                 <outlet property="appIcon" destination="FEH-Qe-7Ys" id="Vt0-Hn-tE8"/>
                 <outlet property="appName" destination="idg-Oi-FFL" id="aVI-D9-RMW"/>
                 <outlet property="appStatus" destination="mq4-R7-yG1" id="THe-k3-ZKq"/>

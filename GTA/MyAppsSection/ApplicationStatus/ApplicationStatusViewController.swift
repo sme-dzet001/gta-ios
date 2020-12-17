@@ -60,7 +60,11 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
             monthlyData: [ChartData(legendTitle: "11/2020", periodFullTitle: "November 2020", value: 5000), ChartData(legendTitle: "10/2020", periodFullTitle: "October 2020", value: 5450), ChartData(legendTitle: "9/2020", periodFullTitle: "September 2020", value: 5900), ChartData(legendTitle: "8/2020", periodFullTitle: "August 2020", value: 5300), ChartData(legendTitle: "7/2020", periodFullTitle: "July 2020", value: 4100), ChartData(legendTitle: "6/2020", periodFullTitle: "June 2020", value: 5100), ChartData(legendTitle: "5/2020", periodFullTitle: "May 2020", value: 2050)]
         )
         
-        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData:[CellData(mainText: "Report Issue", additionalText: "Report Outages, System Issues", image: bellData?.pngData(), systemStatus: .none), CellData(mainText: "Login Help", additionalText: "Reset Account Access & login Assistance", image: loginHelpData?.pngData(), systemStatus: .none), CellData(mainText: "About", additionalText: "Description and list of app contacts", image: aboutData?.pngData(), systemStatus: .none)]), AppsDataSource(sectionName: "System Updates", description: nil, cellData: [CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "System restore", systemStatus: .none), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "Scheduled maintenance", systemStatus: .other), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "System restore",  systemStatus: .offline), CellData(mainText: "08/15/20 – 06:15 +5 GMT", additionalText: "AWS outage reported",  systemStatus: .offline)]), AppsDataSource(sectionName: "Stats", description: nil, cellData: [], metricsData: metricsData)]
+        let firstSection = [AppInfo(app_id: 0, app_name: "Report Outages, System Issues", app_title: "Report Issue", app_icon: "", appStatus: .none, app_is_active: true, imageData: bellData?.pngData()), AppInfo(app_id: 0, app_name: "Reset Account Access & login Assistance", app_title: "Login Help", app_icon: "", appStatus: .none, app_is_active: true, imageData: loginHelpData?.pngData()), AppInfo(app_id: 0, app_name: "Description and list of app contacts", app_title: "About", app_icon: "", appStatus: .none, app_is_active: true, imageData: aboutData?.pngData())]
+        
+        let secondSection = [AppInfo(app_id: 0, app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", app_icon: "", appStatus: .none, app_is_active: true, imageData: nil), AppInfo(app_id: 0, app_name: "08/15/20 – 06:15 +5 GMT", app_title: "Scheduled maintenance", app_icon: "", appStatus: .none, app_is_active: true, imageData: nil), AppInfo(app_id: 0, app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", app_icon: "", appStatus: .none, app_is_active: true, imageData: nil), AppInfo(app_id: 0, app_name: "08/15/20 – 06:15 +5 GMT", app_title: "AWS outage reported", app_icon: "", appStatus: .none, app_is_active: true, imageData: nil)]
+                
+        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: firstSection, metricsData: nil), AppsDataSource(sectionName: "System Updates", description: nil, cellData: secondSection), AppsDataSource(sectionName: "Stats", description: nil, cellData: [], metricsData: metricsData)]
     }
 
     @objc private func backPressed() {
@@ -174,7 +178,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         } else {
             let reportScreen = HelpReportScreenViewController()
             reportScreen.delegate = self
-            reportScreen.screenTitle = dataSource[indexPath.section].cellData[indexPath.row].mainText
+            reportScreen.screenTitle = dataSource[indexPath.section].cellData[indexPath.row].app_title
             presentPanModal(reportScreen)
         }
     }
