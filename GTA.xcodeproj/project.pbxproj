@@ -202,9 +202,6 @@
 		9F8AEAE4255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
 		9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
 		9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
-		9F9D9C582582565B00DC4231 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9C572582565B00DC4231 /* DataParser.swift */; };
-		9F9D9C592582565B00DC4231 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9C572582565B00DC4231 /* DataParser.swift */; };
-		9F9D9C5A2582565B00DC4231 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9C572582565B00DC4231 /* DataParser.swift */; };
 		9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
@@ -485,7 +482,6 @@
 		9F895B69255D3D27004489C6 /* HelpReportScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpReportScreenViewController.xib; sourceTree = "<group>"; };
 		9F895B7A255D8810004489C6 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9F8AEAE3255EB88500B62072 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
-		9F9D9C572582565B00DC4231 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginUSMViewController.swift; path = GTA/Login/LoginUSMViewController.swift; sourceTree = SOURCE_ROOT; };
 		9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsMessageCell.swift; sourceTree = "<group>"; };
@@ -729,7 +725,6 @@
 			children = (
 				65D2909A256C0DDD001B658A /* KeychainManager.swift */,
 				65398BCB256D4C5E0039C24E /* Utils.swift */,
-				9F9D9C572582565B00DC4231 /* DataParser.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1808,7 +1803,6 @@
 				9F78D0DE256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				65D14CB9256DA877004DFA70 /* GeneralViewController.swift in Sources */,
-				9F9D9C582582565B00DC4231 /* DataParser.swift in Sources */,
 				C9D0359C2578095A0068441F /* LoginResponses.swift in Sources */,
 				65D2909B256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E0125642632003C247E /* MyDevicesViewController.swift in Sources */,
@@ -1900,7 +1894,6 @@
 				9F1620C22566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				C9424E0225642632003C247E /* MyDevicesViewController.swift in Sources */,
 				65D14CBA256DA877004DFA70 /* GeneralViewController.swift in Sources */,
-				9F9D9C592582565B00DC4231 /* DataParser.swift in Sources */,
 				C9D0359D2578095A0068441F /* LoginResponses.swift in Sources */,
 				65D2909C256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E15256427F0003C247E /* DeviceCell.swift in Sources */,
@@ -1976,7 +1969,6 @@
 				9F1620C32566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
 				C9424E0325642632003C247E /* MyDevicesViewController.swift in Sources */,
 				65D14CBB256DA877004DFA70 /* GeneralViewController.swift in Sources */,
-				9F9D9C5A2582565B00DC4231 /* DataParser.swift in Sources */,
 				C9D0359E2578095A0068441F /* LoginResponses.swift in Sources */,
 				65D2909D256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E16256427F0003C247E /* DeviceCell.swift in Sources */,
