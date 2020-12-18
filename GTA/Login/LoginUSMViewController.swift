@@ -13,7 +13,7 @@ class LoginUSMViewController: UIViewController {
     @IBOutlet weak var headerView: UIView!
     
     private var usmWebView: WKWebView!
-    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var dataProvider: LoginDataProvider = LoginDataProvider()
     
     private let usmBasicURL = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
@@ -46,6 +46,22 @@ class LoginUSMViewController: UIViewController {
         usmWebView.uiDelegate = self
         
         loadUsmLogon()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startAnimation()
+    }
+    
+    func startAnimation() {
+        activityIndicator.center = self.view.center
+        self.view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    func stopAnimation() {
+        activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
     }
     
     func removeCookies() {
@@ -137,8 +153,8 @@ extension LoginUSMViewController: WKNavigationDelegate {
                 decisionHandler(.cancel)
                 return
             }
+            startAnimation()
             dataProvider.validateToken(token: aToken) { [weak self] (_ errorCode: Int, _ error: Error?) in
-                //guard let self = self else { return }
                 DispatchQueue.main.async {
                     if error == nil && errorCode == 200 {
                         UserDefaults.standard.set(true, forKey: "userLoggedIn")
@@ -150,6 +166,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
                             self?.performSegue(withIdentifier: "unwindToLogin", sender: nil)
                         }
                     }
+                    self?.stopAnimation()
                 }
             }
             decisionHandler(.cancel)
@@ -160,5 +177,11 @@ extension LoginUSMViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         decisionHandler(.allow)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if let url = webView.url?.absoluteString, url.contains("login") {
+            stopAnimation()
+        }
     }
 }
