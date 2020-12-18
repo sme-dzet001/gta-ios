@@ -12,6 +12,11 @@ class AboutViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     private var dataSource: AboutDataSource?
+    var details: AppDetailsData? {
+        didSet {
+            
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

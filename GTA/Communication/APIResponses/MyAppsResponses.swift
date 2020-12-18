@@ -108,3 +108,57 @@ struct ChartData {
     var periodFullTitle: String?
     var value: Int?
 }
+
+struct AppDetailsData: Codable {
+    var data: User? //temp
+    private var values: [QuantumValue]? {
+        return data?.username1?.data?.rows?.first?.values
+    }
+    
+    var appDescription: String? {
+        guard let _ = values, values!.count >= 4 else { return nil }
+        return values?[3].stringValue
+    }
+    
+    var appSupportEmail: String? {
+        guard let _ = values, values!.count >= 6 else { return nil }
+        return values?[5].stringValue
+    }
+    
+    var appWikiUrl: String? {
+        guard let _ = values, values!.count >= 7 else { return nil }
+        return values?[6].stringValue
+    }
+    
+    var appJiraSupportUrl: String? {
+        guard let _ = values, values!.count >= 8 else { return nil }
+        return values?[7].stringValue
+    }
+    
+    var appSupportPolicy: String? {
+        guard let _ = values, values!.count >= 9 else { return nil }
+        return values?[8].stringValue
+    }
+    
+    var appTeamContact: String? {
+        guard let _ = values, values!.count >= 10 else { return nil }
+        return values?[9].stringValue
+    }
+    
+}
+
+struct User: Codable { //temp
+    var username1: UserData?
+}
+
+struct UserData: Codable {
+    var data: AppDetailsDataRows?
+}
+
+struct AppDetailsDataRows: Codable {
+    var rows: [AppDetailsValues]?
+}
+
+struct AppDetailsValues: Codable {
+    var values: [QuantumValue]?
+}

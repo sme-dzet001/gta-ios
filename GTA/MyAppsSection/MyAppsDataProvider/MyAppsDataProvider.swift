@@ -115,6 +115,28 @@ class MyAppsDataProvider {
         }
     }
     
+    func getAppDetailsData(completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
+            let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetails.rawValue }?.generationNumber
+            if let _ = generationNumber {
+                self?.apiManager.getAppDetailsData(for: generationNumber!, completion: { (data, errorCode, error) in
+                    var appDetailsData: AppDetailsData?
+                    var retErr = error
+                    if let responseData = data {
+                        do {
+                            appDetailsData = try DataParser.parse(data: responseData)
+                        } catch {
+                            retErr = error
+                        }
+                    }
+                    completion?(appDetailsData, errorCode, retErr)
+                })
+            } else {
+                completion?(nil, errorCode, error)
+            }
+        }
+    }
+    
 //    func getAppsServiceAlert(completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
 //        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
 //            let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.productionAlerts.rawValue }?.generationNumber

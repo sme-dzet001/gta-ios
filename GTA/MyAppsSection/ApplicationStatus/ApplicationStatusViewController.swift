@@ -18,7 +18,10 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    var dataProvider: MyAppsDataProvider = MyAppsDataProvider()
     var dataSource: [AppsDataSource] = []
+    var appDetailsData: AppDetailsData?
     var appName: String? = ""
     var systemStatus: SystemStatus = .none
     var selectedMetricsPeriod: MetricsPeriod = .weekly
@@ -33,6 +36,30 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
+        startAnimation()
+        dataProvider.getAppDetailsData { (detailsData, _, error) in
+            self.appDetailsData = detailsData
+            self.stopAnimation()
+        }
+    }
+    
+    private func startAnimation() {
+        //self.dataSource = []
+        self.tableView.alpha = 0
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.center = CGPoint(x: view.frame.size.width  / 2,
+                                                y: view.frame.size.height / 2)
+        self.activityIndicator.hidesWhenStopped = true
+        self.activityIndicator.startAnimating()
+    }
+    
+    private func stopAnimation() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.tableView.alpha = 1
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.removeFromSuperview()
+        }
     }
     
     private func setUpNavigationItem() {
@@ -174,6 +201,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         guard indexPath.section == 0 else { return }
         if indexPath.row == 2 {
             let aboutScreen = AboutViewController()
+            aboutScreen.details = appDetailsData
             navigationController?.pushViewController(aboutScreen, animated: true)
         } else {
             let reportScreen = HelpReportScreenViewController()
