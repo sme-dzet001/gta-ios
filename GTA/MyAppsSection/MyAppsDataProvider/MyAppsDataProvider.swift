@@ -75,7 +75,18 @@ class MyAppsDataProvider {
         apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
             let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
             if let _ = generationNumber {
-                self?.apiManager.getMyAppsData(for: generationNumber!, completion: completion)
+                self?.apiManager.getMyAppsData(for: generationNumber!, completion: { (data, errorCode, error) in
+                    var myAppsResponse: MyAppsResponse?
+                    var retErr = error
+                    if let responseData = data {
+                        do {
+                            myAppsResponse = try DataParser.parse(data: responseData)
+                        } catch {
+                            retErr = error
+                        }
+                    }
+                    completion?(myAppsResponse, errorCode, retErr)
+                })
             } else {
                 completion?(nil, errorCode, error)
             }
@@ -86,7 +97,18 @@ class MyAppsDataProvider {
         apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
             let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allApps.rawValue }?.generationNumber
             if let _ = generationNumber {
-                self?.apiManager.getAllApps(for: generationNumber!, completion: completion)
+                self?.apiManager.getAllApps(for: generationNumber!, completion: { (data, errorCode, error) in
+                    var allAppsResponse: AllAppsResponse?
+                    var retErr = error
+                    if let responseData = data {
+                        do {
+                            allAppsResponse = try DataParser.parse(data: responseData)
+                        } catch {
+                            retErr = error
+                        }
+                    }
+                    completion?(allAppsResponse, errorCode, retErr)
+                })
             } else {
                 completion?(nil, errorCode, error)
             }

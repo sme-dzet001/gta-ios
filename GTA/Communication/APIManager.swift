@@ -186,36 +186,14 @@ class APIManager: NSObject, URLSessionDelegate {
     }
     //MARK: - My Apps methods
     
-    func getMyAppsData(for generationNumber: Int, completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getMyAppsData(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error) in
-            var reportDataResponse: MyAppsResponse?
-            var retErr = error
-            if let responseData = responseData {
-                do {
-                    reportDataResponse = try self?.parse(data: responseData)
-                } catch {
-                    retErr = error
-                }
-            }
-            completion?(reportDataResponse, errorCode, retErr)
-        }
+        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
-    func getAllApps(for generationNumber: Int, completion: ((_ serviceDeskResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getAllApps(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error) in
-            var reportDataResponse: AllAppsResponse?
-            var retErr = error
-            if let responseData = responseData {
-                do {
-                    reportDataResponse = try self?.parse(data: responseData)
-                } catch {
-                    retErr = error
-                }
-            }
-            completion?(reportDataResponse, errorCode, retErr)
-        }
+        self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
 //    func getAppsServiceAlert(for generationNumber: Int, completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -236,20 +214,9 @@ class APIManager: NSObject, URLSessionDelegate {
     
     //MARK: - Common methods
     
-    func validateToken(token: String, completion: ((_ tokenData: AccessTokenValidationResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func validateToken(token: String, completion: ((_ tokenData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": token]
-        makeRequest(endpoint: .validateToken, method: "GET", headers: requestHeaders, completion:  { (responseData: Data?, errorCode: Int, error: Error?) in
-            var tokenValidationResponse: AccessTokenValidationResponse?
-            var retErr = error
-            if let responseData = responseData {
-                do {
-                    tokenValidationResponse = try self.parse(data: responseData)
-                } catch {
-                    retErr = error
-                }
-            }
-            completion?(tokenValidationResponse, errorCode, retErr)
-        })
+        makeRequest(endpoint: .validateToken, method: "GET", headers: requestHeaders, completion: completion)
     }
     
     func getSectionReport(sectionId: String, completion: ((_ reportData: ReportDataResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
