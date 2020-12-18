@@ -40,7 +40,7 @@ class InfoViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        officeStatusLabel.isHidden = infoType != .office
+        officeStatusLabel.isHidden = true//infoType != .office
         officeStatusLabel.layer.cornerRadius = 5
         officeStatusLabel.layer.masksToBounds = true
         infoLabel.text = self.title
@@ -73,7 +73,7 @@ class InfoViewController: UIViewController {
             screenTitleLabel.text = specialAlertData?.alertHeadline
         } else {
             headerImageView.image = UIImage(named: "office")
-            screenTitleLabel.text = "Office Status"
+            screenTitleLabel.text = "Office"
         }
     }
     
