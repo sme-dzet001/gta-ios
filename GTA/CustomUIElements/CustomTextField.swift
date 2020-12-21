@@ -13,6 +13,7 @@ open class CustomTextField: UITextField {
    private var labelPlaceholderTitleCenterY: NSLayoutConstraint!
    private var labelPlaceholderTitleLeft: NSLayoutConstraint!
     
+    weak var backwardDelegate: BackwardDelegate?
     @IBInspectable var allowToShrinkPlaceholderSizeOnEditing = true
     @IBInspectable var shrinkSizeOfPlaceholder: CGFloat = 0
     
@@ -130,6 +131,11 @@ open class CustomTextField: UITextField {
         self.addSubview(imageView)
     }
     
+    open override func deleteBackward() {
+        super.deleteBackward()
+        self.backwardDelegate?.textFieldDidSelectDeleteButton(self)
+    }
+    
     func initalSetup() {
         //setIconIfNeeded()
         tintColor = UIColor(red: 204.0 / 255.0, green: 0 / 255.0, blue: 0 / 255.0, alpha: 1.0)
@@ -234,4 +240,9 @@ open class CustomTextField: UITextField {
         return inputView != nil ? false : super.canPerformAction(action, withSender: sender)
     }
     
+}
+
+
+protocol BackwardDelegate: class {
+    func textFieldDidSelectDeleteButton(_ textField: UITextField)
 }

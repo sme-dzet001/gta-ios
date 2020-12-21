@@ -7,8 +7,21 @@
 
 import Foundation
 
+func random(_ n: Int) -> String
+{
+    let a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+    var s = ""
+    for _ in 0..<n {
+        let r = Int(arc4random_uniform(UInt32(a.count)))
+        s += String(a[a.index(a.startIndex, offsetBy: r)])
+    }
+    return s
+}
+
 public class KeychainManager: NSObject {
     
+    static let keychainPinKey = "KeychainPinKey"
+    static let pinVerificationAttemptsCount = 3
     static let usernameKey = "UsernameKey"
     static let tokenKey = "tokenKey"
     static let tokenExpirationDateKey = "tokenExpirationDateKey"
@@ -135,5 +148,93 @@ public class KeychainManager: NSObject {
             kSecAttrAccount as String : tokenExpirationDateKey ] as [String : Any]
         
         SecItemDelete(query as CFDictionary)
+    }
+    
+    private class func savePinData(pinData: KeychainPin) -> OSStatus? {
+        deletePinData()
+        guard let jsonData = try? JSONEncoder().encode(pinData) else { return nil }
+        let query = [
+            kSecClass as String             : kSecClassGenericPassword as String,
+            kSecAttrAccessible as String    : kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+            kSecAttrAccount as String       : keychainPinKey,
+            kSecValueData as String         : jsonData ] as [String : Any]
+        
+        return SecItemAdd(query as CFDictionary, nil)
+    }
+    
+    class func createPin(pin:String) ->  KeychainPin {
+        let keychainPin = KeychainPin(pin: pin)
+        _ = savePinData(pinData: keychainPin)
+        return keychainPin
+    }
+    
+    class func changePin(pin:String) ->  KeychainPin{
+        let keychainPin = KeychainPin(pin: pin)
+        _ = updatePinData(pinData: keychainPin)
+        return keychainPin
+    }
+    
+    class func deletePinData() {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword as String,
+            kSecAttrAccount as String : keychainPinKey ] as [String : Any]
+        SecItemDelete(query as CFDictionary)
+    }
+    
+    private class func updatePinData(pinData: KeychainPin) -> OSStatus? {
+        guard let jsonData = try? JSONEncoder().encode(pinData) else { return nil }
+        
+        var query = [
+            kSecClass as String       : kSecClassGenericPassword as String,
+            kSecAttrAccount as String : keychainPinKey,
+            kSecValueData as String   : jsonData ] as [String : Any]
+        
+        SecItemDelete(query as CFDictionary)
+        query[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+        return SecItemAdd(query as CFDictionary, nil)
+    }
+    
+    class func getPin() -> KeychainPin? {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword,
+            kSecAttrAccount as String : keychainPinKey,
+            kSecReturnData as String  : kCFBooleanTrue!,
+            kSecMatchLimit as String  : kSecMatchLimitOne ] as [String : Any]
+        
+        var dataTypeRef :AnyObject?
+        let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
+        
+        if status == errSecSuccess {
+            if let retrievedData = dataTypeRef as? Data {
+                guard let decodedPin = try? JSONDecoder().decode(KeychainPin.self, from: retrievedData) else { return nil }
+                return decodedPin
+            }
+        } else {
+            return nil
+        }
+        return nil
+    }
+    
+    class func isPinValid(pin: String) -> Bool {
+        guard var keychainData = getPin() else { return false }
+        if keychainData.pinHash == String(pin + keychainData.pinSalt).sha512{
+            keychainData.pinVerificationAttemptsLeft = pinVerificationAttemptsCount
+            _ = updatePinData(pinData: keychainData)
+            return true
+        }
+        return false
+    }
+    
+}
+
+struct KeychainPin: Codable {
+    var pinVerificationAttemptsLeft: Int
+    var pinSalt:String
+    let pinHash:String
+    
+    init(pin:String){
+        pinSalt = random(16)
+        pinVerificationAttemptsLeft = KeychainManager.pinVerificationAttemptsCount
+        pinHash = String(pin + pinSalt).sha512
     }
 }

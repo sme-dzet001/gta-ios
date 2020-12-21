@@ -23,6 +23,10 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
+        if let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") {
+            emailTextField.text = lastUserEmail
+            emailTextField.textFieldDidChange(makePlaceHolderSmall: true)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +70,7 @@ class LoginViewController: UIViewController {
             present(alert, animated: true)
             return
         }
+        UserDefaults.standard.setValue(emailText, forKey: "lastUserEmail")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let usmLoginScreen = storyboard.instantiateViewController(withIdentifier: "LoginUSMViewController") as? LoginUSMViewController {
             usmLoginScreen.emailAddress = emailText

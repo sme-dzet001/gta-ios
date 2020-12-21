@@ -29,8 +29,8 @@ class LoginUSMViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        activityIndicator.hidesWhenStopped = true
+        
         usmWebView = WKWebView(frame: CGRect.zero)
         usmWebView.translatesAutoresizingMaskIntoConstraints = false
         usmWebView.scrollView.showsVerticalScrollIndicator = false
@@ -50,18 +50,9 @@ class LoginUSMViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        startAnimation()
-    }
-    
-    func startAnimation() {
-        activityIndicator.center = self.view.center
         self.view.addSubview(activityIndicator)
+        activityIndicator.center = self.view.center
         activityIndicator.startAnimating()
-    }
-    
-    func stopAnimation() {
-        activityIndicator.stopAnimating()
-        activityIndicator.removeFromSuperview()
     }
     
     func removeCookies() {
@@ -109,6 +100,11 @@ class LoginUSMViewController: UIViewController {
 }
 
 extension LoginUSMViewController: WKUIDelegate {
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        activityIndicator.startAnimating()
+    }
+    
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         guard let theURL = navigationAction.request.url else {
            return nil
@@ -153,20 +149,20 @@ extension LoginUSMViewController: WKNavigationDelegate {
                 decisionHandler(.cancel)
                 return
             }
-            startAnimation()
+            activityIndicator.startAnimating()
             dataProvider.validateToken(token: aToken) { [weak self] (_ errorCode: Int, _ error: Error?) in
                 DispatchQueue.main.async {
                     if error == nil && errorCode == 200 {
                         UserDefaults.standard.set(true, forKey: "userLoggedIn")
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        let mainScreen = storyboard.instantiateViewController(withIdentifier: "TabBarController")
-                        self?.navigationController?.pushViewController(mainScreen, animated: true)
+                        let authVC = AuthViewController()
+                        authVC.isLogin = true
+                        self?.navigationController?.pushViewController(authVC, animated: true)
                     } else {
                         self?.displayError(errorMessage: "/me request failed", title: "Login Failed") { (_) in
                             self?.performSegue(withIdentifier: "unwindToLogin", sender: nil)
                         }
                     }
-                    self?.stopAnimation()
+                    self?.activityIndicator.stopAnimating()
                 }
             }
             decisionHandler(.cancel)
@@ -181,7 +177,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let url = webView.url?.absoluteString, url.contains("login") {
-            stopAnimation()
+            activityIndicator.stopAnimating()
         }
     }
 }
