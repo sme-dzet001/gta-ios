@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arh-Dl-mmd">
-                        <rect key="frame" x="24" y="22" width="390" height="98"/>
+                        <rect key="frame" x="24" y="22" width="390" height="76"/>
                         <attributedString key="attributedText">
                             <fragment>
                                 <string key="content">On 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases reported on 11 September 2020.</string>
@@ -36,7 +37,7 @@
                     <constraint firstItem="arh-Dl-mmd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="GQA-PU-xWr"/>
                     <constraint firstAttribute="trailing" secondItem="arh-Dl-mmd" secondAttribute="trailing" constant="24" id="REG-Rn-vBT"/>
                     <constraint firstItem="arh-Dl-mmd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="22" id="f6z-x6-9zD"/>
-                    <constraint firstAttribute="bottom" secondItem="arh-Dl-mmd" secondAttribute="bottom" id="hdz-Qf-iUt"/>
+                    <constraint firstAttribute="bottom" secondItem="arh-Dl-mmd" secondAttribute="bottom" constant="22" id="hdz-Qf-iUt"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

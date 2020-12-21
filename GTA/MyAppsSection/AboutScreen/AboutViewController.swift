@@ -35,10 +35,44 @@ class AboutViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "AboutInfoCell", bundle: nil), forCellReuseIdentifier: "AboutInfoCell")
         tableView.register(UINib(nibName: "AboutContactsCell", bundle: nil), forCellReuseIdentifier: "AboutContactsCell")
+        tableView.register(UINib(nibName: "AboutSupportCell", bundle: nil), forCellReuseIdentifier: "AboutSupportCell")
     }
     
     private func setHardCodeData() {
         dataSource = AboutDataSource(description: [DescriptionData(text: details?.appDescription)], contactsData: [ContactData(contactName: "Jane Cooper", contactPosition: "Administrator", phoneNumber: "(480) 555-0103", email: "janecooper@mail.com"), ContactData(contactName: "Marvin McKinney", contactPosition: "Administrator", phoneNumber: "(480) 555-0103", email: "marvinmckinney@mail.com")])
+        let supportData = createSupportDataString()
+        if supportData.string.count > 0 {
+            dataSource?.supportData = [SupportData(text: supportData)]
+        }
+    }
+    
+    private func createSupportDataString() -> NSMutableAttributedString  {
+        let resultString = NSMutableAttributedString()
+        if let wikiUrlString = details?.appWikiUrl, let url = URL(string: wikiUrlString) {
+            let stringValue = "Wiki Url: "
+            let attrString = NSMutableAttributedString(string: stringValue + "\(wikiUrlString)")
+            attrString.setAttributes([.link: url], range: NSMakeRange(stringValue.count, wikiUrlString.count))
+            resultString.append(attrString)
+        }
+        if let supportUrlString = details?.appJiraSupportUrl, let url = URL(string: supportUrlString) {
+            var stringValue = "Jira Support URL: "
+            if !resultString.string.isEmpty {
+                stringValue = "\n" + stringValue
+            }
+            let attrString = NSMutableAttributedString(string: stringValue + "\(supportUrlString)")
+            attrString.setAttributes([.link: url], range: NSMakeRange(stringValue.count, supportUrlString.count))
+            resultString.append(attrString)
+        }
+        if let supportPolicy = details?.appSupportPolicy, let url = URL(string: supportPolicy) {
+            var stringValue = "Support Policy: "
+            if !resultString.string.isEmpty {
+                stringValue = "\n" + stringValue
+            }
+            let attrString = NSMutableAttributedString(string: stringValue + " \(supportPolicy)")
+            attrString.setAttributes([.link: url], range: NSMakeRange(stringValue.count, supportPolicy.count))
+            resultString.append(attrString)
+        }
+        return resultString
     }
     
     @objc private func backPressed() {
@@ -50,32 +84,51 @@ class AboutViewController: UIViewController {
 extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        switch section {
+        case 0:
             return dataSource?.description.count ?? 0
-        } else {
+        case 1:
+            return dataSource?.supportData?.count ?? dataSource?.contactsData.count ?? 0
+        default:
             return dataSource?.contactsData.count ?? 0
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard section == 1 else { return nil }
+        if section == 1 {
+            let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 1))
+            view.backgroundColor = UIColor(red: 234.0 / 255.0, green: 236.0 / 255.0, blue: 239.0 / 255.0, alpha: 1.0)
+            return view
+        }
+        guard section == 2 else { return nil }
         let header = AboutContactsHeader.instanceFromNib()
         header.headerTitleLabel.text = "Contacts"
         return header
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard section == 1 else { return 0 }
-        return 100
+        switch section {
+        case 1:
+            return 1
+        case 2:
+            return 69
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AboutInfoCell", for: indexPath) as? AboutInfoCell {
             let cellDataSource = dataSource?.description[indexPath.row]
+            cell.setUpCell(with: cellDataSource?.text)
+            return cell
+        }
+        if indexPath.section == 1, let cell = tableView.dequeueReusableCell(withIdentifier: "AboutSupportCell", for: indexPath) as? AboutSupportCell {
+            let cellDataSource = dataSource?.supportData?[indexPath.row]
             cell.setUpCell(with: cellDataSource?.text)
             return cell
         }
@@ -90,11 +143,16 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
 
 struct AboutDataSource {
     var description: [DescriptionData]
+    var supportData: [SupportData]? = nil
     var contactsData: [ContactData]
 }
 
 struct DescriptionData {
     var text: String?
+}
+
+struct SupportData {
+    var text: NSMutableAttributedString?
 }
 
 struct ContactData {

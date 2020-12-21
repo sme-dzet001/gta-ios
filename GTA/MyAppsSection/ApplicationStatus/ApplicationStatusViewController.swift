@@ -35,7 +35,9 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
-        startAnimation()
+        if appDetailsData == nil {
+            startAnimation()
+        }
         dataProvider.getAppDetailsData(for: appName) { [weak self] (detailsData, _, error) in
             self?.appDetailsData = detailsData
             self?.stopAnimation()
