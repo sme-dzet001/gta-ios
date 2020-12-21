@@ -115,7 +115,7 @@ class MyAppsDataProvider {
         }
     }
     
-    func getAppDetailsData(completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getAppDetailsData(for app: String?, completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
             let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetails.rawValue }?.generationNumber
             if let _ = generationNumber {
@@ -129,7 +129,9 @@ class MyAppsDataProvider {
                             retErr = error
                         }
                     }
-                    completion?(appDetailsData, errorCode, retErr)
+                    var result = appDetailsData
+                    result?.appKey = app
+                    completion?(result, errorCode, retErr)
                 })
             } else {
                 completion?(nil, errorCode, error)

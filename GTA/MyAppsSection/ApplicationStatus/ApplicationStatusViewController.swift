@@ -28,7 +28,6 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpNavigationItem()
         setHardCodeData()
         setUpTableView()
     }
@@ -37,15 +36,15 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
         startAnimation()
-        dataProvider.getAppDetailsData { (detailsData, _, error) in
-            self.appDetailsData = detailsData
-            self.stopAnimation()
+        dataProvider.getAppDetailsData(for: appName) { [weak self] (detailsData, _, error) in
+            self?.appDetailsData = detailsData
+            self?.stopAnimation()
         }
     }
     
     private func startAnimation() {
-        //self.dataSource = []
         self.tableView.alpha = 0
+        self.navigationItem.setHidesBackButton(true, animated: false)
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.center = CGPoint(x: view.frame.size.width  / 2,
                                                 y: view.frame.size.height / 2)
@@ -55,6 +54,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     
     private func stopAnimation() {
         DispatchQueue.main.async {
+            self.setUpNavigationItem()
             self.tableView.reloadData()
             self.tableView.alpha = 1
             self.activityIndicator.stopAnimating()
@@ -63,8 +63,8 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     }
     
     private func setUpNavigationItem() {
-        navigationItem.title = appName
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
+        self.navigationItem.title = self.appDetailsData?.appTitle
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
     }
 
     private func setUpTableView() {
@@ -207,6 +207,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             let reportScreen = HelpReportScreenViewController()
             reportScreen.delegate = self
             reportScreen.screenTitle = dataSource[indexPath.section].cellData[indexPath.row].app_title
+            reportScreen.appSupportEmail = appDetailsData?.appSupportEmail
             presentPanModal(reportScreen)
         }
     }

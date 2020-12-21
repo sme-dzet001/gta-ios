@@ -18,7 +18,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     
     private var heightObserver: NSKeyValueObservation?
-    
+    var appSupportEmail: String?
     private var pickerDataSource: [String] = ["Reactivate Account", "Site Down"] //temp
     var panScrollable: UIScrollView?
     weak var delegate: ShowAlertDelegate?

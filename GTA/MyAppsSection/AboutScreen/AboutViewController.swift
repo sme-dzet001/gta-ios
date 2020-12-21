@@ -12,11 +12,7 @@ class AboutViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     private var dataSource: AboutDataSource?
-    var details: AppDetailsData? {
-        didSet {
-            
-        }
-    }
+    var details: AppDetailsData?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +38,7 @@ class AboutViewController: UIViewController {
     }
     
     private func setHardCodeData() {
-        dataSource = AboutDataSource(description: [DescriptionData(text: "On 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases reported on 11 September 2020."), DescriptionData(text: "As of 7 September 2020, there is a negative number of cumulative cases in Ecuador due to the removal of cases detected from rapid tests. In addition, the total number of reported COVID-19 deaths has shifted to include both probable and confirmed deaths, which lead to a steep increase on the 7 Sep.")], contactsData: [ContactData(contactName: "Jane Cooper", contactPosition: "Administrator", phoneNumber: "(480) 555-0103", email: "janecooper@mail.com"), ContactData(contactName: "Marvin McKinney", contactPosition: "Administrator", phoneNumber: "(480) 555-0103", email: "marvinmckinney@mail.com")])
+        dataSource = AboutDataSource(description: [DescriptionData(text: details?.appDescription)], contactsData: [ContactData(contactName: "Jane Cooper", contactPosition: "Administrator", phoneNumber: "(480) 555-0103", email: "janecooper@mail.com"), ContactData(contactName: "Marvin McKinney", contactPosition: "Administrator", phoneNumber: "(480) 555-0103", email: "marvinmckinney@mail.com")])
     }
     
     @objc private func backPressed() {

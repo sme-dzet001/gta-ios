@@ -110,45 +110,55 @@ struct ChartData {
 }
 
 struct AppDetailsData: Codable {
-    var data: User? //temp
-    private var values: [QuantumValue]? {
-        return data?.username1?.data?.rows?.first?.values
+    var data: [String : [String : [String: [String: [[String : [QuantumValue?]]]]]]]? //temp
+    
+    var appKey: String? = nil
+    private var values: [QuantumValue?]? {
+        var nameKey = data?.first(where: {$0.value[appKey ?? ""] != nil})?.key //temp
+        if nameKey == nil {
+            nameKey = data?.first(where: {$0.value["SCUBA"] != nil})?.key ?? ""
+            let rows = data?[nameKey ?? ""]?["SCUBA"]?["data"]?["rows"]?.first
+            return rows?["values"]
+        }
+        let rows = data?[nameKey ?? ""]?[appKey ?? ""]?["data"]?["rows"]?.first
+        return rows?["values"]
+    }
+    
+    var appTitle: String? {
+        guard let _ = values, values!.count >= 3 else { return nil }
+        return values?[2]?.stringValue
     }
     
     var appDescription: String? {
         guard let _ = values, values!.count >= 4 else { return nil }
-        return values?[3].stringValue
+        return values?[3]?.stringValue
     }
     
     var appSupportEmail: String? {
         guard let _ = values, values!.count >= 6 else { return nil }
-        return values?[5].stringValue
+        return values?[5]?.stringValue
     }
     
     var appWikiUrl: String? {
         guard let _ = values, values!.count >= 7 else { return nil }
-        return values?[6].stringValue
+        return values?[6]?.stringValue
     }
     
     var appJiraSupportUrl: String? {
         guard let _ = values, values!.count >= 8 else { return nil }
-        return values?[7].stringValue
+        return values?[7]?.stringValue
     }
     
     var appSupportPolicy: String? {
         guard let _ = values, values!.count >= 9 else { return nil }
-        return values?[8].stringValue
+        return values?[8]?.stringValue
     }
     
     var appTeamContact: String? {
         guard let _ = values, values!.count >= 10 else { return nil }
-        return values?[9].stringValue
+        return values?[9]?.stringValue
     }
     
-}
-
-struct User: Codable { //temp
-    var username1: UserData?
 }
 
 struct UserData: Codable {
