@@ -29,7 +29,7 @@ class HomepageTableViewController: UITableViewController {
     }
     
     private func setHardcodedData() {
-        dataSource = [HomepageCellData(mainText: "Closed", address: OfficeAddress(address: "9 Derry Street, London, W8 5HY, United Kingdom", phoneNumber: "(480) 555-0103", email: "deanna.curtis@example.com"), infoType : .office), HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautions, etc...", image: "return_to_work"), HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")]
+        dataSource = [HomepageCellData(mainText: "Sony Music UK", address: OfficeAddress(address: "9 Derry Street, London, W8 5HY, United Kingdom", phoneNumber: "(480) 555-0103", email: "deanna.curtis@example.com"), infoType : .office), HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautions, etc...", image: "return_to_work", infoType: .returnToWork)/*, HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")*/]
     }
     
     private func setUpTableView() {
@@ -91,9 +91,11 @@ class HomepageTableViewController: UITableViewController {
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
                 cell?.separator.isHidden = false
-                cell?.iconImageView.image = UIImage(named: data.image ?? "")
+                cell?.iconImageView.image = UIImage(named: data.image ?? "")?.withRenderingMode(data.enabled ? .alwaysOriginal : .alwaysTemplate)
+                cell?.iconImageView.tintColor = data.enabled ? nil : UIColor(hex: 0x9B9B9B)
                 cell?.mainLabel.text = data.mainText
                 cell?.descriptionLabel.text = data.additionalText
+                cell?.mainLabel.textColor = data.enabled ? UIColor.black : UIColor(hex: 0x9B9B9B)
                 return cell ?? UITableViewCell()
             }
         }
@@ -128,6 +130,9 @@ struct HomepageCellData {
     var address: OfficeAddress? = nil
     var infoType: infoType = .info
     
+    var enabled: Bool {
+        return infoType != .returnToWork
+    }
 }
 
 struct OfficeAddress {
