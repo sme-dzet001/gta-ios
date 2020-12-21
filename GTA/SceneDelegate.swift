@@ -47,6 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        UserDefaults.standard.setValue(Date(), forKey: "lastActivityDate")
     }
     
     private func showNeededScreen() {
@@ -59,9 +60,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 KeychainManager.deleteUsername()
                 KeychainManager.deleteToken()
                 KeychainManager.deleteTokenExpirationDate()
+                KeychainManager.deletePinData()
                 startLoginFlow(sessionExpired: tokenIsExpired)
             } else {
+                var lastActivityDate = Date.distantPast
+                if let aDate = UserDefaults.standard.value(forKey: "lastActivityDate") as? Date {
+                    lastActivityDate = aDate
+                }
+                if lastActivityDate.addingTimeInterval(1200) > Date() {
+                    let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let mainViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarController")
+                    let navController = UINavigationController(rootViewController: mainViewController)
+                    navController.isNavigationBarHidden = true
+                    navController.isToolbarHidden = true
+                    self.window?.rootViewController = navController
+                    return
+                }
                 let authVC = AuthViewController()
+                authVC.isLogin = KeychainManager.getPin() == nil
                 window?.rootViewController = authVC
             }
         }
