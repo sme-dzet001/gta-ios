@@ -19,7 +19,7 @@ class ApplicationCell: UITableViewCell {
         // Initialization code
     }
     
-    func setUpCell(with data: AppInfo) {
+    func setUpCell(with data: AppInfo, hideStatusView: Bool = false) {
         if data.imageData == nil && !data.isImageDataEmpty {
             startAnimation()
         } else {
@@ -29,13 +29,17 @@ class ApplicationCell: UITableViewCell {
             appIcon.image = UIImage(data: image)
         }
         appName.text = data.app_title
-        switch data.appStatus {
-        case .online:
-            appStatus.backgroundColor = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
-        case .offline:
-            appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 62.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
-        default:
-            appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 153.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
+        if hideStatusView {
+            appStatus.backgroundColor = .clear
+        } else {
+            switch data.appStatus {
+            case .online:
+                appStatus.backgroundColor = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
+            case .offline:
+                appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 62.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
+            default:
+                appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 153.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
+            }
         }
         appStatus.layer.cornerRadius = appStatus.frame.size.width / 2
     }

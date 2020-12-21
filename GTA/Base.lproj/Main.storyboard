@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EcR-AN-4mG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EcR-AN-4mG">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -119,23 +119,11 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0p-Sp-geY">
-                                <rect key="frame" x="140.5" y="814" width="133" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="8bd-UY-ZGo"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
-                                <state key="normal" title="I forgot my password">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="x0p-Sp-geY" secondAttribute="bottom" constant="16" id="3Ou-ib-wtc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0p5-Sa-qVW" secondAttribute="trailing" constant="24" id="92m-v5-tTp"/>
-                            <constraint firstItem="x0p-Sp-geY" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="MVE-BI-5jd"/>
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Odm-Zn-f5Q"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="W8k-S3-PNz"/>
                             <constraint firstItem="3cg-mN-F74" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-24" id="Xsx-Zw-2wc"/>
@@ -156,8 +144,6 @@
                     <navigationItem key="navigationItem" id="StN-4C-H86"/>
                     <connections>
                         <outlet property="emailTextField" destination="JCo-dS-SrK" id="w3D-2H-yab"/>
-                        <outlet property="forgotPasswordBottom" destination="3Ou-ib-wtc" id="4Rr-Zr-PpC"/>
-                        <outlet property="forgotPasswordButton" destination="x0p-Sp-geY" id="izh-PG-K3j"/>
                         <outlet property="loginButton" destination="0p5-Sa-qVW" id="VQy-dc-DCh"/>
                         <outlet property="loginLabel" destination="7Xr-Ki-8uN" id="Qkg-Ng-6Ot"/>
                         <outlet property="loginTitleBottom" destination="i93-tF-XP5" id="Zue-yC-U7u"/>
@@ -334,7 +320,7 @@
     </scenes>
     <designables>
         <designable name="JCo-dS-SrK">
-            <size key="intrinsicContentSize" width="39.5" height="20.5"/>
+            <size key="intrinsicContentSize" width="37" height="52.5"/>
         </designable>
     </designables>
     <resources>

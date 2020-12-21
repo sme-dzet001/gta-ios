@@ -96,7 +96,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.setUpCell(with: dataSource[indexPath.section].cellData[indexPath.row])
         return cell
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicationCell", for: indexPath) as? ApplicationCell {
-            cell.setUpCell(with: dataSource[indexPath.section].cellData[indexPath.row])
+            cell.setUpCell(with: dataSource[indexPath.section].cellData[indexPath.row], hideStatusView: dataSource[indexPath.section].sectionName == "Other Apps")
             return cell
         }
         return UITableViewCell()

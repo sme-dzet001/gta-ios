@@ -132,12 +132,14 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         typeTextField.setIconForPicker(for: self.view.frame.width)
     }
     
-    private func setUpTextViewLayout(isNeedCompact: Bool = false) {
+    private func setUpTextViewLayout(isNeedCompact: Bool = false, keyboardHeight: CGFloat? = nil) {
         let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 300 : 340
         if isNeedCompact && UIDevice.current.iPhone5_se {
             textViewHeight.constant = 60
         } else if isNeedCompact {
-            textViewHeight.constant = defaultHeight - coefficient > 0 ? defaultHeight - coefficient : 0
+            let longFormScreenHeight = view.frame.height
+            let keyboardOverlayHeight = keyboardHeight ?? 0
+            textViewHeight.constant = longFormScreenHeight - keyboardOverlayHeight - coefficient > 0 ? longFormScreenHeight - keyboardOverlayHeight - coefficient : 0
         } else {
             textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
         }
@@ -175,15 +177,15 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         panModalTransition(to: .longForm)
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
             var overlay: CGFloat = keyboardSize.height
-            if UIDevice.current.iPhone4_4s || UIDevice.current.iPhone5_se || UIDevice.current.iPhone7_8 {
+            if UIDevice.current.iPhone4_4s || UIDevice.current.iPhone5_se {
                 overlay = overlay - 145
             }
             if textView.isFirstResponder {
-                setUpTextViewLayout(isNeedCompact: true)
+                setUpTextViewLayout(isNeedCompact: true, keyboardHeight: keyboardSize.height)
             }
             guard keyboardSize.height > 0 else { return }
             UIView.animate(withDuration: 0.3, animations: {
-                guard overlay > 0, UIDevice.current.iPhone5_se || UIDevice.current.iPhone7_8 else {return}
+                guard overlay > 0, UIDevice.current.iPhone5_se else {return}
                 self.view.frame.origin.y = -overlay
             })
         }

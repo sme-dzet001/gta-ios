@@ -14,18 +14,19 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var forgotPasswordButton: UIButton!
-    @IBOutlet weak var forgotPasswordBottom: NSLayoutConstraint!
     @IBOutlet weak var logoImageTop: NSLayoutConstraint!
     @IBOutlet weak var loginTitleBottom: NSLayoutConstraint!
     
-    private let defaultForgotPasswordBottom: CGFloat = 16
     var sessionExpired = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
+        if let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") {
+            emailTextField.text = lastUserEmail
+            emailTextField.textFieldDidChange(makePlaceHolderSmall: true)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +70,7 @@ class LoginViewController: UIViewController {
             present(alert, animated: true)
             return
         }
+        UserDefaults.standard.setValue(emailText, forKey: "lastUserEmail")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let usmLoginScreen = storyboard.instantiateViewController(withIdentifier: "LoginUSMViewController") as? LoginUSMViewController {
             usmLoginScreen.emailAddress = emailText
@@ -95,9 +97,9 @@ class LoginViewController: UIViewController {
     
     func handleKeyboardAppearance(overlay: CGFloat) {
         let yPointLoginBtn = self.view.frame.height - (loginButton.frame.origin.y + loginButton.frame.height)
-        forgotPasswordBottom.constant = yPointLoginBtn - self.forgotPasswordButton.frame.height - self.view.safeAreaInsets.bottom - 20
-        if overlay > forgotPasswordBottom.constant {
-            self.view.frame.origin.y = forgotPasswordBottom.constant - overlay
+        let yPointLoginBtnWithOffset = yPointLoginBtn - 20
+        if overlay > yPointLoginBtnWithOffset {
+            self.view.frame.origin.y = yPointLoginBtnWithOffset - overlay
             if UIScreen.main.nativeBounds.height >= 1334.0 { // greater or equal then iPhone 8
                 logoImageTop.constant = 10 + -self.view.frame.origin.y
                 loginTitleBottom.constant = 20
@@ -111,12 +113,6 @@ class LoginViewController: UIViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.3, animations: {
-//            self.view.frame.origin.y = 0
-//            self.logoImageTop.constant = 10
-//            self.loginTitleBottom.constant = 40
-//            self.forgotPasswordBottom.constant = self.defaultForgotPasswordBottom
-//            self.logoImageView.isHidden = false
-//            self.titleLabel.isHidden = false
             self.setDefaultElementsState()
             self.view.layoutIfNeeded()
         })
@@ -126,7 +122,6 @@ class LoginViewController: UIViewController {
         self.view.frame.origin.y = 0
         self.logoImageTop.constant = 10
         self.loginTitleBottom.constant = 40
-        self.forgotPasswordBottom.constant = self.defaultForgotPasswordBottom
         self.logoImageView.isHidden = false
         self.titleLabel.isHidden = false
     }
