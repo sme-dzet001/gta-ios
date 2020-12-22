@@ -68,7 +68,7 @@ class AppsViewController: UIViewController {
     }
     
     private func setHardCodeData() {
-        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: [AppInfo(app_id: 0, app_name: "Service Alert: VPN Outage", app_title: "10:30 +5 GTM Wed 15", app_icon: nil, appStatus: .none, app_is_active: false, imageData: nil)])]
+        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: [AppInfo(app_name: "Service Alert: VPN Outage", app_title: "10:30 +5 GTM Wed 15", app_icon: nil, appStatus: .none, app_is_active: false, imageData: nil)])]
         
     }
     
@@ -129,10 +129,10 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension AppsViewController: AppImageDelegate {
     
-    func setImage(with data: Data?, for appId: Int) {
+    func setImage(with data: Data?, for appName: String?) {
         for (index, element) in dataSource.enumerated() {
             for (cellDataIndex, cellDataObject) in element.cellData.enumerated() {
-                if cellDataObject.app_id == appId {
+                if cellDataObject.app_name == appName {
                     dataSource[index].cellData[cellDataIndex].imageData = data
                     dataSource[index].cellData[cellDataIndex].isImageDataEmpty = data == nil
                     reloadTableViewRow(for: IndexPath(row: cellDataIndex, section: index))

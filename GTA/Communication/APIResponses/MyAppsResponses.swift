@@ -14,11 +14,10 @@ struct AllAppsResponse: Codable {
         var status = [AppInfo]()
         data?.rows?.forEach({ (value) in
             if let valuesArray = value.values {
-                let appId = valuesArray.count >= 1 ? valuesArray[0].intValue : 0
                 let appName = valuesArray.count > 1 ? valuesArray[1].stringValue : ""
                 let appTitle = valuesArray.count > 2 ? valuesArray[2].stringValue : ""
                 let appIcon = valuesArray.count > 3 ? valuesArray[3].stringValue : ""
-                status.append(AppInfo(app_id: appId ?? 0, app_name: appName, app_title: appTitle, app_icon: appIcon, appStatus: .none, app_is_active: true))
+                status.append(AppInfo(app_name: appName, app_title: appTitle, app_icon: appIcon, appStatus: .none, app_is_active: true))
             }
         })
         return status
@@ -38,7 +37,6 @@ struct AllAppsValues: Codable {
 }
 
 struct AppInfo {
-    var app_id: Int
     var app_name: String?
     var app_title: String?
     var app_icon: String?
@@ -85,7 +83,7 @@ struct AppsDataSource {
 enum SystemStatus {
     init(status: String?) {
         switch status?.lowercased() {
-        case "available": self = .online
+        case "Up": self = .online
         case "offline": self = .offline
         case "Pending Alerts": self = .pendingAlerts
         default: self = .none

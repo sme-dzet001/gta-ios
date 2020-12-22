@@ -32,8 +32,8 @@ class MyAppsDataProvider {
         var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
         for (index, info) in commonResponse!.enumerated() {
-            let status = appsStatus!.values?.first(where: {$0.values?.first?.intValue == info.app_id})
-            response![index].appStatus = SystemStatus(status: status?.values?[1].stringValue)
+            let status = appsStatus!.values?.first(where: {$0.values?[1].stringValue == info.app_name})
+            response![index].appStatus = SystemStatus(status: status?.values?[2].stringValue)
             if let _ = status {
                 myAppsSection.cellData.append(response![index])
             } else {
@@ -54,7 +54,7 @@ class MyAppsDataProvider {
         for info in appInfo {
             if let url = URL(string: formImageURL(from: info.app_icon)) {
                 getAppImageData(from: url) { (imageData, _) in
-                    self.appImageDelegate?.setImage(with: imageData, for: info.app_id)
+                    self.appImageDelegate?.setImage(with: imageData, for: info.app_name)
                 }
             }
         }
@@ -71,7 +71,7 @@ class MyAppsDataProvider {
         return imageURL
     }
     
-    func getMyAppsStatus(completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getMyAppsStatus(completion: ((_ myAppsResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
             let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
             if let _ = generationNumber {
@@ -93,7 +93,7 @@ class MyAppsDataProvider {
         }
     }
     
-    func getAllApps(completion: ((_ serviceDeskResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getAllApps(completion: ((_ allAppsResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
             let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allApps.rawValue }?.generationNumber
             if let _ = generationNumber {
@@ -153,5 +153,5 @@ class MyAppsDataProvider {
 }
 
 protocol AppImageDelegate: class {
-    func setImage(with data: Data?, for appId: Int)
+    func setImage(with data: Data?, for appName: String?)
 }
