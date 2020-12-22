@@ -68,52 +68,16 @@ class APIManager: NSObject, URLSessionDelegate {
         self.networkManager.delegate = sessionExpiredHandler
     }
     
-    func parse<T>(data: Data, decodingStrategy: JSONDecoder.KeyDecodingStrategy? = nil) throws -> T? where T : Codable {
-        var res: T?
-        let decoder = JSONDecoder()
-        if let decodingStrategy: JSONDecoder.KeyDecodingStrategy = decodingStrategy {
-            decoder.keyDecodingStrategy = decodingStrategy
-        }
-        do {
-            res = try decoder.decode(T.self, from: data)
-        } catch {
-            throw error
-        }
-        return res
-    }
-    
     //MARK: - Homescreen methods
     
-    func getGlobalNews(generationNumber: Int, completion: ((_ newsData: GlobalNewsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getGlobalNews(generationNumber: Int, completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error) in
-            var newsDataResponse: GlobalNewsResponse?
-            var retErr = error
-            if let responseData = responseData {
-                do {
-                    newsDataResponse = try self.parse(data: responseData)
-                } catch {
-                    retErr = error
-                }
-            }
-            completion?(newsDataResponse, errorCode, retErr)
-        }
+        makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
-    func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: SpecialAlertsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error) in
-            var specialAlertsDataResponse: SpecialAlertsResponse?
-            var retErr = error
-            if let responseData = responseData {
-                do {
-                    specialAlertsDataResponse = try self.parse(data: responseData)
-                } catch {
-                    retErr = error
-                }
-            }
-            completion?(specialAlertsDataResponse, errorCode, retErr)
-        }
+        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
     func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
@@ -139,52 +103,19 @@ class APIManager: NSObject, URLSessionDelegate {
     
     //MARK: - Service Desk methods
     
-    func getHelpDeskData(for generationNumber: Int, completion: ((_ serviceDeskResponse: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getHelpDeskData(for generationNumber: Int, completion: ((_ serviceDeskResponse: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getHelpDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error) in
-            var reportDataResponse: HelpDeskResponse?
-            var retErr = error
-            if let responseData = responseData {
-                do {
-                    reportDataResponse = try self?.parse(data: responseData)
-                } catch {
-                    retErr = error
-                }
-            }
-            completion?(reportDataResponse, errorCode, retErr)
-        }
+        self.makeRequest(endpoint: .getHelpDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+    }
+        
+    func getQuickHelp(generationNumber: Int, completion: ((_ quickHelpData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getQuickHelpData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
-    func getQuickHelp(generationNumber: Int, completion: ((_ quickHelpData: QuickHelpResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getTeamContacts(generationNumber: Int, completion: ((_ teamContactsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getQuickHelpData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error) in
-            var quickHelpDataResponse: QuickHelpResponse?
-            var retErr = error
-            if let responseData = responseData {
-                do {
-                    quickHelpDataResponse = try self.parse(data: responseData)
-                } catch {
-                    retErr = error
-                }
-            }
-            completion?(quickHelpDataResponse, errorCode, retErr)
-        }
-    }
-    
-    func getTeamContacts(generationNumber: Int, completion: ((_ teamContactsData: TeamContactsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders) { (responseData, errorCode, error) in
-            var teamContactsDataResponse: TeamContactsResponse?
-            var retErr = error
-            if let responseData = responseData {
-                do {
-                    teamContactsDataResponse = try self.parse(data: responseData)
-                } catch {
-                    retErr = error
-                }
-            }
-            completion?(teamContactsDataResponse, errorCode, retErr)
-        }
+        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     //MARK: - My Apps methods
     
@@ -227,21 +158,10 @@ class APIManager: NSObject, URLSessionDelegate {
         makeRequest(endpoint: .validateToken, method: "GET", headers: requestHeaders, completion: completion)
     }
     
-    func getSectionReport(sectionId: String, completion: ((_ reportData: ReportDataResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getSectionReport(sectionId: String, completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         let requestParams = ["section_id": sectionId]
-        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, params: requestParams) { (responseData, errorCode, error) in
-            var reportDataResponse: ReportDataResponse?
-            var retErr = error
-            if let responseData = responseData {
-                do {
-                    reportDataResponse = try self.parse(data: responseData)
-                } catch {
-                    retErr = error
-                }
-            }
-            completion?(reportDataResponse, errorCode, retErr)
-        }
+        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, params: requestParams, completion: completion)
     }
     
     private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, completion: RequestCompletion = nil) {
@@ -294,19 +214,6 @@ class APIManager: NSObject, URLSessionDelegate {
         networkManager.performURLRequest(request, completion: completion)
     }
     
-//    private func performURLSession(request: URLRequest, completion: RequestCompletion = nil) {
-//        let sessionConfig = URLSessionConfiguration.default
-//        let session = URLSession(configuration: sessionConfig)
-//        let sessionTask = session.dataTask(with: request) {[weak self] (data: Data?, response: URLResponse?, error: Error?) in
-//            self?.sessionExpiredHandler.handleExpiredSessionIfNeeded(for: data)
-//            var statusCode: Int = 0
-//            if let httpResponse = response as? HTTPURLResponse {
-//                statusCode = httpResponse.statusCode
-//            }
-//            completion?(data, statusCode, error)
-//        }
-//        sessionTask.resume()
-//    }
 }
 
 

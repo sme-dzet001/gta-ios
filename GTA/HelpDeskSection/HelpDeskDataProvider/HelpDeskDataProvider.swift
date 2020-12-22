@@ -24,9 +24,21 @@ class HelpDeskDataProvider {
     
     func getHelpDeskData(completion: ((_ reportData: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport(sectionId: APIManager.SectionId.serviceDesk.rawValue) { [weak self] (reportResponse, errorCode, error) in
-            let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdProfile.rawValue }?.generationNumber
+            let reportData = self?.parseSectionReport(data: reportResponse)
+            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdProfile.rawValue }?.generationNumber
             if let _ = generationNumber {
-                self?.apiManager.getHelpDeskData(for: generationNumber!, completion: completion)
+                self?.apiManager.getHelpDeskData(for: generationNumber!) { (data, errorCode, error) in
+                    var reportDataResponse: HelpDeskResponse?
+                    var retErr = error
+                    if let responseData = data {
+                        do {
+                            reportDataResponse = try DataParser.parse(data: responseData)
+                        } catch {
+                            retErr = error
+                        }
+                    }
+                    completion?(reportDataResponse, errorCode, retErr)
+                }
             } else {
                 completion?(nil, errorCode, error)
             }
@@ -41,13 +53,23 @@ class HelpDeskDataProvider {
     
     func getQuickHelpData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport(sectionId: APIManager.SectionId.serviceDesk.rawValue) { [weak self] (reportResponse, errorCode, error) in
-            let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.gsdQuickHelp.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdQuickHelp.rawValue }?.generationNumber
+            let reportData = self?.parseSectionReport(data: reportResponse)
+            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdQuickHelp.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdQuickHelp.rawValue }?.generationNumber
             if let generationNumber = generationNumber {
                 self?.apiManager.getQuickHelp(generationNumber: generationNumber) { (quickHelpResponse, errorCode, error) in
-                    if let quickHelpResponse = quickHelpResponse {
+                    var quickHelpDataResponse: QuickHelpResponse?
+                    var retErr = error
+                    if let responseData = quickHelpResponse {
+                        do {
+                            quickHelpDataResponse = try DataParser.parse(data: responseData)
+                        } catch {
+                            retErr = error
+                        }
+                    }
+                    if let quickHelpResponse = quickHelpDataResponse {
                         self?.fillQuickHelpData(with: quickHelpResponse)
                     }
-                    completion?(errorCode, error)
+                    completion?(errorCode, retErr)
                 }
             } else {
                 completion?(errorCode, error)
@@ -61,13 +83,23 @@ class HelpDeskDataProvider {
     
     func getTeamContactsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport(sectionId: APIManager.SectionId.serviceDesk.rawValue) { [weak self] (reportResponse, errorCode, error) in
-            let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.gsdTeamContacts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdTeamContacts.rawValue }?.generationNumber
+            let reportData = self?.parseSectionReport(data: reportResponse)
+            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdTeamContacts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdTeamContacts.rawValue }?.generationNumber
             if let generationNumber = generationNumber {
                 self?.apiManager.getTeamContacts(generationNumber: generationNumber) { (teamContactsResponse, errorCode, error) in
-                    if let teamContactsResponse = teamContactsResponse {
+                    var teamContactsDataResponse: TeamContactsResponse?
+                    var retErr = error
+                    if let responseData = teamContactsResponse {
+                        do {
+                            teamContactsDataResponse = try DataParser.parse(data: responseData)
+                        } catch {
+                            retErr = error
+                        }
+                    }
+                    if let teamContactsResponse = teamContactsDataResponse {
                         self?.fillTeamContactsData(with: teamContactsResponse)
                     }
-                    completion?(errorCode, error)
+                    completion?(errorCode, retErr)
                 }
             } else {
                 completion?(errorCode, error)
@@ -88,6 +120,18 @@ class HelpDeskDataProvider {
     
     func getContactImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
         apiManager.loadImageData(from: url, completion: completion)
+    }
+    
+    private func parseSectionReport(data: Data?) -> ReportDataResponse? {
+        var reportDataResponse: ReportDataResponse?
+        if let responseData = data {
+            do {
+                reportDataResponse = try DataParser.parse(data: responseData)
+            } catch {
+                print("Function: \(#function), line: \(#line), message: \(error.localizedDescription)")
+            }
+        }
+        return reportDataResponse
     }
     
 }

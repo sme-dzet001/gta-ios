@@ -73,7 +73,8 @@ class MyAppsDataProvider {
     
     func getMyAppsStatus(completion: ((_ myAppsResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
-            let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
+            let reportData = self?.parseSectionReport(data: reportResponse)
+            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
             if let _ = generationNumber {
                 self?.apiManager.getMyAppsData(for: generationNumber!, completion: { (data, errorCode, error) in
                     var myAppsResponse: MyAppsResponse?
@@ -95,7 +96,8 @@ class MyAppsDataProvider {
     
     func getAllApps(completion: ((_ allAppsResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
-            let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allApps.rawValue }?.generationNumber
+            let reportData = self?.parseSectionReport(data: reportResponse)
+            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allApps.rawValue }?.generationNumber
             if let _ = generationNumber {
                 self?.apiManager.getAllApps(for: generationNumber!, completion: { (data, errorCode, error) in
                     var allAppsResponse: AllAppsResponse?
@@ -117,7 +119,8 @@ class MyAppsDataProvider {
     
     func getAppDetailsData(for app: String?, completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
-            let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetails.rawValue }?.generationNumber
+            let reportData = self?.parseSectionReport(data: reportResponse)
+            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetails.rawValue }?.generationNumber
             if let _ = generationNumber {
                 self?.apiManager.getAppDetailsData(for: generationNumber!, completion: { (data, errorCode, error) in
                     var appDetailsData: AppDetailsData?
@@ -149,6 +152,18 @@ class MyAppsDataProvider {
 //            }
 //        }
 //    }
+    
+    private func parseSectionReport(data: Data?) -> ReportDataResponse? {
+        var reportDataResponse: ReportDataResponse?
+        if let responseData = data {
+            do {
+                reportDataResponse = try DataParser.parse(data: responseData)
+            } catch {
+                print("Function: \(#function), line: \(#line), message: \(error.localizedDescription)")
+            }
+        }
+        return reportDataResponse
+    }
     
 }
 
