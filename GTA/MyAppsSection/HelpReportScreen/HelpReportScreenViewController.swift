@@ -133,14 +133,15 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
     
     private func setUpTextViewLayout(isNeedCompact: Bool = false, keyboardHeight: CGFloat? = nil) {
-        let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 300 : 340
         if isNeedCompact && UIDevice.current.iPhone5_se {
             textViewHeight.constant = 60
         } else if isNeedCompact {
+            let compactFormCoefficient: CGFloat = UIDevice.current.iPhone5_se ? 300 : 320
             let longFormScreenHeight = view.frame.height
             let keyboardOverlayHeight = keyboardHeight ?? 0
-            textViewHeight.constant = longFormScreenHeight - keyboardOverlayHeight - coefficient > 0 ? longFormScreenHeight - keyboardOverlayHeight - coefficient : 0
+            textViewHeight.constant = longFormScreenHeight - keyboardOverlayHeight - compactFormCoefficient > 0 ? longFormScreenHeight - keyboardOverlayHeight - compactFormCoefficient : 0
         } else {
+            let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 300 : 340
             textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
         }
         self.view.layoutIfNeeded()
