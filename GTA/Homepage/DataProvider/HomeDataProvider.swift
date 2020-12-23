@@ -64,7 +64,7 @@ class HomeDataProvider {
                         }
                     }
                     if let newsResponse = newsDataResponse {
-                        self?.fillNewsData(with: newsResponse)
+                        self?.fillNewsData(with: newsResponse, indexes: self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.globalNews?.columns) ?? [:])
                     }
                     completion?(errorCode, retErr)
                 }
@@ -74,8 +74,14 @@ class HomeDataProvider {
         }
     }
     
-    private func fillNewsData(with newsResponse: GlobalNewsResponse) {
-        newsData = newsResponse.data?.rows ?? []
+    private func fillNewsData(with newsResponse: GlobalNewsResponse, indexes: [String : Int]) {
+        var response: GlobalNewsResponse = newsResponse
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index].indexes = indexes
+            }
+        }
+        newsData = response.data?.rows ?? []
     }
     
     func getSpecialAlertsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -94,7 +100,7 @@ class HomeDataProvider {
                         }
                     }
                     if let alertsResponse = specialAlertsDataResponse {
-                        self?.fillAlertsData(with: alertsResponse)
+                        self?.fillAlertsData(with: alertsResponse, indexes: self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.globalNews?.columns) ?? [:])
                     }
                     completion?(errorCode, retErr)
                 }
@@ -104,8 +110,14 @@ class HomeDataProvider {
         }
     }
     
-    private func fillAlertsData(with alertsResponse: SpecialAlertsResponse) {
-        alertsData = alertsResponse.data?.rows ?? []
+    private func fillAlertsData(with alertsResponse: SpecialAlertsResponse, indexes: [String : Int]) {
+        var response: SpecialAlertsResponse = alertsResponse
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index].indexes = indexes
+            }
+        }
+        alertsData = response.data?.rows ?? []
     }
     
     private func parseSectionReport(data: Data?) -> ReportDataResponse? {
@@ -118,6 +130,17 @@ class HomeDataProvider {
             }
         }
         return reportDataResponse
+    }
+    
+    private func getDataIndexes(columns: [ColumnName]?) -> [String : Int] {
+        var indexes: [String : Int] = [:]
+        guard let columns = columns else { return indexes}
+        for (index, column) in columns.enumerated() {
+            if let name = column.name {
+                indexes[name] = index
+            }
+        }
+        return indexes
     }
     
 }
