@@ -11,7 +11,8 @@ import WebKit
 class GeneralViewController: UIViewController {
     
     private var usmLogoutWebView: WKWebView!
-
+    @IBOutlet weak var softwareVersionLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +21,11 @@ class GeneralViewController: UIViewController {
         view.addSubview(usmLogoutWebView)
         usmLogoutWebView.isHidden = true
         usmLogoutWebView.navigationDelegate = self
+        
+        let dictionary = Bundle.main.infoDictionary!
+        let version = dictionary["CFBundleShortVersionString"] as! String
+        let build = dictionary["CFBundleVersion"] as! String
+        softwareVersionLabel.text = String(format: "Version \(version) (\(build))")
     }
     
     @IBAction func onLogoutButtonTap(sender: UIButton) {
