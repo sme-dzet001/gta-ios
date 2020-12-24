@@ -78,30 +78,42 @@ class HomeDataProvider {
         newsData = newsResponse.data?.rows ?? []
     }
     
-    func getSpecialAlertsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.home.rawValue) { [weak self] (reportResponse, errorCode, error) in
-            let reportData = self?.parseSectionReport(data: reportResponse)
-            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.specialAlerts.rawValue }?.generationNumber
-            if let generationNumber = generationNumber {
-                self?.apiManager.getSpecialAlerts(generationNumber: generationNumber) { (alertsResponse, errorCode, error) in
-                    var specialAlertsDataResponse: SpecialAlertsResponse?
-                    var retErr = error
-                    if let responseData = alertsResponse {
-                        do {
-                            specialAlertsDataResponse = try DataParser.parse(data: responseData)
-                        } catch {
-                            retErr = error
-                        }
-                    }
-                    if let alertsResponse = specialAlertsDataResponse {
-                        self?.fillAlertsData(with: alertsResponse)
-                    }
-                    completion?(errorCode, retErr)
-                }
-            } else {
-                completion?(errorCode, error)
+    private func processSpecialAlerts(_ alertsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var specialAlertsDataResponse: SpecialAlertsResponse?
+        var retErr = error
+        if let responseData = alertsResponse {
+            do {
+                specialAlertsDataResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = error
             }
         }
+        if let alertsResponse = specialAlertsDataResponse {
+            fillAlertsData(with: alertsResponse)
+        }
+        completion?(errorCode, retErr)
+    }
+    
+    private func processSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.specialAlerts.rawValue }?.generationNumber
+        if let generationNumber = generationNumber {
+            apiManager.getSpecialAlerts(generationNumber: generationNumber, cachedDataCallback: fromCache ? { [weak self] (alertsResponse, errorCode, error) in
+                self?.processSpecialAlerts(alertsResponse, errorCode, error, completion)
+            } : nil, completion: fromCache ? nil : { [weak self] (alertsResponse, errorCode, error) in
+                self?.processSpecialAlerts(alertsResponse, errorCode, error, completion)
+            })
+        } else {
+            completion?(errorCode, error)
+        }
+    }
+    
+    func getSpecialAlertsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        apiManager.getSectionReport(sectionId: APIManager.SectionId.home.rawValue, cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
+            self?.processSectionReport(reportResponse, errorCode, error, true, completion)
+        }, completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.processSectionReport(reportResponse, errorCode, error, false, completion)
+        })
     }
     
     private func fillAlertsData(with alertsResponse: SpecialAlertsResponse) {

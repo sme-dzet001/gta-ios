@@ -159,9 +159,9 @@ class APIManager: NSObject, URLSessionDelegate {
         makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: completion, completion: completion)
     }
     
-    func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getSpecialAlerts(generationNumber: Int, cachedDataCallback: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: completion, completion: completion)
+        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     
     func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
