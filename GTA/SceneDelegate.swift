@@ -67,7 +67,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 if let aDate = UserDefaults.standard.value(forKey: "lastActivityDate") as? Date {
                     lastActivityDate = aDate
                 }
-                if lastActivityDate.addingTimeInterval(1200) > Date() {
+                if lastActivityDate.addingTimeInterval(1200) > Date(),  let _ = KeychainManager.getPin() {
                     let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let mainViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarController")
                     let navController = UINavigationController(rootViewController: mainViewController)
@@ -75,9 +75,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     navController.isToolbarHidden = true
                     self.window?.rootViewController = navController
                     return
+                } else if KeychainManager.getPin() == nil {
+                    KeychainManager.deleteUsername()
+                    KeychainManager.deleteToken()
+                    KeychainManager.deleteTokenExpirationDate()
+                    KeychainManager.deletePinData()
+                    startLoginFlow(sessionExpired: tokenIsExpired)
+                    return
                 }
                 let authVC = AuthViewController()
-                authVC.isLogin = KeychainManager.getPin() == nil
+                authVC.isSignUp = false
                 window?.rootViewController = authVC
             }
         }

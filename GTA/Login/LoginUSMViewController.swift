@@ -155,7 +155,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
                     if error == nil && errorCode == 200 {
                         UserDefaults.standard.set(true, forKey: "userLoggedIn")
                         let authVC = AuthViewController()
-                        authVC.isLogin = true
+                        authVC.isSignUp = true
                         self?.navigationController?.pushViewController(authVC, animated: true)
                     } else {
                         self?.displayError(errorMessage: "/me request failed", title: "Login Failed") { (_) in
