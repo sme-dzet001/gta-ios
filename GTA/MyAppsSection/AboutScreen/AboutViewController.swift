@@ -63,14 +63,12 @@ class AboutViewController: UIViewController {
             attrString.setAttributes([.link: url], range: NSMakeRange(stringValue.count, supportUrlString.count))
             resultString.append(attrString)
         }
-        if let supportPolicy = details?.appSupportPolicy, let url = URL(string: supportPolicy) {
+        if let supportPolicy = details?.appSupportPolicy {
             var stringValue = "Support Policy: "
             if !resultString.string.isEmpty {
                 stringValue = "\n" + stringValue
             }
-            let attrString = NSMutableAttributedString(string: stringValue + " \(supportPolicy)")
-            attrString.setAttributes([.link: url], range: NSMakeRange(stringValue.count, supportPolicy.count))
-            resultString.append(attrString)
+            resultString.append(NSMutableAttributedString(string: stringValue + " \(supportPolicy)"))
         }
         return resultString
     }
