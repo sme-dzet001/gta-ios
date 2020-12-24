@@ -25,6 +25,7 @@ public class KeychainManager: NSObject {
     static let usernameKey = "UsernameKey"
     static let tokenKey = "tokenKey"
     static let tokenExpirationDateKey = "tokenExpirationDateKey"
+    static let cachePasswordKey = "CachePasswordKey"
     
     class func getUsername() -> String? {
         let query = [
@@ -225,6 +226,45 @@ public class KeychainManager: NSObject {
         return false
     }
     
+    class func getCachePassword() -> String? {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword,
+            kSecAttrAccount as String : cachePasswordKey,
+            kSecReturnData as String  : kCFBooleanTrue!,
+            kSecMatchLimit as String  : kSecMatchLimitOne ] as [String : Any]
+        
+        var dataTypeRef :AnyObject?
+        let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
+        
+        if status == errSecSuccess {
+            if let retrievedData = dataTypeRef as? Data {
+                guard let res = String(data: retrievedData, encoding: .utf8) else { return nil }
+                return res
+            }
+        } else {
+            return nil
+        }
+        return nil
+    }
+    
+    class func saveCachePassword(cachePassword: String) -> OSStatus? {
+        deleteCachePassword()
+        guard let dataToStore = cachePassword.data(using: .utf8) else { return nil }
+        let query = [
+            kSecClass as String             : kSecClassGenericPassword as String,
+            kSecAttrAccessible as String    : kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+            kSecAttrAccount as String       : cachePasswordKey,
+            kSecValueData as String         : dataToStore ] as [String : Any]
+        
+        return SecItemAdd(query as CFDictionary, nil)
+    }
+    
+    class func deleteCachePassword() {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword as String,
+            kSecAttrAccount as String : cachePasswordKey ] as [String : Any]
+        SecItemDelete(query as CFDictionary)
+    }
 }
 
 struct KeychainPin: Codable {

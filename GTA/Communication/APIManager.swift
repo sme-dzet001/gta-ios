@@ -7,6 +7,90 @@
 
 import Foundation
 
+public enum ResponseError: Error {
+    case commonError
+
+    var localizedDescription: String {
+        switch self {
+        case .commonError:
+            return "Oops, something went wrong"
+        }
+    }
+}
+
+struct APIRequest {
+    var baseUrl: String
+    var endpoint: String
+    var headers: [String: String] = [:]
+    var params: [String: String] = [:]
+    var requestBodyParams: [String: String]? = nil
+    var requestBodyJSONParams: Any? = nil
+    
+    var requestUrl: URL? {
+        get {
+            var requestUrlStr = baseUrl + endpoint
+            
+            var queryStr = ""
+            if !params.isEmpty {
+                var urlComponents = URLComponents()
+                urlComponents.path = baseUrl + endpoint
+                urlComponents.queryItems = params.map {
+                    URLQueryItem(name: $0, value: $1.addingPercentEncoding(withAllowedCharacters: .alphanumerics))
+                }
+                queryStr = urlComponents.query ?? ""
+            }
+            if !queryStr.isEmpty {
+                requestUrlStr += "?"
+                requestUrlStr += queryStr
+            }
+            
+            return URL(string: requestUrlStr)
+        }
+    }
+    
+    private func cachedRequestURI(endpoint: String, params: [String: Any]) -> String {
+        var queryStr = "?"
+        for paramName in params.keys.sorted() {
+            if let strVal = params[paramName] as? String {
+                queryStr += paramName + "=" + strVal
+            } else if let strArrVal = params[paramName] as? [String] {
+                for strArrItem in strArrVal {
+                    queryStr += paramName + "=" + strArrItem
+                }
+            } else if let dictArrVal = params[paramName] as? [[String: Any]] {
+                for dictArrItem in dictArrVal {
+                    queryStr += paramName + ":{"
+                    for paramName2 in dictArrItem.keys.sorted() {
+                        if let strVal = dictArrItem[paramName2] as? String {
+                            queryStr += paramName2 + "=" + strVal
+                        }
+                    }
+                    queryStr += "}"
+                }
+            } else {
+                print("cache error")
+            }
+        }
+        return baseUrl + endpoint + (queryStr.count > 1 ? queryStr : "")
+    }
+    
+    var cachedRequestUri: String {
+        get {
+            var cachedResponseURIComponents: [String: Any] = [:]
+            if let aVal = requestBodyParams {
+                cachedResponseURIComponents = aVal.merging(params) { (_, new) in new }
+            } else if let aVal = requestBodyJSONParams as? [String: Any] {
+                cachedResponseURIComponents = aVal.merging(params) { (_, new) in new }
+            } else if let aVal = requestBodyJSONParams as? [Any] {
+                cachedResponseURIComponents = ["_Array": aVal].merging(params) { (_, new) in new }
+            } else {
+                cachedResponseURIComponents = params
+            }
+            return cachedRequestURI(endpoint: endpoint, params: cachedResponseURIComponents)
+        }
+    }
+}
+
 typealias RequestCompletion = ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)?
 
 class APIManager: NSObject, URLSessionDelegate {
@@ -72,12 +156,12 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func getGlobalNews(generationNumber: Int, completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+        makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: completion, completion: completion)
     }
     
     func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: completion, completion: completion)
     }
     
     func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
@@ -105,28 +189,28 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func getHelpDeskData(for generationNumber: Int, completion: ((_ serviceDeskResponse: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getHelpDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+        self.makeRequest(endpoint: .getHelpDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: completion, completion: completion)
     }
         
-    func getQuickHelp(generationNumber: Int, completion: ((_ quickHelpData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getQuickHelp(generationNumber: Int, cachedDataCallback: ((_ quickHelpData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ quickHelpData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getQuickHelpData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+        makeRequest(endpoint: .getQuickHelpData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     
     func getTeamContacts(generationNumber: Int, completion: ((_ teamContactsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: completion, completion: completion)
     }
     //MARK: - My Apps methods
     
     func getMyAppsData(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: completion, completion: completion)
     }
     
     func getAllApps(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+        self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: completion, completion: completion)
     }
     
     func getAppDetailsData(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -155,35 +239,21 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func validateToken(token: String, completion: ((_ tokenData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": token]
-        makeRequest(endpoint: .validateToken, method: "GET", headers: requestHeaders, completion: completion)
+        makeRequest(endpoint: .validateToken, method: "GET", headers: requestHeaders, cacheResponse: false, forceUpdate: true, completion: completion)
     }
     
-    func getSectionReport(sectionId: String, completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getSectionReport(sectionId: String, cachedDataCallback: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         let requestParams = ["section_id": sectionId]
-        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, params: requestParams, completion: completion)
+        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, params: requestParams, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     
-    private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, completion: RequestCompletion = nil) {
-        var requestUrlStr = baseUrl + endpoint.endpoint
-        
-        var queryStr = ""
-        if !params.isEmpty {
-            var urlComponents = URLComponents()
-            urlComponents.path = baseUrl + endpoint.endpoint
-            urlComponents.queryItems = params.map {
-                URLQueryItem(name: $0, value: $1.addingPercentEncoding(withAllowedCharacters: .alphanumerics))
-            }
-            queryStr = urlComponents.query ?? ""
+    private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, cacheResponse: Bool = true, forceUpdate: Bool = false, immediateCachedDataCallback: RequestCompletion = nil, completion: RequestCompletion = nil) {
+        let apiRequest = APIRequest(baseUrl: baseUrl, endpoint: endpoint.endpoint, headers: headers, params: params, requestBodyParams: requestBodyParams, requestBodyJSONParams: requestBodyJSONParams)
+        guard let requestUrl = apiRequest.requestUrl else {
+            completion?(nil, 0, ResponseError.commonError)
+            return
         }
-        if !queryStr.isEmpty {
-            requestUrlStr += "?"
-            requestUrlStr += queryStr
-        }
-        
-        //print("headers =", headers)
-        print("requestUrlStr =", requestUrlStr)
-        let requestUrl = URL(string: requestUrlStr)!
         var request = URLRequest(url: requestUrl)
         request.httpMethod = method
         for (param, value) in headers {
@@ -211,7 +281,37 @@ class APIManager: NSObject, URLSessionDelegate {
             }
         }
         request.timeoutInterval = timeout
-        networkManager.performURLRequest(request, completion: completion)
+        
+        if let immediateCachedDataCallback = immediateCachedDataCallback {
+            CacheManager.shared.getCachedResponse(requestURI: apiRequest.cachedRequestUri, completion: { (responseData: Data?, error: Error?) in
+                if let data = responseData {
+                    immediateCachedDataCallback(data, 200, error)
+                }
+            })
+        }
+        
+        guard let completion = completion else { return }
+        
+        networkManager.performURLRequest(request, completion:  { (responseData: Data?, errorCode: Int, error: Error?) in
+            DispatchQueue.main.async {
+                let completeWithCachedResponseData = responseData == nil && errorCode == 0 && !forceUpdate
+                let storeResponseData = errorCode == 200 && error == nil && cacheResponse
+                
+                if completeWithCachedResponseData {
+                    CacheManager.shared.getCachedResponse(requestURI: apiRequest.cachedRequestUri, completion: { (responseData: Data?, error: Error?) in
+                        completion(responseData, 200, error)
+                    })
+                    return
+                }
+                if storeResponseData, let data = responseData {
+                    CacheManager.shared.cacheResponse(responseData: data, requestURI: apiRequest.cachedRequestUri) { (error) in
+                        completion(responseData, errorCode, error)
+                        return
+                    }
+                }
+                completion(responseData, errorCode, error)
+            }
+        })
     }
     
 }

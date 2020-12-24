@@ -61,6 +61,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 KeychainManager.deleteToken()
                 KeychainManager.deleteTokenExpirationDate()
                 KeychainManager.deletePinData()
+                CacheManager.shared.clearCache()
                 startLoginFlow(sessionExpired: tokenIsExpired)
             } else {
                 var lastActivityDate = Date.distantPast

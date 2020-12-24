@@ -51,12 +51,16 @@ class HelpDeskDataProvider {
         return String(data: data, encoding: .utf8)
     }
     
+    private func getQuickHelp(generationNumber: Int, fromCache: Bool, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        
+    }
+    
     func getQuickHelpData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.serviceDesk.rawValue) { [weak self] (reportResponse, errorCode, error) in
+        apiManager.getSectionReport(sectionId: APIManager.SectionId.serviceDesk.rawValue, completion: { [weak self] (reportResponse, errorCode, error) in
             let reportData = self?.parseSectionReport(data: reportResponse)
             let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdQuickHelp.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdQuickHelp.rawValue }?.generationNumber
             if let generationNumber = generationNumber {
-                self?.apiManager.getQuickHelp(generationNumber: generationNumber) { (quickHelpResponse, errorCode, error) in
+                self?.apiManager.getQuickHelp(generationNumber: generationNumber, completion: { (quickHelpResponse, errorCode, error) in
                     var quickHelpDataResponse: QuickHelpResponse?
                     var retErr = error
                     if let responseData = quickHelpResponse {
@@ -70,11 +74,11 @@ class HelpDeskDataProvider {
                         self?.fillQuickHelpData(with: quickHelpResponse)
                     }
                     completion?(errorCode, retErr)
-                }
+                })
             } else {
                 completion?(errorCode, error)
             }
-        }
+        })
     }
     
     private func fillQuickHelpData(with quickHelpResponse: QuickHelpResponse) {

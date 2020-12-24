@@ -64,6 +64,7 @@ class QuickHelpViewController: UIViewController {
 extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(dataProvider?.quickHelpData.count ?? 0)
         return dataProvider?.quickHelpData.count ?? 0
     }
     
