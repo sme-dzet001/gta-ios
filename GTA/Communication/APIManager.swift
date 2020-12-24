@@ -306,8 +306,8 @@ class APIManager: NSObject, URLSessionDelegate {
                 if storeResponseData, let data = responseData {
                     CacheManager.shared.cacheResponse(responseData: data, requestURI: apiRequest.cachedRequestUri) { (error) in
                         completion(responseData, errorCode, error)
-                        return
                     }
+                    return
                 }
                 completion(responseData, errorCode, error)
             }
