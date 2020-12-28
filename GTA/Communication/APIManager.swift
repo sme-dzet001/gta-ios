@@ -203,19 +203,19 @@ class APIManager: NSObject, URLSessionDelegate {
     }
     //MARK: - My Apps methods
     
-    func getMyAppsData(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getMyAppsData(for generationNumber: Int, cachedDataCallback: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: completion, completion: completion)
+        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     
-    func getAllApps(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getAllApps(for generationNumber: Int, cachedDataCallback: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: completion, completion: completion)
+        self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     
-    func getAppDetailsData(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getAppDetailsData(for generationNumber: Int, cachedDataCallback: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getAppDetails(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+        self.makeRequest(endpoint: .getAppDetails(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     
     

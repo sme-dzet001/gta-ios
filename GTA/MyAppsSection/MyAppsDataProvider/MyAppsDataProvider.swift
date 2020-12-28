@@ -71,75 +71,111 @@ class MyAppsDataProvider {
         return imageURL
     }
     
-    func getMyAppsStatus(completion: ((_ myAppsResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
-            let reportData = self?.parseSectionReport(data: reportResponse)
-            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
-            if let _ = generationNumber {
-                self?.apiManager.getMyAppsData(for: generationNumber!, completion: { (data, errorCode, error) in
-                    var myAppsResponse: MyAppsResponse?
-                    var retErr = error
-                    if let responseData = data {
-                        do {
-                            myAppsResponse = try DataParser.parse(data: responseData)
-                        } catch {
-                            retErr = error
-                        }
-                    }
-                    completion?(myAppsResponse, errorCode, retErr)
-                })
-            } else {
-                completion?(nil, errorCode, error)
+    private func processMyApps(_ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ myAppsResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var myAppsResponse: MyAppsResponse?
+        var retErr = error
+        if let responseData = myAppsDataResponse {
+            do {
+                myAppsResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = error
             }
+        }
+        completion?(myAppsResponse, errorCode, retErr)
+    }
+    
+    private func processMyAppsStatusSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ myAppsResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
+        if let _ = generationNumber {
+            apiManager.getMyAppsData(for: generationNumber!, cachedDataCallback: fromCache ? { [weak self] (data, errorCode, error) in
+                self?.processMyApps(data, errorCode, error, completion)
+            } : nil, completion: fromCache ? nil : { [weak self] (data, errorCode, error) in
+                self?.processMyApps(data, errorCode, error, completion)
+            })
+        } else {
+            completion?(nil, errorCode, error)
+        }
+    }
+    
+    func getMyAppsStatus(completion: ((_ myAppsResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue, cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
+            self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, true, completion)
+        }, completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, false, completion)
+        })
+    }
+    
+    private func processAllApps(_ allAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ allAppsResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var allAppsResponse: AllAppsResponse?
+        var retErr = error
+        if let responseData = allAppsDataResponse {
+            do {
+                allAppsResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = error
+            }
+        }
+        completion?(allAppsResponse, errorCode, retErr)
+    }
+    
+    private func processAllAppsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ allAppsResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allApps.rawValue }?.generationNumber
+        if let _ = generationNumber {
+            apiManager.getAllApps(for: generationNumber!, cachedDataCallback: fromCache ? { [weak self] (data, errorCode, error) in
+                self?.processAllApps(data, errorCode, error, completion)
+            } : nil, completion: fromCache ? nil : { [weak self] (data, errorCode, error) in
+                self?.processAllApps(data, errorCode, error, completion)
+            })
+        } else {
+            completion?(nil, errorCode, error)
         }
     }
     
     func getAllApps(completion: ((_ allAppsResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
-            let reportData = self?.parseSectionReport(data: reportResponse)
-            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allApps.rawValue }?.generationNumber
-            if let _ = generationNumber {
-                self?.apiManager.getAllApps(for: generationNumber!, completion: { (data, errorCode, error) in
-                    var allAppsResponse: AllAppsResponse?
-                    var retErr = error
-                    if let responseData = data {
-                        do {
-                            allAppsResponse = try DataParser.parse(data: responseData)
-                        } catch {
-                            retErr = error
-                        }
-                    }
-                    completion?(allAppsResponse, errorCode, retErr)
-                })
-            } else {
-                completion?(nil, errorCode, error)
+        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue, cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
+            self?.processAllAppsSectionReport(reportResponse, errorCode, error, true, completion)
+        }, completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.processAllAppsSectionReport(reportResponse, errorCode, error, false, completion)
+        })
+    }
+    
+    private func processAppDetails(_ app: String?, _ appDetailsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ appDetailsData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var appDetailsData: AppDetailsData?
+        var retErr = error
+        if let responseData = appDetailsDataResponse {
+            do {
+                appDetailsData = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = error
             }
+        }
+        var result = appDetailsData
+        result?.appKey = app
+        completion?(result, errorCode, retErr)
+    }
+    
+    private func processAppDetailsSectionReport(_ app: String?, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetails.rawValue }?.generationNumber
+        if let _ = generationNumber {
+            apiManager.getAppDetailsData(for: generationNumber!, cachedDataCallback: fromCache ? { [weak self] (data, errorCode, error) in
+                self?.processAppDetails(app, data, errorCode, error, completion)
+            } : nil, completion: fromCache ? nil : { [weak self] (data, errorCode, error) in
+                self?.processAppDetails(app, data, errorCode, error, completion)
+            })
+        } else {
+            completion?(nil, errorCode, error)
         }
     }
     
     func getAppDetailsData(for app: String?, completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
-            let reportData = self?.parseSectionReport(data: reportResponse)
-            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetails.rawValue }?.generationNumber
-            if let _ = generationNumber {
-                self?.apiManager.getAppDetailsData(for: generationNumber!, completion: { (data, errorCode, error) in
-                    var appDetailsData: AppDetailsData?
-                    var retErr = error
-                    if let responseData = data {
-                        do {
-                            appDetailsData = try DataParser.parse(data: responseData)
-                        } catch {
-                            retErr = error
-                        }
-                    }
-                    var result = appDetailsData
-                    result?.appKey = app
-                    completion?(result, errorCode, retErr)
-                })
-            } else {
-                completion?(nil, errorCode, error)
-            }
-        }
+        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue, cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
+            self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, true, completion)
+        }, completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, false, completion)
+        })
     }
     
 //    func getAppsServiceAlert(completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
