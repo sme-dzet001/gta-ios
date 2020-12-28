@@ -33,7 +33,7 @@ class MyAppsDataProvider {
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
         for (index, info) in commonResponse!.enumerated() {
             let appNameIndex = appsStatus?.indexes["app_name"] ?? 0
-            let statusIndex = appsStatus?.indexes["app_is_active"] ?? 0
+            let statusIndex = appsStatus?.indexes["status"] ?? 0
             let status = appsStatus!.values?.first(where: {$0.values?[appNameIndex].stringValue == info.app_name})
             response![index].appStatus = SystemStatus(status: status?.values?[statusIndex].stringValue)
             if let _ = status {
@@ -78,7 +78,7 @@ class MyAppsDataProvider {
             let reportData = self?.parseSectionReport(data: reportResponse)
             let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
             if let _ = generationNumber {
-                self?.apiManager.getMyAppsData(for: generationNumber!, completion: { (data, errorCode, error) in
+                self?.apiManager.getMyAppsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), completion: { (data, errorCode, error) in
                     var myAppsResponse: MyAppsResponse?
                     var retErr = error
                     if let responseData = data {
@@ -137,7 +137,7 @@ class MyAppsDataProvider {
             let reportData = self?.parseSectionReport(data: reportResponse)
             let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetails.rawValue }?.generationNumber
             if let _ = generationNumber {
-                self?.apiManager.getAppDetailsData(for: generationNumber!, completion: { (data, errorCode, error) in
+                self?.apiManager.getAppDetailsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), appName: (app ?? ""), completion: { (data, errorCode, error) in
                     var appDetailsData: AppDetailsData?
                     var retErr = error
                     if let responseData = data {
@@ -147,7 +147,6 @@ class MyAppsDataProvider {
                             retErr = error
                         }
                     }
-                    appDetailsData?.appKey = app
                     appDetailsData?.indexes = (self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.appDetails?.columns))!
                     completion?(appDetailsData, errorCode, retErr)
                 })

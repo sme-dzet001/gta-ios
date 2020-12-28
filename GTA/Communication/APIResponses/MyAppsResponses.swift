@@ -84,9 +84,9 @@ struct AppsDataSource {
 enum SystemStatus {
     init(status: String?) {
         switch status?.lowercased() {
-        case "Up": self = .online
+        case "up": self = .online
         case "offline": self = .offline
-        case "Pending Alerts": self = .pendingAlerts
+        case "pending alerts": self = .pendingAlerts
         default: self = .none
         }
     }
@@ -109,57 +109,53 @@ struct ChartData {
 }
 
 struct AppDetailsData: Codable {
-    var data: [String : [String : [String: [String: [[String : [QuantumValue?]]]]]]]? //temp
+    var data: [String : [String : UserData]]?
     
     var indexes: [String : Int] = [:]
     
-    var appKey: String? = nil
-    private var values: [QuantumValue?]? {
-        var nameKey = data?.first(where: {$0.value[appKey ?? ""] != nil})?.key //temp
-        if nameKey == nil {
-            nameKey = data?.first(where: {$0.value["SCUBA"] != nil})?.key ?? ""
-            let rows = data?[nameKey ?? ""]?["SCUBA"]?["data"]?["rows"]?.first
-            return rows?["values"]
-        }
-        let rows = data?[nameKey ?? ""]?[appKey ?? ""]?["data"]?["rows"]?.first
-        return rows?["values"]
+    private var values: [QuantumValue]? {
+        let rows = data?.first?.value.first?.value.data?.rows?.first?.values
+        return rows
     }
     
     var appTitle: String? {
         guard let _ = values, let index = indexes["app_title"], values!.count > index else { return nil }
-        return values?[index]?.stringValue
+        return values?[index].stringValue
     }
     
     var appDescription: String? {
         guard let _ = values, let index = indexes["app_desc"], values!.count > index else { return nil }
-        return values?[index]?.stringValue
+        return values?[index].stringValue
     }
     
     var appSupportEmail: String? {
         guard let _ = values, let index = indexes["app_support_email"], values!.count > index else { return nil }
-        return values?[index]?.stringValue
+        return values?[index].stringValue
     }
     
     var appWikiUrl: String? {
         guard let _ = values, let index = indexes["app_wiki_url"], values!.count > index else { return nil }
-        return values?[index]?.stringValue
+        return values?[index].stringValue
     }
     
     var appJiraSupportUrl: String? {
         guard let _ = values, let index = indexes["app_jira_support_url"], values!.count > index else { return nil }
-        return values?[index]?.stringValue
+        return values?[index].stringValue
     }
     
     var appSupportPolicy: String? {
         guard let _ = values, let index = indexes["app_support_policy"], values!.count > index else { return nil }
-        return values?[index]?.stringValue
+        return values?[index].stringValue
     }
     
     var appTeamContact: String? {
         guard let _ = values, let index = indexes["app_team_contact"], values!.count > index else { return nil }
-        return values?[index]?.stringValue
+        return values?[index].stringValue
     }
     
+    enum CodingKeys: String, CodingKey {
+        case data
+    }
 }
 
 struct UserData: Codable {

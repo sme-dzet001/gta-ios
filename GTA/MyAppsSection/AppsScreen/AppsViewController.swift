@@ -120,8 +120,9 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section != 0 else { return }
         let appVC = ApplicationStatusViewController()
-        appVC.appName = dataSource[indexPath.section].cellData[indexPath.row].app_title
+        appVC.appName = dataSource[indexPath.section].cellData[indexPath.row].app_name
         appVC.systemStatus = dataSource[indexPath.section].cellData[indexPath.row].appStatus
+        appVC.dataProvider = dataProvider
         self.navigationController?.pushViewController(appVC, animated: true)
     }
 

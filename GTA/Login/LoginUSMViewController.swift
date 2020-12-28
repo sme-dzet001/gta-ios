@@ -150,7 +150,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
                 return
             }
             activityIndicator.startAnimating()
-            dataProvider.validateToken(token: aToken) { [weak self] (_ errorCode: Int, _ error: Error?) in
+            dataProvider.validateToken(token: aToken, userEmail: emailAddress) { [weak self] (_ errorCode: Int, _ error: Error?) in
                 DispatchQueue.main.async {
                     if error == nil && errorCode == 200 {
                         UserDefaults.standard.set(true, forKey: "userLoggedIn")
