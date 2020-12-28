@@ -44,12 +44,6 @@ class APIManager: NSObject, URLSessionDelegate {
         }
     }
     
-    enum SectionId: String {
-        case home = "5fbbd382cead87a5b8400767"
-        case apps = "5fbbd382cead87a5b8400768"
-        case serviceDesk = "5fbbd382cead87a5b8400769"
-    }
-    
     enum WidgetId: String {
         case globalNews = "global_news"
         case specialAlerts = "special_alerts"
@@ -158,10 +152,9 @@ class APIManager: NSObject, URLSessionDelegate {
         makeRequest(endpoint: .validateToken, method: "GET", headers: requestHeaders, completion: completion)
     }
     
-    func getSectionReport(sectionId: String, completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        let requestParams = ["section_id": sectionId]
-        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, params: requestParams, completion: completion)
+        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, completion: completion)
     }
     
     private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, completion: RequestCompletion = nil) {

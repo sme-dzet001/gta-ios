@@ -49,7 +49,7 @@ class HomeDataProvider {
     }
     
     func getGlobalNewsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.home.rawValue) { [weak self] (reportResponse, errorCode, error) in
+        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
             let reportData = self?.parseSectionReport(data: reportResponse)
             let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalNews.rawValue }?.generationNumber
             if let generationNumber = generationNumber {
@@ -85,7 +85,7 @@ class HomeDataProvider {
     }
     
     func getSpecialAlertsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.home.rawValue) { [weak self] (reportResponse, errorCode, error) in
+        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
             let reportData = self?.parseSectionReport(data: reportResponse)
             let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.specialAlerts.rawValue }?.generationNumber
             if let generationNumber = generationNumber {
