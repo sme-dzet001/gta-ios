@@ -119,6 +119,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section != 0 else { return }
+        guard dataSource[indexPath.section].sectionName != "Other Apps" else { return }
         let appVC = ApplicationStatusViewController()
         appVC.appName = dataSource[indexPath.section].cellData[indexPath.row].app_name
         appVC.systemStatus = dataSource[indexPath.section].cellData[indexPath.row].appStatus
