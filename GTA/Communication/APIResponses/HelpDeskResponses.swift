@@ -9,6 +9,11 @@ import Foundation
 
 struct HelpDeskResponse: Codable {
     var data: HelpDeskRows?//[String : [HelpDeskValues]]?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case data = "data"
+    }
     
     private var values: [String]? {
         guard let rows = data?.rows, !rows.isEmpty else { return [] }
@@ -16,17 +21,17 @@ struct HelpDeskResponse: Codable {
     }
     
     var serviceDeskPhoneNumber: String? {
-        guard let values = values, values.count >= 5 else { return nil }
-        return convertPhoneNumber(number: values[4])
+        guard let values = values, let index = indexes["service_phone"], values.count > index else { return nil }
+        return convertPhoneNumber(number: values[index])
     }
     var serviceDeskEmail: String? {
-        guard let values = values, values.count >= 6 else { return nil }
-        return values[5]
+        guard let values = values, let index = indexes["service_email"], values.count > index else { return nil }
+        return values[index]
     }
     
     var teamsChatLink: String? {
-        guard let values = values, values.count >= 7 else { return nil }
-        return values[6]
+        guard let values = values, let index = indexes["service_teams_channel"], values.count > index else { return nil }
+        return values[index]
     }
     
     private func convertPhoneNumber(number: String) -> String {
@@ -48,15 +53,20 @@ struct HelpDeskValues: Codable {
 
 struct QuickHelpRow: Codable {
     var values: [QuantumValue]?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case values = "values"
+    }
     
     var question: String? {
-        guard let valuesArr = values, valuesArr.count >= 6 else { return nil }
-        return valuesArr[5].stringValue
+        guard let valuesArr = values, let index = indexes["question"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var answer: String? {
-        guard let valuesArr = values, valuesArr.count >= 7 else { return nil }
-        return valuesArr[6].stringValue
+        guard let valuesArr = values, let index = indexes["answer"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
 }
 
@@ -73,25 +83,30 @@ struct QuickHelpResponse: Codable {
 
 struct TeamContactsRow: Codable {
     var values: [QuantumValue]?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case values = "values"
+    }
     
     var contactPhotoUrl: String? {
-        guard let valuesArr = values, valuesArr.count >= 2 else { return nil }
-        return valuesArr[1].stringValue
+        guard let valuesArr = values, let index = indexes["profile_picture"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var contactName: String? {
-        guard let valuesArr = values, valuesArr.count >= 3 else { return nil }
-        return valuesArr[2].stringValue
+        guard let valuesArr = values, let index = indexes["name"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var contactEmail: String? {
-        guard let valuesArr = values, valuesArr.count >= 4 else { return nil }
-        return valuesArr[3].stringValue
+        guard let valuesArr = values, let index = indexes["email"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var contactBio: String? {
-        guard let valuesArr = values, valuesArr.count >= 5 else { return nil }
-        return valuesArr[4].stringValue
+        guard let valuesArr = values, let index = indexes["bio"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
 }
 

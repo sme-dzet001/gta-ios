@@ -32,8 +32,10 @@ class MyAppsDataProvider {
         var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
         for (index, info) in commonResponse!.enumerated() {
-            let status = appsStatus!.values?.first(where: {$0.values?[1].stringValue == info.app_name})
-            response![index].appStatus = SystemStatus(status: status?.values?[2].stringValue)
+            let appNameIndex = appsStatus?.indexes["app_name"] ?? 0
+            let statusIndex = appsStatus?.indexes["app_is_active"] ?? 0
+            let status = appsStatus!.values?.first(where: {$0.values?[appNameIndex].stringValue == info.app_name})
+            response![index].appStatus = SystemStatus(status: status?.values?[statusIndex].stringValue)
             if let _ = status {
                 myAppsSection.cellData.append(response![index])
             } else {
@@ -86,6 +88,7 @@ class MyAppsDataProvider {
                             retErr = error
                         }
                     }
+                    myAppsResponse?.indexes = (self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.myAppsStatus?.columns))!
                     completion?(myAppsResponse, errorCode, retErr)
                 })
             } else {
@@ -109,12 +112,24 @@ class MyAppsDataProvider {
                             retErr = error
                         }
                     }
+                    allAppsResponse?.indexes = (self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.allApps?.columns))!
                     completion?(allAppsResponse, errorCode, retErr)
                 })
             } else {
                 completion?(nil, errorCode, error)
             }
         }
+    }
+    
+    private func getDataIndexes(columns: [ColumnName]?) -> [String : Int] {
+        var indexes: [String : Int] = [:]
+        guard let columns = columns else { return indexes}
+        for (index, column) in columns.enumerated() {
+            if let name = column.name {
+                indexes[name] = index
+            }
+        }
+        return indexes
     }
     
     func getAppDetailsData(for app: String?, completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -132,9 +147,9 @@ class MyAppsDataProvider {
                             retErr = error
                         }
                     }
-                    var result = appDetailsData
-                    result?.appKey = app
-                    completion?(result, errorCode, retErr)
+                    appDetailsData?.appKey = app
+                    appDetailsData?.indexes = (self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.appDetails?.columns))!
+                    completion?(appDetailsData, errorCode, retErr)
                 })
             } else {
                 completion?(nil, errorCode, error)

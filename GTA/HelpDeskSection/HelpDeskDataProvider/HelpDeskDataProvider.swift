@@ -37,6 +37,8 @@ class HelpDeskDataProvider {
                             retErr = error
                         }
                     }
+                    let indexes = self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.gsdProfile?.columns) ?? [:]
+                    reportDataResponse?.indexes = indexes
                     completion?(reportDataResponse, errorCode, retErr)
                 }
             } else {
@@ -67,7 +69,7 @@ class HelpDeskDataProvider {
                         }
                     }
                     if let quickHelpResponse = quickHelpDataResponse {
-                        self?.fillQuickHelpData(with: quickHelpResponse)
+                        self?.fillQuickHelpData(with: quickHelpResponse, indexes: (self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.gsdQuickHelp?.columns))!)
                     }
                     completion?(errorCode, retErr)
                 }
@@ -77,8 +79,14 @@ class HelpDeskDataProvider {
         }
     }
     
-    private func fillQuickHelpData(with quickHelpResponse: QuickHelpResponse) {
-        quickHelpData = quickHelpResponse.data?.rows ?? []
+    private func fillQuickHelpData(with quickHelpResponse: QuickHelpResponse, indexes: [String : Int]) {
+        var response: QuickHelpResponse = quickHelpResponse
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index].indexes = indexes
+            }
+        }
+        quickHelpData = response.data?.rows ?? []
     }
     
     func getTeamContactsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -97,7 +105,7 @@ class HelpDeskDataProvider {
                         }
                     }
                     if let teamContactsResponse = teamContactsDataResponse {
-                        self?.fillTeamContactsData(with: teamContactsResponse)
+                        self?.fillTeamContactsData(with: teamContactsResponse, indexes: (self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.gsdTeamContacts?.columns))!)
                     }
                     completion?(errorCode, retErr)
                 }
@@ -107,8 +115,14 @@ class HelpDeskDataProvider {
         }
     }
     
-    private func fillTeamContactsData(with teamContactsResponse: TeamContactsResponse) {
-        teamContactsData = teamContactsResponse.data?.rows ?? []
+    private func fillTeamContactsData(with teamContactsResponse: TeamContactsResponse, indexes: [String : Int]) {
+        var response: TeamContactsResponse = teamContactsResponse
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index].indexes = indexes
+            }
+        }
+        teamContactsData = response.data?.rows ?? []
     }
     
     func formImageURL(from imagePath: String?) -> String {
@@ -132,6 +146,17 @@ class HelpDeskDataProvider {
             }
         }
         return reportDataResponse
+    }
+    
+    private func getDataIndexes(columns: [ColumnName]?) -> [String : Int] {
+        var indexes: [String : Int] = [:]
+        guard let columns = columns else { return indexes}
+        for (index, column) in columns.enumerated() {
+            if let name = column.name {
+                indexes[name] = index
+            }
+        }
+        return indexes
     }
     
 }
