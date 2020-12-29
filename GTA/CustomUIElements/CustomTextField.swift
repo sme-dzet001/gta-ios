@@ -184,7 +184,7 @@ open class CustomTextField: UITextField {
     }
     
     
-    @objc func textFieldDidChange(makePlaceHolderSmall: Bool = false) {
+    @objc func textFieldDidChange(makePlaceHolderSmall: Bool = false, animate: Bool = true) {
         
         func animateLabel() {
             UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -202,7 +202,9 @@ open class CustomTextField: UITextField {
                     let currentFont = font == nil ? UIFont.systemFont(ofSize: 12) : font!
                     labelPlaceholderTitle.font = UIFont.init(descriptor: currentFont.fontDescriptor, size: 12.0)
                 }
-                animateLabel()
+                if animate {
+                    animateLabel()
+                }
             }
         } else {
             labelPlaceholderTitleCenterY.isActive = true

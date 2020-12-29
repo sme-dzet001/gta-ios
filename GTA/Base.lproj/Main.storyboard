@@ -124,12 +124,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0p5-Sa-qVW" secondAttribute="trailing" constant="24" id="92m-v5-tTp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JCo-dS-SrK" secondAttribute="trailing" constant="24" id="AUL-Xf-6vc"/>
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Odm-Zn-f5Q"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="W8k-S3-PNz"/>
                             <constraint firstItem="3cg-mN-F74" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-24" id="Xsx-Zw-2wc"/>
                             <constraint firstItem="3cg-mN-F74" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="Yfp-UX-ne4"/>
                             <constraint firstItem="vsT-Ui-lpa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="dWi-3n-PWU"/>
-                            <constraint firstItem="JCo-dS-SrK" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-24" id="guk-gv-XEZ"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="top" secondItem="7Xr-Ki-8uN" secondAttribute="bottom" constant="40" id="i93-tF-XP5"/>
                             <constraint firstItem="JCo-dS-SrK" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="ijo-Ne-Unq"/>
                             <constraint firstItem="hOh-kP-jbd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="kjN-7v-3d1"/>

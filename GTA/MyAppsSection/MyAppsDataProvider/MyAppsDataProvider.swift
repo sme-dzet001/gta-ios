@@ -32,8 +32,10 @@ class MyAppsDataProvider {
         var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
         for (index, info) in commonResponse!.enumerated() {
-            let status = appsStatus!.values?.first(where: {$0.values?[1].stringValue == info.app_name})
-            response![index].appStatus = SystemStatus(status: status?.values?[2].stringValue)
+            let appNameIndex = appsStatus?.indexes["app_name"] ?? 0
+            let statusIndex = appsStatus?.indexes["status"] ?? 0
+            let status = appsStatus!.values?.first(where: {$0.values?[appNameIndex].stringValue == info.app_name})
+            response![index].appStatus = SystemStatus(status: status?.values?[statusIndex].stringValue)
             if let _ = status {
                 myAppsSection.cellData.append(response![index])
             } else {
@@ -71,7 +73,18 @@ class MyAppsDataProvider {
         return imageURL
     }
     
-    private func processMyApps(_ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ myAppsResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func getDataIndexes(columns: [ColumnName]?) -> [String : Int] {
+        var indexes: [String : Int] = [:]
+        guard let columns = columns else { return indexes}
+        for (index, column) in columns.enumerated() {
+            if let name = column.name {
+                indexes[name] = index
+            }
+        }
+        return indexes
+    }
+    
+    private func processMyApps(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ myAppsResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var myAppsResponse: MyAppsResponse?
         var retErr = error
         if let responseData = myAppsDataResponse {
@@ -81,6 +94,7 @@ class MyAppsDataProvider {
                 retErr = error
             }
         }
+        myAppsResponse?.indexes = getDataIndexes(columns: reportData?.meta.widgetsDataSource?.myAppsStatus?.columns)
         completion?(myAppsResponse, errorCode, retErr)
     }
     
@@ -88,10 +102,10 @@ class MyAppsDataProvider {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
         if let _ = generationNumber {
-            apiManager.getMyAppsData(for: generationNumber!, cachedDataCallback: fromCache ? { [weak self] (data, errorCode, error) in
-                self?.processMyApps(data, errorCode, error, completion)
+            apiManager.getMyAppsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), cachedDataCallback: fromCache ? { [weak self] (data, errorCode, error) in
+                self?.processMyApps(reportData, data, errorCode, error, completion)
             } : nil, completion: fromCache ? nil : { [weak self] (data, errorCode, error) in
-                self?.processMyApps(data, errorCode, error, completion)
+                self?.processMyApps(reportData, data, errorCode, error, completion)
             })
         } else {
             completion?(nil, errorCode, error)
@@ -99,14 +113,14 @@ class MyAppsDataProvider {
     }
     
     func getMyAppsStatus(completion: ((_ myAppsResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue, cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
+        apiManager.getSectionReport(cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
             self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, true, completion)
         }, completion: { [weak self] (reportResponse, errorCode, error) in
             self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, false, completion)
         })
     }
     
-    private func processAllApps(_ allAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ allAppsResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processAllApps(_ reportData: ReportDataResponse?, _ allAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ allAppsResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var allAppsResponse: AllAppsResponse?
         var retErr = error
         if let responseData = allAppsDataResponse {
@@ -116,6 +130,7 @@ class MyAppsDataProvider {
                 retErr = error
             }
         }
+        allAppsResponse?.indexes = getDataIndexes(columns: reportData?.meta.widgetsDataSource?.allApps?.columns)
         completion?(allAppsResponse, errorCode, retErr)
     }
     
@@ -124,9 +139,9 @@ class MyAppsDataProvider {
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allApps.rawValue }?.generationNumber
         if let _ = generationNumber {
             apiManager.getAllApps(for: generationNumber!, cachedDataCallback: fromCache ? { [weak self] (data, errorCode, error) in
-                self?.processAllApps(data, errorCode, error, completion)
+                self?.processAllApps(reportData, data, errorCode, error, completion)
             } : nil, completion: fromCache ? nil : { [weak self] (data, errorCode, error) in
-                self?.processAllApps(data, errorCode, error, completion)
+                self?.processAllApps(reportData, data, errorCode, error, completion)
             })
         } else {
             completion?(nil, errorCode, error)
@@ -134,14 +149,14 @@ class MyAppsDataProvider {
     }
     
     func getAllApps(completion: ((_ allAppsResponse: AllAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue, cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
+        apiManager.getSectionReport(cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
             self?.processAllAppsSectionReport(reportResponse, errorCode, error, true, completion)
         }, completion: { [weak self] (reportResponse, errorCode, error) in
             self?.processAllAppsSectionReport(reportResponse, errorCode, error, false, completion)
         })
     }
     
-    private func processAppDetails(_ app: String?, _ appDetailsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ appDetailsData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processAppDetails(_ reportData: ReportDataResponse?, _ app: String?, _ appDetailsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ appDetailsData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var appDetailsData: AppDetailsData?
         var retErr = error
         if let responseData = appDetailsDataResponse {
@@ -151,19 +166,18 @@ class MyAppsDataProvider {
                 retErr = error
             }
         }
-        var result = appDetailsData
-        result?.appKey = app
-        completion?(result, errorCode, retErr)
+        appDetailsData?.indexes = getDataIndexes(columns: reportData?.meta.widgetsDataSource?.appDetails?.columns)
+        completion?(appDetailsData, errorCode, retErr)
     }
     
     private func processAppDetailsSectionReport(_ app: String?, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetails.rawValue }?.generationNumber
         if let _ = generationNumber {
-            apiManager.getAppDetailsData(for: generationNumber!, cachedDataCallback: fromCache ? { [weak self] (data, errorCode, error) in
-                self?.processAppDetails(app, data, errorCode, error, completion)
+            apiManager.getAppDetailsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), appName: (app ?? ""), cachedDataCallback: fromCache ? { [weak self] (data, errorCode, error) in
+                self?.processAppDetails(reportData, app, data, errorCode, error, completion)
             } : nil, completion: fromCache ? nil : { [weak self] (data, errorCode, error) in
-                self?.processAppDetails(app, data, errorCode, error, completion)
+                self?.processAppDetails(reportData, app, data, errorCode, error, completion)
             })
         } else {
             completion?(nil, errorCode, error)
@@ -171,7 +185,7 @@ class MyAppsDataProvider {
     }
     
     func getAppDetailsData(for app: String?, completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue, cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
+        apiManager.getSectionReport(cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
             self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, true, completion)
         }, completion: { [weak self] (reportResponse, errorCode, error) in
             self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, false, completion)

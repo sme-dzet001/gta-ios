@@ -11,35 +11,40 @@ import Foundation
 
 struct GlobalNewsRow: Codable {
     var values: [QuantumValue]?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case values = "values"
+    }
     
     var newsTitle: String? {
-        guard let valuesArr = values, valuesArr.count >= 2 else { return nil }
-        return valuesArr[1].stringValue
+        guard let valuesArr = values, let index = indexes["headline"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var newsSubtitle: String? {
-        guard let valuesArr = values, valuesArr.count >= 3 else { return nil }
-        return valuesArr[2].stringValue
+        guard let valuesArr = values, let index = indexes["sub_headline"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var posterUrl: String? {
-        guard let valuesArr = values, valuesArr.count >= 4 else { return nil }
-        return valuesArr[3].stringValue
+        guard let valuesArr = values, let index = indexes["banner"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var newsDate: String? {
-        guard let valuesArr = values, valuesArr.count >= 5 else { return nil }
-        return valuesArr[4].stringValue
+        guard let valuesArr = values, let index = indexes["post_date"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var newsAuthor: String? {
-        guard let valuesArr = values, valuesArr.count >= 6 else { return nil }
-        return valuesArr[5].stringValue
+        guard let valuesArr = values, let index = indexes["by_line"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var newsBody: String? {
-        guard let valuesArr = values, valuesArr.count >= 7 else { return nil }
-        return valuesArr[6].stringValue
+        guard let valuesArr = values, let index = indexes["body"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
 }
 
@@ -56,35 +61,40 @@ struct GlobalNewsResponse: Codable {
 
 struct SpecialAlertRow: Codable {
     var values: [QuantumValue]?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case values = "values"
+    }
     
     var alertHeadline: String? {
-        guard let valuesArr = values, valuesArr.count >= 2 else { return nil }
-        return valuesArr[1].stringValue
+        guard let valuesArr = values, let index = indexes["headline"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var alertSubHeadline: String? {
-        guard let valuesArr = values, valuesArr.count >= 3 else { return nil }
-        return valuesArr[2].stringValue
+        guard let valuesArr = values, let index = indexes["sub_headline"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var posterUrl: String? {
-        guard let valuesArr = values, valuesArr.count >= 4 else { return nil }
-        return valuesArr[3].stringValue
+        guard let valuesArr = values, let index = indexes["banner"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var alertDate: String? {
-        guard let valuesArr = values, valuesArr.count >= 5 else { return nil }
-        return valuesArr[4].stringValue
+        guard let valuesArr = values, let index = indexes["post_date"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var alertAuthor: String? {
-        guard let valuesArr = values, valuesArr.count >= 6 else { return nil }
-        return valuesArr[5].stringValue
+        guard let valuesArr = values, let index = indexes["by_line"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
     
     var alertBody: String? {
-        guard let valuesArr = values, valuesArr.count >= 7 else { return nil }
-        return valuesArr[6].stringValue
+        guard let valuesArr = values, let index = indexes["body"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
     }
 }
 

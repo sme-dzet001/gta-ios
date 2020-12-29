@@ -19,7 +19,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    var dataProvider: MyAppsDataProvider = MyAppsDataProvider()
+    var dataProvider: MyAppsDataProvider?
     var dataSource: [AppsDataSource] = []
     var appDetailsData: AppDetailsData?
     var appName: String? = ""
@@ -38,7 +38,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         if appDetailsData == nil {
             startAnimation()
         }
-        dataProvider.getAppDetailsData(for: appName) { [weak self] (detailsData, _, error) in
+        dataProvider?.getAppDetailsData(for: appName) { [weak self] (detailsData, _, error) in
             self?.appDetailsData = detailsData
             self?.stopAnimation()
         }

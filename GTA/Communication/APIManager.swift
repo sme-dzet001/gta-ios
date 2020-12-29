@@ -128,12 +128,6 @@ class APIManager: NSObject, URLSessionDelegate {
         }
     }
     
-    enum SectionId: String {
-        case home = "5fbbd382cead87a5b8400767"
-        case apps = "5fbbd382cead87a5b8400768"
-        case serviceDesk = "5fbbd382cead87a5b8400769"
-    }
-    
     enum WidgetId: String {
         case globalNews = "global_news"
         case specialAlerts = "special_alerts"
@@ -197,15 +191,16 @@ class APIManager: NSObject, URLSessionDelegate {
         makeRequest(endpoint: .getQuickHelpData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     
-    func getTeamContacts(generationNumber: Int, completion: ((_ teamContactsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getTeamContacts(generationNumber: Int, cachedDataCallback: ((_ teamContactsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ teamContactsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: completion, completion: completion)
+        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     //MARK: - My Apps methods
     
-    func getMyAppsData(for generationNumber: Int, cachedDataCallback: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: cachedDataCallback, completion: completion)
+    func getMyAppsData(for generationNumber: Int, username: String, cachedDataCallback: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        let requestBodyParams = ["s1": username]
+        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     
     func getAllApps(for generationNumber: Int, cachedDataCallback: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -213,9 +208,10 @@ class APIManager: NSObject, URLSessionDelegate {
         self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     
-    func getAppDetailsData(for generationNumber: Int, cachedDataCallback: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getAppDetails(generationNumber: generationNumber), method: "POST", headers: requestHeaders, immediateCachedDataCallback: cachedDataCallback, completion: completion)
+    func getAppDetailsData(for generationNumber: Int, username: String, appName: String, cachedDataCallback: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        let requestBodyParams = ["s1": username, "s2": appName]
+        self.makeRequest(endpoint: .getAppDetails(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     
     
@@ -242,10 +238,9 @@ class APIManager: NSObject, URLSessionDelegate {
         makeRequest(endpoint: .validateToken, method: "GET", headers: requestHeaders, cacheResponse: false, forceUpdate: true, completion: completion)
     }
     
-    func getSectionReport(sectionId: String, cachedDataCallback: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getSectionReport(cachedDataCallback: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil, completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        let requestParams = ["section_id": sectionId]
-        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, params: requestParams, immediateCachedDataCallback: cachedDataCallback, completion: completion)
+        makeRequest(endpoint: .getSectionReport, method: "GET", headers: requestHeaders, immediateCachedDataCallback: cachedDataCallback, completion: completion)
     }
     
     private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, cacheResponse: Bool = true, forceUpdate: Bool = false, immediateCachedDataCallback: RequestCompletion = nil, completion: RequestCompletion = nil) {

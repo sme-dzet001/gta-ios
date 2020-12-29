@@ -25,7 +25,7 @@ class LoginViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
         if let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") {
             emailTextField.text = lastUserEmail
-            emailTextField.textFieldDidChange(makePlaceHolderSmall: true)
+            emailTextField.textFieldDidChange(makePlaceHolderSmall: true, animate: false)
         }
     }
     

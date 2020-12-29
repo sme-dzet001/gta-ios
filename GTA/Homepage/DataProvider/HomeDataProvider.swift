@@ -49,7 +49,7 @@ class HomeDataProvider {
     }
     
     func getGlobalNewsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.home.rawValue) { [weak self] (reportResponse, errorCode, error) in
+        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
             let reportData = self?.parseSectionReport(data: reportResponse)
             let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalNews.rawValue }?.generationNumber
             if let generationNumber = generationNumber {
@@ -64,7 +64,7 @@ class HomeDataProvider {
                         }
                     }
                     if let newsResponse = newsDataResponse {
-                        self?.fillNewsData(with: newsResponse)
+                        self?.fillNewsData(with: newsResponse, indexes: self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.globalNews?.columns) ?? [:])
                     }
                     completion?(errorCode, retErr)
                 }
@@ -74,11 +74,17 @@ class HomeDataProvider {
         }
     }
     
-    private func fillNewsData(with newsResponse: GlobalNewsResponse) {
-        newsData = newsResponse.data?.rows ?? []
+    private func fillNewsData(with newsResponse: GlobalNewsResponse, indexes: [String : Int]) {
+        var response: GlobalNewsResponse = newsResponse
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index].indexes = indexes
+            }
+        }
+        newsData = response.data?.rows ?? []
     }
     
-    private func processSpecialAlerts(_ alertsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processSpecialAlerts(_ reportData: ReportDataResponse?, _ alertsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var specialAlertsDataResponse: SpecialAlertsResponse?
         var retErr = error
         if let responseData = alertsResponse {
@@ -89,7 +95,7 @@ class HomeDataProvider {
             }
         }
         if let alertsResponse = specialAlertsDataResponse {
-            fillAlertsData(with: alertsResponse)
+            fillAlertsData(with: alertsResponse, indexes: getDataIndexes(columns: reportData?.meta.widgetsDataSource?.globalNews?.columns))
         }
         completion?(errorCode, retErr)
     }
@@ -99,9 +105,9 @@ class HomeDataProvider {
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.specialAlerts.rawValue }?.generationNumber
         if let generationNumber = generationNumber {
             apiManager.getSpecialAlerts(generationNumber: generationNumber, cachedDataCallback: fromCache ? { [weak self] (alertsResponse, errorCode, error) in
-                self?.processSpecialAlerts(alertsResponse, errorCode, error, completion)
+                self?.processSpecialAlerts(reportData, alertsResponse, errorCode, error, completion)
             } : nil, completion: fromCache ? nil : { [weak self] (alertsResponse, errorCode, error) in
-                self?.processSpecialAlerts(alertsResponse, errorCode, error, completion)
+                self?.processSpecialAlerts(reportData, alertsResponse, errorCode, error, completion)
             })
         } else {
             completion?(errorCode, error)
@@ -109,15 +115,21 @@ class HomeDataProvider {
     }
     
     func getSpecialAlertsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(sectionId: APIManager.SectionId.home.rawValue, cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
+        apiManager.getSectionReport(cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
             self?.processSectionReport(reportResponse, errorCode, error, true, completion)
         }, completion: { [weak self] (reportResponse, errorCode, error) in
             self?.processSectionReport(reportResponse, errorCode, error, false, completion)
         })
     }
     
-    private func fillAlertsData(with alertsResponse: SpecialAlertsResponse) {
-        alertsData = alertsResponse.data?.rows ?? []
+    private func fillAlertsData(with alertsResponse: SpecialAlertsResponse, indexes: [String : Int]) {
+        var response: SpecialAlertsResponse = alertsResponse
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index].indexes = indexes
+            }
+        }
+        alertsData = response.data?.rows ?? []
     }
     
     private func parseSectionReport(data: Data?) -> ReportDataResponse? {
@@ -130,6 +142,17 @@ class HomeDataProvider {
             }
         }
         return reportDataResponse
+    }
+    
+    private func getDataIndexes(columns: [ColumnName]?) -> [String : Int] {
+        var indexes: [String : Int] = [:]
+        guard let columns = columns else { return indexes}
+        for (index, column) in columns.enumerated() {
+            if let name = column.name {
+                indexes[name] = index
+            }
+        }
+        return indexes
     }
     
 }

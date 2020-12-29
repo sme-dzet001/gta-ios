@@ -16,13 +16,22 @@ class AuthViewController: UIViewController {
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var logoutBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var fieldsCenterY: NSLayoutConstraint!
+    @IBOutlet weak var fieldsBottom: NSLayoutConstraint!
+    @IBOutlet weak var continueButtonBottom: NSLayoutConstraint!
+    @IBOutlet weak var backButtonTop: NSLayoutConstraint!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var loginLabel: UILabel!
+    @IBOutlet weak var loginLabelCenterY: NSLayoutConstraint!
+    @IBOutlet weak var loginLabelBottom: NSLayoutConstraint!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var logoImageViewTop: NSLayoutConstraint!
     @IBOutlet weak var logoImageView: UIImageView!
     private var usmLogoutWebView: WKWebView!
     private var continueButtonY: CGFloat?
     
-    var isLogin: Bool = KeychainManager.getPin() == nil
+    var isSignUp: Bool = KeychainManager.getPin() == nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,21 +41,44 @@ class AuthViewController: UIViewController {
             box.delegate = self
             box.backwardDelegate = self
         }
-        continueButton.isHidden = !isLogin
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
         setDefaultElementsState()
+        setUpScreen()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !isLogin {
+        if !isSignUp {
             authenticateUser()
+        }
+    }
+    
+    @objc func willResignActive() {
+        if isSignUp {
+            logout()
+        } else {
+            hideKeyboard()
+        }
+    }
+    
+    private func setUpScreen() {
+        loginLabel.isHidden = !isSignUp
+        fieldsCenterY.isActive = !isSignUp
+        fieldsBottom.isActive = isSignUp
+        logoutButton.isHidden = isSignUp
+        continueButton.isHidden = !isSignUp
+        backButton.isHidden = !isSignUp
+        if !isSignUp {
+            descriptionLabel.text = "Your pin code"
+            descriptionLabel.font = UIFont(name: "Roboto-Regular", size: 24.0)
+            descriptionLabel.textColor = .black
+            descriptionLabel.textAlignment = .center
         }
     }
     
@@ -77,21 +109,25 @@ class AuthViewController: UIViewController {
     }
     
     @IBAction func logoutButtonDidPressed(_ sender: UIButton) {
-        addWebViewIfNeeded()
         let alert = UIAlertController(title: "Confirm Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (_) in
-            guard let accessToken = KeychainManager.getToken() else { return }
-            let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
-            let logoutURLStr = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/logout?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))"
-            if let logoutURL = URL(string: logoutURLStr) {
-                let logoutRequest = URLRequest(url: logoutURL)
-                self?.usmLogoutWebView.load(logoutRequest)
-            }
+            self?.performLogout()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(okAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true)
+    }
+    
+    private func performLogout() {
+        guard let accessToken = KeychainManager.getToken() else { return }
+        addWebViewIfNeeded()
+        let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
+        let logoutURLStr = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/logout?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))"
+        if let logoutURL = URL(string: logoutURLStr) {
+            let logoutRequest = URLRequest(url: logoutURL)
+            self.usmLogoutWebView.load(logoutRequest)
+        }
     }
     
     func authenticateUser() {
@@ -154,27 +190,36 @@ class AuthViewController: UIViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
             guard keyboardSize.height > 0 else { return }
-            
             UIView.animate(withDuration: 0.3, animations: {
-                self.handleKeyboardAppearance(overlay: keyboardSize.height)
+                if self.isSignUp {
+                    self.handleKeyboardAppearanceForSignUp(overlay: keyboardSize.height)
+                } else {
+                    self.handleKeyboardAppearanceForLogin(overlay: keyboardSize.height)
+                }
             })
         }
     }
     
-    func handleKeyboardAppearance(overlay: CGFloat) {
-        if continueButtonY == nil {
-            continueButtonY = self.view.frame.height - (continueButton.frame.origin.y + continueButton.frame.height)
+    func handleKeyboardAppearanceForLogin(overlay: CGFloat) {
+        logoutBottomConstraint.constant = overlay
+        if UIDevice.current.iPhone5_se {
+            self.view.frame.origin.y = -10
+            logoImageViewTop.constant = 40 + -self.view.frame.origin.y
         }
-        logoutBottomConstraint.constant = continueButtonY! - self.logoutButton.frame.height - self.view.safeAreaInsets.bottom - 20
-        if overlay > logoutBottomConstraint.constant {
-            self.view.frame.origin.y = logoutBottomConstraint.constant - overlay
-            if UIScreen.main.nativeBounds.height >= 1334.0 { // greater or equal then iPhone 8
-                logoImageViewTop.constant = 40 + -self.view.frame.origin.y
-            } else {
-                logoImageView.isHidden = true
-                titleLabel.isHidden = true
-            }
+        self.view.layoutIfNeeded()
+    }
+    
+    func handleKeyboardAppearanceForSignUp(overlay: CGFloat) {
+        self.view.frame.origin.y = -(overlay - 60)
+        if UIScreen.main.nativeBounds.height >= 1334.0 { // greater or equal then iPhone 8
+            logoImageViewTop.constant = 40 + -self.view.frame.origin.y
+            loginLabelCenterY.isActive = false
+            loginLabelBottom.isActive = true
+        } else {
+            logoImageView.isHidden = true
+            titleLabel.isHidden = true
         }
+        backButtonTop.constant = 28 + -self.view.frame.origin.y
         self.view.layoutIfNeeded()
     }
     
@@ -189,14 +234,20 @@ class AuthViewController: UIViewController {
         self.view.frame.origin.y = 0
         self.logoImageViewTop.constant = 40
         self.logoutBottomConstraint.constant = 16
+        backButtonTop.constant = 28
         self.logoImageView.isHidden = false
         self.titleLabel.isHidden = false
+        loginLabelCenterY.isActive = true
+        loginLabelBottom.isActive = false
     }
     
     @objc func hideKeyboard() {
         view.endEditing(true)
     }
 
+    @IBAction func backButtonDidPressed(_ sender: Any) {
+        performLogout()
+    }
 }
 
 extension AuthViewController: WKNavigationDelegate {
@@ -218,6 +269,7 @@ extension AuthViewController: WKNavigationDelegate {
         KeychainManager.deleteToken()
         KeychainManager.deleteTokenExpirationDate()
         CacheManager.shared.clearCache()
+        KeychainManager.deletePinData()
         if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
             sceneDelegate.startLoginFlow()
         }
@@ -249,14 +301,13 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
         if string.count > 0 {
             textField.text = string
             switch textField {
-            case pinCodeBoxes[0]: pinCodeBoxes[1].becomeFirstResponder()
-            case pinCodeBoxes[1]: pinCodeBoxes[2].becomeFirstResponder()
-            case pinCodeBoxes[2]: pinCodeBoxes[3].becomeFirstResponder()
-            case pinCodeBoxes[3]: pinCodeBoxes[4].becomeFirstResponder()
-            case pinCodeBoxes[4]: pinCodeBoxes[5].becomeFirstResponder()
-            case pinCodeBoxes[5]:
-                pinCodeBoxes[5].resignFirstResponder()
-                if getCodeFromBoxes().count == 6, !isLogin {
+            case pinCodeBoxes[0]: let _ = pinCodeBoxes[1].becomeFirstResponder()
+            case pinCodeBoxes[1]: let _ = pinCodeBoxes[2].becomeFirstResponder()
+            case pinCodeBoxes[2]: let _ = pinCodeBoxes[3].becomeFirstResponder()
+            case pinCodeBoxes[3]: let _ = pinCodeBoxes[4].becomeFirstResponder()
+            case pinCodeBoxes[4]: let _ = pinCodeBoxes[5].becomeFirstResponder()
+            case pinCodeBoxes[5]: let _ = pinCodeBoxes[5].resignFirstResponder()
+                if getCodeFromBoxes().count == 6, !isSignUp {
                     startAuthenticationWithPin()
                 }
             default: break
@@ -264,12 +315,12 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
             return false
         } else if string.count == 0 {
             switch textField {
-            case pinCodeBoxes[0]: pinCodeBoxes[0].resignFirstResponder()
-            case pinCodeBoxes[1]: pinCodeBoxes[0].becomeFirstResponder()
-            case pinCodeBoxes[2]: pinCodeBoxes[1].becomeFirstResponder()
-            case pinCodeBoxes[3]: pinCodeBoxes[2].becomeFirstResponder()
-            case pinCodeBoxes[4]: pinCodeBoxes[3].becomeFirstResponder()
-            case pinCodeBoxes[5]: pinCodeBoxes[4].becomeFirstResponder()
+            case pinCodeBoxes[0]: let _ = pinCodeBoxes[0].resignFirstResponder()
+            case pinCodeBoxes[1]: let _ = pinCodeBoxes[0].becomeFirstResponder()
+            case pinCodeBoxes[2]: let _ = pinCodeBoxes[1].becomeFirstResponder()
+            case pinCodeBoxes[3]: let _ = pinCodeBoxes[2].becomeFirstResponder()
+            case pinCodeBoxes[4]: let _ = pinCodeBoxes[3].becomeFirstResponder()
+            case pinCodeBoxes[5]: let _ = pinCodeBoxes[4].becomeFirstResponder()
             default: break
             }
             textField.text = ""

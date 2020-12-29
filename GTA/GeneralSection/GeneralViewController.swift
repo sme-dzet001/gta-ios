@@ -76,6 +76,7 @@ extension GeneralViewController: WKNavigationDelegate {
         KeychainManager.deleteToken()
         KeychainManager.deleteTokenExpirationDate()
         CacheManager.shared.clearCache()
+        KeychainManager.deletePinData()
         if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
             sceneDelegate.startLoginFlow()
         }
