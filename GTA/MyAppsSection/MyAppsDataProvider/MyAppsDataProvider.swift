@@ -102,9 +102,8 @@ class MyAppsDataProvider {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
         if let _ = generationNumber {
-            apiManager.getMyAppsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), cachedDataCallback: fromCache ? { [weak self] (data, errorCode, error) in
-                self?.processMyApps(reportData, data, errorCode, error, completion)
-            } : nil, completion: fromCache ? nil : { [weak self] (data, errorCode, error) in
+            getCachedResponse(for: <#T##String#>, completion: <#T##((Data?, Error?) -> Void)##((Data?, Error?) -> Void)##(Data?, Error?) -> Void#>)
+            apiManager.getMyAppsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), completion: fromCache ? nil : { [weak self] (data, errorCode, error) in
                 self?.processMyApps(reportData, data, errorCode, error, completion)
             })
         } else {
@@ -113,9 +112,7 @@ class MyAppsDataProvider {
     }
     
     func getMyAppsStatus(completion: ((_ myAppsResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
-            self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, true, completion)
-        }, completion: { [weak self] (reportResponse, errorCode, error) in
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
             self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, false, completion)
         })
     }
@@ -213,6 +210,19 @@ class MyAppsDataProvider {
             }
         }
         return reportDataResponse
+    }
+    
+    private func cacheData(_ data: Data?, url: String?) {
+        guard let _ = data, let _ = url  else { return }
+        CacheManager.shared.cacheResponse(responseData: data!, requestURI: url!) { (error) in
+            if let error = error {
+                print("Function: \(#function), line: \(#line), message: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func getCachedResponse(for url: String, completion: @escaping ((_ data: Data?, _ error: Error?) -> Void)) {
+        CacheManager.shared.getCachedResponse(requestURI: url, completion: completion)
     }
     
 }
