@@ -20,7 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let navBarTitleAttributes = [NSAttributedString.Key.font: navBarTitleFont]
             UINavigationBar.appearance().titleTextAttributes = navBarTitleAttributes
         }
+        #if GTAStage
         FirebaseApp.configure()
+        #endif
         return true
     }
 
