@@ -45,7 +45,8 @@ class HelpDeskViewController: UIViewController {
 
     private func startAnimation() {
         self.tableView.alpha = 0
-        self.activityIndicator.center = self.view.center
+        self.activityIndicator.center = CGPoint(x: UIScreen.main.bounds.width  / 2,
+                                                y: UIScreen.main.bounds.height / 2)
         self.activityIndicator.hidesWhenStopped = true
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
@@ -158,7 +159,7 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func makeCallWithNumber(_ number: String?) {
-        if let _ = number, let numberURL = URL(string: "tel://" + number!) {
+        if let _ = number, let numberURL = URL(string: "tel://" + number!.filter("+0123456789.".contains)) {
             UIApplication.shared.open(numberURL, options: [:], completionHandler: nil)
         }
     }

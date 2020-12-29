@@ -68,12 +68,13 @@ class AuthViewController: UIViewController {
     }
     
     private func setUpScreen() {
-        loginLabel.isHidden = !isSignUp
+        loginLabel.isHidden = true
         fieldsCenterY.isActive = !isSignUp
         fieldsBottom.isActive = isSignUp
         logoutButton.isHidden = isSignUp
         continueButton.isHidden = !isSignUp
         backButton.isHidden = !isSignUp
+        pinCodeBoxes.forEach { $0.isSecureTextEntry = !isSignUp }
         if !isSignUp {
             descriptionLabel.text = "Your pin code"
             descriptionLabel.font = UIFont(name: "Roboto-Regular", size: 24.0)
@@ -268,6 +269,7 @@ extension AuthViewController: WKNavigationDelegate {
         KeychainManager.deleteUsername()
         KeychainManager.deleteToken()
         KeychainManager.deleteTokenExpirationDate()
+        CacheManager().clearCache()
         KeychainManager.deletePinData()
         if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
             sceneDelegate.startLoginFlow()

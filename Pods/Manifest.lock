@@ -1,20 +1,24 @@
 PODS:
   - AdvancedPageControl (0.1.5)
   - PanModal (1.2.7)
+  - RNCryptor (5.1.0)
 
 DEPENDENCIES:
   - AdvancedPageControl
   - PanModal
+  - RNCryptor
 
 SPEC REPOS:
   trunk:
     - AdvancedPageControl
     - PanModal
+    - RNCryptor
 
 SPEC CHECKSUMS:
   AdvancedPageControl: df5912b03c7b78a7719d4f479b79f7eb3a2966bb
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
+  RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
 
-PODFILE CHECKSUM: c1b081f6b4bf390844dc2044f5a57a7efdf4c064
+PODFILE CHECKSUM: 323c3bba9186bb5f3a2c0adeb13f5fe2fe95f0cf
 
 COCOAPODS: 1.10.0

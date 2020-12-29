@@ -6,6 +6,7 @@
 # Pods for GTA
 
 def shared_pods
+  pod 'RNCryptor'
   pod 'PanModal'
   pod 'AdvancedPageControl'
 end

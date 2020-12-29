@@ -169,25 +169,12 @@ class APIManager: NSObject, URLSessionDelegate {
     }
     
     private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, completion: RequestCompletion = nil) {
-        var requestUrlStr = baseUrl + endpoint.endpoint
         
-        var queryStr = ""
-        if !params.isEmpty {
-            var urlComponents = URLComponents()
-            urlComponents.path = baseUrl + endpoint.endpoint
-            urlComponents.queryItems = params.map {
-                URLQueryItem(name: $0, value: $1.addingPercentEncoding(withAllowedCharacters: .alphanumerics))
-            }
-            queryStr = urlComponents.query ?? ""
+        let apiRequest = APIRequest(baseUrl: baseUrl, endpoint: endpoint.endpoint, headers: headers, params: params, requestBodyParams: requestBodyParams, requestBodyJSONParams: requestBodyJSONParams)
+        guard let requestUrl = apiRequest.requestUrl else {
+            completion?(nil, 0, ResponseError.commonError)
+            return
         }
-        if !queryStr.isEmpty {
-            requestUrlStr += "?"
-            requestUrlStr += queryStr
-        }
-        
-        //print("headers =", headers)
-        print("requestUrlStr =", requestUrlStr)
-        let requestUrl = URL(string: requestUrlStr)!
         var request = URLRequest(url: requestUrl)
         request.httpMethod = method
         for (param, value) in headers {

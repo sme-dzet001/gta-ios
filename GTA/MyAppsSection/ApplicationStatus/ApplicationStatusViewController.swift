@@ -23,6 +23,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     var dataSource: [AppsDataSource] = []
     var appDetailsData: AppDetailsData?
     var appName: String? = ""
+    var appTitle: String?
     var systemStatus: SystemStatus = .none
     var selectedMetricsPeriod: MetricsPeriod = .weekly
     
@@ -30,6 +31,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         super.viewDidLoad()
         setHardCodeData()
         setUpTableView()
+        setUpNavigationItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,7 +58,6 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     
     private func stopAnimation() {
         DispatchQueue.main.async {
-            self.setUpNavigationItem()
             self.tableView.reloadData()
             self.tableView.alpha = 1
             self.activityIndicator.stopAnimating()
@@ -65,7 +66,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     }
     
     private func setUpNavigationItem() {
-        self.navigationItem.title = self.appDetailsData?.appTitle
+        self.navigationItem.title = appTitle
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
     }
 

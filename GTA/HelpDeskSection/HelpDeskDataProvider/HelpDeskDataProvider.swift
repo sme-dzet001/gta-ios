@@ -10,6 +10,7 @@ import Foundation
 class HelpDeskDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
+    private var cacheManager: CacheManager = CacheManager()
     
     private(set) var quickHelpData = [QuickHelpRow]()
     private(set) var teamContactsData = [TeamContactsRow]()
@@ -27,24 +28,34 @@ class HelpDeskDataProvider {
             let reportData = self?.parseSectionReport(data: reportResponse)
             let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdProfile.rawValue }?.generationNumber
             if let _ = generationNumber {
-                self?.apiManager.getHelpDeskData(for: generationNumber!) { (data, errorCode, error) in
-                    var reportDataResponse: HelpDeskResponse?
-                    var retErr = error
-                    if let responseData = data {
-                        do {
-                            reportDataResponse = try DataParser.parse(data: responseData)
-                        } catch {
-                            retErr = error
-                        }
+                self?.getCachedResponse(for: .getHelpDeskData) {[weak self] (data, error) in
+                    if let _ = data {
+                        self?.processHelpDeskData(data: data, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
                     }
-                    let indexes = self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.gsdProfile?.columns) ?? [:]
-                    reportDataResponse?.indexes = indexes
-                    completion?(reportDataResponse, errorCode, retErr)
+                }
+                self?.apiManager.getHelpDeskData(for: generationNumber!) { (data, errorCode, error) in
+                    self?.cacheData(data, path: .getHelpDeskData)
+                    self?.processHelpDeskData(data: data, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
                 }
             } else {
                 completion?(nil, errorCode, error)
             }
         }
+    }
+    
+    private func processHelpDeskData(data: Data?, reportDataResponse: ReportDataResponse?, error: Error?, errorCode: Int, completion: ((_ respone: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var helpDeskResponse: HelpDeskResponse?
+        var retErr = error
+        if let responseData = data {
+            do {
+                helpDeskResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = error
+            }
+        }
+        let indexes = self.getDataIndexes(columns: reportDataResponse?.meta.widgetsDataSource?.gsdProfile?.columns)
+        helpDeskResponse?.indexes = indexes
+        completion?(helpDeskResponse, errorCode, retErr)
     }
     
     func formQuickHelpAnswerBody(from base64EncodedText: String?) -> String? {
@@ -53,30 +64,51 @@ class HelpDeskDataProvider {
         return String(data: data, encoding: .utf8)
     }
     
-    func getQuickHelpData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
-            let reportData = self?.parseSectionReport(data: reportResponse)
-            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdQuickHelp.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdQuickHelp.rawValue }?.generationNumber
-            if let generationNumber = generationNumber {
-                self?.apiManager.getQuickHelp(generationNumber: generationNumber) { (quickHelpResponse, errorCode, error) in
-                    var quickHelpDataResponse: QuickHelpResponse?
-                    var retErr = error
-                    if let responseData = quickHelpResponse {
-                        do {
-                            quickHelpDataResponse = try DataParser.parse(data: responseData)
-                        } catch {
-                            retErr = error
-                        }
-                    }
-                    if let quickHelpResponse = quickHelpDataResponse {
-                        self?.fillQuickHelpData(with: quickHelpResponse, indexes: (self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.gsdQuickHelp?.columns))!)
-                    }
-                    completion?(errorCode, retErr)
-                }
-            } else {
-                completion?(errorCode, error)
+    private func processQuickHelp(_ reportData: ReportDataResponse?, _ quickHelpResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var quickHelpDataResponse: QuickHelpResponse?
+        var retErr = error
+        if let responseData = quickHelpResponse {
+            do {
+                quickHelpDataResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = error
             }
         }
+        if let quickHelpResponse = quickHelpDataResponse {
+            fillQuickHelpData(with: quickHelpResponse, indexes: (getDataIndexes(columns: reportData?.meta.widgetsDataSource?.gsdQuickHelp?.columns)))
+        }
+        completion?(errorCode, retErr)
+    }
+    
+    private func processSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdQuickHelp.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdQuickHelp.rawValue }?.generationNumber
+        if let generationNumber = generationNumber {
+            getCachedResponse(for: .getQuickHelpData) {[weak self] (data, error) in
+                if let _ = data {
+                    self?.processQuickHelp(reportData, data, 200, error, completion)
+                }
+            }
+            apiManager.getQuickHelp(generationNumber: generationNumber, completion: { [weak self] (quickHelpResponse, errorCode, error) in
+                self?.cacheData(quickHelpResponse, path: .getQuickHelpData)
+                self?.processQuickHelp(reportData, quickHelpResponse, errorCode, error, completion)
+            })
+
+        } else {
+            completion?(errorCode, error)
+        }
+    }
+    
+    func getQuickHelpData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
+            if let _ = data {
+                self?.processSectionReport(data, 200, error, false, completion)
+            }
+        }
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
+            self?.processSectionReport(reportResponse, errorCode, error, false, completion)
+        })
     }
     
     private func fillQuickHelpData(with quickHelpResponse: QuickHelpResponse, indexes: [String : Int]) {
@@ -89,30 +121,50 @@ class HelpDeskDataProvider {
         quickHelpData = response.data?.rows ?? []
     }
     
-    func getTeamContactsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
-            let reportData = self?.parseSectionReport(data: reportResponse)
-            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdTeamContacts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdTeamContacts.rawValue }?.generationNumber
-            if let generationNumber = generationNumber {
-                self?.apiManager.getTeamContacts(generationNumber: generationNumber) { (teamContactsResponse, errorCode, error) in
-                    var teamContactsDataResponse: TeamContactsResponse?
-                    var retErr = error
-                    if let responseData = teamContactsResponse {
-                        do {
-                            teamContactsDataResponse = try DataParser.parse(data: responseData)
-                        } catch {
-                            retErr = error
-                        }
-                    }
-                    if let teamContactsResponse = teamContactsDataResponse {
-                        self?.fillTeamContactsData(with: teamContactsResponse, indexes: (self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.gsdTeamContacts?.columns))!)
-                    }
-                    completion?(errorCode, retErr)
-                }
-            } else {
-                completion?(errorCode, error)
+    private func processTeamContacts(_ reportData: ReportDataResponse?, _ teamContactsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var teamContactsDataResponse: TeamContactsResponse?
+        var retErr = error
+        if let responseData = teamContactsResponse {
+            do {
+                teamContactsDataResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = error
             }
         }
+        if let teamContactsResponse = teamContactsDataResponse {
+            fillTeamContactsData(with: teamContactsResponse, indexes: getDataIndexes(columns: reportData?.meta.widgetsDataSource?.gsdTeamContacts?.columns))
+        }
+        completion?(errorCode, retErr)
+    }
+    
+    private func processTeamContactsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdTeamContacts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdTeamContacts.rawValue }?.generationNumber
+        if let generationNumber = generationNumber {
+            getCachedResponse(for: .getTeamContactsData) {[weak self] (data, error) in
+                if let _ = data {
+                    self?.processTeamContacts(reportData, data, 200, error)
+                }
+            }
+            apiManager.getTeamContacts(generationNumber: generationNumber, completion: { [weak self] (teamContactsResponse, errorCode, error) in
+                self?.cacheData(teamContactsResponse, path: .getTeamContactsData)
+                self?.processTeamContacts(reportData, teamContactsResponse, errorCode, error)
+            })
+        } else {
+            completion?(errorCode, error)
+        }
+    }
+    
+    func getTeamContactsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
+            if let _ = data {
+                self?.processTeamContactsSectionReport(data, 200, error, completion)
+            }
+        }
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
+            self?.processTeamContactsSectionReport(reportResponse, errorCode, error, completion)
+        })
     }
     
     private func fillTeamContactsData(with teamContactsResponse: TeamContactsResponse, indexes: [String : Int]) {
@@ -157,6 +209,19 @@ class HelpDeskDataProvider {
             }
         }
         return indexes
+    }
+    
+    private func cacheData(_ data: Data?, path: CacheManager.path) {
+        guard let _ = data else { return }
+        cacheManager.cacheResponse(responseData: data!, requestURI: path.rawValue) { (error) in
+            if let error = error {
+                print("Function: \(#function), line: \(#line), message: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func getCachedResponse(for path: CacheManager.path, completion: @escaping ((_ data: Data?, _ error: Error?) -> Void)) {
+        cacheManager.getCachedResponse(requestURI: path.rawValue, completion: completion)
     }
     
 }

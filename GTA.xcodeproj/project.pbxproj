@@ -14,6 +14,9 @@
 		65398BCC256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
 		65398BCD256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
 		65398BCE256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
+		6563C2782592AD1500AA6168 /* GTA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */; };
+		6563C2792592AD1500AA6168 /* GTA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */; };
+		6563C27A2592AD1500AA6168 /* GTA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */; };
 		659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
 		659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
 		659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
@@ -29,6 +32,9 @@
 		659A5AF4255404F100E13B77 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */; };
 		659A5AF5255404F200E13B77 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */; };
 		659A5AFA255457B600E13B77 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AF9255457B600E13B77 /* Extensions.swift */; };
+		659C595B25924106007953A7 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
+		659C595C25924106007953A7 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
+		659C595D25924106007953A7 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
 		65D14CB9256DA877004DFA70 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
 		65D14CBA256DA877004DFA70 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
 		65D14CBB256DA877004DFA70 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
@@ -87,6 +93,9 @@
 		9F5B10602567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */; };
 		9F5B10612567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */; };
 		9F5B10622567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */; };
+		9F753AA2259B862000AE6EC2 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
+		9F753AA3259B862000AE6EC2 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
+		9F753AA4259B862000AE6EC2 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
 		9F78CFCD25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */; };
 		9F78CFCE25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */; };
 		9F78CFCF25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */; };
@@ -426,6 +435,7 @@
 		32CD469F4721B25AB5FCA92F /* Pods-GTA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.release.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.release.xcconfig"; sourceTree = "<group>"; };
 		36A01C2B3BD99917F474E04F /* Pods-GTATests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.release.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.release.xcconfig"; sourceTree = "<group>"; };
 		65398BCB256D4C5E0039C24E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		6563C2772592AD1500AA6168 /* GTA.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GTA.xcdatamodel; sourceTree = "<group>"; };
 		659A5AAD255401EA00E13B77 /* GTA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		659A5AB0255401EA00E13B77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		659A5AB2255401EA00E13B77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -447,6 +457,7 @@
 		659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
 		659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		659A5AF9255457B600E13B77 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		659C595A25924106007953A7 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		65D14CB8256DA877004DFA70 /* GeneralViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralViewController.swift; sourceTree = "<group>"; };
 		65D1A29225549A0600D71965 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		65D1A2A02554BE3700D71965 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
@@ -475,6 +486,7 @@
 		9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpDeskResponses.swift; sourceTree = "<group>"; };
 		9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsViewController.swift; sourceTree = "<group>"; };
 		9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TicketDetailsViewController.xib; sourceTree = "<group>"; };
+		9F753AA1259B862000AE6EC2 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		9F78CFE72564138800BCD38F /* NewsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCollectionViewCell.xib; sourceTree = "<group>"; };
 		9F78D079256530CD00BCD38F /* ArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
@@ -687,6 +699,7 @@
 				659A5ABE255401ED00E13B77 /* Info.plist */,
 				9F819AA7255C1572007C1739 /* GTAStage-Info.plist */,
 				9F819AD1255C1646007C1739 /* GTADev-Info.plist */,
+				6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */,
 			);
 			path = GTA;
 			sourceTree = "<group>";
@@ -750,6 +763,7 @@
 				9F9D9CF6258A063800DC4231 /* NetworkManager.swift */,
 				65D29082256C0DA6001B658A /* APIManager.swift */,
 				9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */,
+				9F753AAA259B864400AE6EC2 /* APIRequest */,
 				C9D035922578095A0068441F /* APIResponses */,
 			);
 			path = Communication;
@@ -761,6 +775,7 @@
 				65D2909A256C0DDD001B658A /* KeychainManager.swift */,
 				65398BCB256D4C5E0039C24E /* Utils.swift */,
 				9F9D9CE825891E1800DC4231 /* DataParser.swift */,
+				659C595A25924106007953A7 /* CacheManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -872,6 +887,14 @@
 				9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */,
 			);
 			path = xib;
+			sourceTree = "<group>";
+		};
+		9F753AAA259B864400AE6EC2 /* APIRequest */ = {
+			isa = PBXGroup;
+			children = (
+				9F753AA1259B862000AE6EC2 /* APIRequest.swift */,
+			);
+			path = APIRequest;
 			sourceTree = "<group>";
 		};
 		9F78CFCA256409D500BCD38F /* HomepageCollectionViewCell */ = {
@@ -1801,6 +1824,7 @@
 				9F895B0F255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA625756C0300315AAE /* HelpDeskHeader.swift in Sources */,
 				9F37C96F257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
+				9F753AA2259B862000AE6EC2 /* APIRequest.swift in Sources */,
 				9F78CFCD25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				9FF0543C2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				C993A2AE2576664300F9146A /* QuickHelpViewController.swift in Sources */,
@@ -1826,6 +1850,7 @@
 				C99AEEB9259A3CAB005BD447 /* OfficesResponses.swift in Sources */,
 				C91F708B2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */,
+				6563C2782592AD1500AA6168 /* GTA.xcdatamodeld in Sources */,
 				C9766FAC2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F8164B8257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
@@ -1867,6 +1892,7 @@
 				65D2909B256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E0125642632003C247E /* MyDevicesViewController.swift in Sources */,
 				C9424E14256427F0003C247E /* DeviceCell.swift in Sources */,
+				659C595B25924106007953A7 /* CacheManager.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
@@ -1898,6 +1924,7 @@
 				9F895B10255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA725756C0300315AAE /* HelpDeskHeader.swift in Sources */,
 				9F37C970257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
+				9F753AA3259B862000AE6EC2 /* APIRequest.swift in Sources */,
 				C9705B7D2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
 				9F1620DB2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				C993A2AF2576664300F9146A /* QuickHelpViewController.swift in Sources */,
@@ -1923,6 +1950,7 @@
 				C99AEEBA259A3CAB005BD447 /* OfficesResponses.swift in Sources */,
 				9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */,
 				C9DFD47D2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
+				6563C2792592AD1500AA6168 /* GTA.xcdatamodeld in Sources */,
 				C9766FAD2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708C2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F8164B9257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
@@ -1964,6 +1992,7 @@
 				65D2909C256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E15256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
+				659C595C25924106007953A7 /* CacheManager.swift in Sources */,
 				C962D8452566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
@@ -1979,6 +2008,7 @@
 				9F895B11255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA825756C0300315AAE /* HelpDeskHeader.swift in Sources */,
 				9F37C971257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
+				9F753AA4259B862000AE6EC2 /* APIRequest.swift in Sources */,
 				C9705B7E2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
 				9F1620DC2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				C993A2B02576664300F9146A /* QuickHelpViewController.swift in Sources */,
@@ -2004,6 +2034,7 @@
 				C99AEEBB259A3CAB005BD447 /* OfficesResponses.swift in Sources */,
 				9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */,
 				C9DFD47E2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
+				6563C27A2592AD1500AA6168 /* GTA.xcdatamodeld in Sources */,
 				C9766FAE2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708D2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F8164BA257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
@@ -2045,6 +2076,7 @@
 				65D2909D256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E16256427F0003C247E /* DeviceCell.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
+				659C595D25924106007953A7 /* CacheManager.swift in Sources */,
 				C962D8462566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
 			);
@@ -2463,6 +2495,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6563C2772592AD1500AA6168 /* GTA.xcdatamodel */,
+			);
+			currentVersion = 6563C2772592AD1500AA6168 /* GTA.xcdatamodel */;
+			path = GTA.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 659A5AA5255401EA00E13B77 /* Project object */;
 }

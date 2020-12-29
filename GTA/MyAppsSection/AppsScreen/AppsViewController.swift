@@ -46,8 +46,8 @@ class AppsViewController: UIViewController {
         self.dataSource = []
         self.tableView.alpha = 0
         self.view.addSubview(self.activityIndicator)
-        self.activityIndicator.center = CGPoint(x: view.frame.size.width  / 2,
-                                                y: view.frame.size.height / 2)
+        self.activityIndicator.center = CGPoint(x: UIScreen.main.bounds.width  / 2,
+                                                y: UIScreen.main.bounds.height / 2)
         self.activityIndicator.hidesWhenStopped = true
         self.activityIndicator.startAnimating()
     }
@@ -122,6 +122,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         guard dataSource[indexPath.section].sectionName != "Other Apps" else { return }
         let appVC = ApplicationStatusViewController()
         appVC.appName = dataSource[indexPath.section].cellData[indexPath.row].app_name
+        appVC.appTitle = dataSource[indexPath.section].cellData[indexPath.row].app_title
         appVC.systemStatus = dataSource[indexPath.section].cellData[indexPath.row].appStatus
         appVC.dataProvider = dataProvider
         self.navigationController?.pushViewController(appVC, animated: true)
