@@ -45,7 +45,8 @@ class HelpDeskViewController: UIViewController {
 
     private func startAnimation() {
         self.tableView.alpha = 0
-        self.activityIndicator.center = self.view.center
+        self.activityIndicator.center = CGPoint(x: UIScreen.main.bounds.width  / 2,
+                                                y: UIScreen.main.bounds.height / 2)
         self.activityIndicator.hidesWhenStopped = true
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
