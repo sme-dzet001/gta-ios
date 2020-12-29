@@ -47,46 +47,4 @@ struct APIRequest {
             return URL(string: requestUrlStr)
         }
     }
-    
-    private func cachedRequestURI(endpoint: String, params: [String: Any]) -> String {
-        var queryStr = "?"
-        for paramName in params.keys.sorted() {
-            if let strVal = params[paramName] as? String {
-                queryStr += paramName + "=" + strVal
-            } else if let strArrVal = params[paramName] as? [String] {
-                for strArrItem in strArrVal {
-                    queryStr += paramName + "=" + strArrItem
-                }
-            } else if let dictArrVal = params[paramName] as? [[String: Any]] {
-                for dictArrItem in dictArrVal {
-                    queryStr += paramName + ":{"
-                    for paramName2 in dictArrItem.keys.sorted() {
-                        if let strVal = dictArrItem[paramName2] as? String {
-                            queryStr += paramName2 + "=" + strVal
-                        }
-                    }
-                    queryStr += "}"
-                }
-            } else {
-                print("cache error")
-            }
-        }
-        return baseUrl + endpoint + (queryStr.count > 1 ? queryStr : "")
-    }
-    
-    var cachedRequestUri: String {
-        get {
-            var cachedResponseURIComponents: [String: Any] = [:]
-            if let aVal = requestBodyParams {
-                cachedResponseURIComponents = aVal.merging(params) { (_, new) in new }
-            } else if let aVal = requestBodyJSONParams as? [String: Any] {
-                cachedResponseURIComponents = aVal.merging(params) { (_, new) in new }
-            } else if let aVal = requestBodyJSONParams as? [Any] {
-                cachedResponseURIComponents = ["_Array": aVal].merging(params) { (_, new) in new }
-            } else {
-                cachedResponseURIComponents = params
-            }
-            return cachedRequestURI(endpoint: endpoint, params: cachedResponseURIComponents)
-        }
-    }
 }

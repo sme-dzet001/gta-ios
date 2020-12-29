@@ -17,7 +17,6 @@ struct CacheManagerConstants {
 }
 
 class CacheManager {
-    static let shared = CacheManager()
     
     private var cacheQueue: DispatchQueue
     private var cacheDbQueue: DispatchQueue
@@ -47,6 +46,18 @@ class CacheManager {
             cachePassword = cachePasswordData.base64EncodedString(options: .lineLength64Characters)
             _ = KeychainManager.saveCachePassword(cachePassword: cachePassword!)
         }
+    }
+    
+    enum path: String {
+        case getSectionReport = "/v3/reports/"
+        case getGlobalNews = "/v3/widgets/global_news/data/"
+        case getSpecialAlerts = "/v3/widgets/special_alerts/data/"
+        case getHelpDeskData = "/v3/widgets/gsd_profile/data/"
+        case getQuickHelpData = "/v3/widgets/gsd_quick_help/data/"
+        case getTeamContactsData = "/v3/widgets/gsd_team_contacts/data/"
+        case getMyAppsData = "/v3/widgets/my_apps_status/data/"
+        case getAllAppsData = "/v3/widgets/all_apps/data/"
+        case getAppDetails = "/v3/widgets/app_details/data/"
     }
     
     private func getCachePath(requestURI: String, formatVersion: Int32, createIfNotExists: Bool = true, completion: @escaping ((_ path: String?, _ error: Error?) -> Void)) {
@@ -183,58 +194,62 @@ class CacheManager {
     }
     
     func cacheResponse(responseData: Data, requestURI: String, formatVersion: Int32 = 1, completion: @escaping ((_ error: Error?) -> Void)) {
-        getCachePath(requestURI: requestURI, formatVersion: formatVersion) { [weak self] (path: String?, err: Error?) in
-            if path != nil {
-                let cacheFolderURL = URL(fileURLWithPath: (self?.cacheFolderPath ?? ""))
-                let fullPath = cacheFolderURL.appendingPathComponent(path!).path
-                self?.writeCache(responseData: responseData, path: fullPath, completion: { [weak self] (err: Error?) in
-                    if (err != nil) {
-                        self?.deleteCache(path: fullPath, completion: { (error: Error?) in
-                        })
-                        self?.deleteCacheMetadata(requestURI: requestURI, completion: { (error: Error?) in
-                        })
-                    }
-                    self?.placeResponseToBuffer(responseData: responseData, requestURI: requestURI)
-                    completion(err)
-                })
-                return
+        DispatchQueue.main.async {
+            self.getCachePath(requestURI: requestURI, formatVersion: formatVersion) { [weak self] (path: String?, err: Error?) in
+                if path != nil {
+                    let cacheFolderURL = URL(fileURLWithPath: (self?.cacheFolderPath ?? ""))
+                    let fullPath = cacheFolderURL.appendingPathComponent(path!).path
+                    self?.writeCache(responseData: responseData, path: fullPath, completion: { [weak self] (err: Error?) in
+                        if (err != nil) {
+                            self?.deleteCache(path: fullPath, completion: { (error: Error?) in
+                            })
+                            self?.deleteCacheMetadata(requestURI: requestURI, completion: { (error: Error?) in
+                            })
+                        }
+                        self?.placeResponseToBuffer(responseData: responseData, requestURI: requestURI)
+                        completion(err)
+                    })
+                    return
+                }
+                if (err != nil) {
+                    self?.deleteCacheMetadata(requestURI: requestURI, completion: { (error: Error?) in
+                    })
+                }
+                completion(err)
             }
-            if (err != nil) {
-                self?.deleteCacheMetadata(requestURI: requestURI, completion: { (error: Error?) in
-                })
-            }
-            completion(err)
         }
     }
     
     func getCachedResponse(requestURI: String, formatVersion: Int32 = 1, completion: @escaping ((_ responseData: Data?, _ error: Error?) -> Void)) {
-        var cachedResponseError: Error? = nil
-        var responseData: Data? = nil
-        if let bufferedData = getResponseFromBuffer(requestURI: requestURI) {
-            completion(bufferedData, nil)
-            return
-        }
-        getCachePath(requestURI: requestURI, formatVersion: formatVersion, createIfNotExists: false) { [weak self] (path: String?, err: Error?) in
-            cachedResponseError = err
-            if path != nil {
-                let cacheFolderURL = URL(fileURLWithPath: (self?.cacheFolderPath ?? ""))
-                let fullURL = cacheFolderURL.appendingPathComponent(path!)
-                do {
-                    let encryptedResponseData = try Data(contentsOf: fullURL)
-                    responseData = try RNCryptor.decrypt(data: encryptedResponseData, withPassword: self?.cachePassword ?? "")
-                } catch {
-                    cachedResponseError = error
+        DispatchQueue.main.async {
+            var cachedResponseError: Error? = nil
+            var responseData: Data? = nil
+            if let bufferedData = self.getResponseFromBuffer(requestURI: requestURI) {
+                completion(bufferedData, nil)
+                return
+            }
+            self.getCachePath(requestURI: requestURI, formatVersion: formatVersion, createIfNotExists: false) { [weak self] (path: String?, err: Error?) in
+                cachedResponseError = err
+                if path != nil {
+                    let cacheFolderURL = URL(fileURLWithPath: (self?.cacheFolderPath ?? ""))
+                    let fullURL = cacheFolderURL.appendingPathComponent(path!)
+                    do {
+                        let encryptedResponseData = try Data(contentsOf: fullURL)
+                        responseData = try RNCryptor.decrypt(data: encryptedResponseData, withPassword: self?.cachePassword ?? "")
+                    } catch {
+                        cachedResponseError = error
+                    }
+                    if responseData == nil {
+                        self?.deleteCache(path: fullURL.path, completion: { (error: Error?) in
+                        })
+                    }
                 }
                 if responseData == nil {
-                    self?.deleteCache(path: fullURL.path, completion: { (error: Error?) in
+                    self?.deleteCacheMetadata(requestURI: requestURI, completion: { (error: Error?) in
                     })
                 }
+                completion(responseData, cachedResponseError)
             }
-            if responseData == nil {
-                self?.deleteCacheMetadata(requestURI: requestURI, completion: { (error: Error?) in
-                })
-            }
-            completion(responseData, cachedResponseError)
         }
     }
     

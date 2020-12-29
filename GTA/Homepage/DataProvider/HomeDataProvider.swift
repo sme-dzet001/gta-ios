@@ -10,6 +10,7 @@ import Foundation
 class HomeDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
+    private var cacheManager: CacheManager = CacheManager()
     
     private(set) var newsData = [GlobalNewsRow]()
     private(set) var alertsData = [SpecialAlertRow]()
@@ -50,28 +51,39 @@ class HomeDataProvider {
     
     func getGlobalNewsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSpecialAlerts)
             let reportData = self?.parseSectionReport(data: reportResponse)
             let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalNews.rawValue }?.generationNumber
             if let generationNumber = generationNumber {
+                self?.getCachedResponse(for: .getGlobalNews) { (data, error) in
+                    if let _ = data {
+                        self?.processGlobalNews(newsResponse: data, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
+                    }
+                }
                 self?.apiManager.getGlobalNews(generationNumber: generationNumber) { (newsResponse, errorCode, error) in
-                    var newsDataResponse: GlobalNewsResponse?
-                    var retErr = error
-                    if let responseData = newsResponse {
-                        do {
-                            newsDataResponse = try DataParser.parse(data: responseData)
-                        } catch {
-                            retErr = error
-                        }
-                    }
-                    if let newsResponse = newsDataResponse {
-                        self?.fillNewsData(with: newsResponse, indexes: self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.globalNews?.columns) ?? [:])
-                    }
-                    completion?(errorCode, retErr)
+                    self?.cacheData(newsResponse, path: .getGlobalNews)
+                    self?.processGlobalNews(newsResponse: newsResponse, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
                 }
             } else {
                 completion?(errorCode, error)
             }
         }
+    }
+    
+    private func processGlobalNews(newsResponse: Data?, reportDataResponse: ReportDataResponse?, error: Error?, errorCode: Int, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var newsDataResponse: GlobalNewsResponse?
+        var retErr = error
+        if let responseData = newsResponse {
+            do {
+                newsDataResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = error
+            }
+        }
+        if let newsResponse = newsDataResponse {
+            self.fillNewsData(with: newsResponse, indexes: self.getDataIndexes(columns: reportDataResponse?.meta.widgetsDataSource?.globalNews?.columns) )
+        }
+        completion?(errorCode, retErr)
     }
     
     private func fillNewsData(with newsResponse: GlobalNewsResponse, indexes: [String : Int]) {
@@ -100,13 +112,17 @@ class HomeDataProvider {
         completion?(errorCode, retErr)
     }
     
-    private func processSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.specialAlerts.rawValue }?.generationNumber
         if let generationNumber = generationNumber {
-            apiManager.getSpecialAlerts(generationNumber: generationNumber, cachedDataCallback: fromCache ? { [weak self] (alertsResponse, errorCode, error) in
-                self?.processSpecialAlerts(reportData, alertsResponse, errorCode, error, completion)
-            } : nil, completion: fromCache ? nil : { [weak self] (alertsResponse, errorCode, error) in
+            getCachedResponse(for: .getSpecialAlerts) {[weak self] (data, error) in
+                if let _ = data {
+                    self?.processSpecialAlerts(reportData, data, 200, error, completion)
+                }
+            }
+            apiManager.getSpecialAlerts(generationNumber: generationNumber, completion: { [weak self] (alertsResponse, errorCode, error) in
+                self?.cacheData(alertsResponse, path: .getSpecialAlerts)
                 self?.processSpecialAlerts(reportData, alertsResponse, errorCode, error, completion)
             })
         } else {
@@ -115,10 +131,14 @@ class HomeDataProvider {
     }
     
     func getSpecialAlertsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
-            self?.processSectionReport(reportResponse, errorCode, error, true, completion)
-        }, completion: { [weak self] (reportResponse, errorCode, error) in
-            self?.processSectionReport(reportResponse, errorCode, error, false, completion)
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
+            if let _ = data {
+                self?.processSectionReport(data, 200, error, completion)
+            }
+        }
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
+            self?.processSectionReport(reportResponse, errorCode, error, completion)
         })
     }
     
@@ -153,6 +173,19 @@ class HomeDataProvider {
             }
         }
         return indexes
+    }
+    
+    private func cacheData(_ data: Data?, path: CacheManager.path) {
+        guard let _ = data else { return }
+        cacheManager.cacheResponse(responseData: data!, requestURI: path.rawValue) { (error) in
+            if let error = error {
+                print("Function: \(#function), line: \(#line), message: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func getCachedResponse(for path: CacheManager.path, completion: @escaping ((_ data: Data?, _ error: Error?) -> Void)) {
+        cacheManager.getCachedResponse(requestURI: path.rawValue, completion: completion)
     }
     
 }

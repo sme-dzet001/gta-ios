@@ -268,7 +268,7 @@ extension AuthViewController: WKNavigationDelegate {
         KeychainManager.deleteUsername()
         KeychainManager.deleteToken()
         KeychainManager.deleteTokenExpirationDate()
-        CacheManager.shared.clearCache()
+        CacheManager().clearCache()
         KeychainManager.deletePinData()
         if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
             sceneDelegate.startLoginFlow()

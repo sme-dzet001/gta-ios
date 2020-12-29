@@ -10,6 +10,7 @@ import Foundation
 class HelpDeskDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
+    private var cacheManager: CacheManager = CacheManager()
     
     private(set) var quickHelpData = [QuickHelpRow]()
     private(set) var teamContactsData = [TeamContactsRow]()
@@ -27,24 +28,34 @@ class HelpDeskDataProvider {
             let reportData = self?.parseSectionReport(data: reportResponse)
             let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdProfile.rawValue }?.generationNumber
             if let _ = generationNumber {
-                self?.apiManager.getHelpDeskData(for: generationNumber!) { (data, errorCode, error) in
-                    var reportDataResponse: HelpDeskResponse?
-                    var retErr = error
-                    if let responseData = data {
-                        do {
-                            reportDataResponse = try DataParser.parse(data: responseData)
-                        } catch {
-                            retErr = error
-                        }
+                self?.getCachedResponse(for: .getHelpDeskData) {[weak self] (data, error) in
+                    if let _ = data {
+                        self?.processHelpDeskData(data: data, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
                     }
-                    let indexes = self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.gsdProfile?.columns) ?? [:]
-                    reportDataResponse?.indexes = indexes
-                    completion?(reportDataResponse, errorCode, retErr)
+                }
+                self?.apiManager.getHelpDeskData(for: generationNumber!) { (data, errorCode, error) in
+                    self?.cacheData(data, path: .getHelpDeskData)
+                    self?.processHelpDeskData(data: data, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
                 }
             } else {
                 completion?(nil, errorCode, error)
             }
         }
+    }
+    
+    private func processHelpDeskData(data: Data?, reportDataResponse: ReportDataResponse?, error: Error?, errorCode: Int, completion: ((_ respone: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var helpDeskResponse: HelpDeskResponse?
+        var retErr = error
+        if let responseData = data {
+            do {
+                helpDeskResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = error
+            }
+        }
+        let indexes = self.getDataIndexes(columns: reportDataResponse?.meta.widgetsDataSource?.gsdProfile?.columns)
+        helpDeskResponse?.indexes = indexes
+        completion?(helpDeskResponse, errorCode, retErr)
     }
     
     func formQuickHelpAnswerBody(from base64EncodedText: String?) -> String? {
@@ -73,9 +84,13 @@ class HelpDeskDataProvider {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdQuickHelp.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdQuickHelp.rawValue }?.generationNumber
         if let generationNumber = generationNumber {
-            apiManager.getQuickHelp(generationNumber: generationNumber, cachedDataCallback: fromCache ? { [weak self] (quickHelpResponse, errorCode, error) in
-                self?.processQuickHelp(reportData, quickHelpResponse, errorCode, error, completion)
-            } : nil, completion: fromCache ? nil : { [weak self] (quickHelpResponse, errorCode, error) in
+            getCachedResponse(for: .getQuickHelpData) {[weak self] (data, error) in
+                if let _ = data {
+                    self?.processQuickHelp(reportData, data, 200, error, completion)
+                }
+            }
+            apiManager.getQuickHelp(generationNumber: generationNumber, completion: { [weak self] (quickHelpResponse, errorCode, error) in
+                self?.cacheData(quickHelpResponse, path: .getQuickHelpData)
                 self?.processQuickHelp(reportData, quickHelpResponse, errorCode, error, completion)
             })
 
@@ -85,9 +100,13 @@ class HelpDeskDataProvider {
     }
     
     func getQuickHelpData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
-            self?.processSectionReport(reportResponse, errorCode, error, true, completion)
-        }, completion: { [weak self] (reportResponse, errorCode, error) in
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
+            if let _ = data {
+                self?.processSectionReport(data, 200, error, false, completion)
+            }
+        }
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
             self?.processSectionReport(reportResponse, errorCode, error, false, completion)
         })
     }
@@ -118,13 +137,17 @@ class HelpDeskDataProvider {
         completion?(errorCode, retErr)
     }
     
-    private func processTeamContactsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processTeamContactsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdTeamContacts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdTeamContacts.rawValue }?.generationNumber
         if let generationNumber = generationNumber {
-            apiManager.getTeamContacts(generationNumber: generationNumber, cachedDataCallback: fromCache ? { [weak self] (teamContactsResponse, errorCode, error) in
-                self?.processTeamContacts(reportData, teamContactsResponse, errorCode, error)
-            } : nil, completion: fromCache ? nil : { [weak self] (teamContactsResponse, errorCode, error) in
+            getCachedResponse(for: .getTeamContactsData) {[weak self] (data, error) in
+                if let _ = data {
+                    self?.processTeamContacts(reportData, data, 200, error)
+                }
+            }
+            apiManager.getTeamContacts(generationNumber: generationNumber, completion: { [weak self] (teamContactsResponse, errorCode, error) in
+                self?.cacheData(teamContactsResponse, path: .getTeamContactsData)
                 self?.processTeamContacts(reportData, teamContactsResponse, errorCode, error)
             })
         } else {
@@ -133,10 +156,14 @@ class HelpDeskDataProvider {
     }
     
     func getTeamContactsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport(cachedDataCallback: { [weak self] (reportResponse, errorCode, error) in
-            self?.processTeamContactsSectionReport(reportResponse, errorCode, error, true, completion)
-        }, completion: { [weak self] (reportResponse, errorCode, error) in
-            self?.processTeamContactsSectionReport(reportResponse, errorCode, error, false, completion)
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
+            if let _ = data {
+                self?.processTeamContactsSectionReport(data, 200, error, completion)
+            }
+        }
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
+            self?.processTeamContactsSectionReport(reportResponse, errorCode, error, completion)
         })
     }
     
@@ -182,6 +209,19 @@ class HelpDeskDataProvider {
             }
         }
         return indexes
+    }
+    
+    private func cacheData(_ data: Data?, path: CacheManager.path) {
+        guard let _ = data else { return }
+        cacheManager.cacheResponse(responseData: data!, requestURI: path.rawValue) { (error) in
+            if let error = error {
+                print("Function: \(#function), line: \(#line), message: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func getCachedResponse(for path: CacheManager.path, completion: @escaping ((_ data: Data?, _ error: Error?) -> Void)) {
+        cacheManager.getCachedResponse(requestURI: path.rawValue, completion: completion)
     }
     
 }
