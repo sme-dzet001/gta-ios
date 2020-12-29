@@ -109,10 +109,10 @@ class HomepageTableViewController: UITableViewController {
                 return cell ?? UITableViewCell()
             } else {
                 if let errorStr = officeLoadingError {
-                    let errorCell = createErrorCell(with: errorStr)
+                    let errorCell = createErrorCell(with: errorStr, withSeparator: true)
                     return errorCell
                 } else {
-                    let loadingCell = createLoadingCell()
+                    let loadingCell = createLoadingCell(withSeparator: true, verticalOffset: 24)
                     return loadingCell
                 }
             }

@@ -118,15 +118,27 @@ extension UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    func createErrorCell(with text: String?) -> UITableViewCell {
+    func createErrorCell(with text: String?, withSeparator: Bool = false, verticalOffset: CGFloat = 24) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         cell.selectionStyle = .none
+        if withSeparator {
+            let separatorView = UIView()
+            separatorView.backgroundColor = UIColor(hex: 0xF2F2F7)
+            cell.contentView.addSubview(separatorView)
+            separatorView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: separatorView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 1.0),
+                NSLayoutConstraint(item: separatorView, attribute: .bottom, relatedBy: .equal, toItem: cell.contentView, attribute: .bottom, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: separatorView, attribute: .leading, relatedBy: .equal, toItem: cell.contentView, attribute: .leading, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: separatorView, attribute: .trailing, relatedBy: .equal, toItem: cell.contentView, attribute: .trailing, multiplier: 1.0, constant: 0.0)
+                ])
+        }
         let label = UILabel(frame: cell.contentView.bounds)
         cell.contentView.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: cell.contentView, attribute: .top, multiplier: 1.0, constant: 16.0),
-            NSLayoutConstraint(item: label, attribute: .bottom, relatedBy: .equal, toItem: cell.contentView, attribute: .bottom, multiplier: 1.0, constant: -16.0),
+            NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: cell.contentView, attribute: .top, multiplier: 1.0, constant: verticalOffset),
+            NSLayoutConstraint(item: label, attribute: .bottom, relatedBy: .equal, toItem: cell.contentView, attribute: .bottom, multiplier: 1.0, constant: -verticalOffset),
             NSLayoutConstraint(item: label, attribute: .leading, relatedBy: .equal, toItem: cell.contentView, attribute: .leading, multiplier: 1.0, constant: 0.0),
             NSLayoutConstraint(item: label, attribute: .trailing, relatedBy: .equal, toItem: cell.contentView, attribute: .trailing, multiplier: 1.0, constant: 0.0)
             ])
@@ -140,16 +152,36 @@ extension UIViewController {
         return cell
     }
     
-    func createLoadingCell() -> UITableViewCell {
+    func createLoadingCell(withSeparator: Bool = false, verticalOffset: CGFloat? = nil) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         cell.selectionStyle = .none
+        if withSeparator {
+            let separatorView = UIView()
+            separatorView.backgroundColor = UIColor(hex: 0xF2F2F7)
+            cell.contentView.addSubview(separatorView)
+            separatorView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: separatorView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 1.0),
+                NSLayoutConstraint(item: separatorView, attribute: .bottom, relatedBy: .equal, toItem: cell.contentView, attribute: .bottom, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: separatorView, attribute: .leading, relatedBy: .equal, toItem: cell.contentView, attribute: .leading, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: separatorView, attribute: .trailing, relatedBy: .equal, toItem: cell.contentView, attribute: .trailing, multiplier: 1.0, constant: 0.0)
+                ])
+        }
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         cell.contentView.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: cell.contentView, attribute: .centerX, multiplier: 1.0, constant: 0.0),
-            NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: cell.contentView, attribute: .centerY, multiplier: 1.0, constant: 0.0)
-            ])
+        if let verticalOffset = verticalOffset {
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: activityIndicator, attribute: .top, relatedBy: .equal, toItem: cell.contentView, attribute: .top, multiplier: 1.0, constant: verticalOffset),
+                NSLayoutConstraint(item: activityIndicator, attribute: .bottom, relatedBy: .equal, toItem: cell.contentView, attribute: .bottom, multiplier: 1.0, constant: -verticalOffset),
+                NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: cell.contentView, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+                ])
+        } else {
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: cell.contentView, attribute: .centerX, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: cell.contentView, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+                ])
+        }
         activityIndicator.startAnimating()
         return cell
     }
