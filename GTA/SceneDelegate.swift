@@ -69,6 +69,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     lastActivityDate = aDate
                 }
                 if lastActivityDate.addingTimeInterval(1200) > Date(),  let _ = KeychainManager.getPin() {
+                    if let navController = self.window?.rootViewController as? UINavigationController, navController.rootViewController is UITabBarController {
+                        return
+                    }
                     let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let mainViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarController")
                     let navController = UINavigationController(rootViewController: mainViewController)
