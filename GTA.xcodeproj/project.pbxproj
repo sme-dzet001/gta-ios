@@ -343,6 +343,9 @@
 		C993A2C92576686500F9146A /* QuickHelpCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2C52576686500F9146A /* QuickHelpCell.xib */; };
 		C993A2CA2576686500F9146A /* QuickHelpCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2C52576686500F9146A /* QuickHelpCell.xib */; };
 		C993A2CB2576686500F9146A /* QuickHelpCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2C52576686500F9146A /* QuickHelpCell.xib */; };
+		C99AEEB9259A3CAB005BD447 /* OfficesResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99AEEB8259A3CAB005BD447 /* OfficesResponses.swift */; };
+		C99AEEBA259A3CAB005BD447 /* OfficesResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99AEEB8259A3CAB005BD447 /* OfficesResponses.swift */; };
+		C99AEEBB259A3CAB005BD447 /* OfficesResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99AEEB8259A3CAB005BD447 /* OfficesResponses.swift */; };
 		C9D035962578095A0068441F /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035932578095A0068441F /* CommonResponses.swift */; };
 		C9D035972578095A0068441F /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035932578095A0068441F /* CommonResponses.swift */; };
 		C9D035982578095A0068441F /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035932578095A0068441F /* CommonResponses.swift */; };
@@ -554,6 +557,7 @@
 		C993A2AD2576664300F9146A /* QuickHelpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuickHelpViewController.xib; sourceTree = "<group>"; };
 		C993A2C42576686500F9146A /* QuickHelpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickHelpCell.swift; sourceTree = "<group>"; };
 		C993A2C52576686500F9146A /* QuickHelpCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuickHelpCell.xib; sourceTree = "<group>"; };
+		C99AEEB8259A3CAB005BD447 /* OfficesResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficesResponses.swift; sourceTree = "<group>"; };
 		C9D035932578095A0068441F /* CommonResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonResponses.swift; sourceTree = "<group>"; };
 		C9D035942578095A0068441F /* GlobalNewsResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalNewsResponses.swift; sourceTree = "<group>"; };
 		C9D035952578095A0068441F /* LoginResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginResponses.swift; sourceTree = "<group>"; };
@@ -1232,6 +1236,7 @@
 			children = (
 				C9D035932578095A0068441F /* CommonResponses.swift */,
 				C9D035942578095A0068441F /* GlobalNewsResponses.swift */,
+				C99AEEB8259A3CAB005BD447 /* OfficesResponses.swift */,
 				C9D035952578095A0068441F /* LoginResponses.swift */,
 				9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */,
 				9F8164AE257FA7D9001507BF /* MyAppsResponses.swift */,
@@ -1818,6 +1823,7 @@
 				C9DFD4AE25659BE400BF1740 /* StatsBarChart.swift in Sources */,
 				659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */,
 				C9DFD47C2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
+				C99AEEB9259A3CAB005BD447 /* OfficesResponses.swift in Sources */,
 				C91F708B2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */,
 				C9766FAC2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
@@ -1914,6 +1920,7 @@
 				9FF0546725681F4A0071E596 /* SecondTicketDetailsViewController.swift in Sources */,
 				9F78D07C256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				C9DFD4AF25659BE400BF1740 /* StatsBarChart.swift in Sources */,
+				C99AEEBA259A3CAB005BD447 /* OfficesResponses.swift in Sources */,
 				9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */,
 				C9DFD47D2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
 				C9766FAD2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
@@ -1994,6 +2001,7 @@
 				9FF0546825681F4A0071E596 /* SecondTicketDetailsViewController.swift in Sources */,
 				9F78D07D256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				C9DFD4B025659BE400BF1740 /* StatsBarChart.swift in Sources */,
+				C99AEEBB259A3CAB005BD447 /* OfficesResponses.swift in Sources */,
 				9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */,
 				C9DFD47E2565721F00BF1740 /* MetricStatsCell.swift in Sources */,
 				C9766FAE2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,

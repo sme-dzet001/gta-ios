@@ -21,6 +21,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getSectionReport
         case getGlobalNews(generationNumber: Int)
         case getSpecialAlerts(generationNumber: Int)
+        case getAllOffices(generationNumber: Int)
         case getHelpDeskData(generationNumber: Int)
         case getQuickHelpData(generationNumber: Int)
         case getTeamContactsData(generationNumber: Int)
@@ -34,6 +35,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getSectionReport: return "/v3/reports/"
                 case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)"
                 case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)"
+                case .getAllOffices(let generationNumber): return "/v3/widgets/all_offices/data/\(generationNumber)"
                 case .getHelpDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)"
                 case .getQuickHelpData(let generationNumber): return "/v3/widgets/gsd_quick_help/data/\(generationNumber)"
                 case .getTeamContactsData(let generationNumber): return "/v3/widgets/gsd_team_contacts/data/\(generationNumber)"
@@ -47,6 +49,8 @@ class APIManager: NSObject, URLSessionDelegate {
     enum WidgetId: String {
         case globalNews = "global_news"
         case specialAlerts = "special_alerts"
+        case allOffices = "all_offices"
+        case officeStatus = "office_status"
         case gsdProfile = "gsd_profile"
         case gsdQuickHelp = "gsd_quick_help"
         case gsdTeamContacts = "gsd_team_contacts"
@@ -72,6 +76,11 @@ class APIManager: NSObject, URLSessionDelegate {
     func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+    }
+    
+    func getAllOffices(generationNumber: Int, completion: ((_ allOfficesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getAllOffices(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
     func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {

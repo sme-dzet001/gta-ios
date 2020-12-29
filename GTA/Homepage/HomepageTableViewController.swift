@@ -14,6 +14,7 @@ protocol HomepageMainDelegate: AnyObject {
 class HomepageTableViewController: UITableViewController {
     
     var dataProvider: HomeDataProvider?
+    var officeLoadingError: String?
         
     var dataSource: [HomepageCellData] = []
     
@@ -26,10 +27,11 @@ class HomepageTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadSpecialAlertsData()
+        loadOfficesData()
     }
     
     private func setHardcodedData() {
-        dataSource = [HomepageCellData(mainText: "Sony Music UK", address: OfficeAddress(address: "9 Derry Street, London, W8 5HY, United Kingdom", phoneNumber: "(480) 555-0103", email: "deanna.curtis@example.com"), infoType : .office), HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautions, etc...", image: "return_to_work", infoType: .returnToWork)/*, HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")*/]
+        dataSource = [HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautions, etc...", image: "return_to_work", infoType: .returnToWork)/*, HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")*/]
     }
     
     private func setUpTableView() {
@@ -50,13 +52,30 @@ class HomepageTableViewController: UITableViewController {
         }
     }
     
+    private func loadOfficesData() {
+        officeLoadingError = nil
+        tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+        dataProvider?.getAllOfficesData { [weak self] (errorCode, error) in
+            DispatchQueue.main.async {
+                if error == nil && errorCode == 200 {
+                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+                } else {
+                    self?.officeLoadingError = "Oops, something went wrong"
+                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+                }
+            }
+        }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return dataProvider?.alertsData.count ?? 0
+        } else if section == 1 {
+            return 1
         } else {
             return dataSource.count
         }
@@ -78,26 +97,35 @@ class HomepageTableViewController: UITableViewController {
             cell?.mainLabel.text = data[indexPath.row].alertHeadline
             cell?.descriptionLabel.text = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
             return cell ?? UITableViewCell()
-        } else {
-            let data = dataSource[indexPath.row]
-            if let _ = data.address {
+        } else if indexPath.section == 1 {
+            let data = dataProvider?.selectedOffice
+            if let officeData = data {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
-                cell?.officeStatusLabel.text = data.mainText
-                cell?.officeAddressLabel.text = data.address?.address
-                cell?.officeNumberLabel.text = data.address?.phoneNumber
-                cell?.officeEmailLabel.text = data.address?.email
+                cell?.officeStatusLabel.text = officeData.officeName
+                cell?.officeAddressLabel.text = officeData.officeLocation
+                cell?.officeNumberLabel.text = "(480) 555-0103"
+                cell?.officeEmailLabel.text = "deanna.curtis@example.com"
                 cell?.separator.isHidden = false
                 return cell ?? UITableViewCell()
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
-                cell?.separator.isHidden = false
-                cell?.iconImageView.image = UIImage(named: data.image ?? "")?.withRenderingMode(data.enabled ? .alwaysOriginal : .alwaysTemplate)
-                cell?.iconImageView.tintColor = data.enabled ? nil : UIColor(hex: 0x9B9B9B)
-                cell?.mainLabel.text = data.mainText
-                cell?.descriptionLabel.text = data.additionalText
-                cell?.mainLabel.textColor = data.enabled ? UIColor.black : UIColor(hex: 0x9B9B9B)
-                return cell ?? UITableViewCell()
+                if let errorStr = officeLoadingError {
+                    let errorCell = createErrorCell(with: errorStr)
+                    return errorCell
+                } else {
+                    let loadingCell = createLoadingCell()
+                    return loadingCell
+                }
             }
+        } else  {
+            let data = dataSource[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
+            cell?.separator.isHidden = false
+            cell?.iconImageView.image = UIImage(named: data.image ?? "")?.withRenderingMode(data.enabled ? .alwaysOriginal : .alwaysTemplate)
+            cell?.iconImageView.tintColor = data.enabled ? nil : UIColor(hex: 0x9B9B9B)
+            cell?.mainLabel.text = data.mainText
+            cell?.descriptionLabel.text = data.additionalText
+            cell?.mainLabel.textColor = data.enabled ? UIColor.black : UIColor(hex: 0x9B9B9B)
+            return cell ?? UITableViewCell()
         }
     }
     
@@ -111,12 +139,13 @@ class HomepageTableViewController: UITableViewController {
             infoViewController.infoType = .info
             infoViewController.title = data.alertSubHeadline
             self.navigationController?.pushViewController(infoViewController, animated: true)
-        } else {
-            guard indexPath.row == 0 else { return }
-            let data = dataSource[indexPath.row]
+        } else if indexPath.section == 1 {
+            guard let dataProvider = dataProvider, let selectedOffice = dataProvider.selectedOffice else { return }
             let infoViewController = InfoViewController()
-            infoViewController.infoType = data.infoType
-            infoViewController.title = data.infoType == .office ? "Sony Music UK" : "What is the current situation?"
+            infoViewController.dataProvider = dataProvider
+            infoViewController.selectedOfficeData = selectedOffice
+            infoViewController.infoType = .office
+            infoViewController.title = selectedOffice.officeName
             self.navigationController?.pushViewController(infoViewController, animated: true)
         }
     }
@@ -127,18 +156,11 @@ struct HomepageCellData {
     var mainText: String?
     var additionalText: String? = nil
     var image: String? = nil
-    var address: OfficeAddress? = nil
     var infoType: infoType = .info
     
     var enabled: Bool {
         return infoType != .returnToWork
     }
-}
-
-struct OfficeAddress {
-    var address: String
-    var phoneNumber: String
-    var email: String
 }
 
 enum infoType {

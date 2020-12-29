@@ -117,6 +117,42 @@ extension UIViewController {
         alertController.addAction(closeAction)
         present(alertController, animated: true, completion: nil)
     }
+    
+    func createErrorCell(with text: String?) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        cell.selectionStyle = .none
+        let label = UILabel(frame: cell.contentView.bounds)
+        cell.contentView.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: cell.contentView, attribute: .top, multiplier: 1.0, constant: 16.0),
+            NSLayoutConstraint(item: label, attribute: .bottom, relatedBy: .equal, toItem: cell.contentView, attribute: .bottom, multiplier: 1.0, constant: -16.0),
+            NSLayoutConstraint(item: label, attribute: .leading, relatedBy: .equal, toItem: cell.contentView, attribute: .leading, multiplier: 1.0, constant: 0.0),
+            NSLayoutConstraint(item: label, attribute: .trailing, relatedBy: .equal, toItem: cell.contentView, attribute: .trailing, multiplier: 1.0, constant: 0.0)
+            ])
+        label.numberOfLines = 0
+        label.font = UIFont(name: "SFProText-Regular", size: 16)!
+        label.textAlignment = .center
+        label.textColor = .black
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.7
+        label.text = text
+        return cell
+    }
+    
+    func createLoadingCell() -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        cell.selectionStyle = .none
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        cell.contentView.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: cell.contentView, attribute: .centerX, multiplier: 1.0, constant: 0.0),
+            NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: cell.contentView, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+            ])
+        activityIndicator.startAnimating()
+        return cell
+    }
 }
 
 extension String {
@@ -179,6 +215,18 @@ extension String {
                                      attributes: [NSAttributedString.Key.font : font],
                                      context: nil)
         return ceil(size.height)
+    }
+}
+
+extension Array where Element: Equatable {
+    func removeDuplicates() -> [Element] {
+        var result = [Element]()
+        for value in self {
+            if !result.contains(value) {
+                result.append(value)
+            }
+        }
+        return result
     }
 }
 

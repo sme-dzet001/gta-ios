@@ -109,7 +109,7 @@ struct SpecialAlertsResponse: Codable {
 
 enum QuantumValue: Codable {
     
-    case int(Int), string(String)
+    case int(Int), string(String), float(Float)
     
     init(from decoder: Decoder) throws {
         if let int = try? decoder.singleValueContainer().decode(Int.self) {
@@ -119,6 +119,11 @@ enum QuantumValue: Codable {
         
         if let string = try? decoder.singleValueContainer().decode(String.self) {
             self = .string(string)
+            return
+        }
+        
+        if let float = try? decoder.singleValueContainer().decode(Float.self) {
+            self = .float(float)
             return
         }
         
@@ -137,6 +142,7 @@ enum QuantumValue: Codable {
         switch self {
         case .int(let value): return value
         case .string(let value): return Int(value)
+        case .float(let value): return Int(value)
         }
     }
     
@@ -144,6 +150,15 @@ enum QuantumValue: Codable {
         switch self {
         case .int(let value): return "\(value)"
         case .string(let value): return value
+        case .float(let value): return "\(value)"
+        }
+    }
+    
+    var floatValue: Float? {
+        switch self {
+        case .int(let value): return Float(value)
+        case .string(let value): return Float(value)
+        case .float(let value): return value
         }
     }
 }

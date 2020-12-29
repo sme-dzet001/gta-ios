@@ -20,12 +20,13 @@ class InfoViewController: UIViewController {
     var dataProvider: HomeDataProvider?
     
     var infoType: infoType = .info
+    var selectedOfficeData: OfficeRow?
     var officeDataSoure: [Hardcode] = []
     var specialAlertData: SpecialAlertRow?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        officeDataSoure = [Hardcode(imageName: "phone_icon", text: "(480) 555-0103"), Hardcode(imageName: "email_icon", text: "deanna.curtis@example.com"), Hardcode(imageName: "location", text: "9 Derry Street, London, W8 5HY, United Kindom"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a Sony location to see current status")]
+        officeDataSoure = [Hardcode(imageName: "phone_icon", text: "(480) 555-0103"), Hardcode(imageName: "email_icon", text: "deanna.curtis@example.com"), Hardcode(imageName: "location", text: selectedOfficeData?.officeLocation ?? "9 Derry Street, London, W8 5HY, United Kindom"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a Sony location to see current status")]
         setUpTableView()
         setupHeaderImageView()
         setNeedsStatusBarAppearanceUpdate()
@@ -150,6 +151,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
             statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
         }
         officeLocation.title = "Select a Sony Music Office Location"
+        officeLocation.dataProvider = dataProvider
         let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
         panModalNavigationController.setNavigationBarHidden(true, animated: true)
         panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight

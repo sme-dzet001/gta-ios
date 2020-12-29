@@ -13,6 +13,7 @@ class HomeDataProvider {
     
     private(set) var newsData = [GlobalNewsRow]()
     private(set) var alertsData = [SpecialAlertRow]()
+    private(set) var allOfficesData = [OfficeRow]()
     
     var newsDataIsEmpty: Bool {
         return newsData.isEmpty
@@ -20,6 +21,14 @@ class HomeDataProvider {
     
     var alertsDataIsEmpty: Bool {
         return alertsData.isEmpty
+    }
+    
+    var allOfficesDataIsEmpty: Bool {
+        return allOfficesData.isEmpty
+    }
+    
+    var selectedOffice: OfficeRow? {
+        return allOfficesData.first
     }
     
     func formImageURL(from imagePath: String?) -> String {
@@ -118,6 +127,57 @@ class HomeDataProvider {
             }
         }
         alertsData = response.data?.rows ?? []
+    }
+    
+    func getAllOfficesData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
+            let reportData = self?.parseSectionReport(data: reportResponse)
+            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.officeStatus.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allOffices.rawValue }?.generationNumber
+            if let generationNumber = generationNumber {
+                self?.apiManager.getAllOffices(generationNumber: generationNumber) { (officesResponse, errorCode, error) in
+                    var allOfficesResponse: AllOfficesResponse?
+                    var retErr = error
+                    if let responseData = officesResponse {
+                        do {
+                            allOfficesResponse = try DataParser.parse(data: responseData)
+                        } catch {
+                            retErr = error
+                        }
+                    }
+                    if let officesResponse = allOfficesResponse {
+                        self?.fillAllOfficesData(with: officesResponse, indexes: self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.allOffices?.columns) ?? [:])
+                    }
+                    completion?(errorCode, retErr)
+                }
+            } else {
+                completion?(errorCode, error)
+            }
+        }
+    }
+    
+    private func fillAllOfficesData(with officesResponse: AllOfficesResponse, indexes: [String : Int]) {
+        var response: AllOfficesResponse = officesResponse
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index].indexes = indexes
+            }
+        }
+        allOfficesData = response.data?.rows ?? []
+    }
+    
+    func getAllOfficeRegions() -> [String] {
+        let regions = allOfficesData.compactMap { $0.officeRegion }
+        return regions.removeDuplicates().sorted()
+    }
+    
+    func getOffices(for region: String) -> [OfficeRow] {
+        let selectedRegionOffices = allOfficesData.filter { $0.officeRegion == region }
+        let sortedOffices = selectedRegionOffices.sorted { ($0.officeName ?? "") < ($1.officeName ?? "") }
+        return sortedOffices
+    }
+    
+    func getOfficeNames(for region: String) -> [String] {
+        return getOffices(for: region).compactMap { $0.officeName }
     }
     
     private func parseSectionReport(data: Data?) -> ReportDataResponse? {

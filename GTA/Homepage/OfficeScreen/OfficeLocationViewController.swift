@@ -20,8 +20,9 @@ class OfficeLocationViewController: UIViewController {
     private let defaultBackButtonLeading: CGFloat = 24
     
     var selectionIsOn: Bool = true
-    var countryDataSource: [Hardcode] = []
+    var dataProvider: HomeDataProvider?
     var regionDataSource: [Hardcode] = []
+    var officeDataSource: [Hardcode] = []
     private var heightObserver: NSKeyValueObservation?
     
     override func viewDidLoad() {
@@ -33,7 +34,7 @@ class OfficeLocationViewController: UIViewController {
             self.view.layoutIfNeeded()
         }
         
-        setHardcodeData()
+        setDataSource()
         titleLabel.text = title
     }
     
@@ -58,10 +59,9 @@ class OfficeLocationViewController: UIViewController {
         self.view.layoutIfNeeded()
     }
     
-    private func setHardcodeData() {
-        countryDataSource = [Hardcode(imageName: "", text: "Use My Current Location", additionalText: "Will display office based on your current location"), Hardcode(imageName: "", text: "North American Region Office"), Hardcode(imageName: "", text: "South American Region Office"), Hardcode(imageName: "", text: "UK & EU Regional Office"), Hardcode(imageName: "", text: "Asia & Aus Regional Offices"), Hardcode(imageName: "", text: "Japan Regional Offices")]
-        
-        regionDataSource = [Hardcode(imageName: "", text: "New York", additionalText: "25 Madison Avenue, New York, NY"), Hardcode(imageName: "", text: "Culver City", additionalText: "10202 Washington Blvd, Culver City, CA"), Hardcode(imageName: "", text: "Lyndhurst", additionalText: "210 Clay Avenue, Lyndhurst, NJ"), Hardcode(imageName: "", text: "New York", additionalText: "25 Madison Avenue, New York, NY"), Hardcode(imageName: "", text: "Culver City", additionalText: "10202 Washington Blvd, Culver City, CA"), Hardcode(imageName: "", text: "Lyndhurst", additionalText: "210 Clay Avenue, Lyndhurst, NJ"), Hardcode(imageName: "", text: "New York", additionalText: "25 Madison Avenue, New York, NY"), Hardcode(imageName: "", text: "New York", additionalText: "25 Madison Avenue, New York, NY")]
+    private func setDataSource() {
+        let regionsData = dataProvider?.getAllOfficeRegions().compactMap { Hardcode(imageName: "", text: $0) } ?? []
+        regionDataSource = [Hardcode(imageName: "", text: "Use My Current Location", additionalText: "Will display office based on your current location")] + regionsData
     }
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
@@ -91,7 +91,7 @@ class OfficeLocationViewController: UIViewController {
 extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectionIsOn ? countryDataSource.count : regionDataSource.count
+        return selectionIsOn ? regionDataSource.count : officeDataSource.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -100,9 +100,9 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if selectionIsOn {
-            return provideCountryCell(for: indexPath)
+            return provideRegionCell(for: indexPath)
         }
-        return provideRegionCell(for: indexPath)
+        return provideOfficeCell(for: indexPath)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -116,7 +116,7 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         
     }
     
-    func provideCountryCell(for indexPath: IndexPath) -> UITableViewCell {
+    func provideRegionCell(for indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
             cell?.mainLabel.text = "Use My Current Location"
@@ -128,14 +128,14 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeInfoCell", for: indexPath) as? OfficeInfoCell
         cell?.iconImageView.image = UIImage(named: "region_icon")
-        cell?.infoLabel?.text = countryDataSource[indexPath.row].text
+        cell?.infoLabel?.text = regionDataSource[indexPath.row].text
         return cell ?? UITableViewCell()
     }
     
-    func provideRegionCell(for indexPath: IndexPath) -> UITableViewCell {
+    func provideOfficeCell(for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
-        cell?.mainLabel.text = regionDataSource[indexPath.row].text
-        cell?.descriptionLabel.text = regionDataSource[indexPath.row].additionalText
+        cell?.mainLabel.text = officeDataSource[indexPath.row].text
+        cell?.descriptionLabel.text = officeDataSource[indexPath.row].additionalText
         cell?.iconImageView.image = UIImage(named: "location")
         cell?.separator.isHidden = false
         cell?.arrowIcon.isHidden = true
@@ -147,9 +147,10 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         guard selectionIsOn, indexPath.row != 0 else { return }
         let office = OfficeLocationViewController()
         office.selectionIsOn = false
-        office.title = countryDataSource[indexPath.row].text
+        office.title = regionDataSource[indexPath.row].text
+        let officesList = dataProvider?.getOffices(for: regionDataSource[indexPath.row].text).compactMap { officeRow in Hardcode(imageName: "", text: officeRow.officeName ?? "", additionalText: officeRow.officeLocation ?? "") } ?? []
+        office.officeDataSource = officesList
         self.navigationController?.pushWithFadeAnimationVC(office)
-        //self.navigationController?.pushViewController(office, animated: true)
     }
     
 }
