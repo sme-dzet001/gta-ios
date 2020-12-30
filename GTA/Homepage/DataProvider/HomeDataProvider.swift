@@ -15,6 +15,7 @@ class HomeDataProvider {
     private(set) var newsData = [GlobalNewsRow]()
     private(set) var alertsData = [SpecialAlertRow]()
     private(set) var allOfficesData = [OfficeRow]()
+    private var selectedOfficeId: Int?
     
     var newsDataIsEmpty: Bool {
         return newsData.isEmpty
@@ -28,8 +29,17 @@ class HomeDataProvider {
         return allOfficesData.isEmpty
     }
     
-    var selectedOffice: OfficeRow? {
+    private var defaultOffice: OfficeRow? {
         return allOfficesData.first
+    }
+    
+    private var selectedOffice: OfficeRow? {
+        guard let officeId = selectedOfficeId else { return nil }
+        return allOfficesData.first { $0.officeId == officeId }
+    }
+    
+    var userOffice: OfficeRow? {
+        return selectedOffice ?? defaultOffice
     }
     
     func formImageURL(from imagePath: String?) -> String {
@@ -170,6 +180,8 @@ class HomeDataProvider {
         alertsData = response.data?.rows ?? []
     }
     
+    // MARK: - Office related methods
+    
     func getAllOfficesData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
             if let _ = data {
@@ -240,6 +252,35 @@ class HomeDataProvider {
     func getOfficeNames(for region: String) -> [String] {
         return getOffices(for: region).compactMap { $0.officeName }
     }
+    
+    func getCurrentOffice(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        apiManager.getCurrentOffice { [weak self] (response, errorCode, error) in
+            var userPreferencesResponse: UserPreferencesResponse?
+            var retErr = error
+            if let responseData = response {
+                do {
+                    userPreferencesResponse = try DataParser.parse(data: responseData)
+                } catch {
+                    retErr = error
+                }
+            }
+            if let userPreferencesResponse = userPreferencesResponse {
+                self?.selectedOfficeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
+            }
+            completion?(errorCode, retErr)
+        }
+    }
+    
+    func setCurrentOffice(officeId: Int, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        apiManager.setCurrentOffice(officeId: officeId) { [weak self] (response, errorCode, error) in
+            if let _ = response, errorCode == 200, error == nil {
+                self?.selectedOfficeId = officeId
+            }
+            completion?(errorCode, error)
+        }
+    }
+    
+    // MARK: - Common methods
     
     private func parseSectionReport(data: Data?) -> ReportDataResponse? {
         var reportDataResponse: ReportDataResponse?
