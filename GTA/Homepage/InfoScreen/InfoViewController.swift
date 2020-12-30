@@ -63,6 +63,7 @@ class InfoViewController: UIViewController {
     private func setupHeaderImageView() {
         if let alertData = specialAlertData {
             headerImageView.image = nil
+            headerImageView.contentMode = .scaleAspectFit
             if let imageURL = dataProvider?.formImageURL(from: alertData.posterUrl), let url = URL(string: imageURL) {
                 dataProvider?.getPosterImageData(from: url) { [weak self] (data, error) in
                     if let imageData = data, error == nil {
@@ -74,6 +75,7 @@ class InfoViewController: UIViewController {
             screenTitleLabel.text = specialAlertData?.alertHeadline
         } else {
             headerImageView.image = UIImage(named: "office")
+            headerImageView.contentMode = .scaleAspectFill
             screenTitleLabel.text = "Office"
         }
     }
