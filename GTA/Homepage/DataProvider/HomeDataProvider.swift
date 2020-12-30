@@ -45,7 +45,21 @@ class HomeDataProvider {
     
     func formNewsBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
         guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
-        return NSMutableAttributedString(attributedString: htmlAttrString)
+        
+        let res = NSMutableAttributedString(attributedString: htmlAttrString)
+        
+        guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return res }
+        
+        let wholeRange = NSRange(res.string.startIndex..., in: res.string)
+        let matches = (mailRegex.matches(in: res.string, options: [], range: wholeRange))
+        for match in matches {
+            guard let mailLinkRange = Range(match.range, in: res.string) else { continue }
+            let mailLinkStr = res.string[mailLinkRange]
+            if let linkUrl = URL(string: "mailto:\(mailLinkStr)") {
+                res.addAttribute(.link, value: linkUrl, range: match.range)
+            }
+        }
+        return res
     }
     
     func formatDateString(dateString: String?, initialDateFormat: String) -> String? {
