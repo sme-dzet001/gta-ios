@@ -113,44 +113,44 @@ struct AppDetailsData: Codable {
     
     var indexes: [String : Int] = [:]
     
-    private var values: [QuantumValue]? {
+    private var values: [QuantumValue?]? {
         let rows = data?.first?.value.first?.value.data?.rows?.first?.values
         return rows
     }
     
     var appTitle: String? {
         guard let _ = values, let index = indexes["app_title"], values!.count > index else { return nil }
-        return values?[index].stringValue
+        return values?[index]?.stringValue
     }
     
     var appDescription: String? {
         guard let _ = values, let index = indexes["app_desc"], values!.count > index else { return nil }
-        return values?[index].stringValue
+        return values?[index]?.stringValue
     }
     
     var appSupportEmail: String? {
         guard let _ = values, let index = indexes["app_support_email"], values!.count > index else { return nil }
-        return values?[index].stringValue
+        return values?[index]?.stringValue
     }
     
     var appWikiUrl: String? {
         guard let _ = values, let index = indexes["app_wiki_url"], values!.count > index else { return nil }
-        return values?[index].stringValue
+        return values?[index]?.stringValue
     }
     
     var appJiraSupportUrl: String? {
         guard let _ = values, let index = indexes["app_jira_support_url"], values!.count > index else { return nil }
-        return values?[index].stringValue
+        return values?[index]?.stringValue
     }
     
     var appSupportPolicy: String? {
         guard let _ = values, let index = indexes["app_support_policy"], values!.count > index else { return nil }
-        return values?[index].stringValue
+        return values?[index]?.stringValue
     }
     
     var appTeamContact: String? {
         guard let _ = values, let index = indexes["app_team_contact"], values!.count > index else { return nil }
-        return values?[index].stringValue
+        return values?[index]?.stringValue
     }
     
     enum CodingKeys: String, CodingKey {
@@ -167,5 +167,5 @@ struct AppDetailsDataRows: Codable {
 }
 
 struct AppDetailsValues: Codable {
-    var values: [QuantumValue]?
+    var values: [QuantumValue?]?
 }

@@ -213,7 +213,7 @@ class HelpDeskDataProvider {
     
     private func cacheData(_ data: Data?, path: CacheManager.path) {
         guard let _ = data else { return }
-        cacheManager.cacheResponse(responseData: data!, requestURI: path.rawValue) { (error) in
+        cacheManager.cacheResponse(responseData: data!, requestURI: path.endpoint) { (error) in
             if let error = error {
                 print("Function: \(#function), line: \(#line), message: \(error.localizedDescription)")
             }
@@ -221,7 +221,7 @@ class HelpDeskDataProvider {
     }
     
     private func getCachedResponse(for path: CacheManager.path, completion: @escaping ((_ data: Data?, _ error: Error?) -> Void)) {
-        cacheManager.getCachedResponse(requestURI: path.rawValue, completion: completion)
+        cacheManager.getCachedResponse(requestURI: path.endpoint, completion: completion)
     }
     
 }
