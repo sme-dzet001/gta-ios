@@ -226,6 +226,28 @@ public class KeychainManager: NSObject {
         return false
     }
     
+    class func decreaseAttemptsLeft() -> Int {
+        guard var keychainData = getPin() else { return 0 }
+        keychainData.pinVerificationAttemptsLeft -= 1
+        if keychainData.pinVerificationAttemptsLeft < 1 {
+            deletePinData()
+            return 0
+        }
+        let _ = updatePinData(pinData: keychainData)
+        return keychainData.pinVerificationAttemptsLeft
+    }
+    
+    class func getVerificationsAttemptsLeft() -> Int {
+        guard let keychainData = getPin() else { return 0 }
+        return keychainData.pinVerificationAttemptsLeft
+    }
+    
+    class func resetVerificationAttempts(){
+        guard var keychainData = getPin() else { return }
+        keychainData.pinVerificationAttemptsLeft = pinVerificationAttemptsCount
+        _ = updatePinData(pinData: keychainData)
+    }
+    
     class func getCachePassword() -> String? {
         let query = [
             kSecClass as String       : kSecClassGenericPassword,

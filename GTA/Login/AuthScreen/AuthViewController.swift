@@ -162,6 +162,9 @@ class AuthViewController: UIViewController {
                 self.pinCodeBoxes.forEach { (box) in
                     box.text = ""
                 }
+                if KeychainManager.decreaseAttemptsLeft() < 1 {
+                    self.logout()
+                }
             }))
             self.present(ac, animated: true)
         }
