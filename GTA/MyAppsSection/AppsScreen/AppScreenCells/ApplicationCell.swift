@@ -27,6 +27,8 @@ class ApplicationCell: UITableViewCell {
         }
         if let image = data.imageData {
             appIcon.image = UIImage(data: image)
+        } else if data.isImageDataEmpty {
+            appIcon.image = UIImage(named: "gta_logo")
         }
         appName.text = data.app_title
         if hideStatusView {
