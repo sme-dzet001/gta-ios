@@ -110,14 +110,7 @@ class AuthViewController: UIViewController {
     }
     
     @IBAction func logoutButtonDidPressed(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Confirm Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (_) in
-            self?.performLogout()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true)
+        performLogout()
     }
     
     private func performLogout() {
@@ -220,7 +213,7 @@ class AuthViewController: UIViewController {
             logoImageView.isHidden = true
             titleLabel.isHidden = true
         }
-        backButtonTop.constant = 28 + -self.view.frame.origin.y
+        backButtonTop.constant = 16 + -self.view.frame.origin.y
         self.view.layoutIfNeeded()
     }
     
@@ -235,7 +228,7 @@ class AuthViewController: UIViewController {
         self.view.frame.origin.y = 0
         self.logoImageViewTop.constant = 40
         self.logoutBottomConstraint.constant = 16
-        backButtonTop.constant = 28
+        backButtonTop.constant = 16
         self.logoImageView.isHidden = false
         self.titleLabel.isHidden = false
         loginLabelCenterY.isActive = true
