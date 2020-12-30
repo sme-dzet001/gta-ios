@@ -67,6 +67,12 @@ class MyAppsDataProvider {
         })
     }
     
+    func getAppContactsData(for app: String?, completion: ((_ responseData: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.processAppContactsSectionReport(app, reportResponse, errorCode, error, false, completion)
+        })
+    }
+    
     private func cacheData(_ data: Data?, path: CacheManager.path) {
         guard let _ = data else { return }
         cacheManager.cacheResponse(responseData: data!, requestURI: path.endpoint) { (error) in
@@ -195,6 +201,39 @@ class MyAppsDataProvider {
             apiManager.getAllApps(for: generationNumber!, completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAllAppsData)
                 self?.processAllApps(reportData, data, errorCode, error, completion)
+            })
+        } else {
+            completion?(nil, errorCode, error)
+        }
+    }
+    
+    private func processAppContacts(_ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ appContactsData: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var appContactsData: AppContactsData?
+        var retErr = error
+        if let responseData = appContactsDataResponse {
+            do {
+                appContactsData = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = error
+            }
+        }
+        appContactsData?.indexes = getDataIndexes(columns: reportData?.meta.widgetsDataSource?.appContacts?.columns)
+        completion?(appContactsData, errorCode, retErr)
+    }
+    
+    private func processAppContactsSectionReport(_ app: String?, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ responseData: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appContacts.rawValue }?.generationNumber
+        if let _ = generationNumber {
+            let contactsPath = (KeychainManager.getUsername() ?? "") + "/" + (app ?? "")
+            getCachedResponse(for: .getAppContacts(contactsPath: contactsPath)) {[weak self] (data, error) in
+                if let _ = data {
+                    self?.processAppContacts(reportData, data, errorCode, error, completion)
+                }
+            }
+            apiManager.getAppContactsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getAppContacts(contactsPath: contactsPath))
+                self?.processAppContacts(reportData, data, errorCode, error, completion)
             })
         } else {
             completion?(nil, errorCode, error)

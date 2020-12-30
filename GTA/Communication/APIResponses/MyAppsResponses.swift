@@ -108,6 +108,31 @@ struct ChartData {
     var value: Int?
 }
 
+struct AppContactsData: Codable {
+    var data: [String : [String : UserData]]?
+    
+    var indexes: [String : Int] = [:]
+    
+    var contactsData: [ContactData]? {
+        guard let appContactRows = data?.first?.value.first?.value.data?.rows else { return nil }
+        guard let appContactTitleIdx = indexes["app_contact_title"] else { return nil }
+        guard let appContactNameIdx = indexes["app_contact_name"] else { return nil }
+        guard let appContactEmailIdx = indexes["app_contact_email"] else { return nil }
+        let res = appContactRows.map({ (appContact) -> ContactData in
+            guard let values = appContact.values else { return ContactData() }
+            guard let appContactTitle = values[appContactTitleIdx]?.stringValue else { return ContactData() }
+            guard let appContactName = values[appContactNameIdx]?.stringValue else { return ContactData() }
+            guard let appContactEmail = values[appContactEmailIdx]?.stringValue else { return ContactData() }
+            return ContactData(contactName: appContactName, contactPosition: appContactTitle, phoneNumber: "", email: appContactEmail)
+        })
+        return res
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case data
+    }
+}
+
 struct AppDetailsData: Codable {
     var data: [String : [String : UserData]]?
     

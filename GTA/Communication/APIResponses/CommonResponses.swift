@@ -33,6 +33,7 @@ struct WidgetsDataSource: Codable {
     var myAppsStatus: WidgetsDataSourceColumns?
     var allApps: WidgetsDataSourceColumns?
     var appDetails: WidgetsDataSourceColumns?
+    var appContacts: WidgetsDataSourceColumns?
     
     enum CodingKeys: String, CodingKey {
         case globalNews = "global_news"
@@ -45,6 +46,7 @@ struct WidgetsDataSource: Codable {
         case myAppsStatus = "my_apps_status"
         case allApps = "all_apps"
         case appDetails = "app_details"
+        case appContacts = "app_contacts"
     }
     
 }
