@@ -100,7 +100,7 @@
                             </constraints>
                             <color key="textColor" red="0.54117647059999996" green="0.54117647059999996" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" secureTextEntry="YES" textContentType="name"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" secureTextEntry="YES" textContentType="cc-number"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="leadingTextInset">
                                     <real key="value" value="0.0"/>
@@ -124,7 +124,7 @@
                             <color key="backgroundColor" red="0.72156862749999995" green="0.72156862749999995" blue="0.80000000000000004" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <color key="textColor" red="0.54117647059999996" green="0.54117647059999996" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" secureTextEntry="YES" textContentType="name"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" secureTextEntry="YES" textContentType="cc-number"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="leadingTextInset">
                                     <real key="value" value="0.0"/>
@@ -148,7 +148,7 @@
                             <color key="backgroundColor" red="0.72156862749999995" green="0.72156862749999995" blue="0.80000000000000004" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <color key="textColor" red="0.54117647059999996" green="0.54117647059999996" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" secureTextEntry="YES" textContentType="name"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" secureTextEntry="YES" textContentType="cc-number"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="leadingTextInset">
                                     <real key="value" value="0.0"/>
@@ -172,7 +172,7 @@
                             <color key="backgroundColor" red="0.72156862749999995" green="0.72156862749999995" blue="0.80000000000000004" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <color key="textColor" red="0.54117647059999996" green="0.54117647059999996" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" secureTextEntry="YES" textContentType="cc-number"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="leadingTextInset">
                                     <real key="value" value="0.0"/>
@@ -196,7 +196,7 @@
                             <color key="backgroundColor" red="0.72156862749999995" green="0.72156862749999995" blue="0.80000000000000004" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <color key="textColor" red="0.54117647059999996" green="0.54117647059999996" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" secureTextEntry="YES" textContentType="name"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" secureTextEntry="YES" textContentType="cc-number"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="leadingTextInset">
                                     <real key="value" value="0.0"/>
@@ -220,7 +220,7 @@
                             <color key="backgroundColor" red="0.72156862749999995" green="0.72156862749999995" blue="0.80000000000000004" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <color key="textColor" red="0.54117647059999996" green="0.54117647059999996" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" secureTextEntry="YES" textContentType="name"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" secureTextEntry="YES" textContentType="cc-number"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="leadingTextInset">
                                     <real key="value" value="0.0"/>
