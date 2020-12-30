@@ -148,7 +148,6 @@ class MyAppsDataProvider {
             }
         }
         myAppsResponse?.indexes = getDataIndexes(columns: reportData?.meta.widgetsDataSource?.myAppsStatus?.columns)
-        let sddssd = String(data: myAppsDataResponse!, encoding: .utf8)
         completion?(myAppsResponse, errorCode, retErr)
     }
     
