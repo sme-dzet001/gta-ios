@@ -59,23 +59,32 @@ class HomeDataProvider {
     }
     
     func getGlobalNewsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
-            self?.cacheData(reportResponse, path: .getSpecialAlerts)
-            let reportData = self?.parseSectionReport(data: reportResponse)
-            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalNews.rawValue }?.generationNumber
-            if let generationNumber = generationNumber {
-                self?.getCachedResponse(for: .getGlobalNews) { (data, error) in
-                    if let _ = data {
-                        self?.processGlobalNews(newsResponse: data, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
-                    }
-                }
-                self?.apiManager.getGlobalNews(generationNumber: generationNumber) { (newsResponse, errorCode, error) in
-                    self?.cacheData(newsResponse, path: .getGlobalNews)
-                    self?.processGlobalNews(newsResponse: newsResponse, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
-                }
-            } else {
-                completion?(errorCode, error)
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
+            if let _ = data {
+                self?.processGlobalNewsSectionReport(data, 200, error, completion)
             }
+        }
+        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
+            self?.processGlobalNewsSectionReport(reportResponse, errorCode, error, completion)
+        }
+    }
+    
+    private func processGlobalNewsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalNews.rawValue }?.generationNumber
+        if let generationNumber = generationNumber {
+            getCachedResponse(for: .getGlobalNews) { [weak self] (data, error) in
+                if let _ = data {
+                    self?.processGlobalNews(newsResponse: data, reportDataResponse: reportData, error: error, errorCode: 200, completion: completion)
+                }
+            }
+            apiManager.getGlobalNews(generationNumber: generationNumber) { [weak self] (newsResponse, errorCode, error) in
+                self?.cacheData(newsResponse, path: .getGlobalNews)
+                self?.processGlobalNews(newsResponse: newsResponse, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
+            }
+        } else {
+            completion?(errorCode, error)
         }
     }
     
@@ -121,7 +130,7 @@ class HomeDataProvider {
         completion?(errorCode, retErr)
     }
     
-    private func processSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processSpecialAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.specialAlerts.rawValue }?.generationNumber
         if let generationNumber = generationNumber {
@@ -142,12 +151,12 @@ class HomeDataProvider {
     func getSpecialAlertsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
             if let _ = data {
-                self?.processSectionReport(data, 200, error, completion)
+                self?.processSpecialAlertsSectionReport(data, 200, error, completion)
             }
         }
         apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
             self?.cacheData(reportResponse, path: .getSectionReport)
-            self?.processSectionReport(reportResponse, errorCode, error, completion)
+            self?.processSpecialAlertsSectionReport(reportResponse, errorCode, error, completion)
         })
     }
     
@@ -162,29 +171,49 @@ class HomeDataProvider {
     }
     
     func getAllOfficesData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
-            let reportData = self?.parseSectionReport(data: reportResponse)
-            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.officeStatus.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allOffices.rawValue }?.generationNumber
-            if let generationNumber = generationNumber {
-                self?.apiManager.getAllOffices(generationNumber: generationNumber) { (officesResponse, errorCode, error) in
-                    var allOfficesResponse: AllOfficesResponse?
-                    var retErr = error
-                    if let responseData = officesResponse {
-                        do {
-                            allOfficesResponse = try DataParser.parse(data: responseData)
-                        } catch {
-                            retErr = error
-                        }
-                    }
-                    if let officesResponse = allOfficesResponse {
-                        self?.fillAllOfficesData(with: officesResponse, indexes: self?.getDataIndexes(columns: reportData?.meta.widgetsDataSource?.allOffices?.columns) ?? [:])
-                    }
-                    completion?(errorCode, retErr)
-                }
-            } else {
-                completion?(errorCode, error)
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
+            if let _ = data {
+                self?.processAllOfficesSectionReport(data, 200, error, completion)
             }
         }
+        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
+            self?.processAllOfficesSectionReport(reportResponse, errorCode, error, completion)
+        }
+    }
+    
+    private func processAllOfficesSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.officeStatus.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allOffices.rawValue }?.generationNumber
+        if let generationNumber = generationNumber {
+            getCachedResponse(for: .getAllOffices) {[weak self] (data, error) in
+                if let _ = data {
+                    self?.processAllOffices(reportData, data, 200, error, completion)
+                }
+            }
+            apiManager.getAllOffices(generationNumber: generationNumber) { [weak self] (officesResponse, errorCode, error) in
+                self?.cacheData(officesResponse, path: .getAllOffices)
+                self?.processAllOffices(reportData, officesResponse, errorCode, error, completion)
+            }
+        } else {
+            completion?(errorCode, error)
+        }
+    }
+    
+    private func processAllOffices(_ reportData: ReportDataResponse?, _ officesResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var allOfficesResponse: AllOfficesResponse?
+        var retErr = error
+        if let responseData = officesResponse {
+            do {
+                allOfficesResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = error
+            }
+        }
+        if let officesResponse = allOfficesResponse {
+            fillAllOfficesData(with: officesResponse, indexes: getDataIndexes(columns: reportData?.meta.widgetsDataSource?.allOffices?.columns) )
+        }
+        completion?(errorCode, retErr)
     }
     
     private func fillAllOfficesData(with officesResponse: AllOfficesResponse, indexes: [String : Int]) {

@@ -80,7 +80,7 @@ class HelpDeskDataProvider {
         completion?(errorCode, retErr)
     }
     
-    private func processSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processQuickHelpSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdQuickHelp.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdQuickHelp.rawValue }?.generationNumber
         if let generationNumber = generationNumber {
@@ -102,12 +102,12 @@ class HelpDeskDataProvider {
     func getQuickHelpData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
             if let _ = data {
-                self?.processSectionReport(data, 200, error, false, completion)
+                self?.processQuickHelpSectionReport(data, 200, error, false, completion)
             }
         }
         apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
             self?.cacheData(reportResponse, path: .getSectionReport)
-            self?.processSectionReport(reportResponse, errorCode, error, false, completion)
+            self?.processQuickHelpSectionReport(reportResponse, errorCode, error, false, completion)
         })
     }
     
