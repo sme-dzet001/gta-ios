@@ -143,12 +143,12 @@ class HelpDeskDataProvider {
         if let generationNumber = generationNumber {
             getCachedResponse(for: .getTeamContactsData) {[weak self] (data, error) in
                 if let _ = data {
-                    self?.processTeamContacts(reportData, data, 200, error)
+                    self?.processTeamContacts(reportData, data, 200, error, completion)
                 }
             }
             apiManager.getTeamContacts(generationNumber: generationNumber, completion: { [weak self] (teamContactsResponse, errorCode, error) in
                 self?.cacheData(teamContactsResponse, path: .getTeamContactsData)
-                self?.processTeamContacts(reportData, teamContactsResponse, errorCode, error)
+                self?.processTeamContacts(reportData, teamContactsResponse, errorCode, error, completion)
             })
         } else {
             completion?(errorCode, error)
