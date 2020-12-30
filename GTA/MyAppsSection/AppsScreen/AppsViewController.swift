@@ -138,15 +138,17 @@ extension AppsViewController: AppImageDelegate {
                 if cellDataObject.app_name == appName {
                     dataSource[index].cellData[cellDataIndex].imageData = data
                     dataSource[index].cellData[cellDataIndex].isImageDataEmpty = data == nil
-                    reloadTableViewRow(for: IndexPath(row: cellDataIndex, section: index))
+                    setCellImageView(for: IndexPath(row: cellDataIndex, section: index))
                 }
             }
         }
     }
     
-    private func reloadTableViewRow(for indexPath: IndexPath) {
+    private func setCellImageView(for indexPath: IndexPath) {
         DispatchQueue.main.async {
-            self.tableView.reloadRows(at: [indexPath], with: .none)
+            if let cell = self.tableView.cellForRow(at: indexPath) as? ApplicationCell {
+                cell.setUpCell(with: self.dataSource[indexPath.section].cellData[indexPath.row], hideStatusView: self.dataSource[indexPath.section].sectionName == "Other Apps")
+            }
         }
     }
     
