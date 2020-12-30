@@ -157,7 +157,7 @@ class AuthViewController: UIViewController {
         if KeychainManager.isPinValid(pin: getCodeFromBoxes()) {
             authentificatePassed()
         } else {
-            let ac = UIAlertController(title: "Authentication failed", message: "Wrong pincode", preferredStyle: .alert)
+            let ac = UIAlertController(title: "Wrong PIN", message: "Entered pin code is incorrect", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
                 self.pinCodeBoxes.forEach { (box) in
                     box.text = ""
