@@ -133,22 +133,22 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
 extension AppsViewController: AppImageDelegate {
     
     func setImage(with data: Data?, for appName: String?) {
-        for (index, element) in dataSource.enumerated() {
-            for (cellDataIndex, cellDataObject) in element.cellData.enumerated() {
-                if cellDataObject.app_name == appName {
-                    dataSource[index].cellData[cellDataIndex].imageData = data
-                    dataSource[index].cellData[cellDataIndex].isImageDataEmpty = data == nil
-                    setCellImageView(for: IndexPath(row: cellDataIndex, section: index))
+        DispatchQueue.main.async {
+            for (index, element) in self.dataSource.enumerated() {
+                for (cellDataIndex, cellDataObject) in element.cellData.enumerated() {
+                    if cellDataObject.app_name == appName, self.dataSource[index].cellData[cellDataIndex].imageData == nil {
+                        self.dataSource[index].cellData[cellDataIndex].imageData = data
+                        self.dataSource[index].cellData[cellDataIndex].isImageDataEmpty = data == nil
+                        self.setCellImageView(for: IndexPath(row: cellDataIndex, section: index))
+                    }
                 }
             }
         }
     }
     
     private func setCellImageView(for indexPath: IndexPath) {
-        DispatchQueue.main.async {
-            if let cell = self.tableView.cellForRow(at: indexPath) as? ApplicationCell {
-                cell.setUpCell(with: self.dataSource[indexPath.section].cellData[indexPath.row], hideStatusView: self.dataSource[indexPath.section].sectionName == "Other Apps")
-            }
+        if let cell = self.tableView.cellForRow(at: indexPath) as? ApplicationCell {
+            cell.setUpCell(with: self.dataSource[indexPath.section].cellData[indexPath.row], hideStatusView:self.dataSource[indexPath.section].sectionName == "Other Apps")
         }
     }
     
