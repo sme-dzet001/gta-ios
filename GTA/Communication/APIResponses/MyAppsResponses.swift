@@ -70,7 +70,7 @@ struct MyAppsRows: Codable {
 }
 
 struct MyAppsValues: Codable {
-    var values: [QuantumValue]?
+    var values: [QuantumValue?]?
 }
 
 

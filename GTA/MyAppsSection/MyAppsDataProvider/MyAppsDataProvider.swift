@@ -119,8 +119,8 @@ class MyAppsDataProvider {
         for (index, info) in commonResponse!.enumerated() {
             let appNameIndex = appsStatus?.indexes["app_name"] ?? 0
             let statusIndex = appsStatus?.indexes["status"] ?? 0
-            let status = appsStatus!.values?.first(where: {$0.values?[appNameIndex].stringValue == info.app_name})
-            response![index].appStatus = SystemStatus(status: status?.values?[statusIndex].stringValue)
+            let status = appsStatus!.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name})
+            response![index].appStatus = SystemStatus(status: status?.values?[statusIndex]?.stringValue)
             if let _ = status {
                 myAppsSection.cellData.append(response![index])
             } else {
@@ -148,6 +148,7 @@ class MyAppsDataProvider {
             }
         }
         myAppsResponse?.indexes = getDataIndexes(columns: reportData?.meta.widgetsDataSource?.myAppsStatus?.columns)
+        let sddssd = String(data: myAppsDataResponse!, encoding: .utf8)
         completion?(myAppsResponse, errorCode, retErr)
     }
     
