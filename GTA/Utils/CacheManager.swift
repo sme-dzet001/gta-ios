@@ -48,17 +48,32 @@ class CacheManager {
         }
     }
     
-    enum path: String {
-        case getSectionReport = "/v3/reports/"
-        case getGlobalNews = "/v3/widgets/global_news/data/"
-        case getSpecialAlerts = "/v3/widgets/special_alerts/data/"
-        case getAllOffices = "/v3/widgets/all_offices/data/"
-        case getHelpDeskData = "/v3/widgets/gsd_profile/data/"
-        case getQuickHelpData = "/v3/widgets/gsd_quick_help/data/"
-        case getTeamContactsData = "/v3/widgets/gsd_team_contacts/data/"
-        case getMyAppsData = "/v3/widgets/my_apps_status/data/"
-        case getAllAppsData = "/v3/widgets/all_apps/data/"
-        case getAppDetails = "/v3/widgets/app_details/data/"
+    enum path {
+        case getSectionReport// = "/v3/reports/"
+        case getGlobalNews// = "/v3/widgets/global_news/data/"
+        case getSpecialAlerts// = "/v3/widgets/special_alerts/data/"
+        case getAllOffices// = "/v3/widgets/all_offices/data/"
+        case getHelpDeskData// = "/v3/widgets/gsd_profile/data/"
+        case getQuickHelpData// = "/v3/widgets/gsd_quick_help/data/"
+        case getTeamContactsData// = "/v3/widgets/gsd_team_contacts/data/"
+        case getMyAppsData// = "/v3/widgets/my_apps_status/data/"
+        case getAllAppsData// = "/v3/widgets/all_apps/data/"
+        case getAppDetails(detailsPath: String)// = "/v3/widgets/app_details/data/"
+        
+        var endpoint: String {
+            switch self {
+            case .getSectionReport: return "/v3/reports/"
+            case .getGlobalNews: return "/v3/widgets/global_news/data/"
+            case .getSpecialAlerts: return "/v3/widgets/special_alerts/data/"
+            case .getAllOffices: return "/v3/widgets/all_offices/data/"
+            case .getHelpDeskData: return "/v3/widgets/gsd_profile/data/"
+            case .getQuickHelpData: return "/v3/widgets/gsd_quick_help/data/"
+            case .getTeamContactsData: return "/v3/widgets/gsd_team_contacts/data/"
+            case .getMyAppsData: return "/v3/widgets/my_apps_status/data/"
+            case .getAllAppsData: return "/v3/widgets/all_apps/data/"
+            case .getAppDetails(let detailsPath): return "/v3/widgets/app_details/data/\(detailsPath)"
+            }
+        }
     }
     
     private func getCachePath(requestURI: String, formatVersion: Int32, createIfNotExists: Bool = true, completion: @escaping ((_ path: String?, _ error: Error?) -> Void)) {
