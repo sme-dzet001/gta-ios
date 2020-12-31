@@ -8,27 +8,58 @@
 import Foundation
 import CoreLocation
 
-class UserLocationManager {
+protocol UserLocationManagerDelegate: class {
+    func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?)
+}
+
+class UserLocationManager: NSObject {
     
     private let locationManager = CLLocationManager()
     private var currentLocation: CLLocation?
+    var officesCoordArray = [(lat: Float, long: Float)]()
     
-    private func getCurrentUserLocation() {
+    weak var userLocationManagerDelegate: UserLocationManagerDelegate?
+    
+    override init() {
+        super.init()
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.delegate = self
+    }
+    
+    func getCurrentUserLocation() {
         locationManager.requestWhenInUseAuthorization()
         if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways) {
-            currentLocation = locationManager.location
+            locationManager.requestLocation()
         }
     }
     
-    // TODO: Remove prints
-    func findClosestLocation(from locCoordArr: [(lat: Float, long: Float)]) -> (lat: Float, long: Float)? {
-        getCurrentUserLocation()
+    private func findClosestLocation() -> (lat: Float, long: Float)? {
         guard let userLocation = currentLocation else { return nil }
-        print(userLocation)
-        let locationsArray = locCoordArr.map { CLLocation(latitude: CLLocationDegrees($0.lat), longitude: CLLocationDegrees($0.long)) }
-        print(locationsArray)
+        let locationsArray = officesCoordArray.map { CLLocation(latitude: CLLocationDegrees($0.lat), longitude: CLLocationDegrees($0.long)) }
         guard let closestLoc = locationsArray.min(by: { $0.distance(from: userLocation) < $1.distance(from: userLocation) }) else { return nil }
-        print(closestLoc)
         return (lat: Float(closestLoc.coordinate.latitude), long: Float(closestLoc.coordinate.longitude))
+    }
+}
+
+extension UserLocationManager: CLLocationManagerDelegate {
+    
+    // trigers after user tap on 'Allow' or 'Disallow' on the dialog
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            manager.requestLocation()
+        }
+    }
+    
+    // trigers after location was retreived
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            currentLocation = location
+            let closestOfficeCoord = findClosestLocation()
+            userLocationManagerDelegate?.closestOfficeWasRetreived(officeCoord: closestOfficeCoord)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        
     }
 }

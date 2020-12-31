@@ -33,6 +33,7 @@ class OfficeLocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataProvider?.userLocationManager.userLocationManagerDelegate = self
         setUpTableView()
         UIView.animate(withDuration: 0.4) {
             self.backArrow.isHidden = self.regionSelectionIsOn
@@ -149,23 +150,13 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         return cell ?? UITableViewCell()
     }
     
-    // TODO: Refactor this method
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if regionSelectionIsOn {
             if indexPath.row == 0 {
-                // TODO
-                print(dataProvider?.getClosestOfficeId())
-                // call bottom lines if all is ok, otherwise show some error
-                // officeSelectionDelegate?.officeWasSelected(selectedOfficeId)
-                //self.dismiss(animated: true, completion: nil)
+                // "Use My Current Location" option was selected
+                dataProvider?.getClosestOffice()
             } else {
-                let office = OfficeLocationViewController()
-                office.officeSelectionDelegate = officeSelectionDelegate
-                office.regionSelectionIsOn = false
-                office.title = regionDataSource[indexPath.row].text
-                let officesList = dataProvider?.getOffices(for: regionDataSource[indexPath.row].text).compactMap { officeRow in Hardcode(imageName: "", text: officeRow.officeName ?? "", additionalText: officeRow.officeLocation ?? "", officeId: officeRow.officeId) } ?? []
-                office.officeDataSource = officesList
-                self.navigationController?.pushWithFadeAnimationVC(office)
+                showOfficeLocationVC(for: regionDataSource[indexPath.row].text)
             }
         } else {
             guard indexPath.row < officeDataSource.count, let selectedOfficeId = officeDataSource[indexPath.row].officeId else { return }
@@ -174,4 +165,25 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         }
     }
     
+    private func showOfficeLocationVC(for regionName: String) {
+        let office = OfficeLocationViewController()
+        office.officeSelectionDelegate = officeSelectionDelegate
+        office.regionSelectionIsOn = false
+        office.title = regionName
+        let officesList = dataProvider?.getOffices(for: regionName).compactMap { officeRow in Hardcode(imageName: "", text: officeRow.officeName ?? "", additionalText: officeRow.officeLocation ?? "", officeId: officeRow.officeId) } ?? []
+        office.officeDataSource = officesList
+        self.navigationController?.pushWithFadeAnimationVC(office)
+    }
+    
+}
+
+extension OfficeLocationViewController: UserLocationManagerDelegate {
+    func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?) {
+        guard let officeCoord = officeCoord, let officeId = dataProvider?.getClosestOfficeId(by: officeCoord) else {
+            displayError(errorMessage: "Getting user location did failed!")
+            return
+        }
+        officeSelectionDelegate?.officeWasSelected(officeId)
+        self.dismiss(animated: true, completion: nil)
+    }
 }
