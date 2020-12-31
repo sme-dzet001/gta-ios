@@ -232,6 +232,7 @@
 		9FBAF4862577D65E00B43F96 /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
 		9FBAF4872577D65E00B43F96 /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
 		9FBAF4882577D65E00B43F96 /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
+		9FCFA2A7259E138D00E893D2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FCFA2A6259E138D00E893D2 /* GoogleService-Info.plist */; };
 		9FE173CF25914D3F00E2C481 /* AboutSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE173CD25914D3F00E2C481 /* AboutSupportCell.swift */; };
 		9FE173D025914D3F00E2C481 /* AboutSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE173CD25914D3F00E2C481 /* AboutSupportCell.swift */; };
 		9FE173D125914D3F00E2C481 /* AboutSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE173CD25914D3F00E2C481 /* AboutSupportCell.swift */; };
@@ -525,6 +526,7 @@
 		9F9D9CF6258A063800DC4231 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginUSMViewController.swift; path = GTA/Login/LoginUSMViewController.swift; sourceTree = SOURCE_ROOT; };
+		9FCFA2A6259E138D00E893D2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9FE173CD25914D3F00E2C481 /* AboutSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSupportCell.swift; sourceTree = "<group>"; };
 		9FE173CE25914D3F00E2C481 /* AboutSupportCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutSupportCell.xib; sourceTree = "<group>"; };
 		9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsMessageCell.swift; sourceTree = "<group>"; };
@@ -694,10 +696,7 @@
 				65D14CB7256DA832004DFA70 /* GeneralSection */,
 				659A5AB6255401EA00E13B77 /* Main.storyboard */,
 				659A5AE9255404BB00E13B77 /* Supporting Files */,
-				659A5ABE255401ED00E13B77 /* Info.plist */,
-				9F819AA7255C1572007C1739 /* GTAStage-Info.plist */,
-				9F819AD1255C1646007C1739 /* GTADev-Info.plist */,
-				9F70BFE7259B49390020A741 /* GoogleService-Info.plist */,
+				9FCFA2AE259E141300E893D2 /* Plists */,
 				659A5AB9255401ED00E13B77 /* Assets.xcassets */,
 				659A5ABB255401ED00E13B77 /* LaunchScreen.storyboard */,
 				6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */,
@@ -1066,6 +1065,33 @@
 			children = (
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		9FCFA2AE259E141300E893D2 /* Plists */ = {
+			isa = PBXGroup;
+			children = (
+				9FCFA2AF259E143100E893D2 /* GooglePlists */,
+				659A5ABE255401ED00E13B77 /* Info.plist */,
+				9F819AA7255C1572007C1739 /* GTAStage-Info.plist */,
+				9F819AD1255C1646007C1739 /* GTADev-Info.plist */,
+			);
+			path = Plists;
+			sourceTree = "<group>";
+		};
+		9FCFA2AF259E143100E893D2 /* GooglePlists */ = {
+			isa = PBXGroup;
+			children = (
+				9FCFA2B0259E143600E893D2 /* GTAStage */,
+			);
+			path = GooglePlists;
+			sourceTree = "<group>";
+		};
+		9FCFA2B0259E143600E893D2 /* GTAStage */ = {
+			isa = PBXGroup;
+			children = (
+				9FCFA2A6259E138D00E893D2 /* GoogleService-Info.plist */,
+			);
+			path = GTAStage;
 			sourceTree = "<group>";
 		};
 		9FF0542C2567E1A00071E596 /* TicketDetailsCell */ = {
@@ -1558,7 +1584,6 @@
 				9FE173D325914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
 				C91F708F2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
 				9F895AF1255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
-				9F70BFE8259B49390020A741 /* GoogleService-Info.plist in Resources */,
 				9F819AA0255C1572007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F895B6E255D3D27004489C6 /* HelpReportScreenViewController.xib in Resources */,
 				C993A2B22576664300F9146A /* QuickHelpViewController.xib in Resources */,
@@ -1571,6 +1596,7 @@
 				C962D8532566E21400727949 /* MyTicketsHeader.xib in Resources */,
 				C9424E0525642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
+				9FCFA2A7259E138D00E893D2 /* GoogleService-Info.plist in Resources */,
 				C9705B802566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
 				C9EC9E9D25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
 				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
@@ -2263,7 +2289,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = GTA/Info.plist;
+				INFOPLIST_FILE = GTA/Plists/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2286,7 +2312,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 44443HH46G;
-				INFOPLIST_FILE = GTA/Info.plist;
+				INFOPLIST_FILE = GTA/Plists/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2392,7 +2418,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				INFOPLIST_FILE = "GTA/GTAStage-Info.plist";
+				INFOPLIST_FILE = "GTA/Plists/GTAStage-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2413,7 +2439,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				INFOPLIST_FILE = "GTA/GTAStage-Info.plist";
+				INFOPLIST_FILE = "GTA/Plists/GTAStage-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2433,7 +2459,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "GTA/GTADev-Info.plist";
+				INFOPLIST_FILE = "GTA/Plists/GTADev-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2453,7 +2479,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "GTA/GTADev-Info.plist";
+				INFOPLIST_FILE = "GTA/Plists/GTADev-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
