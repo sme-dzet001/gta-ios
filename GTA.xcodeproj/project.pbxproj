@@ -688,7 +688,10 @@
 				65D14CB7256DA832004DFA70 /* GeneralSection */,
 				659A5AB6255401EA00E13B77 /* Main.storyboard */,
 				659A5AE9255404BB00E13B77 /* Supporting Files */,
-				9F70BFDB259B45240020A741 /* Plists */,
+				659A5ABE255401ED00E13B77 /* Info.plist */,
+				9F819AA7255C1572007C1739 /* GTAStage-Info.plist */,
+				9F819AD1255C1646007C1739 /* GTADev-Info.plist */,
+				9F70BFE7259B49390020A741 /* GoogleService-Info.plist */,
 				659A5AB9255401ED00E13B77 /* Assets.xcassets */,
 				659A5ABB255401ED00E13B77 /* LaunchScreen.storyboard */,
 				6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */,
@@ -878,33 +881,6 @@
 				9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */,
 			);
 			path = xib;
-			sourceTree = "<group>";
-		};
-		9F70BFDB259B45240020A741 /* Plists */ = {
-			isa = PBXGroup;
-			children = (
-				9F70BFE6259B49090020A741 /* GooglePlists */,
-				659A5ABE255401ED00E13B77 /* Info.plist */,
-				9F819AA7255C1572007C1739 /* GTAStage-Info.plist */,
-				9F819AD1255C1646007C1739 /* GTADev-Info.plist */,
-			);
-			path = Plists;
-			sourceTree = "<group>";
-		};
-		9F70BFE6259B49090020A741 /* GooglePlists */ = {
-			isa = PBXGroup;
-			children = (
-				9F70BFF3259B49F90020A741 /* GTAStage */,
-			);
-			path = GooglePlists;
-			sourceTree = "<group>";
-		};
-		9F70BFF3259B49F90020A741 /* GTAStage */ = {
-			isa = PBXGroup;
-			children = (
-				9F70BFE7259B49390020A741 /* GoogleService-Info.plist */,
-			);
-			path = GTAStage;
 			sourceTree = "<group>";
 		};
 		9F78CFCA256409D500BCD38F /* HomepageCollectionViewCell */ = {
@@ -2265,7 +2241,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = GTA/Plists/Info.plist;
+				INFOPLIST_FILE = GTA/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2288,7 +2264,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 44443HH46G;
-				INFOPLIST_FILE = GTA/Plists/Info.plist;
+				INFOPLIST_FILE = GTA/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2394,7 +2370,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				INFOPLIST_FILE = "GTA/Plists/GTAStage-Info.plist";
+				INFOPLIST_FILE = "GTA/GTAStage-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2415,7 +2391,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				INFOPLIST_FILE = "GTA/Plists/GTAStage-Info.plist";
+				INFOPLIST_FILE = "GTA/GTAStage-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2435,7 +2411,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "GTA/Plists/GTADev-Info.plist";
+				INFOPLIST_FILE = "GTA/GTADev-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2455,7 +2431,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "GTA/Plists/GTADev-Info.plist";
+				INFOPLIST_FILE = "GTA/GTADev-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
