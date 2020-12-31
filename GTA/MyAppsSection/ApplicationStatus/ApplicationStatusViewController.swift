@@ -23,7 +23,6 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     var dataSource: [AppsDataSource] = []
     var appDetailsData: AppDetailsData?
     var appName: String? = ""
-    var appTitle: String?
     var systemStatus: SystemStatus = .none
     var selectedMetricsPeriod: MetricsPeriod = .weekly
     
@@ -66,7 +65,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     }
     
     private func setUpNavigationItem() {
-        self.navigationItem.title = appTitle
+        self.navigationItem.title = appName
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
     }
 
@@ -133,6 +132,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         if section == 0 {
             let statusHeader = SystemStatusHeader.instanceFromNib()
             statusHeader.systemStatus = systemStatus
+            statusHeader.dateLabel.text = appDetailsData?.lastUpdate
             return statusHeader
         } else if let metricsData = dataSource[section].metricsData {
             let metricStatsHeader = MetricStatsHeader.instanceFromNib()

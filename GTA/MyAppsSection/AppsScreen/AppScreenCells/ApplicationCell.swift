@@ -30,12 +30,12 @@ class ApplicationCell: UITableViewCell {
         } else if data.isImageDataEmpty {
             appIcon.image = UIImage(named: "gta_logo")
         }
-        appName.text = data.app_title
+        appName.text = data.app_name
         if hideStatusView {
             appStatus.backgroundColor = .clear
         } else {
             switch data.appStatus {
-            case .online:
+            case .online, .none:
                 appStatus.backgroundColor = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
             case .offline:
                 appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 62.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)

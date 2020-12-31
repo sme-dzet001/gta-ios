@@ -36,17 +36,18 @@ class SystemStatusHeader: UIView {
         onlineStatusView.layer.cornerRadius = onlineStatusView.frame.size.width / 2
         offlineStatusView.layer.cornerRadius = offlineStatusView.frame.size.width / 2
         otherStatusView.layer.cornerRadius = otherStatusView.frame.size.width / 2
+        var appStatus: String = "Everything Online, Looking Good!"
         switch systemStatus {
-        case .online:
-            onlineStatusView.backgroundColor = onlineStatusView.backgroundColor?.withAlphaComponent(1.0) //layer.opacity = 1.0
+        case .online, .none:
+            onlineStatusView.backgroundColor = onlineStatusView.backgroundColor?.withAlphaComponent(1.0)
         case .offline:
             offlineStatusView.backgroundColor = offlineStatusView.backgroundColor?.withAlphaComponent(1.0)
+            appStatus = "Complete Outage"
         case .pendingAlerts:
             otherStatusView.backgroundColor = otherStatusView.backgroundColor?.withAlphaComponent(1.0)
-        default:
-            return
+            appStatus = "Something Wrong "
         }
-        
+        appStatusDescription.text = appStatus
     }
     
     override func draw(_ rect: CGRect) {

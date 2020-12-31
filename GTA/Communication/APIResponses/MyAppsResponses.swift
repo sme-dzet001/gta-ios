@@ -153,6 +153,11 @@ struct AppDetailsData: Codable {
         return values?[index]?.stringValue
     }
     
+    var lastUpdate: String? {
+        guard let _ = values, let index = indexes["last_update"], values!.count > index else { return nil }
+        return values?[index]?.stringValue
+    }
+    
     enum CodingKeys: String, CodingKey {
         case data
     }
