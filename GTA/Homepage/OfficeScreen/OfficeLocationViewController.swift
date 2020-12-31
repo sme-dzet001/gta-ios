@@ -8,6 +8,10 @@
 import UIKit
 import PanModal
 
+protocol OfficeSelectionDelegate: class {
+    func officeWasSelected(_ officeId: Int)
+}
+
 class OfficeLocationViewController: UIViewController {
     
     @IBOutlet weak var backArrow: UIButton!
@@ -19,7 +23,9 @@ class OfficeLocationViewController: UIViewController {
     
     private let defaultBackButtonLeading: CGFloat = 24
     
-    var selectionIsOn: Bool = true
+    weak var officeSelectionDelegate: OfficeSelectionDelegate?
+    
+    var regionSelectionIsOn: Bool = true
     var dataProvider: HomeDataProvider?
     var regionDataSource: [Hardcode] = []
     var officeDataSource: [Hardcode] = []
@@ -27,9 +33,10 @@ class OfficeLocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataProvider?.userLocationManager.userLocationManagerDelegate = self
         setUpTableView()
         UIView.animate(withDuration: 0.4) {
-            self.backArrow.isHidden = self.selectionIsOn
+            self.backArrow.isHidden = self.regionSelectionIsOn
             self.backButtonLeading.constant = self.defaultBackButtonLeading
             self.view.layoutIfNeeded()
         }
@@ -91,7 +98,7 @@ class OfficeLocationViewController: UIViewController {
 extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectionIsOn ? regionDataSource.count : officeDataSource.count
+        return regionSelectionIsOn ? regionDataSource.count : officeDataSource.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -99,17 +106,17 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if selectionIsOn {
+        if regionSelectionIsOn {
             return provideRegionCell(for: indexPath)
         }
         return provideOfficeCell(for: indexPath)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 && selectionIsOn {
+        if indexPath.row == 0 && regionSelectionIsOn {
             let cell = cell as? AppsServiceAlertCell
             cell?.parentView.backgroundColor = UIColor(red: 247.0 / 255.0, green: 247.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0)
-        } else if !selectionIsOn {
+        } else if !regionSelectionIsOn {
             let cell = cell as? AppsServiceAlertCell
             cell?.iconWidth.constant = 17
         }
@@ -144,13 +151,39 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard selectionIsOn, indexPath.row != 0 else { return }
+        if regionSelectionIsOn {
+            if indexPath.row == 0 {
+                // "Use My Current Location" option was selected
+                dataProvider?.getClosestOffice()
+            } else {
+                showOfficeLocationVC(for: regionDataSource[indexPath.row].text)
+            }
+        } else {
+            guard indexPath.row < officeDataSource.count, let selectedOfficeId = officeDataSource[indexPath.row].officeId else { return }
+            officeSelectionDelegate?.officeWasSelected(selectedOfficeId)
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    private func showOfficeLocationVC(for regionName: String) {
         let office = OfficeLocationViewController()
-        office.selectionIsOn = false
-        office.title = regionDataSource[indexPath.row].text
-        let officesList = dataProvider?.getOffices(for: regionDataSource[indexPath.row].text).compactMap { officeRow in Hardcode(imageName: "", text: officeRow.officeName ?? "", additionalText: officeRow.officeLocation ?? "") } ?? []
+        office.officeSelectionDelegate = officeSelectionDelegate
+        office.regionSelectionIsOn = false
+        office.title = regionName
+        let officesList = dataProvider?.getOffices(for: regionName).compactMap { officeRow in Hardcode(imageName: "", text: officeRow.officeName ?? "", additionalText: officeRow.officeLocation ?? "", officeId: officeRow.officeId) } ?? []
         office.officeDataSource = officesList
         self.navigationController?.pushWithFadeAnimationVC(office)
     }
     
+}
+
+extension OfficeLocationViewController: UserLocationManagerDelegate {
+    func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?) {
+        guard let officeCoord = officeCoord, let officeId = dataProvider?.getClosestOfficeId(by: officeCoord) else {
+            displayError(errorMessage: "Getting user location did failed!")
+            return
+        }
+        officeSelectionDelegate?.officeWasSelected(officeId)
+        self.dismiss(animated: true, completion: nil)
+    }
 }

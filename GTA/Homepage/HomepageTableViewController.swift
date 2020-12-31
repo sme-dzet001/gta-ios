@@ -55,16 +55,18 @@ class HomepageTableViewController: UITableViewController {
     private func loadOfficesData() {
         officeLoadingError = nil
         tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
-        dataProvider?.getAllOfficesData { [weak self] (errorCode, error) in
-            DispatchQueue.main.async {
-                if error == nil && errorCode == 200 {
-                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
-                } else {
-                    self?.officeLoadingError = "Oops, something went wrong"
-                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+        dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error) in
+            self?.dataProvider?.getAllOfficesData { [weak self] (errorCode, error) in
+                DispatchQueue.main.async {
+                    if error == nil && errorCode == 200 {
+                        self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+                    } else {
+                        self?.officeLoadingError = "Oops, something went wrong"
+                        self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+                    }
                 }
             }
-        }
+        })
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -98,7 +100,7 @@ class HomepageTableViewController: UITableViewController {
             cell?.descriptionLabel.text = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
             return cell ?? UITableViewCell()
         } else if indexPath.section == 1 {
-            let data = dataProvider?.selectedOffice
+            let data = dataProvider?.userOffice
             if let officeData = data {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
                 cell?.officeStatusLabel.text = officeData.officeName
@@ -140,7 +142,7 @@ class HomepageTableViewController: UITableViewController {
             infoViewController.title = data.alertSubHeadline
             self.navigationController?.pushViewController(infoViewController, animated: true)
         } else if indexPath.section == 1 {
-            guard let dataProvider = dataProvider, let selectedOffice = dataProvider.selectedOffice else { return }
+            guard let dataProvider = dataProvider, let selectedOffice = dataProvider.userOffice else { return }
             let infoViewController = InfoViewController()
             infoViewController.dataProvider = dataProvider
             infoViewController.selectedOfficeData = selectedOffice

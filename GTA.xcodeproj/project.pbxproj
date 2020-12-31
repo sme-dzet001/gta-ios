@@ -409,6 +409,9 @@
 		C9EC9EB425756C1400315AAE /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
 		C9EC9EB525756C1400315AAE /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
 		C9EC9EB625756C1400315AAE /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
+		C9EFD9E2259DDC6900F57817 /* UserLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */; };
+		C9EFD9E3259DDC6900F57817 /* UserLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */; };
+		C9EFD9E4259DDC6900F57817 /* UserLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */; };
 		C9EFEBC4256D1F4800112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 /* End PBXBuildFile section */
@@ -589,6 +592,7 @@
 		C9EC9E9825756BA400315AAE /* HelpDeskContactOptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpDeskContactOptionCell.xib; sourceTree = "<group>"; };
 		C9EC9EA525756C0300315AAE /* HelpDeskHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskHeader.swift; sourceTree = "<group>"; };
 		C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpDeskHeader.xib; sourceTree = "<group>"; };
+		C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationManager.swift; sourceTree = "<group>"; };
 		D3387A52A0F8F88F9F876531 /* Pods-GTATests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.debug.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.debug.xcconfig"; sourceTree = "<group>"; };
 		E99FE5D7739905AF03A6B886 /* Pods_GTA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -776,6 +780,7 @@
 				65398BCB256D4C5E0039C24E /* Utils.swift */,
 				9F9D9CE825891E1800DC4231 /* DataParser.swift */,
 				659C595A25924106007953A7 /* CacheManager.swift */,
+				C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1924,6 +1929,7 @@
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
 				9F9D9CF7258A063800DC4231 /* NetworkManager.swift in Sources */,
 				C962D8442566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
+				C9EFD9E2259DDC6900F57817 /* UserLocationManager.swift in Sources */,
 				9F895B6A255D3D27004489C6 /* HelpReportScreenViewController.swift in Sources */,
 				C9705B7C2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
 				9F0CA54D2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
@@ -2024,6 +2030,7 @@
 				9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */,
 				9F9D9CF8258A063800DC4231 /* NetworkManager.swift in Sources */,
 				9F819A94255C1572007C1739 /* MainViewController.swift in Sources */,
+				C9EFD9E3259DDC6900F57817 /* UserLocationManager.swift in Sources */,
 				9F1620DE2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
 				9F895B6B255D3D27004489C6 /* HelpReportScreenViewController.swift in Sources */,
 				C93FCF322564906F001E86F6 /* AboutContactsCell.swift in Sources */,
@@ -2108,6 +2115,7 @@
 				9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */,
 				9F9D9CF9258A063800DC4231 /* NetworkManager.swift in Sources */,
 				9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */,
+				C9EFD9E4259DDC6900F57817 /* UserLocationManager.swift in Sources */,
 				9F1620DF2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
 				9F895B6C255D3D27004489C6 /* HelpReportScreenViewController.swift in Sources */,
 				C93FCF332564906F001E86F6 /* AboutContactsCell.swift in Sources */,

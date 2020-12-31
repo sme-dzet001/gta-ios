@@ -26,7 +26,7 @@ class InfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        officeDataSoure = [Hardcode(imageName: "phone_icon", text: "(480) 555-0103"), Hardcode(imageName: "email_icon", text: "deanna.curtis@example.com"), Hardcode(imageName: "location", text: selectedOfficeData?.officeLocation ?? "9 Derry Street, London, W8 5HY, United Kindom"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a Sony location to see current status")]
+        setDataSource()
         setUpTableView()
         setupHeaderImageView()
         setNeedsStatusBarAppearanceUpdate()
@@ -58,6 +58,10 @@ class InfoViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    private func setDataSource() {
+        officeDataSoure = [Hardcode(imageName: "phone_icon", text: "(480) 555-0103"), Hardcode(imageName: "email_icon", text: "deanna.curtis@example.com"), Hardcode(imageName: "location", text: selectedOfficeData?.officeLocation ?? "9 Derry Street, London, W8 5HY, United Kindom"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a Sony location to see current status")]
     }
     
     private func setupHeaderImageView() {
@@ -152,6 +156,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         }
         officeLocation.title = "Select a Sony Music Office Location"
         officeLocation.dataProvider = dataProvider
+        officeLocation.officeSelectionDelegate = self
         let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
         panModalNavigationController.setNavigationBarHidden(true, animated: true)
         panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight
@@ -169,11 +174,34 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
+extension InfoViewController: OfficeSelectionDelegate {
+    func officeWasSelected(_ officeId: Int) {
+        dataProvider?.setCurrentOffice(officeId: officeId, completion: { [weak self] (errorCode, error) in
+            DispatchQueue.main.async {
+                if errorCode == 200, error == nil {
+                    self?.updateUIWithSelectedOffice()
+                } else {
+                    self?.displayError(errorMessage: "Office selection did failed!")
+                }
+            }
+        })
+    }
+    
+    private func updateUIWithSelectedOffice() {
+        selectedOfficeData = dataProvider?.userOffice
+        self.title = selectedOfficeData?.officeName
+        infoLabel.text = self.title
+        setDataSource()
+        tableView.reloadData()
+    }
+}
+
 //temp
 struct Hardcode {
     var imageName: String
     var text: String
     var additionalText: String? = nil
+    var officeId: Int? = nil
 }
 
 

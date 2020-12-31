@@ -58,3 +58,22 @@ struct AllOfficesResponse: Codable {
     var meta: ResponseMetaData
     var data: AllOfficesData?
 }
+
+// MARK: - Get/Set Office Response
+
+struct UserPreferences: Codable {
+    var officeId: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case officeId = "office_id"
+    }
+}
+
+struct UserPreferencesResponseData: Codable {
+    var preferences: UserPreferences?
+}
+
+struct UserPreferencesResponse: Codable {
+    var status: ResponseMetaData
+    var data: UserPreferencesResponseData
+}
