@@ -102,7 +102,7 @@ class MyAppsDataProvider {
     
     private func getDataIndexes(columns: [ColumnName]?) -> [String : Int] {
         var indexes: [String : Int] = [:]
-        guard let columns = columns else { return indexes}
+        guard let columns = columns else { return indexes }
         for (index, column) in columns.enumerated() {
             if let name = column.name {
                 indexes[name] = index
