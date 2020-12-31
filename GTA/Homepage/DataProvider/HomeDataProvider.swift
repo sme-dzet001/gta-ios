@@ -11,6 +11,7 @@ class HomeDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
+    private var userLocationManager: UserLocationManager = UserLocationManager()
     
     private(set) var newsData = [GlobalNewsRow]()
     private(set) var alertsData = [SpecialAlertRow]()
@@ -251,6 +252,13 @@ class HomeDataProvider {
     
     func getOfficeNames(for region: String) -> [String] {
         return getOffices(for: region).compactMap { $0.officeName }
+    }
+    
+    func getClosestOfficeId() -> Int? {
+        let officesCoordinates = allOfficesData.filter { $0.officeLatitude != nil && $0.officeLongitude != nil }.map { (lat: $0.officeLatitude!, long: $0.officeLongitude!) }
+        guard let closestOfficeCoord = userLocationManager.findClosestLocation(from: officesCoordinates) else { return nil }
+        let officeId = allOfficesData.first { $0.officeLatitude == closestOfficeCoord.lat && $0.officeLongitude == closestOfficeCoord.long }?.officeId
+        return officeId
     }
     
     func getCurrentOffice(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
