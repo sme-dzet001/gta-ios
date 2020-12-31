@@ -9,6 +9,7 @@ def shared_pods
   pod 'RNCryptor'
   pod 'PanModal'
   pod 'AdvancedPageControl'
+  pod 'Firebase/Crashlytics'
 end
 
 target 'GTA' do
