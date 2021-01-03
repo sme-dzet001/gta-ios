@@ -121,7 +121,7 @@ struct AppContactsData: Codable {
         guard let appContactRows = data?.first?.value.first?.value.data?.rows else { return nil }
         guard let appContactTitleIdx = indexes["app contact title"] else { return nil }
         guard let appContactNameIdx = indexes["app contact name"] else { return nil }
-        guard let appContactEmailIdx = indexes["app contanct email"] else { return nil } // change to "app contact email" after backend fix
+        guard let appContactEmailIdx = indexes["app contact email"] else { return nil }
         let res = appContactRows.map({ (appContact) -> ContactData in
             guard let values = appContact.values else { return ContactData() }
             guard let appContactTitle = values[appContactTitleIdx]?.stringValue else { return ContactData() }
