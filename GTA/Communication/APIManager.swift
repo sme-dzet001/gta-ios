@@ -165,9 +165,10 @@ class APIManager: NSObject, URLSessionDelegate {
     }
     
     func getAppContactsData(for generationNumber: Int, username: String, appName: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestParams = ["widget_details": "true"]
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         let requestBodyParams = ["s1": username, "s2": appName]
-        self.makeRequest(endpoint: .getAppContacts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
+        self.makeRequest(endpoint: .getAppContacts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, params: requestParams, requestBodyJSONParams: requestBodyParams, completion: completion)
     }
     
     

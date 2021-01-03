@@ -219,7 +219,8 @@ class MyAppsDataProvider {
                 retErr = error
             }
         }
-        appContactsData?.indexes = getDataIndexes(columns: reportData?.meta.widgetsDataSource?.appContacts?.columns)
+        let columns = appContactsData?.meta.widgetsDataSource?.params?.columns
+        appContactsData?.indexes = getDataIndexes(columns: columns)
         completion?(appContactsData, errorCode, retErr)
     }
     

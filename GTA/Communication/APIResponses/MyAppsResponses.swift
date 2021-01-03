@@ -112,15 +112,16 @@ struct ChartData {
 }
 
 struct AppContactsData: Codable {
+    var meta: ResponseMetaData
     var data: [String : [String : UserData]]?
     
     var indexes: [String : Int] = [:]
     
     var contactsData: [ContactData]? {
         guard let appContactRows = data?.first?.value.first?.value.data?.rows else { return nil }
-        guard let appContactTitleIdx = indexes["app_contact_title"] else { return nil }
-        guard let appContactNameIdx = indexes["app_contact_name"] else { return nil }
-        guard let appContactEmailIdx = indexes["app_contact_email"] else { return nil }
+        guard let appContactTitleIdx = indexes["app contact title"] else { return nil }
+        guard let appContactNameIdx = indexes["app contact name"] else { return nil }
+        guard let appContactEmailIdx = indexes["app contanct email"] else { return nil } // change to "app contact email" after backend fix
         let res = appContactRows.map({ (appContact) -> ContactData in
             guard let values = appContact.values else { return ContactData() }
             guard let appContactTitle = values[appContactTitleIdx]?.stringValue else { return ContactData() }
@@ -132,6 +133,7 @@ struct AppContactsData: Codable {
     }
     
     enum CodingKeys: String, CodingKey {
+        case meta
         case data
     }
 }
