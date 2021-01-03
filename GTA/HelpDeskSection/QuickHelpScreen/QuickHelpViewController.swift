@@ -74,6 +74,12 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
             cell.delegate = self
             let answerEncoded = cellDataSource.answer
             let answerDecoded = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded)
+            if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+                answerDecoded?.setFontFace(font: neededFont)
+            }
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 8
+            answerDecoded?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, answerDecoded?.length ?? 0))
             cell.setUpCell(question: cellDataSource.question, answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .minus : .plus)
             return cell
         }
@@ -83,10 +89,16 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     private func heightForAnswerAt(indexPath: IndexPath) -> CGFloat {
         let data = dataProvider?.quickHelpData ?? []
         guard let answerEncoded = data[indexPath.row].answer else { return 0 }
-        let answerDecoded = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded)
-        guard let answerBody = answerDecoded?.htmlToAttributedString else { return 0 }
+        guard let answerBody = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) else { return 0 }
+        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+            answerBody.setFontFace(font: neededFont)
+        }
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        answerBody.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, answerBody.length))
         let textHeight = answerBody.height(containerWidth: view.frame.width - 48)
-        return textHeight
+        let bottomMargin: CGFloat = 8
+        return textHeight + bottomMargin
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

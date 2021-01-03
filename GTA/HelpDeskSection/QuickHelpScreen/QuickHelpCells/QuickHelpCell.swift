@@ -27,9 +27,9 @@ class QuickHelpCell: UITableViewCell {
         expandButton.addGestureRecognizer(tapGesture)
     }
     
-    func setUpCell(question: String?, answer: String?, expandBtnType: ExpandButtonType) {
+    func setUpCell(question: String?, answer: NSAttributedString?, expandBtnType: ExpandButtonType) {
         questionLabel.text = question
-        answerLabel.attributedText = answer?.htmlToAttributedString
+        answerLabel.attributedText = answer
         switch expandBtnType {
         case .plus:
             expandButton.setImage(UIImage(named: "plus_icon"), for: .normal)
