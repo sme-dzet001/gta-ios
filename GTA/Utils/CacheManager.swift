@@ -59,6 +59,7 @@ class CacheManager {
         case getMyAppsData// = "/v3/widgets/my_apps_status/data/"
         case getAllAppsData// = "/v3/widgets/all_apps/data/"
         case getAppDetails(detailsPath: String)// = "/v3/widgets/app_details/data/"
+        case getAppContacts(contactsPath: String)// = "/v3/widgets/app_contacts/data/"
         
         var endpoint: String {
             switch self {
@@ -72,6 +73,7 @@ class CacheManager {
             case .getMyAppsData: return "/v3/widgets/my_apps_status/data/"
             case .getAllAppsData: return "/v3/widgets/all_apps/data/"
             case .getAppDetails(let detailsPath): return "/v3/widgets/app_details/data/\(detailsPath)"
+            case .getAppContacts(let contactsPath): return "/v3/widgets/app_contacts/data/\(contactsPath)"
             }
         }
     }

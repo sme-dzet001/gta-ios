@@ -205,6 +205,8 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         if indexPath.row == 2 {
             let aboutScreen = AboutViewController()
             aboutScreen.details = appDetailsData
+            aboutScreen.dataProvider = dataProvider
+            aboutScreen.appName = appName
             navigationController?.pushViewController(aboutScreen, animated: true)
         } else {
             let reportScreen = HelpReportScreenViewController()

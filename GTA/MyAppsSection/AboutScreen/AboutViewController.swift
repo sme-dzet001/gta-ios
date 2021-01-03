@@ -11,7 +11,12 @@ class AboutViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     private var dataSource: AboutDataSource?
+    var appName: String? = ""
+    var appContactsData: AppContactsData?
+    var dataProvider: MyAppsDataProvider?
     var details: AppDetailsData?
 
     override func viewDidLoad() {
@@ -24,6 +29,34 @@ class AboutViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barTintColor = UIColor.white
+        
+        if appContactsData == nil {
+            startAnimation()
+        }
+        dataProvider?.getAppContactsData(for: appName) { [weak self] (contactsData, _, error) in
+            self?.appContactsData = contactsData
+            self?.dataSource?.contactsData = self?.appContactsData?.contactsData ?? []
+            self?.stopAnimation()
+        }
+    }
+    
+    private func startAnimation() {
+        self.tableView.alpha = 0
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.center = CGPoint(x: view.frame.size.width  / 2,
+                                                y: view.frame.size.height / 2)
+        self.activityIndicator.hidesWhenStopped = true
+        self.activityIndicator.startAnimating()
+    }
+    
+    private func stopAnimation() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.tableView.alpha = 1
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.removeFromSuperview()
+        }
     }
     
     private func setUpNavigationItem() {
