@@ -8,13 +8,14 @@
 import Foundation
 
 struct AllAppsResponse: Codable {
+    var meta: ResponseMetaData
     var data: AllAppsRows?
     var indexes: [String : Int] = [:]
     
     var myAppsStatus: [AppInfo] {
         var status = [AppInfo]()
         data?.rows?.forEach({ (value) in
-            if let valuesArray = value.values, let nameIndex = indexes["app_name"], let titleIndex = indexes["app_title"], let iconIndex = indexes["app_icon"] {
+            if let valuesArray = value.values, let nameIndex = indexes["app name"], let titleIndex = indexes["app title"], let iconIndex = indexes["app icon"] {
                 let appName = valuesArray.count > nameIndex ? valuesArray[nameIndex].stringValue : ""
                 let appTitle = valuesArray.count > titleIndex ? valuesArray[titleIndex].stringValue : ""
                 let appIcon = valuesArray.count > iconIndex ? valuesArray[iconIndex].stringValue : ""
@@ -25,6 +26,7 @@ struct AllAppsResponse: Codable {
     }
     
     enum CodingKeys: String, CodingKey {
+        case meta
         case data
     }
 }
@@ -49,7 +51,7 @@ struct AppInfo {
 
 
 struct MyAppsResponse: Codable {
-
+    var meta: ResponseMetaData
     var data: [String : MyAppsData]?
     var indexes: [String : Int] = [:]
     var values: [MyAppsValues]? {
@@ -57,6 +59,7 @@ struct MyAppsResponse: Codable {
     }
 
     enum CodingKeys: String, CodingKey {
+        case meta
         case data
     }
 }
@@ -109,6 +112,7 @@ struct ChartData {
 }
 
 struct AppDetailsData: Codable {
+    var meta: ResponseMetaData
     var data: [String : [String : UserData]]?
     
     var indexes: [String : Int] = [:]
@@ -119,51 +123,47 @@ struct AppDetailsData: Codable {
     }
     
     var appTitle: String? {
-        guard let _ = values, let index = indexes["app_title"], values!.count > index else { return nil }
+        guard let _ = values, let index = indexes["app title"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
     
     var appDescription: String? {
-        guard let _ = values, let index = indexes["app_desc"], values!.count > index else { return nil }
+        guard let _ = values, let index = indexes["app desc"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
     
     var appSupportEmail: String? {
-        guard let _ = values, let index = indexes["app_support_email"], values!.count > index else { return nil }
+        guard let _ = values, let index = indexes["app support email"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
     
     var appWikiUrl: String? {
-        guard let _ = values, let index = indexes["app_wiki_url"], values!.count > index else { return nil }
+        guard let _ = values, let index = indexes["app wiki url"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
     
     var appJiraSupportUrl: String? {
-        guard let _ = values, let index = indexes["app_jira_support_url"], values!.count > index else { return nil }
+        guard let _ = values, let index = indexes["app jira_support url"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
     
     var appSupportPolicy: String? {
-        guard let _ = values, let index = indexes["app_support_policy"], values!.count > index else { return nil }
+        guard let _ = values, let index = indexes["app support policy"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
     
     var appTeamContact: String? {
-        guard let _ = values, let index = indexes["app_team_contact"], values!.count > index else { return nil }
+        guard let _ = values, let index = indexes["app team contact"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
     
     var lastUpdate: String? {
-        return values?.last??.stringValue
+        guard let _ = values, let index = indexes["last update"], values!.count > index else { return nil }
+        return values?[index]?.stringValue
     }
     
-    // waiting for server fix
-//    var lastUpdate: String? {
-//        guard let _ = values, let index = indexes["last_update"], values!.count > index else { return nil }
-//        return values?[index]?.stringValue
-//    }
-    
     enum CodingKeys: String, CodingKey {
+        case meta
         case data
     }
 }

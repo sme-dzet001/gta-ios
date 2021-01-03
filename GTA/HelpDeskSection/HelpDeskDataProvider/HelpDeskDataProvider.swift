@@ -53,7 +53,7 @@ class HelpDeskDataProvider {
                 retErr = error
             }
         }
-        let indexes = self.getDataIndexes(columns: reportDataResponse?.meta.widgetsDataSource?.gsdProfile?.columns)
+        let indexes = getDataIndexes(columns: helpDeskResponse?.meta.widgetsDataSource?.params?.columns)
         helpDeskResponse?.indexes = indexes
         completion?(helpDeskResponse, errorCode, retErr)
     }
@@ -75,7 +75,7 @@ class HelpDeskDataProvider {
             }
         }
         if let quickHelpResponse = quickHelpDataResponse {
-            fillQuickHelpData(with: quickHelpResponse, indexes: (getDataIndexes(columns: reportData?.meta.widgetsDataSource?.gsdQuickHelp?.columns)))
+            fillQuickHelpData(with: quickHelpResponse)
         }
         completion?(errorCode, retErr)
     }
@@ -111,7 +111,8 @@ class HelpDeskDataProvider {
         })
     }
     
-    private func fillQuickHelpData(with quickHelpResponse: QuickHelpResponse, indexes: [String : Int]) {
+    private func fillQuickHelpData(with quickHelpResponse: QuickHelpResponse) {
+        let indexes = getDataIndexes(columns: quickHelpResponse.meta.widgetsDataSource?.params?.columns)
         var response: QuickHelpResponse = quickHelpResponse
         if let rows = response.data?.rows {
             for (index, _) in rows.enumerated() {
@@ -132,7 +133,7 @@ class HelpDeskDataProvider {
             }
         }
         if let teamContactsResponse = teamContactsDataResponse {
-            fillTeamContactsData(with: teamContactsResponse, indexes: getDataIndexes(columns: reportData?.meta.widgetsDataSource?.gsdTeamContacts?.columns))
+            fillTeamContactsData(with: teamContactsResponse)
         }
         completion?(errorCode, retErr)
     }
@@ -167,7 +168,8 @@ class HelpDeskDataProvider {
         })
     }
     
-    private func fillTeamContactsData(with teamContactsResponse: TeamContactsResponse, indexes: [String : Int]) {
+    private func fillTeamContactsData(with teamContactsResponse: TeamContactsResponse) {
+        let indexes = getDataIndexes(columns: teamContactsResponse.meta.widgetsDataSource?.params?.columns)
         var response: TeamContactsResponse = teamContactsResponse
         if let rows = response.data?.rows {
             for (index, _) in rows.enumerated() {

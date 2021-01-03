@@ -124,12 +124,13 @@ class HomeDataProvider {
             }
         }
         if let newsResponse = newsDataResponse {
-            self.fillNewsData(with: newsResponse, indexes: self.getDataIndexes(columns: reportDataResponse?.meta.widgetsDataSource?.globalNews?.columns) )
+            self.fillNewsData(with: newsResponse)
         }
         completion?(errorCode, retErr)
     }
     
-    private func fillNewsData(with newsResponse: GlobalNewsResponse, indexes: [String : Int]) {
+    private func fillNewsData(with newsResponse: GlobalNewsResponse) {
+        let indexes = getDataIndexes(columns: newsResponse.meta.widgetsDataSource?.params?.columns)
         var response: GlobalNewsResponse = newsResponse
         if let rows = response.data?.rows {
             for (index, _) in rows.enumerated() {
@@ -150,7 +151,7 @@ class HomeDataProvider {
             }
         }
         if let alertsResponse = specialAlertsDataResponse {
-            fillAlertsData(with: alertsResponse, indexes: getDataIndexes(columns: reportData?.meta.widgetsDataSource?.globalNews?.columns))
+            fillAlertsData(with: alertsResponse)
         }
         completion?(errorCode, retErr)
     }
@@ -185,7 +186,8 @@ class HomeDataProvider {
         })
     }
     
-    private func fillAlertsData(with alertsResponse: SpecialAlertsResponse, indexes: [String : Int]) {
+    private func fillAlertsData(with alertsResponse: SpecialAlertsResponse) {
+        let indexes = getDataIndexes(columns: alertsResponse.meta.widgetsDataSource?.params?.columns)
         var response: SpecialAlertsResponse = alertsResponse
         if let rows = response.data?.rows {
             for (index, _) in rows.enumerated() {
@@ -238,12 +240,13 @@ class HomeDataProvider {
             }
         }
         if let officesResponse = allOfficesResponse {
-            fillAllOfficesData(with: officesResponse, indexes: getDataIndexes(columns: reportData?.meta.widgetsDataSource?.allOffices?.columns) )
+            fillAllOfficesData(with: officesResponse)
         }
         completion?(errorCode, retErr)
     }
     
-    private func fillAllOfficesData(with officesResponse: AllOfficesResponse, indexes: [String : Int]) {
+    private func fillAllOfficesData(with officesResponse: AllOfficesResponse) {
+        let indexes = getDataIndexes(columns: officesResponse.meta.widgetsDataSource?.params?.columns)
         var response: AllOfficesResponse = officesResponse
         if let rows = response.data?.rows {
             for (index, _) in rows.enumerated() {

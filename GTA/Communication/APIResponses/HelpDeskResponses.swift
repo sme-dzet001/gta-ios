@@ -8,10 +8,12 @@
 import Foundation
 
 struct HelpDeskResponse: Codable {
+    var meta: ResponseMetaData
     var data: HelpDeskRows?//[String : [HelpDeskValues]]?
     var indexes: [String : Int] = [:]
     
     enum CodingKeys: String, CodingKey {
+        case meta = "meta"
         case data = "data"
     }
     
@@ -90,7 +92,7 @@ struct TeamContactsRow: Codable {
     }
     
     var contactPhotoUrl: String? {
-        guard let valuesArr = values, let index = indexes["profile_picture"], valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["profile picture"], valuesArr.count > index else { return nil }
         return valuesArr[index].stringValue
     }
     

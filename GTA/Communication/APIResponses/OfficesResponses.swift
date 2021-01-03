@@ -18,7 +18,7 @@ struct OfficeRow: Codable {
     }
     
     var officeId: Int? {
-        guard let valuesArr = values, let index = indexes["office_id"], valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["office id"], valuesArr.count > index else { return nil }
         return valuesArr[index].intValue
     }
     
@@ -38,14 +38,12 @@ struct OfficeRow: Codable {
     }
     
     var officeLatitude: Float? {
-        let index = 4 // temp (change while mapping will work properly)
-        guard let valuesArr = values, /*let index = indexes["gps_location_lat"],*/ valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["gps_location_lat"], valuesArr.count > index else { return nil }
         return valuesArr[index].floatValue
     }
     
     var officeLongitude: Float? {
-        let index = 5 // temp (change while mapping will work properly)
-        guard let valuesArr = values, /*let index = indexes["gps_location_long"],*/ valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["gps_location_long"], valuesArr.count > index else { return nil }
         return valuesArr[index].floatValue
     }
 }

@@ -17,36 +17,12 @@ struct ResponseMetaData: Codable {
         case responseCode = "code"
         case userInstructions = "user_instructions"
         case userMessage = "user_message"
-        case widgetsDataSource = "widgets_datasource"
+        case widgetsDataSource = "widget"
     }
 }
 
 struct WidgetsDataSource: Codable {
-    
-    var globalNews: WidgetsDataSourceColumns?
-    var officeStatus: WidgetsDataSourceColumns?
-    var allOffices: WidgetsDataSourceColumns?
-    var specialAlerts: WidgetsDataSourceColumns?
-    var gsdTeamContacts: WidgetsDataSourceColumns?
-    var gsdQuickHelp: WidgetsDataSourceColumns?
-    var gsdProfile: WidgetsDataSourceColumns?
-    var myAppsStatus: WidgetsDataSourceColumns?
-    var allApps: WidgetsDataSourceColumns?
-    var appDetails: WidgetsDataSourceColumns?
-    
-    enum CodingKeys: String, CodingKey {
-        case globalNews = "global_news"
-        case officeStatus = "office_status"
-        case allOffices = "all_offices"
-        case specialAlerts = "special_alerts"
-        case gsdTeamContacts = "gsd_team_contacts"
-        case gsdQuickHelp = "gsd_quick_help"
-        case gsdProfile = "gsd_profile"
-        case myAppsStatus = "my_apps_status"
-        case allApps = "all_apps"
-        case appDetails = "app_details"
-    }
-    
+    var params: WidgetsDataSourceColumns?
 }
 
 struct WidgetsDataSourceColumns: Codable {
@@ -55,6 +31,10 @@ struct WidgetsDataSourceColumns: Codable {
 
 struct ColumnName: Codable {
     var name: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case name = "header"
+    }
 }
 
 // MARK: - Report Response

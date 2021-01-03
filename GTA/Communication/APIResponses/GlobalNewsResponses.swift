@@ -23,7 +23,7 @@ struct GlobalNewsRow: Codable {
     }
     
     var newsSubtitle: String? {
-        guard let valuesArr = values, let index = indexes["sub_headline"], valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["sub headline"], valuesArr.count > index else { return nil }
         return valuesArr[index].stringValue
     }
     
@@ -33,12 +33,12 @@ struct GlobalNewsRow: Codable {
     }
     
     var newsDate: String? {
-        guard let valuesArr = values, let index = indexes["post_date"], valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["post date"], valuesArr.count > index else { return nil }
         return valuesArr[index].stringValue
     }
     
     var newsAuthor: String? {
-        guard let valuesArr = values, let index = indexes["by_line"], valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
         return valuesArr[index].stringValue
     }
     
@@ -73,7 +73,7 @@ struct SpecialAlertRow: Codable {
     }
     
     var alertSubHeadline: String? {
-        guard let valuesArr = values, let index = indexes["sub_headline"], valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["sub headline"], valuesArr.count > index else { return nil }
         return valuesArr[index].stringValue
     }
     
@@ -83,12 +83,12 @@ struct SpecialAlertRow: Codable {
     }
     
     var alertDate: String? {
-        guard let valuesArr = values, let index = indexes["post_date"], valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["post date"], valuesArr.count > index else { return nil }
         return valuesArr[index].stringValue
     }
     
     var alertAuthor: String? {
-        guard let valuesArr = values, let index = indexes["by_line"], valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
         return valuesArr[index].stringValue
     }
     

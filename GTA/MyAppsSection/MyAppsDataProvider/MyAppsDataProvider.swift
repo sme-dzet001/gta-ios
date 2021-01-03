@@ -117,7 +117,7 @@ class MyAppsDataProvider {
         var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
         for (index, info) in commonResponse!.enumerated() {
-            let appNameIndex = appsStatus?.indexes["app_name"] ?? 0
+            let appNameIndex = appsStatus?.indexes["app name"] ?? 0
             let statusIndex = appsStatus?.indexes["status"] ?? 0
             let status = appsStatus!.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name})
             response![index].appStatus = SystemStatus(status: status?.values?[statusIndex]?.stringValue)
@@ -147,7 +147,8 @@ class MyAppsDataProvider {
                 retErr = error
             }
         }
-        myAppsResponse?.indexes = getDataIndexes(columns: reportData?.meta.widgetsDataSource?.myAppsStatus?.columns)
+        let columns = myAppsResponse?.meta.widgetsDataSource?.params?.columns
+        myAppsResponse?.indexes = getDataIndexes(columns: columns)
         completion?(myAppsResponse, errorCode, retErr)
     }
     
@@ -179,7 +180,8 @@ class MyAppsDataProvider {
                 retErr = error
             }
         }
-        allAppsResponse?.indexes = getDataIndexes(columns: reportData?.meta.widgetsDataSource?.allApps?.columns)
+        let columns = allAppsResponse?.meta.widgetsDataSource?.params?.columns
+        allAppsResponse?.indexes = getDataIndexes(columns: columns)
         completion?(allAppsResponse, errorCode, retErr)
     }
     
@@ -211,7 +213,8 @@ class MyAppsDataProvider {
                 retErr = error
             }
         }
-        appDetailsData?.indexes = getDataIndexes(columns: reportData?.meta.widgetsDataSource?.appDetails?.columns)
+        let columns = appDetailsData?.meta.widgetsDataSource?.params?.columns
+        appDetailsData?.indexes = getDataIndexes(columns: columns)
         completion?(appDetailsData, errorCode, retErr)
     }
     
