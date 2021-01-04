@@ -23,7 +23,7 @@ class LoginUSMViewController: UIViewController {
     private let usmInternalRedirectURL = "https://gtastage.smedsp.com/charts-ui2/#/auth/processor"
     private let usmLogoutURL = "https://gtastageapi.smedsp.com:8888/logout/oauth2"
     
-    private let shortRequestTimeoutInterval: Double = 4
+    private let shortRequestTimeoutInterval: Double = 24
     
     var emailAddress = ""
 

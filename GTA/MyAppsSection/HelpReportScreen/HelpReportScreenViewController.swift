@@ -79,6 +79,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         setUpTextView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
+        tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -155,10 +156,11 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
             self.present(alert, animated: true, completion: nil)
             return
         }
-        self.dismiss(animated: true, completion: nil)
-        let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "E d HH:mm zzz"
-        delegate?.showAlert(title: "Issue has been submitted", message: dateFormatterPrint.string(from: Date()))
+        self.dismiss(animated: true, completion: {
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "E d HH:mm zzz"
+            self.delegate?.showAlert(title: "Issue has been submitted", message: dateFormatterPrint.string(from: Date()))
+        })
     }
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
@@ -235,5 +237,11 @@ extension HelpReportScreenViewController: UIPickerViewDelegate, UIPickerViewData
 extension HelpReportScreenViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         self.textView.textViewDidChange()
+    }
+}
+
+extension HelpReportScreenViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return !(touch.view is UIControl)
     }
 }

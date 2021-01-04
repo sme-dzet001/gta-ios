@@ -39,6 +39,7 @@ class AuthViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
         pinCodeBoxes.forEach { (box) in
             box.delegate = self
+            box.textContentType = .username
             box.backwardDelegate = self
         }
     }
@@ -127,9 +128,12 @@ class AuthViewController: UIViewController {
     func authenticateUser() {
         let context = LAContext()
         var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+            if context.biometryType == .none {
+                return
+            }
             let reason = "Authenticate with Biometrics"
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) {
                 [weak self] success, authenticationError in
                 self?.checkAuthentification(isSuccess: success, error: authenticationError as NSError?)
             }
