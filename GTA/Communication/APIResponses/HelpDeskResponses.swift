@@ -106,8 +106,23 @@ struct TeamContactsRow: Codable {
         return valuesArr[index].stringValue
     }
     
+    var contactPosition: String? {
+        guard let valuesArr = values, let index = indexes["job title"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
+    }
+    
+    var contactLocation: String? {
+        guard let valuesArr = values, let index = indexes["location"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
+    }
+    
     var contactBio: String? {
         guard let valuesArr = values, let index = indexes["bio"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
+    }
+    
+    var contactFunFact: String? {
+        guard let valuesArr = values, let index = indexes["fan fact"], valuesArr.count > index else { return nil }
         return valuesArr[index].stringValue
     }
 }
