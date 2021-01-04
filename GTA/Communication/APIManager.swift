@@ -36,16 +36,16 @@ class APIManager: NSObject, URLSessionDelegate {
             switch self {
                 case .validateToken, .getCurrentOffice, .setCurrentOffice: return "/v1/me"
                 case .getSectionReport: return "/v3/reports/"
-                case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)"
-                case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)"
-                case .getAllOffices(let generationNumber): return "/v3/widgets/all_offices/data/\(generationNumber)"
-                case .getHelpDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)"
-                case .getQuickHelpData(let generationNumber): return "/v3/widgets/gsd_quick_help/data/\(generationNumber)"
-                case .getTeamContactsData(let generationNumber): return "/v3/widgets/gsd_team_contacts/data/\(generationNumber)"
-                case .getMyAppsData(let generationNumber): return "/v3/widgets/my_apps_status/data/\(generationNumber)"
-                case .getAllAppsData(let generationNumber): return "/v3/widgets/all_apps/data/\(generationNumber)"
-                case .getAppDetails(let generationNumber): return "/v3/widgets/app_details/data/\(generationNumber)"
-                case .getAppContacts(let generationNumber): return "/v3/widgets/app_contacts/data/\(generationNumber)"
+                case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)/detailed"
+                case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)/detailed"
+                case .getAllOffices(let generationNumber): return "/v3/widgets/all_offices/data/\(generationNumber)/detailed"
+                case .getHelpDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)/detailed"
+                case .getQuickHelpData(let generationNumber): return "/v3/widgets/gsd_quick_help/data/\(generationNumber)/detailed"
+                case .getTeamContactsData(let generationNumber): return "/v3/widgets/gsd_team_contacts/data/\(generationNumber)/detailed"
+                case .getMyAppsData(let generationNumber): return "/v3/widgets/my_apps_status/data/\(generationNumber)/detailed"
+                case .getAllAppsData(let generationNumber): return "/v3/widgets/all_apps/data/\(generationNumber)/detailed"
+                case .getAppDetails(let generationNumber): return "/v3/widgets/app_details/data/\(generationNumber)/detailed"
+                case .getAppContacts(let generationNumber): return "/v3/widgets/app_contacts/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -74,21 +74,18 @@ class APIManager: NSObject, URLSessionDelegate {
     //MARK: - Homescreen methods
     
     func getGlobalNews(generationNumber: Int, completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestParams = ["widget_details": "true"]
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders, params: requestParams, completion: completion)
+        makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
     func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestParams = ["widget_details": "true"]
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, params: requestParams, completion: completion)
+        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
     func getAllOffices(generationNumber: Int, completion: ((_ allOfficesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestParams = ["widget_details": "true"]
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getAllOffices(generationNumber: generationNumber), method: "POST", headers: requestHeaders, params: requestParams, completion: completion)
+        makeRequest(endpoint: .getAllOffices(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
     func getCurrentOffice(completion: ((_ preferencesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -126,49 +123,42 @@ class APIManager: NSObject, URLSessionDelegate {
     //MARK: - Service Desk methods
     
     func getHelpDeskData(for generationNumber: Int, completion: ((_ serviceDeskResponse: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestParams = ["widget_details": "true"]
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getHelpDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, params: requestParams, completion: completion)
+        self.makeRequest(endpoint: .getHelpDeskData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
         
     func getQuickHelp(generationNumber: Int, completion: ((_ quickHelpData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestParams = ["widget_details": "true"]
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getQuickHelpData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, params: requestParams, completion: completion)
+        makeRequest(endpoint: .getQuickHelpData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
     func getTeamContacts(generationNumber: Int, completion: ((_ teamContactsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestParams = ["widget_details": "true"]
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, params: requestParams, completion: completion)
+        makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     //MARK: - My Apps methods
     
     func getMyAppsData(for generationNumber: Int, username: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestParams = ["widget_details": "true"]
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         let requestBodyParams = ["s1": username]
-        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, params: requestParams, requestBodyJSONParams: requestBodyParams, completion: completion)
+        self.makeRequest(endpoint: .getMyAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
     }
     
     func getAllApps(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestParams = ["widget_details": "true"]
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, params: requestParams, completion: completion)
+        self.makeRequest(endpoint: .getAllAppsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
     func getAppDetailsData(for generationNumber: Int, username: String, appName: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestParams = ["widget_details": "true"]
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         let requestBodyParams = ["s1": username, "s2": appName]
-        self.makeRequest(endpoint: .getAppDetails(generationNumber: generationNumber), method: "POST", headers: requestHeaders, params: requestParams, requestBodyJSONParams: requestBodyParams, completion: completion)
+        self.makeRequest(endpoint: .getAppDetails(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
     }
     
     func getAppContactsData(for generationNumber: Int, username: String, appName: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestParams = ["widget_details": "true"]
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         let requestBodyParams = ["s1": username, "s2": appName]
-        self.makeRequest(endpoint: .getAppContacts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, params: requestParams, requestBodyJSONParams: requestBodyParams, completion: completion)
+        self.makeRequest(endpoint: .getAppContacts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
     }
     
     
