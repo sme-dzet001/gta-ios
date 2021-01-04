@@ -105,6 +105,9 @@ class HelpDeskDataProvider {
         }
         if let quickHelpResponse = quickHelpDataResponse {
             fillQuickHelpData(with: quickHelpResponse)
+            if (quickHelpResponse.data?.rows ?? []).isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
         }
         completion?(errorCode, retErr)
     }
@@ -124,7 +127,8 @@ class HelpDeskDataProvider {
             })
 
         } else {
-            completion?(errorCode, error)
+            let retError = ResponseError.serverError
+            completion?(errorCode, retError)
         }
     }
     
@@ -163,6 +167,9 @@ class HelpDeskDataProvider {
         }
         if let teamContactsResponse = teamContactsDataResponse {
             fillTeamContactsData(with: teamContactsResponse)
+            if (teamContactsResponse.data?.rows ?? []).isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
         }
         completion?(errorCode, retErr)
     }
@@ -181,7 +188,8 @@ class HelpDeskDataProvider {
                 self?.processTeamContacts(reportData, teamContactsResponse, errorCode, error, completion)
             })
         } else {
-            completion?(errorCode, error)
+            let retError = ResponseError.serverError
+            completion?(errorCode, retError)
         }
     }
     

@@ -11,6 +11,7 @@ class QuickHelpViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var errorLabel: UILabel!
     
     var dataProvider: HelpDeskDataProvider?
     private var expandedRowsIndex = [Int]()
@@ -40,16 +41,19 @@ class QuickHelpViewController: UIViewController {
         guard let dataProvider = dataProvider else { return }
         if dataProvider.quickHelpDataIsEmpty {
             activityIndicator.startAnimating()
+            errorLabel.isHidden = true
             tableView.isHidden = true
         }
         dataProvider.getQuickHelpData { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
+                    self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
                     self?.tableView.reloadData()
                 } else {
-                    self?.displayError(errorMessage: "Error was happened!")
+                    self?.errorLabel.isHidden = !dataProvider.quickHelpDataIsEmpty
+                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
             }
         }
