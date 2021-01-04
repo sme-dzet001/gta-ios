@@ -88,8 +88,8 @@ enum SystemStatus {
     init(status: String?) {
         switch status?.lowercased() {
         case "up": self = .online
-        case "offline": self = .offline
-        case "pending alerts": self = .pendingAlerts
+        case "down": self = .offline
+        case "has issues": self = .pendingAlerts
         default: self = .none
         }
     }
