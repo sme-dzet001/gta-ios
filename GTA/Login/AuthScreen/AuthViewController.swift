@@ -39,6 +39,7 @@ class AuthViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
         pinCodeBoxes.forEach { (box) in
             box.delegate = self
+            box.textContentType = .username
             box.backwardDelegate = self
         }
     }
