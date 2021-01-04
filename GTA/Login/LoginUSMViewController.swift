@@ -102,6 +102,7 @@ class LoginUSMViewController: UIViewController {
 extension LoginUSMViewController: WKUIDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        usmWebView.alpha = 0.5
         activityIndicator.startAnimating()
     }
     
@@ -150,6 +151,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
                 decisionHandler(.cancel)
                 return
             }
+            usmWebView.alpha = 0.5
             activityIndicator.startAnimating()
             dataProvider.validateToken(token: aToken, userEmail: emailAddress) { [weak self] (_ errorCode: Int, _ error: Error?) in
                 DispatchQueue.main.async {
@@ -161,6 +163,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
                     } else {
                         self?.performSegue(withIdentifier: "unwindToLogin", sender: nil)
                     }
+                    self?.usmWebView.alpha = 1
                     self?.activityIndicator.stopAnimating()
                 }
             }
@@ -176,6 +179,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let url = webView.url?.absoluteString, url.contains("login") {
+            usmWebView.alpha = 1
             activityIndicator.stopAnimating()
         }
     }
