@@ -12,7 +12,7 @@ public enum ResponseError: Error {
     case serverError
     case parsingError
     case noDataAvailable
-    case missingFieldError(field: String)
+    case missingFieldError(missingFields: [String])
 
     var localizedDescription: String {
         switch self {
@@ -20,8 +20,8 @@ public enum ResponseError: Error {
             return "Oops, something went wrong"
         case .noDataAvailable:
             return "No data available"
-        case .missingFieldError(let field):
-            return "\(field) field is missing"
+        case .missingFieldError(let missingFields):
+            return "\(missingFields) fields are missing"
         }
     }
 }

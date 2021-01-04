@@ -18,11 +18,12 @@ class HelpDeskContactOptionCell: UITableViewCell {
         // Initialization code
     }
     
-    func setUpCell(with data: HelpDeskCellData) {
+    func setUpCell(with data: HelpDeskCellData, isActive: Bool = true) {
         if let imageName = data.imageName {
             cellIcon.image = UIImage(named: imageName)
         }
         cellTitle.text = data.cellTitle
+        cellTitle.textColor = isActive ? .black : UIColor(hex: 0x8E8E93)
         cellSubtitle.text = data.cellSubtitle
     }
     

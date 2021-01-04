@@ -38,7 +38,8 @@ class HelpDeskDataProvider {
                     self?.processHelpDeskData(data: data, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
                 }
             } else {
-                completion?(nil, errorCode, error)
+                let retError = ResponseError.serverError
+                completion?(nil, errorCode, retError)
             }
         }
     }
@@ -55,6 +56,21 @@ class HelpDeskDataProvider {
         }
         let indexes = getDataIndexes(columns: helpDeskResponse?.meta.widgetsDataSource?.params?.columns)
         helpDeskResponse?.indexes = indexes
+        if let helpDeskResponse = helpDeskResponse {
+            var missingHelpDeskFields = [String]()
+            if (helpDeskResponse.serviceDeskPhoneNumber ?? "").isEmpty {
+                missingHelpDeskFields.append("phoneNumber")
+            }
+            if (helpDeskResponse.serviceDeskEmail ?? "").isEmpty {
+                missingHelpDeskFields.append("email")
+            }
+            if (helpDeskResponse.teamsChatLink ?? "").isEmpty {
+                missingHelpDeskFields.append("teamsChat")
+            }
+            if !missingHelpDeskFields.isEmpty {
+                retErr = ResponseError.missingFieldError(missingFields: missingHelpDeskFields)
+            }
+        }
         completion?(helpDeskResponse, errorCode, retErr)
     }
     

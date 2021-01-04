@@ -15,6 +15,7 @@ class HelpDeskViewController: UIViewController {
     private var dataProvider: HelpDeskDataProvider = HelpDeskDataProvider()
     
     var dataResponse: HelpDeskResponse?
+    var helpDeskResponseError: Error?
     
     private var helpDeskCellsData: [[HelpDeskCellData]] = []
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -31,7 +32,10 @@ class HelpDeskViewController: UIViewController {
         super.viewWillAppear(animated)
         startAnimation()
         dataProvider.getHelpDeskData { [weak self] (response, code, error) in
-            self?.dataResponse = response
+            if let helpDeskResponse = response {
+                self?.dataResponse = helpDeskResponse
+            }
+            self?.helpDeskResponseError = error
             self?.setHelpDeskCellsData()
             self?.stopAnimation()
         }
@@ -74,10 +78,18 @@ class HelpDeskViewController: UIViewController {
     }
     
     private func setHelpDeskCellsData() {
+        var serverErrorWasHappened: Bool
+        switch (helpDeskResponseError as? ResponseError) {
+        case .serverError, .parsingError:
+            serverErrorWasHappened = true
+        default:
+            serverErrorWasHappened = false
+        }
+        let errorDesc = serverErrorWasHappened ? (helpDeskResponseError as? ResponseError)?.localizedDescription : nil
         helpDeskCellsData = [
-            [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: dataResponse?.serviceDeskPhoneNumber ?? "+1 (212) 833-6767", updatesNumber: nil),
-             HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: dataResponse?.serviceDeskEmail ??  "helpdesk.request@sonymusic.com", updatesNumber: nil),
-            HelpDeskCellData(imageName: "teams_chat_icon", cellTitle: "Teams Chat", cellSubtitle: "Teams mobile app is required", updatesNumber: nil)],
+            [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: dataResponse?.serviceDeskPhoneNumber ?? errorDesc, updatesNumber: nil),
+             HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: dataResponse?.serviceDeskEmail ?? errorDesc, updatesNumber: nil),
+             HelpDeskCellData(imageName: "teams_chat_icon", cellTitle: "Teams Chat", cellSubtitle: dataResponse?.teamsChatLink != nil ? "Teams mobile app is required" : errorDesc, updatesNumber: nil)],
             [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, Report Security...", updatesNumber: nil),
             HelpDeskCellData(imageName: "about_red_icon", cellTitle: "About", cellSubtitle: "Overview of the mission, hours, etc.", updatesNumber: nil),
             HelpDeskCellData(imageName: "contacts_icon", cellTitle: "Service Desk Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil)/*,
@@ -101,7 +113,8 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HelpDeskContactOptionCell", for: indexPath) as? HelpDeskContactOptionCell {
                 let cellData = helpDeskCellsData[indexPath.section][indexPath.row]
-                cell.setUpCell(with: cellData)
+                let cellIsActive = cellData.cellSubtitle != nil && cellData.cellSubtitle != "Oops, something went wrong"
+                cell.setUpCell(with: cellData, isActive: cellIsActive)
                 return cell
             }
         } else {
@@ -129,12 +142,13 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
             let sectionData: [HelpDeskCellData] = helpDeskCellsData.count != 0 ? helpDeskCellsData[indexPath.section] : []
             switch indexPath.row {
             case 0:
-                guard let number = sectionData[indexPath.row].cellSubtitle else { return }
+                guard let number = sectionData[indexPath.row].cellSubtitle, number != "Oops, something went wrong" else { return }
                 makeCallWithNumber(number)
             case 1:
-                guard let email = sectionData[indexPath.row].cellSubtitle else { return }
+                guard let email = sectionData[indexPath.row].cellSubtitle, email != "Oops, something went wrong" else { return }
                 makeEmailForAddress(email)
             case 2:
+                guard let msTeamsLink = sectionData[indexPath.row].cellSubtitle, msTeamsLink != "Oops, something went wrong" else { return }
                 openMSTeamsChat()
             default:
                 return
