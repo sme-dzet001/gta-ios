@@ -19,7 +19,7 @@ class LoginDataProvider {
                 do {
                     tokenValidationResponse = try DataParser.parse(data: responseData)
                 } catch {
-                    retErr = error
+                    retErr = ResponseError.parsingError
                 }
             }
             if let validationResponse = tokenValidationResponse {

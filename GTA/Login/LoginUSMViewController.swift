@@ -159,9 +159,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
                         authVC.isSignUp = true
                         self?.navigationController?.pushViewController(authVC, animated: true)
                     } else {
-                        self?.displayError(errorMessage: "/me request failed", title: "Login Failed") { (_) in
-                            self?.performSegue(withIdentifier: "unwindToLogin", sender: nil)
-                        }
+                        self?.performSegue(withIdentifier: "unwindToLogin", sender: nil)
                     }
                     self?.activityIndicator.stopAnimating()
                 }

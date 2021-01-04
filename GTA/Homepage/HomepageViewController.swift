@@ -14,6 +14,7 @@ class HomepageViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var pageControl: AdvancedPageControlView!
     
     private var dataProvider: HomeDataProvider = HomeDataProvider()
@@ -38,17 +39,20 @@ class HomepageViewController: UIViewController {
     private func loadNewsData() {
         if dataProvider.newsDataIsEmpty {
             activityIndicator.startAnimating()
+            errorLabel.isHidden = true
             pageControl.isHidden = true
         }
         dataProvider.getGlobalNewsData { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
+                    self?.errorLabel.isHidden = true
                     self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
                     self?.collectionView.reloadData()
                 } else {
-                    self?.displayError(errorMessage: "Error was happened!")
+                    self?.errorLabel.isHidden = !(self?.dataProvider.newsDataIsEmpty ?? true)
+                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
             }
         }

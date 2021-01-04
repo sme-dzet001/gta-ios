@@ -50,7 +50,7 @@ class HelpDeskDataProvider {
             do {
                 helpDeskResponse = try DataParser.parse(data: responseData)
             } catch {
-                retErr = error
+                retErr = ResponseError.parsingError
             }
         }
         let indexes = getDataIndexes(columns: helpDeskResponse?.meta.widgetsDataSource?.params?.columns)
@@ -84,7 +84,7 @@ class HelpDeskDataProvider {
             do {
                 quickHelpDataResponse = try DataParser.parse(data: responseData)
             } catch {
-                retErr = error
+                retErr = ResponseError.parsingError
             }
         }
         if let quickHelpResponse = quickHelpDataResponse {
@@ -142,7 +142,7 @@ class HelpDeskDataProvider {
             do {
                 teamContactsDataResponse = try DataParser.parse(data: responseData)
             } catch {
-                retErr = error
+                retErr = ResponseError.parsingError
             }
         }
         if let teamContactsResponse = teamContactsDataResponse {

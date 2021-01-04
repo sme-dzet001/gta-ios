@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="tSX-vM-6Qk">
@@ -62,6 +67,12 @@
                                     <segue destination="ib8-M3-rFG" kind="embed" identifier="embedTable" id="GXE-CY-EIR"/>
                                 </connections>
                             </containerView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7G-Dt-tkK">
+                                <rect key="frame" x="188.5" y="188" width="37.5" height="19.5"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="QDX-0N-PvK">
                                 <rect key="frame" x="197" y="187.5" width="20" height="20"/>
                                 <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -87,6 +98,8 @@
                             <constraint firstItem="Rwc-F4-LiA" firstAttribute="trailing" secondItem="9CN-qS-fad" secondAttribute="trailing" id="EX1-Ao-SZr"/>
                             <constraint firstItem="WOX-S5-YeY" firstAttribute="leading" secondItem="ks6-d7-mSt" secondAttribute="trailing" constant="2" id="HYk-ro-szk"/>
                             <constraint firstItem="9CN-qS-fad" firstAttribute="trailing" secondItem="1GO-lO-K0o" secondAttribute="trailing" id="IDY-HO-Mlb"/>
+                            <constraint firstItem="O7G-Dt-tkK" firstAttribute="centerX" secondItem="eVF-gW-Cgr" secondAttribute="centerX" id="QRp-hK-1sE"/>
+                            <constraint firstItem="O7G-Dt-tkK" firstAttribute="centerY" secondItem="eVF-gW-Cgr" secondAttribute="centerY" constant="32" id="QmB-2v-PJZ"/>
                             <constraint firstItem="9CN-qS-fad" firstAttribute="trailing" secondItem="eVF-gW-Cgr" secondAttribute="trailing" id="SH1-29-4eG"/>
                             <constraint firstItem="QDX-0N-PvK" firstAttribute="centerX" secondItem="eVF-gW-Cgr" secondAttribute="centerX" id="VYi-8v-l81"/>
                             <constraint firstItem="QDX-0N-PvK" firstAttribute="centerY" secondItem="eVF-gW-Cgr" secondAttribute="centerY" constant="32" id="W83-f5-70R"/>
@@ -105,6 +118,7 @@
                         <outlet property="activityIndicator" destination="QDX-0N-PvK" id="HHj-52-lQc"/>
                         <outlet property="collectionView" destination="eVF-gW-Cgr" id="ZdK-CA-rKP"/>
                         <outlet property="containerView" destination="Rwc-F4-LiA" id="eTA-yX-epK"/>
+                        <outlet property="errorLabel" destination="O7G-Dt-tkK" id="jUI-uc-AFN"/>
                         <outlet property="pageControl" destination="1GO-lO-K0o" id="ivv-zl-Axd"/>
                     </connections>
                 </viewController>
@@ -132,7 +146,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="HomeScreenTitle" width="2038" height="256"/>
+        <image name="HomeScreenTitle" width="199" height="25"/>
         <image name="homepage_tab_icon" width="24" height="24"/>
         <image name="settings_icon" width="20" height="20"/>
     </resources>

@@ -150,7 +150,7 @@ class MyAppsDataProvider {
             do {
                 myAppsResponse = try DataParser.parse(data: responseData)
             } catch {
-                retErr = error
+                retErr = ResponseError.parsingError
             }
         }
         let columns = myAppsResponse?.meta.widgetsDataSource?.params?.columns
@@ -183,7 +183,7 @@ class MyAppsDataProvider {
             do {
                 allAppsResponse = try DataParser.parse(data: responseData)
             } catch {
-                retErr = error
+                retErr = ResponseError.parsingError
             }
         }
         let columns = allAppsResponse?.meta.widgetsDataSource?.params?.columns
@@ -216,7 +216,7 @@ class MyAppsDataProvider {
             do {
                 appContactsData = try DataParser.parse(data: responseData)
             } catch {
-                retErr = error
+                retErr = ResponseError.parsingError
             }
         }
         let columns = appContactsData?.meta.widgetsDataSource?.params?.columns
@@ -250,7 +250,7 @@ class MyAppsDataProvider {
             do {
                 appDetailsData = try DataParser.parse(data: responseData)
             } catch {
-                retErr = error
+                retErr = ResponseError.parsingError
             }
         }
         let columns = appDetailsData?.meta.widgetsDataSource?.params?.columns

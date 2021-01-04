@@ -9,11 +9,19 @@ import Foundation
 
 public enum ResponseError: Error {
     case commonError
+    case serverError
+    case parsingError
+    case noDataAvailable
+    case missingFieldError(field: String)
 
     var localizedDescription: String {
         switch self {
-        case .commonError:
+        case .commonError, .serverError, .parsingError:
             return "Oops, something went wrong"
+        case .noDataAvailable:
+            return "No data available"
+        case .missingFieldError(let field):
+            return "\(field) field is missing"
         }
     }
 }

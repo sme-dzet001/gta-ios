@@ -61,7 +61,7 @@ class HomepageTableViewController: UITableViewController {
                     if error == nil && errorCode == 200 {
                         self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
                     } else {
-                        self?.officeLoadingError = "Oops, something went wrong"
+                        self?.officeLoadingError = "Offices loading is failed!"
                         self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
                     }
                 }
@@ -111,7 +111,7 @@ class HomepageTableViewController: UITableViewController {
                 return cell ?? UITableViewCell()
             } else {
                 if let errorStr = officeLoadingError {
-                    let errorCell = createErrorCell(with: errorStr, withSeparator: true)
+                    let errorCell = createErrorCell(with: errorStr, textColor: UIColor(hex: 0x8E8E93), withSeparator: true)
                     return errorCell
                 } else {
                     let loadingCell = createLoadingCell(withSeparator: true, verticalOffset: 24)

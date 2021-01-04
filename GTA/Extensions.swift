@@ -118,7 +118,7 @@ extension UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    func createErrorCell(with text: String?, withSeparator: Bool = false, verticalOffset: CGFloat = 24) -> UITableViewCell {
+    func createErrorCell(with text: String?, textColor: UIColor = .black, withSeparator: Bool = false, verticalOffset: CGFloat = 24) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         cell.selectionStyle = .none
         if withSeparator {
@@ -145,7 +145,7 @@ extension UIViewController {
         label.numberOfLines = 0
         label.font = UIFont(name: "SFProText-Regular", size: 16)!
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = textColor
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.7
         label.text = text

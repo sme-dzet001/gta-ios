@@ -109,7 +109,8 @@ class HomeDataProvider {
                 self?.processGlobalNews(newsResponse: newsResponse, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
             }
         } else {
-            completion?(errorCode, error)
+            let retError = ResponseError.serverError
+            completion?(errorCode, retError)
         }
     }
     
@@ -120,11 +121,14 @@ class HomeDataProvider {
             do {
                 newsDataResponse = try DataParser.parse(data: responseData)
             } catch {
-                retErr = error
+                retErr = ResponseError.parsingError
             }
         }
         if let newsResponse = newsDataResponse {
             self.fillNewsData(with: newsResponse)
+            if (newsResponse.data?.rows ?? []).isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
         }
         completion?(errorCode, retErr)
     }
@@ -147,11 +151,14 @@ class HomeDataProvider {
             do {
                 specialAlertsDataResponse = try DataParser.parse(data: responseData)
             } catch {
-                retErr = error
+                retErr = ResponseError.parsingError
             }
         }
         if let alertsResponse = specialAlertsDataResponse {
             fillAlertsData(with: alertsResponse)
+            if (alertsResponse.data?.rows ?? []).isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
         }
         completion?(errorCode, retErr)
     }
@@ -170,7 +177,8 @@ class HomeDataProvider {
                 self?.processSpecialAlerts(reportData, alertsResponse, errorCode, error, completion)
             })
         } else {
-            completion?(errorCode, error)
+            let retError = ResponseError.serverError
+            completion?(errorCode, retError)
         }
     }
     
@@ -236,7 +244,7 @@ class HomeDataProvider {
             do {
                 allOfficesResponse = try DataParser.parse(data: responseData)
             } catch {
-                retErr = error
+                retErr = ResponseError.parsingError
             }
         }
         if let officesResponse = allOfficesResponse {
@@ -290,7 +298,7 @@ class HomeDataProvider {
                 do {
                     userPreferencesResponse = try DataParser.parse(data: responseData)
                 } catch {
-                    retErr = error
+                    retErr = ResponseError.parsingError
                 }
             }
             if let userPreferencesResponse = userPreferencesResponse {
