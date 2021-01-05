@@ -105,6 +105,18 @@ class MyAppsDataProvider {
     
     // MARK: - Handling methods
     
+    func formatDateString(dateString: String?, initialDateFormat: String) -> String? {
+        guard let dateString = dateString else { return nil }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = initialDateFormat
+        print("1")
+        guard let date = dateFormatter.date(from: dateString) else { return dateString }
+        print("2")
+        dateFormatter.dateFormat = "HH:mm zzz E d"
+        let formattedDateString = dateFormatter.string(from: date)
+        return formattedDateString
+    }
+    
     private func formImageURL(from imagePath: String?) -> String {
         guard let imagePath = imagePath else { return "" }
         guard !imagePath.contains("https://") else  { return imagePath }

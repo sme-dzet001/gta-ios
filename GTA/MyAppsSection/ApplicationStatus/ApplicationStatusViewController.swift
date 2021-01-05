@@ -132,7 +132,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         if section == 0 {
             let statusHeader = SystemStatusHeader.instanceFromNib()
             statusHeader.systemStatus = systemStatus
-            statusHeader.dateLabel.text = appDetailsData?.lastUpdate
+            statusHeader.dateLabel.text = dataProvider?.formatDateString(dateString: appDetailsData?.lastUpdate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS")
             return statusHeader
         } else if let metricsData = dataSource[section].metricsData {
             let metricStatsHeader = MetricStatsHeader.instanceFromNib()
