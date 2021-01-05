@@ -64,22 +64,6 @@ class AppsViewController: UIViewController {
         }
     }
     
-//    private func getAppsData() {
-//        startAnimation()
-//        dataProvider.getAppsCommonData {[weak self] (response, code, error, isFromServer) in
-//            if let responseData = response {
-//                self?.setHardCodeData()
-//                self?.dataSource.append(contentsOf: responseData)
-//            }
-//            self?.stopAnimation()
-//            let appInfo = response?.map({$0.cellData}).reduce([], {$0 + $1})
-//            self?.dataProvider.getImageData(for: appInfo ?? [])
-//            if isFromServer {
-//                self?.lastUpdateDate = Date().addingTimeInterval(15)
-//            }
-//        }
-//    }
-    
     private func startAnimation() {
         self.tableView.alpha = 0
         self.view.addSubview(self.activityIndicator)
