@@ -36,7 +36,6 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppDetailsData()
         }
@@ -71,8 +70,18 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     }
     
     private func setUpNavigationItem() {
+        let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+        tlabel.text = appName
+        tlabel.textColor = UIColor.black
+        tlabel.textAlignment = .center
+        tlabel.font = UIFont(name: "SFProDisplay-Medium", size: 20.0)
+        tlabel.backgroundColor = UIColor.clear
+        tlabel.minimumScaleFactor = 0.6
+        tlabel.adjustsFontSizeToFitWidth = true
+        self.navigationItem.titleView = tlabel
         self.navigationItem.title = appName
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
+        self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
     }
 
     private func setUpTableView() {
