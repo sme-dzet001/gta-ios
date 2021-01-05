@@ -15,6 +15,7 @@ class QuickHelpViewController: UIViewController {
     
     var dataProvider: HelpDeskDataProvider?
     private var expandedRowsIndex = [Int]()
+    private var lastUpdateDate: Date?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +25,10 @@ class QuickHelpViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadQuickHelpData()
+        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
+            loadQuickHelpData()
+        }
+        
     }
     
     private func setUpNavigationItem() {
@@ -46,6 +50,7 @@ class QuickHelpViewController: UIViewController {
         }
         dataProvider.getQuickHelpData { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
+                self?.lastUpdateDate = Date().addingTimeInterval(60)
                 self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
                     self?.errorLabel.isHidden = true

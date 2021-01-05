@@ -18,6 +18,7 @@ class HomepageViewController: UIViewController {
     @IBOutlet weak var pageControl: AdvancedPageControlView!
     
     private var dataProvider: HomeDataProvider = HomeDataProvider()
+    private var lastUpdateDate: Date?
     
     var selectedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     var homepageTableVC: HomepageTableViewController?
@@ -33,7 +34,10 @@ class HomepageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadNewsData()
+        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
+            loadNewsData()
+        }
+        
     }
     
     private func loadNewsData() {
@@ -44,6 +48,7 @@ class HomepageViewController: UIViewController {
         }
         dataProvider.getGlobalNewsData { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
+                self?.lastUpdateDate = Date().addingTimeInterval(60)
                 self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
                     self?.errorLabel.isHidden = true
@@ -59,7 +64,6 @@ class HomepageViewController: UIViewController {
     }
     
     private func setUpPageControl() {
-        
         let inactiveColor = UIColor(red: 147.0 / 255.0, green: 130.0 / 255.0, blue: 134.0 / 255.0, alpha: 1.0)
         let newsCount = dataProvider.newsData.count
         pageControl.drawer = ExtendedDotDrawer(numberOfPages: newsCount,  height: 4, width: 6, space: 6, dotsColor: inactiveColor, borderColor: inactiveColor, indicatorBorderColor: .white)

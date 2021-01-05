@@ -14,6 +14,7 @@ class ServiceDeskContactsViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     
     var dataProvider: HelpDeskDataProvider?
+    private var lastUpdateDate: Date?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +24,9 @@ class ServiceDeskContactsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadContactsData()
+        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
+            loadContactsData()
+        }
     }
     
     private func setUpNavigationItem() {
@@ -46,6 +49,7 @@ class ServiceDeskContactsViewController: UIViewController {
         }
         dataProvider.getTeamContactsData { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
+                self?.lastUpdateDate = Date().addingTimeInterval(60)
                 self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
                     self?.errorLabel.isHidden = true

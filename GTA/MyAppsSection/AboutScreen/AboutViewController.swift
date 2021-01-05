@@ -14,6 +14,7 @@ class AboutViewController: UIViewController {
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     private var dataSource: AboutDataSource?
+    private var lastUpdateDate: Date?
     var appName: String? = ""
     var appContactsData: AppContactsData?
     var dataProvider: MyAppsDataProvider?
@@ -29,18 +30,22 @@ class AboutViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barTintColor = UIColor.white
-        
-        if appContactsData == nil {
-            startAnimation()
+        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
+            getAppContactsData()
         }
+    }
+    
+    private func getAppContactsData() {
         dataProvider?.getAppContactsData(for: appName) { [weak self] (contactsData, _, error) in
             self?.appContactsData = contactsData
+            self?.lastUpdateDate = Date().addingTimeInterval(60)
             self?.dataSource?.contactsData = self?.appContactsData?.contactsData ?? []
             self?.stopAnimation()
         }
     }
     
     private func startAnimation() {
+        guard appContactsData == nil else { return }
         self.tableView.alpha = 0
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.view.addSubview(self.activityIndicator)

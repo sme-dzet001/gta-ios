@@ -19,6 +19,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var lastUpdateDate: Date?
     var dataProvider: MyAppsDataProvider?
     var dataSource: [AppsDataSource] = []
     var appDetailsData: AppDetailsData?
@@ -36,16 +37,21 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
-        if appDetailsData == nil {
-            startAnimation()
+        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
+            getAppDetailsData()
         }
+    }
+    
+    private func getAppDetailsData() {
         dataProvider?.getAppDetailsData(for: appName) { [weak self] (detailsData, _, error) in
             self?.appDetailsData = detailsData
+            self?.lastUpdateDate = Date().addingTimeInterval(60)
             self?.stopAnimation()
         }
     }
     
     private func startAnimation() {
+        guard appDetailsData == nil else { return }
         self.tableView.alpha = 0
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.view.addSubview(self.activityIndicator)

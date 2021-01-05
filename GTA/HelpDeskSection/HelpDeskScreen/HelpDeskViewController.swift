@@ -11,6 +11,7 @@ class HelpDeskViewController: UIViewController {
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    private var lastUpdateDate: Date?
     
     private var dataProvider: HelpDeskDataProvider = HelpDeskDataProvider()
     
@@ -30,7 +31,14 @@ class HelpDeskViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        startAnimation()
+        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
+            startAnimation()
+            self.getHelpDeskData()
+        }
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    private func getHelpDeskData() {
         dataProvider.getHelpDeskData { [weak self] (response, code, error) in
             if let helpDeskResponse = response {
                 self?.dataResponse = helpDeskResponse
@@ -38,8 +46,8 @@ class HelpDeskViewController: UIViewController {
             self?.helpDeskResponseError = error
             self?.setHelpDeskCellsData()
             self?.stopAnimation()
+            self?.lastUpdateDate = Date().addingTimeInterval(60)
         }
-        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,6 +56,7 @@ class HelpDeskViewController: UIViewController {
     }
 
     private func startAnimation() {
+        guard dataResponse == nil else { return }
         self.tableView.alpha = 0
         self.activityIndicator.center = CGPoint(x: UIScreen.main.bounds.width  / 2,
                                                 y: UIScreen.main.bounds.height / 2)
