@@ -25,6 +25,7 @@ class OfficeLocationViewController: UIViewController {
     
     weak var officeSelectionDelegate: OfficeSelectionDelegate?
     
+    var selectedRegionName: String?
     var regionSelectionIsOn: Bool = true
     var dataProvider: HomeDataProvider?
     var regionDataSource: [Hardcode] = []
@@ -33,7 +34,9 @@ class OfficeLocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataProvider?.userLocationManager.userLocationManagerDelegate = self
+        if regionSelectionIsOn {
+            dataProvider?.userLocationManager.userLocationManagerDelegate = self
+        }
         setUpTableView()
         UIView.animate(withDuration: 0.4) {
             self.backArrow.isHidden = self.regionSelectionIsOn
@@ -69,6 +72,9 @@ class OfficeLocationViewController: UIViewController {
     private func setDataSource() {
         let regionsData = dataProvider?.getAllOfficeRegions().compactMap { Hardcode(imageName: "", text: $0) } ?? []
         regionDataSource = [Hardcode(imageName: "", text: "Use My Current Location", additionalText: "Will display office based on your current location")] + regionsData
+        if let regionName = selectedRegionName {
+            officeDataSource = dataProvider?.getOffices(for: regionName).compactMap { officeRow in Hardcode(imageName: "", text: officeRow.officeName ?? "", additionalText: officeRow.officeLocation ?? "", officeId: officeRow.officeId) } ?? []
+        }
     }
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
@@ -170,8 +176,8 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         office.officeSelectionDelegate = officeSelectionDelegate
         office.regionSelectionIsOn = false
         office.title = regionName
-        let officesList = dataProvider?.getOffices(for: regionName).compactMap { officeRow in Hardcode(imageName: "", text: officeRow.officeName ?? "", additionalText: officeRow.officeLocation ?? "", officeId: officeRow.officeId) } ?? []
-        office.officeDataSource = officesList
+        office.selectedRegionName = regionName
+        office.dataProvider = dataProvider
         self.navigationController?.pushWithFadeAnimationVC(office)
     }
     
