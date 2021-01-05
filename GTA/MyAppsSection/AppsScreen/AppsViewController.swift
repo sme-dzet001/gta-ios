@@ -110,6 +110,10 @@ class AppsViewController: UIViewController {
     }
     
     private func setHardCodeData() {
+        let serviceAlertIsAlreadyPresent = dataProvider.appsData.contains(where: { (appsDataSource) -> Bool in
+            appsDataSource.cellData.first?.app_name == "Service Alert: VPN Outage"
+        })
+        guard !serviceAlertIsAlreadyPresent else { return }
         dataProvider.appsData.insert(AppsDataSource(sectionName: nil, description: nil, cellData: [AppInfo(app_name: "Service Alert: VPN Outage", app_title: "10:30 +5 GTM Wed 15", app_icon: nil, appStatus: .none, app_is_active: false, imageData: nil)]), at: 0)
 //        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: [AppInfo(app_name: "Service Alert: VPN Outage", app_title: "10:30 +5 GTM Wed 15", app_icon: nil, appStatus: .none, app_is_active: false, imageData: nil)])]
 //
@@ -139,7 +143,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0, dataProvider.appsData[indexPath.section].cellData.first?.app_name == "Service Alert: VPN Outage", let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
+        if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
             return cell
         } else if dataProvider.appsData[indexPath.section].sectionName == "My Apps", dataProvider.appsData[indexPath.section].cellData.isEmpty {
