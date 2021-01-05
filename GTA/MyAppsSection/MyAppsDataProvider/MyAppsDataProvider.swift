@@ -13,12 +13,12 @@ class MyAppsDataProvider {
     private var cacheManager: CacheManager = CacheManager()
     weak var appImageDelegate: AppImageDelegate?
     var appsData: [AppsDataSource] = []
-    private var allAppsData: AllAppsResponse? {
+    var allAppsData: AllAppsResponse? {
         didSet {
             appsData = self.crateGeneralResponse() ?? []
         }
     }
-    private var myAppsStatusData: MyAppsResponse? {
+    var myAppsStatusData: MyAppsResponse? {
         didSet {
             appsData = self.crateGeneralResponse() ?? []
         }
@@ -107,9 +107,7 @@ class MyAppsDataProvider {
         guard let dateString = dateString else { return nil }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = initialDateFormat
-        print("1")
         guard let date = dateFormatter.date(from: dateString) else { return dateString }
-        print("2")
         dateFormatter.dateFormat = "HH:mm zzz E d"
         let formattedDateString = dateFormatter.string(from: date)
         return formattedDateString
@@ -134,7 +132,8 @@ class MyAppsDataProvider {
     }
     
     private func crateGeneralResponse() -> [AppsDataSource]? {
-        guard let _ = allAppsData?.myAppsStatus, let _ = myAppsStatusData else { return nil }
+        guard let allAppsInfo = allAppsData?.myAppsStatus, let _ = myAppsStatusData else { return nil }
+        guard !allAppsInfo.isEmpty else { return nil }
         var response = allAppsData?.myAppsStatus
         var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
@@ -150,12 +149,8 @@ class MyAppsDataProvider {
             }
         }
         var result = [AppsDataSource]()
-        if !myAppsSection.cellData.isEmpty {
-            result.append(myAppsSection)
-        }
-        if !otherAppsSection.cellData.isEmpty {
-            result.append(otherAppsSection)
-        }
+        result.append(myAppsSection)
+        result.append(otherAppsSection)
         return result
     }
     
@@ -171,7 +166,9 @@ class MyAppsDataProvider {
         }
         let columns = myAppsResponse?.meta.widgetsDataSource?.params?.columns
         myAppsResponse?.indexes = getDataIndexes(columns: columns)
-        self.myAppsStatusData = myAppsResponse
+        if let myAppsResponse = myAppsResponse {
+            self.myAppsStatusData = myAppsResponse
+        }
         completion?(errorCode, retErr, isFromServer)
     }
     
@@ -208,7 +205,9 @@ class MyAppsDataProvider {
         }
         let columns = allAppsResponse?.meta.widgetsDataSource?.params?.columns
         allAppsResponse?.indexes = getDataIndexes(columns: columns)
-        self.allAppsData = allAppsResponse
+        if let allAppsResponse = allAppsResponse {
+            self.allAppsData = allAppsResponse
+        }
         completion?(errorCode, retErr)
     }
     
