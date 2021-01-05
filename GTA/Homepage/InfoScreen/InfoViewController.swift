@@ -133,7 +133,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
             if data.additionalText == nil {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeInfoCell", for: indexPath) as? OfficeInfoCell
                 cell?.iconImageView.image = UIImage(named: data.imageName)
-                cell?.infoLabel.text = data.text
+                cell?.infoLabel.text = data.text.replacingOccurrences(of: "\u{00A0}", with: " ")
                 return cell ?? UITableViewCell()
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
