@@ -28,6 +28,7 @@ class AppsViewController: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+        startAnimation()
         if allAppsLastUpdateDate == nil || Date() >= allAppsLastUpdateDate ?? Date() {
             self.getAllApps()
         }
@@ -65,6 +66,7 @@ class AppsViewController: UIViewController {
     }
     
     private func startAnimation() {
+        guard dataProvider.appsData.isEmpty else { return }
         self.tableView.alpha = 0
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.center = CGPoint(x: UIScreen.main.bounds.width  / 2,
