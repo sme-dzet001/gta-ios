@@ -72,13 +72,15 @@ extension GeneralViewController: WKNavigationDelegate {
     }
     
     private func logout() {
-        KeychainManager.deleteUsername()
-        KeychainManager.deleteToken()
-        KeychainManager.deleteTokenExpirationDate()
-        CacheManager().clearCache()
-        KeychainManager.deletePinData()
-        if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
-            sceneDelegate.startLoginFlow()
+        DispatchQueue.main.async {
+            KeychainManager.deleteUsername()
+            KeychainManager.deleteToken()
+            KeychainManager.deleteTokenExpirationDate()
+            CacheManager().clearCache()
+            KeychainManager.deletePinData()
+            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+                sceneDelegate.startLoginFlow()
+            }
         }
     }
 }
