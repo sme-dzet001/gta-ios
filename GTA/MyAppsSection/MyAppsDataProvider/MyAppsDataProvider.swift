@@ -55,7 +55,7 @@ class MyAppsDataProvider {
     
     func getAppDetailsData(for app: String?, completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
-            self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, false, completion)
+            self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, isFromCache, completion)
         }
     }
     
@@ -241,9 +241,14 @@ class MyAppsDataProvider {
             } catch {
                 retErr = ResponseError.parsingError
             }
+        } else {
+            retErr = ResponseError.commonError
         }
         let columns = appContactsData?.meta.widgetsDataSource?.params?.columns
         appContactsData?.indexes = getDataIndexes(columns: columns)
+        if let contacts = appContactsData?.contactsData, contacts.isEmpty {
+            retErr = ResponseError.noDataAvailable
+        }
         completion?(appContactsData, errorCode, retErr)
     }
     
@@ -278,6 +283,8 @@ class MyAppsDataProvider {
             } catch {
                 retErr = ResponseError.parsingError
             }
+        } else {
+            retErr = ResponseError.commonError
         }
         let columns = appDetailsData?.meta.widgetsDataSource?.params?.columns
         appDetailsData?.indexes = getDataIndexes(columns: columns)

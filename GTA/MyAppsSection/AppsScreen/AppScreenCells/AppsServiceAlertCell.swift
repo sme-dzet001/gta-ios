@@ -22,7 +22,7 @@ class AppsServiceAlertCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func setUpCell(with data: AppInfo, isNeedCornerRadius: Bool = false) {
+    func setUpCell(with data: AppInfo, isNeedCornerRadius: Bool = false, isDisabled: Bool = false, error: Error? = nil) {
         descriptionLabel.text = data.app_name
         mainLabel.text = data.app_title
         if let image = data.imageData {
@@ -31,6 +31,14 @@ class AppsServiceAlertCell: UITableViewCell {
         if isNeedCornerRadius {
             self.parentView.layer.cornerRadius = 20
             self.parentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        }
+        if isDisabled {
+            self.parentView.backgroundColor = UIColor(red: 142.0 / 255.0, green: 142.0 / 255.0, blue: 147.0 / 255.0, alpha: 0.3)
+        } else {
+            self.parentView.backgroundColor = .white
+        }
+        if let downloadError = error as? ResponseError, isDisabled {
+            descriptionLabel.text = downloadError.localizedDescription
         }
     }
     

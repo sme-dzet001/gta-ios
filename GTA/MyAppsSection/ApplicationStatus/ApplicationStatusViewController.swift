@@ -22,10 +22,16 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     private var lastUpdateDate: Date?
     var dataProvider: MyAppsDataProvider?
     var dataSource: [AppsDataSource] = []
-    var appDetailsData: AppDetailsData?
+    var appDetailsData: AppDetailsData? {
+        didSet {
+            detailsDataDelegate?.detailsDataUpdated(detailsData: appDetailsData, error: detailsDataResponseError)
+        }
+    }
     var appName: String? = ""
     var systemStatus: SystemStatus = .none
     var selectedMetricsPeriod: MetricsPeriod = .weekly
+    var detailsDataResponseError: Error?
+    weak var detailsDataDelegate: DetailsDataDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +50,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     
     private func getAppDetailsData() {
         dataProvider?.getAppDetailsData(for: appName) { [weak self] (detailsData, errorCode, error) in
+            self?.detailsDataResponseError = error
             if error == nil, errorCode == 200 {
                 self?.lastUpdateDate = Date().addingTimeInterval(60)
             }
@@ -187,7 +194,8 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         let dataArray = dataSource[indexPath.section].cellData
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.separator.isHidden = indexPath.row == dataArray.count - 1
-            cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0)
+            let isDisabled = indexPath.row < 2 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty)
+            cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, error: detailsDataResponseError)
             return cell
         }
         if let metricsData = dataSource[indexPath.section].metricsData, let cell = tableView.dequeueReusableCell(withIdentifier: "MetricStatsCell", for: indexPath) as? MetricStatsCell {
@@ -222,10 +230,15 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         if indexPath.row == 2 {
             let aboutScreen = AboutViewController()
             aboutScreen.details = appDetailsData
+            aboutScreen.detailsDataResponseError = detailsDataResponseError
+            self.detailsDataDelegate = aboutScreen
             aboutScreen.dataProvider = dataProvider
             aboutScreen.appName = appName
             navigationController?.pushViewController(aboutScreen, animated: true)
         } else {
+            if appDetailsData?.appSupportEmail == nil {
+                return
+            }
             let reportScreen = HelpReportScreenViewController()
             reportScreen.delegate = self
             reportScreen.screenTitle = dataSource[indexPath.section].cellData[indexPath.row].app_title
@@ -249,4 +262,8 @@ extension ApplicationStatusViewController: MetricStatsHeaderDelegate {
 
 protocol ShowAlertDelegate: class {
     func showAlert(title: String?, message: String?)
+}
+
+protocol DetailsDataDelegate: class {
+    func detailsDataUpdated(detailsData: AppDetailsData?, error: Error?)
 }
