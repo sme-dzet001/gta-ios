@@ -41,6 +41,7 @@ class InfoViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateTitleLabel.isHidden = infoType == .office
         officeStatusLabel.isHidden = true//infoType != .office
         officeStatusLabel.layer.cornerRadius = 5
         officeStatusLabel.layer.masksToBounds = true
@@ -61,7 +62,7 @@ class InfoViewController: UIViewController {
     }
     
     private func setDataSource() {
-        officeDataSoure = [Hardcode(imageName: "phone_icon", text: "(480) 555-0103"), Hardcode(imageName: "email_icon", text: "deanna.curtis@example.com"), Hardcode(imageName: "location", text: selectedOfficeData?.officeLocation ?? "9 Derry Street, London, W8 5HY, United Kindom"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a Sony location to see current status")]
+        officeDataSoure = [Hardcode(imageName: "phone_icon", text: "(480) 555-0103"), Hardcode(imageName: "email_icon", text: "deanna.curtis@example.com"), Hardcode(imageName: "location", text: selectedOfficeData?.officeLocation ?? "9 Derry Street, London, W8 5HY, United Kindom"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a different Sony Music office")]
     }
     
     private func setupHeaderImageView() {
@@ -156,7 +157,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
             statusBarHeight = self.view.bounds.height - UIApplication.shared.statusBarFrame.height
             statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
         }
-        officeLocation.title = "Select a Sony Music Office Location"
+        officeLocation.title = "Select Sony Music Office Region"
         officeLocation.dataProvider = dataProvider
         officeLocation.officeSelectionDelegate = self
         let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)

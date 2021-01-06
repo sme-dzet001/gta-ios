@@ -76,7 +76,7 @@ class OfficeLocationViewController: UIViewController {
     
     private func setDataSource() {
         let regionsData = dataProvider?.getAllOfficeRegions().compactMap { Hardcode(imageName: "", text: $0) } ?? []
-        regionDataSource = [Hardcode(imageName: "", text: "Use My Current Location", additionalText: "Will display office based on your current location")] + regionsData
+        regionDataSource = [Hardcode(imageName: "", text: "Use My Current Location", additionalText: "Will select office based on your current location")] + regionsData
         if let regionName = selectedRegionName {
             officeDataSource = dataProvider?.getOffices(for: regionName).compactMap { officeRow in Hardcode(imageName: "", text: officeRow.officeName ?? "", additionalText: officeRow.officeLocation ?? "", officeId: officeRow.officeId) } ?? []
         }
@@ -138,7 +138,7 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
             cell?.mainLabel.text = "Use My Current Location"
-            cell?.descriptionLabel.text = "Will display office based on your current location"
+            cell?.descriptionLabel.text = "Will select office based on your current location"
             cell?.iconImageView.image = UIImage(named: "gps_icon")
             cell?.arrowIcon.isHidden = true
             cell?.separator.isHidden = false
