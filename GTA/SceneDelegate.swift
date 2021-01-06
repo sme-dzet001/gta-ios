@@ -7,11 +7,13 @@
 
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed {
+    
     var window: UIWindow?
 
     var appIsInTray: Bool = false
+    
+    var isAuthentificationPassed: Bool?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -74,7 +76,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 if let aDate = UserDefaults.standard.value(forKey: "lastActivityDate") as? Date {
                     lastActivityDate = aDate
                 }
-                if lastActivityDate.addingTimeInterval(1200) > Date(),  let _ = KeychainManager.getPin() {
+                if lastActivityDate.addingTimeInterval(1200) > Date(),  let _ = KeychainManager.getPin(), isAuthentificationPassed ?? false {
                     if let navController = self.window?.rootViewController as? UINavigationController, navController.rootViewController is UITabBarController {
                         return
                     }
@@ -90,11 +92,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     KeychainManager.deleteToken()
                     KeychainManager.deleteTokenExpirationDate()
                     KeychainManager.deletePinData()
+                    CacheManager().clearCache()
                     startLoginFlow(sessionExpired: tokenIsExpired)
                     return
                 }
                 let authVC = AuthViewController()
                 authVC.isSignUp = false
+                authVC.delegate = self
                 window?.rootViewController = authVC
             }
         }

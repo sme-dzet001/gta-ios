@@ -30,6 +30,7 @@ class AuthViewController: UIViewController {
     @IBOutlet weak var logoImageView: UIImageView!
     private var usmLogoutWebView: WKWebView!
     private var continueButtonY: CGFloat?
+    weak var delegate: AuthentificationPassed?
     
     var isSignUp: Bool = KeychainManager.getPin() == nil
     
@@ -180,6 +181,7 @@ class AuthViewController: UIViewController {
     }
     
     private func authentificatePassed() {
+        delegate?.isAuthentificationPassed = true
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarController")
         let navController = UINavigationController(rootViewController: mainViewController)
@@ -331,4 +333,8 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
         return true
     }
     
+}
+
+protocol AuthentificationPassed: class {
+    var isAuthentificationPassed: Bool? {get set}
 }
