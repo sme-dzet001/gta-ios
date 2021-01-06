@@ -43,10 +43,10 @@ class AppsViewController: UIViewController {
     private func getMyApps() {
         myAppsLoadingError = nil
         dataProvider.getMyAppsStatus {[weak self] (errorCode, error, isFromServer) in
-            self?.myAppsLastUpdateDate = Date().addingTimeInterval(15)
             if error != nil || errorCode != 200 {
                 self?.myAppsLoadingError = "Oops, something went wrong"
             } else if let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
+                self?.myAppsLastUpdateDate = Date().addingTimeInterval(15)
                 self?.stopAnimation()
                 //self?.setHardCodeData()
                 let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
@@ -59,7 +59,6 @@ class AppsViewController: UIViewController {
         allAppsLoadingError = nil
         errorLabel.isHidden = true
         dataProvider.getAllApps {[weak self] (errorCode, error) in
-            self?.allAppsLastUpdateDate = Date().addingTimeInterval(60)
             DispatchQueue.main.async {
                 if error != nil || errorCode != 200 {
                     self?.allAppsLoadingError = "Oops, something went wrong"
@@ -74,6 +73,7 @@ class AppsViewController: UIViewController {
                     self?.errorLabel.text = "No data available"
                     self?.errorLabel.isHidden = false
                 } else if let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
+                    self?.allAppsLastUpdateDate = Date().addingTimeInterval(60)
                     self?.errorLabel.isHidden = true
                     self?.stopAnimation()
                     //self?.setHardCodeData()

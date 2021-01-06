@@ -36,9 +36,11 @@ class AboutViewController: UIViewController {
     }
     
     private func getAppContactsData() {
-        dataProvider?.getAppContactsData(for: appName) { [weak self] (contactsData, _, error) in
+        dataProvider?.getAppContactsData(for: appName) { [weak self] (contactsData, errorCode, error) in
+            if error == nil, errorCode == 200 {
+                self?.lastUpdateDate = Date().addingTimeInterval(60)
+            }
             self?.appContactsData = contactsData
-            self?.lastUpdateDate = Date().addingTimeInterval(60)
             self?.dataSource?.contactsData = self?.appContactsData?.contactsData ?? []
             self?.stopAnimation()
         }

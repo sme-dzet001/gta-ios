@@ -61,9 +61,9 @@ class HomepageTableViewController: UITableViewController {
         tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
         dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error) in
             self?.dataProvider?.getAllOfficesData { [weak self] (errorCode, error) in
-                self?.lastUpdateDate = Date().addingTimeInterval(60)
                 DispatchQueue.main.async {
                     if error == nil && errorCode == 200 {
+                        self?.lastUpdateDate = Date().addingTimeInterval(60)
                         self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
                     } else {
                         self?.officeLoadingError = "Offices loading is failed!"

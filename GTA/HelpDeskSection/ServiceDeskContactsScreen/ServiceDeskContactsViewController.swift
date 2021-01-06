@@ -49,9 +49,9 @@ class ServiceDeskContactsViewController: UIViewController {
         }
         dataProvider.getTeamContactsData { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
-                self?.lastUpdateDate = Date().addingTimeInterval(60)
                 self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
+                    self?.lastUpdateDate = Date().addingTimeInterval(60)
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
                     self?.tableView.reloadData()

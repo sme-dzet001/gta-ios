@@ -43,9 +43,11 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
     }
     
     private func getAppDetailsData() {
-        dataProvider?.getAppDetailsData(for: appName) { [weak self] (detailsData, _, error) in
+        dataProvider?.getAppDetailsData(for: appName) { [weak self] (detailsData, errorCode, error) in
+            if error == nil, errorCode == 200 {
+                self?.lastUpdateDate = Date().addingTimeInterval(60)
+            }
             self?.appDetailsData = detailsData
-            self?.lastUpdateDate = Date().addingTimeInterval(60)
             self?.stopAnimation()
         }
     }

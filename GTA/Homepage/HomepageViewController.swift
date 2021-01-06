@@ -48,9 +48,9 @@ class HomepageViewController: UIViewController {
         }
         dataProvider.getGlobalNewsData { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
-                self?.lastUpdateDate = Date().addingTimeInterval(60)
                 self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
+                    self?.lastUpdateDate = Date().addingTimeInterval(60)
                     self?.errorLabel.isHidden = true
                     self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0

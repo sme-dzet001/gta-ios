@@ -41,12 +41,12 @@ class HelpDeskViewController: UIViewController {
     private func getHelpDeskData() {
         dataProvider.getHelpDeskData { [weak self] (response, code, error) in
             if let helpDeskResponse = response {
+                self?.lastUpdateDate = Date().addingTimeInterval(60)
                 self?.dataResponse = helpDeskResponse
             }
             self?.helpDeskResponseError = error
             self?.setHelpDeskCellsData()
             self?.stopAnimation()
-            self?.lastUpdateDate = Date().addingTimeInterval(60)
         }
     }
 
