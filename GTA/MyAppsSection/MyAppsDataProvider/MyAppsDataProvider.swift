@@ -55,7 +55,7 @@ class MyAppsDataProvider {
     
     func getAppDetailsData(for app: String?, completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
-            self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, false, completion)
+            self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, isFromCache, completion)
         }
     }
     
@@ -163,11 +163,16 @@ class MyAppsDataProvider {
             } catch {
                 retErr = ResponseError.parsingError
             }
+        } else {
+            retErr = ResponseError.commonError
         }
         let columns = myAppsResponse?.meta.widgetsDataSource?.params?.columns
         myAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let myAppsResponse = myAppsResponse {
             self.myAppsStatusData = myAppsResponse
+        }
+        if myAppsResponse == nil || (myAppsResponse?.values ?? []).isEmpty {
+            retErr = ResponseError.noDataAvailable
         }
         completion?(errorCode, retErr, isFromServer)
     }
@@ -202,11 +207,16 @@ class MyAppsDataProvider {
             } catch {
                 retErr = ResponseError.parsingError
             }
+        } else {
+            retErr = ResponseError.commonError
         }
         let columns = allAppsResponse?.meta.widgetsDataSource?.params?.columns
         allAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let allAppsResponse = allAppsResponse {
             self.allAppsData = allAppsResponse
+        }
+        if allAppsResponse == nil || (allAppsResponse?.myAppsStatus ?? []).isEmpty {
+            retErr = ResponseError.noDataAvailable
         }
         completion?(errorCode, retErr)
     }
@@ -241,9 +251,14 @@ class MyAppsDataProvider {
             } catch {
                 retErr = ResponseError.parsingError
             }
+        } else {
+            retErr = ResponseError.commonError
         }
         let columns = appContactsData?.meta.widgetsDataSource?.params?.columns
         appContactsData?.indexes = getDataIndexes(columns: columns)
+        if let contacts = appContactsData?.contactsData, contacts.isEmpty {
+            retErr = ResponseError.noDataAvailable
+        }
         completion?(appContactsData, errorCode, retErr)
     }
     
@@ -278,6 +293,8 @@ class MyAppsDataProvider {
             } catch {
                 retErr = ResponseError.parsingError
             }
+        } else {
+            retErr = ResponseError.commonError
         }
         let columns = appDetailsData?.meta.widgetsDataSource?.params?.columns
         appDetailsData?.indexes = getDataIndexes(columns: columns)

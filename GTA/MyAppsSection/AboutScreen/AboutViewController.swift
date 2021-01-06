@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AboutViewController: UIViewController {
+class AboutViewController: UIViewController, DetailsDataDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -19,20 +19,28 @@ class AboutViewController: UIViewController {
     var appContactsData: AppContactsData?
     var dataProvider: MyAppsDataProvider?
     var details: AppDetailsData?
+    var contactsDataResponseError: Error?
+    var detailsDataResponseError: Error?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationItem()
-        setHardCodeData()
         setUpTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        configureDataSource()
         navigationController?.navigationBar.barTintColor = UIColor.white
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppContactsData()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        contactsDataResponseError = nil
+        detailsDataResponseError = nil
     }
     
     private func getAppContactsData() {
@@ -40,6 +48,7 @@ class AboutViewController: UIViewController {
             if error == nil, errorCode == 200 {
                 self?.lastUpdateDate = Date().addingTimeInterval(60)
             }
+            self?.contactsDataResponseError = error
             self?.appContactsData = contactsData
             self?.dataSource?.contactsData = self?.appContactsData?.contactsData ?? []
             self?.stopAnimation()
@@ -78,11 +87,20 @@ class AboutViewController: UIViewController {
         tableView.register(UINib(nibName: "AboutSupportCell", bundle: nil), forCellReuseIdentifier: "AboutSupportCell")
     }
     
-    private func setHardCodeData() {
-        dataSource = AboutDataSource(description: [DescriptionData(text: details?.appDescription)], contactsData: [ContactData(contactName: "Jane Cooper", contactPosition: "Administrator", phoneNumber: "(480) 555-0103", email: "janecooper@mail.com"), ContactData(contactName: "Marvin McKinney", contactPosition: "Administrator", phoneNumber: "(480) 555-0103", email: "marvinmckinney@mail.com")])
+    private func configureDataSource() {
+        dataSource = AboutDataSource(description: [DescriptionData(text: details?.appDescription)], contactsData: appContactsData?.contactsData ?? [])
         let supportData = createSupportDataString()
         if supportData.string.count > 0 {
             dataSource?.supportData = [SupportData(text: supportData)]
+        }
+    }
+    
+    func detailsDataUpdated(detailsData: AppDetailsData?, error: Error?) {
+        detailsDataResponseError = error
+        details = detailsData
+        configureDataSource()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
     
@@ -130,9 +148,10 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             return dataSource?.description.count ?? 0
         case 1:
-            return dataSource?.supportData?.count ?? dataSource?.contactsData.count ?? 0
+            return dataSource?.supportData?.count ?? 0
         default:
-            return dataSource?.contactsData.count ?? 0
+            let count = dataSource?.contactsData.count ?? 0
+            return count == 0 ? 1 : count
         }
     }
     
@@ -160,6 +179,11 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0, detailsDataResponseError == nil, details == nil  {
+            return createLoadingCell()
+        } else if let error = detailsDataResponseError as? ResponseError {
+            return createErrorCell(with: error.localizedDescription)
+        }
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AboutInfoCell", for: indexPath) as? AboutInfoCell {
             let cellDataSource = dataSource?.description[indexPath.row]
             cell.setUpCell(with: cellDataSource?.text)
@@ -169,6 +193,11 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
             let cellDataSource = dataSource?.supportData?[indexPath.row]
             cell.setUpCell(with: cellDataSource?.text)
             return cell
+        }
+        if let error = contactsDataResponseError as? ResponseError {
+            return createErrorCell(with: error.localizedDescription)
+        } else if contactsDataResponseError == nil, (dataSource?.contactsData ?? []).isEmpty {
+            return createLoadingCell()
         }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AboutContactsCell", for: indexPath) as? AboutContactsCell {
             let cellDataSource = dataSource?.contactsData[indexPath.row]

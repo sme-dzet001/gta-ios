@@ -10,7 +10,6 @@ import UIKit
 class AppsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var errorLabel: UILabel!
     
    // var dataSource: [AppsDataSource] = []
     
@@ -18,8 +17,8 @@ class AppsViewController: UIViewController {
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var myAppsLastUpdateDate: Date?
     private var allAppsLastUpdateDate: Date?
-    private var myAppsLoadingError: String?
-    private var allAppsLoadingError: String?
+    private var allAppsLoadingError: Error?
+    private var myAppsLoadingError: Error?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,45 +40,31 @@ class AppsViewController: UIViewController {
     }
     
     private func getMyApps() {
-        myAppsLoadingError = nil
-        dataProvider.getMyAppsStatus {[weak self] (errorCode, error, isFromServer) in
-            if error != nil || errorCode != 200 {
-                self?.myAppsLoadingError = "Oops, something went wrong"
-            } else if let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
+        dataProvider.getMyAppsStatus {[weak self] (errorCode, error, _) in
+            self?.myAppsLoadingError = error
+            if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
                 self?.myAppsLastUpdateDate = Date().addingTimeInterval(15)
                 self?.stopAnimation()
                 //self?.setHardCodeData()
                 let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
                 self?.dataProvider.getImageData(for: appInfo ?? [])
             }
+            self?.stopAnimation()
         }
     }
     
     private func getAllApps() {
         allAppsLoadingError = nil
-        errorLabel.isHidden = true
         dataProvider.getAllApps {[weak self] (errorCode, error) in
+            self?.allAppsLoadingError = error
             DispatchQueue.main.async {
-                if error != nil || errorCode != 200 {
-                    self?.allAppsLoadingError = "Oops, something went wrong"
-                    self?.errorLabel.text = "Oops, something went wrong"
-                    self?.errorLabel.isHidden = self?.dataProvider.allAppsData != nil
-                    if self?.dataProvider.allAppsData == nil {
-                        self?.stopAnimation()
-                    }
-                } else if let allAppsData = self?.dataProvider.allAppsData?.data?.rows, allAppsData.isEmpty {
-                    self?.stopAnimation()
-                    self?.allAppsLoadingError = "No data available"
-                    self?.errorLabel.text = "No data available"
-                    self?.errorLabel.isHidden = false
-                } else if let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
+                if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
                     self?.allAppsLastUpdateDate = Date().addingTimeInterval(60)
-                    self?.errorLabel.isHidden = true
-                    self?.stopAnimation()
                     //self?.setHardCodeData()
                     let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
                     self?.dataProvider.getImageData(for: appInfo ?? [])
                 }
+                self?.stopAnimation()
             }
         }
     }
@@ -124,11 +109,20 @@ class AppsViewController: UIViewController {
 extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        if let _ = allAppsLoadingError {
+            return 1
+        }
         return dataProvider.appsData.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let _ = allAppsLoadingError {
+            return 1
+        }
         if dataProvider.appsData[section].sectionName == "My Apps" {
+            if let _ = myAppsLoadingError {
+                return 1
+            }
             let myAppsDataIsEmpty = dataProvider.appsData[section].cellData.isEmpty
             return myAppsDataIsEmpty ? 1 : dataProvider.appsData[section].cellData.count
         }
@@ -136,6 +130,9 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let _ = allAppsLoadingError {
+            return tableView.frame.height
+        }
 //        if indexPath.section == 0 {
 //            return 80
 //        }
@@ -143,12 +140,14 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let error = allAppsLoadingError as? ResponseError {
+            return createErrorCell(with: error.localizedDescription)
+        }
         /*if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
             return cell
-        } else*/ if dataProvider.appsData[indexPath.section].sectionName == "My Apps", dataProvider.appsData[indexPath.section].cellData.isEmpty {
-            let errorCell = createErrorCell(with: "No data available")
-            return errorCell
+         } else*/ if indexPath.section == 0, let error = myAppsLoadingError as? ResponseError {
+            return createErrorCell(with: error.localizedDescription)
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicationCell", for: indexPath) as? ApplicationCell {
             cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row], hideStatusView: dataProvider.appsData[indexPath.section].sectionName == "Other Apps")
             return cell
