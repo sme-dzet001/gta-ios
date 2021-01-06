@@ -129,10 +129,7 @@ class AuthViewController: UIViewController {
     func authenticateUser() {
         let context = LAContext()
         var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            if context.biometryType == .none {
-                return
-            }
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             let reason = "Authenticate with Biometrics"
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) {
                 [weak self] success, authenticationError in
