@@ -99,7 +99,7 @@ class HelpDeskViewController: UIViewController {
             [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: dataResponse?.serviceDeskPhoneNumber ?? errorDesc, updatesNumber: nil),
              HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: dataResponse?.serviceDeskEmail ?? errorDesc, updatesNumber: nil),
              HelpDeskCellData(imageName: "teams_chat_icon", cellTitle: "Teams Chat", cellSubtitle: dataResponse?.teamsChatLink != nil ? "Teams mobile app is required" : errorDesc, updatesNumber: nil)],
-            [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, Report Security...", updatesNumber: nil),
+            [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, etc.", updatesNumber: nil),
             HelpDeskCellData(imageName: "about_red_icon", cellTitle: "About", cellSubtitle: "Overview of the mission, hours, etc.", updatesNumber: nil),
             HelpDeskCellData(imageName: "contacts_icon", cellTitle: "Service Desk Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil)/*,
             HelpDeskCellData(imageName: "my_tickets_icon", cellTitle: "My Tickets", cellSubtitle: "Help Desk Ticket History", updatesNumber: 3),

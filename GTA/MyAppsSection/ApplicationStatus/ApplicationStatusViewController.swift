@@ -39,6 +39,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppDetailsData()
         }
+        self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
     }
     
     private func getAppDetailsData() {
@@ -81,7 +82,6 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         self.navigationItem.titleView = tlabel
         self.navigationItem.title = appName
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
-        self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
     }
 
     private func setUpTableView() {
@@ -108,7 +108,7 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         
         let secondSection = [AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", app_icon: "", appStatus: .none, app_is_active: true, imageData: nil), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "Scheduled maintenance", app_icon: "", appStatus: .none, app_is_active: true, imageData: nil), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", app_icon: "", appStatus: .none, app_is_active: true, imageData: nil), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "AWS outage reported", app_icon: "", appStatus: .none, app_is_active: true, imageData: nil)]
                 
-        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: firstSection, metricsData: nil), AppsDataSource(sectionName: "System Updates", description: nil, cellData: secondSection), AppsDataSource(sectionName: "Stats", description: nil, cellData: [], metricsData: metricsData)]
+        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: firstSection, metricsData: nil)/*, AppsDataSource(sectionName: "System Updates", description: nil, cellData: secondSection), AppsDataSource(sectionName: "Stats", description: nil, cellData: [], metricsData: metricsData)*/]
     }
 
     @objc private func backPressed() {

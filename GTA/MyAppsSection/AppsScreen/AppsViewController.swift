@@ -48,7 +48,7 @@ class AppsViewController: UIViewController {
                 self?.myAppsLoadingError = "Oops, something went wrong"
             } else if let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
                 self?.stopAnimation()
-                self?.setHardCodeData()
+                //self?.setHardCodeData()
                 let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
                 self?.dataProvider.getImageData(for: appInfo ?? [])
             }
@@ -76,7 +76,7 @@ class AppsViewController: UIViewController {
                 } else if let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
                     self?.errorLabel.isHidden = true
                     self?.stopAnimation()
-                    self?.setHardCodeData()
+                    //self?.setHardCodeData()
                     let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
                     self?.dataProvider.getImageData(for: appInfo ?? [])
                 }
@@ -136,17 +136,17 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 80
-        }
+//        if indexPath.section == 0 {
+//            return 80
+//        }
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
+        /*if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
             return cell
-        } else if dataProvider.appsData[indexPath.section].sectionName == "My Apps", dataProvider.appsData[indexPath.section].cellData.isEmpty {
+        } else*/ if dataProvider.appsData[indexPath.section].sectionName == "My Apps", dataProvider.appsData[indexPath.section].cellData.isEmpty {
             let errorCell = createErrorCell(with: "No data available")
             return errorCell
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicationCell", for: indexPath) as? ApplicationCell {
@@ -164,15 +164,19 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard section != 0 else { return 0 }
+        /*guard section != 0 else { return 0 }
         if section == 2 {
+            return 80
+        }
+        return 60*/
+        if section == 1 {
             return 80
         }
         return 60
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section != 0 else { return }
+        //guard indexPath.section != 0 else { return }
         guard dataProvider.appsData[indexPath.section].sectionName == "My Apps" else { return }
         guard !dataProvider.appsData[indexPath.section].cellData.isEmpty else { return }
         let appVC = ApplicationStatusViewController()
