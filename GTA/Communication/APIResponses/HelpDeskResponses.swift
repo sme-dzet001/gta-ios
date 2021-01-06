@@ -122,7 +122,7 @@ struct TeamContactsRow: Codable {
     }
     
     var contactFunFact: String? {
-        guard let valuesArr = values, let index = indexes["fan fact"], valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["fun fact"], valuesArr.count > index else { return nil }
         return valuesArr[index].stringValue
     }
 }

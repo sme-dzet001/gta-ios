@@ -134,15 +134,13 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
     
     private func setUpTextViewLayout(isNeedCompact: Bool = false, keyboardHeight: CGFloat? = nil) {
-        if isNeedCompact && UIDevice.current.iPhone5_se {
-            textViewHeight.constant = 60
-        } else if isNeedCompact {
-            let compactFormCoefficient: CGFloat = UIDevice.current.iPhone5_se ? 240 : 260
+        if isNeedCompact {
+            let compactFormCoefficient: CGFloat = 260
             let longFormScreenHeight = view.frame.height
             let keyboardOverlayHeight = keyboardHeight ?? 0
             textViewHeight.constant = longFormScreenHeight - keyboardOverlayHeight - compactFormCoefficient > 0 ? longFormScreenHeight - keyboardOverlayHeight - compactFormCoefficient : 0
         } else {
-            let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 240 : 280
+            let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 260 : 280
             textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
         }
         self.view.layoutIfNeeded()
@@ -179,18 +177,9 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     @objc func keyboardWillShow(notification: NSNotification) {
         panModalTransition(to: .longForm)
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
-            var overlay: CGFloat = keyboardSize.height
-            if UIDevice.current.iPhone4_4s || UIDevice.current.iPhone5_se {
-                overlay = overlay - 145
-            }
             if textView.isFirstResponder {
                 setUpTextViewLayout(isNeedCompact: true, keyboardHeight: keyboardSize.height)
             }
-            guard keyboardSize.height > 0 else { return }
-            UIView.animate(withDuration: 0.3, animations: {
-                guard overlay > 0, UIDevice.current.iPhone5_se else {return}
-                self.view.frame.origin.y = -overlay
-            })
         }
     }
     
