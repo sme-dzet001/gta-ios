@@ -163,11 +163,16 @@ class MyAppsDataProvider {
             } catch {
                 retErr = ResponseError.parsingError
             }
+        } else {
+            retErr = ResponseError.commonError
         }
         let columns = myAppsResponse?.meta.widgetsDataSource?.params?.columns
         myAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let myAppsResponse = myAppsResponse {
             self.myAppsStatusData = myAppsResponse
+        }
+        if myAppsResponse == nil || (myAppsResponse?.values ?? []).isEmpty {
+            retErr = ResponseError.noDataAvailable
         }
         completion?(errorCode, retErr, isFromServer)
     }
@@ -202,11 +207,16 @@ class MyAppsDataProvider {
             } catch {
                 retErr = ResponseError.parsingError
             }
+        } else {
+            retErr = ResponseError.commonError
         }
         let columns = allAppsResponse?.meta.widgetsDataSource?.params?.columns
         allAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let allAppsResponse = allAppsResponse {
             self.allAppsData = allAppsResponse
+        }
+        if allAppsResponse == nil || (allAppsResponse?.myAppsStatus ?? []).isEmpty {
+            retErr = ResponseError.noDataAvailable
         }
         completion?(errorCode, retErr)
     }

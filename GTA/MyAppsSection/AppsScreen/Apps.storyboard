@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-Pro-Text-Regular.otf">
-            <string>SFProText-Regular</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="olW-7D-ljo">
@@ -50,28 +45,19 @@
                                     <outlet property="delegate" destination="6tU-3l-7Lu" id="3Cm-aj-C0x"/>
                                 </connections>
                             </tableView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jbi-ek-3Fo">
-                                <rect key="frame" x="188.5" y="377" width="37.5" height="20"/>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="D08-q8-5U9"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="D08-q8-5U9" firstAttribute="trailing" secondItem="WA0-Vn-0kX" secondAttribute="trailing" id="4td-3y-9Bx"/>
                             <constraint firstItem="WA0-Vn-0kX" firstAttribute="leading" secondItem="D08-q8-5U9" secondAttribute="leading" id="IME-oB-Dbx"/>
-                            <constraint firstItem="Jbi-ek-3Fo" firstAttribute="centerX" secondItem="D08-q8-5U9" secondAttribute="centerX" id="egp-Fd-cC9"/>
                             <constraint firstItem="D08-q8-5U9" firstAttribute="bottom" secondItem="WA0-Vn-0kX" secondAttribute="bottom" id="jp2-jk-w2e"/>
-                            <constraint firstItem="Jbi-ek-3Fo" firstAttribute="centerY" secondItem="D08-q8-5U9" secondAttribute="centerY" id="k4d-uW-JA8"/>
                             <constraint firstItem="WA0-Vn-0kX" firstAttribute="top" secondItem="D08-q8-5U9" secondAttribute="top" id="qFT-8c-28U"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Apps" image="apps_tab_icon" id="D1p-Ql-HEx"/>
                     <navigationItem key="navigationItem" title="My Apps" id="iQl-xL-XYf"/>
                     <connections>
-                        <outlet property="errorLabel" destination="Jbi-ek-3Fo" id="Kdt-3c-UTj"/>
                         <outlet property="tableView" destination="WA0-Vn-0kX" id="H7F-Re-K1L"/>
                     </connections>
                 </viewController>
