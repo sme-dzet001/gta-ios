@@ -412,6 +412,12 @@
 		C9EFD9E2259DDC6900F57817 /* UserLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */; };
 		C9EFD9E3259DDC6900F57817 /* UserLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */; };
 		C9EFD9E4259DDC6900F57817 /* UserLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */; };
+		C9EFDA2F25A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFDA2D25A5E2E200F57817 /* OfficeSelectionCell.swift */; };
+		C9EFDA3025A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFDA2D25A5E2E200F57817 /* OfficeSelectionCell.swift */; };
+		C9EFDA3125A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFDA2D25A5E2E200F57817 /* OfficeSelectionCell.swift */; };
+		C9EFDA3225A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
+		C9EFDA3325A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
+		C9EFDA3425A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
 		C9EFEBC4256D1F4800112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 /* End PBXBuildFile section */
@@ -593,6 +599,8 @@
 		C9EC9EA525756C0300315AAE /* HelpDeskHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskHeader.swift; sourceTree = "<group>"; };
 		C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpDeskHeader.xib; sourceTree = "<group>"; };
 		C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationManager.swift; sourceTree = "<group>"; };
+		C9EFDA2D25A5E2E200F57817 /* OfficeSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeSelectionCell.swift; sourceTree = "<group>"; };
+		C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfficeSelectionCell.xib; sourceTree = "<group>"; };
 		D3387A52A0F8F88F9F876531 /* Pods-GTATests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.debug.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.debug.xcconfig"; sourceTree = "<group>"; };
 		E99FE5D7739905AF03A6B886 /* Pods_GTA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -882,6 +890,7 @@
 			children = (
 				9F5B106A2567C08F000A3CFD /* xib */,
 				9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */,
+				C9EFDA2D25A5E2E200F57817 /* OfficeSelectionCell.swift */,
 			);
 			path = OfficeScreenCell;
 			sourceTree = "<group>";
@@ -890,6 +899,7 @@
 			isa = PBXGroup;
 			children = (
 				9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */,
+				C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */,
 			);
 			path = xib;
 			sourceTree = "<group>";
@@ -1486,6 +1496,7 @@
 			files = (
 				659A5AF1255404F100E13B77 /* SF-Pro-Display-Thin.otf in Resources */,
 				65D1A2A12554BE3700D71965 /* Home.storyboard in Resources */,
+				C9EFDA3225A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */,
 				9F0CA5502566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
 				9F1620D72566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
 				9F9D9CB82588C59600DC4231 /* AuthViewController.xib in Resources */,
@@ -1601,6 +1612,7 @@
 				C962D8532566E21400727949 /* MyTicketsHeader.xib in Resources */,
 				C9424E0525642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
+				C9EFDA3325A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */,
 				9FCFA2A7259E138D00E893D2 /* GoogleService-Info.plist in Resources */,
 				C9705B802566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
 				C9EC9E9D25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
@@ -1625,6 +1637,7 @@
 			files = (
 				9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
 				9F1620D92566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
+				C9EFDA3425A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */,
 				9FF0548325681FCD0071E596 /* SecondSendMessageView.xib in Resources */,
 				9F819AC2255C1646007C1739 /* Home.storyboard in Resources */,
 				9F9D9CBA2588C59600DC4231 /* AuthViewController.xib in Resources */,
@@ -1918,6 +1931,7 @@
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9D035962578095A0068441F /* CommonResponses.swift in Sources */,
 				9FF0545C25680ED30071E596 /* SendMessageView.swift in Sources */,
+				C9EFDA2F25A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				C9DFD4B725659C1100BF1740 /* StatsBarView.swift in Sources */,
 				9FF0547325681FC60071E596 /* SecondSendMessageView.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
@@ -2019,6 +2033,7 @@
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035972578095A0068441F /* CommonResponses.swift in Sources */,
 				9FF0543D2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
+				C9EFDA3025A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				9FF0547425681FC60071E596 /* SecondSendMessageView.swift in Sources */,
 				C93FCF1A2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9DFD4B825659C1100BF1740 /* StatsBarView.swift in Sources */,
@@ -2104,6 +2119,7 @@
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035982578095A0068441F /* CommonResponses.swift in Sources */,
 				9FF0543E2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
+				C9EFDA3125A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				9FF0547525681FC60071E596 /* SecondSendMessageView.swift in Sources */,
 				C93FCF1B2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9DFD4B925659C1100BF1740 /* StatsBarView.swift in Sources */,

@@ -66,6 +66,7 @@ class OfficeLocationViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "OfficeInfoCell", bundle: nil), forCellReuseIdentifier: "OfficeInfoCell")
+        tableView.register(UINib(nibName: "OfficeSelectionCell", bundle: nil), forCellReuseIdentifier: "OfficeSelectionCell")
     }
     
     private func setUpTextViewLayout() {
@@ -127,11 +128,7 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         if indexPath.row == 0 && regionSelectionIsOn {
             let cell = cell as? AppsServiceAlertCell
             cell?.parentView.backgroundColor = UIColor(red: 247.0 / 255.0, green: 247.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0)
-        } else if !regionSelectionIsOn {
-            let cell = cell as? AppsServiceAlertCell
-            cell?.iconWidth.constant = 17
         }
-        
     }
     
     func provideRegionCell(for indexPath: IndexPath) -> UITableViewCell {
@@ -151,12 +148,11 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func provideOfficeCell(for indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeSelectionCell", for: indexPath) as? OfficeSelectionCell
         cell?.mainLabel.text = officeDataSource[indexPath.row].text
-        cell?.descriptionLabel.text = officeDataSource[indexPath.row].additionalText
+        cell?.descriptionLabel.text = officeDataSource[indexPath.row].additionalText?.replacingOccurrences(of: "\u{00A0}", with: " ")
         cell?.iconImageView.image = UIImage(named: "location")
         cell?.separator.isHidden = false
-        cell?.arrowIcon.isHidden = true
         cell?.topSeparator.isHidden = indexPath.row != 0
         return cell ?? UITableViewCell()
     }
