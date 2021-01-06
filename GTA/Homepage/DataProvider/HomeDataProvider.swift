@@ -261,6 +261,7 @@ class HomeDataProvider {
                 response.data?.rows?[index].indexes = indexes
             }
         }
+        response.data?.rows?.removeAll { ($0.officeName?.isEmpty ?? true) || ($0.officeName?.isEmpty ?? true) }
         allOfficesData = response.data?.rows ?? []
     }
     

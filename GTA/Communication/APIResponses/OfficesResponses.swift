@@ -46,6 +46,16 @@ struct OfficeRow: Codable {
         guard let valuesArr = values, let index = indexes["gps_location_long"], valuesArr.count > index else { return nil }
         return valuesArr[index].floatValue
     }
+    
+    var officePhone: String? {
+        guard let valuesArr = values, let index = indexes["phone"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
+    }
+    
+    var officeEmail: String? {
+        guard let valuesArr = values, let index = indexes["email"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
+    }
 }
 
 struct AllOfficesData: Codable {

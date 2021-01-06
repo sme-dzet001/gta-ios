@@ -62,7 +62,8 @@ class InfoViewController: UIViewController {
     }
     
     private func setDataSource() {
-        officeDataSoure = [Hardcode(imageName: "phone_icon", text: "(480) 555-0103"), Hardcode(imageName: "email_icon", text: "deanna.curtis@example.com"), Hardcode(imageName: "location", text: selectedOfficeData?.officeLocation ?? "9 Derry Street, London, W8 5HY, United Kindom"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a different Sony Music office")]
+        officeDataSoure = [Hardcode(imageName: "phone_icon", text: selectedOfficeData?.officePhone ?? ""), Hardcode(imageName: "email_icon", text: selectedOfficeData?.officeEmail ?? ""), Hardcode(imageName: "location", text: selectedOfficeData?.officeLocation ?? ""), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a different Sony Music office")]
+        officeDataSoure.removeAll { $0.text.isEmpty }
     }
     
     private func setupHeaderImageView() {
@@ -184,7 +185,7 @@ extension InfoViewController: OfficeSelectionDelegate {
                 if errorCode == 200, error == nil {
                     self?.updateUIWithSelectedOffice()
                 } else {
-                    self?.displayError(errorMessage: "Office selection did failed!")
+                    self?.displayError(errorMessage: "Office Selection Failed")
                 }
             }
         })

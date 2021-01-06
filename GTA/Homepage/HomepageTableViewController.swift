@@ -30,6 +30,9 @@ class HomepageTableViewController: UITableViewController {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadSpecialAlertsData()
             loadOfficesData()
+        } else {
+            // reloading office cell (because office could be changed on office selection screen)
+            tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
         }
     }
     
@@ -60,15 +63,27 @@ class HomepageTableViewController: UITableViewController {
         officeLoadingError = nil
         tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
         dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error) in
-            self?.dataProvider?.getAllOfficesData { [weak self] (errorCode, error) in
-                DispatchQueue.main.async {
-                    if error == nil && errorCode == 200 {
-                        self?.lastUpdateDate = Date().addingTimeInterval(60)
-                        self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
-                    } else {
-                        self?.officeLoadingError = "Offices loading is failed!"
-                        self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+            if error == nil && errorCode == 200 {
+                self?.dataProvider?.getAllOfficesData { [weak self] (errorCode, error) in
+                    DispatchQueue.main.async {
+                        if error == nil && errorCode == 200 {
+                            self?.lastUpdateDate = Date().addingTimeInterval(60)
+                            if self?.dataProvider?.allOfficesDataIsEmpty == true {
+                                self?.officeLoadingError = "No data available"
+                            } else {
+                                self?.officeLoadingError = nil
+                            }
+                            self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+                        } else {
+                            self?.officeLoadingError = "Oops, something went wrong"
+                            self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+                        }
                     }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.officeLoadingError = "Oops, something went wrong"
+                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
                 }
             }
         })
@@ -110,14 +125,27 @@ class HomepageTableViewController: UITableViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
                 cell?.officeStatusLabel.text = officeData.officeName
                 cell?.officeAddressLabel.text = officeData.officeLocation
-                cell?.officeNumberLabel.text = "(480) 555-0103"
-                cell?.officeEmailLabel.text = "deanna.curtis@example.com"
+                cell?.officeAddressLabel.isHidden = officeData.officeLocation?.isEmpty ?? true
+                cell?.officeNumberLabel.text = officeData.officePhone
+                cell?.officeNumberLabel.isHidden = officeData.officePhone?.isEmpty ?? true
+                cell?.officeEmailLabel.text = officeData.officeEmail
+                cell?.officeEmailLabel.isHidden = officeData.officeEmail?.isEmpty ?? true
+                cell?.officeErrorLabel.isHidden = true
                 cell?.separator.isHidden = false
+                cell?.arrowImage.isHidden = false
                 return cell ?? UITableViewCell()
             } else {
                 if let errorStr = officeLoadingError {
-                    let errorCell = createErrorCell(with: errorStr, textColor: UIColor(hex: 0x8E8E93), withSeparator: true)
-                    return errorCell
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
+                    cell?.officeStatusLabel.text = " "
+                    cell?.officeAddressLabel.text = " "
+                    cell?.officeNumberLabel.text = " "
+                    cell?.officeEmailLabel.text = " "
+                    cell?.officeErrorLabel.text = errorStr
+                    cell?.officeErrorLabel.isHidden = false
+                    cell?.separator.isHidden = false
+                    cell?.arrowImage.isHidden = true
+                    return cell ?? UITableViewCell()
                 } else {
                     let loadingCell = createLoadingCell(withSeparator: true, verticalOffset: 24)
                     return loadingCell
