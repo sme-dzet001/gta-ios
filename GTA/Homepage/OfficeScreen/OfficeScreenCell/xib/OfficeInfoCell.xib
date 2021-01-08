@@ -47,13 +47,13 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Klw-9v-lEJ" secondAttribute="bottom" constant="4" id="2Us-fK-rSQ"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Klw-9v-lEJ" secondAttribute="bottom" constant="8" id="2Us-fK-rSQ"/>
                     <constraint firstItem="Klw-9v-lEJ" firstAttribute="leading" secondItem="ZRs-eu-nL9" secondAttribute="trailing" constant="20" id="6pA-ns-Cb9"/>
                     <constraint firstAttribute="trailing" secondItem="Klw-9v-lEJ" secondAttribute="trailing" constant="24" id="AYq-FE-ggD"/>
                     <constraint firstItem="Jl7-Se-gb5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="MuV-g3-9TF"/>
                     <constraint firstAttribute="bottom" secondItem="Jl7-Se-gb5" secondAttribute="bottom" id="ND6-5a-3SD"/>
                     <constraint firstItem="Klw-9v-lEJ" firstAttribute="centerY" secondItem="ZRs-eu-nL9" secondAttribute="centerY" id="QWY-bU-4Oo"/>
-                    <constraint firstItem="Klw-9v-lEJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="Y7i-bS-bB0"/>
+                    <constraint firstItem="Klw-9v-lEJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Y7i-bS-bB0"/>
                     <constraint firstAttribute="trailing" secondItem="Jl7-Se-gb5" secondAttribute="trailing" id="eSp-Fe-f8P"/>
                     <constraint firstItem="ZRs-eu-nL9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="oN7-SL-UpQ"/>
                 </constraints>

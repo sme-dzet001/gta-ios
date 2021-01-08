@@ -62,7 +62,7 @@ class InfoViewController: UIViewController {
     }
     
     private func setDataSource() {
-        officeDataSoure = [Hardcode(imageName: "phone_icon", text: selectedOfficeData?.officePhone ?? ""), Hardcode(imageName: "email_icon", text: selectedOfficeData?.officeEmail ?? ""), Hardcode(imageName: "location", text: selectedOfficeData?.officeLocation ?? ""), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a different Sony Music office")]
+        officeDataSoure = [Hardcode(imageName: "phone_icon", text: selectedOfficeData?.officePhone ?? "", infoType: "phone"), Hardcode(imageName: "email_icon", text: selectedOfficeData?.officeEmail ?? "", infoType: "email"), Hardcode(imageName: "location", text: selectedOfficeData?.officeLocation ?? "", infoType: "location"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a different Sony Music office")]
         officeDataSoure.removeAll { $0.text.isEmpty }
     }
     
@@ -113,7 +113,22 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return infoType == .info ? UITableView.automaticDimension : 80
+        if infoType == .info {
+            return UITableView.automaticDimension
+        } else {
+            if indexPath.row < officeDataSoure.count, let infoType = officeDataSoure[indexPath.row].infoType, infoType == "location" {
+                // change bottom value if leading or trailing margin will change
+                let addressLabelWidth = view.frame.width - 71
+                let addressLabelMinTopOffset: CGFloat = 8
+                if let labelFont = UIFont(name: "SFProText-Regular", size: 16), (officeDataSoure[indexPath.row].text.replacingOccurrences(of: "\u{00A0}", with: " ").height(width: addressLabelWidth, font: labelFont) + 2 * addressLabelMinTopOffset) > 80 {
+                    return UITableView.automaticDimension
+                } else {
+                    return 80
+                }
+            } else {
+                return 80
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -206,6 +221,7 @@ struct Hardcode {
     var text: String
     var additionalText: String? = nil
     var officeId: Int? = nil
+    var infoType: String? = nil
 }
 
 

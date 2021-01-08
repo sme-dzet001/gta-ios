@@ -124,7 +124,7 @@ class HomepageTableViewController: UITableViewController {
             if let officeData = data {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
                 cell?.officeStatusLabel.text = officeData.officeName
-                cell?.officeAddressLabel.text = officeData.officeLocation
+                cell?.officeAddressLabel.text = officeData.officeLocation?.replacingOccurrences(of: "\u{00A0}", with: " ")
                 cell?.officeAddressLabel.isHidden = officeData.officeLocation?.isEmpty ?? true
                 cell?.officeNumberLabel.text = officeData.officePhone
                 cell?.officeNumberLabel.isHidden = officeData.officePhone?.isEmpty ?? true
