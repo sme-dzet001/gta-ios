@@ -95,6 +95,18 @@ class InfoViewController: UIViewController {
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "OfficeInfoCell", bundle: nil), forCellReuseIdentifier: "OfficeInfoCell")
     }
+    
+    private func makeCallWithNumber(_ number: String?) {
+        if let number = number, let numberURL = URL(string: "tel://" + number.filter("+0123456789.".contains)) {
+            UIApplication.shared.open(numberURL, options: [:], completionHandler: nil)
+        }
+    }
+    
+    private func makeEmailForAddress(_ address: String?) {
+        if let address = address, let addressURL = URL(string: "mailto://" + address) {
+            UIApplication.shared.open(addressURL, options: [:], completionHandler: nil)
+        }
+    }
 
     @IBAction func backButtonDidPressed(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
@@ -163,24 +175,34 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard infoType == .office, indexPath.row == officeDataSoure.count - 1  else { return }
-        let officeLocation = OfficeLocationViewController()
-        var statusBarHeight: CGFloat = 0.0
-        if #available(iOS 13.0, *) {
-            statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
+        guard infoType == .office else { return }
+        if indexPath.row == officeDataSoure.count - 1 {
+            let officeLocation = OfficeLocationViewController()
+            var statusBarHeight: CGFloat = 0.0
+            if #available(iOS 13.0, *) {
+                statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+                statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
+            } else {
+                statusBarHeight = self.view.bounds.height - UIApplication.shared.statusBarFrame.height
+                statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
+            }
+            officeLocation.title = "Select Sony Music Office Region"
+            officeLocation.dataProvider = dataProvider
+            officeLocation.officeSelectionDelegate = self
+            let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
+            panModalNavigationController.setNavigationBarHidden(true, animated: true)
+            panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight
+            
+            presentPanModal(panModalNavigationController)
         } else {
-            statusBarHeight = self.view.bounds.height - UIApplication.shared.statusBarFrame.height
-            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
+            if officeDataSoure[indexPath.row].infoType == "phone" {
+                let number = officeDataSoure[indexPath.row].text
+                makeCallWithNumber(number)
+            } else if officeDataSoure[indexPath.row].infoType == "email" {
+                let email = officeDataSoure[indexPath.row].text
+                makeEmailForAddress(email)
+            }
         }
-        officeLocation.title = "Select Sony Music Office Region"
-        officeLocation.dataProvider = dataProvider
-        officeLocation.officeSelectionDelegate = self
-        let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
-        panModalNavigationController.setNavigationBarHidden(true, animated: true)
-        panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight
-        
-        presentPanModal(panModalNavigationController)
     }
     
     func addBlurToView() {
