@@ -32,7 +32,7 @@ class HomepageTableViewController: UITableViewController {
             loadOfficesData()
         } else {
             // reloading office cell (because office could be changed on office selection screen)
-            tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+            tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
         }
     }
     
@@ -51,7 +51,7 @@ class HomepageTableViewController: UITableViewController {
             DispatchQueue.main.async {
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = Date().addingTimeInterval(60)
-                    self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .automatic)
+                    self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
                 } else {
                     //self?.displayError(errorMessage: "Error was happened!")
                 }
@@ -61,7 +61,7 @@ class HomepageTableViewController: UITableViewController {
     
     private func loadOfficesData() {
         officeLoadingError = nil
-        tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+        tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
         dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error) in
             if error == nil && errorCode == 200 {
                 self?.dataProvider?.getAllOfficesData { [weak self] (errorCode, error) in
@@ -73,17 +73,17 @@ class HomepageTableViewController: UITableViewController {
                             } else {
                                 self?.officeLoadingError = nil
                             }
-                            self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+                            self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
                         } else {
                             self?.officeLoadingError = "Oops, something went wrong"
-                            self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+                            self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
                         }
                     }
                 }
             } else {
                 DispatchQueue.main.async {
                     self?.officeLoadingError = "Oops, something went wrong"
-                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .automatic)
+                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
                 }
             }
         })
@@ -117,6 +117,7 @@ class HomepageTableViewController: UITableViewController {
             cell?.separator.isHidden = false
             cell?.iconImageView.image = UIImage(named: "alert_icon")
             cell?.mainLabel.text = data[indexPath.row].alertHeadline
+            cell?.mainLabel.textColor = .black
             cell?.descriptionLabel.text = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
             return cell ?? UITableViewCell()
         } else if indexPath.section == 1 {
@@ -147,7 +148,7 @@ class HomepageTableViewController: UITableViewController {
                     cell?.arrowImage.isHidden = true
                     return cell ?? UITableViewCell()
                 } else {
-                    let loadingCell = createLoadingCell(withSeparator: true, verticalOffset: 24)
+                    let loadingCell = createLoadingCell(withSeparator: true, verticalOffset: 54)
                     return loadingCell
                 }
             }
