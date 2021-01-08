@@ -93,7 +93,20 @@ class HelpDeskDataProvider {
         return res
     }
     
-    private func processQuickHelp(_ reportData: ReportDataResponse?, _ quickHelpResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    /// Returns true if data was updated, otherwise false
+    private func checkQuickHelpDataForUpdates(previousData: [QuickHelpRow]) -> Bool {
+        guard previousData.count == quickHelpData.count else { return true }
+        var dataWasUpdated = false
+        for i in 0..<quickHelpData.count {
+            if quickHelpData[i] != previousData[i] {
+                dataWasUpdated = true
+                break
+            }
+        }
+        return dataWasUpdated
+    }
+    
+    private func processQuickHelp(_ reportData: ReportDataResponse?, _ quickHelpResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var quickHelpDataResponse: QuickHelpResponse?
         var retErr = error
         if let responseData = quickHelpResponse {
@@ -103,16 +116,18 @@ class HelpDeskDataProvider {
                 retErr = ResponseError.parsingError
             }
         }
+        let previousData = quickHelpData
         if let quickHelpResponse = quickHelpDataResponse {
             fillQuickHelpData(with: quickHelpResponse)
             if (quickHelpResponse.data?.rows ?? []).isEmpty {
                 retErr = ResponseError.noDataAvailable
             }
         }
-        completion?(errorCode, retErr)
+        let dataWasChanged = checkQuickHelpDataForUpdates(previousData: previousData)
+        completion?(dataWasChanged, errorCode, retErr)
     }
     
-    private func processQuickHelpSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processQuickHelpSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdQuickHelp.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdQuickHelp.rawValue }?.generationNumber
         if let generationNumber = generationNumber {
@@ -125,14 +140,13 @@ class HelpDeskDataProvider {
                 self?.cacheData(quickHelpResponse, path: .getQuickHelpData)
                 self?.processQuickHelp(reportData, quickHelpResponse, errorCode, error, completion)
             })
-
         } else {
             let retError = ResponseError.serverError
-            completion?(errorCode, retError)
+            completion?(true, errorCode, retError)
         }
     }
     
-    func getQuickHelpData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getQuickHelpData(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
             if let _ = data {
                 self?.processQuickHelpSectionReport(data, 200, error, false, completion)

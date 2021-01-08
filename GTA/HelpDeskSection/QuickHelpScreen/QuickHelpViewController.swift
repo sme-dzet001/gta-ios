@@ -48,14 +48,14 @@ class QuickHelpViewController: UIViewController {
             errorLabel.isHidden = true
             tableView.isHidden = true
         }
-        dataProvider.getQuickHelpData { [weak self] (errorCode, error) in
+        dataProvider.getQuickHelpData { [weak self] (dataWasChanged, errorCode, error) in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = Date().addingTimeInterval(60)
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
-                    self?.tableView.reloadData()
+                    if dataWasChanged { self?.tableView.reloadData() }
                 } else {
                     self?.errorLabel.isHidden = !dataProvider.quickHelpDataIsEmpty
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
