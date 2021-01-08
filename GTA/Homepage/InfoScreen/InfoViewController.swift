@@ -81,7 +81,7 @@ class InfoViewController: UIViewController {
             screenTitleLabel.text = specialAlertData?.alertHeadline
         } else {
             headerImageView.image = UIImage(named: "office")
-            headerImageView.contentMode = .scaleAspectFit
+            headerImageView.contentMode = .scaleAspectFill
             screenTitleLabel.text = "Office"
         }
     }
