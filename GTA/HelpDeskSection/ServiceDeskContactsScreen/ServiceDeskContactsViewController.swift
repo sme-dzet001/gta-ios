@@ -79,6 +79,7 @@ extension ServiceDeskContactsViewController: UITableViewDelegate, UITableViewDat
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ServiceDeskContactCell", for: indexPath) as? ServiceDeskContactCell {
             let data = dataProvider?.teamContactsData ?? []
             let cellDataSource = data[indexPath.row]
+            cell.contactEmail = data[indexPath.row].contactEmail
             cell.setUpCell(with: cellDataSource)
             if let imageURL = dataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl), let url = URL(string: imageURL) {
                 cell.imageUrl = imageURL
