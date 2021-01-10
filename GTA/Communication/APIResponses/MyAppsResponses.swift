@@ -124,9 +124,9 @@ struct AppContactsData: Codable {
         guard let appContactEmailIdx = indexes["app contact email"] else { return nil }
         var res = appContactRows.map({ (appContact) -> ContactData in
             guard let values = appContact.values else { return ContactData() }
-            guard let appContactTitle = values[appContactTitleIdx]?.stringValue else { return ContactData() }
-            guard let appContactName = values[appContactNameIdx]?.stringValue else { return ContactData() }
-            guard let appContactEmail = values[appContactEmailIdx]?.stringValue else { return ContactData() }
+            let appContactTitle = values[appContactTitleIdx]?.stringValue
+            let appContactName = values[appContactNameIdx]?.stringValue
+            let appContactEmail = values[appContactEmailIdx]?.stringValue
             return ContactData(contactName: appContactName, contactPosition: appContactTitle, phoneNumber: "", email: appContactEmail)
         })
         res.removeAll(where: {$0.contactName == nil || ($0.contactName ?? "").isEmpty})
