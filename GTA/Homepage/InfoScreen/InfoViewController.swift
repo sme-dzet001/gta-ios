@@ -217,11 +217,12 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension InfoViewController: OfficeSelectionDelegate {
     func officeWasSelected(_ officeId: Int) {
+        let officeWasChanged = dataProvider?.userOffice?.officeId != officeId
         dataProvider?.setCurrentOffice(officeId: officeId, completion: { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
                 if errorCode == 200, error == nil {
                     self?.updateUIWithSelectedOffice()
-                } else {
+                } else if officeWasChanged {
                     self?.displayError(errorMessage: "Office Selection Failed")
                 }
             }
