@@ -66,15 +66,23 @@ class MyAppsDataProvider {
     }
     
     private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
-        getCachedResponse(for: .getSectionReport) { (data, error) in
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             if let _ = data {
-                completion?(data, 200, error, true)
+                completion?(data, 200, cachedError, true)
             }
+            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                self?.cacheData(reportResponse, path: .getSectionReport)
+                if let _ = error, cachedError == nil  {
+                    return
+                } else {
+                    completion?(reportResponse, errorCode, error, false)
+                }
+            })
         }
-        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-            self?.cacheData(reportResponse, path: .getSectionReport)
-            completion?(reportResponse, errorCode, error, false)
-        })
+//        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+//            self?.cacheData(reportResponse, path: .getSectionReport)
+//            completion?(reportResponse, errorCode, error, false)
+//        })
     }
     
     private func cacheData(_ data: Data?, path: CacheManager.path) {
@@ -181,8 +189,10 @@ class MyAppsDataProvider {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
         if let _ = generationNumber {
+            var cacheError: Error?
             if fromCache {
                 getCachedResponse(for: .getMyAppsData) {[weak self] (data, error) in
+                    cacheError = error
                     if let _ = data {
                         self?.processMyApps(reportData, data!, errorCode, error, completion)
                     }
@@ -191,7 +201,11 @@ class MyAppsDataProvider {
             }
             apiManager.getMyAppsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getMyAppsData)
-                self?.processMyApps(isFromServer: true, reportData, data, errorCode, error, completion)
+                if cacheError == nil, let _ = error {
+                    return
+                } else {
+                    self?.processMyApps(isFromServer: true, reportData, data, errorCode, error, completion)
+                }
             })
         } else {
             completion?(errorCode, error, false)
@@ -225,8 +239,10 @@ class MyAppsDataProvider {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allApps.rawValue }?.generationNumber
         if let _ = generationNumber {
+            var cacheError: Error?
             if fromCache {
                 getCachedResponse(for: .getAllAppsData) {[weak self] (data, error) in
+                    cacheError = error
                     if let _ = data {
                         self?.processAllApps(reportData, data, errorCode, error, completion)
                     }
@@ -235,7 +251,11 @@ class MyAppsDataProvider {
             }
             apiManager.getAllApps(for: generationNumber!, completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAllAppsData)
-                self?.processAllApps(reportData, data, errorCode, error, completion)
+                if cacheError == nil, let _ = error {
+                    return
+                } else {
+                    self?.processAllApps(reportData, data, errorCode, error, completion)
+                }
             })
         } else {
             if let _ = error {
@@ -270,9 +290,11 @@ class MyAppsDataProvider {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appContacts.rawValue }?.generationNumber
         if let _ = generationNumber {
+            var cacheError: Error?
             let contactsPath = (KeychainManager.getUsername() ?? "") + "/" + (app ?? "")
             if fromCache {
                 getCachedResponse(for: .getAppContacts(contactsPath: contactsPath)) {[weak self] (data, error) in
+                    cacheError = error
                     if let _ = data {
                         self?.processAppContacts(reportData, data, errorCode, error, completion)
                     }
@@ -281,7 +303,11 @@ class MyAppsDataProvider {
             }
             apiManager.getAppContactsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAppContacts(contactsPath: contactsPath))
-                self?.processAppContacts(reportData, data, errorCode, error, completion)
+                if cacheError == nil, let _ = error {
+                    return
+                } else {
+                    self?.processAppContacts(reportData, data, errorCode, error, completion)
+                }
             })
         } else {
             if let _ = error {
@@ -313,9 +339,11 @@ class MyAppsDataProvider {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetails.rawValue }?.generationNumber
         if let _ = generationNumber {
+            var cacheError: Error?
             let detailsPath = (KeychainManager.getUsername() ?? "") + "/" + (app ?? "")
             if fromCache {
                 getCachedResponse(for: .getAppDetails(detailsPath: detailsPath)) {[weak self] (data, error) in
+                    cacheError = error
                     if let _ = data {
                         self?.processAppDetails(reportData, data, errorCode, error, completion)
                     }
@@ -324,7 +352,11 @@ class MyAppsDataProvider {
             }
             apiManager.getAppDetailsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAppDetails(detailsPath: detailsPath))
-                self?.processAppDetails(reportData, data, errorCode, error, completion)
+                if cacheError == nil, let _ = error {
+                    return
+                } else {
+                    self?.processAppDetails(reportData, data, errorCode, error, completion)
+                }
             })
         } else {
             if let _ = error {

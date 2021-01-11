@@ -112,11 +112,13 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         if let _ = allAppsLoadingError {
             return 1
         }
-        return dataProvider.appsData.count
+        return dataProvider.appsData.count > 0 ? dataProvider.appsData.count : 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let _ = allAppsLoadingError {
+            return 1
+        } else if dataProvider.appsData.isEmpty {
             return 1
         }
         if dataProvider.appsData[section].sectionName == "My Apps" {
@@ -132,6 +134,8 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let _ = allAppsLoadingError {
             return tableView.frame.height
+        } else if dataProvider.appsData.isEmpty {
+            return tableView.frame.height
         }
 //        if indexPath.section == 0 {
 //            return 80
@@ -142,6 +146,8 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let error = allAppsLoadingError as? ResponseError {
             return createErrorCell(with: error.localizedDescription)
+        } else if dataProvider.appsData.isEmpty {
+            return createErrorCell(with: "No data available")
         }
         /*if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
@@ -156,7 +162,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if allAppsLoadingError == nil {
+        if allAppsLoadingError == nil && !dataProvider.appsData.isEmpty {
             let header = AppsTableViewHeader.instanceFromNib()
             header.descriptionLabel.text = dataProvider.appsData[section].description
             header.headerTitleLabel.text = dataProvider.appsData[section].sectionName
@@ -166,7 +172,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if allAppsLoadingError != nil {
+        if allAppsLoadingError != nil || dataProvider.appsData.isEmpty {
             return 0
         }
         /*guard section != 0 else { return 0 }
