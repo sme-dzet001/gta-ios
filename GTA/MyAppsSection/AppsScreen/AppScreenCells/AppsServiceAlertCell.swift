@@ -33,9 +33,9 @@ class AppsServiceAlertCell: UITableViewCell {
             self.parentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         }
         if isDisabled {
-            self.parentView.backgroundColor = UIColor(red: 142.0 / 255.0, green: 142.0 / 255.0, blue: 147.0 / 255.0, alpha: 0.3)
+            mainLabel.textColor = UIColor(hex: 0x8E8E93)
         } else {
-            self.parentView.backgroundColor = .white
+            mainLabel.textColor = .black
         }
         if let downloadError = error as? ResponseError, isDisabled {
             descriptionLabel.text = downloadError.localizedDescription

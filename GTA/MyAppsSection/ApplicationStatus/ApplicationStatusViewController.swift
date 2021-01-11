@@ -43,6 +43,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        startAnimation()
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppDetailsData()
         }
