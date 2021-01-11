@@ -284,6 +284,10 @@ class MyAppsDataProvider {
                 self?.processAppContacts(reportData, data, errorCode, error, completion)
             })
         } else {
+            if let _ = error {
+                completion?(nil, errorCode, ResponseError.commonError)
+                return
+            }
             completion?(nil, errorCode, error)
         }
     }
@@ -323,6 +327,10 @@ class MyAppsDataProvider {
                 self?.processAppDetails(reportData, data, errorCode, error, completion)
             })
         } else {
+            if let _ = error {
+                completion?(nil, errorCode, ResponseError.commonError)
+                return
+            }
             completion?(nil, errorCode, error)
         }
     }
