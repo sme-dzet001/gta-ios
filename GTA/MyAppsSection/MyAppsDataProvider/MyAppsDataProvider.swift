@@ -238,6 +238,10 @@ class MyAppsDataProvider {
                 self?.processAllApps(reportData, data, errorCode, error, completion)
             })
         } else {
+            if let _ = error {
+                completion?(errorCode, ResponseError.commonError)
+                return
+            }
             completion?(errorCode, error)
         }
     }

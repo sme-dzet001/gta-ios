@@ -156,13 +156,19 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = AppsTableViewHeader.instanceFromNib()
-        header.descriptionLabel.text = dataProvider.appsData[section].description
-        header.headerTitleLabel.text = dataProvider.appsData[section].sectionName
-        return header
+        if allAppsLoadingError == nil {
+            let header = AppsTableViewHeader.instanceFromNib()
+            header.descriptionLabel.text = dataProvider.appsData[section].description
+            header.headerTitleLabel.text = dataProvider.appsData[section].sectionName
+            return header
+        }
+        return nil
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if allAppsLoadingError != nil {
+            return 0
+        }
         /*guard section != 0 else { return 0 }
         if section == 2 {
             return 80
