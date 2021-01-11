@@ -53,6 +53,7 @@ class CacheManager {
         case getGlobalNews// = "/v3/widgets/global_news/data/"
         case getSpecialAlerts// = "/v3/widgets/special_alerts/data/"
         case getAllOffices// = "/v3/widgets/all_offices/data/"
+        case getCurrentOffice
         case getHelpDeskData// = "/v3/widgets/gsd_profile/data/"
         case getQuickHelpData// = "/v3/widgets/gsd_quick_help/data/"
         case getTeamContactsData// = "/v3/widgets/gsd_team_contacts/data/"
@@ -67,6 +68,7 @@ class CacheManager {
             case .getGlobalNews: return "/v3/widgets/global_news/data/"
             case .getSpecialAlerts: return "/v3/widgets/special_alerts/data/"
             case .getAllOffices: return "/v3/widgets/all_offices/data/"
+            case .getCurrentOffice: return "/v1/me"
             case .getHelpDeskData: return "/v3/widgets/gsd_profile/data/"
             case .getQuickHelpData: return "/v3/widgets/gsd_quick_help/data/"
             case .getTeamContactsData: return "/v3/widgets/gsd_team_contacts/data/"

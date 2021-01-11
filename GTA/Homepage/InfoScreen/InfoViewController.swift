@@ -222,6 +222,7 @@ extension InfoViewController: OfficeSelectionDelegate {
             DispatchQueue.main.async {
                 if errorCode == 200, error == nil {
                     self?.updateUIWithSelectedOffice()
+                    self?.dataProvider?.getCurrentOffice()
                 } else if officeWasChanged {
                     self?.displayError(errorMessage: "Office Selection Failed")
                 }

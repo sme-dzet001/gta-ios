@@ -292,21 +292,33 @@ class HomeDataProvider {
     }
     
     func getCurrentOffice(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getCurrentOffice { [weak self] (response, errorCode, error) in
-            var userPreferencesResponse: UserPreferencesResponse?
-            var retErr = error
-            if let responseData = response {
-                do {
-                    userPreferencesResponse = try DataParser.parse(data: responseData)
-                } catch {
-                    retErr = ResponseError.parsingError
-                }
+        getCachedResponse(for: .getCurrentOffice) {[weak self] (data, error) in
+            if let _ = data {
+                self?.processGetCurrentOffice(data, 200, error, true, completion)
             }
-            if let userPreferencesResponse = userPreferencesResponse {
-                self?.selectedOfficeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
-            }
-            completion?(errorCode, retErr)
         }
+        apiManager.getCurrentOffice { [weak self] (response, errorCode, error) in
+            self?.cacheData(response, path: .getCurrentOffice)
+            self?.processGetCurrentOffice(response, errorCode, error, false, completion)
+        }
+    }
+    
+    private func processGetCurrentOffice(_ currentOfficeResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var userPreferencesResponse: UserPreferencesResponse?
+        var retErr = error
+        if let responseData = currentOfficeResponse {
+            do {
+                userPreferencesResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        }
+        if let userPreferencesResponse = userPreferencesResponse {
+            if !fromCache || selectedOfficeId == nil {
+                selectedOfficeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
+            }
+        }
+        completion?(errorCode, retErr)
     }
     
     func setCurrentOffice(officeId: Int, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
