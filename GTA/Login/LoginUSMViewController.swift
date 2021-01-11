@@ -19,7 +19,6 @@ class LoginUSMViewController: UIViewController {
     private let usmBasicURL = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
     private let usmRedirectURL = "https://gtastageapi.smedsp.com:8888/validate"
     private let usmClientID = "NVdmOTlSc2txN3ByUmozbVNQSGs"
-    private let usmClientSecret = "WURSdzdjKk5tK0J3UVp3OGNZcTM"
     private let usmInternalRedirectURL = "https://gtastage.smedsp.com/charts-ui2/#/auth/processor"
     private let usmLogoutURL = "https://gtastageapi.smedsp.com:8888/logout/oauth2"
     
