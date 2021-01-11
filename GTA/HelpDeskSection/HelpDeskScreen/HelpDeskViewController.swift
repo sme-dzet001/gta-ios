@@ -188,19 +188,19 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func makeEmailForAddress(_ address: String?) {
-        if let _ = address, let addressURL = URL(string: "mailto://" + address!) {
+        if let _ = address, let addressURL = URL(string: "mailto:" + address!) {
             UIApplication.shared.open(addressURL, options: [:], completionHandler: nil)
         }
     }
     
     private func openMSTeamsChat() {
-        if let chatLink = dataResponse?.teamsChatLink, let addressURL = URL(string: "msteams://" + chatLink) {
+        if let chatLink = dataResponse?.teamsChatLink, let addressURL = URL(string: chatLink.replacingOccurrences(of: "https://", with: "msteams://").replacingOccurrences(of: "http://", with: "msteams://")) {
             UIApplication.shared.open(addressURL, options: [:], completionHandler: { (isSuccess) in
                 if !isSuccess {
                     self.needMSTeamsAppAlert()
                 }
             })
-        } else if let addressURL = URL(string: "msteams://" + "https://teams.microsoft.com/l/team/19%3a77f2b169349f449da4be0ebda3c44aee%40thread.tacv2/conversations?groupId=e7cf5b23-9d73-469f-8f4e-022835c554dd&tenantId=f0aff3b7-91a5-4aae-af71-c63e1dda2049") {
+        } else if let addressURL = URL(string: "msteams://teams.microsoft.com/l/team/19%3a77f2b169349f449da4be0ebda3c44aee%40thread.tacv2/conversations?groupId=e7cf5b23-9d73-469f-8f4e-022835c554dd&tenantId=f0aff3b7-91a5-4aae-af71-c63e1dda2049") {
             UIApplication.shared.open(addressURL, options: [:], completionHandler: { (isSuccess) in
                 if !isSuccess {
                     self.needMSTeamsAppAlert()

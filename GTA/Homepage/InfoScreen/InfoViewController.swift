@@ -103,7 +103,7 @@ class InfoViewController: UIViewController {
     }
     
     private func makeEmailForAddress(_ address: String?) {
-        if let address = address, let addressURL = URL(string: "mailto://" + address) {
+        if let address = address, let addressURL = URL(string: "mailto:" + address) {
             UIApplication.shared.open(addressURL, options: [:], completionHandler: nil)
         }
     }
