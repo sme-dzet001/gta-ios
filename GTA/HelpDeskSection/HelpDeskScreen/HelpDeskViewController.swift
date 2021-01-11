@@ -39,9 +39,9 @@ class HelpDeskViewController: UIViewController {
     }
     
     private func getHelpDeskData() {
-        dataProvider.getHelpDeskData { [weak self] (response, code, error) in
+        dataProvider.getHelpDeskData { [weak self] (response, code, error, isFromCache) in
             if let helpDeskResponse = response {
-                self?.lastUpdateDate = Date().addingTimeInterval(60)
+                self?.lastUpdateDate = isFromCache ? nil : Date().addingTimeInterval(60)
                 self?.dataResponse = helpDeskResponse
             }
             self?.helpDeskResponseError = error

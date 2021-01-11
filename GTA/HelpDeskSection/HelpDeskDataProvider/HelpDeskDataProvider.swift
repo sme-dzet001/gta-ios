@@ -23,28 +23,43 @@ class HelpDeskDataProvider {
         return teamContactsData.isEmpty
     }
     
-    func getHelpDeskData(completion: ((_ reportData: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
+    func getHelpDeskData(completion: ((_ reportData: HelpDeskResponse?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+        getSectionReport() { [weak self] (reportResponse, errorCode, error, isFromCache) in
             let reportData = self?.parseSectionReport(data: reportResponse)
             let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdProfile.rawValue }?.generationNumber
             if let _ = generationNumber {
-                self?.getCachedResponse(for: .getHelpDeskData) {[weak self] (data, error) in
-                    if let _ = data {
-                        self?.processHelpDeskData(data: data, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
+                if isFromCache {
+                    self?.getCachedResponse(for: .getHelpDeskData) {[weak self] (data, error) in
+                        if let _ = data {
+                            self?.processHelpDeskData(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+                        }
                     }
+                    return
                 }
                 self?.apiManager.getHelpDeskData(for: generationNumber!) { (data, errorCode, error) in
                     self?.cacheData(data, path: .getHelpDeskData)
-                    self?.processHelpDeskData(data: data, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
+                    self?.processHelpDeskData(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
                 }
             } else {
                 let retError = ResponseError.serverError
-                completion?(nil, errorCode, retError)
+                completion?(nil, errorCode, retError, isFromCache)
             }
         }
     }
     
-    private func processHelpDeskData(data: Data?, reportDataResponse: ReportDataResponse?, error: Error?, errorCode: Int, completion: ((_ respone: HelpDeskResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            if let _ = data {
+                completion?(data, 200, cachedError, true)
+            }
+            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                self?.cacheData(reportResponse, path: .getSectionReport)
+                completion?(reportResponse, errorCode, error, false)
+            })
+        }
+    }
+    
+    private func processHelpDeskData(data: Data?, reportDataResponse: ReportDataResponse?, _ isFromCache: Bool, error: Error?, errorCode: Int, completion: ((_ respone: HelpDeskResponse?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         var helpDeskResponse: HelpDeskResponse?
         var retErr = error
         if let responseData = data {
@@ -71,7 +86,7 @@ class HelpDeskDataProvider {
                 retErr = ResponseError.missingFieldError(missingFields: missingHelpDeskFields)
             }
         }
-        completion?(helpDeskResponse, errorCode, retErr)
+        completion?(helpDeskResponse, errorCode, retErr, isFromCache)
     }
     
     func formQuickHelpAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
