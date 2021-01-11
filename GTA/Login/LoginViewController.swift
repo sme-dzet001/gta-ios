@@ -102,7 +102,7 @@ class LoginViewController: UIViewController {
             self.view.frame.origin.y = yPointLoginBtnWithOffset - overlay
             if UIScreen.main.nativeBounds.height >= 1334.0 { // greater or equal then iPhone 8
                 logoImageTop.constant = 10 + -self.view.frame.origin.y
-                loginTitleBottom.constant = 20
+                loginTitleBottom.constant = 40
             } else {
                 logoImageView.isHidden = true
                 titleLabel.isHidden = true
