@@ -7,6 +7,7 @@
 
 import UIKit
 import PanModal
+import MessageUI
 
 enum MetricsPeriod {
     case daily
@@ -14,7 +15,7 @@ enum MetricsPeriod {
     case monthly
 }
 
-class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
+class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -124,10 +125,18 @@ class ApplicationStatusViewController: UIViewController, ShowAlertDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
-    func showAlert(title: String?, message: String?) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+    func sendEmail(withTitle subject: String, withText body: String, to recipient: String) {
+        if MFMailComposeViewController.canSendMail() {
+            let mailVC = MFMailComposeViewController()
+            mailVC.mailComposeDelegate = self
+            mailVC.setSubject(subject)
+            mailVC.setToRecipients([recipient])
+            mailVC.setMessageBody(body, isHTML: false)
+            
+            present(mailVC, animated: true)
+        } else {
+            displayError(errorMessage: "Configure your mail in iOS mail app to use this feature")
+        }
     }
     
 }
@@ -260,8 +269,14 @@ extension ApplicationStatusViewController: MetricStatsHeaderDelegate {
     }
 }
 
-protocol ShowAlertDelegate: class {
-    func showAlert(title: String?, message: String?)
+extension ApplicationStatusViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+}
+
+protocol SendEmailDelegate: class {
+    func sendEmail(withTitle subject: String, withText body: String, to recipient: String)
 }
 
 protocol DetailsDataDelegate: class {

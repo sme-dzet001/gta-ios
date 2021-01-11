@@ -21,7 +21,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     var appSupportEmail: String?
     private var pickerDataSource: [String] = ["Reactivate Account", "Site Down"] //temp
     var panScrollable: UIScrollView?
-    weak var delegate: ShowAlertDelegate?
+    weak var delegate: SendEmailDelegate?
     private let pickerView = UIPickerView()
     var screenTitle: String?
     var selectedText: String? = ""
@@ -154,10 +154,13 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
             self.present(alert, animated: true, completion: nil)
             return
         }
-        self.dismiss(animated: true, completion: {
-            let dateFormatterPrint = DateFormatter()
-            dateFormatterPrint.dateFormat = "E d HH:mm zzz"
-            self.delegate?.showAlert(title: "Issue has been submitted", message: dateFormatterPrint.string(from: Date()))
+        self.dismiss(animated: true, completion: { [weak self] in
+            let screenTitle = self?.screenTitle ?? ""
+            let issueType = self?.typeTextField.text ?? ""
+            let subject = "\(screenTitle): \(issueType)"
+            let body = self?.textView.text ?? ""
+            let recipient = self?.appSupportEmail ?? ""
+            self?.delegate?.sendEmail(withTitle: subject, withText: body, to: recipient)
         })
     }
     
