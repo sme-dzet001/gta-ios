@@ -40,31 +40,40 @@ class AppsViewController: UIViewController {
     }
     
     private func getMyApps() {
-        dataProvider.getMyAppsStatus {[weak self] (errorCode, error, _) in
-            self?.myAppsLoadingError = error
-            if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
-                self?.myAppsLastUpdateDate = Date().addingTimeInterval(15)
-                self?.stopAnimation()
-                //self?.setHardCodeData()
+        dataProvider.getMyAppsStatus {[weak self] (errorCode, error, isFromCache) in
+            self?.myAppsLoadingError = isFromCache ? nil : error
+            if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty {
+                if !isFromCache {
+                    self?.myAppsLastUpdateDate = Date().addingTimeInterval(15)
+                }
+                if !isEmpty {
+                    self?.stopAnimation()
+                }
                 let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
                 self?.dataProvider.getImageData(for: appInfo ?? [])
+            } else if !isFromCache {
+                self?.stopAnimation()
             }
-            self?.stopAnimation()
         }
     }
     
     private func getAllApps() {
         allAppsLoadingError = nil
-        dataProvider.getAllApps {[weak self] (errorCode, error) in
-            self?.allAppsLoadingError = error
+        dataProvider.getAllApps {[weak self] (errorCode, error, isFromCache) in
+            self?.allAppsLoadingError = isFromCache ? nil : error
             DispatchQueue.main.async {
-                if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
-                    self?.allAppsLastUpdateDate = Date().addingTimeInterval(60)
-                    //self?.setHardCodeData()
+                if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty {
+                    if !isFromCache {
+                        self?.allAppsLastUpdateDate = Date().addingTimeInterval(60)
+                    }
+                    if !isEmpty {
+                        self?.stopAnimation()
+                    }
                     let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
                     self?.dataProvider.getImageData(for: appInfo ?? [])
+                } else if !isFromCache {
+                    self?.stopAnimation()
                 }
-                self?.stopAnimation()
             }
         }
     }
@@ -109,16 +118,14 @@ class AppsViewController: UIViewController {
 extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if let _ = allAppsLoadingError {
+        if let _ = allAppsLoadingError, dataProvider.appsData.isEmpty {
             return 1
         }
-        return dataProvider.appsData.count > 0 ? dataProvider.appsData.count : 1
+        return dataProvider.appsData.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let _ = allAppsLoadingError {
-            return 1
-        } else if dataProvider.appsData.isEmpty {
+        if let _ = allAppsLoadingError, dataProvider.appsData.isEmpty {
             return 1
         }
         if dataProvider.appsData[section].sectionName == "My Apps" {
@@ -132,9 +139,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let _ = allAppsLoadingError {
-            return tableView.frame.height
-        } else if dataProvider.appsData.isEmpty {
+        if allAppsLoadingError != nil && dataProvider.appsData.isEmpty {
             return tableView.frame.height
         }
 //        if indexPath.section == 0 {
@@ -144,15 +149,13 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let error = allAppsLoadingError as? ResponseError {
+        if let error = allAppsLoadingError as? ResponseError, dataProvider.appsData.isEmpty {
             return createErrorCell(with: error.localizedDescription)
-        } else if dataProvider.appsData.isEmpty {
-            return createErrorCell(with: "No data available")
         }
         /*if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
             return cell
-         } else*/ if indexPath.section == 0, let error = myAppsLoadingError as? ResponseError {
+         } else*/ if indexPath.section == 0, let error = myAppsLoadingError as? ResponseError, dataProvider.myAppsStatusData == nil {
             return createErrorCell(with: error.localizedDescription)
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicationCell", for: indexPath) as? ApplicationCell {
             cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row], hideStatusView: dataProvider.appsData[indexPath.section].sectionName == "Other Apps")
@@ -172,7 +175,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if allAppsLoadingError != nil || dataProvider.appsData.isEmpty {
+        if allAppsLoadingError != nil && dataProvider.appsData.isEmpty {
             return 0
         }
         /*guard section != 0 else { return 0 }
