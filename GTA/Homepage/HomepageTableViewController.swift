@@ -32,7 +32,9 @@ class HomepageTableViewController: UITableViewController {
             loadOfficesData()
         } else {
             // reloading office cell (because office could be changed on office selection screen)
-            tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+            UIView.performWithoutAnimation {
+                tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+            }
         }
     }
     
@@ -61,7 +63,9 @@ class HomepageTableViewController: UITableViewController {
     
     private func loadOfficesData() {
         officeLoadingError = nil
-        tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+        UIView.performWithoutAnimation {
+            tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+        }
         dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error) in
             if error == nil && errorCode == 200 {
                 self?.dataProvider?.getAllOfficesData { [weak self] (errorCode, error) in
@@ -73,17 +77,23 @@ class HomepageTableViewController: UITableViewController {
                             } else {
                                 self?.officeLoadingError = nil
                             }
-                            self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                            UIView.performWithoutAnimation {
+                                self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                            }
                         } else {
                             self?.officeLoadingError = "Oops, something went wrong"
-                            self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                            UIView.performWithoutAnimation {
+                                self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                            }
                         }
                     }
                 }
             } else {
                 DispatchQueue.main.async {
                     self?.officeLoadingError = "Oops, something went wrong"
-                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                    UIView.performWithoutAnimation {
+                        self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                    }
                 }
             }
         })
