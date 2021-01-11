@@ -12,6 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
     var window: UIWindow?
 
     var appIsInTray: Bool = false
+    var appSwitcherView: UIView?
     
     var isAuthentificationPassed: Bool?
 
@@ -33,11 +34,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        UIView.animate(withDuration: 0.3) {
+            self.appSwitcherView?.alpha = 0
+        } completion: { (_) in
+            self.appSwitcherView?.removeFromSuperview()
+        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
+        hideContent()
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
@@ -114,6 +121,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         navController.isToolbarHidden = true
         window?.rootViewController = navController
     }
-
+    
+    func hideContent() {
+        if let navController = window?.rootViewController as? UINavigationController, navController.rootViewController is UITabBarController {
+            appSwitcherView = UIImageView(image: createScreenshotOfCurrentContext())
+            if let _ = appSwitcherView {
+                appSwitcherView?.alpha = 0
+                self.window?.addSubview(self.appSwitcherView!)
+                UIView.animate(withDuration: 0.3) {
+                    self.appSwitcherView?.alpha = 1
+                }
+            }
+        }
+    }
+    
+    func createScreenshotOfCurrentContext() -> UIImage? {
+        guard let _  = window else { return UIImage() }
+        let authViewController = AuthViewController()
+        authViewController.isSignUp = false
+        authViewController.viewWillAppear(true)
+        authViewController.view?.frame.size = window!.bounds.size
+        UIGraphicsBeginImageContext(window!.bounds.size)
+        guard let currentContext = UIGraphicsGetCurrentContext() else { return nil }
+        authViewController.view?.layer.render(in: currentContext)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
 }
 
