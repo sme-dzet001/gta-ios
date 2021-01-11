@@ -19,12 +19,12 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     
     private var heightObserver: NSKeyValueObservation?
     var appSupportEmail: String?
-    private var pickerDataSource: [String] = ["Reactivate Account", "Site Down"] //temp
+    private var pickerDataSource: [String] = ["Reactivate Account", "Site Down", "Other"] //temp
     var panScrollable: UIScrollView?
     weak var delegate: SendEmailDelegate?
     private let pickerView = UIPickerView()
     var screenTitle: String?
-    var selectedText: String? = ""
+    var selectedText: String = ""
     var isShortFormEnabled = true
     var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
@@ -103,7 +103,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
         
     @objc private func doneAction() {
-        self.typeTextField.text = selectedText
+        self.typeTextField.text = !selectedText.isEmpty ? selectedText : pickerDataSource.first 
         self.view.endEditing(true)
     }
     
@@ -128,7 +128,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
-        toolbar.setItems([doneButton, flexible, cancelButton], animated: true)
+        toolbar.setItems([cancelButton, flexible, doneButton], animated: true)
         typeTextField.inputAccessoryView = toolbar
         typeTextField.setIconForPicker(for: self.view.frame.width)
     }
