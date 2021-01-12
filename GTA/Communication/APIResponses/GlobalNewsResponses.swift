@@ -39,7 +39,7 @@ struct GlobalNewsRow: Codable {
     
     var newsAuthor: String? {
         guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index].stringValue?.replacingOccurrences(of: "\\n", with: "\n")
     }
     
     var newsBody: String? {
@@ -94,7 +94,7 @@ struct SpecialAlertRow: Codable {
     
     var alertAuthor: String? {
         guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index].stringValue?.replacingOccurrences(of: "\\n", with: "\n")
     }
     
     var alertBody: String? {

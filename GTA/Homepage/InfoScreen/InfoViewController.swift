@@ -16,6 +16,10 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var blurView: UIView!
     @IBOutlet weak var screenTitleLabel: UILabel!
     @IBOutlet weak var updateTitleLabel: UILabel!
+    @IBOutlet weak var byLabel: UILabel!
+    @IBOutlet weak var mainLabelCenterY: NSLayoutConstraint!
+    @IBOutlet weak var dateLabelTop: NSLayoutConstraint!
+    @IBOutlet weak var dateLabelByLineTop: NSLayoutConstraint!
     
     var dataProvider: HomeDataProvider?
     
@@ -41,6 +45,7 @@ class InfoViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setUpConstraints()
         updateTitleLabel.isHidden = infoType == .office
         officeStatusLabel.isHidden = true//infoType != .office
         officeStatusLabel.layer.cornerRadius = 5
@@ -50,6 +55,7 @@ class InfoViewController: UIViewController {
             if let updateDate = dataProvider?.formatDateString(dateString: specialAlertData?.alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
                 self.updateTitleLabel.text = "Updates \(updateDate)"
             }
+            byLabel.text = specialAlertData?.alertAuthor
             self.blurView.isHidden = false
             addBlurToView()
             self.tabBarController?.tabBar.isHidden = true
@@ -59,6 +65,21 @@ class InfoViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    func setUpConstraints() {
+        if infoType == .info {
+            byLabel.isHidden = false
+            let multiplier: CGFloat = UIDevice.current.iPhone5_se ? 1.0 : 1.1
+            let newConstraint = mainLabelCenterY.constraintWithMultiplier(multiplier)
+            self.view.removeConstraint(mainLabelCenterY)
+            self.view.addConstraint(newConstraint)
+        } else {
+            byLabel.isHidden = true
+            dateLabelByLineTop.isActive = false
+            dateLabelTop.isActive = true
+        }
+        self.view.layoutIfNeeded()
     }
     
     private func setDataSource() {

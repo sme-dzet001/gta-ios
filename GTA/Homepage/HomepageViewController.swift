@@ -117,6 +117,7 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
                 }
             }
             cell.titleLabel.text = cellDataSource.newsTitle
+            cell.byLabel.text = cellDataSource.newsAuthor
             let newsDate = cellDataSource.newsDate
             cell.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
             return cell
