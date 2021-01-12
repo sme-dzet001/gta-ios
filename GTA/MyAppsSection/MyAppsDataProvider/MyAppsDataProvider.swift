@@ -140,20 +140,20 @@ class MyAppsDataProvider {
     }
     
     private func crateGeneralResponse() -> [AppsDataSource]? {
-        guard let allAppsInfo = allAppsData?.myAppsStatus, let _ = myAppsStatusData else { return nil }
+        guard let allAppsInfo = allAppsData?.myAppsStatus else { return nil }
         guard !allAppsInfo.isEmpty else { return nil }
-        var response = allAppsData?.myAppsStatus
+        var response = allAppsInfo
         var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
         for (index, info) in allAppsData!.myAppsStatus.enumerated() {
             let appNameIndex = myAppsStatusData?.indexes["app name"] ?? 0
             let statusIndex = myAppsStatusData?.indexes["status"] ?? 0
-            let status = myAppsStatusData!.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name})
-            response![index].appStatus = SystemStatus(status: status?.values?[statusIndex]?.stringValue)
+            let status = myAppsStatusData?.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name})
+            response[index].appStatus = SystemStatus(status: status?.values?[statusIndex]?.stringValue)
             if let _ = status {
-                myAppsSection.cellData.append(response![index])
+                myAppsSection.cellData.append(response[index])
             } else {
-                otherAppsSection.cellData.append(response![index])
+                otherAppsSection.cellData.append(response[index])
             }
         }
         var result = [AppsDataSource]()
@@ -162,7 +162,7 @@ class MyAppsDataProvider {
         return result
     }
     
-    private func processMyApps(isFromServer: Bool = false, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
+    private func processMyApps(isFromCache: Bool = true, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
         var myAppsResponse: MyAppsResponse?
         var retErr = error
         if let responseData = myAppsDataResponse {
@@ -179,10 +179,10 @@ class MyAppsDataProvider {
         if let myAppsResponse = myAppsResponse {
             self.myAppsStatusData = myAppsResponse
         }
-        if myAppsResponse == nil || (myAppsResponse?.values ?? []).isEmpty {
+        if (myAppsResponse?.values ?? []).isEmpty {
             retErr = ResponseError.noDataAvailable
         }
-        completion?(errorCode, retErr, isFromServer)
+        completion?(errorCode, retErr, isFromCache)
     }
     
     private func processMyAppsStatusSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
@@ -199,7 +199,7 @@ class MyAppsDataProvider {
             }
             apiManager.getMyAppsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getMyAppsData)
-                self?.processMyApps(isFromServer: true, reportData, data, errorCode, error, completion)
+                self?.processMyApps(isFromCache: false, reportData, data, errorCode, error, completion)
             })
         } else {
             completion?(errorCode, error, false)

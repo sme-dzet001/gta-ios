@@ -52,7 +52,7 @@ class AppsViewController: UIViewController {
                 }
                 let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
                 self?.dataProvider.getImageData(for: appInfo ?? [])
-            } else if !isFromCache {
+            } else if !isFromCache, let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
                 self?.stopAnimation()
             }
         }
@@ -63,11 +63,11 @@ class AppsViewController: UIViewController {
         dataProvider.getAllApps {[weak self] (errorCode, error, isFromCache) in
             self?.allAppsLoadingError = isFromCache ? nil : error
             DispatchQueue.main.async {
-                if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty {
+                if error == nil, errorCode == 200, let appsData = self?.dataProvider.appsData.first {
                     if !isFromCache {
                         self?.allAppsLastUpdateDate = Date().addingTimeInterval(60)
                     }
-                    if !isEmpty {
+                    if !appsData.cellData.isEmpty || self?.myAppsLoadingError != nil {
                         self?.stopAnimation()
                     }
                     let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
@@ -156,7 +156,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         /*if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
             return cell
-         } else*/ if indexPath.section == 0, let error = myAppsLoadingError as? ResponseError, dataProvider.myAppsStatusData == nil {
+         } else*/ if indexPath.section == 0, let error = myAppsLoadingError as? ResponseError, let isEmpty = dataProvider.myAppsStatusData?.data?.isEmpty, isEmpty {
             return createErrorCell(with: error.localizedDescription)
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicationCell", for: indexPath) as? ApplicationCell {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
