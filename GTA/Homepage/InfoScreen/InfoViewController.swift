@@ -130,7 +130,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             if indexPath.row < officeDataSoure.count, let infoType = officeDataSoure[indexPath.row].infoType, infoType == "location" {
                 // change bottom value if leading or trailing margin will change
-                let addressLabelWidth = view.frame.width - 71
+                let addressLabelWidth = view.frame.width - 81
                 let addressLabelMinTopOffset: CGFloat = 8
                 if let labelFont = UIFont(name: "SFProText-Regular", size: 16), (officeDataSoure[indexPath.row].text.replacingOccurrences(of: "\u{00A0}", with: " ").height(width: addressLabelWidth, font: labelFont) + 2 * addressLabelMinTopOffset) > 80 {
                     return UITableView.automaticDimension
