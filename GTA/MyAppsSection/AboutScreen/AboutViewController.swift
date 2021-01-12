@@ -201,6 +201,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
         }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AboutContactsCell", for: indexPath) as? AboutContactsCell {
             let cellDataSource = dataSource?.contactsData[indexPath.row]
+            cell.contactEmail = cellDataSource?.email
             cell.setUpCell(with: cellDataSource)
             return cell
         }
