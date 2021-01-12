@@ -171,7 +171,7 @@ struct AppDetailsData: Codable {
     }
     
     var appJiraSupportUrl: String? {
-        guard let _ = values, let index = indexes["app jira_support url"], values!.count > index else { return nil }
+        guard let _ = values, let index = indexes["app jira support url"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
     

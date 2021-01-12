@@ -107,7 +107,7 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     private func createSupportDataString() -> NSMutableAttributedString  {
         let resultString = NSMutableAttributedString()
         if let wikiUrlString = details?.appWikiUrl, let url = URL(string: wikiUrlString) {
-            let stringValue = "Wiki Url: "
+            let stringValue = "Wiki URL: "
             let attrString = NSMutableAttributedString(string: stringValue + "\(wikiUrlString)")
             attrString.setAttributes([.link: url], range: NSMakeRange(stringValue.count, wikiUrlString.count))
             resultString.append(attrString)
