@@ -158,7 +158,7 @@ class HomepageTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
             cell?.separator.isHidden = false
             cell?.iconImageView.image = UIImage(named: "alert_icon")
-            cell?.mainLabel.text = data[indexPath.row].alertHeadline
+            cell?.mainLabel.text = data[indexPath.row].alertTitle
             cell?.mainLabel.textColor = .black
             cell?.descriptionLabel.text = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
             return cell ?? UITableViewCell()
@@ -218,7 +218,7 @@ class HomepageTableViewController: UITableViewController {
             infoViewController.dataProvider = dataProvider
             infoViewController.specialAlertData = data
             infoViewController.infoType = .info
-            infoViewController.title = data.alertSubHeadline
+            infoViewController.title = data.alertHeadline
             self.navigationController?.pushViewController(infoViewController, animated: true)
         } else if indexPath.section == 1 {
             guard let dataProvider = dataProvider, let selectedOffice = dataProvider.userOffice else { return }

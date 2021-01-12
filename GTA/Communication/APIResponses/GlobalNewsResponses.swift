@@ -67,6 +67,11 @@ struct SpecialAlertRow: Codable {
         case values = "values"
     }
     
+    var alertTitle: String? {
+        guard let valuesArr = values, let index = indexes["alert title"], valuesArr.count > index else { return nil }
+        return valuesArr[index].stringValue
+    }
+    
     var alertHeadline: String? {
         guard let valuesArr = values, let index = indexes["headline"], valuesArr.count > index else { return nil }
         return valuesArr[index].stringValue
