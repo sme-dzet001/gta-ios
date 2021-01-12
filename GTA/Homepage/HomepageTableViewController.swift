@@ -15,6 +15,7 @@ class HomepageTableViewController: UITableViewController {
     
     var dataProvider: HomeDataProvider?
     var officeLoadingError: String?
+    var officeLoadingIsEnabled = true
         
     var dataSource: [HomepageCellData] = []
     private var lastUpdateDate: Date?
@@ -29,11 +30,13 @@ class HomepageTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadSpecialAlertsData()
-            loadOfficesData()
+            if officeLoadingIsEnabled { loadOfficesData() }
         } else {
             // reloading office cell (because office could be changed on office selection screen)
-            UIView.performWithoutAnimation {
-                tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+            if officeLoadingIsEnabled {
+                UIView.performWithoutAnimation {
+                    tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                }
             }
         }
     }
@@ -62,6 +65,7 @@ class HomepageTableViewController: UITableViewController {
     }
     
     private func loadOfficesData() {
+        var forceOpenOfficeSelectionScreen = false
         officeLoadingError = nil
         UIView.performWithoutAnimation {
             tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
@@ -74,11 +78,17 @@ class HomepageTableViewController: UITableViewController {
                             self?.lastUpdateDate = Date().addingTimeInterval(60)
                             if self?.dataProvider?.allOfficesDataIsEmpty == true {
                                 self?.officeLoadingError = "No data available"
+                            } else if self?.dataProvider?.userOffice == nil {
+                                self?.officeLoadingError = "Not Selected"
+                                forceOpenOfficeSelectionScreen = true
                             } else {
                                 self?.officeLoadingError = nil
                             }
                             UIView.performWithoutAnimation {
                                 self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                            }
+                            if forceOpenOfficeSelectionScreen {
+                                self?.openOfficeSelectionModalScreen()
                             }
                         } else {
                             self?.officeLoadingError = "Oops, something went wrong"
@@ -97,6 +107,28 @@ class HomepageTableViewController: UITableViewController {
                 }
             }
         })
+    }
+    
+    private func openOfficeSelectionModalScreen() {
+        let officeLocation = OfficeLocationViewController()
+        var statusBarHeight: CGFloat = 0.0
+        if #available(iOS 13.0, *) {
+            statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
+        } else {
+            statusBarHeight = self.view.bounds.height - UIApplication.shared.statusBarFrame.height
+            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
+        }
+        officeLocation.title = "Select Sony Music Office Region"
+        officeLocation.dataProvider = dataProvider
+        officeLocation.forceOfficeSelection = true
+        officeLocation.officeSelectionDelegate = self
+        let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
+        panModalNavigationController.setNavigationBarHidden(true, animated: true)
+        panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight
+        panModalNavigationController.forceOfficeSelection = true
+        
+        presentPanModal(panModalNavigationController)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -150,8 +182,11 @@ class HomepageTableViewController: UITableViewController {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
                     cell?.officeStatusLabel.text = " "
                     cell?.officeAddressLabel.text = " "
+                    cell?.officeAddressLabel.isHidden = false
                     cell?.officeNumberLabel.text = " "
+                    cell?.officeNumberLabel.isHidden = false
                     cell?.officeEmailLabel.text = " "
+                    cell?.officeEmailLabel.isHidden = false
                     cell?.officeErrorLabel.text = errorStr
                     cell?.officeErrorLabel.isHidden = false
                     cell?.separator.isHidden = false
@@ -196,6 +231,34 @@ class HomepageTableViewController: UITableViewController {
         }
     }
 
+}
+
+extension HomepageTableViewController: OfficeSelectionDelegate {
+    func officeWasSelected(_ officeId: Int) {
+        officeLoadingIsEnabled = false
+        dataProvider?.setCurrentOffice(officeId: officeId, completion: { [weak self] (errorCode, error) in
+            DispatchQueue.main.async {
+                if errorCode == 200, error == nil {
+                    self?.updateUIWithSelectedOffice()
+                    self?.dataProvider?.getCurrentOffice(completion: { (_, _) in
+                        self?.officeLoadingIsEnabled = true
+                    })
+                } else {
+                    self?.officeLoadingIsEnabled = true
+                    self?.displayError(errorMessage: "Office Selection Failed", onClose: { [weak self] (_) in
+                        self?.openOfficeSelectionModalScreen()
+                    })
+                }
+            }
+        })
+    }
+    
+    private func updateUIWithSelectedOffice() {
+        officeLoadingError = nil
+        UIView.performWithoutAnimation {
+            tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+        }
+    }
 }
 
 struct HomepageCellData {

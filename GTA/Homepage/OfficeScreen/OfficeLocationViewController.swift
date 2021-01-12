@@ -25,6 +25,7 @@ class OfficeLocationViewController: UIViewController {
     
     weak var officeSelectionDelegate: OfficeSelectionDelegate?
     
+    var forceOfficeSelection = false
     var selectedRegionName: String?
     var regionSelectionIsOn: Bool = true
     var dataProvider: HomeDataProvider?
@@ -46,6 +47,7 @@ class OfficeLocationViewController: UIViewController {
         
         setDataSource()
         titleLabel.text = title
+        closeButton.isHidden = forceOfficeSelection
         setNeedsStatusBarAppearanceUpdate()
     }
     
@@ -84,6 +86,7 @@ class OfficeLocationViewController: UIViewController {
     }
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
+        guard !forceOfficeSelection else { return }
         self.dismiss(animated: true, completion: nil)
         
     }
@@ -174,6 +177,7 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     
     private func showOfficeLocationVC(for regionName: String) {
         let office = OfficeLocationViewController()
+        office.forceOfficeSelection = forceOfficeSelection
         office.officeSelectionDelegate = officeSelectionDelegate
         office.regionSelectionIsOn = false
         office.title = regionName
@@ -187,7 +191,9 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
 extension OfficeLocationViewController: UserLocationManagerDelegate {
     func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?) {
         guard let officeCoord = officeCoord, let officeId = dataProvider?.getClosestOfficeId(by: officeCoord) else {
-            displayError(errorMessage: "Getting user location did failed!")
+            if !forceOfficeSelection {
+                displayError(errorMessage: "Getting user location did failed!")
+            }
             return
         }
         officeSelectionDelegate?.officeWasSelected(officeId)

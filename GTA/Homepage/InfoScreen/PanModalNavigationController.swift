@@ -10,6 +10,7 @@ import PanModal
 
 class PanModalNavigationController: UINavigationController, PanModalPresentable {
     
+    var forceOfficeSelection = false
     var initialHeight: CGFloat = 0.0
     var panScrollable: UIScrollView?
     
@@ -31,6 +32,14 @@ class PanModalNavigationController: UINavigationController, PanModalPresentable 
     
     var showDragIndicator: Bool {
         return false
+    }
+    
+    var allowsTapToDismiss: Bool {
+        return !forceOfficeSelection
+    }
+    
+    var allowsDragToDismiss: Bool {
+        return !forceOfficeSelection
     }
     
 }

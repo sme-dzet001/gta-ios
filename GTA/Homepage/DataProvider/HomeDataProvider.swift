@@ -30,17 +30,13 @@ class HomeDataProvider {
         return allOfficesData.isEmpty
     }
     
-    private var defaultOffice: OfficeRow? {
-        return allOfficesData.first
-    }
-    
     private var selectedOffice: OfficeRow? {
         guard let officeId = selectedOfficeId else { return nil }
         return allOfficesData.first { $0.officeId == officeId }
     }
     
     var userOffice: OfficeRow? {
-        return selectedOffice ?? defaultOffice
+        return selectedOffice
     }
     
     func formImageURL(from imagePath: String?) -> String {
