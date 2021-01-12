@@ -167,6 +167,9 @@ extension LoginUSMViewController: WKNavigationDelegate {
                         UserDefaults.standard.set(true, forKey: "userLoggedIn")
                         let authVC = AuthViewController()
                         authVC.isSignUp = true
+                        if let sceneDelegate = self?.view.window?.windowScene?.delegate as? SceneDelegate {
+                            authVC.delegate = sceneDelegate
+                        }
                         self?.navigationController?.pushViewController(authVC, animated: true)
                     } else {
                         self?.performSegue(withIdentifier: "unwindToLogin", sender: nil)
