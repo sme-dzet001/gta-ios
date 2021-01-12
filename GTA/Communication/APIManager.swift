@@ -13,7 +13,11 @@ class APIManager: NSObject, URLSessionDelegate {
     private var sessionExpiredHandler: SessionExpiredHandler = SessionExpiredHandler()
     private var networkManager: NetworkManager = NetworkManager()
     
+    #if GTADev
+    let baseUrl = "https://gtadev.smedsp.com:8888"
+    #else
     let baseUrl = "https://gtastageapi.smedsp.com:8888"
+    #endif
     private let accessToken: String?
     
     private enum requestEndpoint {
