@@ -124,29 +124,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
     
     func hideContent() {
         if let navController = window?.rootViewController as? UINavigationController, navController.rootViewController is UITabBarController {
-            appSwitcherView = UIImageView(image: createScreenshotOfCurrentContext())
+            appSwitcherView = UIView()
+            appSwitcherView?.frame = self.window!.bounds
+            let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            //blurEffectView.alpha = 0.99
+            blurEffectView.frame = window!.bounds
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             if let _ = appSwitcherView {
                 appSwitcherView?.alpha = 0
+                appSwitcherView?.addSubview(blurEffectView)
                 self.window?.addSubview(self.appSwitcherView!)
                 UIView.animate(withDuration: 0.3) {
                     self.appSwitcherView?.alpha = 1
                 }
             }
         }
-    }
-    
-    func createScreenshotOfCurrentContext() -> UIImage? {
-        guard let _  = window else { return UIImage() }
-        let authViewController = AuthViewController()
-        authViewController.isSignUp = false
-        authViewController.viewWillAppear(true)
-        authViewController.view?.frame.size = window!.bounds.size
-        UIGraphicsBeginImageContext(window!.bounds.size)
-        guard let currentContext = UIGraphicsGetCurrentContext() else { return nil }
-        authViewController.view?.layer.render(in: currentContext)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
     }
     
 }
