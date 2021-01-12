@@ -118,7 +118,7 @@ extension LoginUSMViewController: WKUIDelegate {
 extension LoginUSMViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         guard error.localizedDescription != "Frame load interrupted" else { return }
-        displayError(errorMessage: error.localizedDescription, title: "Error") { (_) in
+        displayError(errorMessage: "Oops, something went wrong", title: "Login Failed") { (_) in
             self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
         }
     }
@@ -133,12 +133,21 @@ extension LoginUSMViewController: WKNavigationDelegate {
             CacheManager().clearCache()
             UserDefaults.standard.set(false, forKey: "userLoggedIn")
             usmWebView.isHidden = false
-            loadUsmLogon()
+            //loadUsmLogon()
         }
         if navigationRequestURL.absoluteString.hasPrefix(usmRedirectURL) && navigationAction.request.timeoutInterval > shortRequestTimeoutInterval {
             let authRequest = URLRequest(url: navigationRequestURL, timeoutInterval: shortRequestTimeoutInterval)
             decisionHandler(.cancel)
             usmWebView.load(authRequest)
+            return
+        }
+        if navigationRequestURL.absoluteString.contains("app_code=1160") {
+            usmWebView.alpha = 0
+            activityIndicator.stopAnimating()
+            displayError(errorMessage: "Oops, something went wrong", title: "Login Failed") { (_) in
+                self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
+            }
+            decisionHandler(.cancel)
             return
         }
         if navigationRequestURL.absoluteString.hasPrefix(usmInternalRedirectURL) {
