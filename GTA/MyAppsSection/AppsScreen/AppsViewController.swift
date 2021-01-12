@@ -40,6 +40,7 @@ class AppsViewController: UIViewController {
     }
     
     private func getMyApps() {
+        myAppsLoadingError = nil
         dataProvider.getMyAppsStatus {[weak self] (errorCode, error, isFromCache) in
             self?.myAppsLoadingError = isFromCache ? nil : error
             if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty {
@@ -158,7 +159,11 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
          } else*/ if indexPath.section == 0, let error = myAppsLoadingError as? ResponseError, dataProvider.myAppsStatusData == nil {
             return createErrorCell(with: error.localizedDescription)
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicationCell", for: indexPath) as? ApplicationCell {
-            cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row], hideStatusView: dataProvider.appsData[indexPath.section].sectionName == "Other Apps")
+            if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
+                cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row], hideStatusView: dataProvider.appsData[indexPath.section].sectionName == "Other Apps")
+            } else {
+                return UITableViewCell()
+            }
             return cell
         }
         return UITableViewCell()
@@ -190,8 +195,8 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //guard indexPath.section != 0 else { return }
-        guard dataProvider.appsData[indexPath.section].sectionName == "My Apps" else { return }
+        guard allAppsLoadingError == nil, myAppsLoadingError == nil else { return }
+        guard indexPath.section < dataProvider.appsData.count, dataProvider.appsData[indexPath.section].sectionName == "My Apps" else { return }
         guard !dataProvider.appsData[indexPath.section].cellData.isEmpty else { return }
         let appVC = ApplicationStatusViewController()
         appVC.appName = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_name

@@ -67,12 +67,16 @@ class MyAppsDataProvider {
     
     private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
-            if let _ = data {
+            if let _ = data, cachedError == nil {
                 completion?(data, 200, cachedError, true)
             }
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                 self?.cacheData(reportResponse, path: .getSectionReport)
-                completion?(reportResponse, errorCode, error, false)
+                var newError = error
+                if let _ = error {
+                    newError = ResponseError.commonError
+                }
+                completion?(reportResponse, errorCode, newError, false)
             })
         }
 //        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
@@ -187,7 +191,7 @@ class MyAppsDataProvider {
         if let _ = generationNumber {
             if fromCache {
                 getCachedResponse(for: .getMyAppsData) {[weak self] (data, error) in
-                    if let _ = data {
+                    if let _ = data, error == nil {
                         self?.processMyApps(reportData, data!, errorCode, error, completion)
                     }
                 }
@@ -231,7 +235,7 @@ class MyAppsDataProvider {
         if let _ = generationNumber {
             if fromCache {
                 getCachedResponse(for: .getAllAppsData) {[weak self] (data, error) in
-                    if let _ = data {
+                    if let _ = data, error == nil {
                         self?.processAllApps(reportData, true, data, errorCode, error, completion)
                     }
                 }
@@ -273,7 +277,7 @@ class MyAppsDataProvider {
             let contactsPath = (KeychainManager.getUsername() ?? "") + "/" + (app ?? "")
             if fromCache {
                 getCachedResponse(for: .getAppContacts(contactsPath: contactsPath)) {[weak self] (data, error) in
-                    if let _ = data {
+                    if let _ = data, error == nil {
                         self?.processAppContacts(reportData, data, errorCode, error, completion)
                     }
                 }
@@ -316,7 +320,7 @@ class MyAppsDataProvider {
             let detailsPath = (KeychainManager.getUsername() ?? "") + "/" + (app ?? "")
             if fromCache {
                 getCachedResponse(for: .getAppDetails(detailsPath: detailsPath)) {[weak self] (data, error) in
-                    if let _ = data {
+                    if let _ = data, error == nil {
                         self?.processAppDetails(reportData, data, errorCode, error, completion)
                     }
                 }
