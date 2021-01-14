@@ -256,6 +256,10 @@ class HelpDeskDataProvider {
         apiManager.loadImageData(from: url, completion: completion)
     }
     
+    func getServiceDeskImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+        apiManager.loadImageData(from: url, completion: completion)
+    }
+    
     private func parseSectionReport(data: Data?) -> ReportDataResponse? {
         var reportDataResponse: ReportDataResponse?
         if let responseData = data {

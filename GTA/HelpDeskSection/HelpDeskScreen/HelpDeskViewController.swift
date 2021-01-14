@@ -95,12 +95,13 @@ class HelpDeskViewController: UIViewController {
             serverErrorWasHappened = false
         }
         let errorDesc = serverErrorWasHappened ? (helpDeskResponseError as? ResponseError)?.localizedDescription : nil
+        let aboutCellSubtitle = (dataResponse == nil && errorDesc != nil) ? errorDesc : "Overview of the mission, hours, etc."
         helpDeskCellsData = [
             [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: dataResponse?.serviceDeskPhoneNumber ?? errorDesc, updatesNumber: nil),
              HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: dataResponse?.serviceDeskEmail ?? errorDesc, updatesNumber: nil),
              HelpDeskCellData(imageName: "teams_chat_icon", cellTitle: "Teams Chat", cellSubtitle: dataResponse?.teamsChatLink != nil ? "Teams mobile app is required" : errorDesc, updatesNumber: nil)],
             [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, etc.", updatesNumber: nil),
-            HelpDeskCellData(imageName: "about_red_icon", cellTitle: "About", cellSubtitle: "Overview of the mission, hours, etc.", updatesNumber: nil),
+            HelpDeskCellData(imageName: "about_red_icon", cellTitle: "About", cellSubtitle: aboutCellSubtitle, updatesNumber: nil),
             HelpDeskCellData(imageName: "contacts_icon", cellTitle: "Service Desk Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil)/*,
             HelpDeskCellData(imageName: "my_tickets_icon", cellTitle: "My Tickets", cellSubtitle: "Help Desk Ticket History", updatesNumber: 3),
             HelpDeskCellData(imageName: "my_devices_icon", cellTitle: "My Devices", cellSubtitle: "Manage Devices, Request Upgrades, etc.", updatesNumber: 5)*/]
@@ -129,7 +130,8 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HelpDeskCell", for: indexPath) as? HelpDeskCell {
                 let cellData = helpDeskCellsData[indexPath.section][indexPath.row]
-                cell.setUpCell(with: cellData)
+                let cellIsActive = cellData.cellSubtitle != "Oops, something went wrong"
+                cell.setUpCell(with: cellData, isActive: cellIsActive)
                 return cell
             }
         }
@@ -168,6 +170,13 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
             let quickHelpVC = QuickHelpViewController()
             quickHelpVC.dataProvider = dataProvider
             navigationController?.pushViewController(quickHelpVC, animated: true)
+        } else if indexPath.row == 1 {
+            guard let cellSubtitle = helpDeskCellsData[indexPath.section][indexPath.row].cellSubtitle, cellSubtitle != "Oops, something went wrong" else { return }
+            let aboutVC = ServiceDeskAboutViewController()
+            let aboutData = (imageUrl: dataResponse?.serviceDeskIcon, desc: dataResponse?.serviceDeskDesc)
+            aboutVC.aboutData = aboutData
+            aboutVC.dataProvider = dataProvider
+            navigationController?.pushViewController(aboutVC, animated: true)
         } else if indexPath.row == 2 {
             let contactsVC = ServiceDeskContactsViewController()
             contactsVC.dataProvider = dataProvider

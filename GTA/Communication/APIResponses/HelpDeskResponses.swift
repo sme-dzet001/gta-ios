@@ -22,6 +22,16 @@ struct HelpDeskResponse: Codable {
         return rows.first?.values //data["rows"]?.first?.values
     }
     
+    var serviceDeskDesc: String? {
+        guard let values = values, let index = indexes["description"], values.count > index else { return nil }
+        return values[index]
+    }
+    
+    var serviceDeskIcon: String? {
+        guard let values = values, let index = indexes["icon"], values.count > index else { return nil }
+        return values[index]
+    }
+    
     var serviceDeskPhoneNumber: String? {
         guard let values = values, let index = indexes["service_phone"], values.count > index else { return nil }
         return convertPhoneNumber(number: values[index])
