@@ -21,27 +21,17 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contacts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blD-e0-azQ">
-                    <rect key="frame" x="24" y="23" width="91.5" height="29"/>
+                    <rect key="frame" x="24" y="24" width="91.5" height="29"/>
                     <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="24"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bsl-pi-bx1">
-                    <rect key="frame" x="0.0" y="0.0" width="434" height="1"/>
-                    <color key="backgroundColor" red="0.91764705882352937" green="0.92549019607843142" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="63N-5z-Mbp"/>
-                    </constraints>
-                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Ggq-Ek-dP7"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="blD-e0-azQ" firstAttribute="top" secondItem="Bsl-pi-bx1" secondAttribute="bottom" constant="22" id="2wy-48-fMw"/>
-                <constraint firstAttribute="trailing" secondItem="Bsl-pi-bx1" secondAttribute="trailing" id="LKO-hh-3qJ"/>
+                <constraint firstItem="blD-e0-azQ" firstAttribute="top" secondItem="zOs-Tm-30L" secondAttribute="top" constant="24" id="2wy-48-fMw"/>
                 <constraint firstItem="Ggq-Ek-dP7" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="blD-e0-azQ" secondAttribute="trailing" constant="24" id="We9-YT-Gj8"/>
-                <constraint firstItem="Bsl-pi-bx1" firstAttribute="top" secondItem="zOs-Tm-30L" secondAttribute="top" id="gXg-We-NaM"/>
-                <constraint firstItem="Bsl-pi-bx1" firstAttribute="leading" secondItem="zOs-Tm-30L" secondAttribute="leading" id="u5w-XL-agd"/>
                 <constraint firstItem="blD-e0-azQ" firstAttribute="leading" secondItem="Ggq-Ek-dP7" secondAttribute="leading" constant="24" id="vJq-Oq-exD"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

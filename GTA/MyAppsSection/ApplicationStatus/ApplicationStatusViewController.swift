@@ -29,6 +29,8 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         }
     }
     var appName: String? = ""
+    var appTitle: String?
+    var appImageUrl: String = ""
     var systemStatus: SystemStatus = .none
     var selectedMetricsPeriod: MetricsPeriod = .weekly
     var detailsDataResponseError: Error?
@@ -244,6 +246,8 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             self.detailsDataDelegate = aboutScreen
             aboutScreen.dataProvider = dataProvider
             aboutScreen.appName = appName
+            aboutScreen.appTitle = appTitle
+            aboutScreen.appImageUrl = appImageUrl
             navigationController?.pushViewController(aboutScreen, animated: true)
         } else {
             if appDetailsData?.appSupportEmail == nil {

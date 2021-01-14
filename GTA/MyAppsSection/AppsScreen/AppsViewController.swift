@@ -200,6 +200,8 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         guard !dataProvider.appsData[indexPath.section].cellData.isEmpty else { return }
         let appVC = ApplicationStatusViewController()
         appVC.appName = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_name
+        appVC.appTitle = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_title
+        appVC.appImageUrl = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_icon ?? ""
         appVC.systemStatus = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appStatus
         appVC.dataProvider = dataProvider
         self.navigationController?.pushViewController(appVC, animated: true)
