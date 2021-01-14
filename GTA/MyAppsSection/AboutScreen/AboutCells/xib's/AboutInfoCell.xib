@@ -18,13 +18,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arh-Dl-mmd">
-                        <rect key="frame" x="24" y="22" width="390" height="76"/>
+                        <rect key="frame" x="24" y="14" width="390" height="84"/>
                         <attributedString key="attributedText">
                             <fragment>
                                 <string key="content">On 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases reported on 11 September 2020.</string>
                                 <attributes>
                                     <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="16" name="SFMono-Light"/>
+                                    <font key="NSFont" size="16" name="SFProText-Light"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5" lineHeightMultiple="1" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -36,7 +36,7 @@
                 <constraints>
                     <constraint firstItem="arh-Dl-mmd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="GQA-PU-xWr"/>
                     <constraint firstAttribute="trailing" secondItem="arh-Dl-mmd" secondAttribute="trailing" constant="24" id="REG-Rn-vBT"/>
-                    <constraint firstItem="arh-Dl-mmd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="22" id="f6z-x6-9zD"/>
+                    <constraint firstItem="arh-Dl-mmd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="f6z-x6-9zD"/>
                     <constraint firstAttribute="bottom" secondItem="arh-Dl-mmd" secondAttribute="bottom" constant="22" id="hdz-Qf-iUt"/>
                 </constraints>
             </tableViewCellContentView>

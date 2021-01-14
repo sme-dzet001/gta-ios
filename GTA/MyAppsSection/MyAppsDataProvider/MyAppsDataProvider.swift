@@ -29,15 +29,14 @@ class MyAppsDataProvider {
     
     func getImageData(for appInfo: [AppInfo]) {
         for info in appInfo {
-            if let url = URL(string: formImageURL(from: info.app_icon)) {
-                getAppImageData(from: url) { (imageData, _) in
-                    self.appImageDelegate?.setImage(with: imageData, for: info.app_name)
-                }
+            getAppImageData(from: info.app_icon ?? "") { (imageData, _) in
+                self.appImageDelegate?.setImage(with: imageData, for: info.app_name)
             }
         }
     }
     
-    private func getAppImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+    func getAppImageData(from url: String, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+        guard let url = URL(string: formImageURL(from: url)) else { return }
         apiManager.loadImageData(from: url, completion: completion)
     }
     

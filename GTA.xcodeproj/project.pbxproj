@@ -226,6 +226,18 @@
 		9F9D9CF7258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
 		9F9D9CF8258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
 		9F9D9CF9258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
+		9FA8E8FB25B054C6007D3B9F /* AboutSupportPolicyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */; };
+		9FA8E8FC25B054C6007D3B9F /* AboutSupportPolicyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */; };
+		9FA8E8FD25B054C6007D3B9F /* AboutSupportPolicyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */; };
+		9FA8E8FE25B054C6007D3B9F /* AboutSupportPolicyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */; };
+		9FA8E8FF25B054C6007D3B9F /* AboutSupportPolicyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */; };
+		9FA8E90025B054C6007D3B9F /* AboutSupportPolicyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */; };
+		9FA8E90D25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */; };
+		9FA8E90E25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */; };
+		9FA8E90F25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */; };
+		9FA8E91025B056D5007D3B9F /* AboutHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E90C25B056D5007D3B9F /* AboutHeaderCell.xib */; };
+		9FA8E91125B056D5007D3B9F /* AboutHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E90C25B056D5007D3B9F /* AboutHeaderCell.xib */; };
+		9FA8E91225B056D5007D3B9F /* AboutHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E90C25B056D5007D3B9F /* AboutHeaderCell.xib */; };
 		9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
@@ -533,6 +545,10 @@
 		9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionExpiredHandler.swift; sourceTree = "<group>"; };
 		9F9D9CE825891E1800DC4231 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		9F9D9CF6258A063800DC4231 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSupportPolicyCell.swift; sourceTree = "<group>"; };
+		9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutSupportPolicyCell.xib; sourceTree = "<group>"; };
+		9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutHeaderCell.swift; sourceTree = "<group>"; };
+		9FA8E90C25B056D5007D3B9F /* AboutHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutHeaderCell.xib; sourceTree = "<group>"; };
 		9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginUSMViewController.swift; path = GTA/Login/LoginUSMViewController.swift; sourceTree = SOURCE_ROOT; };
 		9FCFA2A6259E138D00E893D2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1203,6 +1219,8 @@
 				C93FCF3C2564911A001E86F6 /* AboutContactsHeader.swift */,
 				C93FCF2F2564906F001E86F6 /* AboutContactsCell.swift */,
 				9FE173CD25914D3F00E2C481 /* AboutSupportCell.swift */,
+				9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */,
+				9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */,
 				C93FCF6A25649244001E86F6 /* xib's */,
 			);
 			path = AboutCells;
@@ -1215,6 +1233,8 @@
 				9FE173CE25914D3F00E2C481 /* AboutSupportCell.xib */,
 				C93FCF302564906F001E86F6 /* AboutContactsCell.xib */,
 				C93FCF182564901E001E86F6 /* AboutInfoCell.xib */,
+				9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */,
+				9FA8E90C25B056D5007D3B9F /* AboutHeaderCell.xib */,
 			);
 			path = "xib's";
 			sourceTree = "<group>";
@@ -1512,6 +1532,7 @@
 				9FF0544A2567F70B0071E596 /* TicketDatailsHeader.xib in Resources */,
 				9FFD5F102565A1F900B6A65C /* InfoViewController.xib in Resources */,
 				659A5AF0255404F100E13B77 /* SF-Pro-Display-Medium.otf in Resources */,
+				9FA8E91025B056D5007D3B9F /* AboutHeaderCell.xib in Resources */,
 				9F895B3D255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
 				9FF0546925681F4A0071E596 /* SecondTicketDetailsViewController.xib in Resources */,
 				65D1A2AC2554CE5E00D71965 /* HelpDesk.storyboard in Resources */,
@@ -1550,6 +1571,7 @@
 				C93FCF0925648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				C93FCF1C2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
 				C9424E17256427F0003C247E /* DeviceCell.xib in Resources */,
+				9FA8E8FE25B054C6007D3B9F /* AboutSupportPolicyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1584,6 +1606,7 @@
 				9FF0544B2567F70B0071E596 /* TicketDatailsHeader.xib in Resources */,
 				9F819A99255C1572007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
 				9F895B3E255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
+				9FA8E8FF25B054C6007D3B9F /* AboutSupportPolicyCell.xib in Resources */,
 				9F819A9A255C1572007C1739 /* HelpDesk.storyboard in Resources */,
 				9F78D0962565321100BCD38F /* SF-Pro-Text-Light.ttf in Resources */,
 				9F819A9B255C1572007C1739 /* SF-Pro-Display-Bold.otf in Resources */,
@@ -1600,6 +1623,7 @@
 				9FE173D325914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
 				C91F708F2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
 				9F895AF1255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
+				9FA8E91125B056D5007D3B9F /* AboutHeaderCell.xib in Resources */,
 				9F819AA0255C1572007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F895B6E255D3D27004489C6 /* HelpReportScreenViewController.xib in Resources */,
 				C993A2B22576664300F9146A /* QuickHelpViewController.xib in Resources */,
@@ -1653,6 +1677,7 @@
 				9F78D0972565321100BCD38F /* SF-Pro-Text-Light.ttf in Resources */,
 				9F819AC5255C1646007C1739 /* SF-Pro-Display-Bold.otf in Resources */,
 				C93FCF362564906F001E86F6 /* AboutContactsCell.xib in Resources */,
+				9FA8E91225B056D5007D3B9F /* AboutHeaderCell.xib in Resources */,
 				9FF0545525680EC90071E596 /* SendMessageView.xib in Resources */,
 				C93FCF6425649220001E86F6 /* AboutContactsHeader.xib in Resources */,
 				9F819AC6255C1646007C1739 /* LaunchScreen.storyboard in Resources */,
@@ -1691,6 +1716,7 @@
 				9F1620D62566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
 				C93FCF1E2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
 				C9424E19256427F0003C247E /* DeviceCell.xib in Resources */,
+				9FA8E90025B054C6007D3B9F /* AboutSupportPolicyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1930,6 +1956,7 @@
 				C9D035DE2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9D035962578095A0068441F /* CommonResponses.swift in Sources */,
+				9FA8E90D25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
 				9FF0545C25680ED30071E596 /* SendMessageView.swift in Sources */,
 				C9EFDA2F25A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				C9DFD4B725659C1100BF1740 /* StatsBarView.swift in Sources */,
@@ -1946,6 +1973,7 @@
 				C9EFD9E2259DDC6900F57817 /* UserLocationManager.swift in Sources */,
 				9F895B6A255D3D27004489C6 /* HelpReportScreenViewController.swift in Sources */,
 				C9705B7C2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
+				9FA8E8FB25B054C6007D3B9F /* AboutSupportPolicyCell.swift in Sources */,
 				9F0CA54D2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
 				9FE173CF25914D3F00E2C481 /* AboutSupportCell.swift in Sources */,
 				C93FCF312564906F001E86F6 /* AboutContactsCell.swift in Sources */,
@@ -2032,6 +2060,7 @@
 				C9D035DF2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035972578095A0068441F /* CommonResponses.swift in Sources */,
+				9FA8E90E25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
 				9FF0543D2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				C9EFDA3025A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				9FF0547425681FC60071E596 /* SecondSendMessageView.swift in Sources */,
@@ -2048,6 +2077,7 @@
 				C9EFD9E3259DDC6900F57817 /* UserLocationManager.swift in Sources */,
 				9F1620DE2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
 				9F895B6B255D3D27004489C6 /* HelpReportScreenViewController.swift in Sources */,
+				9FA8E8FC25B054C6007D3B9F /* AboutSupportPolicyCell.swift in Sources */,
 				C93FCF322564906F001E86F6 /* AboutContactsCell.swift in Sources */,
 				9FE173D025914D3F00E2C481 /* AboutSupportCell.swift in Sources */,
 				C91F707D2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
@@ -2118,6 +2148,7 @@
 				C9D035E02579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035982578095A0068441F /* CommonResponses.swift in Sources */,
+				9FA8E90F25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
 				9FF0543E2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				C9EFDA3125A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				9FF0547525681FC60071E596 /* SecondSendMessageView.swift in Sources */,
@@ -2134,6 +2165,7 @@
 				C9EFD9E4259DDC6900F57817 /* UserLocationManager.swift in Sources */,
 				9F1620DF2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
 				9F895B6C255D3D27004489C6 /* HelpReportScreenViewController.swift in Sources */,
+				9FA8E8FD25B054C6007D3B9F /* AboutSupportPolicyCell.swift in Sources */,
 				C93FCF332564906F001E86F6 /* AboutContactsCell.swift in Sources */,
 				9FE173D125914D3F00E2C481 /* AboutSupportCell.swift in Sources */,
 				C91F707E2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
