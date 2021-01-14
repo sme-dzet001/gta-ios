@@ -88,8 +88,12 @@ extension ServiceDeskContactsViewController: UITableViewDelegate, UITableViewDat
                     if let imageData = data, error == nil {
                         let image = UIImage(data: imageData)
                         cell.photoImageView.image = image
+                    } else {
+                        cell.photoImageView.image = UIImage(named: "contact_default_photo")
                     }
                 }
+            } else {
+                cell.photoImageView.image = UIImage(named: "contact_default_photo")
             }
             return cell
         }

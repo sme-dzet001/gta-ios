@@ -245,8 +245,8 @@ class HelpDeskDataProvider {
         teamContactsData = response.data?.rows ?? []
     }
     
-    func formImageURL(from imagePath: String?) -> String {
-        guard let imagePath = imagePath else { return "" }
+    func formImageURL(from imagePath: String?) -> String? {
+        guard let imagePath = imagePath, !imagePath.isEmpty else { return nil }
         guard !imagePath.contains("https://") else  { return imagePath }
         let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
         return imageURL
