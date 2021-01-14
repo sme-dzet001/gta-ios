@@ -9,9 +9,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Roboto-Medium.ttf">
-            <string>Roboto-Medium</string>
-        </array>
         <array key="Roboto-Regular.ttf">
             <string>Roboto-Regular</string>
         </array>
@@ -35,9 +32,6 @@
                 <outlet property="descriptionLabel" destination="03c-6H-wtC" id="HOx-QF-2DK"/>
                 <outlet property="fieldsBottom" destination="394-cf-Cds" id="2kZ-m7-ZeT"/>
                 <outlet property="fieldsCenterY" destination="O6i-8l-w0W" id="4Z1-co-63h"/>
-                <outlet property="loginLabel" destination="t7s-KM-75o" id="PI3-xz-99F"/>
-                <outlet property="loginLabelBottom" destination="tv7-9Y-mUl" id="omr-BL-cvf"/>
-                <outlet property="loginLabelCenterY" destination="cXe-iw-zWp" id="mcW-Lk-4SF"/>
                 <outlet property="logoImageView" destination="C4q-sv-TJB" id="fGS-oX-9xI"/>
                 <outlet property="logoImageViewTop" destination="WU9-AO-8Qz" id="wxc-5h-ZJa"/>
                 <outlet property="logoutBottomConstraint" destination="w8z-RE-axo" id="xz2-R9-hee"/>
@@ -65,9 +59,9 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please select a Pin Code for a convenient, fast login next time" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03c-6H-wtC">
-                    <rect key="frame" x="24" y="600.5" width="366" height="33"/>
-                    <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
-                    <color key="textColor" red="0.54117647059999996" green="0.54117647059999996" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="24" y="600" width="366" height="33.5"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Sony Music Global Technology" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMY-xI-Uxl">
@@ -267,15 +261,6 @@
                         <action selector="continueButtonDidPressed:" destination="-1" eventType="touchUpInside" id="DHC-Mh-PNi"/>
                     </connections>
                 </button>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t7s-KM-75o">
-                    <rect key="frame" x="177" y="421" width="60" height="64"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="64" id="Dro-k9-FCd"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="24"/>
-                    <color key="textColor" systemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XdF-vM-OaP">
                     <rect key="frame" x="12" y="60" width="48" height="48"/>
                     <constraints>
@@ -291,7 +276,6 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="t7s-KM-75o" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="2LN-Lk-AM2"/>
                 <constraint firstItem="KJq-O6-f40" firstAttribute="top" secondItem="Hdn-f2-g3C" secondAttribute="bottom" constant="30" id="394-cf-Cds"/>
                 <constraint firstItem="Hdn-f2-g3C" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="44O-AB-qcc"/>
                 <constraint firstItem="Hdn-f2-g3C" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="6j9-5s-ct2"/>
@@ -303,14 +287,12 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="KMY-xI-Uxl" secondAttribute="trailing" constant="24" id="XNS-CE-gup"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="KJq-O6-f40" secondAttribute="bottom" constant="70" id="aOs-zp-q7C"/>
                 <constraint firstItem="Hdn-f2-g3C" firstAttribute="top" secondItem="03c-6H-wtC" secondAttribute="bottom" constant="15" id="aRe-7a-zf1"/>
-                <constraint firstItem="t7s-KM-75o" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="cXe-iw-zWp"/>
                 <constraint firstItem="KJq-O6-f40" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="ebH-NJ-sOU"/>
                 <constraint firstItem="S2U-f5-M2A" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="gMO-DU-0sR"/>
                 <constraint firstItem="KMY-xI-Uxl" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="hnR-Km-5at"/>
                 <constraint firstItem="XdF-vM-OaP" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="jJ5-Mw-eHB"/>
                 <constraint firstItem="KMY-xI-Uxl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="kpU-yF-9Se"/>
                 <constraint firstItem="03c-6H-wtC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="m3K-YM-KX4"/>
-                <constraint firstItem="03c-6H-wtC" firstAttribute="top" secondItem="t7s-KM-75o" secondAttribute="bottom" id="tv7-9Y-mUl"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="S2U-f5-M2A" secondAttribute="bottom" constant="16" id="w8z-RE-axo"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="03c-6H-wtC" secondAttribute="trailing" constant="24" id="xFF-aL-qM7"/>
                 <constraint firstItem="KMY-xI-Uxl" firstAttribute="top" secondItem="C4q-sv-TJB" secondAttribute="bottom" constant="29" id="xhF-lS-PGh"/>
@@ -318,7 +300,6 @@
             </constraints>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="tv7-9Y-mUl"/>
                     <exclude reference="O6i-8l-w0W"/>
                 </mask>
             </variation>
@@ -348,9 +329,6 @@
     <resources>
         <image name="back_arrow" width="24" height="24"/>
         <image name="gta_logo" width="48" height="48"/>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

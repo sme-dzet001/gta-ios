@@ -12,6 +12,7 @@ class ApplicationCell: UITableViewCell {
     @IBOutlet weak var appIcon: UIImageView!
     @IBOutlet weak var appStatus: UIView!
     @IBOutlet weak var appName: UILabel!
+    @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
         
     override func awakeFromNib() {
@@ -20,15 +21,16 @@ class ApplicationCell: UITableViewCell {
     }
     
     func setUpCell(with data: AppInfo, hideStatusView: Bool = false) {
+        iconLabel.isHidden = true
         if data.imageData == nil && !data.isImageDataEmpty {
             startAnimation()
         } else {
             stopAnimation()
         }
-        if let image = data.imageData {
-            appIcon.image = UIImage(data: image)
+        if let imageData = data.imageData, let image = UIImage(data: imageData) {
+            appIcon.image = image
         } else if data.isImageDataEmpty {
-            appIcon.image = UIImage(named: "gta_logo")
+            showFirstCharFrom(data.app_name)
         }
         appName.text = data.app_name
         if hideStatusView {
@@ -46,7 +48,16 @@ class ApplicationCell: UITableViewCell {
         appStatus.layer.cornerRadius = appStatus.frame.size.width / 2
     }
     
+    private func showFirstCharFrom(_ text: String?) {
+        appIcon.isHidden = false
+        appIcon.image = UIImage(named: "empty_app_icon")
+        guard let char = text?.trimmingCharacters(in: .whitespacesAndNewlines).first else { return }
+        iconLabel.text = char.uppercased()
+        iconLabel.isHidden = false
+    }
+    
     private func startAnimation() {
+        appIcon.isHidden = true
         self.activityIndicator.isHidden = false
         self.activityIndicator.hidesWhenStopped = true
         self.activityIndicator.startAnimating()
@@ -54,6 +65,7 @@ class ApplicationCell: UITableViewCell {
     }
     
     private func stopAnimation() {
+        appIcon.isHidden = false
         self.activityIndicator.isHidden = true
         self.activityIndicator.stopAnimating()
         appStatus.isHidden = false

@@ -22,9 +22,6 @@ class AuthViewController: UIViewController {
     @IBOutlet weak var continueButtonBottom: NSLayoutConstraint!
     @IBOutlet weak var backButtonTop: NSLayoutConstraint!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var loginLabel: UILabel!
-    @IBOutlet weak var loginLabelCenterY: NSLayoutConstraint!
-    @IBOutlet weak var loginLabelBottom: NSLayoutConstraint!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var logoImageViewTop: NSLayoutConstraint!
     @IBOutlet weak var logoImageView: UIImageView!
@@ -70,7 +67,6 @@ class AuthViewController: UIViewController {
     }
     
     private func setUpScreen() {
-        loginLabel.isHidden = true
         fieldsCenterY.isActive = !isSignUp
         fieldsBottom.isActive = isSignUp
         logoutButton.isHidden = isSignUp
@@ -79,7 +75,7 @@ class AuthViewController: UIViewController {
         pinCodeBoxes.forEach { $0.isSecureTextEntry = !isSignUp }
         if !isSignUp {
             descriptionLabel.text = "Your pin code"
-            descriptionLabel.font = UIFont(name: "Roboto-Regular", size: 24.0)
+            descriptionLabel.font = UIFont(name: "SFProDisplay-Light", size: 30.0)
             descriptionLabel.textColor = .black
             descriptionLabel.textAlignment = .center
         }
@@ -213,8 +209,6 @@ class AuthViewController: UIViewController {
         self.view.frame.origin.y = -(overlay - 60)
         if UIScreen.main.nativeBounds.height >= 1334.0 { // greater or equal then iPhone 8
             logoImageViewTop.constant = 40 + -self.view.frame.origin.y
-            loginLabelCenterY.isActive = false
-            loginLabelBottom.isActive = true
         } else {
             logoImageView.isHidden = true
             titleLabel.isHidden = true
@@ -237,8 +231,6 @@ class AuthViewController: UIViewController {
         backButtonTop.constant = 16
         self.logoImageView.isHidden = false
         self.titleLabel.isHidden = false
-        loginLabelCenterY.isActive = true
-        loginLabelBottom.isActive = false
     }
     
     @objc func hideKeyboard() {

@@ -5,47 +5,57 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Semibold.ttf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AboutSupportCell" rowHeight="141" id="KGk-i7-Jjw" customClass="AboutSupportCell" customModule="GTA" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="141"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AboutSupportCell" rowHeight="102" id="KGk-i7-Jjw" customClass="AboutSupportCell" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="102"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="141"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="102"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="support" translatesAutoresizingMaskIntoConstraints="NO" id="lKF-je-iVv">
-                        <rect key="frame" x="24" y="22" width="272" height="97"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <color key="textColor" systemColor="labelColor"/>
-                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    </textView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAs-cv-aQf">
+                        <rect key="frame" x="24" y="10" width="272" height="56"/>
+                        <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="56" id="q1m-Mf-Mpk"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wiki URL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N1C-Mp-ghb">
+                        <rect key="frame" x="34" y="28" width="252" height="20"/>
+                        <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="lKF-je-iVv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="22" id="3wy-uD-ciS"/>
-                    <constraint firstAttribute="trailing" secondItem="lKF-je-iVv" secondAttribute="trailing" constant="24" id="HxT-Mj-qXv"/>
-                    <constraint firstAttribute="bottom" secondItem="lKF-je-iVv" secondAttribute="bottom" constant="22" id="N8S-ya-UJq"/>
-                    <constraint firstItem="lKF-je-iVv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="TGW-5S-sog"/>
+                    <constraint firstItem="NAs-cv-aQf" firstAttribute="trailing" secondItem="N1C-Mp-ghb" secondAttribute="trailing" constant="10" id="5L0-fv-X6k"/>
+                    <constraint firstItem="NAs-cv-aQf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="9Nb-n3-fmh"/>
+                    <constraint firstAttribute="bottom" secondItem="NAs-cv-aQf" secondAttribute="bottom" constant="10" id="ImK-We-8r3"/>
+                    <constraint firstItem="NAs-cv-aQf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="Ua8-hy-l6D"/>
+                    <constraint firstAttribute="trailing" secondItem="NAs-cv-aQf" secondAttribute="trailing" constant="24" id="a4N-Ij-nnh"/>
+                    <constraint firstItem="N1C-Mp-ghb" firstAttribute="leading" secondItem="NAs-cv-aQf" secondAttribute="leading" constant="10" id="ex4-l5-z6S"/>
+                    <constraint firstItem="N1C-Mp-ghb" firstAttribute="centerY" secondItem="NAs-cv-aQf" secondAttribute="centerY" id="gzF-qF-dUm"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="textView" destination="lKF-je-iVv" id="0Ed-h6-iW9"/>
+                <outlet property="supportNameLabel" destination="N1C-Mp-ghb" id="WMB-r1-QiX"/>
             </connections>
-            <point key="canvasLocation" x="-197.10144927536234" y="86.049107142857139"/>
+            <point key="canvasLocation" x="-197.10144927536234" y="72.991071428571431"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>

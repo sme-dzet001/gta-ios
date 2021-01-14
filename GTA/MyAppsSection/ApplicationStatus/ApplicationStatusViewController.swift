@@ -29,6 +29,8 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         }
     }
     var appName: String? = ""
+    var appTitle: String?
+    var appImageUrl: String = ""
     var systemStatus: SystemStatus = .none
     var selectedMetricsPeriod: MetricsPeriod = .weekly
     var detailsDataResponseError: Error?
@@ -67,7 +69,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.center = CGPoint(x: view.frame.size.width  / 2,
-                                                y: view.frame.size.height / 2)
+                                                y: view.frame.size.height / 2.5)
         self.activityIndicator.hidesWhenStopped = true
         self.activityIndicator.startAnimating()
     }
@@ -244,6 +246,8 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             self.detailsDataDelegate = aboutScreen
             aboutScreen.dataProvider = dataProvider
             aboutScreen.appName = appName
+            aboutScreen.appTitle = appTitle
+            aboutScreen.appImageUrl = appImageUrl
             navigationController?.pushViewController(aboutScreen, animated: true)
         } else {
             if appDetailsData?.appSupportEmail == nil {

@@ -15,18 +15,5 @@ class AboutInfoCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
-    func setUpCell(with description: String?) {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
-
-        let attrString = NSMutableAttributedString(string: description ?? "")
-        attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
-        if let textFont = UIFont(name: "SFProDisplay-Light", size: 16.0) {
-            attrString.addAttribute(.font, value: textFont, range: NSMakeRange(0, attrString.length))
-        }
-
-        descriptionLabel.attributedText = attrString
-    }
     
 }

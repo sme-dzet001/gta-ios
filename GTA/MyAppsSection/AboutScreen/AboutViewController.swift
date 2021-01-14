@@ -12,15 +12,18 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    
     private var dataSource: AboutDataSource?
     private var lastUpdateDate: Date?
     var appName: String? = ""
+    var appTitle: String?
     var appContactsData: AppContactsData?
     var dataProvider: MyAppsDataProvider?
     var details: AppDetailsData?
     var contactsDataResponseError: Error?
     var detailsDataResponseError: Error?
+    var imageDataResponseError: Error?
+    var appImageUrl: String = ""
+    private var appImageData: Data?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +35,10 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         super.viewWillAppear(animated)
         configureDataSource()
         navigationController?.navigationBar.barTintColor = UIColor.white
+        dataProvider?.getAppImageData(from: appImageUrl, completion: { (imageData, error) in
+            self.imageDataResponseError = error
+            self.appImageData = imageData
+        })
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppContactsData()
         }
@@ -85,13 +92,15 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         tableView.register(UINib(nibName: "AboutInfoCell", bundle: nil), forCellReuseIdentifier: "AboutInfoCell")
         tableView.register(UINib(nibName: "AboutContactsCell", bundle: nil), forCellReuseIdentifier: "AboutContactsCell")
         tableView.register(UINib(nibName: "AboutSupportCell", bundle: nil), forCellReuseIdentifier: "AboutSupportCell")
+        tableView.register(UINib(nibName: "AboutSupportPolicyCell", bundle: nil), forCellReuseIdentifier: "AboutSupportPolicyCell")
+        tableView.register(UINib(nibName: "AboutHeaderCell", bundle: nil), forCellReuseIdentifier: "AboutHeaderCell")
     }
     
     private func configureDataSource() {
-        dataSource = AboutDataSource(description: [DescriptionData(text: details?.appDescription)], contactsData: appContactsData?.contactsData ?? [])
-        let supportData = createSupportDataString()
-        if supportData.string.count > 0 {
-            dataSource?.supportData = [SupportData(text: supportData)]
+        dataSource = AboutDataSource(contactsData: appContactsData?.contactsData ?? [])
+        let supportData = createSupportData()
+        if !supportData.isEmpty {
+            dataSource?.supportData = supportData
         }
     }
     
@@ -104,31 +113,21 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         }
     }
     
-    private func createSupportDataString() -> NSMutableAttributedString  {
-        let resultString = NSMutableAttributedString()
-        if let wikiUrlString = details?.appWikiUrl, let url = URL(string: wikiUrlString) {
-            let stringValue = "Wiki URL: "
-            let attrString = NSMutableAttributedString(string: stringValue + "\(wikiUrlString)")
-            attrString.setAttributes([.link: url], range: NSMakeRange(stringValue.count, wikiUrlString.count))
-            resultString.append(attrString)
-        }
-        if let supportUrlString = details?.appJiraSupportUrl, let url = URL(string: supportUrlString) {
-            var stringValue = "Jira Support URL: "
-            if !resultString.string.isEmpty {
-                stringValue = "\n" + stringValue
-            }
-            let attrString = NSMutableAttributedString(string: stringValue + "\(supportUrlString)")
-            attrString.setAttributes([.link: url], range: NSMakeRange(stringValue.count, supportUrlString.count))
-            resultString.append(attrString)
-        }
+    private func createSupportData() -> [SupportData]  {
+        var supportData = [SupportData]()
         if let supportPolicy = details?.appSupportPolicy {
-            var stringValue = "Support Policy: "
-            if !resultString.string.isEmpty {
-                stringValue = "\n" + stringValue
-            }
-            resultString.append(NSMutableAttributedString(string: stringValue + " \(supportPolicy)"))
+            supportData.append(SupportData(title: supportPolicy, value: supportPolicy))
         }
-        return resultString
+        if let decription = details?.appDescription {
+            supportData.append(SupportData(title: decription, value: decription))
+        }
+        if let wikiUrlString = details?.appWikiUrl, let _ = URL(string: wikiUrlString) {
+            supportData.append(SupportData(title: "Wiki URL", value: wikiUrlString))
+        }
+        if let supportUrlString = details?.appJiraSupportUrl, let _ = URL(string: supportUrlString) {
+            supportData.append(SupportData(title: "Support URL", value: supportUrlString))
+        }
+        return supportData
     }
     
     @objc private func backPressed() {
@@ -146,9 +145,9 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return dataSource?.description.count ?? 0
+            return 1
         case 1:
-            return dataSource?.supportData?.count ?? 0
+            return dataSource?.supportData?.count ?? 1 
         default:
             let count = dataSource?.contactsData.count ?? 0
             return count == 0 ? 1 : count
@@ -169,8 +168,6 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
-        case 1:
-            return 1
         case 2:
             return 69
         default:
@@ -179,21 +176,43 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0, detailsDataResponseError == nil, details == nil  {
+        if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AboutHeaderCell", for: indexPath) as? AboutHeaderCell {
+            if imageDataResponseError == nil, appImageData == nil {
+                cell.startAnimation()
+            } else if let _ = appImageData, let image = UIImage(data: appImageData!) {
+                cell.iconImageView.image = image
+                cell.stopAnimation()
+            } else {
+                cell.showFirstCharFrom(appTitle)
+                cell.stopAnimation()
+            }
+            cell.headerTitleLabel.text = appTitle
+            return cell
+        }
+        
+        if indexPath.section == 1, detailsDataResponseError == nil, details == nil  {
             return createLoadingCell()
-        } else if let error = detailsDataResponseError as? ResponseError {
+        } else if indexPath.section == 1, let error = detailsDataResponseError as? ResponseError {
             return createErrorCell(with: error.localizedDescription)
         }
-        if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AboutInfoCell", for: indexPath) as? AboutInfoCell {
-            let cellDataSource = dataSource?.description[indexPath.row]
-            cell.setUpCell(with: cellDataSource?.text)
-            return cell
+        
+        if indexPath.section == 1 {
+            switch indexPath.row {
+            case 0:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AboutSupportPolicyCell", for: indexPath) as? AboutSupportPolicyCell
+                cell?.policyLabel.text = dataSource?.supportData?[indexPath.row].title
+                return cell ?? UITableViewCell()
+            case 1:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AboutInfoCell", for: indexPath) as? AboutInfoCell
+                cell?.descriptionLabel.text = dataSource?.supportData?[indexPath.row].title
+                return cell ?? UITableViewCell()
+            default:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AboutSupportCell", for: indexPath) as? AboutSupportCell
+                cell?.supportNameLabel.text = dataSource?.supportData?[indexPath.row].title
+                return cell ?? UITableViewCell()
+            }
         }
-        if indexPath.section == 1, let cell = tableView.dequeueReusableCell(withIdentifier: "AboutSupportCell", for: indexPath) as? AboutSupportCell {
-            let cellDataSource = dataSource?.supportData?[indexPath.row]
-            cell.setUpCell(with: cellDataSource?.text)
-            return cell
-        }
+
         if let error = contactsDataResponseError as? ResponseError {
             return createErrorCell(with: error.localizedDescription)
         } else if contactsDataResponseError == nil, (dataSource?.contactsData ?? []).isEmpty {
@@ -207,20 +226,23 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return UITableViewCell()
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1, let supData = dataSource?.supportData, indexPath.row < supData.count, let stringUrl = supData[indexPath.row].value, let url = URL(string: stringUrl) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
 }
 
 struct AboutDataSource {
-    var description: [DescriptionData]
     var supportData: [SupportData]? = nil
     var contactsData: [ContactData]
 }
 
-struct DescriptionData {
-    var text: String?
-}
-
 struct SupportData {
-    var text: NSMutableAttributedString?
+    var title: String?
+    var value: String?
 }
 
 struct ContactData {
