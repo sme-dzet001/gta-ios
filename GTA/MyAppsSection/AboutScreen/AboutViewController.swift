@@ -124,7 +124,7 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     private func createSupportData() -> [SupportData]  {
         var supportData = [SupportData]()
         if let supportPolicy = details?.appSupportPolicy {
-            supportData.append(SupportData(title: supportPolicy, value: supportPolicy))
+            supportData.append(SupportData(title: "Support Policy: \(supportPolicy)", value: supportPolicy))
         }
         if let decription = details?.appDescription {
             supportData.append(SupportData(title: decription, value: decription))
