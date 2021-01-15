@@ -27,10 +27,10 @@
                         <rect key="frame" x="24" y="16" width="271" height="209"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Mt-1S-Mpa">
-                                <rect key="frame" x="85.5" y="0.0" width="100" height="100"/>
+                                <rect key="frame" x="82.5" y="0.0" width="106" height="106.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eZw-Su-YGN">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="106" height="106.5"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="12"/>
@@ -38,7 +38,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="XK2-e1-aIx">
-                                        <rect key="frame" x="40" y="40" width="20" height="20"/>
+                                        <rect key="frame" x="43" y="43" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -49,12 +49,11 @@
                                     <constraint firstAttribute="bottom" secondItem="eZw-Su-YGN" secondAttribute="bottom" id="VX9-hf-yJb"/>
                                     <constraint firstItem="eZw-Su-YGN" firstAttribute="leading" secondItem="4Mt-1S-Mpa" secondAttribute="leading" id="ZXl-ba-Vpc"/>
                                     <constraint firstItem="XK2-e1-aIx" firstAttribute="centerX" secondItem="4Mt-1S-Mpa" secondAttribute="centerX" id="czX-RR-5WU"/>
-                                    <constraint firstAttribute="width" secondItem="4Mt-1S-Mpa" secondAttribute="height" multiplier="1:1" id="hb4-bB-A08"/>
-                                    <constraint firstAttribute="height" constant="100" id="wp1-i9-zkf"/>
+                                    <constraint firstAttribute="width" secondItem="4Mt-1S-Mpa" secondAttribute="height" multiplier="1:1" id="lNz-SB-2kc"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Global Technology Enterprise Service Desk provides Best in Class Tech Delivery 24/7/365" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pV6-3K-Slr">
-                                <rect key="frame" x="0.5" y="116" width="270" height="93"/>
+                                <rect key="frame" x="0.5" y="122.5" width="270" height="86.5"/>
                                 <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="16"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -67,6 +66,7 @@
                     <constraint firstAttribute="trailing" secondItem="ajA-a2-ouQ" secondAttribute="trailing" constant="24" id="KMN-TS-33v"/>
                     <constraint firstItem="ajA-a2-ouQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="Mh2-hT-iHz"/>
                     <constraint firstItem="ajA-a2-ouQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="j2h-Tm-BMy"/>
+                    <constraint firstItem="4Mt-1S-Mpa" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.333333" id="poK-Ce-7gQ"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
