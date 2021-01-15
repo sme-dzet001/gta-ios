@@ -42,15 +42,23 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppContactsData()
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         contactsDataResponseError = nil
         detailsDataResponseError = nil
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    @objc private func didBecomeActive() {
+        getAppContactsData()
+        tableView.reloadData()
     }
     
     private func getAppContactsData() {
+        contactsDataResponseError = nil
         dataProvider?.getAppContactsData(for: appName) { [weak self] (contactsData, errorCode, error) in
             if error == nil, errorCode == 200 {
                 self?.lastUpdateDate = Date().addingTimeInterval(60)

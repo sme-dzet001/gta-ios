@@ -57,9 +57,9 @@ class OfficeLocationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setUpTextViewLayout()
+        self.setUpTableViewLayout()
         heightObserver = self.navigationController?.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
-            self?.setUpTextViewLayout()
+            self?.setUpTableViewLayout()
         })
     }
     
@@ -71,7 +71,7 @@ class OfficeLocationViewController: UIViewController {
         tableView.register(UINib(nibName: "OfficeSelectionCell", bundle: nil), forCellReuseIdentifier: "OfficeSelectionCell")
     }
     
-    private func setUpTextViewLayout() {
+    private func setUpTableViewLayout() {
         let position = UIScreen.main.bounds.height - (self.navigationController?.presentationController?.presentedView?.frame.origin.y ?? 0.0)
         tableViewBottom.constant = position > 0 ? self.view.frame.height - position : 0
         self.view.layoutIfNeeded()
