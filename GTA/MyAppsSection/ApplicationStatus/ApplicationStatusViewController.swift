@@ -69,7 +69,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.center = CGPoint(x: view.frame.size.width  / 2,
-                                                y: view.frame.size.height / 2.5)
+                                                y: view.frame.size.height / 2.2)
         self.activityIndicator.hidesWhenStopped = true
         self.activityIndicator.startAnimating()
     }
