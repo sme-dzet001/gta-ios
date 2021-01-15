@@ -99,25 +99,20 @@ class APIManager: NSObject, URLSessionDelegate {
         makeRequest(endpoint: .setCurrentOffice, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
     }
     
-    func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        // loading from cache if it possible
-        if let cachedResponse = URLCache.shared.cachedResponse(for: URLRequest(url: url)) {
-            completion(cachedResponse.data, nil)
-            return
-        }
-        
+    func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ response: URLResponse?, _ error: Error?) -> Void)) {
         let session = URLSession.shared
-        let dataTask = session.dataTask(with: url) { (data, response, error) in
-            DispatchQueue.main.async {
-                if let data = data, let responseURL = response?.url, let response = response {
-                    // saving to cache
-                    let cachedResponse = CachedURLResponse(response: response, data: data)
-                    URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: responseURL))
-                }
-                completion(data, error)
-            }
-        }
-        dataTask.resume()
+        session.dataTask(with: url, completionHandler: completion).resume()
+//        let dataTask = session.dataTask(with: url) { (data, response, error) in
+//            //DispatchQueue.main.async {
+////                if let data = data, let responseURL = response?.url, let response = response {
+////                    // saving to cache
+////                    let cachedResponse = CachedURLResponse(response: response, data: data)
+////                    URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: responseURL))
+////                }
+//                completion(data, response, error)
+//            //}
+//        }
+//        dataTask.resume()
     }
     
     //MARK: - Service Desk methods

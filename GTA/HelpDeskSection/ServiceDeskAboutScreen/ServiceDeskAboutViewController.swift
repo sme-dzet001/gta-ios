@@ -73,7 +73,7 @@ extension ServiceDeskAboutViewController: UITableViewDataSource, UITableViewDele
             
             if let imagePath = aboutData?.imageUrl, let imageURL = dataProvider?.formImageURL(from: imagePath), let url = URL(string: imageURL) {
                 cell.activityIndicator.startAnimating()
-                dataProvider?.getServiceDeskImageData(from: url) { (data, error) in
+                dataProvider?.getImageData(from: url) { (data, error) in
                     cell.activityIndicator.stopAnimating()
                     if let imageData = data, error == nil {
                         let image = UIImage(data: imageData)

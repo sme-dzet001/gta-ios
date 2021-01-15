@@ -11,6 +11,7 @@ class HelpDeskDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
+    private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     
     private(set) var quickHelpData = [QuickHelpRow]()
     private(set) var teamContactsData = [TeamContactsRow]()
@@ -252,13 +253,24 @@ class HelpDeskDataProvider {
         return imageURL
     }
     
-    func getContactImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        apiManager.loadImageData(from: url, completion: completion)
+    func getImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+        if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
+            completion(cachedResponse, nil)
+            return
+        } else {
+            apiManager.loadImageData(from: url) { (data, response, error) in
+                self.imageCacheManager.storeCacheResponse(response, data: data)
+                DispatchQueue.main.async {
+                    completion(data, error)
+                }
+            }
+        }
+        //apiManager.loadImageData(from: url, completion: completion)
     }
     
-    func getServiceDeskImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        apiManager.loadImageData(from: url, completion: completion)
-    }
+//    func getServiceDeskImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+//        apiManager.loadImageData(from: url, completion: completion)
+//    }
     
     private func parseSectionReport(data: Data?) -> ReportDataResponse? {
         var reportDataResponse: ReportDataResponse?
