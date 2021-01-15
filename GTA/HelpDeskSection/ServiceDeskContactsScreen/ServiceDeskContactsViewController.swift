@@ -83,7 +83,7 @@ extension ServiceDeskContactsViewController: UITableViewDelegate, UITableViewDat
             cell.setUpCell(with: cellDataSource)
             if let imageURL = dataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl), let url = URL(string: imageURL) {
                 cell.imageUrl = imageURL
-                dataProvider?.getContactImageData(from: url) { (data, error) in
+                dataProvider?.getImageData(from: url) { (data, error) in
                     if cell.imageUrl != imageURL { return }
                     if let imageData = data, error == nil {
                         let image = UIImage(data: imageData)

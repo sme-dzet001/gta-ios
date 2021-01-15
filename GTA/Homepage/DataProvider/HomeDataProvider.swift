@@ -11,6 +11,7 @@ class HomeDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
+    private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     private(set) var userLocationManager: UserLocationManager = UserLocationManager()
     
     private(set) var newsData = [GlobalNewsRow]()
@@ -47,7 +48,18 @@ class HomeDataProvider {
     }
     
     func getPosterImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        apiManager.loadImageData(from: url, completion: completion)
+        if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
+            completion(cachedResponse, nil)
+            return
+        } else {
+            apiManager.loadImageData(from: url) { (data, response, error) in
+                self.imageCacheManager.storeCacheResponse(response, data: data)
+                DispatchQueue.main.async {
+                    completion(data, error)
+                }
+            }
+        }
+       // apiManager.loadImageData(from: url, completion: completion)
     }
     
     func formNewsBody(from base64EncodedText: String?) -> NSMutableAttributedString? {

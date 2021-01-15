@@ -93,6 +93,9 @@
 		9F5B10602567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */; };
 		9F5B10612567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */; };
 		9F5B10622567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */; };
+		9F6FD63E25B1ABC300A32377 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
+		9F6FD63F25B1ABC300A32377 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
+		9F6FD64025B1ABC300A32377 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
 		9F753AA2259B862000AE6EC2 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
 		9F753AA3259B862000AE6EC2 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
 		9F753AA4259B862000AE6EC2 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
@@ -520,6 +523,7 @@
 		9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpDeskResponses.swift; sourceTree = "<group>"; };
 		9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsViewController.swift; sourceTree = "<group>"; };
 		9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TicketDetailsViewController.xib; sourceTree = "<group>"; };
+		9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		9F753AA1259B862000AE6EC2 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		9F78CFE72564138800BCD38F /* NewsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -821,6 +825,7 @@
 				9F9D9CE825891E1800DC4231 /* DataParser.swift */,
 				659C595A25924106007953A7 /* CacheManager.swift */,
 				C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */,
+				9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1959,6 +1964,7 @@
 				9F37C96F257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
 				9F753AA2259B862000AE6EC2 /* APIRequest.swift in Sources */,
 				9F78CFCD25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
+				9F6FD63E25B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9FF0543C2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				C993A2AE2576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */,
@@ -2065,6 +2071,7 @@
 				9F37C970257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
 				9F753AA3259B862000AE6EC2 /* APIRequest.swift in Sources */,
 				C9705B7D2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
+				9F6FD63F25B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9F1620DB2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				C993A2AF2576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9F5B105E2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
@@ -2155,6 +2162,7 @@
 				9F37C971257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
 				9F753AA4259B862000AE6EC2 /* APIRequest.swift in Sources */,
 				C9705B7E2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
+				9F6FD64025B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9F1620DC2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				C993A2B02576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9F5B105F2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,

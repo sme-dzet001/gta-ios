@@ -11,6 +11,7 @@ class MyAppsDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
+    private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     weak var appImageDelegate: AppImageDelegate?
     var appsData: [AppsDataSource] = []
     var allAppsData: AllAppsResponse? {
@@ -37,7 +38,18 @@ class MyAppsDataProvider {
     
     func getAppImageData(from url: String, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
         guard let url = URL(string: formImageURL(from: url)) else { return }
-        apiManager.loadImageData(from: url, completion: completion)
+        if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
+            completion(cachedResponse, nil)
+            return
+        } else {
+            apiManager.loadImageData(from: url) { (data, response, error) in
+                self.imageCacheManager.storeCacheResponse(response, data: data)
+                DispatchQueue.main.async {
+                    completion(data, error)
+                }
+            }
+        }
+        //apiManager.loadImageData(from: url, completion: completion)
     }
     
     func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
