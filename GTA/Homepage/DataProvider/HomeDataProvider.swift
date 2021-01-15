@@ -73,8 +73,18 @@ class HomeDataProvider {
         guard let dateString = dateString else { return nil }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = initialDateFormat
-        guard let date = dateFormatter.date(from: dateString) else { return dateString }
-        dateFormatter.dateFormat = "HH:mm zzz E d"
+        let date: Date
+        if let formattedDate = dateFormatter.date(from: dateString) {
+            date = formattedDate
+        } else {
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            if let formattedDate = dateFormatter.date(from: dateString) {
+                date = formattedDate
+            } else {
+                return dateString
+            }
+        }
+        dateFormatter.dateFormat = "E MMM d'\(date.daySuffix())', yyyy"
         let formattedDateString = dateFormatter.string(from: date)
         return formattedDateString
     }
