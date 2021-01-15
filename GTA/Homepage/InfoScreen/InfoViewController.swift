@@ -177,6 +177,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
                 htmlBody?.setFontFace(font: neededFont)
             }
             cell?.infoLabel.attributedText = htmlBody
+            cell?.delegate = self
             return cell ?? UITableViewCell()
         default:
             let data = officeDataSoure[indexPath.row]
@@ -234,6 +235,12 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         blurView.layer.mask = gradientMaskLayer
     }
     
+}
+
+extension InfoViewController: OpenLinkDelegate {
+    func openUrl(_ url: URL) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
 }
 
 extension InfoViewController: OfficeSelectionDelegate {

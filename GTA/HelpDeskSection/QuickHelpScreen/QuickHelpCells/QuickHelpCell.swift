@@ -9,6 +9,7 @@ import UIKit
 
 protocol QuickHelpCellDelegate: class {
     func quickHelpCellTapped(_ cell: QuickHelpCell, animationDuration: Double)
+    func openUrl(_ url: URL)
 }
 
 class QuickHelpCell: UITableViewCell {
@@ -25,6 +26,20 @@ class QuickHelpCell: UITableViewCell {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
         expandButton.addGestureRecognizer(tapGesture)
+        self.answerLabel.isUserInteractionEnabled = true
+        self.answerLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tryOpenLink(gesture:))))
+    }
+    
+    @objc private func tryOpenLink(gesture: UITapGestureRecognizer) {
+        guard let text = answerLabel.attributedText?.string else { return }
+        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
+        for match in matches {
+            if gesture.didTapAttributedTextInLabel(label: answerLabel, inRange: match.range) {
+                guard let range = Range(match.range, in: text), let url = URL(string: "\(text[range])")  else { continue }
+                delegate?.openUrl(url)
+            }
+        }
     }
     
     func setUpCell(question: String?, answer: NSAttributedString?, expandBtnType: ExpandButtonType) {

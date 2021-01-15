@@ -11,11 +11,27 @@ class InfoArticleCell: UITableViewCell {
 
     @IBOutlet weak var infoLabel: UILabel!
     
+    weak var delegate: OpenLinkDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.infoLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tryOpenLink(gesture:))))
     }
     
+    @objc private func tryOpenLink(gesture: UITapGestureRecognizer) {
+        guard let text = infoLabel.attributedText?.string else { return }
+        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
+        for match in matches {
+            if gesture.didTapAttributedTextInLabel(label: infoLabel, inRange: match.range) {
+                guard let range = Range(match.range, in: text), let url = URL(string: "\(text[range])")  else { continue }
+                delegate?.openUrl(url)
+            }
+        }
+    }
     
-    
+}
+
+protocol OpenLinkDelegate: class {
+    func openUrl(_ url: URL)
 }

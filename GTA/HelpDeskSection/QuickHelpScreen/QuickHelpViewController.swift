@@ -128,6 +128,10 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension QuickHelpViewController: QuickHelpCellDelegate {
     
+    func openUrl(_ url: URL) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
     func quickHelpCellTapped(_ cell: QuickHelpCell, animationDuration: Double) {
         guard let cellIndex = tableView.indexPath(for: cell)?.row else { return }
         if expandedRowsIndex.contains(cellIndex) {
