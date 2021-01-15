@@ -19,7 +19,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     
     private var heightObserver: NSKeyValueObservation?
     var appSupportEmail: String?
-    private var pickerDataSource: [String] = ["Reactivate Account", "Site Down", "Other"] //temp
+    var pickerDataSource: [String] = [] 
     var panScrollable: UIScrollView?
     weak var delegate: SendEmailDelegate?
     private let pickerView = UIPickerView()
@@ -103,13 +103,14 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
         
     @objc private func doneAction() {
-        self.typeTextField.text = !selectedText.isEmpty ? selectedText : pickerDataSource.first 
+        self.typeTextField.text = !selectedText.isEmpty ? selectedText : pickerDataSource.first
         self.view.endEditing(true)
     }
     
     @objc private func cancelAction() {
         let index = pickerDataSource.firstIndex(of: self.typeTextField.text ?? "") ?? 0
         pickerView.selectRow(index, inComponent: 0, animated: false)
+        selectedText = pickerDataSource[index]
         self.view.endEditing(true)
     }
     
@@ -194,6 +195,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     @objc func hideKeyboard() {
         let index = pickerDataSource.firstIndex(of: self.typeTextField.text ?? "") ?? 0
         pickerView.selectRow(index, inComponent: 0, animated: false)
+        selectedText = pickerDataSource[index]
         view.endEditing(true)
     }
     
