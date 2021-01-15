@@ -16,12 +16,6 @@ class LoginUSMViewController: UIViewController {
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var dataProvider: LoginDataProvider = LoginDataProvider()
     
-    private let usmBasicURL = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
-    private let usmRedirectURL = "https://gtastageapi.smedsp.com:8888/validate"
-    private let usmClientID = "NVdmOTlSc2txN3ByUmozbVNQSGs"
-    private let usmInternalRedirectURL = "https://gtastage.smedsp.com/charts-ui2/#/auth/processor"
-    private let usmLogoutURL = "https://gtastageapi.smedsp.com:8888/logout/oauth2"
-    
     private let shortRequestTimeoutInterval: Double = 24
     
     var emailAddress = ""
@@ -67,8 +61,8 @@ class LoginUSMViewController: UIViewController {
         removeCookies()
         
         let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
-        guard let redirectURIStr = usmRedirectURL.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else { return }
-        let authURLString = "\(usmBasicURL)?response_type=code&scope=openid&client_id=\(usmClientID)&state=\(Utils.stateStr(nonceStr))&nonce=\(nonceStr)&redirect_uri=\(redirectURIStr)&email=\(emailAddress)"
+        guard let redirectURIStr = USMSettings.usmRedirectURL.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else { return }
+        let authURLString = "\(USMSettings.usmBasicURL)?response_type=code&scope=openid&client_id=\(USMSettings.usmClientID)&state=\(Utils.stateStr(nonceStr))&nonce=\(nonceStr)&redirect_uri=\(redirectURIStr)&email=\(emailAddress)"
         if let authURL = URL(string: authURLString) {
             let authRequest = URLRequest(url: authURL, timeoutInterval: shortRequestTimeoutInterval)
             usmWebView.load(authRequest)
@@ -78,7 +72,7 @@ class LoginUSMViewController: UIViewController {
     private func logout() {
         guard let accessToken = KeychainManager.getToken() else { return }
         let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
-        guard let logoutURL = URL(string: "\(usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
+        guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
         let logoutRequest = URLRequest(url: logoutURL)
         usmWebView.load(logoutRequest)
     }
@@ -125,7 +119,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         guard let navigationRequestURL = navigationAction.request.url else { return }
-        if navigationRequestURL.absoluteString.hasPrefix(usmLogoutURL) {
+        if navigationRequestURL.absoluteString.hasPrefix(USMSettings.usmLogoutURL) {
             // logout was made
             KeychainManager.deleteUsername()
             KeychainManager.deleteToken()
@@ -135,7 +129,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
             usmWebView.isHidden = false
             //loadUsmLogon()
         }
-        if navigationRequestURL.absoluteString.hasPrefix(usmRedirectURL) && navigationAction.request.timeoutInterval > shortRequestTimeoutInterval {
+        if navigationRequestURL.absoluteString.hasPrefix(USMSettings.usmRedirectURL) && navigationAction.request.timeoutInterval > shortRequestTimeoutInterval {
             let authRequest = URLRequest(url: navigationRequestURL, timeoutInterval: shortRequestTimeoutInterval)
             decisionHandler(.cancel)
             usmWebView.load(authRequest)
@@ -150,8 +144,8 @@ extension LoginUSMViewController: WKNavigationDelegate {
             decisionHandler(.cancel)
             return
         }
-        if navigationRequestURL.absoluteString.hasPrefix(usmInternalRedirectURL) {
-            guard let correctParsingFormatURL = URL(string: navigationRequestURL.absoluteString.replacingOccurrences(of: usmInternalRedirectURL, with: "https://correctparsingformat.com")) else {
+        if navigationRequestURL.absoluteString.hasPrefix(USMSettings.usmInternalRedirectURL) {
+            guard let correctParsingFormatURL = URL(string: navigationRequestURL.absoluteString.replacingOccurrences(of: USMSettings.usmInternalRedirectURL, with: "https://correctparsingformat.com")) else {
                 decisionHandler(.cancel)
                 return
             }
