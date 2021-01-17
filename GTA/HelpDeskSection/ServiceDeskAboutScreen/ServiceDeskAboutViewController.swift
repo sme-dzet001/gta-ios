@@ -69,6 +69,7 @@ extension ServiceDeskAboutViewController: UITableViewDataSource, UITableViewDele
             if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
                 descDecoded?.setFontFace(font: neededFont)
             }
+            descDecoded?.setParagraphStyleParams(lineSpacing: 8, paragraphSpacing: 16)
             cell.descLabel.attributedText = descDecoded
             
             if let imagePath = aboutData?.imageUrl, let imageURL = dataProvider?.formImageURL(from: imagePath), let url = URL(string: imageURL) {

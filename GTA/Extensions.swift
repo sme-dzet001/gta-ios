@@ -321,6 +321,24 @@ extension NSMutableAttributedString {
         }
         endEditing()
     }
+    
+    // method to change attr string paragraph style without removing other paragraph attribures
+    func setParagraphStyleParams(lineSpacing: CGFloat, paragraphSpacing: CGFloat) {
+        beginEditing()
+        self.enumerateAttribute(
+            .paragraphStyle,
+            in: NSRange(location: 0, length: self.length)
+        ) { (value, range, stop) in
+            if let parStyle = value as? NSMutableParagraphStyle {
+                let newParStyle = parStyle
+                newParStyle.lineSpacing = lineSpacing
+                newParStyle.paragraphSpacing = paragraphSpacing
+                removeAttribute(.paragraphStyle, range: range)
+                addAttribute(.paragraphStyle, value: newParStyle, range: range)
+            }
+        }
+        endEditing()
+    }
 }
 
 extension UINavigationController {
