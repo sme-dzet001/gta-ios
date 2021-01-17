@@ -127,7 +127,7 @@ class MyAppsDataProvider {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = initialDateFormat
         guard let date = dateFormatter.date(from: dateString) else { return dateString }
-        dateFormatter.dateFormat = "E MMM d'\(date.daySuffix())', yyyy"
+        dateFormatter.dateFormat = "E MMM d'\(date.daySuffix())', yyyy h:mm a"
         let formattedDateString = dateFormatter.string(from: date)
         return formattedDateString
     }
