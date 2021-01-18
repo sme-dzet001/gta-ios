@@ -112,7 +112,7 @@ struct SpecialAlertsResponse: Codable {
     var data: SpecialAlertsData?
 }
 
-enum QuantumValue: Codable {
+enum QuantumValue: Codable, Equatable {
     
     case int(Int), string(String), float(Float)
     

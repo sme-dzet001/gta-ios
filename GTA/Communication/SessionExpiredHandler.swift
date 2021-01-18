@@ -22,6 +22,7 @@ class SessionExpiredHandler: ExpiredSessionDelegate {
         KeychainManager.deleteTokenExpirationDate()
         KeychainManager.deletePinData()
         CacheManager().clearCache()
+        ImageCacheManager().removeCachedData()
         DispatchQueue.main.async {
             if let delegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
                 delegate.startLoginFlow(sessionExpired: true)

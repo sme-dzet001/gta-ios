@@ -22,14 +22,14 @@ class ApplicationCell: UITableViewCell {
     
     func setUpCell(with data: AppInfo, hideStatusView: Bool = false) {
         iconLabel.isHidden = true
-        if data.imageData == nil && !data.isImageDataEmpty {
+        if data.appImageData.imageStatus == .loading {//} imageData == nil && !data.isImageDataEmpty {
             startAnimation()
         } else {
             stopAnimation()
         }
-        if let imageData = data.imageData, let image = UIImage(data: imageData) {
+        if let imageData = data.appImageData.imageData, let image = UIImage(data: imageData) {
             appIcon.image = image
-        } else if data.isImageDataEmpty {
+        } else if data.appImageData.imageStatus == .failed {
             showFirstCharFrom(data.app_name)
         }
         appName.text = data.app_name
