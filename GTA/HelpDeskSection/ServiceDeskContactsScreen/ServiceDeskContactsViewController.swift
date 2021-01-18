@@ -85,8 +85,8 @@ extension ServiceDeskContactsViewController: UITableViewDelegate, UITableViewDat
                 cell.activityIndicator.startAnimating()
                 cell.imageUrl = imageURL
                 dataProvider?.getImageData(from: url) { (data, error) in
-                    cell.activityIndicator.stopAnimating()
                     if cell.imageUrl != imageURL { return }
+                    cell.activityIndicator.stopAnimating()
                     if let imageData = data, error == nil {
                         let image = UIImage(data: imageData)
                         cell.photoImageView.image = image
