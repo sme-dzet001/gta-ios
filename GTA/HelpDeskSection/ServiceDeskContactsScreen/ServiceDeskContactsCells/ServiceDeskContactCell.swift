@@ -10,6 +10,7 @@ import UIKit
 class ServiceDeskContactCell: UITableViewCell {
 
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var contactNameLabel: UILabel!
     @IBOutlet weak var positionLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -31,6 +32,7 @@ class ServiceDeskContactCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         photoImageView.image = nil
+        activityIndicator.stopAnimating()
     }
 
     func setUpCell(with data: TeamContactsRow?) {

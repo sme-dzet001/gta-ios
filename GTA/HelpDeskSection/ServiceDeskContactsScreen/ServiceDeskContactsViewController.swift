@@ -82,8 +82,10 @@ extension ServiceDeskContactsViewController: UITableViewDelegate, UITableViewDat
             cell.contactEmail = data[indexPath.row].contactEmail
             cell.setUpCell(with: cellDataSource)
             if let imageURL = dataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl), let url = URL(string: imageURL) {
+                cell.activityIndicator.startAnimating()
                 cell.imageUrl = imageURL
                 dataProvider?.getImageData(from: url) { (data, error) in
+                    cell.activityIndicator.stopAnimating()
                     if cell.imageUrl != imageURL { return }
                     if let imageData = data, error == nil {
                         let image = UIImage(data: imageData)
