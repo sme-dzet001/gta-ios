@@ -162,7 +162,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
                 cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row], hideStatusView: dataProvider.appsData[indexPath.section].sectionName == "Other Apps")
             } else {
-                return UITableViewCell()
+                return createErrorCell(with: "No data available")
             }
             return cell
         }
