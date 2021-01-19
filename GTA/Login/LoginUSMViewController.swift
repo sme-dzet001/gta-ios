@@ -138,7 +138,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
         if navigationRequestURL.absoluteString.contains("app_code=1160") {
             usmWebView.alpha = 0
             activityIndicator.stopAnimating()
-            displayError(errorMessage: "Oops, something went wrong", title: "Login Failed") { (_) in
+            displayError(errorMessage: "Your account is not setup properly. Please, contact your administrator.", title: "Login Failed") { (_) in
                 self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
             }
             decisionHandler(.cancel)
