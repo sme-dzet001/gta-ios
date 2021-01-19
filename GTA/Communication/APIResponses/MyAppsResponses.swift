@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AllAppsResponse: Codable {
+struct AllAppsResponse: Codable, Equatable {
     var meta: ResponseMetaData
     var data: AllAppsRows?
     var indexes: [String : Int] = [:]
@@ -19,7 +19,9 @@ struct AllAppsResponse: Codable {
                 let appName = valuesArray.count > nameIndex ? valuesArray[nameIndex].stringValue : ""
                 let appTitle = valuesArray.count > titleIndex ? valuesArray[titleIndex].stringValue : ""
                 let appIcon = valuesArray.count > iconIndex ? valuesArray[iconIndex].stringValue : ""
-                status.append(AppInfo(app_name: appName, app_title: appTitle, app_icon: appIcon, appStatus: .none, app_is_active: true))
+                let appImageData = AppsImageData(app_icon: appIcon, imageData: nil, imageStatus: .loading)
+                let appInfo = AppInfo(app_name: appName, app_title: appTitle, appImageData: appImageData, appStatus: .none, app_is_active: true)
+                status.append(appInfo)
             }
         })
         return status
@@ -29,6 +31,11 @@ struct AllAppsResponse: Codable {
         case meta
         case data
     }
+    
+    static func == (lhs: AllAppsResponse, rhs: AllAppsResponse) -> Bool {
+        return lhs.myAppsStatus == rhs.myAppsStatus
+    }
+    
 }
 
 struct AllAppsRows: Codable {
@@ -39,19 +46,33 @@ struct AllAppsValues: Codable {
     var values: [QuantumValue]?
 }
 
-struct AppInfo {
+struct AppInfo: Equatable {
     var app_name: String?
     var app_title: String?
-    var app_icon: String?
+    var appImageData: AppsImageData
     var appStatus: SystemStatus
     var app_is_active: Bool
-    var imageData: Data?
-    var isImageDataEmpty: Bool = false
     var lastUpdateDate: String?
 }
 
+struct AppsImageData: Equatable {
+    var app_icon: String?
+    var imageData: Data?
+    var imageStatus: ImageLoadingStatus = .loading
+    
+    enum ImageLoadingStatus {
+        case loading
+        case failed
+        case loaded
+    }
+    
+    static func == (lhs: AppsImageData, rhs: AppsImageData) -> Bool {
+        return lhs.imageData == rhs.imageData && lhs.app_icon == rhs.app_icon
+    }
+}
 
-struct MyAppsResponse: Codable {
+
+struct MyAppsResponse: Codable, Equatable {
     var meta: ResponseMetaData
     var data: [String : MyAppsData]?
     var indexes: [String : Int] = [:]
@@ -63,6 +84,10 @@ struct MyAppsResponse: Codable {
         case meta
         case data
     }
+    
+    static func == (lhs: MyAppsResponse, rhs: MyAppsResponse) -> Bool {
+        return lhs.values == rhs.values
+    }
 }
 
 struct MyAppsData: Codable {
@@ -73,8 +98,17 @@ struct MyAppsRows: Codable {
     var rows: [MyAppsValues]?
 }
 
-struct MyAppsValues: Codable {
+struct MyAppsValues: Codable, Equatable {
     var values: [QuantumValue?]?
+    
+    static func == (lhs: MyAppsValues, rhs: MyAppsValues) -> Bool {
+        var isEqual: Bool = false
+        if lhs.values == rhs.values {
+            isEqual = true
+        }
+        return isEqual
+    }
+    
 }
 
 

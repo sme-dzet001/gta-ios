@@ -104,15 +104,15 @@ class AppsViewController: UIViewController {
         tableView.register(UINib(nibName: "ApplicationCell", bundle: nil), forCellReuseIdentifier: "ApplicationCell")
     }
     
-    private func setHardCodeData() {
-        let serviceAlertIsAlreadyPresent = dataProvider.appsData.contains(where: { (appsDataSource) -> Bool in
-            appsDataSource.cellData.first?.app_name == "Service Alert: VPN Outage"
-        })
-        guard !serviceAlertIsAlreadyPresent else { return }
-        dataProvider.appsData.insert(AppsDataSource(sectionName: nil, description: nil, cellData: [AppInfo(app_name: "Service Alert: VPN Outage", app_title: "10:30 +5 GTM Wed 15", app_icon: nil, appStatus: .none, app_is_active: false, imageData: nil)]), at: 0)
-//        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: [AppInfo(app_name: "Service Alert: VPN Outage", app_title: "10:30 +5 GTM Wed 15", app_icon: nil, appStatus: .none, app_is_active: false, imageData: nil)])]
-//
-    }
+//    private func setHardCodeData() {
+//        let serviceAlertIsAlreadyPresent = dataProvider.appsData.contains(where: { (appsDataSource) -> Bool in
+//            appsDataSource.cellData.first?.app_name == "Service Alert: VPN Outage"
+//        })
+//        guard !serviceAlertIsAlreadyPresent else { return }
+//        dataProvider.appsData.insert(AppsDataSource(sectionName: nil, description: nil, cellData: [AppInfo(app_name: "Service Alert: VPN Outage", app_title: "10:30 +5 GTM Wed 15", app_icon: nil, appStatus: .none, app_is_active: false, imageData: nil)]), at: 0)
+////        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: [AppInfo(app_name: "Service Alert: VPN Outage", app_title: "10:30 +5 GTM Wed 15", app_icon: nil, appStatus: .none, app_is_active: false, imageData: nil)])]
+////
+//    }
     
 }
 
@@ -130,11 +130,11 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             return 1
         }
         if dataProvider.appsData[section].sectionName == "My Apps" {
-            if let _ = myAppsLoadingError {
+            let myAppsDataIsEmpty = dataProvider.appsData[section].cellData.isEmpty
+            if let _ = myAppsLoadingError, myAppsDataIsEmpty {
                 return 1
             }
-            let myAppsDataIsEmpty = dataProvider.appsData[section].cellData.isEmpty
-            return myAppsDataIsEmpty ? 1 : dataProvider.appsData[section].cellData.count
+            return dataProvider.appsData[section].cellData.count
         }
         return dataProvider.appsData[section].cellData.count
     }
@@ -201,7 +201,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         let appVC = ApplicationStatusViewController()
         appVC.appName = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_name
         appVC.appTitle = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_title
-        appVC.appImageUrl = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_icon ?? ""
+        appVC.appImageUrl = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appImageData.app_icon ?? ""
         appVC.appLastUpdateDate = dataProvider.appsData[indexPath.section].cellData[indexPath.row].lastUpdateDate
         appVC.systemStatus = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appStatus
         appVC.dataProvider = dataProvider
@@ -212,13 +212,13 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension AppsViewController: AppImageDelegate {
     
-    func setImage(with data: Data?, for appName: String?) {
+    func setImage(with data: Data?, for appName: String?, error: Error?) {
         DispatchQueue.main.async {
             for (index, element) in self.dataProvider.appsData.enumerated() {
                 for (cellDataIndex, cellDataObject) in element.cellData.enumerated() {
-                    if cellDataObject.app_name == appName, self.dataProvider.appsData[index].cellData[cellDataIndex].imageData == nil {
-                        self.dataProvider.appsData[index].cellData[cellDataIndex].imageData = data
-                        self.dataProvider.appsData[index].cellData[cellDataIndex].isImageDataEmpty = data == nil
+                    if cellDataObject.app_name == appName {
+                        self.dataProvider.appsData[index].cellData[cellDataIndex].appImageData.imageData = data
+                        self.dataProvider.appsData[index].cellData[cellDataIndex].appImageData.imageStatus = error == nil ? .loaded : .failed
                         self.setCellImageView(for: IndexPath(row: cellDataIndex, section: index))
                     }
                 }

@@ -27,5 +27,9 @@ class ImageCacheManager {
         }
     }
     
+    func removeCachedData() {
+        URLCache.shared.removeAllCachedResponses()
+    }
+    
 }
 

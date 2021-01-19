@@ -30,8 +30,10 @@ class MyAppsDataProvider {
     
     func getImageData(for appInfo: [AppInfo]) {
         for info in appInfo {
-            getAppImageData(from: info.app_icon ?? "") { (imageData, _) in
-                self.appImageDelegate?.setImage(with: imageData, for: info.app_name)
+            getAppImageData(from: info.appImageData.app_icon ?? "") { (imageData, error) in
+                if info.appImageData.imageData == nil || (imageData != nil && imageData != info.appImageData.imageData) {
+                    self.appImageDelegate?.setImage(with: imageData, for: info.app_name, error: error)
+                }
             }
         }
     }
@@ -49,7 +51,6 @@ class MyAppsDataProvider {
                 }
             }
         }
-        //apiManager.loadImageData(from: url, completion: completion)
     }
     
     func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
@@ -108,17 +109,6 @@ class MyAppsDataProvider {
     private func getCachedResponse(for path: CacheManager.path, completion: @escaping ((_ data: Data?, _ error: Error?) -> Void)) {
         cacheManager.getCachedResponse(requestURI: path.endpoint, completion: completion)
     }
-    
-    //    func getAppsServiceAlert(completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-    //        apiManager.getSectionReport(sectionId: APIManager.SectionId.apps.rawValue) { [weak self] (reportResponse, errorCode, error) in
-    //            let generationNumber = reportResponse?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.productionAlerts.rawValue }?.generationNumber
-    //            if let _ = generationNumber {
-    //                self?.apiManager.getAppsServiceAlert(for: generationNumber!, completion: completion)
-    //            } else {
-    //                completion?(nil, errorCode, error)
-    //            }
-    //        }
-    //    }
     
     // MARK: - Handling methods
     
@@ -189,7 +179,7 @@ class MyAppsDataProvider {
         }
         let columns = myAppsResponse?.meta.widgetsDataSource?.params?.columns
         myAppsResponse?.indexes = getDataIndexes(columns: columns)
-        if let myAppsResponse = myAppsResponse {
+        if let myAppsResponse = myAppsResponse, self.myAppsStatusData != myAppsResponse {
             self.myAppsStatusData = myAppsResponse
         }
         if (myAppsResponse?.values ?? []).isEmpty {
@@ -233,7 +223,7 @@ class MyAppsDataProvider {
         }
         let columns = allAppsResponse?.meta.widgetsDataSource?.params?.columns
         allAppsResponse?.indexes = getDataIndexes(columns: columns)
-        if let allAppsResponse = allAppsResponse {
+        if let allAppsResponse = allAppsResponse, allAppsResponse != self.allAppsData {
             self.allAppsData = allAppsResponse
         }
         if allAppsResponse == nil || (allAppsResponse?.myAppsStatus ?? []).isEmpty {
@@ -367,5 +357,5 @@ class MyAppsDataProvider {
 }
 
 protocol AppImageDelegate: class {
-    func setImage(with data: Data?, for appName: String?)
+    func setImage(with data: Data?, for appName: String?, error: Error?)
 }
