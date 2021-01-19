@@ -37,7 +37,6 @@ class HomepageViewController: UIViewController {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadNewsData()
         }
-        
     }
     
     private func loadNewsData() {
