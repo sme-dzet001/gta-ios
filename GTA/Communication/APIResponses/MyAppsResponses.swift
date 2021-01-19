@@ -52,6 +52,7 @@ struct AppInfo: Equatable {
     var appImageData: AppsImageData
     var appStatus: SystemStatus
     var app_is_active: Bool
+    var lastUpdateDate: String?
 }
 
 struct AppsImageData: Equatable {
@@ -68,8 +69,6 @@ struct AppsImageData: Equatable {
     static func == (lhs: AppsImageData, rhs: AppsImageData) -> Bool {
         return lhs.imageData == rhs.imageData && lhs.app_icon == rhs.app_icon
     }
-    
-    var lastUpdateDate: String?
 }
 
 
