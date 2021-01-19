@@ -14,7 +14,8 @@ class ApplicationCell: UITableViewCell {
     @IBOutlet weak var appName: UILabel!
     @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-        
+    @IBOutlet weak var statusParentView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -35,6 +36,7 @@ class ApplicationCell: UITableViewCell {
         appName.text = data.app_name
         if hideStatusView {
             appStatus.backgroundColor = .clear
+            statusParentView.backgroundColor = .clear
         } else {
             switch data.appStatus {
             case .online, .none:
@@ -44,7 +46,9 @@ class ApplicationCell: UITableViewCell {
             default:
                 appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 153.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
             }
+            statusParentView.backgroundColor = .white
         }
+        statusParentView.layer.cornerRadius = statusParentView.frame.size.width / 2
         appStatus.layer.cornerRadius = appStatus.frame.size.width / 2
     }
     
@@ -62,6 +66,7 @@ class ApplicationCell: UITableViewCell {
         self.activityIndicator.hidesWhenStopped = true
         self.activityIndicator.startAnimating()
         appStatus.isHidden = true
+        statusParentView.isHidden = true
     }
     
     private func stopAnimation() {
@@ -69,6 +74,7 @@ class ApplicationCell: UITableViewCell {
         self.activityIndicator.isHidden = true
         self.activityIndicator.stopAnimating()
         appStatus.isHidden = false
+        statusParentView.isHidden = false
     }
     
 }
