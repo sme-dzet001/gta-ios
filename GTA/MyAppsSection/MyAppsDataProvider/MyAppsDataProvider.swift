@@ -159,8 +159,10 @@ class MyAppsDataProvider {
         for (index, info) in allAppsData!.myAppsStatus.enumerated() {
             let appNameIndex = myAppsStatusData?.indexes["app name"] ?? 0
             let statusIndex = myAppsStatusData?.indexes["status"] ?? 0
+            let appLastUpdateIndex = myAppsStatusData?.indexes["last update"] ?? 0
             let status = myAppsStatusData?.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name})
             response[index].appStatus = SystemStatus(status: status?.values?[statusIndex]?.stringValue)
+            response[index].lastUpdateDate = status?.values?[appLastUpdateIndex]?.stringValue
             if let _ = status {
                 myAppsSection.cellData.append(response[index])
             } else {

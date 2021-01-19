@@ -31,6 +31,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     var appName: String? = ""
     var appTitle: String?
     var appImageUrl: String = ""
+    var appLastUpdateDate: String?
     var systemStatus: SystemStatus = .none
     var selectedMetricsPeriod: MetricsPeriod = .weekly
     var detailsDataResponseError: Error?
@@ -168,7 +169,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         if section == 0 {
             let statusHeader = SystemStatusHeader.instanceFromNib()
             statusHeader.systemStatus = systemStatus
-            statusHeader.dateLabel.text = dataProvider?.formatDateString(dateString: appDetailsData?.lastUpdate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS")
+            statusHeader.dateLabel.text = dataProvider?.formatDateString(dateString: appLastUpdateDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS")
             return statusHeader
         } else if let metricsData = dataSource[section].metricsData {
             let metricStatsHeader = MetricStatsHeader.instanceFromNib()

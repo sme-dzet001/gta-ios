@@ -202,6 +202,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         appVC.appName = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_name
         appVC.appTitle = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_title
         appVC.appImageUrl = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_icon ?? ""
+        appVC.appLastUpdateDate = dataProvider.appsData[indexPath.section].cellData[indexPath.row].lastUpdateDate
         appVC.systemStatus = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appStatus
         appVC.dataProvider = dataProvider
         self.navigationController?.pushViewController(appVC, animated: true)

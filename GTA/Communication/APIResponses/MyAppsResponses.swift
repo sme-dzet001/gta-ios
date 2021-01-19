@@ -47,6 +47,7 @@ struct AppInfo {
     var app_is_active: Bool
     var imageData: Data?
     var isImageDataEmpty: Bool = false
+    var lastUpdateDate: String?
 }
 
 
