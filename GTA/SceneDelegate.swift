@@ -72,11 +72,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         }
         if let _ = KeychainManager.getToken() {
             if tokenIsExpired || !UserDefaults.standard.bool(forKey: "userLoggedIn") {
-                KeychainManager.deleteUsername()
-                KeychainManager.deleteToken()
-                KeychainManager.deleteTokenExpirationDate()
-                KeychainManager.deletePinData()
-                CacheManager().clearCache()
+                removeAllData()
                 startLoginFlow(sessionExpired: tokenIsExpired)
             } else {
                 var lastActivityDate = Date.distantPast
@@ -95,11 +91,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                     self.window?.rootViewController = navController
                     return
                 } else if KeychainManager.getPin() == nil {
-                    KeychainManager.deleteUsername()
-                    KeychainManager.deleteToken()
-                    KeychainManager.deleteTokenExpirationDate()
-                    KeychainManager.deletePinData()
-                    CacheManager().clearCache()
+                    removeAllData()
                     startLoginFlow(sessionExpired: tokenIsExpired)
                     return
                 }
@@ -109,6 +101,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                 window?.rootViewController = authVC
             }
         }
+    }
+    
+    private func removeAllData() {
+        KeychainManager.deleteUsername()
+        KeychainManager.deleteToken()
+        KeychainManager.deleteTokenExpirationDate()
+        KeychainManager.deletePinData()
+        CacheManager().clearCache()
+        ImageCacheManager().removeCachedData()
     }
 
     func startLoginFlow(sessionExpired: Bool = false) {
