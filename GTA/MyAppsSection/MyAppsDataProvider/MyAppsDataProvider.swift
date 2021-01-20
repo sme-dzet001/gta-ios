@@ -14,6 +14,7 @@ class MyAppsDataProvider {
     private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     weak var appImageDelegate: AppImageDelegate?
     var appsData: [AppsDataSource] = []
+    private var appImageData: [String : Data?] = [:]
     var allAppsData: AllAppsResponse? {
         didSet {
             appsData = self.crateGeneralResponse() ?? []
@@ -38,13 +39,17 @@ class MyAppsDataProvider {
         }
     }
     
-    func getAppImageData(from url: String, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        guard let url = URL(string: formImageURL(from: url)) else { return }
+    func getAppImageData(from urlString: String, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+        guard let url = URL(string: formImageURL(from: urlString)) else { return }
         if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
+            appImageData[urlString] = cachedResponse
             completion(cachedResponse, nil)
             return
         } else {
             apiManager.loadImageData(from: url) { (data, response, error) in
+                if self.appImageData.keys.contains(urlString), error == nil {
+                    self.appImageData[urlString] = data
+                }
                 self.imageCacheManager.storeCacheResponse(response, data: data)
                 DispatchQueue.main.async {
                     completion(data, error)
@@ -153,6 +158,10 @@ class MyAppsDataProvider {
             let status = myAppsStatusData?.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name})
             response[index].appStatus = SystemStatus(status: status?.values?[statusIndex]?.stringValue)
             response[index].lastUpdateDate = status?.values?[appLastUpdateIndex]?.stringValue
+            if appImageData.keys.contains(response[index].appImageData.app_icon ?? ""), let data =  appImageData[response[index].appImageData.app_icon ?? ""] {
+                response[index].appImageData.imageData = data
+                response[index].appImageData.imageStatus = .loaded
+            }
             if let _ = status {
                 myAppsSection.cellData.append(response[index])
             } else {
