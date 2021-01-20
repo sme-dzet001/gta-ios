@@ -218,7 +218,13 @@ extension AppsViewController: AppImageDelegate {
                 for (cellDataIndex, cellDataObject) in element.cellData.enumerated() {
                     if cellDataObject.app_name == appName {
                         self.dataProvider.appsData[index].cellData[cellDataIndex].appImageData.imageData = data
-                        self.dataProvider.appsData[index].cellData[cellDataIndex].appImageData.imageStatus = error == nil ? .loaded : .failed
+                        var isFailed: Bool = false
+                        if let _ = data, let _ = UIImage(data: data!) {
+                            isFailed = false
+                        } else {
+                            isFailed = true
+                        }
+                        self.dataProvider.appsData[index].cellData[cellDataIndex].appImageData.imageStatus = isFailed ? .failed : .loaded
                         self.setCellImageView(for: IndexPath(row: cellDataIndex, section: index))
                     }
                 }
