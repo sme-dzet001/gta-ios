@@ -16,9 +16,9 @@ struct AllAppsResponse: Codable, Equatable {
         var status = [AppInfo]()
         data?.rows?.forEach({ (value) in
             if let valuesArray = value.values, let nameIndex = indexes["app name"], let titleIndex = indexes["app title"], let iconIndex = indexes["app icon"] {
-                let appName = valuesArray.count > nameIndex ? valuesArray[nameIndex].stringValue : ""
-                let appTitle = valuesArray.count > titleIndex ? valuesArray[titleIndex].stringValue : ""
-                let appIcon = valuesArray.count > iconIndex ? valuesArray[iconIndex].stringValue : ""
+                let appName = valuesArray.count > nameIndex ? valuesArray[nameIndex]?.stringValue : ""
+                let appTitle = valuesArray.count > titleIndex ? valuesArray[titleIndex]?.stringValue : ""
+                let appIcon = valuesArray.count > iconIndex ? valuesArray[iconIndex]?.stringValue : ""
                 let appImageData = AppsImageData(app_icon: appIcon, imageData: nil, imageStatus: .loading)
                 let appInfo = AppInfo(app_name: appName, app_title: appTitle, appImageData: appImageData, appStatus: .none, app_is_active: true)
                 status.append(appInfo)
@@ -43,7 +43,7 @@ struct AllAppsRows: Codable {
 }
 
 struct AllAppsValues: Codable {
-    var values: [QuantumValue]?
+    var values: [QuantumValue?]?
 }
 
 struct AppInfo: Equatable {
