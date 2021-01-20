@@ -43,17 +43,19 @@ class AppsViewController: UIViewController {
         myAppsLoadingError = nil
         dataProvider.getMyAppsStatus {[weak self] (errorCode, error, isFromCache) in
             self?.myAppsLoadingError = isFromCache ? nil : error
-            if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty {
-                if !isFromCache {
-                    self?.myAppsLastUpdateDate = Date().addingTimeInterval(15)
-                }
-                if !isEmpty {
+            DispatchQueue.main.async {
+                if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty {
+                    if !isFromCache {
+                        self?.myAppsLastUpdateDate = Date().addingTimeInterval(15)
+                    }
+                    if !isEmpty {
+                        self?.stopAnimation()
+                    }
+                    //let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
+                    //self?.dataProvider.getImageData(for: appInfo ?? [])
+                } else if !isFromCache, let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
                     self?.stopAnimation()
                 }
-                let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
-                self?.dataProvider.getImageData(for: appInfo ?? [])
-            } else if !isFromCache, let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
-                self?.stopAnimation()
             }
         }
     }
@@ -70,8 +72,8 @@ class AppsViewController: UIViewController {
                     if !appsData.cellData.isEmpty || self?.myAppsLoadingError != nil {
                         self?.stopAnimation()
                     }
-                    let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
-                    self?.dataProvider.getImageData(for: appInfo ?? [])
+                    //let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
+                    //self?.dataProvider.getImageData(for: appInfo ?? [])
                 } else if !isFromCache {
                     self?.stopAnimation()
                 }
@@ -214,20 +216,13 @@ extension AppsViewController: AppImageDelegate {
     
     func setImage(with data: Data?, for appName: String?, error: Error?) {
         DispatchQueue.main.async {
-            for (index, element) in self.dataProvider.appsData.enumerated() {
-                for (cellDataIndex, cellDataObject) in element.cellData.enumerated() {
-                    if cellDataObject.app_name == appName {
-                        self.dataProvider.appsData[index].cellData[cellDataIndex].appImageData.imageData = data
-                        var isFailed: Bool = false
-                        if let _ = data, let _ = UIImage(data: data!) {
-                            isFailed = false
-                        } else {
-                            isFailed = true
-                        }
-                        self.dataProvider.appsData[index].cellData[cellDataIndex].appImageData.imageStatus = isFailed ? .failed : .loaded
-                        self.setCellImageView(for: IndexPath(row: cellDataIndex, section: index))
-                    }
-                }
+            let sectionIndex = self.dataProvider.appsData.firstIndex(where: {$0.cellData.contains(where: {$0.app_name == appName})})
+            if let _ = sectionIndex {
+                let rowIndex = self.dataProvider.appsData[sectionIndex!].cellData.firstIndex(where: {$0.app_name == appName})
+                guard let _ = rowIndex else { return }
+                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageData = data
+                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageStatus = error == nil ? .loaded : .failed
+                self.setCellImageView(for: IndexPath(row: rowIndex!, section: sectionIndex!))
             }
         }
     }
