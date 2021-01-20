@@ -25,16 +25,19 @@ class MyAppsDataProvider {
             appsData = self.crateGeneralResponse() ?? []
         }
     }
-    
         
     // MARK: - Calling methods
     
     func getImageData(for appInfo: [AppInfo]) {
         for info in appInfo {
-            getAppImageData(from: info.appImageData.app_icon ?? "") { (imageData, error) in
-                if info.appImageData.imageData == nil || (imageData != nil && imageData != info.appImageData.imageData) {
-                    self.appImageDelegate?.setImage(with: imageData, for: info.app_name, error: error)
+            if let url = info.appImageData.app_icon {
+                getAppImageData(from: url) { (imageData, error) in
+                    if info.appImageData.imageData == nil || (imageData != nil && imageData != info.appImageData.imageData) {
+                        self.appImageDelegate?.setImage(with: imageData, for: info.app_name, error: error)
+                    }
                 }
+            } else {
+                self.appImageDelegate?.setImage(with: nil, for: info.app_name, error: ResponseError.noDataAvailable)
             }
         }
     }
@@ -96,10 +99,6 @@ class MyAppsDataProvider {
                 completion?(reportResponse, errorCode, newError, false)
             })
         }
-//        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-//            self?.cacheData(reportResponse, path: .getSectionReport)
-//            completion?(reportResponse, errorCode, error, false)
-//        })
     }
     
     private func cacheData(_ data: Data?, path: CacheManager.path) {
@@ -171,6 +170,11 @@ class MyAppsDataProvider {
         var result = [AppsDataSource]()
         result.append(myAppsSection)
         result.append(otherAppsSection)
+        DispatchQueue.main.async {
+            let appInfo = result.map({$0.cellData}).reduce([], {$0 + $1})
+            self.getImageData(for: appInfo)
+        }
+        
         return result
     }
     
