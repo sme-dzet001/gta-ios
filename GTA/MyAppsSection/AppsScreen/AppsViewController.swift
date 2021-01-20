@@ -221,7 +221,13 @@ extension AppsViewController: AppImageDelegate {
                 let rowIndex = self.dataProvider.appsData[sectionIndex!].cellData.firstIndex(where: {$0.app_name == appName})
                 guard let _ = rowIndex else { return }
                 self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageData = data
-                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageStatus = error == nil ? .loaded : .failed
+                var isFailed: Bool = false
+                if let _ = data, let _ = UIImage(data: data!) {
+                    isFailed = false
+                } else {
+                    isFailed = true
+                }
+                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageStatus = isFailed ? .failed : .loaded
                 self.setCellImageView(for: IndexPath(row: rowIndex!, section: sectionIndex!))
             }
         }
