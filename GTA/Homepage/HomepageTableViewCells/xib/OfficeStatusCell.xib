@@ -63,7 +63,7 @@
                             <constraint firstAttribute="width" secondItem="nzW-fD-7gZ" secondAttribute="height" multiplier="1:1" id="BYj-Di-xsg"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Sony Music UK" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="84p-gl-Gqp">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Sony Music UK" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="84p-gl-Gqp">
                         <rect key="frame" x="79.5" y="18" width="113.5" height="19.5"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -81,16 +81,16 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="84p-gl-Gqp" firstAttribute="top" secondItem="ayQ-To-8HK" secondAttribute="top" id="1Mo-uS-oEy"/>
                     <constraint firstItem="nzW-fD-7gZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="84p-gl-Gqp" secondAttribute="trailing" constant="8" id="3Ol-kb-SPl"/>
+                    <constraint firstItem="g1F-on-8LR" firstAttribute="top" secondItem="84p-gl-Gqp" secondAttribute="bottom" constant="10" id="Bkw-Ky-tBP"/>
                     <constraint firstAttribute="trailing" secondItem="OkM-bA-6ew" secondAttribute="trailing" id="DEf-XR-lq9"/>
                     <constraint firstItem="84p-gl-Gqp" firstAttribute="leading" secondItem="ayQ-To-8HK" secondAttribute="trailing" id="E3k-Ju-Rj6"/>
                     <constraint firstAttribute="bottom" secondItem="OkM-bA-6ew" secondAttribute="bottom" id="I7R-mP-5aD"/>
-                    <constraint firstItem="g1F-on-8LR" firstAttribute="top" secondItem="ayQ-To-8HK" secondAttribute="bottom" constant="10" id="KLa-lr-hGI"/>
                     <constraint firstItem="ayQ-To-8HK" firstAttribute="top" secondItem="eYx-1Z-qqH" secondAttribute="top" constant="18" id="Ni4-zA-V4h"/>
                     <constraint firstItem="nzW-fD-7gZ" firstAttribute="centerY" secondItem="ayQ-To-8HK" secondAttribute="centerY" id="VHK-1Z-O9d"/>
                     <constraint firstItem="nzW-fD-7gZ" firstAttribute="leading" secondItem="g1F-on-8LR" secondAttribute="trailing" constant="5" id="Vhd-im-dpA"/>
                     <constraint firstItem="ayQ-To-8HK" firstAttribute="leading" secondItem="eYx-1Z-qqH" secondAttribute="leading" constant="24" id="ZMQ-Js-kAa"/>
-                    <constraint firstItem="84p-gl-Gqp" firstAttribute="centerY" secondItem="ayQ-To-8HK" secondAttribute="centerY" id="eeE-zn-wIz"/>
                     <constraint firstItem="VV9-Ul-fjq" firstAttribute="centerY" secondItem="eYx-1Z-qqH" secondAttribute="centerY" id="fKr-br-QRS"/>
                     <constraint firstItem="g1F-on-8LR" firstAttribute="leading" secondItem="eYx-1Z-qqH" secondAttribute="leading" constant="24" id="mXu-vD-wOv"/>
                     <constraint firstAttribute="trailing" secondItem="nzW-fD-7gZ" secondAttribute="trailing" constant="20" id="vFb-l8-1oy"/>
