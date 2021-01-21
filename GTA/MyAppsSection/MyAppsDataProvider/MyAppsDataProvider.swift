@@ -14,6 +14,7 @@ class MyAppsDataProvider {
     private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     weak var appImageDelegate: AppImageDelegate?
     var appsData: [AppsDataSource] = []
+    private var appImageData: [String : Data?] = [:]
     var allAppsData: AllAppsResponse? {
         didSet {
             appsData = self.crateGeneralResponse() ?? []
@@ -24,27 +25,34 @@ class MyAppsDataProvider {
             appsData = self.crateGeneralResponse() ?? []
         }
     }
-    
         
     // MARK: - Calling methods
     
     func getImageData(for appInfo: [AppInfo]) {
         for info in appInfo {
-            getAppImageData(from: info.appImageData.app_icon ?? "") { (imageData, error) in
-                if info.appImageData.imageData == nil || (imageData != nil && imageData != info.appImageData.imageData) {
-                    self.appImageDelegate?.setImage(with: imageData, for: info.app_name, error: error)
+            if let url = info.appImageData.app_icon {
+                getAppImageData(from: url) { (imageData, error) in
+                    if info.appImageData.imageData == nil || (imageData != nil && imageData != info.appImageData.imageData) {
+                        self.appImageDelegate?.setImage(with: imageData, for: info.app_name, error: error)
+                    }
                 }
+            } else {
+                self.appImageDelegate?.setImage(with: nil, for: info.app_name, error: ResponseError.noDataAvailable)
             }
         }
     }
     
-    func getAppImageData(from url: String, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        guard let url = URL(string: formImageURL(from: url)) else { return }
+    func getAppImageData(from urlString: String, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+        guard let url = URL(string: formImageURL(from: urlString)) else { return }
         if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
+            appImageData[urlString] = cachedResponse
             completion(cachedResponse, nil)
             return
         } else {
             apiManager.loadImageData(from: url) { (data, response, error) in
+                if self.appImageData.keys.contains(urlString), error == nil {
+                    self.appImageData[urlString] = data
+                }
                 self.imageCacheManager.storeCacheResponse(response, data: data)
                 DispatchQueue.main.async {
                     completion(data, error)
@@ -91,10 +99,6 @@ class MyAppsDataProvider {
                 completion?(reportResponse, errorCode, newError, false)
             })
         }
-//        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-//            self?.cacheData(reportResponse, path: .getSectionReport)
-//            completion?(reportResponse, errorCode, error, false)
-//        })
     }
     
     private func cacheData(_ data: Data?, path: CacheManager.path) {
@@ -153,6 +157,10 @@ class MyAppsDataProvider {
             let status = myAppsStatusData?.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name})
             response[index].appStatus = SystemStatus(status: status?.values?[statusIndex]?.stringValue)
             response[index].lastUpdateDate = status?.values?[appLastUpdateIndex]?.stringValue
+            if appImageData.keys.contains(response[index].appImageData.app_icon ?? ""), let data =  appImageData[response[index].appImageData.app_icon ?? ""] {
+                response[index].appImageData.imageData = data
+                response[index].appImageData.imageStatus = .loaded
+            }
             if let _ = status {
                 myAppsSection.cellData.append(response[index])
             } else {
@@ -162,6 +170,11 @@ class MyAppsDataProvider {
         var result = [AppsDataSource]()
         result.append(myAppsSection)
         result.append(otherAppsSection)
+        DispatchQueue.main.async {
+            let appInfo = result.map({$0.cellData}).reduce([], {$0 + $1})
+            self.getImageData(for: appInfo)
+        }
+        
         return result
     }
     

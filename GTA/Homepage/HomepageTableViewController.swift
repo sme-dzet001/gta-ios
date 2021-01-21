@@ -42,7 +42,7 @@ class HomepageTableViewController: UITableViewController {
     }
     
     private func setHardcodedData() {
-        dataSource = [HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautions, etc...", image: "return_to_work", infoType: .returnToWork)/*, HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")*/]
+        dataSource = [/*HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautions, etc...", image: "return_to_work", infoType: .returnToWork), HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")*/]
     }
     
     private func setUpTableView() {
