@@ -116,14 +116,28 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
                     }
                 }
             }
-            cell.titleLabel.text = cellDataSource.newsTitle
-            cell.byLabel.text = cellDataSource.newsAuthor
+            //cell.titleLabel.text = cellDataSource.newsTitle
+            //cell.byLabel.text = cellDataSource.newsAuthor
             let newsDate = cellDataSource.newsDate
-            cell.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
+            //cell.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
+            cell.titleLabel.attributedText = addShadow(for: cellDataSource.newsTitle)
+            cell.byLabel.attributedText = addShadow(for: cellDataSource.newsAuthor)
+            cell.dateLabel.attributedText = addShadow(for: dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss"))
             return cell
         } else {
             return UICollectionViewCell()
         }
+    }
+    
+    private func addShadow(for text: String?) -> NSMutableAttributedString? {
+        guard let text = text else { return nil }
+        let shadow = NSShadow()
+        shadow.shadowOffset = CGSize(width: 5, height: 5)
+        shadow.shadowBlurRadius = 5
+        shadow.shadowColor = UIColor.black
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(.shadow, value: shadow, range: NSRange(text.startIndex..., in: text))
+        return attributedString
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
