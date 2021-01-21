@@ -237,7 +237,11 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1, let supData = dataSource?.supportData, indexPath.row < supData.count, let stringUrl = supData[indexPath.row].value, let url = URL(string: stringUrl) {
-            UIApplication.shared.open(url)
+            UIApplication.shared.open(url, options: [:]) { (isSuccess) in
+                if !isSuccess {
+                    self.displayError(errorMessage: "", title: "Invalid link")
+                }
+            }
         }
     }
     
