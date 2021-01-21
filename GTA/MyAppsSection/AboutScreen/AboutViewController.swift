@@ -194,7 +194,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.showFirstCharFrom(appTitle)
                 cell.stopAnimation()
             }
-            cell.headerTitleLabel.text = appTitle
+            cell.headerTitleLabel.text = details?.appTitle
             return cell
         }
         
