@@ -102,25 +102,31 @@ class HomeDataProvider {
     }
     
     func getGlobalNewsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
-            if let _ = data {
-                self?.processGlobalNewsSectionReport(data, 200, error, completion)
-            }
+        getSectionReport {[weak self] (data, errorCode, error, isFromCache) in
+            self?.processGlobalNewsSectionReport(data, 200, error, isFromCache, completion)
         }
-        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
-            self?.cacheData(reportResponse, path: .getSectionReport)
-            self?.processGlobalNewsSectionReport(reportResponse, errorCode, error, completion)
-        }
+//        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
+//            if let _ = data, error == nil {
+//                self?.processGlobalNewsSectionReport(data, 200, error,  completion)
+//            }
+//            self?.apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
+//                self?.cacheData(reportResponse, path: .getSectionReport)
+//                self?.processGlobalNewsSectionReport(reportResponse, errorCode, error, completion)
+//            }
+//        }
     }
     
-    private func processGlobalNewsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processGlobalNewsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalNews.rawValue }?.generationNumber
         if let generationNumber = generationNumber {
-            getCachedResponse(for: .getGlobalNews) { [weak self] (data, error) in
-                if let _ = data {
-                    self?.processGlobalNews(newsResponse: data, reportDataResponse: reportData, error: error, errorCode: 200, completion: completion)
+            if isFromCache {
+                getCachedResponse(for: .getGlobalNews) { [weak self] (data, error) in
+                    if let _ = data, error == nil {
+                        self?.processGlobalNews(newsResponse: data, reportDataResponse: reportData, error: error, errorCode: 200, completion: completion)
+                    }
                 }
+                return
             }
             apiManager.getGlobalNews(generationNumber: generationNumber) { [weak self] (newsResponse, errorCode, error) in
                 self?.cacheData(newsResponse, path: .getGlobalNews)
@@ -181,14 +187,17 @@ class HomeDataProvider {
         completion?(errorCode, retErr)
     }
     
-    private func processSpecialAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processSpecialAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.specialAlerts.rawValue }?.generationNumber
         if let generationNumber = generationNumber {
-            getCachedResponse(for: .getSpecialAlerts) {[weak self] (data, error) in
-                if let _ = data {
-                    self?.processSpecialAlerts(reportData, data, 200, error, completion)
+            if isFromCache {
+                getCachedResponse(for: .getSpecialAlerts) {[weak self] (data, error) in
+                    if let _ = data, error == nil {
+                        self?.processSpecialAlerts(reportData, data, 200, error, completion)
+                    }
                 }
+                return
             }
             apiManager.getSpecialAlerts(generationNumber: generationNumber, completion: { [weak self] (alertsResponse, errorCode, error) in
                 self?.cacheData(alertsResponse, path: .getSpecialAlerts)
@@ -201,15 +210,18 @@ class HomeDataProvider {
     }
     
     func getSpecialAlertsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
-            if let _ = data {
-                self?.processSpecialAlertsSectionReport(data, 200, error, completion)
-            }
+        getSectionReport {[weak self] (data, errorCode, error, isFromCache) in
+            self?.processSpecialAlertsSectionReport(data, errorCode, error, isFromCache, completion)
         }
-        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-            self?.cacheData(reportResponse, path: .getSectionReport)
-            self?.processSpecialAlertsSectionReport(reportResponse, errorCode, error, completion)
-        })
+//        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
+//            if let _ = data {
+//                self?.processSpecialAlertsSectionReport(data, 200, error, completion)
+//            }
+//        }
+//        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+//            self?.cacheData(reportResponse, path: .getSectionReport)
+//            self?.processSpecialAlertsSectionReport(reportResponse, errorCode, error, completion)
+//        })
     }
     
     private func fillAlertsData(with alertsResponse: SpecialAlertsResponse) {
@@ -226,25 +238,32 @@ class HomeDataProvider {
     // MARK: - Office related methods
     
     func getAllOfficesData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
-            if let _ = data {
-                self?.processAllOfficesSectionReport(data, 200, error, completion)
-            }
+        getSectionReport {[weak self] (data, errorCode, error, isFromCache) in
+            self?.processAllOfficesSectionReport(data, errorCode, error, isFromCache, completion)
         }
-        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
-            self?.cacheData(reportResponse, path: .getSectionReport)
-            self?.processAllOfficesSectionReport(reportResponse, errorCode, error, completion)
-        }
+        
+//        getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
+//            if let _ = data {
+//                self?.processAllOfficesSectionReport(data, 200, error, completion)
+//            }
+//        }
+//        apiManager.getSectionReport() { [weak self] (reportResponse, errorCode, error) in
+//            self?.cacheData(reportResponse, path: .getSectionReport)
+//            self?.processAllOfficesSectionReport(reportResponse, errorCode, error, completion)
+//        }
     }
     
-    private func processAllOfficesSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processAllOfficesSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.officeStatus.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allOffices.rawValue }?.generationNumber
         if let generationNumber = generationNumber {
-            getCachedResponse(for: .getAllOffices) {[weak self] (data, error) in
-                if let _ = data {
-                    self?.processAllOffices(reportData, data, 200, error, completion)
+            if isFromCache {
+                getCachedResponse(for: .getAllOffices) {[weak self] (data, error) in
+                    if let _ = data, error == nil {
+                        self?.processAllOffices(reportData, data, 200, error, completion)
+                    }
                 }
+                return
             }
             apiManager.getAllOffices(generationNumber: generationNumber) { [weak self] (officesResponse, errorCode, error) in
                 self?.cacheData(officesResponse, path: .getAllOffices)
@@ -310,14 +329,17 @@ class HomeDataProvider {
     }
     
     func getCurrentOffice(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        getCachedResponse(for: .getCurrentOffice) {[weak self] (data, error) in
-            if let _ = data {
-                self?.processGetCurrentOffice(data, 200, error, true, completion)
+        getCachedResponse(for: .getCurrentOffice) {[weak self] (data, cacheError) in
+            if let _ = data, cacheError == nil {
+                self?.processGetCurrentOffice(data, 200, cacheError, true, completion)
             }
-        }
-        apiManager.getCurrentOffice { [weak self] (response, errorCode, error) in
-            self?.cacheData(response, path: .getCurrentOffice)
-            self?.processGetCurrentOffice(response, errorCode, error, false, completion)
+            self?.apiManager.getCurrentOffice { [weak self] (response, errorCode, error) in
+                if let _ = error, response == nil, let _ = data, cacheError == nil {
+                    return
+                }
+                self?.cacheData(response, path: .getCurrentOffice)
+                self?.processGetCurrentOffice(response, errorCode, error, false, completion)
+            }
         }
     }
     
@@ -349,6 +371,25 @@ class HomeDataProvider {
     }
     
     // MARK: - Common methods
+    
+    private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            if let _ = data, cachedError == nil {
+                completion?(data, 200, cachedError, true)
+            }
+            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                self?.cacheData(reportResponse, path: .getSectionReport)
+                var newError = error
+                if let _ = error {
+                    newError = ResponseError.serverError
+                }
+                if let _ = error, reportResponse == nil, let _ = data, cachedError == nil {
+                    return
+                }
+                completion?(reportResponse, errorCode, newError, false)
+            })
+        }
+    }
     
     private func parseSectionReport(data: Data?) -> ReportDataResponse? {
         var reportDataResponse: ReportDataResponse?
