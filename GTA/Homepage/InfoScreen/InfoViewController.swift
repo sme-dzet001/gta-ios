@@ -50,16 +50,17 @@ class InfoViewController: UIViewController {
         officeStatusLabel.isHidden = true//infoType != .office
         officeStatusLabel.layer.cornerRadius = 5
         officeStatusLabel.layer.masksToBounds = true
-        infoLabel.text = self.title
+        infoLabel.attributedText = addShadow(for: self.title)
         if infoType == .info {
             if let updateDate = dataProvider?.formatDateString(dateString: specialAlertData?.alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
-                self.updateTitleLabel.text = "Updates \(updateDate)"
+                self.updateTitleLabel.attributedText = addShadow(for: "Updates \(updateDate)")//text = "Updates \(updateDate)"
             }
-            byLabel.text = specialAlertData?.alertAuthor
+            byLabel.attributedText = addShadow(for: specialAlertData?.alertAuthor)//text = specialAlertData?.alertAuthor
             self.blurView.isHidden = false
             addBlurToView()
             self.tabBarController?.tabBar.isHidden = true
         }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
