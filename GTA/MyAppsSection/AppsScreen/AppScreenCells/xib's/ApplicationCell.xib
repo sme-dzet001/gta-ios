@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -36,11 +37,21 @@
                                     <constraint firstAttribute="width" constant="48" id="vFB-uW-KiU"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mq4-R7-yG1">
-                                <rect key="frame" x="39" y="0.0" width="19" height="19"/>
-                                <color key="backgroundColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBH-g6-Kh7">
+                                <rect key="frame" x="44.5" y="-3.5" width="17" height="17"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mq4-R7-yG1">
+                                        <rect key="frame" x="2" y="2" width="13" height="13"/>
+                                        <color key="backgroundColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="mq4-R7-yG1" secondAttribute="height" multiplier="1:1" id="Ezk-qg-DLL"/>
+                                    <constraint firstAttribute="bottom" secondItem="mq4-R7-yG1" secondAttribute="bottom" constant="2" id="0UJ-mT-k6e"/>
+                                    <constraint firstAttribute="width" secondItem="hBH-g6-Kh7" secondAttribute="height" multiplier="1:1" id="DJ0-Oo-eza"/>
+                                    <constraint firstItem="mq4-R7-yG1" firstAttribute="leading" secondItem="hBH-g6-Kh7" secondAttribute="leading" constant="2" id="EC1-HX-mwq"/>
+                                    <constraint firstAttribute="trailing" secondItem="mq4-R7-yG1" secondAttribute="trailing" constant="2" id="iqA-4C-fNi"/>
+                                    <constraint firstItem="mq4-R7-yG1" firstAttribute="top" secondItem="hBH-g6-Kh7" secondAttribute="top" constant="2" id="pVn-19-QS1"/>
                                 </constraints>
                             </view>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHH-Yb-Cnv">
@@ -56,16 +67,16 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="mq4-R7-yG1" secondAttribute="trailing" id="9H5-qA-NHr"/>
                             <constraint firstItem="FEH-Qe-7Ys" firstAttribute="centerX" secondItem="0ZE-SM-vhB" secondAttribute="centerX" id="ALd-ld-yu0"/>
+                            <constraint firstItem="hBH-g6-Kh7" firstAttribute="width" secondItem="FEH-Qe-7Ys" secondAttribute="width" multiplier="0.36" id="DiP-IP-Wwi"/>
+                            <constraint firstItem="hBH-g6-Kh7" firstAttribute="centerY" secondItem="FEH-Qe-7Ys" secondAttribute="top" id="PK8-zE-8iz"/>
                             <constraint firstAttribute="width" secondItem="0ZE-SM-vhB" secondAttribute="height" multiplier="1:1" id="RZZ-Mk-8pX"/>
+                            <constraint firstItem="hBH-g6-Kh7" firstAttribute="centerX" secondItem="FEH-Qe-7Ys" secondAttribute="trailing" id="Rmg-Ib-5tX"/>
                             <constraint firstItem="XHH-Yb-Cnv" firstAttribute="centerX" secondItem="0ZE-SM-vhB" secondAttribute="centerX" id="XAO-1m-AHa"/>
                             <constraint firstItem="XHH-Yb-Cnv" firstAttribute="centerY" secondItem="0ZE-SM-vhB" secondAttribute="centerY" id="Yl7-Nl-Nzn"/>
                             <constraint firstItem="FAI-U9-as9" firstAttribute="centerX" secondItem="FEH-Qe-7Ys" secondAttribute="centerX" id="c6i-gr-kkf"/>
                             <constraint firstItem="FEH-Qe-7Ys" firstAttribute="centerY" secondItem="0ZE-SM-vhB" secondAttribute="centerY" id="gln-0d-dh5"/>
-                            <constraint firstItem="mq4-R7-yG1" firstAttribute="top" secondItem="0ZE-SM-vhB" secondAttribute="top" id="iKr-aD-Zlj"/>
                             <constraint firstAttribute="width" constant="58" id="o7Q-am-r06"/>
-                            <constraint firstItem="mq4-R7-yG1" firstAttribute="width" secondItem="FEH-Qe-7Ys" secondAttribute="width" multiplier="0.4" id="qUX-sa-gen"/>
                             <constraint firstItem="FAI-U9-as9" firstAttribute="centerY" secondItem="FEH-Qe-7Ys" secondAttribute="centerY" id="zEj-lT-W1i"/>
                         </constraints>
                     </view>
@@ -93,11 +104,15 @@
                 <outlet property="appName" destination="idg-Oi-FFL" id="aVI-D9-RMW"/>
                 <outlet property="appStatus" destination="mq4-R7-yG1" id="THe-k3-ZKq"/>
                 <outlet property="iconLabel" destination="XHH-Yb-Cnv" id="4S7-Wn-mu7"/>
+                <outlet property="statusParentView" destination="hBH-g6-Kh7" id="9K0-T6-0MK"/>
             </connections>
             <point key="canvasLocation" x="121.73913043478262" y="101.11607142857143"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="empty_app_icon" width="40" height="40"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
