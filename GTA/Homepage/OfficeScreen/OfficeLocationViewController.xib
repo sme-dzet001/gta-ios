@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Medium.otf">
+            <string>SFProDisplay-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OfficeLocationViewController" customModule="GTA" customModuleProvider="target">
+            <connections>
+                <outlet property="backArrow" destination="REx-L1-PWQ" id="JB4-H7-Jpr"/>
+                <outlet property="backButtonLeading" destination="gge-9i-pXN" id="Hml-eL-Tdl"/>
+                <outlet property="closeButton" destination="QbJ-Wz-vk7" id="5RQ-DL-d0S"/>
+                <outlet property="tableView" destination="1dl-Vj-rQd" id="txD-mk-BYr"/>
+                <outlet property="tableViewBottom" destination="Asc-UK-W7i" id="nyQ-XX-qYY"/>
+                <outlet property="titleLabel" destination="G6j-Gm-GTm" id="w4C-96-Mhc"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-Vj-rQd">
+                    <rect key="frame" x="0.0" y="85" width="375" height="582"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V4D-Rv-b6b">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="85"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6j-Gm-GTm">
+                            <rect key="frame" x="69" y="23" width="227" height="48"/>
+                            <string key="text">Select a Sony Music
+Office Location</string>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QbJ-Wz-vk7">
+                            <rect key="frame" x="316" y="29.5" width="35" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="35" id="6U0-qO-H6l"/>
+                                <constraint firstAttribute="width" secondItem="QbJ-Wz-vk7" secondAttribute="height" multiplier="1:1" id="kNX-ED-oHv"/>
+                            </constraints>
+                            <state key="normal" image="close_icon"/>
+                            <connections>
+                                <action selector="closeButtonDidPressed:" destination="-1" eventType="touchUpInside" id="0ef-Vr-lyw"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REx-L1-PWQ">
+                            <rect key="frame" x="60" y="29.5" width="35" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="35" id="WVz-DH-8kM"/>
+                                <constraint firstAttribute="width" secondItem="REx-L1-PWQ" secondAttribute="height" multiplier="1:1" id="XZ1-5h-oJF"/>
+                            </constraints>
+                            <state key="normal" image="back_arrow"/>
+                            <connections>
+                                <action selector="backButtonDidPressed:" destination="-1" eventType="touchUpInside" id="cgA-KQ-xr9"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jne-DP-cx2">
+                            <rect key="frame" x="163.5" y="10" width="48" height="4"/>
+                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="48" id="K6c-tG-OEv"/>
+                                <constraint firstAttribute="height" constant="4" id="YEJ-sB-Ohb"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="Jne-DP-cx2" firstAttribute="top" secondItem="V4D-Rv-b6b" secondAttribute="top" constant="10" id="9ZV-lM-HuQ"/>
+                        <constraint firstAttribute="trailing" secondItem="QbJ-Wz-vk7" secondAttribute="trailing" constant="24" id="LBA-vo-Ulq"/>
+                        <constraint firstAttribute="height" constant="85" id="OzI-BU-Ho1"/>
+                        <constraint firstItem="QbJ-Wz-vk7" firstAttribute="leading" secondItem="G6j-Gm-GTm" secondAttribute="trailing" constant="20" id="VjD-0Z-dQa"/>
+                        <constraint firstItem="REx-L1-PWQ" firstAttribute="leading" secondItem="V4D-Rv-b6b" secondAttribute="leading" constant="60" id="gge-9i-pXN"/>
+                        <constraint firstItem="REx-L1-PWQ" firstAttribute="centerY" secondItem="G6j-Gm-GTm" secondAttribute="centerY" id="ipZ-zk-XXf"/>
+                        <constraint firstItem="G6j-Gm-GTm" firstAttribute="leading" secondItem="V4D-Rv-b6b" secondAttribute="leading" constant="69" id="mUz-bz-d0v"/>
+                        <constraint firstItem="QbJ-Wz-vk7" firstAttribute="centerY" secondItem="G6j-Gm-GTm" secondAttribute="centerY" id="oeY-U4-KlL"/>
+                        <constraint firstItem="G6j-Gm-GTm" firstAttribute="centerY" secondItem="V4D-Rv-b6b" secondAttribute="centerY" multiplier="1.1" id="sOT-oc-cM7"/>
+                        <constraint firstItem="Jne-DP-cx2" firstAttribute="centerX" secondItem="V4D-Rv-b6b" secondAttribute="centerX" id="tdE-Ds-E5o"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="V4D-Rv-b6b" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4i8-3T-dmS"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="1dl-Vj-rQd" secondAttribute="bottom" id="Asc-UK-W7i"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="V4D-Rv-b6b" secondAttribute="trailing" id="DfL-Ua-JRm"/>
+                <constraint firstItem="1dl-Vj-rQd" firstAttribute="top" secondItem="V4D-Rv-b6b" secondAttribute="bottom" id="Ogo-72-1kk"/>
+                <constraint firstItem="V4D-Rv-b6b" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="rnL-1k-2NT"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1dl-Vj-rQd" secondAttribute="trailing" id="xXF-fv-TqS"/>
+                <constraint firstItem="1dl-Vj-rQd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="xcl-4J-iek"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="118"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="back_arrow" width="24" height="24"/>
+        <image name="close_icon" width="24" height="24"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

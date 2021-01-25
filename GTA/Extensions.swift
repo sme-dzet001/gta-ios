@@ -18,6 +18,7 @@ extension UIColor {
         )
         self.init(red: components.R, green: components.G, blue: components.B, alpha: 1)
     }
+    
     convenience init(hex: Int, alpha: CGFloat) {
         let components = (
             R: CGFloat((hex >> 16) & 0xff) / 255,
@@ -25,6 +26,16 @@ extension UIColor {
             B: CGFloat((hex >> 00) & 0xff) / 255
         )
         self.init(red: components.R, green: components.G, blue: components.B, alpha: alpha)
+    }
+    
+    /// Converts UIColor to 1x1 image and returns it
+    func as1ptImage() -> UIImage {
+        UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
+        setFill()
+        UIGraphicsGetCurrentContext()?.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        let image = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
+        UIGraphicsEndImageContext()
+        return image
     }
 }
 
@@ -99,6 +110,83 @@ extension UIView {
     }
 }
 
+extension UIViewController {
+    func displayError(errorMessage: String, title: String? = "Error", onClose: @escaping ((UIAlertAction) -> Void) = { _ in }) {
+        let alertController = UIAlertController(title: title, message: errorMessage, preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "OK", style: .default, handler: onClose)
+        alertController.addAction(closeAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func createErrorCell(with text: String?, textColor: UIColor = .black, withSeparator: Bool = false, verticalOffset: CGFloat = 24) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        cell.selectionStyle = .none
+        if withSeparator {
+            let separatorView = UIView()
+            separatorView.backgroundColor = UIColor(hex: 0xF2F2F7)
+            cell.contentView.addSubview(separatorView)
+            separatorView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: separatorView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 1.0),
+                NSLayoutConstraint(item: separatorView, attribute: .bottom, relatedBy: .equal, toItem: cell.contentView, attribute: .bottom, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: separatorView, attribute: .leading, relatedBy: .equal, toItem: cell.contentView, attribute: .leading, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: separatorView, attribute: .trailing, relatedBy: .equal, toItem: cell.contentView, attribute: .trailing, multiplier: 1.0, constant: 0.0)
+                ])
+        }
+        let label = UILabel(frame: cell.contentView.bounds)
+        cell.contentView.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: cell.contentView, attribute: .top, multiplier: 1.0, constant: verticalOffset),
+            NSLayoutConstraint(item: label, attribute: .bottom, relatedBy: .equal, toItem: cell.contentView, attribute: .bottom, multiplier: 1.0, constant: -verticalOffset),
+            NSLayoutConstraint(item: label, attribute: .leading, relatedBy: .equal, toItem: cell.contentView, attribute: .leading, multiplier: 1.0, constant: 24.0),
+            NSLayoutConstraint(item: label, attribute: .trailing, relatedBy: .equal, toItem: cell.contentView, attribute: .trailing, multiplier: 1.0, constant: -24.0)
+            ])
+        label.numberOfLines = 0
+        label.font = UIFont(name: "SFProText-Regular", size: 16)!
+        label.textAlignment = .center
+        label.textColor = textColor
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.7
+        label.text = text
+        return cell
+    }
+    
+    func createLoadingCell(withSeparator: Bool = false, verticalOffset: CGFloat? = nil) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        cell.selectionStyle = .none
+        if withSeparator {
+            let separatorView = UIView()
+            separatorView.backgroundColor = UIColor(hex: 0xF2F2F7)
+            cell.contentView.addSubview(separatorView)
+            separatorView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: separatorView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 1.0),
+                NSLayoutConstraint(item: separatorView, attribute: .bottom, relatedBy: .equal, toItem: cell.contentView, attribute: .bottom, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: separatorView, attribute: .leading, relatedBy: .equal, toItem: cell.contentView, attribute: .leading, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: separatorView, attribute: .trailing, relatedBy: .equal, toItem: cell.contentView, attribute: .trailing, multiplier: 1.0, constant: 0.0)
+                ])
+        }
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        cell.contentView.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        if let verticalOffset = verticalOffset {
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: activityIndicator, attribute: .top, relatedBy: .equal, toItem: cell.contentView, attribute: .top, multiplier: 1.0, constant: verticalOffset),
+                NSLayoutConstraint(item: activityIndicator, attribute: .bottom, relatedBy: .equal, toItem: cell.contentView, attribute: .bottom, multiplier: 1.0, constant: -verticalOffset),
+                NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: cell.contentView, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+                ])
+        } else {
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: cell.contentView, attribute: .centerX, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: cell.contentView, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+                ])
+        }
+        activityIndicator.startAnimating()
+        return cell
+    }
+}
+
 extension String {
     var sha512: String {
         let data = Data(self.utf8)
@@ -115,6 +203,14 @@ extension String {
             return true
         }
         return (self.trimmingCharacters(in: NSCharacterSet.whitespaces) == "")
+    }
+    
+    static var neededDateFormat: String {
+        return "HH:mm zzz E d"
+    }
+    
+    static var ticketsSectionDateFormat: String {
+        return "E MMM d, yyyy"
     }
     
     var isValidEmail: Bool {
@@ -154,9 +250,114 @@ extension String {
     }
 }
 
+extension Date {
+    func daySuffix() -> String {
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components(.day, from: self)
+        let dayOfMonth = components.day
+        switch dayOfMonth {
+        case 1, 21, 31:
+            return "st"
+        case 2, 22:
+            return "nd"
+        case 3, 23:
+            return "rd"
+        default:
+            return "th"
+        }
+    }
+}
+
+extension Array where Element: Equatable {
+    func removeDuplicates() -> [Element] {
+        var result = [Element]()
+        for value in self {
+            if !result.contains(value) {
+                result.append(value)
+            }
+        }
+        return result
+    }
+}
+
+extension NSAttributedString {
+    func height(containerWidth: CGFloat) -> CGFloat {
+        let rect = self.boundingRect(with: CGSize.init(width: containerWidth, height: CGFloat.greatestFiniteMagnitude), options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)
+        return ceil(rect.size.height)
+    }
+}
+extension NSMutableAttributedString {
+    // method to change attr string font without removing other attribures
+    func setFontFace(font: UIFont, color: UIColor? = nil) {
+        beginEditing()
+        self.enumerateAttribute(
+            .font,
+            in: NSRange(location: 0, length: self.length)
+        ) { (value, range, stop) in
+
+            if let f = value as? UIFont,
+              let newFontDescriptor = f.fontDescriptor
+                .withFamily(font.familyName)
+                .withSymbolicTraits(f.fontDescriptor.symbolicTraits) {
+
+                let newFont = UIFont(
+                    descriptor: newFontDescriptor,
+                    size: font.pointSize
+                )
+                removeAttribute(.font, range: range)
+                addAttribute(.font, value: newFont, range: range)
+                if let color = color {
+                    removeAttribute(
+                        .foregroundColor,
+                        range: range
+                    )
+                    addAttribute(
+                        .foregroundColor,
+                        value: color,
+                        range: range
+                    )
+                }
+            }
+        }
+        endEditing()
+    }
+    
+    // method to change attr string paragraph style without removing other paragraph attribures
+    func setParagraphStyleParams(lineSpacing: CGFloat, paragraphSpacing: CGFloat) {
+        beginEditing()
+        self.enumerateAttribute(
+            .paragraphStyle,
+            in: NSRange(location: 0, length: self.length)
+        ) { (value, range, stop) in
+            if let parStyle = value as? NSMutableParagraphStyle {
+                let newParStyle = parStyle
+                newParStyle.lineSpacing = lineSpacing
+                newParStyle.paragraphSpacing = paragraphSpacing
+                removeAttribute(.paragraphStyle, range: range)
+                addAttribute(.paragraphStyle, value: newParStyle, range: range)
+            }
+        }
+        endEditing()
+    }
+}
+
 extension UINavigationController {
     var rootViewController : UIViewController? {
         return self.viewControllers.first
+    }
+    
+    func setNavigationBarBottomShadowColor(_ color: UIColor) {
+        self.navigationBar.shadowImage = color.as1ptImage()
+    }
+}
+
+extension UIWindow {
+    static var key: UIWindow? {
+        if #available(iOS 13, *) {
+            return UIApplication.shared.windows.first { $0.isKeyWindow }
+        } else {
+            return UIApplication.shared.keyWindow
+        }
     }
 }
 
@@ -184,4 +385,45 @@ extension UIDevice {
     var iPad: Bool {
         return userInterfaceIdiom == .pad
     }
+}
+
+extension NSLayoutConstraint {
+    func constraintWithMultiplier(_ multiplier: CGFloat) -> NSLayoutConstraint {
+        return NSLayoutConstraint(item: self.firstItem!, attribute: self.firstAttribute, relatedBy: self.relation, toItem: self.secondItem, attribute: self.secondAttribute, multiplier: multiplier, constant: self.constant)
+    }
+}
+
+extension UITapGestureRecognizer {
+
+    func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
+        // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: CGSize.zero)
+        let textStorage = NSTextStorage(attributedString: label.attributedText!)
+
+        // Configure layoutManager and textStorage
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+
+        // Configure textContainer
+        textContainer.lineFragmentPadding = 0.0
+        textContainer.lineBreakMode = label.lineBreakMode
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        let labelSize = label.bounds.size
+        textContainer.size = labelSize
+
+        // Find the tapped character location and compare it to the specified range
+        let locationOfTouchInLabel = self.location(in: label)
+        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+        //let textContainerOffset = CGPointMake((labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
+                                              //(labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y);
+        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x, y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
+
+        //let locationOfTouchInTextContainer = CGPointMake(locationOfTouchInLabel.x - textContainerOffset.x,
+                                                        // locationOfTouchInLabel.y - textContainerOffset.y);
+        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y)
+        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        return NSLocationInRange(indexOfCharacter, targetRange)
+    }
+
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServiceDeskContactsViewController" customModule="GTA" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="tAh-nr-imQ" id="PWG-4q-mlF"/>
+                <outlet property="errorLabel" destination="8lo-1h-M3v" id="9pM-zU-55c"/>
+                <outlet property="tableView" destination="pCD-ER-464" id="DMO-cG-vzN"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pCD-ER-464">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="nKW-Lw-MPo"/>
+                        <outlet property="delegate" destination="-1" id="m8I-3P-Ltx"/>
+                    </connections>
+                </tableView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8lo-1h-M3v">
+                    <rect key="frame" x="188.5" y="443" width="37.5" height="20"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tAh-nr-imQ">
+                    <rect key="frame" x="197" y="443" width="20" height="20"/>
+                </activityIndicatorView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="8lo-1h-M3v" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="6IV-MQ-LpD"/>
+                <constraint firstItem="pCD-ER-464" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="B6S-ov-xlt"/>
+                <constraint firstItem="tAh-nr-imQ" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="BvZ-E9-FKo"/>
+                <constraint firstItem="8lo-1h-M3v" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Hfa-hX-CUo"/>
+                <constraint firstItem="tAh-nr-imQ" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="Vb6-47-SIE"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pCD-ER-464" secondAttribute="trailing" id="ia7-ES-ZBC"/>
+                <constraint firstItem="pCD-ER-464" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="nse-LB-RJP"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="pCD-ER-464" secondAttribute="bottom" id="svx-nI-hDn"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="67"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
