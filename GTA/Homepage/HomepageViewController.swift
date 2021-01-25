@@ -115,10 +115,13 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
                     }
                 }
             }
-            cell.titleLabel.text = cellDataSource.newsTitle
-            cell.byLabel.text = cellDataSource.newsAuthor
+            //cell.titleLabel.text = cellDataSource.newsTitle
+            //cell.byLabel.text = cellDataSource.newsAuthor
             let newsDate = cellDataSource.newsDate
-            cell.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
+            //cell.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
+            cell.titleLabel.attributedText = addShadow(for: cellDataSource.newsTitle)
+            cell.byLabel.attributedText = addShadow(for: cellDataSource.newsAuthor)
+            cell.dateLabel.attributedText = addShadow(for: dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss"))
             return cell
         } else {
             return UICollectionViewCell()

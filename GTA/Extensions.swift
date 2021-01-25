@@ -185,6 +185,18 @@ extension UIViewController {
         activityIndicator.startAnimating()
         return cell
     }
+    
+    func addShadow(for text: String?) -> NSMutableAttributedString? {
+        guard let text = text else { return nil }
+        let shadow = NSShadow()
+        shadow.shadowOffset = CGSize(width: 5, height: 5)
+        shadow.shadowBlurRadius = 5
+        shadow.shadowColor = UIColor.black
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(.shadow, value: shadow, range: NSRange(text.startIndex..., in: text))
+        return attributedString
+    }
+    
 }
 
 extension String {
