@@ -15,6 +15,7 @@ class NewsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var byLabel: UILabel!
     @IBOutlet weak var defaultTitleLabelY: NSLayoutConstraint!
     @IBOutlet weak var titleLabelYForSmallScreen: NSLayoutConstraint!
+    @IBOutlet weak var byLineHeight: NSLayoutConstraint?
     
     var imageUrl: String?
     
@@ -25,6 +26,21 @@ class NewsCollectionViewCell: UICollectionViewCell {
             titleLabelYForSmallScreen.isActive = true
         }
         // Initialization code
+    }
+    
+    func configurePosition() {
+        let constraint = UIDevice.current.iPhone5_se ? titleLabelYForSmallScreen : defaultTitleLabelY
+        var multiplier: CGFloat = 1.0
+        var newConstraint: NSLayoutConstraint?
+        if let byLine = byLabel.text, !byLine.isEmpty {
+            byLineHeight?.isActive = true
+        } else {
+            byLineHeight?.isActive = false
+            multiplier = UIDevice.current.iPhone5_se ? 1.2 : 1.4
+            newConstraint = constraint!.constraintWithMultiplier(multiplier)
+        }
+        self.contentView.removeConstraint(constraint!)
+        self.contentView.addConstraint(newConstraint!)
     }
     
     override func prepareForReuse() {

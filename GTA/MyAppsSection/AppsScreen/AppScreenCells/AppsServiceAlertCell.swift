@@ -16,7 +16,7 @@ class AppsServiceAlertCell: UITableViewCell {
     @IBOutlet weak var separator: UILabel!
     @IBOutlet weak var topSeparator: UILabel!
     @IBOutlet weak var arrowIcon: UIImageView!
-    @IBOutlet weak var iconWidth: NSLayoutConstraint!
+    @IBOutlet weak var mainLabelCenterY: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,6 +40,12 @@ class AppsServiceAlertCell: UITableViewCell {
         if let downloadError = error as? ResponseError, isDisabled {
             descriptionLabel.text = downloadError.localizedDescription
         }
+    }
+    
+    func setMainLabelAtCenter() {
+        let newConstraint = mainLabelCenterY.constraintWithMultiplier(1.0)
+        contentView.removeConstraint(mainLabelCenterY)
+        contentView.addConstraint(newConstraint)
     }
     
 }

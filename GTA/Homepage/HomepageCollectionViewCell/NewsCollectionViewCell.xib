@@ -40,6 +40,9 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Simpson, Rohan, Sony Music Associate Director, Infrastructure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aK6-Ha-QAo">
                         <rect key="frame" x="30" y="305" width="235" height="33.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="03E-fq-YHw"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -81,6 +84,7 @@
             <size key="customSize" width="295" height="445"/>
             <connections>
                 <outlet property="byLabel" destination="aK6-Ha-QAo" id="Asl-9s-bHl"/>
+                <outlet property="byLineHeight" destination="03E-fq-YHw" id="Z2x-F1-nOF"/>
                 <outlet property="dateLabel" destination="qCA-C4-WiG" id="KDB-Pd-gPd"/>
                 <outlet property="defaultTitleLabelY" destination="Tc4-U6-z38" id="t7n-mq-XaM"/>
                 <outlet property="imageView" destination="F6l-Fs-PaI" id="9lJ-Ki-HNw"/>
