@@ -119,7 +119,7 @@ class InfoViewController: UIViewController {
     }
     
     private func makeCallWithNumber(_ number: String?) {
-        if let number = number, let numberURL = URL(string: "tel://" + number.filter("+0123456789.".contains)) {
+        if let number = number?.components(separatedBy: ",").first, let numberURL = URL(string: "tel://" + number.filter("+0123456789.".contains)) {
             UIApplication.shared.open(numberURL, options: [:], completionHandler: nil)
         }
     }
