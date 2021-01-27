@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -110,8 +110,8 @@
                 <outlet property="arrowIcon" destination="eRv-4L-FYW" id="grR-Lp-t5x"/>
                 <outlet property="descriptionLabel" destination="3FG-AM-rsA" id="oUL-w7-mYW"/>
                 <outlet property="iconImageView" destination="hDh-Cz-1qF" id="EO2-bU-ZY1"/>
-                <outlet property="iconWidth" destination="ORC-1Y-SD2" id="e6A-XS-SCt"/>
                 <outlet property="mainLabel" destination="aYU-wk-pGE" id="BmZ-3O-e4K"/>
+                <outlet property="mainLabelCenterY" destination="ii9-nw-Juw" id="zxD-kT-IOP"/>
                 <outlet property="parentView" destination="FmA-2v-IWb" id="MDX-gs-OSy"/>
                 <outlet property="separator" destination="cgv-4g-xLI" id="xKO-q5-zCC"/>
                 <outlet property="topSeparator" destination="m02-aB-zKY" id="glB-mw-5jt"/>

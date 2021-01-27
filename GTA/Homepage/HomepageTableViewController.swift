@@ -160,7 +160,12 @@ class HomepageTableViewController: UITableViewController {
             cell?.iconImageView.image = UIImage(named: "alert_icon")
             cell?.mainLabel.text = data[indexPath.row].alertTitle
             cell?.mainLabel.textColor = .black
-            cell?.descriptionLabel.text = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
+            if let date = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
+                cell?.descriptionLabel.text = date
+            } else {
+                cell?.descriptionLabel.text = nil
+                cell?.setMainLabelAtCenter()
+            }
             return cell ?? UITableViewCell()
         } else if indexPath.section == 1 {
             let data = dataProvider?.userOffice
