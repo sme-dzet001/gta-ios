@@ -53,6 +53,7 @@ class InfoViewController: UIViewController {
         officeStatusLabel.layer.masksToBounds = true
         infoLabel.attributedText = addShadow(for: self.title)
         if infoType == .info {
+            self.updateTitleLabel.attributedText = nil
             if let updateDate = dataProvider?.formatDateString(dateString: specialAlertData?.alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
                 self.updateTitleLabel.attributedText = addShadow(for: updateDate)//text = "Updates \(updateDate)"
             }

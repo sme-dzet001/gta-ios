@@ -38,9 +38,9 @@ class NewsCollectionViewCell: UICollectionViewCell {
             byLineHeight?.isActive = false
             multiplier = UIDevice.current.iPhone5_se ? 1.2 : 1.4
             newConstraint = constraint!.constraintWithMultiplier(multiplier)
+            self.contentView.removeConstraint(constraint!)
+            self.contentView.addConstraint(newConstraint!)
         }
-        self.contentView.removeConstraint(constraint!)
-        self.contentView.addConstraint(newConstraint!)
     }
     
     override func prepareForReuse() {

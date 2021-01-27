@@ -60,7 +60,7 @@ struct GlobalNewsResponse: Codable {
 // MARK: - Special Alerts Response
 
 struct SpecialAlertRow: Codable {
-    var values: [QuantumValue]?
+    var values: [QuantumValue?]?
     var indexes: [String : Int] = [:]
     
     enum CodingKeys: String, CodingKey {
@@ -69,37 +69,37 @@ struct SpecialAlertRow: Codable {
     
     var alertTitle: String? {
         guard let valuesArr = values, let index = indexes["alert title"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var alertHeadline: String? {
         guard let valuesArr = values, let index = indexes["headline"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var alertSubHeadline: String? {
         guard let valuesArr = values, let index = indexes["sub headline"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var posterUrl: String? {
         guard let valuesArr = values, let index = indexes["banner"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var alertDate: String? {
         guard let valuesArr = values, let index = indexes["post date"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var alertAuthor: String? {
         guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue?.replacingOccurrences(of: "\\n", with: "\n")
+        return valuesArr[index]?.stringValue?.replacingOccurrences(of: "\\n", with: "\n")
     }
     
     var alertBody: String? {
         guard let valuesArr = values, let index = indexes["body"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
 }
 
