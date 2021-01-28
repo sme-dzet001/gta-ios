@@ -46,6 +46,11 @@ struct HelpDeskResponse: Codable {
         return values[index]
     }
     
+    var hoursOfOperation: String? {
+        guard let values = values, let index = indexes["hours_of_operation"], values.count > index else { return nil }
+        return values[index]
+    }
+    
     private func convertPhoneNumber(number: String) -> String {
         let codeCount = number.replacingOccurrences(of: "+", with: "").count - 10
         return number.replacingOccurrences(of: "(\\d{\(codeCount)})(\\d{3})(\\d{3})(\\d+)", with: "$1 ($2) $3-$4", options: .regularExpression, range: nil)
@@ -148,5 +153,34 @@ struct TeamContactsData: Codable {
 struct TeamContactsResponse: Codable {
     var meta: ResponseMetaData
     var data: TeamContactsData?
+}
+
+struct GSDStatus: Codable {
+    var meta: ResponseMetaData?
+    var data: GSDStatusData?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case meta = "meta"
+        case data = "data"
+    }
+    
+    private var values: [QuantumValue?]? {
+        guard let rows = data?.rows, !rows.isEmpty else { return [] }
+        return rows.first?.values //data["rows"]?.first?.values
+    }
+    
+    var serviceDeskStatus: String? {
+        guard let values = values, let index = indexes["status"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+}
+
+struct GSDStatusData: Codable {
+    var rows: [GSDStatusRow]?
+}
+
+struct GSDStatusRow: Codable {
+    var values: [QuantumValue?]?
 }
 

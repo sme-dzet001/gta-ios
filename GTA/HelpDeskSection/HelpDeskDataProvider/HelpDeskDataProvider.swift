@@ -24,6 +24,30 @@ class HelpDeskDataProvider {
         return teamContactsData.isEmpty
     }
     
+    func getGSDStatus(completion: ((_ reportData: GSDStatus?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+        getSectionReport() { [weak self] (reportResponse, errorCode, error, isFromCache) in
+            let reportData = self?.parseSectionReport(data: reportResponse)
+            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdStatus.rawValue }?.generationNumber
+            if let _ = generationNumber {
+                if isFromCache {
+                    self?.getCachedResponse(for: .getGSDStatus) {[weak self] (data, error) in
+                        if let _ = data {
+                            self?.processGSDStatus(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+                        }
+                    }
+                    return
+                }
+                self?.apiManager.getGSDStatus(generationNumber: generationNumber!, completion: { (data, errorCode, error) in
+                    self?.cacheData(data, path: .getGSDStatus)
+                    self?.processGSDStatus(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+                })
+            } else {
+                let retError = ResponseError.serverError
+                completion?(nil, errorCode, retError, isFromCache)
+            }
+        }
+    }
+    
     func getHelpDeskData(completion: ((_ reportData: HelpDeskResponse?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getSectionReport() { [weak self] (reportResponse, errorCode, error, isFromCache) in
             let reportData = self?.parseSectionReport(data: reportResponse)
@@ -88,6 +112,24 @@ class HelpDeskDataProvider {
             }
         }
         completion?(helpDeskResponse, errorCode, retErr, isFromCache)
+    }
+    
+    private func processGSDStatus(data: Data?, reportDataResponse: ReportDataResponse?, _ isFromCache: Bool, error: Error?, errorCode: Int, completion: ((_ respone: GSDStatus?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+        var statusResponse: GSDStatus?
+        var retErr = error
+        if let responseData = data {
+            do {
+                statusResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        }
+        let indexes = getDataIndexes(columns: statusResponse?.meta?.widgetsDataSource?.params?.columns)
+        statusResponse?.indexes = indexes
+        if (error != nil || statusResponse == nil) && isFromCache {
+            return
+        }
+        completion?(statusResponse, errorCode, retErr, isFromCache)
     }
     
     func formQuickHelpAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
