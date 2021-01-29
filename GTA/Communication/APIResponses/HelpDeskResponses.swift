@@ -34,8 +34,9 @@ struct HelpDeskResponse: Codable {
     
     var serviceDeskPhoneNumber: String? {
         guard let values = values, let index = indexes["service_phone"], values.count > index else { return nil }
-        return convertPhoneNumber(number: values[index])
+        return values[index] //convertPhoneNumber(number: values[index])
     }
+    
     var serviceDeskEmail: String? {
         guard let values = values, let index = indexes["service_email"], values.count > index else { return nil }
         return values[index]
