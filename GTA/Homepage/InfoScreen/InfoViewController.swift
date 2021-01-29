@@ -71,6 +71,11 @@ class InfoViewController: UIViewController {
         
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        handleBlurShowing(animated: false)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
@@ -161,7 +166,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    private func getHeightForRowAt(indexPath: IndexPath) -> CGFloat {
         if infoType == .info {
             return UITableView.automaticDimension
         } else {
@@ -178,6 +183,14 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
                 return 80
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return getHeightForRowAt(indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return getHeightForRowAt(indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -240,6 +253,22 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
                 let email = officeDataSoure[indexPath.row].text
                 makeEmailForAddress(email)
             }
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        handleBlurShowing(animated: true)
+    }
+    
+    func handleBlurShowing(animated: Bool) {
+        guard infoType == .info else { return }
+        let isReachedBottom = tableView.contentOffset.y >= (tableView.contentSize.height - tableView.frame.size.height).rounded(.towardZero)
+        if animated {
+            UIView.animate(withDuration: 0.2) {
+                self.blurView.alpha = isReachedBottom ? 0 : 1
+            }
+        } else {
+            blurView.alpha = isReachedBottom ? 0 : 1
         }
     }
     
