@@ -125,6 +125,7 @@ enum SystemStatus {
         case "up": self = .online
         case "down": self = .offline
         case "has issues": self = .pendingAlerts
+        case "has issue": self = .pendingAlerts
         default: self = .none
         }
     }
