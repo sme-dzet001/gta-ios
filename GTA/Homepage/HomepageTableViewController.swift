@@ -42,7 +42,7 @@ class HomepageTableViewController: UITableViewController {
     }
     
     private func setHardcodedData() {
-        dataSource = [HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautions, etc...", image: "return_to_work", infoType: .returnToWork)/*, HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")*/]
+        dataSource = [/*HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautions, etc...", image: "return_to_work", infoType: .returnToWork), HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")*/]
     }
     
     private func setUpTableView() {
@@ -160,7 +160,12 @@ class HomepageTableViewController: UITableViewController {
             cell?.iconImageView.image = UIImage(named: "alert_icon")
             cell?.mainLabel.text = data[indexPath.row].alertTitle
             cell?.mainLabel.textColor = .black
-            cell?.descriptionLabel.text = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
+            if let date = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
+                cell?.descriptionLabel.text = date
+            } else {
+                cell?.descriptionLabel.text = nil
+                cell?.setMainLabelAtCenter()
+            }
             return cell ?? UITableViewCell()
         } else if indexPath.section == 1 {
             let data = dataProvider?.userOffice

@@ -191,7 +191,7 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func makeCallWithNumber(_ number: String?) {
-        if let _ = number, let numberURL = URL(string: "tel://" + number!.filter("+0123456789.".contains)) {
+        if let _ = number?.components(separatedBy: ",").first, let numberURL = URL(string: "tel://" + number!.filter("+0123456789.".contains)) {
             UIApplication.shared.open(numberURL, options: [:], completionHandler: nil)
         }
     }

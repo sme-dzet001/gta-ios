@@ -24,6 +24,7 @@
             <connections>
                 <outlet property="blurView" destination="ZTg-WM-pUj" id="CVb-n4-zFu"/>
                 <outlet property="byLabel" destination="NE2-l9-kOX" id="Zx5-9e-UGg"/>
+                <outlet property="byLineHeight" destination="zLW-SW-cuG" id="yU6-JZ-iE2"/>
                 <outlet property="dateLabelByLineTop" destination="Wsu-vr-pB7" id="fax-7O-AC0"/>
                 <outlet property="dateLabelTop" destination="fyy-iH-Ogj" id="p6n-dm-Yqc"/>
                 <outlet property="headerImageView" destination="8OW-0v-f8F" id="GXK-5X-sDu"/>
@@ -61,6 +62,9 @@
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simpson, Rohan, Sony Music Associate Director, Infrastructure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NE2-l9-kOX">
                     <rect key="frame" x="30" y="242.5" width="354" height="33.5"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="zLW-SW-cuG"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="14"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>

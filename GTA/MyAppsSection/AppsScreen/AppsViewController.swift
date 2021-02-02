@@ -92,6 +92,7 @@ class AppsViewController: UIViewController {
     }
     
     private func stopAnimation() {
+        guard dataProvider.myAppsStatusData != nil || myAppsLoadingError != nil else { return }
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.tableView.alpha = 1
@@ -164,6 +165,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
                 cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row], hideStatusView: dataProvider.appsData[indexPath.section].sectionName == "Other Apps")
             } else {
+                print("!!!error my apps cell no data!!!!")
                 return createErrorCell(with: "No data available")
             }
             return cell

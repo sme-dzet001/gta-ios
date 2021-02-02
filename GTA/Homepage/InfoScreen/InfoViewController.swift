@@ -20,6 +20,7 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var mainLabelCenterY: NSLayoutConstraint!
     @IBOutlet weak var dateLabelTop: NSLayoutConstraint!
     @IBOutlet weak var dateLabelByLineTop: NSLayoutConstraint!
+    @IBOutlet weak var byLineHeight: NSLayoutConstraint!
     
     var dataProvider: HomeDataProvider?
     
@@ -50,16 +51,24 @@ class InfoViewController: UIViewController {
         officeStatusLabel.isHidden = true//infoType != .office
         officeStatusLabel.layer.cornerRadius = 5
         officeStatusLabel.layer.masksToBounds = true
-        infoLabel.text = self.title
+        infoLabel.attributedText = addShadow(for: self.title)
         if infoType == .info {
+            self.updateTitleLabel.attributedText = nil
             if let updateDate = dataProvider?.formatDateString(dateString: specialAlertData?.alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
-                self.updateTitleLabel.text = "Updates \(updateDate)"
+                self.updateTitleLabel.attributedText = addShadow(for: updateDate)//text = "Updates \(updateDate)"
             }
-            byLabel.text = specialAlertData?.alertAuthor
+            if let byLine = specialAlertData?.alertAuthor, !byLine.isEmpty {
+                byLineHeight.isActive = true
+                byLabel.attributedText = addShadow(for: byLine)//text = specialAlertData?.alertAuthor
+            } else {
+                byLabel.attributedText = nil
+                byLineHeight.isActive = false
+            }
             self.blurView.isHidden = false
             addBlurToView()
             self.tabBarController?.tabBar.isHidden = true
         }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,10 +79,17 @@ class InfoViewController: UIViewController {
     func setUpConstraints() {
         if infoType == .info {
             byLabel.isHidden = false
-            let multiplier: CGFloat = UIDevice.current.iPhone5_se ? 1.0 : 1.1
-            let newConstraint = mainLabelCenterY.constraintWithMultiplier(multiplier)
+            var multiplier: CGFloat = 1.0
+            var newConstraint: NSLayoutConstraint?
+            if let byLine = specialAlertData?.alertAuthor, !byLine.isEmpty {
+                multiplier = UIDevice.current.iPhone5_se ? 1.0 : 1.1
+                newConstraint = mainLabelCenterY.constraintWithMultiplier(multiplier)
+            } else {
+                multiplier = UIDevice.current.iPhone5_se ? 1.3 : 1.4
+                newConstraint = mainLabelCenterY.constraintWithMultiplier(multiplier)
+            }
             self.view.removeConstraint(mainLabelCenterY)
-            self.view.addConstraint(newConstraint)
+            self.view.addConstraint(newConstraint!)
         } else {
             byLabel.isHidden = true
             dateLabelByLineTop.isActive = false
@@ -118,7 +134,7 @@ class InfoViewController: UIViewController {
     }
     
     private func makeCallWithNumber(_ number: String?) {
-        if let number = number, let numberURL = URL(string: "tel://" + number.filter("+0123456789.".contains)) {
+        if let number = number?.components(separatedBy: ",").first, let numberURL = URL(string: "tel://" + number.filter("+0123456789.".contains)) {
             UIApplication.shared.open(numberURL, options: [:], completionHandler: nil)
         }
     }
