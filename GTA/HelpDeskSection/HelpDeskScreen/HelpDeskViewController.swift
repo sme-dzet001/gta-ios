@@ -56,7 +56,9 @@ class HelpDeskViewController: UIViewController {
     
     private func getServiceDeskStatus() {
         dataProvider.getGSDStatus {[weak self] (status, errorCode, error, isFromCache) in
-            self?.statusResponse.statusString = status?.serviceDeskStatus
+            if error == nil, let _ = status {
+                self?.statusResponse.statusString = status?.serviceDeskStatus
+            }
             self?.setUpHeaderView()
         }
     }
