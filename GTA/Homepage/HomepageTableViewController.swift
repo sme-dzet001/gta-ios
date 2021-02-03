@@ -34,8 +34,12 @@ class HomepageTableViewController: UITableViewController {
         } else {
             // reloading office cell (because office could be changed on office selection screen)
             if officeLoadingIsEnabled {
-                UIView.performWithoutAnimation {
-                    tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                if tableView.dataHasChanged {
+                    tableView.reloadData()
+                } else {
+                    UIView.performWithoutAnimation {
+                        tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                    }
                 }
             }
         }
@@ -67,8 +71,12 @@ class HomepageTableViewController: UITableViewController {
     private func loadOfficesData() {
         var forceOpenOfficeSelectionScreen = false
         officeLoadingError = nil
-        UIView.performWithoutAnimation {
-            tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+        if tableView.dataHasChanged {
+            tableView.reloadData()
+        } else {
+            UIView.performWithoutAnimation {
+                tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+            }
         }
         dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error) in
             if error == nil && errorCode == 200 {
@@ -84,16 +92,24 @@ class HomepageTableViewController: UITableViewController {
                             } else {
                                 self?.officeLoadingError = nil
                             }
-                            UIView.performWithoutAnimation {
-                                self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                            if self?.tableView.dataHasChanged == true {
+                                self?.tableView.reloadData()
+                            } else {
+                                UIView.performWithoutAnimation {
+                                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                                }
                             }
                             if forceOpenOfficeSelectionScreen {
                                 self?.openOfficeSelectionModalScreen()
                             }
                         } else {
                             self?.officeLoadingError = "Oops, something went wrong"
-                            UIView.performWithoutAnimation {
-                                self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                            if self?.tableView.dataHasChanged == true {
+                                self?.tableView.reloadData()
+                            } else {
+                                UIView.performWithoutAnimation {
+                                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                                }
                             }
                         }
                     }
@@ -101,8 +117,12 @@ class HomepageTableViewController: UITableViewController {
             } else {
                 DispatchQueue.main.async {
                     self?.officeLoadingError = "Oops, something went wrong"
-                    UIView.performWithoutAnimation {
-                        self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                    if self?.tableView.dataHasChanged == true {
+                        self?.tableView.reloadData()
+                    } else {
+                        UIView.performWithoutAnimation {
+                            self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                        }
                     }
                 }
             }
@@ -260,8 +280,12 @@ extension HomepageTableViewController: OfficeSelectionDelegate {
     
     private func updateUIWithSelectedOffice() {
         officeLoadingError = nil
-        UIView.performWithoutAnimation {
-            tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+        if tableView.dataHasChanged {
+            tableView.reloadData()
+        } else {
+            UIView.performWithoutAnimation {
+                tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+            }
         }
     }
 }

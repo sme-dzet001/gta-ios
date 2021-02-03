@@ -15,6 +15,8 @@
 #import "GULKeychainStorage.h"
 #import "GULKeychainUtils.h"
 #import "GULSecureCoding.h"
+#import "GULURLSessionDataResponse.h"
+#import "NSURLSession+GULPromises.h"
 #import "GULLogger.h"
 #import "GULLoggerLevel.h"
 #import "GULUserDefaults.h"

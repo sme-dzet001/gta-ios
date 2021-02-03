@@ -15,8 +15,10 @@ class APIManager: NSObject, URLSessionDelegate {
     
     #if GTADev
     let baseUrl = "https://gtadev.smedsp.com:8888"
-    #else
+    #elseif GTAStage
     let baseUrl = "https://gtastageapi.smedsp.com:8888"
+    #else
+    let baseUrl = "https://gtainternal.smedsp.com:8888"
     #endif
     private let accessToken: String?
     

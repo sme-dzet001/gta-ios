@@ -588,6 +588,9 @@
 		C91F707B2562FE98002F17B1 /* HelpDeskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskViewController.swift; sourceTree = "<group>"; };
 		C91F70892562FEC5002F17B1 /* HelpDeskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskCell.swift; sourceTree = "<group>"; };
 		C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpDeskCell.xib; sourceTree = "<group>"; };
+		C937226325C9B27300152E9F /* GTA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GTA.entitlements; sourceTree = "<group>"; };
+		C937226425C9B28E00152E9F /* GTAStage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GTAStage.entitlements; sourceTree = "<group>"; };
+		C937226A25C9B29D00152E9F /* GTADev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GTADev.entitlements; sourceTree = "<group>"; };
 		C93FCF0425648FA0001E86F6 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		C93FCF0525648FA0001E86F6 /* AboutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		C93FCF172564901E001E86F6 /* AboutInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInfoCell.swift; sourceTree = "<group>"; };
@@ -705,6 +708,9 @@
 		659A5AA4255401EA00E13B77 = {
 			isa = PBXGroup;
 			children = (
+				C937226325C9B27300152E9F /* GTA.entitlements */,
+				C937226425C9B28E00152E9F /* GTAStage.entitlements */,
+				C937226A25C9B29D00152E9F /* GTADev.entitlements */,
 				659A5AAF255401EA00E13B77 /* GTA */,
 				659A5AC6255401EE00E13B77 /* GTATests */,
 				659A5AD1255401EE00E13B77 /* GTAUITests */,
@@ -2398,6 +2404,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
@@ -2421,6 +2428,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 44443HH46G;
@@ -2528,6 +2536,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTAStage.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = "GTA/Plists/GTAStage-Info.plist";
@@ -2549,6 +2558,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTAStage.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = "GTA/Plists/GTAStage-Info.plist";
@@ -2570,6 +2580,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTADev.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "GTA/Plists/GTADev-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2590,6 +2601,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTADev.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "GTA/Plists/GTADev-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
