@@ -708,6 +708,9 @@
 		659A5AA4255401EA00E13B77 = {
 			isa = PBXGroup;
 			children = (
+				C937226325C9B27300152E9F /* GTA.entitlements */,
+				C937226425C9B28E00152E9F /* GTAStage.entitlements */,
+				C937226A25C9B29D00152E9F /* GTADev.entitlements */,
 				659A5AAF255401EA00E13B77 /* GTA */,
 				659A5AC6255401EE00E13B77 /* GTATests */,
 				659A5AD1255401EE00E13B77 /* GTAUITests */,
@@ -733,9 +736,6 @@
 		659A5AAF255401EA00E13B77 /* GTA */ = {
 			isa = PBXGroup;
 			children = (
-				C937226325C9B27300152E9F /* GTA.entitlements */,
-				C937226425C9B28E00152E9F /* GTAStage.entitlements */,
-				C937226A25C9B29D00152E9F /* GTADev.entitlements */,
 				65D29081256C0D8F001B658A /* Utils */,
 				65D29080256C0D7E001B658A /* Communication */,
 				659A5AF9255457B600E13B77 /* Extensions.swift */,
