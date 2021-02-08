@@ -137,11 +137,12 @@ extension LoginUSMViewController: WKNavigationDelegate {
             return
         }
         if navigationRequestURL.absoluteString.contains("app_code=1160") {
-            usmWebView.alpha = 0
-            activityIndicator.stopAnimating()
-            displayError(errorMessage: "Your account is not setup properly. Please, contact your administrator.", title: "Login Failed") { (_) in
-                self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
-            }
+            showLoginFailedAlert(message: "Your account is not setup properly. Please, contact your administrator.", title: "Login Failed")
+            decisionHandler(.cancel)
+            return
+        }
+        if navigationRequestURL.absoluteString.contains("app_code=1267") {
+            showLoginFailedAlert(message: "You don't have an account. Please, contact your administrator.", title: nil)
             decisionHandler(.cancel)
             return
         }
@@ -187,6 +188,14 @@ extension LoginUSMViewController: WKNavigationDelegate {
         if let url = webView.url?.absoluteString, url.contains("login") {
             usmWebView.alpha = 1
             activityIndicator.stopAnimating()
+        }
+    }
+    
+    private func showLoginFailedAlert(message: String, title: String?) {
+        usmWebView.alpha = 0
+        activityIndicator.stopAnimating()
+        displayError(errorMessage: message, title: title) { (_) in
+            self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
         }
     }
 }

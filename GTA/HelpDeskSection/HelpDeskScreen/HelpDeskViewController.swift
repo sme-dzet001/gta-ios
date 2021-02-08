@@ -16,6 +16,7 @@ class HelpDeskViewController: UIViewController {
     private var dataProvider: HelpDeskDataProvider = HelpDeskDataProvider()
     
     var dataResponse: HelpDeskResponse?
+    private var statusResponse: HelpDeskStatus = HelpDeskStatus()
     var helpDeskResponseError: Error?
     
     private var helpDeskCellsData: [[HelpDeskCellData]] = []
@@ -31,6 +32,7 @@ class HelpDeskViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getServiceDeskStatus()
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             startAnimation()
             self.getHelpDeskData()
@@ -44,9 +46,20 @@ class HelpDeskViewController: UIViewController {
                 self?.lastUpdateDate = isFromCache ? nil : Date().addingTimeInterval(60)
                 self?.dataResponse = helpDeskResponse
             }
+            self?.statusResponse.hoursOfOperation = response?.hoursOfOperation
+            self?.setUpHeaderView()
             self?.helpDeskResponseError = error
             self?.setHelpDeskCellsData()
             self?.stopAnimation()
+        }
+    }
+    
+    private func getServiceDeskStatus() {
+        dataProvider.getGSDStatus {[weak self] (status, errorCode, error, isFromCache) in
+            if error == nil, let _ = status {
+                self?.statusResponse.statusString = status?.serviceDeskStatus
+            }
+            self?.setUpHeaderView()
         }
     }
 
@@ -75,9 +88,12 @@ class HelpDeskViewController: UIViewController {
     }
     
     private func setUpHeaderView() {
-        let header = HelpDeskHeader.instanceFromNib()
-        headerView.addSubview(header)
-        header.pinEdges(to: headerView)
+        DispatchQueue.main.async {
+            let header = HelpDeskHeader.instanceFromNib()
+            self.headerView.addSubview(header)
+            header.pinEdges(to: self.headerView)
+            header.setStatus(statusData: self.statusResponse)
+        }
     }
 
     private func setUpTableView() {
@@ -236,4 +252,12 @@ struct HelpDeskCellData {
     var cellTitle: String?
     var cellSubtitle: String?
     var updatesNumber: Int?
+}
+
+struct HelpDeskStatus {
+    var statusString: String?
+    var hoursOfOperation: String?
+    var status: SystemStatus {
+        return SystemStatus(status: statusString)
+    }
 }

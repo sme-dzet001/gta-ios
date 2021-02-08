@@ -15,8 +15,10 @@ class APIManager: NSObject, URLSessionDelegate {
     
     #if GTADev
     let baseUrl = "https://gtadev.smedsp.com:8888"
-    #else
+    #elseif GTAStage
     let baseUrl = "https://gtastageapi.smedsp.com:8888"
+    #else
+    let baseUrl = "https://gtainternal.smedsp.com:8888"
     #endif
     private let accessToken: String?
     
@@ -35,6 +37,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getAllAppsData(generationNumber: Int)
         case getAppDetails(generationNumber: Int)
         case getAppContacts(generationNumber: Int)
+        case getGSDStatus(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -50,6 +53,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getAllAppsData(let generationNumber): return "/v3/widgets/all_apps/data/\(generationNumber)/detailed"
                 case .getAppDetails(let generationNumber): return "/v3/widgets/app_details/data/\(generationNumber)/detailed"
                 case .getAppContacts(let generationNumber): return "/v3/widgets/app_contacts/data/\(generationNumber)/detailed"
+                case .getGSDStatus(let generationNumber): return "/v3/widgets/gsd_status/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -68,6 +72,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case appDetails = "app_details"
         case appContacts = "app_contacts"
         case productionAlerts = "production_alerts"
+        case gsdStatus = "gsd_status"
     }
     
     init(accessToken: String?) {
@@ -134,6 +139,11 @@ class APIManager: NSObject, URLSessionDelegate {
     func getTeamContacts(generationNumber: Int, completion: ((_ teamContactsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         makeRequest(endpoint: .getTeamContactsData(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+    }
+    
+    func getGSDStatus(generationNumber: Int, completion: ((_ statusData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getGSDStatus(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     //MARK: - My Apps methods
     

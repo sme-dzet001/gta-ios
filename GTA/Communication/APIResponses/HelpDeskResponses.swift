@@ -34,8 +34,9 @@ struct HelpDeskResponse: Codable {
     
     var serviceDeskPhoneNumber: String? {
         guard let values = values, let index = indexes["service_phone"], values.count > index else { return nil }
-        return convertPhoneNumber(number: values[index])
+        return values[index] //convertPhoneNumber(number: values[index])
     }
+    
     var serviceDeskEmail: String? {
         guard let values = values, let index = indexes["service_email"], values.count > index else { return nil }
         return values[index]
@@ -43,6 +44,11 @@ struct HelpDeskResponse: Codable {
     
     var teamsChatLink: String? {
         guard let values = values, let index = indexes["service_teams_channel"], values.count > index else { return nil }
+        return values[index]
+    }
+    
+    var hoursOfOperation: String? {
+        guard let values = values, let index = indexes["hours_of_operation"], values.count > index else { return nil }
         return values[index]
     }
     
@@ -148,5 +154,34 @@ struct TeamContactsData: Codable {
 struct TeamContactsResponse: Codable {
     var meta: ResponseMetaData
     var data: TeamContactsData?
+}
+
+struct GSDStatus: Codable {
+    var meta: ResponseMetaData?
+    var data: GSDStatusData?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case meta = "meta"
+        case data = "data"
+    }
+    
+    private var values: [QuantumValue?]? {
+        guard let rows = data?.rows, !rows.isEmpty else { return [] }
+        return rows.first?.values //data["rows"]?.first?.values
+    }
+    
+    var serviceDeskStatus: String? {
+        guard let values = values, let index = indexes["status"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+}
+
+struct GSDStatusData: Codable {
+    var rows: [GSDStatusRow]?
+}
+
+struct GSDStatusRow: Codable {
+    var values: [QuantumValue?]?
 }
 

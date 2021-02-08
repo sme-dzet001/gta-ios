@@ -3,9 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Application wants to use your location</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Application wants to use your location</string>
+	<string>GTA app wants to use your location for office selection.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
