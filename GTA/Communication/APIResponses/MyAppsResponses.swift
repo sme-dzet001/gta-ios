@@ -187,12 +187,12 @@ struct AppContactsData: Codable {
 
 struct AppDetailsData: Codable {
     var meta: ResponseMetaData
-    var data: [String : [String : UserData]]?
+    var data: [String : UserData]?
     
     var indexes: [String : Int] = [:]
     
     private var values: [QuantumValue?]? {
-        let rows = data?.first?.value.first?.value.data?.rows?.first?.values
+        let rows = data?.first?.value.data?.rows?.first?.values
         return rows
     }
     
@@ -228,11 +228,6 @@ struct AppDetailsData: Codable {
     
     var appTeamContact: String? {
         guard let _ = values, let index = indexes["app team contact"], values!.count > index else { return nil }
-        return values?[index]?.stringValue
-    }
-    
-    var lastUpdate: String? {
-        guard let _ = values, let index = indexes["last update"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
     

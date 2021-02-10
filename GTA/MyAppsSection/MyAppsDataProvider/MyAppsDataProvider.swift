@@ -348,9 +348,9 @@ class MyAppsDataProvider {
     
     private func processAppDetailsSectionReport(_ app: String?, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
-        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetails.rawValue }?.generationNumber
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetailsAll.rawValue }?.generationNumber
         if let _ = generationNumber {
-            let detailsPath = (KeychainManager.getUsername() ?? "") + "/" + (app ?? "")
+            let detailsPath = app ?? ""
             if fromCache {
                 getCachedResponse(for: .getAppDetails(detailsPath: detailsPath)) {[weak self] (data, error) in
                     if let _ = data, error == nil {
@@ -359,7 +359,7 @@ class MyAppsDataProvider {
                 }
                 return
             }
-            apiManager.getAppDetailsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
+            apiManager.getAppDetailsData(for: generationNumber!, appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAppDetails(detailsPath: detailsPath))
                 self?.processAppDetails(reportData, data, errorCode, error, completion)
             })
