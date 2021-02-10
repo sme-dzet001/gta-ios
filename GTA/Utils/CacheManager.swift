@@ -74,7 +74,7 @@ class CacheManager {
             case .getQuickHelpData: return "/v3/widgets/gsd_quick_help/data/"
             case .getTeamContactsData: return "/v3/widgets/gsd_team_contacts/data/"
             case .getMyAppsData: return "/v3/widgets/my_apps_status/data/"
-            case .getAllAppsData: return "/v3/widgets/all_apps/data/"
+            case .getAllAppsData: return "/v3/widgets/all_apps_status/data/"
             case .getAppDetails(let detailsPath): return "/v3/widgets/app_details/data/\(detailsPath)"
             case .getAppContacts(let contactsPath): return "/v3/widgets/app_contacts_all/data/\(contactsPath)"
             case .getGSDStatus: return "/v3/widgets/gsd_status/data/"

@@ -173,16 +173,12 @@ class MyAppsDataProvider {
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
         for (index, info) in allAppsData!.myAppsStatus.enumerated() {
             let appNameIndex = myAppsStatusData?.indexes["app name"] ?? 0
-            let statusIndex = myAppsStatusData?.indexes["status"] ?? 0
-            let appLastUpdateIndex = myAppsStatusData?.indexes["last update"] ?? 0
-            let status = myAppsStatusData?.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name})
-            response[index].appStatus = SystemStatus(status: status?.values?[statusIndex]?.stringValue)
-            response[index].lastUpdateDate = status?.values?[appLastUpdateIndex]?.stringValue
+            let isMyApp = myAppsStatusData?.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name}) != nil
             if appImageData.keys.contains(response[index].appImageData.app_icon ?? ""), let data =  appImageData[response[index].appImageData.app_icon ?? ""] {
                 response[index].appImageData.imageData = data
                 response[index].appImageData.imageStatus = .loaded
             }
-            if let _ = status {
+            if isMyApp {
                 myAppsSection.cellData.append(response[index])
             } else {
                 otherAppsSection.cellData.append(response[index])
