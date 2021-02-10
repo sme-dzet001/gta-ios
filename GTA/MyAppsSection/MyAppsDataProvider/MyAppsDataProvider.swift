@@ -61,6 +61,20 @@ class MyAppsDataProvider {
         }
     }
     
+    func getContactImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+        if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
+            completion(cachedResponse, nil)
+            return
+        } else {
+            apiManager.loadImageData(from: url) { (data, response, error) in
+                self.imageCacheManager.storeCacheResponse(response, data: data)
+                DispatchQueue.main.async {
+                    completion(data, error)
+                }
+            }
+        }
+    }
+    
     func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
         getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
             self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, isFromCache, completion)
@@ -128,6 +142,13 @@ class MyAppsDataProvider {
     
     private func formImageURL(from imagePath: String?) -> String {
         guard let imagePath = imagePath else { return "" }
+        guard !imagePath.contains("https://") else  { return imagePath }
+        let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
+        return imageURL
+    }
+    
+    func formContactImageURL(from imagePath: String?) -> String? {
+        guard let imagePath = imagePath, !imagePath.isEmpty else { return nil }
         guard !imagePath.contains("https://") else  { return imagePath }
         let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
         return imageURL
@@ -290,7 +311,7 @@ class MyAppsDataProvider {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appContacts.rawValue }?.generationNumber
         if let _ = generationNumber {
-            let contactsPath = (KeychainManager.getUsername() ?? "") + "/" + (app ?? "")
+            let contactsPath = app ?? ""
             if fromCache {
                 getCachedResponse(for: .getAppContacts(contactsPath: contactsPath)) {[weak self] (data, error) in
                     if let _ = data, error == nil {
@@ -299,7 +320,7 @@ class MyAppsDataProvider {
                 }
                 return
             }
-            apiManager.getAppContactsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
+            apiManager.getAppContactsData(for: generationNumber!, appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAppContacts(contactsPath: contactsPath))
                 self?.processAppContacts(reportData, data, errorCode, error, completion)
             })

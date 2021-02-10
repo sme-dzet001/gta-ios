@@ -11,15 +11,10 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var dataSource: AboutDataSource?
-    private var lastUpdateDate: Date?
-    var appName: String? = ""
     var appTitle: String?
-    var appContactsData: AppContactsData?
     var dataProvider: MyAppsDataProvider?
     var details: AppDetailsData?
-    var contactsDataResponseError: Error?
     var detailsDataResponseError: Error?
     var imageDataResponseError: Error?
     var appImageUrl: String = ""
@@ -39,55 +34,17 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
             self.imageDataResponseError = error
             self.appImageData = imageData
         })
-        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
-            getAppContactsData()
-        }
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        contactsDataResponseError = nil
         detailsDataResponseError = nil
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     @objc private func didBecomeActive() {
-        getAppContactsData()
         tableView.reloadData()
-    }
-    
-    private func getAppContactsData() {
-        contactsDataResponseError = nil
-        dataProvider?.getAppContactsData(for: appName) { [weak self] (contactsData, errorCode, error) in
-            if error == nil, errorCode == 200 {
-                self?.lastUpdateDate = Date().addingTimeInterval(60)
-            }
-            self?.contactsDataResponseError = error
-            self?.appContactsData = contactsData
-            self?.dataSource?.contactsData = self?.appContactsData?.contactsData ?? []
-            self?.stopAnimation()
-        }
-    }
-    
-    private func startAnimation() {
-        guard appContactsData == nil else { return }
-        self.tableView.alpha = 0
-        self.navigationItem.setHidesBackButton(true, animated: false)
-        self.view.addSubview(self.activityIndicator)
-        self.activityIndicator.center = CGPoint(x: view.frame.size.width  / 2,
-                                                y: view.frame.size.height / 2)
-        self.activityIndicator.hidesWhenStopped = true
-        self.activityIndicator.startAnimating()
-    }
-    
-    private func stopAnimation() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            self.tableView.alpha = 1
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.removeFromSuperview()
-        }
     }
     
     private func setUpNavigationItem() {
@@ -98,14 +55,13 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     private func setUpTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "AboutInfoCell", bundle: nil), forCellReuseIdentifier: "AboutInfoCell")
-        tableView.register(UINib(nibName: "AboutContactsCell", bundle: nil), forCellReuseIdentifier: "AboutContactsCell")
         tableView.register(UINib(nibName: "AboutSupportCell", bundle: nil), forCellReuseIdentifier: "AboutSupportCell")
         tableView.register(UINib(nibName: "AboutSupportPolicyCell", bundle: nil), forCellReuseIdentifier: "AboutSupportPolicyCell")
         tableView.register(UINib(nibName: "AboutHeaderCell", bundle: nil), forCellReuseIdentifier: "AboutHeaderCell")
     }
     
     private func configureDataSource() {
-        dataSource = AboutDataSource(contactsData: appContactsData?.contactsData ?? [])
+        dataSource = AboutDataSource()
         let supportData = createSupportData()
         if !supportData.isEmpty {
             dataSource?.supportData = supportData
@@ -147,7 +103,7 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
 extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -157,8 +113,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             return dataSource?.supportData?.count ?? 1 
         default:
-            let count = dataSource?.contactsData.count ?? 0
-            return count == 0 ? 1 : count
+            return 0
         }
     }
     
@@ -167,20 +122,13 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
             let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 1))
             view.backgroundColor = UIColor(red: 234.0 / 255.0, green: 236.0 / 255.0, blue: 239.0 / 255.0, alpha: 1.0)
             return view
+        } else {
+            return nil
         }
-        guard section == 2 else { return nil }
-        let header = AboutContactsHeader.instanceFromNib()
-        header.headerTitleLabel.text = "Contacts"
-        return header
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 2:
-            return 69
-        default:
-            return 0
-        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -220,18 +168,6 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
                 return cell ?? UITableViewCell()
             }
         }
-
-        if let error = contactsDataResponseError as? ResponseError {
-            return createErrorCell(with: error.localizedDescription)
-        } else if contactsDataResponseError == nil, (dataSource?.contactsData ?? []).isEmpty {
-            return createLoadingCell()
-        }
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "AboutContactsCell", for: indexPath) as? AboutContactsCell {
-            let cellDataSource = dataSource?.contactsData[indexPath.row]
-            cell.contactEmail = cellDataSource?.email
-            cell.setUpCell(with: cellDataSource)
-            return cell
-        }
         return UITableViewCell()
     }
     
@@ -249,17 +185,9 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
 
 struct AboutDataSource {
     var supportData: [SupportData]? = nil
-    var contactsData: [ContactData]
 }
 
 struct SupportData {
     var title: String?
     var value: String?
-}
-
-struct ContactData {
-    var contactName: String?
-    var contactPosition: String?
-    var phoneNumber: String?
-    var email: String?
 }

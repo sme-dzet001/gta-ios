@@ -1,20 +1,24 @@
 //
-//  AboutContactsCell.swift
+//  AppContactCell.swift
 //  GTA
 //
-//  Created by Ivan Shmyhovskyi on 18.11.2020.
+//  Created by Ivan Shmyhovskyi on 10.02.2021.
 //
 
 import UIKit
 
-class AboutContactsCell: UITableViewCell {
-    
+class AppContactCell: UITableViewCell {
+
+    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var contactNameLabel: UILabel!
     @IBOutlet weak var positionLabel: UILabel!
-    @IBOutlet weak var phoneNumberLabel: UILabel!
-    @IBOutlet weak var dotSeparator: UIView!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var funFactLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
     
+    var imageUrl: String?
     var contactEmail: String?
 
     override func awakeFromNib() {
@@ -24,20 +28,26 @@ class AboutContactsCell: UITableViewCell {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onEmailTap))
         emailLabel.addGestureRecognizer(tapGesture)
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        photoImageView.image = nil
+        activityIndicator.stopAnimating()
+    }
 
     func setUpCell(with data: ContactData?) {
-        if data?.contactPosition == nil || (data?.contactPosition ?? "").isEmpty {
-            dotSeparator.isHidden = true
-        }
+        photoImageView.layer.cornerRadius = photoImageView.frame.size.width / 2
         contactNameLabel.text = data?.contactName
         positionLabel.text = data?.contactPosition
-        phoneNumberLabel.text = data?.phoneNumber
-        emailLabel.attributedText = formEmailLink(from: data?.email)
+        descriptionLabel.text = data?.contactBio
+        funFactLabel.text = data?.contactFunFact
+        emailLabel.attributedText = formEmailLink(from: data?.contactEmail)
+        locationLabel.text = data?.contactLocation
     }
     
     private func formEmailLink(from text: String?) -> NSMutableAttributedString? {
         guard let text = text else { return nil }
-        let font = UIFont(name: "SFProText-Regular", size: 16)!
+        let font = UIFont(name: "SFProText-Regular", size: 14)!
         let attributes = [NSAttributedString.Key.font: font]
         let attributedText = NSAttributedString(string: text, attributes: attributes)
         let res = NSMutableAttributedString(attributedString: attributedText)

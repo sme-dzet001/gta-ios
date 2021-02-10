@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppContactsViewController" customModule="GTA" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="iZ4-Fu-3cP" id="zOL-r7-pga"/>
+                <outlet property="errorLabel" destination="sFD-vz-nPK" id="ApS-nr-wAu"/>
+                <outlet property="tableView" destination="FSd-Bp-Ryx" id="vYG-kX-rkX"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FSd-Bp-Ryx">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="v5a-Ze-JSE"/>
+                        <outlet property="delegate" destination="-1" id="0VL-64-dDG"/>
+                    </connections>
+                </tableView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sFD-vz-nPK">
+                    <rect key="frame" x="188.5" y="443" width="37.5" height="20"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="iZ4-Fu-3cP">
+                    <rect key="frame" x="197" y="443" width="20" height="20"/>
+                </activityIndicatorView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="FSd-Bp-Ryx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5hF-yt-d1g"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FSd-Bp-Ryx" secondAttribute="trailing" id="B1f-ee-LJb"/>
+                <constraint firstItem="FSd-Bp-Ryx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="DRQ-ww-nAT"/>
+                <constraint firstItem="sFD-vz-nPK" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Guj-US-M46"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="FSd-Bp-Ryx" secondAttribute="bottom" id="W4q-PC-0VD"/>
+                <constraint firstItem="sFD-vz-nPK" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="pr5-0U-PfG"/>
+                <constraint firstItem="iZ4-Fu-3cP" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="zRx-xX-Zzd"/>
+                <constraint firstItem="iZ4-Fu-3cP" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="zd8-La-zJF"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="62"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

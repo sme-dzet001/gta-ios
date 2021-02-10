@@ -52,7 +52,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getMyAppsData(let generationNumber): return "/v3/widgets/my_apps_status/data/\(generationNumber)/detailed"
                 case .getAllAppsData(let generationNumber): return "/v3/widgets/all_apps/data/\(generationNumber)/detailed"
                 case .getAppDetails(let generationNumber): return "/v3/widgets/app_details/data/\(generationNumber)/detailed"
-                case .getAppContacts(let generationNumber): return "/v3/widgets/app_contacts/data/\(generationNumber)/detailed"
+                case .getAppContacts(let generationNumber): return "/v3/widgets/app_contacts_all/data/\(generationNumber)/detailed"
                 case .getGSDStatus(let generationNumber): return "/v3/widgets/gsd_status/data/\(generationNumber)/detailed"
             }
         }
@@ -70,7 +70,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case myAppsStatus = "my_apps_status"
         case allApps = "all_apps"
         case appDetails = "app_details"
-        case appContacts = "app_contacts"
+        case appContacts = "app_contacts_all"
         case productionAlerts = "production_alerts"
         case gsdStatus = "gsd_status"
     }
@@ -164,9 +164,9 @@ class APIManager: NSObject, URLSessionDelegate {
         self.makeRequest(endpoint: .getAppDetails(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
     }
     
-    func getAppContactsData(for generationNumber: Int, username: String, appName: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getAppContactsData(for generationNumber: Int, appName: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        let requestBodyParams = ["s1": username, "s2": appName]
+        let requestBodyParams = ["s1": appName]
         self.makeRequest(endpoint: .getAppContacts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
     }
     

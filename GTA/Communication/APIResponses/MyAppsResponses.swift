@@ -149,21 +149,29 @@ struct ChartData {
 
 struct AppContactsData: Codable {
     var meta: ResponseMetaData
-    var data: [String : [String : UserData]]?
+    var data: [String : UserData]?
     
     var indexes: [String : Int] = [:]
     
     var contactsData: [ContactData]? {
-        guard let appContactRows = data?.first?.value.first?.value.data?.rows else { return nil }
-        guard let appContactTitleIdx = indexes["app contact title"] else { return nil }
-        guard let appContactNameIdx = indexes["app contact name"] else { return nil }
+        guard let appContactRows = data?.first?.value.data?.rows else { return nil }
         guard let appContactEmailIdx = indexes["app contact email"] else { return nil }
+        guard let appContactNameIdx = indexes["app contact name"] else { return nil }
+        guard let appContactTitleIdx = indexes["app contact title"] else { return nil }
+        guard let appContactPictureIdx = indexes["profile picture"] else { return nil }
+        guard let appContactLocationIdx = indexes["location"] else { return nil }
+        guard let appContactBioIdx = indexes["bio"] else { return nil }
+        guard let appContactFunFactIdx = indexes["fun fact"] else { return nil }
         var res = appContactRows.map({ (appContact) -> ContactData in
             guard let values = appContact.values else { return ContactData() }
-            let appContactTitle = values[appContactTitleIdx]?.stringValue
-            let appContactName = values[appContactNameIdx]?.stringValue
             let appContactEmail = values[appContactEmailIdx]?.stringValue
-            return ContactData(contactName: appContactName, contactPosition: appContactTitle, phoneNumber: "", email: appContactEmail)
+            let appContactName = values[appContactNameIdx]?.stringValue
+            let appContactTitle = values[appContactTitleIdx]?.stringValue
+            let appContactPhotoUrl = values[appContactPictureIdx]?.stringValue
+            let appContactLocation = values[appContactLocationIdx]?.stringValue
+            let appContactBio = values[appContactBioIdx]?.stringValue
+            let appContactFunFact = values[appContactFunFactIdx]?.stringValue
+            return ContactData(contactPhotoUrl: appContactPhotoUrl, contactName: appContactName, contactEmail: appContactEmail, contactPosition: appContactTitle, contactLocation: appContactLocation, contactBio: appContactBio, contactFunFact: appContactFunFact)
         })
         res.removeAll(where: {$0.contactName == nil || ($0.contactName ?? "").isEmpty})
         return res
