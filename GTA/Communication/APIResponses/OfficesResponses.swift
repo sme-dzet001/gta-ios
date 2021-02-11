@@ -10,7 +10,7 @@ import Foundation
 // MARK: - All Offices Response
 
 struct OfficeRow: Codable {
-    var values: [QuantumValue]?
+    var values: [QuantumValue?]?
     var indexes: [String : Int] = [:]
     
     enum CodingKeys: String, CodingKey {
@@ -19,42 +19,42 @@ struct OfficeRow: Codable {
     
     var officeId: Int? {
         guard let valuesArr = values, let index = indexes["office id"], valuesArr.count > index else { return nil }
-        return valuesArr[index].intValue
+        return valuesArr[index]?.intValue
     }
     
     var officeName: String? {
         guard let valuesArr = values, let index = indexes["name"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var officeLocation: String? {
         guard let valuesArr = values, let index = indexes["location"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var officeRegion: String? {
         guard let valuesArr = values, let index = indexes["region"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var officeLatitude: Float? {
         guard let valuesArr = values, let index = indexes["gps_location_lat"], valuesArr.count > index else { return nil }
-        return valuesArr[index].floatValue
+        return valuesArr[index]?.floatValue
     }
     
     var officeLongitude: Float? {
         guard let valuesArr = values, let index = indexes["gps_location_long"], valuesArr.count > index else { return nil }
-        return valuesArr[index].floatValue
+        return valuesArr[index]?.floatValue
     }
     
     var officePhone: String? {
         guard let valuesArr = values, let index = indexes["phone"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var officeEmail: String? {
         guard let valuesArr = values, let index = indexes["email"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
 }
 
