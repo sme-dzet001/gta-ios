@@ -17,6 +17,7 @@ class AppContactCell: UITableViewCell {
     @IBOutlet weak var funFactLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var locationIcon: UIImageView!
     
     var imageUrl: String?
     var contactEmail: String?
@@ -43,6 +44,8 @@ class AppContactCell: UITableViewCell {
         funFactLabel.text = data?.contactFunFact
         emailLabel.attributedText = formEmailLink(from: data?.contactEmail)
         locationLabel.text = data?.contactLocation
+        let locationIsMissing = data?.contactLocation == nil || (data?.contactLocation ?? "").isEmpty
+        locationIcon.isHidden = locationIsMissing
     }
     
     private func formEmailLink(from text: String?) -> NSMutableAttributedString? {

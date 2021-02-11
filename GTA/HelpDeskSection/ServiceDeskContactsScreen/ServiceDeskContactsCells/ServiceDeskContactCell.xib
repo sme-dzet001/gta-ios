@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -69,63 +69,66 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="janecooper@mail.com" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWH-Un-jZc">
-                        <rect key="frame" x="56" y="183" width="145.5" height="17"/>
+                        <rect key="frame" x="56" y="184.5" width="145.5" height="17"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location_grey_icon" translatesAutoresizingMaskIntoConstraints="NO" id="XLt-pU-rtB">
-                        <rect key="frame" x="24" y="213" width="24" height="24"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="24" id="12r-ra-R3d"/>
-                            <constraint firstAttribute="width" constant="24" id="844-sZ-JTg"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="US - New York" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S4r-vI-Kfr">
                         <rect key="frame" x="56" y="216.5" width="96.5" height="17"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email_grey_icon" translatesAutoresizingMaskIntoConstraints="NO" id="tWG-Hm-VxL">
-                        <rect key="frame" x="24" y="179.5" width="24" height="24"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="24" id="ZeR-vU-CPM"/>
-                            <constraint firstAttribute="width" constant="24" id="jb1-PY-ShJ"/>
-                        </constraints>
-                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nAQ-wT-md7">
+                        <rect key="frame" x="24" y="181" width="24" height="56"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email_grey_icon" translatesAutoresizingMaskIntoConstraints="NO" id="tWG-Hm-VxL">
+                                <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="ZeR-vU-CPM"/>
+                                    <constraint firstAttribute="width" constant="24" id="jb1-PY-ShJ"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location_grey_icon" translatesAutoresizingMaskIntoConstraints="NO" id="XLt-pU-rtB">
+                                <rect key="frame" x="0.0" y="32" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="12r-ra-R3d"/>
+                                    <constraint firstAttribute="width" constant="24" id="844-sZ-JTg"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                    </stackView>
                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="UJ4-5H-Ois">
                         <rect key="frame" x="38" y="38" width="20" height="20"/>
                     </activityIndicatorView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="EWH-Un-jZc" firstAttribute="leading" secondItem="tWG-Hm-VxL" secondAttribute="trailing" constant="8" id="3Ct-dJ-l5f"/>
                     <constraint firstAttribute="trailing" secondItem="NPQ-wa-G6K" secondAttribute="trailing" constant="24" id="3wf-DW-OiQ"/>
                     <constraint firstItem="8eG-Ef-tqd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="8KJ-iI-M2S"/>
-                    <constraint firstItem="XLt-pU-rtB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tWG-Hm-VxL" secondAttribute="bottom" constant="8" id="8z2-zc-Vg9"/>
-                    <constraint firstItem="S4r-vI-Kfr" firstAttribute="centerY" secondItem="XLt-pU-rtB" secondAttribute="centerY" id="93v-aw-3lP"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="S4r-vI-Kfr" secondAttribute="trailing" constant="24" id="BUg-xc-nwL"/>
+                    <constraint firstItem="nAQ-wT-md7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="FUQ-M5-qZ5"/>
                     <constraint firstItem="UJ4-5H-Ois" firstAttribute="centerX" secondItem="8eG-Ef-tqd" secondAttribute="centerX" id="IQo-dW-aXb"/>
-                    <constraint firstItem="tWG-Hm-VxL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="JYi-hl-3Y4"/>
+                    <constraint firstItem="4C5-ZB-Qee" firstAttribute="top" secondItem="nAQ-wT-md7" secondAttribute="bottom" constant="24" id="LCt-3A-Xcv"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="f32-DC-AeN" secondAttribute="trailing" constant="16" id="Rmp-aX-nNq"/>
                     <constraint firstAttribute="trailing" secondItem="4C5-ZB-Qee" secondAttribute="trailing" id="Sx7-9a-vVW"/>
                     <constraint firstItem="yLF-bZ-QA7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="TFv-9C-ux5"/>
-                    <constraint firstItem="S4r-vI-Kfr" firstAttribute="leading" secondItem="XLt-pU-rtB" secondAttribute="trailing" constant="8" id="TbS-KE-Dex"/>
+                    <constraint firstItem="nAQ-wT-md7" firstAttribute="top" secondItem="yLF-bZ-QA7" secondAttribute="bottom" constant="14" id="TXa-n9-gks"/>
                     <constraint firstAttribute="bottom" secondItem="4C5-ZB-Qee" secondAttribute="bottom" id="Tg9-BF-7AB"/>
+                    <constraint firstItem="EWH-Un-jZc" firstAttribute="centerY" secondItem="tWG-Hm-VxL" secondAttribute="centerY" id="Vjh-eh-NbX"/>
+                    <constraint firstItem="EWH-Un-jZc" firstAttribute="leading" secondItem="nAQ-wT-md7" secondAttribute="trailing" constant="8" id="X1U-oV-j8F"/>
+                    <constraint firstItem="S4r-vI-Kfr" firstAttribute="leading" secondItem="nAQ-wT-md7" secondAttribute="trailing" constant="8" id="ZUE-OS-DRo"/>
                     <constraint firstItem="8eG-Ef-tqd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="Zij-CS-cyH"/>
                     <constraint firstItem="NPQ-wa-G6K" firstAttribute="top" relation="greaterThanOrEqual" secondItem="f32-DC-AeN" secondAttribute="bottom" constant="8" id="ZtH-bj-1lO"/>
-                    <constraint firstItem="EWH-Un-jZc" firstAttribute="top" secondItem="yLF-bZ-QA7" secondAttribute="bottom" constant="16" id="bhd-3Z-1en"/>
                     <constraint firstItem="f32-DC-AeN" firstAttribute="leading" secondItem="8eG-Ef-tqd" secondAttribute="trailing" constant="16" id="e6M-hQ-AVx"/>
-                    <constraint firstItem="4C5-ZB-Qee" firstAttribute="top" secondItem="XLt-pU-rtB" secondAttribute="bottom" constant="24" id="lsv-vy-aX2"/>
                     <constraint firstItem="NPQ-wa-G6K" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="nXf-5J-EH3"/>
                     <constraint firstItem="yLF-bZ-QA7" firstAttribute="top" secondItem="NPQ-wa-G6K" secondAttribute="bottom" constant="12" id="o7S-Gg-HwA"/>
                     <constraint firstAttribute="trailing" secondItem="yLF-bZ-QA7" secondAttribute="trailing" constant="24" id="oU8-Gt-AUl"/>
                     <constraint firstItem="NPQ-wa-G6K" firstAttribute="top" secondItem="8eG-Ef-tqd" secondAttribute="bottom" priority="750" constant="16" id="opb-IJ-Wdx"/>
                     <constraint firstItem="UJ4-5H-Ois" firstAttribute="centerY" secondItem="8eG-Ef-tqd" secondAttribute="centerY" id="tEK-9i-qHD"/>
-                    <constraint firstItem="XLt-pU-rtB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="tr3-7e-uBf"/>
                     <constraint firstItem="4C5-ZB-Qee" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="vhb-oH-9AJ"/>
+                    <constraint firstItem="S4r-vI-Kfr" firstAttribute="centerY" secondItem="XLt-pU-rtB" secondAttribute="centerY" id="w3g-ME-m5d"/>
                     <constraint firstItem="f32-DC-AeN" firstAttribute="centerY" secondItem="8eG-Ef-tqd" secondAttribute="centerY" id="wGd-68-w4z"/>
-                    <constraint firstItem="tWG-Hm-VxL" firstAttribute="centerY" secondItem="EWH-Un-jZc" secondAttribute="centerY" id="yX0-s0-R2L"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="EWH-Un-jZc" secondAttribute="trailing" constant="24" id="znt-AK-Kbm"/>
                 </constraints>
             </tableViewCellContentView>
@@ -136,6 +139,7 @@
                 <outlet property="descriptionLabel" destination="NPQ-wa-G6K" id="wX4-sd-HJE"/>
                 <outlet property="emailLabel" destination="EWH-Un-jZc" id="ABy-85-tOz"/>
                 <outlet property="funFactLabel" destination="yLF-bZ-QA7" id="CzE-Td-6TW"/>
+                <outlet property="locationIcon" destination="XLt-pU-rtB" id="Ts4-PQ-ZnA"/>
                 <outlet property="locationLabel" destination="S4r-vI-Kfr" id="Vu9-HY-jLK"/>
                 <outlet property="photoImageView" destination="8eG-Ef-tqd" id="jWE-3Z-DPM"/>
                 <outlet property="positionLabel" destination="8qe-2B-OS9" id="eF1-wS-CDM"/>
