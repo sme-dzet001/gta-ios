@@ -175,7 +175,7 @@ struct AppContactsData: Codable {
             let appContactFunFact = values[appContactFunFactIdx]?.stringValue
             return ContactData(contactPhotoUrl: appContactPhotoUrl, contactName: appContactName, contactEmail: appContactEmail, contactPosition: appContactTitle, contactLocation: appContactLocation, contactBio: appContactBio, contactFunFact: appContactFunFact)
         })
-        res.removeAll(where: {$0.contactName == nil || ($0.contactName ?? "").isEmpty})
+        res.removeAll(where: {$0.contactName == nil || ($0.contactName ?? "").isEmpty || $0.contactEmail == nil || ($0.contactEmail ?? "").isEmpty})
         return res
     }
     

@@ -33,6 +33,9 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         dataProvider?.getAppImageData(from: appImageUrl, completion: { (imageData, error) in
             self.imageDataResponseError = error
             self.appImageData = imageData
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         })
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }

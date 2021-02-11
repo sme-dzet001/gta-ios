@@ -286,6 +286,7 @@ class HelpDeskDataProvider {
             }
         }
         teamContactsData = response.data?.rows ?? []
+        teamContactsData.removeAll { $0.contactName == nil || ($0.contactName ?? "").isEmpty || $0.contactEmail == nil || ($0.contactEmail ?? "").isEmpty }
     }
     
     func formImageURL(from imagePath: String?) -> String? {
