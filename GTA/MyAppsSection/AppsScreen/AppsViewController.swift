@@ -55,6 +55,8 @@ class AppsViewController: UIViewController {
                     //self?.dataProvider.getImageData(for: appInfo ?? [])
                 } else if !isFromCache, let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
                     self?.stopAnimation()
+                } else if !isFromCache, let isEmpty = self?.dataProvider.appsData.isEmpty, isEmpty, self?.allAppsLoadingError != nil {
+                    self?.stopAnimation()
                 }
             }
         }

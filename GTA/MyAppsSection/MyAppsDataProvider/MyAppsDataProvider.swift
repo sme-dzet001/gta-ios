@@ -75,7 +75,7 @@ class MyAppsDataProvider {
         }
     }
     
-    func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
+    func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
             self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, isFromCache, completion)
         }
@@ -195,7 +195,7 @@ class MyAppsDataProvider {
         return result
     }
     
-    private func processMyApps(isFromCache: Bool = true, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
+    private func processMyApps(isFromCache: Bool = true, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         var myAppsResponse: MyAppsResponse?
         var retErr = error
         if let responseData = myAppsDataResponse {
@@ -218,7 +218,7 @@ class MyAppsDataProvider {
         completion?(errorCode, retErr, isFromCache)
     }
     
-    private func processMyAppsStatusSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
+    private func processMyAppsStatusSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
         if let _ = generationNumber {
