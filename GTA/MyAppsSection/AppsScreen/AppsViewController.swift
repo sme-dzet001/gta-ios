@@ -201,7 +201,6 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard allAppsLoadingError == nil, myAppsLoadingError == nil else { return }
         guard indexPath.section < dataProvider.appsData.count else { return }
         guard !dataProvider.appsData[indexPath.section].cellData.isEmpty else { return }
         let appVC = ApplicationStatusViewController()
