@@ -10,6 +10,7 @@ import CoreLocation
 
 protocol UserLocationManagerDelegate: class {
     func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?)
+    func userDeniedToGetHisLocation()
 }
 
 class UserLocationManager: NSObject {
@@ -26,10 +27,19 @@ class UserLocationManager: NSObject {
         locationManager.delegate = self
     }
     
-    func getCurrentUserLocation() {
+    /// - Returns: false - if user denied to get his location, otherwise returns true (user accepted to get his location, or his choice is not determined yet)
+    func getCurrentUserLocation() -> Bool {
         locationManager.requestWhenInUseAuthorization()
-        if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways) {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse, .authorizedAlways:
             locationManager.requestLocation()
+            return true
+        case .notDetermined:
+            return true
+        case .denied, .restricted:
+            return false
+        default:
+            return true
         }
     }
     
@@ -45,7 +55,9 @@ extension UserLocationManager: CLLocationManagerDelegate {
     
     // trigers after user tap on 'Allow' or 'Disallow' on the dialog
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
+        if status == .denied || status == .restricted {
+            userLocationManagerDelegate?.userDeniedToGetHisLocation()
+        } else if status == .authorizedWhenInUse || status == .authorizedAlways {
             manager.requestLocation()
         }
     }

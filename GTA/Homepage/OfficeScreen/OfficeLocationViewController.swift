@@ -9,7 +9,7 @@ import UIKit
 import PanModal
 
 protocol OfficeSelectionDelegate: class {
-    func officeWasSelected(_ officeId: Int)
+    func officeWasSelected()
 }
 
 class OfficeLocationViewController: UIViewController {
@@ -24,6 +24,18 @@ class OfficeLocationViewController: UIViewController {
     private let defaultBackButtonLeading: CGFloat = 24
     
     weak var officeSelectionDelegate: OfficeSelectionDelegate?
+    
+    // bottom params are used to determine if office selection is in progress
+    var useMyCurrentLocationIsInProgress = false {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    var officeIdGoingToBeSelected: Int? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     var forceOfficeSelection = false
     var selectedRegionName: String?
@@ -134,6 +146,9 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     
     func provideRegionCell(for indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
+            if useMyCurrentLocationIsInProgress {
+                return createLoadingCell(withBottomSeparator: true, withTopSeparator: true)
+            }
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
             cell?.mainLabel.text = "Use My Current Location"
             cell?.descriptionLabel.text = "Will select office based on your current location"
@@ -149,6 +164,9 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func provideOfficeCell(for indexPath: IndexPath) -> UITableViewCell {
+        if let officeIdInProgress = officeIdGoingToBeSelected, officeDataSource[indexPath.row].officeId == officeIdInProgress {
+            return createLoadingCell(withBottomSeparator: true, withTopSeparator: indexPath.row == 0)
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeSelectionCell", for: indexPath) as? OfficeSelectionCell
         cell?.mainLabel.text = officeDataSource[indexPath.row].text
         cell?.descriptionLabel.text = officeDataSource[indexPath.row].additionalText?.replacingOccurrences(of: "\u{00A0}", with: " ")
@@ -162,14 +180,21 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         if regionSelectionIsOn {
             if indexPath.row == 0 {
                 // "Use My Current Location" option was selected
-                dataProvider?.getClosestOffice()
+                guard !useMyCurrentLocationIsInProgress else { return }
+                useMyCurrentLocationIsInProgress = true
+                let gettingLocationIsAllowed = dataProvider?.getClosestOffice()
+                if let isAllowed = gettingLocationIsAllowed, !isAllowed {
+                    useMyCurrentLocationIsInProgress = false
+                    displayError(errorMessage: "Please allow getting your location to use this functionality")
+                }
             } else {
                 showOfficeLocationVC(for: regionDataSource[indexPath.row].text)
             }
         } else {
             guard indexPath.row < officeDataSource.count, let selectedOfficeId = officeDataSource[indexPath.row].officeId else { return }
-            officeSelectionDelegate?.officeWasSelected(selectedOfficeId)
-            self.dismiss(animated: true, completion: nil)
+            guard officeIdGoingToBeSelected == nil else { return }
+            officeIdGoingToBeSelected = selectedOfficeId
+            setCurrentOffice(officeId: selectedOfficeId, basedOnCurrentLocation: false)
         }
     }
     
@@ -184,17 +209,42 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         self.navigationController?.pushWithFadeAnimationVC(office)
     }
     
+    private func setCurrentOffice(officeId: Int, basedOnCurrentLocation: Bool) {
+        let officeWasChanged = dataProvider?.userOffice?.officeId != officeId
+        dataProvider?.setCurrentOffice(officeId: officeId, completion: { [weak self] (errorCode, error) in
+            DispatchQueue.main.async {
+                if basedOnCurrentLocation {
+                    self?.useMyCurrentLocationIsInProgress = false
+                } else {
+                    self?.officeIdGoingToBeSelected = nil
+                }
+                if errorCode == 200, error == nil {
+                    self?.officeSelectionDelegate?.officeWasSelected()
+                    self?.dismiss(animated: true, completion: nil)
+                } else if officeWasChanged {
+                    self?.displayError(errorMessage: "Oops, something went wrong")
+                }
+            }
+        })
+    }
+    
 }
 
 extension OfficeLocationViewController: UserLocationManagerDelegate {
+    func userDeniedToGetHisLocation() {
+        guard useMyCurrentLocationIsInProgress else { return }
+        useMyCurrentLocationIsInProgress = false
+        displayError(errorMessage: "Please allow getting your location to use this functionality")
+    }
+    
     func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?) {
         guard let officeCoord = officeCoord, let officeId = dataProvider?.getClosestOfficeId(by: officeCoord) else {
             if !forceOfficeSelection {
-                displayError(errorMessage: "Getting user location did failed!")
+                useMyCurrentLocationIsInProgress = false
+                displayError(errorMessage: "Oops, something went wrong")
             }
             return
         }
-        officeSelectionDelegate?.officeWasSelected(officeId)
-        self.dismiss(animated: true, completion: nil)
+        setCurrentOffice(officeId: officeId, basedOnCurrentLocation: true)
     }
 }

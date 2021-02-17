@@ -168,10 +168,10 @@ extension UIViewController {
         return cell
     }
     
-    func createLoadingCell(withSeparator: Bool = false, verticalOffset: CGFloat? = nil) -> UITableViewCell {
+    func createLoadingCell(withBottomSeparator: Bool = false, withTopSeparator: Bool = false, verticalOffset: CGFloat? = nil) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         cell.selectionStyle = .none
-        if withSeparator {
+        if withBottomSeparator {
             let separatorView = UIView()
             separatorView.backgroundColor = UIColor(hex: 0xF2F2F7)
             cell.contentView.addSubview(separatorView)
@@ -179,6 +179,18 @@ extension UIViewController {
             NSLayoutConstraint.activate([
                 NSLayoutConstraint(item: separatorView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 1.0),
                 NSLayoutConstraint(item: separatorView, attribute: .bottom, relatedBy: .equal, toItem: cell.contentView, attribute: .bottom, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: separatorView, attribute: .leading, relatedBy: .equal, toItem: cell.contentView, attribute: .leading, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: separatorView, attribute: .trailing, relatedBy: .equal, toItem: cell.contentView, attribute: .trailing, multiplier: 1.0, constant: 0.0)
+                ])
+        }
+        if withTopSeparator {
+            let separatorView = UIView()
+            separatorView.backgroundColor = UIColor(hex: 0xF2F2F7)
+            cell.contentView.addSubview(separatorView)
+            separatorView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: separatorView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 1.0),
+                NSLayoutConstraint(item: separatorView, attribute: .top, relatedBy: .equal, toItem: cell.contentView, attribute: .top, multiplier: 1.0, constant: 0.0),
                 NSLayoutConstraint(item: separatorView, attribute: .leading, relatedBy: .equal, toItem: cell.contentView, attribute: .leading, multiplier: 1.0, constant: 0.0),
                 NSLayoutConstraint(item: separatorView, attribute: .trailing, relatedBy: .equal, toItem: cell.contentView, attribute: .trailing, multiplier: 1.0, constant: 0.0)
                 ])
