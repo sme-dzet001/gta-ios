@@ -185,7 +185,7 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
                 let gettingLocationIsAllowed = dataProvider?.getClosestOffice()
                 if let isAllowed = gettingLocationIsAllowed, !isAllowed {
                     useMyCurrentLocationIsInProgress = false
-                    displayError(errorMessage: "Please allow getting your location to use this functionality")
+                    displayError(errorMessage: "Location permission needed to access your location")
                 }
             } else {
                 showOfficeLocationVC(for: regionDataSource[indexPath.row].text)
@@ -234,7 +234,7 @@ extension OfficeLocationViewController: UserLocationManagerDelegate {
     func userDeniedToGetHisLocation() {
         guard useMyCurrentLocationIsInProgress else { return }
         useMyCurrentLocationIsInProgress = false
-        displayError(errorMessage: "Please allow getting your location to use this functionality")
+        displayError(errorMessage: "Location permission needed to access your location")
     }
     
     func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?) {
