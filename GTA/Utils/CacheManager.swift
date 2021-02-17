@@ -242,6 +242,21 @@ class CacheManager {
         }
     }
     
+    func removeCachedData(for endpoint: String) {
+        DispatchQueue.main.async {
+            self.getCachePath(requestURI: endpoint, formatVersion: 1) { [weak self] (path: String?, err: Error?) in
+                if path != nil {
+                    let cacheFolderURL = URL(fileURLWithPath: (self?.cacheFolderPath ?? ""))
+                    let fullPath = cacheFolderURL.appendingPathComponent(path!).path
+                    self?.deleteCache(path: fullPath, completion: { (error: Error?) in
+                    })
+                    self?.deleteCacheMetadata(requestURI: endpoint, completion: { (error: Error?) in
+                    })
+                }
+            }
+        }
+    }
+    
     func getCachedResponse(requestURI: String, formatVersion: Int32 = 1, completion: @escaping ((_ responseData: Data?, _ error: Error?) -> Void)) {
         DispatchQueue.main.async {
             var cachedResponseError: Error? = nil

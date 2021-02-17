@@ -39,7 +39,7 @@ struct ColumnName: Codable {
 
 // MARK: - Report Response
 
-struct SectionWidget: Codable {
+struct SectionWidget: Codable, Equatable {
     var generationNumber: Int
     var widgetId: String
     
@@ -49,7 +49,7 @@ struct SectionWidget: Codable {
     }
 }
 
-struct ReportSection: Codable {
+struct ReportSection: Codable, Equatable {
     var title: String
     var sectionId: String
     var id: String
@@ -61,9 +61,18 @@ struct ReportSection: Codable {
         case id = "_id"
         case widgets = "widgets"
     }
+    
+    static func == (lhs: ReportSection, rhs: ReportSection) -> Bool {
+        lhs.id == rhs.id && lhs.sectionId == rhs.sectionId && lhs.widgets == rhs.widgets
+    }
+    
 }
 
-struct ReportDataResponse: Codable {
+struct ReportDataResponse: Codable, Equatable {
     var meta: ResponseMetaData
     var data: [ReportSection]?
+ 
+    static func == (lhs: ReportDataResponse, rhs: ReportDataResponse) -> Bool {
+        lhs.data == rhs.data
+    }
 }

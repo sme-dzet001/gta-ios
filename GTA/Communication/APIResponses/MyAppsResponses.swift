@@ -98,6 +98,7 @@ struct MyAppsData: Codable {
 
 struct MyAppsRows: Codable {
     var rows: [MyAppsValues]?
+    var requestDate: String?
 }
 
 struct MyAppsValues: Codable, Equatable {

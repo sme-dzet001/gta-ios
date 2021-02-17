@@ -179,6 +179,7 @@ struct GSDStatus: Codable {
 
 struct GSDStatusData: Codable {
     var rows: [GSDStatusRow]?
+    var requestDate: String?
 }
 
 struct GSDStatusRow: Codable {

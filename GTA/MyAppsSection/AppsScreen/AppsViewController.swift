@@ -37,6 +37,20 @@ class AppsViewController: UIViewController {
         if myAppsLastUpdateDate == nil || Date() >= myAppsLastUpdateDate ?? Date() {
             self.getMyApps()
         }
+        activateStatusRefresh()
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        dataProvider.invalidateStatusRefresh()
+    }
+    
+    private func activateStatusRefresh() {
+        dataProvider.activateStatusRefresh {[weak self] (isNeedToRefresh) in
+            guard isNeedToRefresh else { return }
+            self?.getMyApps()
+        }
     }
     
     private func getMyApps() {

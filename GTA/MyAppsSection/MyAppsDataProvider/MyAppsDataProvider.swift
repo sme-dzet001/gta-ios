@@ -25,6 +25,9 @@ class MyAppsDataProvider {
             appsData = self.crateGeneralResponse() ?? []
         }
     }
+    
+    private var refreshTimer: Timer?
+    private var cachedReportData: Data?
         
     // MARK: - Calling methods
     
@@ -102,6 +105,7 @@ class MyAppsDataProvider {
     private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             if let _ = data, cachedError == nil {
+                self?.cachedReportData = data
                 completion?(data, 200, cachedError, true)
             }
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
@@ -113,6 +117,23 @@ class MyAppsDataProvider {
                 completion?(reportResponse, errorCode, newError, false)
             })
         }
+    }
+    
+    func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
+        refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
+            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                if let cahcedReport = self?.parseSectionReport(data: self?.cachedReportData), let serverReport = self?.parseSectionReport(data: reportResponse) {
+                    completion(serverReport != cahcedReport)
+                } else {
+                    completion(true)
+                }
+            })
+        }
+    }
+    
+    func invalidateStatusRefresh() {
+        refreshTimer?.invalidate()
+        refreshTimer = nil
     }
     
     private func cacheData(_ data: Data?, path: CacheManager.path) {
@@ -207,6 +228,11 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
+        
+        if let date = myAppsResponse?.data?.first?.value.data?.requestDate, isNeedToRemoveResponseForDate(date) {
+            cacheManager.removeCachedData(for: CacheManager.path.getMyAppsData.endpoint)
+            return
+        }
         let columns = myAppsResponse?.meta.widgetsDataSource?.params?.columns
         myAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let myAppsResponse = myAppsResponse, self.myAppsStatusData != myAppsResponse {
@@ -231,12 +257,34 @@ class MyAppsDataProvider {
                 return
             }
             apiManager.getMyAppsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), completion: { [weak self] (data, errorCode, error) in
-                self?.cacheData(data, path: .getMyAppsData)
-                self?.processMyApps(isFromCache: false, reportData, data, errorCode, error, completion)
+                let dataWithStatus = self?.addStatusRequest(to: data)
+                self?.cacheData(dataWithStatus, path: .getMyAppsData)
+                self?.processMyApps(isFromCache: false, reportData, dataWithStatus, errorCode, error, completion)
             })
         } else {
             completion?(errorCode, error, false)
         }
+    }
+    
+    private func addStatusRequest(to data: Data?) -> Data? {
+        guard let _ = data, var stringData = String(data: data!, encoding: .utf8) else { return data }
+        if let index = stringData.lastIndex(where: {$0 == "]"}) {
+            let nextIndex = stringData.index(after: index)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = String.comapreDateFormat
+            let dateString = dateFormatter.string(from: Date())
+            stringData.insert(contentsOf: ", \"requestDate\" : \"\(dateString)\"", at: nextIndex)
+            return stringData.data(using: .utf8)
+        }
+        return data
+    }
+    
+    private func isNeedToRemoveResponseForDate(_ date: String) -> Bool {
+        let dateFormatter = DateFormatter()        
+        dateFormatter.dateFormat = String.comapreDateFormat
+        guard var comparingDate = dateFormatter.date(from:date) else { return true }
+        comparingDate.addTimeInterval(900)
+        return Date() >= comparingDate
     }
     
     private func processAllApps(_ reportData: ReportDataResponse?, _ isFromCache: Bool, _ allAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {

@@ -15,6 +15,8 @@ class HelpDeskDataProvider {
     
     private(set) var quickHelpData = [QuickHelpRow]()
     private(set) var teamContactsData = [TeamContactsRow]()
+    private var refreshTimer: Timer?
+    private var cachedReportData: Data?
     
     var quickHelpDataIsEmpty: Bool {
         return quickHelpData.isEmpty
@@ -38,8 +40,9 @@ class HelpDeskDataProvider {
                     return
                 }
                 self?.apiManager.getGSDStatus(generationNumber: generationNumber!, completion: { (data, errorCode, error) in
-                    self?.cacheData(data, path: .getGSDStatus)
-                    self?.processGSDStatus(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+                    let dataWithStatus = self?.addStatusRequest(to: data)
+                    self?.cacheData(dataWithStatus, path: .getGSDStatus)
+                    self?.processGSDStatus(data: dataWithStatus, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
                 })
             } else {
                 let retError = ResponseError.serverError
@@ -75,6 +78,7 @@ class HelpDeskDataProvider {
     private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             if let _ = data {
+                self?.cachedReportData = data
                 completion?(data, 200, cachedError, true)
             }
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
@@ -82,6 +86,23 @@ class HelpDeskDataProvider {
                 completion?(reportResponse, errorCode, error, false)
             })
         }
+    }
+    
+    func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
+        refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
+            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                if let cahcedReport = self?.parseSectionReport(data: self?.cachedReportData), let serverReport = self?.parseSectionReport(data: reportResponse) {
+                    completion(serverReport != cahcedReport)
+                } else {
+                    completion(true)
+                }
+            })
+        }
+    }
+    
+    func invalidateStatusRefresh() {
+        refreshTimer?.invalidate()
+        refreshTimer = nil
     }
     
     private func processHelpDeskData(data: Data?, reportDataResponse: ReportDataResponse?, _ isFromCache: Bool, error: Error?, errorCode: Int, completion: ((_ respone: HelpDeskResponse?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
@@ -124,12 +145,37 @@ class HelpDeskDataProvider {
                 retErr = ResponseError.parsingError
             }
         }
+        if let requestDate = statusResponse?.data?.requestDate, isNeedToRemoveResponseForDate(requestDate) {
+            cacheManager.removeCachedData(for: CacheManager.path.getMyAppsData.endpoint)
+            return
+        }
         let indexes = getDataIndexes(columns: statusResponse?.meta?.widgetsDataSource?.params?.columns)
         statusResponse?.indexes = indexes
         if (error != nil || statusResponse == nil) && isFromCache {
             return
         }
         completion?(statusResponse, errorCode, retErr, isFromCache)
+    }
+    
+    private func addStatusRequest(to data: Data?) -> Data? {
+        guard let _ = data, var stringData = String(data: data!, encoding: .utf8) else { return data }
+        if let index = stringData.lastIndex(where: {$0 == "]"}) {
+            let nextIndex = stringData.index(after: index)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = String.comapreDateFormat
+            let dateString = dateFormatter.string(from: Date())
+            stringData.insert(contentsOf: ", \"requestDate\" : \"\(dateString)\"", at: nextIndex)
+            return stringData.data(using: .utf8)
+        }
+        return data
+    }
+    
+    private func isNeedToRemoveResponseForDate(_ date: String) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = String.comapreDateFormat
+        guard var comparingDate = dateFormatter.date(from:date) else { return true }
+        comparingDate.addTimeInterval(900)
+        return Date() >= comparingDate
     }
     
     func formQuickHelpAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
