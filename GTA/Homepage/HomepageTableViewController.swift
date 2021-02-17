@@ -218,7 +218,7 @@ class HomepageTableViewController: UITableViewController {
                     cell?.arrowImage.isHidden = true
                     return cell ?? UITableViewCell()
                 } else {
-                    let loadingCell = createLoadingCell(withSeparator: true, verticalOffset: 54)
+                    let loadingCell = createLoadingCell(withBottomSeparator: true, verticalOffset: 54)
                     return loadingCell
                 }
             }
@@ -259,22 +259,11 @@ class HomepageTableViewController: UITableViewController {
 }
 
 extension HomepageTableViewController: OfficeSelectionDelegate {
-    func officeWasSelected(_ officeId: Int) {
+    func officeWasSelected() {
         officeLoadingIsEnabled = false
-        dataProvider?.setCurrentOffice(officeId: officeId, completion: { [weak self] (errorCode, error) in
-            DispatchQueue.main.async {
-                if errorCode == 200, error == nil {
-                    self?.updateUIWithSelectedOffice()
-                    self?.dataProvider?.getCurrentOffice(completion: { (_, _) in
-                        self?.officeLoadingIsEnabled = true
-                    })
-                } else {
-                    self?.officeLoadingIsEnabled = true
-                    self?.displayError(errorMessage: "Office Selection Failed", onClose: { [weak self] (_) in
-                        self?.openOfficeSelectionModalScreen()
-                    })
-                }
-            }
+        updateUIWithSelectedOffice()
+        dataProvider?.getCurrentOffice(completion: { [weak self] (_, _) in
+            self?.officeLoadingIsEnabled = true
         })
     }
     

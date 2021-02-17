@@ -317,10 +317,11 @@ class HomeDataProvider {
         return getOffices(for: region).compactMap { $0.officeName }
     }
     
-    func getClosestOffice() {
+    /// - Returns: false - if user denied to get his location, otherwise returns true (user accepted to get his location, or his choice is not determined yet)
+    func getClosestOffice() -> Bool {
         let officesCoordinates = allOfficesData.filter { $0.officeLatitude != nil && $0.officeLongitude != nil }.map { (lat: $0.officeLatitude!, long: $0.officeLongitude!) }
         userLocationManager.officesCoordArray = officesCoordinates
-        userLocationManager.getCurrentUserLocation()
+        return userLocationManager.getCurrentUserLocation()
     }
     
     func getClosestOfficeId(by coord: (lat: Float, long: Float)) -> Int? {
