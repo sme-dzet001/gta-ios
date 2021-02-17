@@ -158,14 +158,14 @@ class HomeDataProvider {
     }
     
     private func fillNewsData(with newsResponse: GlobalNewsResponse) {
-        let indexes = getDataIndexes(columns: newsResponse.meta.widgetsDataSource?.params?.columns)
+        let indexes = getDataIndexes(columns: newsResponse.meta?.widgetsDataSource?.params?.columns)
         var response: GlobalNewsResponse = newsResponse
         if let rows = response.data?.rows {
             for (index, _) in rows.enumerated() {
-                response.data?.rows?[index].indexes = indexes
+                response.data?.rows?[index]?.indexes = indexes
             }
         }
-        newsData = response.data?.rows ?? []
+        newsData = response.data?.rows?.compactMap({$0}) ?? []
     }
     
     private func processSpecialAlerts(_ reportData: ReportDataResponse?, _ alertsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -225,14 +225,14 @@ class HomeDataProvider {
     }
     
     private func fillAlertsData(with alertsResponse: SpecialAlertsResponse) {
-        let indexes = getDataIndexes(columns: alertsResponse.meta.widgetsDataSource?.params?.columns)
+        let indexes = getDataIndexes(columns: alertsResponse.meta?.widgetsDataSource?.params?.columns)
         var response: SpecialAlertsResponse = alertsResponse
         if let rows = response.data?.rows {
             for (index, _) in rows.enumerated() {
-                response.data?.rows?[index].indexes = indexes
+                response.data?.rows?[index]?.indexes = indexes
             }
         }
-        alertsData = response.data?.rows ?? []
+        alertsData = response.data?.rows?.compactMap({$0}) ?? []
     }
     
     // MARK: - Office related methods
@@ -291,15 +291,15 @@ class HomeDataProvider {
     }
     
     private func fillAllOfficesData(with officesResponse: AllOfficesResponse) {
-        let indexes = getDataIndexes(columns: officesResponse.meta.widgetsDataSource?.params?.columns)
+        let indexes = getDataIndexes(columns: officesResponse.meta?.widgetsDataSource?.params?.columns)
         var response: AllOfficesResponse = officesResponse
         if let rows = response.data?.rows {
             for (index, _) in rows.enumerated() {
-                response.data?.rows?[index].indexes = indexes
+                response.data?.rows?[index]?.indexes = indexes
             }
         }
-        response.data?.rows?.removeAll { ($0.officeName?.isEmpty ?? true) || ($0.officeName?.isEmpty ?? true) }
-        allOfficesData = response.data?.rows ?? []
+        response.data?.rows?.removeAll { ($0?.officeName?.isEmpty ?? true) || ($0?.officeName?.isEmpty ?? true) }
+        allOfficesData = response.data?.rows?.compactMap({$0}) ?? []
     }
     
     func getAllOfficeRegions() -> [String] {
