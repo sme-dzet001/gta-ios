@@ -65,8 +65,6 @@ class AppsViewController: UIViewController {
                     if !isEmpty {
                         self?.stopAnimation()
                     }
-                    //let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
-                    //self?.dataProvider.getImageData(for: appInfo ?? [])
                 } else if !isFromCache, let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
                     self?.stopAnimation()
                 } else if !isFromCache, let isEmpty = self?.dataProvider.appsData.isEmpty, isEmpty, self?.allAppsLoadingError != nil {

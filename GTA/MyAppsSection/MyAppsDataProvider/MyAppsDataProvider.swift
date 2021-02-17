@@ -122,8 +122,8 @@ class MyAppsDataProvider {
     func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-                if let cahcedReport = self?.parseSectionReport(data: self?.cachedReportData), let serverReport = self?.parseSectionReport(data: reportResponse) {
-                    completion(serverReport != cahcedReport)
+                if let cachedReport = self?.parseSectionReport(data: self?.cachedReportData), let serverReport = self?.parseSectionReport(data: reportResponse) {
+                    completion(serverReport == cachedReport)
                 } else {
                     completion(true)
                 }
