@@ -45,8 +45,8 @@ class HelpDeskViewController: UIViewController {
             if let helpDeskResponse = response {
                 self?.lastUpdateDate = isFromCache ? nil : Date().addingTimeInterval(60)
                 self?.dataResponse = helpDeskResponse
+                self?.statusResponse.hoursOfOperation = response?.hoursOfOperation
             }
-            self?.statusResponse.hoursOfOperation = response?.hoursOfOperation
             self?.setUpHeaderView()
             self?.helpDeskResponseError = error
             self?.setHelpDeskCellsData()
