@@ -384,9 +384,6 @@ class HomeDataProvider {
                 if let _ = error {
                     newError = ResponseError.serverError
                 }
-                if let _ = error, reportResponse == nil, let _ = data, cachedError == nil {
-                    return
-                }
                 completion?(reportResponse, errorCode, newError, false)
             })
         }
