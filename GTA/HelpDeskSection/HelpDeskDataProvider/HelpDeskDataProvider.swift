@@ -286,6 +286,7 @@ class HelpDeskDataProvider {
             }
         }
         teamContactsData = response.data?.rows ?? []
+        teamContactsData.removeAll { $0.contactName == nil || ($0.contactName ?? "").isEmpty || $0.contactEmail == nil || ($0.contactEmail ?? "").isEmpty }
     }
     
     func formImageURL(from imagePath: String?) -> String? {
@@ -297,17 +298,27 @@ class HelpDeskDataProvider {
     
     func getImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
         if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
-            completion(cachedResponse, nil)
+            if let responseStr = String(data: cachedResponse, encoding: .utf8), responseStr.contains("Not Found") {
+                completion(nil, nil)
+            } else {
+                completion(cachedResponse, nil)
+            }
             return
         } else {
             apiManager.loadImageData(from: url) { (data, response, error) in
-                self.imageCacheManager.storeCacheResponse(response, data: data)
-                DispatchQueue.main.async {
-                    completion(data, error)
+                // checking that response status code == 200, else return no data
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+                    DispatchQueue.main.async {
+                        completion(nil, error)
+                    }
+                } else {
+                    self.imageCacheManager.storeCacheResponse(response, data: data)
+                    DispatchQueue.main.async {
+                        completion(data, error)
+                    }
                 }
             }
         }
-        //apiManager.loadImageData(from: url, completion: completion)
     }
     
 //    func getServiceDeskImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {

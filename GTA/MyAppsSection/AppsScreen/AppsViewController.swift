@@ -55,6 +55,8 @@ class AppsViewController: UIViewController {
                     //self?.dataProvider.getImageData(for: appInfo ?? [])
                 } else if !isFromCache, let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
                     self?.stopAnimation()
+                } else if !isFromCache, let isEmpty = self?.dataProvider.appsData.isEmpty, isEmpty, self?.allAppsLoadingError != nil {
+                    self?.stopAnimation()
                 }
             }
         }
@@ -163,7 +165,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             return createErrorCell(with: error.localizedDescription)
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicationCell", for: indexPath) as? ApplicationCell {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
-                cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row], hideStatusView: dataProvider.appsData[indexPath.section].sectionName == "Other Apps")
+                cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
             } else {
                 print("!!!error my apps cell no data!!!!")
                 return createErrorCell(with: "No data available")
@@ -200,7 +202,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard allAppsLoadingError == nil, myAppsLoadingError == nil else { return }
-        guard indexPath.section < dataProvider.appsData.count, dataProvider.appsData[indexPath.section].sectionName == "My Apps" else { return }
+        guard indexPath.section < dataProvider.appsData.count else { return }
         guard !dataProvider.appsData[indexPath.section].cellData.isEmpty else { return }
         let appVC = ApplicationStatusViewController()
         appVC.appName = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_name
@@ -237,7 +239,7 @@ extension AppsViewController: AppImageDelegate {
     
     private func setCellImageView(for indexPath: IndexPath) {
         if let cell = self.tableView.cellForRow(at: indexPath) as? ApplicationCell {
-            cell.setUpCell(with: self.dataProvider.appsData[indexPath.section].cellData[indexPath.row], hideStatusView:self.dataProvider.appsData[indexPath.section].sectionName == "Other Apps")
+            cell.setUpCell(with: self.dataProvider.appsData[indexPath.section].cellData[indexPath.row])
         }
     }
     

@@ -15,12 +15,14 @@ struct AllAppsResponse: Codable, Equatable {
     var myAppsStatus: [AppInfo] {
         var status = [AppInfo]()
         data?.rows?.forEach({ (value) in
-            if let valuesArray = value.values, let nameIndex = indexes["app name"], let titleIndex = indexes["app title"], let iconIndex = indexes["app icon"] {
+            if let valuesArray = value.values, let nameIndex = indexes["app name"], let titleIndex = indexes["app title"], let iconIndex = indexes["app icon"], let statusIndex = indexes["status"], let lastUpdateIndex = indexes["last update"] {
                 let appName = valuesArray.count > nameIndex ? valuesArray[nameIndex]?.stringValue : ""
                 let appTitle = valuesArray.count > titleIndex ? valuesArray[titleIndex]?.stringValue : ""
                 let appIcon = valuesArray.count > iconIndex ? valuesArray[iconIndex]?.stringValue : ""
+                let appStatus = valuesArray.count > statusIndex ? valuesArray[statusIndex]?.stringValue : ""
+                let appLastUpdate = valuesArray.count > lastUpdateIndex ? valuesArray[lastUpdateIndex]?.stringValue : ""
                 let appImageData = AppsImageData(app_icon: appIcon, imageData: nil, imageStatus: .loading)
-                let appInfo = AppInfo(app_name: appName, app_title: appTitle, appImageData: appImageData, appStatus: .none, app_is_active: true)
+                let appInfo = AppInfo(app_name: appName, app_title: appTitle, appImageData: appImageData, appStatus: SystemStatus(status: appStatus), app_is_active: true, lastUpdateDate: appLastUpdate)
                 status.append(appInfo)
             }
         })
@@ -149,23 +151,31 @@ struct ChartData {
 
 struct AppContactsData: Codable {
     var meta: ResponseMetaData
-    var data: [String : [String : UserData]]?
+    var data: [String : UserData]?
     
     var indexes: [String : Int] = [:]
     
     var contactsData: [ContactData]? {
-        guard let appContactRows = data?.first?.value.first?.value.data?.rows else { return nil }
-        guard let appContactTitleIdx = indexes["app contact title"] else { return nil }
-        guard let appContactNameIdx = indexes["app contact name"] else { return nil }
+        guard let appContactRows = data?.first?.value.data?.rows else { return nil }
         guard let appContactEmailIdx = indexes["app contact email"] else { return nil }
+        guard let appContactNameIdx = indexes["app contact name"] else { return nil }
+        guard let appContactTitleIdx = indexes["app contact title"] else { return nil }
+        guard let appContactPictureIdx = indexes["profile picture"] else { return nil }
+        guard let appContactLocationIdx = indexes["location"] else { return nil }
+        guard let appContactBioIdx = indexes["bio"] else { return nil }
+        guard let appContactFunFactIdx = indexes["fun fact"] else { return nil }
         var res = appContactRows.map({ (appContact) -> ContactData in
             guard let values = appContact.values else { return ContactData() }
-            let appContactTitle = values[appContactTitleIdx]?.stringValue
-            let appContactName = values[appContactNameIdx]?.stringValue
             let appContactEmail = values[appContactEmailIdx]?.stringValue
-            return ContactData(contactName: appContactName, contactPosition: appContactTitle, phoneNumber: "", email: appContactEmail)
+            let appContactName = values[appContactNameIdx]?.stringValue
+            let appContactTitle = values[appContactTitleIdx]?.stringValue
+            let appContactPhotoUrl = values[appContactPictureIdx]?.stringValue
+            let appContactLocation = values[appContactLocationIdx]?.stringValue
+            let appContactBio = values[appContactBioIdx]?.stringValue
+            let appContactFunFact = values[appContactFunFactIdx]?.stringValue
+            return ContactData(contactPhotoUrl: appContactPhotoUrl, contactName: appContactName, contactEmail: appContactEmail, contactPosition: appContactTitle, contactLocation: appContactLocation, contactBio: appContactBio, contactFunFact: appContactFunFact)
         })
-        res.removeAll(where: {$0.contactName == nil || ($0.contactName ?? "").isEmpty})
+        res.removeAll(where: {$0.contactName == nil || ($0.contactName ?? "").isEmpty || $0.contactEmail == nil || ($0.contactEmail ?? "").isEmpty})
         return res
     }
     
@@ -177,12 +187,12 @@ struct AppContactsData: Codable {
 
 struct AppDetailsData: Codable {
     var meta: ResponseMetaData
-    var data: [String : [String : UserData]]?
+    var data: [String : UserData]?
     
     var indexes: [String : Int] = [:]
     
     private var values: [QuantumValue?]? {
-        let rows = data?.first?.value.first?.value.data?.rows?.first?.values
+        let rows = data?.first?.value.data?.rows?.first?.values
         return rows
     }
     
@@ -218,11 +228,6 @@ struct AppDetailsData: Codable {
     
     var appTeamContact: String? {
         guard let _ = values, let index = indexes["app team contact"], values!.count > index else { return nil }
-        return values?[index]?.stringValue
-    }
-    
-    var lastUpdate: String? {
-        guard let _ = values, let index = indexes["last update"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
     

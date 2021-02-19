@@ -111,6 +111,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         let bellData = UIImage(named: "report_icon")
         let loginHelpData = UIImage(named: "login_help")
         let aboutData = UIImage(named: "about_icon")
+        let contactsData = UIImage(named: "app_contacts_icon")
         
         let metricsData = MetricsData(
             dailyData: [ChartData(legendTitle: "18/11/20", periodFullTitle: "18 November 2020", value: 85), ChartData(legendTitle: "17/11/20", periodFullTitle: "17 November 2020", value: 62), ChartData(legendTitle: "16/11/20", periodFullTitle: "16 November 2020", value: 105), ChartData(legendTitle: "15/11/20", periodFullTitle: "15 November 2020", value: 100), ChartData(legendTitle: "14/11/20", periodFullTitle: "14 November 2020", value: 70), ChartData(legendTitle: "13/11/20", periodFullTitle: "13 November 2020", value: 95), ChartData(legendTitle: "12/11/20", periodFullTitle: "12 November 2020", value: 100)],
@@ -120,7 +121,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         
 
         
-        let firstSection = [AppInfo(app_name: "Report Outages, System Issues", app_title: "Report Issue", appImageData: AppsImageData(app_icon: "", imageData: bellData?.pngData(), imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "Reset Account Access & login Assistance", app_title: "Login Help", appImageData: AppsImageData(app_icon: "", imageData: loginHelpData?.pngData(), imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "Description and list of app contacts", app_title: "About", appImageData: AppsImageData(app_icon: "", imageData: aboutData?.pngData(), imageStatus: .loaded), appStatus: .none, app_is_active: true)]
+        let firstSection = [AppInfo(app_name: "Report Outages, System Issues", app_title: "Report Issue", appImageData: AppsImageData(app_icon: "", imageData: bellData?.pngData(), imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "Reset Account Access & login Assistance", app_title: "Login Help", appImageData: AppsImageData(app_icon: "", imageData: loginHelpData?.pngData(), imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "Description, wiki and support information", app_title: "About", appImageData: AppsImageData(app_icon: "", imageData: aboutData?.pngData(), imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "Key Contacts and Member Profiles", app_title: "Contacts", appImageData: AppsImageData(app_icon: "", imageData: contactsData?.pngData(), imageStatus: .loaded), appStatus: .none, app_is_active: true)]
         
         let secondSection = [AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "Scheduled maintenance", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "AWS outage reported", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true)]
                 
@@ -210,7 +211,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.separator.isHidden = indexPath.row == dataArray.count - 1
             let isDisabled = indexPath.row < 2 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty)
-            cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, error: detailsDataResponseError)
+            cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, error: indexPath.row == 3 ? nil : detailsDataResponseError)
             return cell
         }
         if let metricsData = dataSource[indexPath.section].metricsData, let cell = tableView.dequeueReusableCell(withIdentifier: "MetricStatsCell", for: indexPath) as? MetricStatsCell {
@@ -248,10 +249,14 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             aboutScreen.detailsDataResponseError = detailsDataResponseError
             self.detailsDataDelegate = aboutScreen
             aboutScreen.dataProvider = dataProvider
-            aboutScreen.appName = appName
             aboutScreen.appTitle = appTitle
             aboutScreen.appImageUrl = appImageUrl
             navigationController?.pushViewController(aboutScreen, animated: true)
+        } else if indexPath.row == 3 {
+            let contactsScreen = AppContactsViewController()
+            contactsScreen.dataProvider = dataProvider
+            contactsScreen.appName = appName
+            navigationController?.pushViewController(contactsScreen, animated: true)
         } else {
             if appDetailsData?.appSupportEmail == nil {
                 return

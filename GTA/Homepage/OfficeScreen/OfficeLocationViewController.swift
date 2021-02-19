@@ -97,11 +97,9 @@ class OfficeLocationViewController: UIViewController {
             self.backButtonLeading.constant = 60
             self.view.layoutIfNeeded()
         }
-        
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.navigationController?.popWithFadeAnimation()
         }
-        
     }
     
     deinit {

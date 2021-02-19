@@ -70,7 +70,7 @@ struct HelpDeskValues: Codable {
 // MARK: - Quick Help Response
 
 struct QuickHelpRow: Codable, Equatable {
-    var values: [QuantumValue]?
+    var values: [QuantumValue?]?
     var indexes: [String : Int] = [:]
     
     enum CodingKeys: String, CodingKey {
@@ -79,12 +79,12 @@ struct QuickHelpRow: Codable, Equatable {
     
     var question: String? {
         guard let valuesArr = values, let index = indexes["question"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var answer: String? {
         guard let valuesArr = values, let index = indexes["answer"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     static func == (lhs: QuickHelpRow, rhs: QuickHelpRow) -> Bool {

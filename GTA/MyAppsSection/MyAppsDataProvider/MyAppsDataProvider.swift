@@ -61,7 +61,21 @@ class MyAppsDataProvider {
         }
     }
     
-    func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
+    func getContactImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+        if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
+            completion(cachedResponse, nil)
+            return
+        } else {
+            apiManager.loadImageData(from: url) { (data, response, error) in
+                self.imageCacheManager.storeCacheResponse(response, data: data)
+                DispatchQueue.main.async {
+                    completion(data, error)
+                }
+            }
+        }
+    }
+    
+    func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
             self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, isFromCache, completion)
         }
@@ -133,6 +147,13 @@ class MyAppsDataProvider {
         return imageURL
     }
     
+    func formContactImageURL(from imagePath: String?) -> String? {
+        guard let imagePath = imagePath, !imagePath.isEmpty else { return nil }
+        guard !imagePath.contains("https://") else  { return imagePath }
+        let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
+        return imageURL
+    }
+    
     private func getDataIndexes(columns: [ColumnName]?) -> [String : Int] {
         var indexes: [String : Int] = [:]
         guard let columns = columns else { return indexes }
@@ -152,16 +173,12 @@ class MyAppsDataProvider {
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
         for (index, info) in allAppsData!.myAppsStatus.enumerated() {
             let appNameIndex = myAppsStatusData?.indexes["app name"] ?? 0
-            let statusIndex = myAppsStatusData?.indexes["status"] ?? 0
-            let appLastUpdateIndex = myAppsStatusData?.indexes["last update"] ?? 0
-            let status = myAppsStatusData?.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name})
-            response[index].appStatus = SystemStatus(status: status?.values?[statusIndex]?.stringValue)
-            response[index].lastUpdateDate = status?.values?[appLastUpdateIndex]?.stringValue
+            let isMyApp = myAppsStatusData?.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name}) != nil
             if appImageData.keys.contains(response[index].appImageData.app_icon ?? ""), let data =  appImageData[response[index].appImageData.app_icon ?? ""] {
                 response[index].appImageData.imageData = data
                 response[index].appImageData.imageStatus = .loaded
             }
-            if let _ = status {
+            if isMyApp {
                 myAppsSection.cellData.append(response[index])
             } else {
                 otherAppsSection.cellData.append(response[index])
@@ -178,7 +195,7 @@ class MyAppsDataProvider {
         return result
     }
     
-    private func processMyApps(isFromCache: Bool = true, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
+    private func processMyApps(isFromCache: Bool = true, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         var myAppsResponse: MyAppsResponse?
         var retErr = error
         if let responseData = myAppsDataResponse {
@@ -201,7 +218,7 @@ class MyAppsDataProvider {
         completion?(errorCode, retErr, isFromCache)
     }
     
-    private func processMyAppsStatusSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromServer: Bool) -> Void)? = nil) {
+    private func processMyAppsStatusSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.myApps.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.myAppsStatus.rawValue }?.generationNumber
         if let _ = generationNumber {
@@ -290,7 +307,7 @@ class MyAppsDataProvider {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appContacts.rawValue }?.generationNumber
         if let _ = generationNumber {
-            let contactsPath = (KeychainManager.getUsername() ?? "") + "/" + (app ?? "")
+            let contactsPath = app ?? ""
             if fromCache {
                 getCachedResponse(for: .getAppContacts(contactsPath: contactsPath)) {[weak self] (data, error) in
                     if let _ = data, error == nil {
@@ -299,7 +316,7 @@ class MyAppsDataProvider {
                 }
                 return
             }
-            apiManager.getAppContactsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
+            apiManager.getAppContactsData(for: generationNumber!, appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAppContacts(contactsPath: contactsPath))
                 self?.processAppContacts(reportData, data, errorCode, error, completion)
             })
@@ -331,9 +348,9 @@ class MyAppsDataProvider {
     
     private func processAppDetailsSectionReport(_ app: String?, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
-        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetails.rawValue }?.generationNumber
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appDetailsAll.rawValue }?.generationNumber
         if let _ = generationNumber {
-            let detailsPath = (KeychainManager.getUsername() ?? "") + "/" + (app ?? "")
+            let detailsPath = app ?? ""
             if fromCache {
                 getCachedResponse(for: .getAppDetails(detailsPath: detailsPath)) {[weak self] (data, error) in
                     if let _ = data, error == nil {
@@ -342,7 +359,7 @@ class MyAppsDataProvider {
                 }
                 return
             }
-            apiManager.getAppDetailsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
+            apiManager.getAppDetailsData(for: generationNumber!, appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAppDetails(detailsPath: detailsPath))
                 self?.processAppDetails(reportData, data, errorCode, error, completion)
             })
