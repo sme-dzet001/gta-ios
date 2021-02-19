@@ -212,7 +212,7 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        let columns = myAppsResponse?.meta.widgetsDataSource?.params?.columns
+        let columns = myAppsResponse?.meta?.widgetsDataSource?.params?.columns
         myAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let myAppsResponse = myAppsResponse, self.myAppsStatusData != myAppsResponse {
             self.myAppsStatusData = myAppsResponse
@@ -256,7 +256,7 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        let columns = allAppsResponse?.meta.widgetsDataSource?.params?.columns
+        let columns = allAppsResponse?.meta?.widgetsDataSource?.params?.columns
         allAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let allAppsResponse = allAppsResponse, allAppsResponse != self.allAppsData {
             self.allAppsData = allAppsResponse

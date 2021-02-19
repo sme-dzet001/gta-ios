@@ -8,14 +8,14 @@
 import Foundation
 
 struct AllAppsResponse: Codable, Equatable {
-    var meta: ResponseMetaData
+    var meta: ResponseMetaData?
     var data: AllAppsRows?
     var indexes: [String : Int] = [:]
     
     var myAppsStatus: [AppInfo] {
         var status = [AppInfo]()
         data?.rows?.forEach({ (value) in
-            if let valuesArray = value.values, let nameIndex = indexes["app name"], let titleIndex = indexes["app title"], let iconIndex = indexes["app icon"], let statusIndex = indexes["status"], let lastUpdateIndex = indexes["last update"] {
+            if let valuesArray = value?.values, let nameIndex = indexes["app name"], let titleIndex = indexes["app title"], let iconIndex = indexes["app icon"], let statusIndex = indexes["status"], let lastUpdateIndex = indexes["last update"] {
                 let appName = valuesArray.count > nameIndex ? valuesArray[nameIndex]?.stringValue : ""
                 let appTitle = valuesArray.count > titleIndex ? valuesArray[titleIndex]?.stringValue : ""
                 let appIcon = valuesArray.count > iconIndex ? valuesArray[iconIndex]?.stringValue : ""
@@ -41,7 +41,7 @@ struct AllAppsResponse: Codable, Equatable {
 }
 
 struct AllAppsRows: Codable {
-    var rows: [AllAppsValues]?
+    var rows: [AllAppsValues?]?
 }
 
 struct AllAppsValues: Codable {
@@ -75,11 +75,11 @@ struct AppsImageData: Equatable {
 
 
 struct MyAppsResponse: Codable, Equatable {
-    var meta: ResponseMetaData
+    var meta: ResponseMetaData?
     var data: [String : MyAppsData]?
     var indexes: [String : Int] = [:]
     var values: [MyAppsValues]? {
-        return data?.first?.value.data?.rows
+        return data?.first?.value.data?.rows?.compactMap({$0})
     }
 
     enum CodingKeys: String, CodingKey {
@@ -97,7 +97,7 @@ struct MyAppsData: Codable {
 }
 
 struct MyAppsRows: Codable {
-    var rows: [MyAppsValues]?
+    var rows: [MyAppsValues?]?
 }
 
 struct MyAppsValues: Codable, Equatable {

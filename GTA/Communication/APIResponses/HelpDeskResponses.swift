@@ -104,7 +104,7 @@ struct QuickHelpResponse: Codable {
 // MARK: - Team Contacts Response
 
 struct TeamContactsRow: Codable {
-    var values: [QuantumValue]?
+    var values: [QuantumValue?]?
     var indexes: [String : Int] = [:]
     
     enum CodingKeys: String, CodingKey {
@@ -113,37 +113,37 @@ struct TeamContactsRow: Codable {
     
     var contactPhotoUrl: String? {
         guard let valuesArr = values, let index = indexes["profile picture"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var contactName: String? {
         guard let valuesArr = values, let index = indexes["name"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var contactEmail: String? {
         guard let valuesArr = values, let index = indexes["email"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var contactPosition: String? {
         guard let valuesArr = values, let index = indexes["job title"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var contactLocation: String? {
         guard let valuesArr = values, let index = indexes["location"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var contactBio: String? {
         guard let valuesArr = values, let index = indexes["bio"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
     
     var contactFunFact: String? {
         guard let valuesArr = values, let index = indexes["fun fact"], valuesArr.count > index else { return nil }
-        return valuesArr[index].stringValue
+        return valuesArr[index]?.stringValue
     }
 }
 
@@ -167,8 +167,8 @@ struct GSDStatus: Codable {
     }
     
     private var values: [QuantumValue?]? {
-        guard let rows = data?.rows, !rows.isEmpty else { return [] }
-        return rows.first?.values //data["rows"]?.first?.values
+        guard let rows = data?.rows, !rows.isEmpty, let values = rows.first else { return [] }
+        return values?.values //data["rows"]?.first?.values
     }
     
     var serviceDeskStatus: String? {
@@ -178,7 +178,7 @@ struct GSDStatus: Codable {
 }
 
 struct GSDStatusData: Codable {
-    var rows: [GSDStatusRow]?
+    var rows: [GSDStatusRow?]?
 }
 
 struct GSDStatusRow: Codable {
