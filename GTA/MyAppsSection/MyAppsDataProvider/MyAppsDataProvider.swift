@@ -199,6 +199,11 @@ class MyAppsDataProvider {
                 response[index].appImageData.imageData = data
                 response[index].appImageData.imageStatus = .loaded
             }
+            let appStatusIndex = myAppsStatusData?.values?.firstIndex(where: {($0.values?.count ?? 0) > appNameIndex && $0.values?[appNameIndex]?.stringValue == info.app_name})
+            let statusIndex = myAppsStatusData?.indexes["status"] ?? 0
+            if let valueIndex = appStatusIndex, let status = myAppsStatusData?.values?[valueIndex].values?[statusIndex]?.stringValue {
+                response[index].appStatus = SystemStatus(status: status)
+            }
             if isMyApp {
                 myAppsSection.cellData.append(response[index])
             } else {
