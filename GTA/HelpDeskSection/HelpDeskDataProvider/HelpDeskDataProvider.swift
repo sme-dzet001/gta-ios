@@ -74,10 +74,15 @@ class HelpDeskDataProvider {
     
     private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
-            if let _ = data {
+            var isCachedDataExist: Bool = false
+            if let _ = data, cachedError == nil {
+                isCachedDataExist = true
                 completion?(data, 200, cachedError, true)
             }
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                if let _ = error, isCachedDataExist {
+                    return
+                }
                 self?.cacheData(reportResponse, path: .getSectionReport)
                 completion?(reportResponse, errorCode, error, false)
             })
