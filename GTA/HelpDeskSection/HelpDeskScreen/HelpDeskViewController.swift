@@ -38,6 +38,14 @@ class HelpDeskViewController: UIViewController {
             self.getHelpDeskData()
         }
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        activateStatusRefresh()
+    }
+    
+    private func activateStatusRefresh() {
+        dataProvider.activateStatusRefresh {[weak self] (isNeedToRefresh) in
+            guard isNeedToRefresh else { return }
+            self?.getServiceDeskStatus()
+        }
     }
     
     private func getHelpDeskData() {
@@ -65,6 +73,7 @@ class HelpDeskViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        dataProvider.invalidateStatusRefresh()
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 

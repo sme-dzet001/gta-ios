@@ -249,6 +249,10 @@ extension String {
         return "HH:mm zzz E d"
     }
     
+    static var comapreDateFormat: String {
+        return "yyyy-MM-dd HH:mm:ss"
+    }
+    
     static var ticketsSectionDateFormat: String {
         return "E MMM d, yyyy"
     }

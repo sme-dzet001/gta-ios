@@ -25,6 +25,9 @@ class MyAppsDataProvider {
             appsData = self.crateGeneralResponse() ?? []
         }
     }
+    
+    private var refreshTimer: Timer?
+    private var cachedReportData: Data?
         
     // MARK: - Calling methods
     
@@ -104,6 +107,7 @@ class MyAppsDataProvider {
             var isCachedDataExist: Bool = false
             if let _ = data, cachedError == nil {
                 isCachedDataExist = true
+                self?.cachedReportData = data
                 completion?(data, 200, cachedError, true)
             }
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
@@ -118,6 +122,23 @@ class MyAppsDataProvider {
                 completion?(reportResponse, errorCode, newError, false)
             })
         }
+    }
+    
+    func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
+        refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
+            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                if let cachedReport = self?.parseSectionReport(data: self?.cachedReportData), let serverReport = self?.parseSectionReport(data: reportResponse) {
+                    completion(serverReport != cachedReport)
+                } else {
+                    completion(true)
+                }
+            })
+        }
+    }
+    
+    func invalidateStatusRefresh() {
+        refreshTimer?.invalidate()
+        refreshTimer = nil
     }
     
     private func cacheData(_ data: Data?, path: CacheManager.path) {
@@ -183,6 +204,11 @@ class MyAppsDataProvider {
                 response[index].appImageData.imageData = data
                 response[index].appImageData.imageStatus = .loaded
             }
+            let appStatusIndex = myAppsStatusData?.values?.firstIndex(where: {($0.values?.count ?? 0) > appNameIndex && $0.values?[appNameIndex]?.stringValue == info.app_name})
+            let statusIndex = myAppsStatusData?.indexes["status"] ?? 0
+            if let valueIndex = appStatusIndex, let status = myAppsStatusData?.values?[valueIndex].values?[statusIndex]?.stringValue {
+                response[index].appStatus = SystemStatus(status: status)
+            }
             if isMyApp {
                 myAppsSection.cellData.append(response[index])
             } else {
@@ -212,7 +238,12 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        let columns = myAppsResponse?.meta?.widgetsDataSource?.params?.columns
+        
+        if let date = myAppsResponse?.data?.first?.value.data?.requestDate, isNeedToRemoveResponseForDate(date) {
+            cacheManager.removeCachedData(for: CacheManager.path.getMyAppsData.endpoint)
+            return
+        }
+        let columns = myAppsResponse?.meta.widgetsDataSource?.params?.columns
         myAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let myAppsResponse = myAppsResponse, self.myAppsStatusData != myAppsResponse {
             self.myAppsStatusData = myAppsResponse
@@ -236,12 +267,34 @@ class MyAppsDataProvider {
                 return
             }
             apiManager.getMyAppsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), completion: { [weak self] (data, errorCode, error) in
-                self?.cacheData(data, path: .getMyAppsData)
-                self?.processMyApps(isFromCache: false, reportData, data, errorCode, error, completion)
+                let dataWithStatus = self?.addStatusRequest(to: data)
+                self?.cacheData(dataWithStatus, path: .getMyAppsData)
+                self?.processMyApps(isFromCache: false, reportData, dataWithStatus, errorCode, error, completion)
             })
         } else {
             completion?(errorCode, error, false)
         }
+    }
+    
+    private func addStatusRequest(to data: Data?) -> Data? {
+        guard let _ = data, var stringData = String(data: data!, encoding: .utf8) else { return data }
+        if let index = stringData.lastIndex(where: {$0 == "]"}) {
+            let nextIndex = stringData.index(after: index)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = String.comapreDateFormat
+            let dateString = dateFormatter.string(from: Date())
+            stringData.insert(contentsOf: ", \"requestDate\" : \"\(dateString)\"", at: nextIndex)
+            return stringData.data(using: .utf8)
+        }
+        return data
+    }
+    
+    private func isNeedToRemoveResponseForDate(_ date: String) -> Bool {
+        let dateFormatter = DateFormatter()        
+        dateFormatter.dateFormat = String.comapreDateFormat
+        guard var comparingDate = dateFormatter.date(from:date) else { return true }
+        comparingDate.addTimeInterval(900)
+        return Date() >= comparingDate
     }
     
     private func processAllApps(_ reportData: ReportDataResponse?, _ isFromCache: Bool, _ allAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
