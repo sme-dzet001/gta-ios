@@ -49,7 +49,7 @@ class AppsViewController: UIViewController {
     private func activateStatusRefresh() {
         dataProvider.activateStatusRefresh {[weak self] (isNeedToRefresh) in
             guard isNeedToRefresh else { return }
-            self?.getMyApps()
+            self?.getAllApps()
         }
     }
     

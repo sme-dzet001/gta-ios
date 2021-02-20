@@ -204,11 +204,6 @@ class MyAppsDataProvider {
                 response[index].appImageData.imageData = data
                 response[index].appImageData.imageStatus = .loaded
             }
-            let appStatusIndex = myAppsStatusData?.values?.firstIndex(where: {($0.values?.count ?? 0) > appNameIndex && $0.values?[appNameIndex]?.stringValue == info.app_name})
-            let statusIndex = myAppsStatusData?.indexes["status"] ?? 0
-            if let valueIndex = appStatusIndex, let status = myAppsStatusData?.values?[valueIndex].values?[statusIndex]?.stringValue {
-                response[index].appStatus = SystemStatus(status: status)
-            }
             if isMyApp {
                 myAppsSection.cellData.append(response[index])
             } else {
@@ -238,11 +233,6 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        
-        if let date = myAppsResponse?.data?.first?.value.data?.requestDate, isNeedToRemoveResponseForDate(date) {
-            cacheManager.removeCachedData(for: CacheManager.path.getMyAppsData.endpoint)
-            return
-        }
         let columns = myAppsResponse?.meta?.widgetsDataSource?.params?.columns
         myAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let myAppsResponse = myAppsResponse, self.myAppsStatusData != myAppsResponse {
@@ -267,9 +257,9 @@ class MyAppsDataProvider {
                 return
             }
             apiManager.getMyAppsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), completion: { [weak self] (data, errorCode, error) in
-                let dataWithStatus = self?.addStatusRequest(to: data)
-                self?.cacheData(dataWithStatus, path: .getMyAppsData)
-                self?.processMyApps(isFromCache: false, reportData, dataWithStatus, errorCode, error, completion)
+                //let dataWithStatus = self?.addStatusRequest(to: data)
+                self?.cacheData(data, path: .getMyAppsData)
+                self?.processMyApps(isFromCache: false, reportData, data, errorCode, error, completion)
             })
         } else {
             completion?(errorCode, error, false)
@@ -309,6 +299,10 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
+        if let date = allAppsResponse?.data?.requestDate, isNeedToRemoveResponseForDate(date) {
+            cacheManager.removeCachedData(for: CacheManager.path.getAllAppsData.endpoint)
+            return
+        }
         let columns = allAppsResponse?.meta?.widgetsDataSource?.params?.columns
         allAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let allAppsResponse = allAppsResponse, allAppsResponse != self.allAppsData {
@@ -333,8 +327,9 @@ class MyAppsDataProvider {
                 return
             }
             apiManager.getAllApps(for: generationNumber!, completion: { [weak self] (data, errorCode, error) in
-                self?.cacheData(data, path: .getAllAppsData)
-                self?.processAllApps(reportData, false, data, errorCode, error, completion)
+                let dataWithStatus = self?.addStatusRequest(to: data)
+                self?.cacheData(dataWithStatus, path: .getAllAppsData)
+                self?.processAllApps(reportData, false, dataWithStatus, errorCode, error, completion)
             })
         } else {
             completion?(errorCode, error, fromCache)
