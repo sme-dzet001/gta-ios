@@ -243,7 +243,7 @@ class MyAppsDataProvider {
             cacheManager.removeCachedData(for: CacheManager.path.getMyAppsData.endpoint)
             return
         }
-        let columns = myAppsResponse?.meta.widgetsDataSource?.params?.columns
+        let columns = myAppsResponse?.meta?.widgetsDataSource?.params?.columns
         myAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let myAppsResponse = myAppsResponse, self.myAppsStatusData != myAppsResponse {
             self.myAppsStatusData = myAppsResponse
