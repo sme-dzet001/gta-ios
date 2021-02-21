@@ -15,6 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
     var appSwitcherView: UIView?
     
     var isAuthentificationPassed: Bool?
+    var isAuthentificationScreenShown: Bool?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -91,6 +92,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                     self.window?.rootViewController = navController
                     return
                 } else if KeychainManager.getPin() == nil {
+                    let authScreenShown = isAuthentificationScreenShown ?? false
+                    if !authScreenShown {
+                        return
+                    }
                     removeAllData()
                     startLoginFlow(sessionExpired: tokenIsExpired)
                     return

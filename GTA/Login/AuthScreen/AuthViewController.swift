@@ -53,6 +53,7 @@ class AuthViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        delegate?.isAuthentificationScreenShown = true
         if !isSignUp {
             authenticateUser()
         }
@@ -327,4 +328,5 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
 
 protocol AuthentificationPassed: class {
     var isAuthentificationPassed: Bool? {get set}
+    var isAuthentificationScreenShown: Bool? {get set}
 }
