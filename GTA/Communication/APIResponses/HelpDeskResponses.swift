@@ -17,7 +17,7 @@ struct HelpDeskResponse: Codable {
         case data = "data"
     }
     
-    private var values: [String]? {
+    private var values: [String?]? {
         guard let rows = data?.rows, !rows.isEmpty else { return [] }
         return rows.first?.values //data["rows"]?.first?.values
     }
@@ -34,17 +34,20 @@ struct HelpDeskResponse: Codable {
     
     var serviceDeskPhoneNumber: String? {
         guard let values = values, let index = indexes["service_phone"], values.count > index else { return nil }
-        return values[index] //convertPhoneNumber(number: values[index])
+        guard let returnedValue = values[index], !returnedValue.isEmpty else { return nil }
+        return returnedValue
     }
     
     var serviceDeskEmail: String? {
         guard let values = values, let index = indexes["service_email"], values.count > index else { return nil }
-        return values[index]
+        guard let returnedValue = values[index], !returnedValue.isEmpty else { return nil }
+        return returnedValue
     }
     
     var teamsChatLink: String? {
         guard let values = values, let index = indexes["service_teams_channel"], values.count > index else { return nil }
-        return values[index]
+        guard let returnedValue = values[index], !returnedValue.isEmpty else { return nil }
+        return returnedValue
     }
     
     var hoursOfOperation: String? {
@@ -64,7 +67,7 @@ struct HelpDeskRows: Codable {
 }
 
 struct HelpDeskValues: Codable {
-    var values: [String]?
+    var values: [String?]?
 }
 
 // MARK: - Quick Help Response
