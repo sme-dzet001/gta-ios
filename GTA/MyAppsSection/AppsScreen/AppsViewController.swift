@@ -100,7 +100,7 @@ class AppsViewController: UIViewController {
         self.tableView.alpha = 0
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.center = CGPoint(x: UIScreen.main.bounds.width  / 2,
-                                                y: UIScreen.main.bounds.height / 2.5)
+                                                y: UIScreen.main.bounds.height / 2.55)
         self.activityIndicator.hidesWhenStopped = true
         self.activityIndicator.startAnimating()
     }

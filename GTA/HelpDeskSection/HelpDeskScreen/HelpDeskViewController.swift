@@ -81,7 +81,7 @@ class HelpDeskViewController: UIViewController {
         guard dataResponse == nil else { return }
         self.tableView.alpha = 0
         self.activityIndicator.center = CGPoint(x: UIScreen.main.bounds.width  / 2,
-                                                y: UIScreen.main.bounds.height / 2)
+                                                y: UIScreen.main.bounds.height / 1.98)
         self.activityIndicator.hidesWhenStopped = true
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
