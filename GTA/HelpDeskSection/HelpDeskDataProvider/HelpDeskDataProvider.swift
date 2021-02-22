@@ -52,41 +52,52 @@ class HelpDeskDataProvider {
     }
     
     func getHelpDeskData(completion: ((_ reportData: HelpDeskResponse?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        getSectionReport() { [weak self] (reportResponse, errorCode, error, isFromCache) in
-            let reportData = self?.parseSectionReport(data: reportResponse)
-            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdProfile.rawValue }?.generationNumber
-            if let _ = generationNumber {
-                if isFromCache {
-                    self?.getCachedResponse(for: .getHelpDeskData) {[weak self] (data, error) in
-                        if let _ = data {
-                            self?.processHelpDeskData(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
-                        }
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleHelpDeskSectionReport(data, code, cachedError, true, completion: { (cachedResponse, code, error, _) in
+                if error == nil {
+                    completion?(cachedResponse, code, error, true)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    if let _ = error {
+                        completion?(nil, errorCode, ResponseError.serverError, false)
+                    } else {
+                        self?.handleHelpDeskSectionReport(reportResponse, errorCode, error, false, completion: completion)
                     }
-                    return
-                }
-                self?.apiManager.getHelpDeskData(for: generationNumber!) { (data, errorCode, error) in
-                    self?.cacheData(data, path: .getHelpDeskData)
+                })
+            })
+        }
+    }
+    
+    private func handleHelpDeskSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, completion: ((_ reportData: HelpDeskResponse?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+        let reportData = self.parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdProfile.rawValue }?.generationNumber
+        if let _ = generationNumber {
+            if isFromCache {
+                self.getCachedResponse(for: .getHelpDeskData) {[weak self] (data, error) in
+                    //if let _ = data {
                     self?.processHelpDeskData(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+                   // }
                 }
-            } else {
-                let retError = ResponseError.serverError
-                completion?(nil, errorCode, retError, isFromCache)
+                return
             }
+            self.apiManager.getHelpDeskData(for: generationNumber!) {[weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getHelpDeskData)
+                self?.processHelpDeskData(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+            }
+        } else {
+            let retError = ResponseError.serverError
+            completion?(nil, errorCode, retError, isFromCache)
         }
     }
     
     private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             self?.cachedReportData = data
-            var isCachedDataExist: Bool = false
             if let _ = data, cachedError == nil {
-                isCachedDataExist = true
                 completion?(data, 200, cachedError, true)
             }
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-                if let _ = error, isCachedDataExist {
-                    return
-                }
                 self?.cacheData(reportResponse, path: .getSectionReport)
                 completion?(reportResponse, errorCode, error, false)
             })

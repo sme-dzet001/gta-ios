@@ -85,8 +85,20 @@ class MyAppsDataProvider {
     }
     
     func getAllApps(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
-            self?.processAllAppsSectionReport(reportResponse, errorCode, error, isFromCache, completion)
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.processAllAppsSectionReport(data, code, cachedError, true, { (code, error, _) in
+                if error == nil {
+                    completion?(code, cachedError, true)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    if let _ = error {
+                        completion?(errorCode, ResponseError.serverError, false)
+                    } else {
+                        self?.processAllAppsSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
         }
     }
     
@@ -104,16 +116,11 @@ class MyAppsDataProvider {
     
     private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
-            var isCachedDataExist: Bool = false
             if let _ = data, cachedError == nil {
-                isCachedDataExist = true
                 self?.cachedReportData = data
                 completion?(data, 200, cachedError, true)
             }
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-                if let _ = error, isCachedDataExist {
-                    return
-                }
                 self?.cacheData(reportResponse, path: .getSectionReport)
                 var newError = error
                 if let _ = error {
@@ -320,9 +327,9 @@ class MyAppsDataProvider {
         if let _ = generationNumber {
             if fromCache {
                 getCachedResponse(for: .getAllAppsData) {[weak self] (data, error) in
-                    if let _ = data, error == nil {
-                        self?.processAllApps(reportData, true, data, errorCode, error, completion)
-                    }
+                    //if let _ = data, error == nil {
+                    self?.processAllApps(reportData, true, data, errorCode, error, completion)
+                    //}
                 }
                 return
             }
