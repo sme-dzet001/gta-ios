@@ -53,6 +53,7 @@ class AuthViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        delegate?.isAuthentificationScreenShown = true
         if !isSignUp {
             authenticateUser()
         }
@@ -86,6 +87,7 @@ class AuthViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        delegate?.isAuthentificationScreenShown = false
         hideKeyboard()
     }
 
@@ -327,4 +329,5 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
 
 protocol AuthentificationPassed: class {
     var isAuthentificationPassed: Bool? {get set}
+    var isAuthentificationScreenShown: Bool? {get set}
 }
