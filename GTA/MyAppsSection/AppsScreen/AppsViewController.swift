@@ -37,6 +37,20 @@ class AppsViewController: UIViewController {
         if myAppsLastUpdateDate == nil || Date() >= myAppsLastUpdateDate ?? Date() {
             self.getMyApps()
         }
+        activateStatusRefresh()
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        dataProvider.invalidateStatusRefresh()
+    }
+    
+    private func activateStatusRefresh() {
+        dataProvider.activateStatusRefresh {[weak self] (isNeedToRefresh) in
+            guard isNeedToRefresh else { return }
+            self?.getAllApps()
+        }
     }
     
     private func getMyApps() {
@@ -51,8 +65,6 @@ class AppsViewController: UIViewController {
                     if !isEmpty {
                         self?.stopAnimation()
                     }
-                    //let appInfo = self?.dataProvider.appsData.map({$0.cellData}).reduce([], {$0 + $1})
-                    //self?.dataProvider.getImageData(for: appInfo ?? [])
                 } else if !isFromCache, let isEmpty = self?.dataProvider.appsData.isEmpty, !isEmpty {
                     self?.stopAnimation()
                 } else if !isFromCache, let isEmpty = self?.dataProvider.appsData.isEmpty, isEmpty, self?.allAppsLoadingError != nil {
@@ -201,7 +213,6 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard allAppsLoadingError == nil, myAppsLoadingError == nil else { return }
         guard indexPath.section < dataProvider.appsData.count else { return }
         guard !dataProvider.appsData[indexPath.section].cellData.isEmpty else { return }
         let appVC = ApplicationStatusViewController()

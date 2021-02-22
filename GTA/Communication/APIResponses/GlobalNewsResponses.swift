@@ -49,11 +49,11 @@ struct GlobalNewsRow: Codable {
 }
 
 struct GlobalNewsData: Codable {
-    var rows: [GlobalNewsRow]?
+    var rows: [GlobalNewsRow?]?
 }
 
 struct GlobalNewsResponse: Codable {
-    var meta: ResponseMetaData
+    var meta: ResponseMetaData?
     var data: GlobalNewsData?
 }
 
@@ -104,11 +104,11 @@ struct SpecialAlertRow: Codable {
 }
 
 struct SpecialAlertsData: Codable {
-    var rows: [SpecialAlertRow]?
+    var rows: [SpecialAlertRow?]?
 }
 
 struct SpecialAlertsResponse: Codable {
-    var meta: ResponseMetaData
+    var meta: ResponseMetaData?
     var data: SpecialAlertsData?
 }
 

@@ -59,11 +59,11 @@ struct OfficeRow: Codable {
 }
 
 struct AllOfficesData: Codable {
-    var rows: [OfficeRow]?
+    var rows: [OfficeRow?]?
 }
 
 struct AllOfficesResponse: Codable {
-    var meta: ResponseMetaData
+    var meta: ResponseMetaData?
     var data: AllOfficesData?
 }
 

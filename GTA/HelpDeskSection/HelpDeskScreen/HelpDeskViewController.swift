@@ -26,7 +26,7 @@ class HelpDeskViewController: UIViewController {
         super.viewDidLoad()
         setUpHeaderView()
         setUpTableView()
-        setHelpDeskCellsData()
+        //setHelpDeskCellsData()
         navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
     }
     
@@ -38,6 +38,14 @@ class HelpDeskViewController: UIViewController {
             self.getHelpDeskData()
         }
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        activateStatusRefresh()
+    }
+    
+    private func activateStatusRefresh() {
+        dataProvider.activateStatusRefresh {[weak self] (isNeedToRefresh) in
+            guard isNeedToRefresh else { return }
+            self?.getServiceDeskStatus()
+        }
     }
     
     private func getHelpDeskData() {
@@ -45,8 +53,8 @@ class HelpDeskViewController: UIViewController {
             if let helpDeskResponse = response {
                 self?.lastUpdateDate = isFromCache ? nil : Date().addingTimeInterval(60)
                 self?.dataResponse = helpDeskResponse
+                self?.statusResponse.hoursOfOperation = response?.hoursOfOperation
             }
-            self?.statusResponse.hoursOfOperation = response?.hoursOfOperation
             self?.setUpHeaderView()
             self?.helpDeskResponseError = error
             self?.setHelpDeskCellsData()
@@ -65,6 +73,7 @@ class HelpDeskViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        dataProvider.invalidateStatusRefresh()
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
