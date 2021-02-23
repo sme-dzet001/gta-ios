@@ -185,7 +185,7 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
                 let gettingLocationIsAllowed = dataProvider?.getClosestOffice()
                 if let isAllowed = gettingLocationIsAllowed, !isAllowed {
                     useMyCurrentLocationIsInProgress = false
-                    displayError(errorMessage: "Location permission needed to access your location")
+                    displayError(errorMessage: "Location permission needed to access your location", title: nil)
                 }
             } else {
                 showOfficeLocationVC(for: regionDataSource[indexPath.row].text)
@@ -211,6 +211,15 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     
     private func setCurrentOffice(officeId: Int, basedOnCurrentLocation: Bool) {
         let officeWasChanged = dataProvider?.userOffice?.officeId != officeId
+        guard officeWasChanged else {
+            if basedOnCurrentLocation {
+                useMyCurrentLocationIsInProgress = false
+            } else {
+                officeIdGoingToBeSelected = nil
+            }
+            dismiss(animated: true, completion: nil)
+            return
+        }
         dataProvider?.setCurrentOffice(officeId: officeId, completion: { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
                 if basedOnCurrentLocation {
@@ -221,8 +230,8 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
                 if errorCode == 200, error == nil {
                     self?.officeSelectionDelegate?.officeWasSelected()
                     self?.dismiss(animated: true, completion: nil)
-                } else if officeWasChanged {
-                    self?.displayError(errorMessage: "Oops, something went wrong")
+                } else {
+                    self?.displayError(errorMessage: "Office Selection Failed", title: nil)
                 }
             }
         })
@@ -234,14 +243,14 @@ extension OfficeLocationViewController: UserLocationManagerDelegate {
     func userDeniedToGetHisLocation() {
         guard useMyCurrentLocationIsInProgress else { return }
         useMyCurrentLocationIsInProgress = false
-        displayError(errorMessage: "Location permission needed to access your location")
+        displayError(errorMessage: "Location permission needed to access your location", title: nil)
     }
     
     func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?) {
         guard let officeCoord = officeCoord, let officeId = dataProvider?.getClosestOfficeId(by: officeCoord) else {
             if !forceOfficeSelection {
                 useMyCurrentLocationIsInProgress = false
-                displayError(errorMessage: "Oops, something went wrong")
+                displayError(errorMessage: "Can't find your location. Please verify location permissions and try again", title: nil)
             }
             return
         }
