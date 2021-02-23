@@ -139,15 +139,18 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == 0 && regionSelectionIsOn {
-            let cell = cell as? AppsServiceAlertCell
-            cell?.parentView.backgroundColor = UIColor(red: 247.0 / 255.0, green: 247.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0)
+            if let cell = cell as? AppsServiceAlertCell {
+                cell.parentView.backgroundColor = UIColor(red: 247.0 / 255.0, green: 247.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0)
+            } else {
+                cell.backgroundColor = UIColor(red: 247.0 / 255.0, green: 247.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0)
+            }
         }
     }
     
     func provideRegionCell(for indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             if useMyCurrentLocationIsInProgress {
-                return createLoadingCell(withBottomSeparator: true, withTopSeparator: true)
+                return createLoadingCell(withBottomSeparator: true)
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
             cell?.mainLabel.text = "Use My Current Location"
