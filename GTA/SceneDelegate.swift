@@ -72,8 +72,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
             tokenIsExpired = false
         }
         if let _ = KeychainManager.getToken() {
-            if tokenIsExpired || !UserDefaults.standard.bool(forKey: "userLoggedIn") {
+            let isUserLoggedIn = UserDefaults.standard.bool(forKey: "userLoggedIn")
+            if tokenIsExpired || !isUserLoggedIn {
                 removeAllData()
+                if !isUserLoggedIn {
+                    tokenIsExpired = false
+                }
                 startLoginFlow(sessionExpired: tokenIsExpired)
             } else {
                 var lastActivityDate = Date.distantPast
