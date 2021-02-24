@@ -28,6 +28,7 @@ class QuickHelpViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.barTintColor = UIColor.white
         if isTipsAndTricks {
             loadTipsAndTricks()
             return
