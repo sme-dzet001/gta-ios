@@ -98,9 +98,7 @@ class AppsViewController: UIViewController {
     private func startAnimation() {
         guard dataProvider.appsData.isEmpty else { return }
         self.tableView.alpha = 0
-        self.view.addSubview(self.activityIndicator)
-        self.activityIndicator.center = CGPoint(x: UIScreen.main.bounds.width  / 2,
-                                                y: UIScreen.main.bounds.height / 2.5)
+        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
         self.activityIndicator.hidesWhenStopped = true
         self.activityIndicator.startAnimating()
     }
