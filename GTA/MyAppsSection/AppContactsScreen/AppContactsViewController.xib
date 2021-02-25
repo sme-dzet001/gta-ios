@@ -16,7 +16,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppContactsViewController" customModule="GTA" customModuleProvider="target">
             <connections>
-                <outlet property="activityIndicator" destination="iZ4-Fu-3cP" id="zOL-r7-pga"/>
                 <outlet property="errorLabel" destination="sFD-vz-nPK" id="ApS-nr-wAu"/>
                 <outlet property="tableView" destination="FSd-Bp-Ryx" id="vYG-kX-rkX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -41,9 +40,6 @@
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="iZ4-Fu-3cP">
-                    <rect key="frame" x="197" y="438" width="20" height="20"/>
-                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -54,8 +50,6 @@
                 <constraint firstItem="sFD-vz-nPK" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Guj-US-M46"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="FSd-Bp-Ryx" secondAttribute="bottom" id="W4q-PC-0VD"/>
                 <constraint firstItem="sFD-vz-nPK" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="pr5-0U-PfG"/>
-                <constraint firstItem="iZ4-Fu-3cP" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="zRx-xX-Zzd"/>
-                <constraint firstItem="iZ4-Fu-3cP" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="zd8-La-zJF"/>
             </constraints>
             <point key="canvasLocation" x="139" y="62"/>
         </view>

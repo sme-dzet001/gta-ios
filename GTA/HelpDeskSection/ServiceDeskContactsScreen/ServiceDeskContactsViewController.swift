@@ -10,9 +10,10 @@ import UIKit
 class ServiceDeskContactsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    //@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var errorLabel: UILabel!
     
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: HelpDeskDataProvider?
     private var lastUpdateDate: Date?
 
@@ -29,6 +30,11 @@ class ServiceDeskContactsViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopAnimation()
+    }
+    
     private func setUpNavigationItem() {
         navigationItem.title = "Service Desk Contacts"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
@@ -43,13 +49,11 @@ class ServiceDeskContactsViewController: UIViewController {
     private func loadContactsData() {
         guard let dataProvider = dataProvider else { return }
         if dataProvider.teamContactsDataIsEmpty {
-            activityIndicator.startAnimating()
-            errorLabel.isHidden = true
-            tableView.isHidden = true
+            startAnimation()
         }
         dataProvider.getTeamContactsData { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
+                self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = Date().addingTimeInterval(60)
                     self?.errorLabel.isHidden = true
@@ -61,6 +65,19 @@ class ServiceDeskContactsViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    private func startAnimation() {
+        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        errorLabel.isHidden = true
+        tableView.isHidden = true
+    }
+    
+    private func stopAnimation() {
+        activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
     }
     
     @objc private func backPressed() {

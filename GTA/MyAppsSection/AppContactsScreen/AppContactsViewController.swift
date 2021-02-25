@@ -10,9 +10,10 @@ import UIKit
 class AppContactsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    //@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var errorLabel: UILabel!
     
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: MyAppsDataProvider?
     private var lastUpdateDate: Date?
     private var appContactsData: AppContactsData?
@@ -31,6 +32,11 @@ class AppContactsViewController: UIViewController {
             loadContactsData()
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopAnimation()
+    }
 
     private func setUpNavigationItem() {
         navigationItem.title = "Contacts"
@@ -46,13 +52,11 @@ class AppContactsViewController: UIViewController {
         guard let dataProvider = dataProvider else { return }
         let contactsDataIsEmpty = appContactsData?.contactsData == nil || appContactsData?.contactsData?.count == 0
         if contactsDataIsEmpty {
-            activityIndicator.startAnimating()
-            errorLabel.isHidden = true
-            tableView.isHidden = true
+            startAnimation()
         }
         dataProvider.getAppContactsData(for: appName) { [weak self] (contactsData, errorCode, error) in
             DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
+                self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = Date().addingTimeInterval(60)
                     self?.appContactsData = contactsData
@@ -66,6 +70,19 @@ class AppContactsViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    private func startAnimation() {
+        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        errorLabel.isHidden = true
+        tableView.isHidden = true
+    }
+    
+    private func stopAnimation() {
+        activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
     }
     
     @objc private func backPressed() {

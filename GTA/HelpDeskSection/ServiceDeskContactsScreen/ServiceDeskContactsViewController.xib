@@ -16,7 +16,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServiceDeskContactsViewController" customModule="GTA" customModuleProvider="target">
             <connections>
-                <outlet property="activityIndicator" destination="tAh-nr-imQ" id="PWG-4q-mlF"/>
                 <outlet property="errorLabel" destination="8lo-1h-M3v" id="9pM-zU-55c"/>
                 <outlet property="tableView" destination="pCD-ER-464" id="DMO-cG-vzN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -41,18 +40,13 @@
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tAh-nr-imQ">
-                    <rect key="frame" x="197" y="438" width="20" height="20"/>
-                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="8lo-1h-M3v" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="6IV-MQ-LpD"/>
                 <constraint firstItem="pCD-ER-464" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="B6S-ov-xlt"/>
-                <constraint firstItem="tAh-nr-imQ" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="BvZ-E9-FKo"/>
                 <constraint firstItem="8lo-1h-M3v" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Hfa-hX-CUo"/>
-                <constraint firstItem="tAh-nr-imQ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="Vb6-47-SIE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pCD-ER-464" secondAttribute="trailing" id="ia7-ES-ZBC"/>
                 <constraint firstItem="pCD-ER-464" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="nse-LB-RJP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="pCD-ER-464" secondAttribute="bottom" id="svx-nI-hDn"/>
