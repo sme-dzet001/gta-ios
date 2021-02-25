@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -37,13 +37,13 @@
                     </connections>
                 </tableView>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bU-wr-fQ4">
-                    <rect key="frame" x="188.5" y="443" width="37.5" height="20"/>
+                    <rect key="frame" x="188.5" y="438" width="37.5" height="20"/>
                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="zfO-yD-aRS">
-                    <rect key="frame" x="197" y="443" width="20" height="20"/>
+                    <rect key="frame" x="197" y="438" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -52,19 +52,14 @@
                 <constraint firstItem="tl9-Gb-GML" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="0dQ-nN-ueG"/>
                 <constraint firstItem="0bU-wr-fQ4" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="5j7-Ze-gkf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tl9-Gb-GML" secondAttribute="trailing" id="L6T-Xo-ewy"/>
-                <constraint firstItem="zfO-yD-aRS" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="bRj-FD-Ibv"/>
-                <constraint firstItem="0bU-wr-fQ4" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="cHq-KM-u6Y"/>
+                <constraint firstItem="zfO-yD-aRS" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="bRj-FD-Ibv"/>
+                <constraint firstItem="0bU-wr-fQ4" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="cHq-KM-u6Y"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="tl9-Gb-GML" secondAttribute="bottom" id="j4q-y3-7za"/>
                 <constraint firstItem="zfO-yD-aRS" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="qjM-w6-K0p"/>
                 <constraint firstItem="tl9-Gb-GML" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="xVt-cn-Ccu"/>
             </constraints>
             <point key="canvasLocation" x="139" y="91"/>
         </view>
-        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" id="gqO-Gu-ld2">
-            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <point key="canvasLocation" x="-281" y="45"/>
-        </activityIndicatorView>
     </objects>
     <resources>
         <systemColor name="systemBackgroundColor">

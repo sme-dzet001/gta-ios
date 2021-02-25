@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -42,7 +42,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="tAh-nr-imQ">
-                    <rect key="frame" x="197" y="443" width="20" height="20"/>
+                    <rect key="frame" x="197" y="438" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -52,7 +52,7 @@
                 <constraint firstItem="pCD-ER-464" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="B6S-ov-xlt"/>
                 <constraint firstItem="tAh-nr-imQ" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="BvZ-E9-FKo"/>
                 <constraint firstItem="8lo-1h-M3v" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Hfa-hX-CUo"/>
-                <constraint firstItem="tAh-nr-imQ" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="Vb6-47-SIE"/>
+                <constraint firstItem="tAh-nr-imQ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="Vb6-47-SIE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pCD-ER-464" secondAttribute="trailing" id="ia7-ES-ZBC"/>
                 <constraint firstItem="pCD-ER-464" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="nse-LB-RJP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="pCD-ER-464" secondAttribute="bottom" id="svx-nI-hDn"/>
