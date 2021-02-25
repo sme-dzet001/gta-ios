@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "contacts@1x.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "contacts@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "contacts@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "Group-3.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

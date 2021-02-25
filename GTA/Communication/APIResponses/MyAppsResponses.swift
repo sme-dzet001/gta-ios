@@ -249,3 +249,12 @@ struct AppDetailsDataRows: Codable {
 struct AppDetailsValues: Codable {
     var values: [QuantumValue?]?
 }
+
+struct AppsTipsAndTricksResponse: Codable {
+    var meta: ResponseMetaData?
+    var data: [String : AppsTipsAndTricksData?]?
+}
+
+struct AppsTipsAndTricksData: Codable {
+    var data: QuickHelpData?
+}
