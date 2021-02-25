@@ -110,6 +110,15 @@ extension UIView {
     }
 }
 
+extension UINavigationController {
+    
+    func addAndCenteredActivityIndicator(_ activityIndicator: UIActivityIndicatorView) {
+        self.view.addSubview(activityIndicator)
+        self.view.bringSubviewToFront(activityIndicator)
+        activityIndicator.center = self.view.center
+    }
+}
+
 extension UITableView {
     var dataHasChanged: Bool {
         guard let dataSource = dataSource else { return false }
