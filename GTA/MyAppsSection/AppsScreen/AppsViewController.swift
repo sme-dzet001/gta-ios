@@ -188,7 +188,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if allAppsLoadingError == nil && !dataProvider.appsData.isEmpty {
+        if !dataProvider.appsData.isEmpty {
             let header = AppsTableViewHeader.instanceFromNib()
             header.descriptionLabel.text = dataProvider.appsData[section].description
             header.headerTitleLabel.text = dataProvider.appsData[section].sectionName

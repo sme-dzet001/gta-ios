@@ -287,6 +287,9 @@ class CacheManager {
                     self?.deleteCacheMetadata(requestURI: requestURI, completion: { (error: Error?) in
                     })
                 }
+                if cachedResponseError == nil && responseData == nil {
+                    cachedResponseError = ResponseError.commonError
+                }
                 completion(responseData, cachedResponseError)
             }
         }
