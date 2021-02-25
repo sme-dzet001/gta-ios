@@ -10,6 +10,7 @@ import UIKit
 class HelpDeskViewController: UIViewController {
     
     @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     private var lastUpdateDate: Date?
     
@@ -20,7 +21,6 @@ class HelpDeskViewController: UIViewController {
     var helpDeskResponseError: Error?
     
     private var helpDeskCellsData: [[HelpDeskCellData]] = []
-    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,9 +81,8 @@ class HelpDeskViewController: UIViewController {
         guard dataResponse == nil else { return }
         self.tableView.alpha = 0
         self.activityIndicator.center = CGPoint(x: UIScreen.main.bounds.width  / 2,
-                                                y: UIScreen.main.bounds.height / 2)
+                                                y: UIScreen.main.bounds.height / 1.98)
         self.activityIndicator.hidesWhenStopped = true
-        self.view.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
     }
     
@@ -92,7 +91,6 @@ class HelpDeskViewController: UIViewController {
             self.tableView.reloadData()
             self.tableView.alpha = 1
             self.activityIndicator.stopAnimating()
-            self.activityIndicator.removeFromSuperview()
         }
     }
     

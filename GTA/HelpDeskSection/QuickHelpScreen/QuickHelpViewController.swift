@@ -10,9 +10,10 @@ import UIKit
 class QuickHelpViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    //@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var errorLabel: UILabel!
     
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: HelpDeskDataProvider?
     private var expandedRowsIndex = [Int]()
     private var lastUpdateDate: Date?
@@ -38,13 +39,17 @@ class QuickHelpViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopAnimation()
+    }
+    
     private func loadTipsAndTricks() {
-        activityIndicator.startAnimating()
-        errorLabel.isHidden = true
-        tableView.isHidden = true
+        startAnimation()
         appsDataProvider.getAppTipsAndTricks(for: appName) {[weak self] (errorCode, error, isFromCache) in
             DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
+                //self?.activityIndicator.stopAnimating()
+                self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = Date().addingTimeInterval(60)
                     self?.errorLabel.isHidden = true
@@ -56,6 +61,19 @@ class QuickHelpViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    private func startAnimation() {
+        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        errorLabel.isHidden = true
+        tableView.isHidden = true
+    }
+    
+    private func stopAnimation() {
+        activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
     }
     
     private func setUpNavigationItem() {
@@ -71,13 +89,15 @@ class QuickHelpViewController: UIViewController {
     private func loadQuickHelpData() {
         guard let dataProvider = dataProvider else { return }
         if dataProvider.quickHelpDataIsEmpty {
-            activityIndicator.startAnimating()
-            errorLabel.isHidden = true
-            tableView.isHidden = true
+            startAnimation()
+//            activityIndicator.startAnimating()
+//            errorLabel.isHidden = true
+//            tableView.isHidden = true
         }
         dataProvider.getQuickHelpData { [weak self] (dataWasChanged, errorCode, error) in
             DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
+                self?.stopAnimation()
+                //self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = Date().addingTimeInterval(60)
                     self?.errorLabel.isHidden = true

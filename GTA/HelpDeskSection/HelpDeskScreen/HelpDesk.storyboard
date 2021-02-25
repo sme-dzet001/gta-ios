@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,6 +25,9 @@
                                     <outlet property="delegate" destination="emg-U7-4qg" id="60J-9v-O4C"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="5pQ-Oy-a9O">
+                                <rect key="frame" x="197" y="394" width="20" height="20"/>
+                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgO-Iy-sSg">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -38,9 +41,11 @@
                         <constraints>
                             <constraint firstItem="dgO-Iy-sSg" firstAttribute="leading" secondItem="VQY-2b-btO" secondAttribute="leading" id="66R-b2-pPt"/>
                             <constraint firstItem="VQY-2b-btO" firstAttribute="trailing" secondItem="dgO-Iy-sSg" secondAttribute="trailing" id="GnK-mA-uok"/>
+                            <constraint firstItem="5pQ-Oy-a9O" firstAttribute="centerX" secondItem="hnm-gk-3gF" secondAttribute="centerX" id="HFO-tl-Cbq"/>
                             <constraint firstItem="VQY-2b-btO" firstAttribute="trailing" secondItem="Udk-yr-ScC" secondAttribute="trailing" id="ND0-dx-5wA"/>
                             <constraint firstItem="Udk-yr-ScC" firstAttribute="top" secondItem="dgO-Iy-sSg" secondAttribute="bottom" id="Uz3-Nm-DPt"/>
                             <constraint firstItem="VQY-2b-btO" firstAttribute="bottom" secondItem="Udk-yr-ScC" secondAttribute="bottom" id="dtK-HT-WFT"/>
+                            <constraint firstItem="5pQ-Oy-a9O" firstAttribute="centerY" secondItem="hnm-gk-3gF" secondAttribute="centerY" id="ohs-eq-db1"/>
                             <constraint firstItem="Udk-yr-ScC" firstAttribute="leading" secondItem="VQY-2b-btO" secondAttribute="leading" id="qcC-Mh-bQL"/>
                             <constraint firstItem="dgO-Iy-sSg" firstAttribute="top" secondItem="VQY-2b-btO" secondAttribute="top" id="riG-Nr-BwO"/>
                         </constraints>
@@ -48,6 +53,7 @@
                     <tabBarItem key="tabBarItem" title="Service Desk" image="helpdesk_tab_icon" id="Bkv-ay-b2Q"/>
                     <navigationItem key="navigationItem" title="Help Desk" id="r71-do-NAE"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="5pQ-Oy-a9O" id="LEo-Jc-TIb"/>
                         <outlet property="headerView" destination="dgO-Iy-sSg" id="Crl-Xy-sCH"/>
                         <outlet property="tableView" destination="Udk-yr-ScC" id="4zN-sk-6is"/>
                     </connections>
