@@ -143,7 +143,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
             
             present(mailVC, animated: true)
         } else {
-            displayError(errorMessage: "Configure your mail in iOS mail app to use this feature")
+            displayError(errorMessage: "Configure your mail in iOS mail app to use this feature", title: nil)
         }
     }
     
