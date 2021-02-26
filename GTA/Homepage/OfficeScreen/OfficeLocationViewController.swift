@@ -114,6 +114,19 @@ class OfficeLocationViewController: UIViewController {
         }
     }
     
+    func displayPermissionDeniedAlert() {
+        let alertController = UIAlertController(title: nil, message: "Location permission needed to access your location", preferredStyle: .alert)
+        let openSettingsAction = UIAlertAction(title: "Settings", style: .default) { (_) in
+            if let settingsUrl = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+            }
+        }
+        let closeAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(openSettingsAction)
+        alertController.addAction(closeAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     deinit {
         heightObserver?.invalidate()
     }
@@ -188,7 +201,8 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
                 let gettingLocationIsAllowed = dataProvider?.getClosestOffice()
                 if let isAllowed = gettingLocationIsAllowed, !isAllowed {
                     useMyCurrentLocationIsInProgress = false
-                    displayError(errorMessage: "Location permission needed to access your location", title: nil)
+                    displayPermissionDeniedAlert()
+                    //displayError(errorMessage: "Location permission needed to access your location", title: nil)
                 }
             } else {
                 showOfficeLocationVC(for: regionDataSource[indexPath.row].text)
@@ -246,7 +260,8 @@ extension OfficeLocationViewController: UserLocationManagerDelegate {
     func userDeniedToGetHisLocation() {
         guard useMyCurrentLocationIsInProgress else { return }
         useMyCurrentLocationIsInProgress = false
-        displayError(errorMessage: "Location permission needed to access your location", title: nil)
+        displayPermissionDeniedAlert()
+        //displayError(errorMessage: "Location permission needed to access your location", title: nil)
     }
     
     func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?) {
