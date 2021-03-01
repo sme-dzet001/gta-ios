@@ -121,7 +121,7 @@ class OfficeLocationViewController: UIViewController {
                 UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
             }
         }
-        let closeAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let closeAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         alertController.addAction(openSettingsAction)
         alertController.addAction(closeAction)
         present(alertController, animated: true, completion: nil)
