@@ -254,12 +254,6 @@ class HomepageTableViewController: UITableViewController {
             infoViewController.title = selectedOffice.officeName
             self.navigationController?.pushViewController(infoViewController, animated: true)
         }
-        TESTCRASH()
-    }
-    
-    func TESTCRASH() {
-        let rrr = ["sddsdsds"]
-        print(rrr[33])
     }
 
 }
