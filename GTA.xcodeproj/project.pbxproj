@@ -160,6 +160,7 @@
 		9F819ACA255C1646007C1739 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */; };
 		9F819ACB255C1646007C1739 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2B02554CF1F00D71965 /* Apps.storyboard */; };
 		9F819ACC255C1646007C1739 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB6255401EA00E13B77 /* Main.storyboard */; };
+		9F825FF525ED5612002A4560 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F825FCF25ED4DE5002A4560 /* GoogleService-Info.plist */; };
 		9F83A8EB2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */; };
 		9F83A8EC2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */; };
 		9F83A8ED2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */; };
@@ -538,6 +539,7 @@
 		9F819AA7255C1572007C1739 /* GTAStage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTAStage-Info.plist"; sourceTree = "<group>"; };
 		9F819AD0255C1646007C1739 /* GTADev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTADev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F819AD1255C1646007C1739 /* GTADev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTADev-Info.plist"; sourceTree = "<group>"; };
+		9F825FCF25ED4DE5002A4560 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpDeskDataProvider.swift; sourceTree = "<group>"; };
 		9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsTableViewHeader.swift; sourceTree = "<group>"; };
 		9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsServiceAlertCell.swift; sourceTree = "<group>"; };
@@ -998,6 +1000,14 @@
 			path = MyAppsDataProvider;
 			sourceTree = "<group>";
 		};
+		9F825FCE25ED4DD3002A4560 /* GTA */ = {
+			isa = PBXGroup;
+			children = (
+				9F825FCF25ED4DE5002A4560 /* GoogleService-Info.plist */,
+			);
+			path = GTA;
+			sourceTree = "<group>";
+		};
 		9F83A8F32578FF2500F9CFF0 /* HelpDeskDataProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -1140,6 +1150,7 @@
 		9FCFA2AF259E143100E893D2 /* GooglePlists */ = {
 			isa = PBXGroup;
 			children = (
+				9F825FCE25ED4DD3002A4560 /* GTA */,
 				9FCFA2B0259E143600E893D2 /* GTAStage */,
 			);
 			path = GooglePlists;
@@ -1441,6 +1452,7 @@
 				659A5AAA255401EA00E13B77 /* Frameworks */,
 				659A5AAB255401EA00E13B77 /* Resources */,
 				2B32BA7128DEF70968DB513E /* [CP] Embed Pods Frameworks */,
+				9F825FE025ED4F20002A4560 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1632,6 +1644,7 @@
 				659A5AB8255401EA00E13B77 /* Main.storyboard in Resources */,
 				9F78CFE82564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
 				C962D82B2566D21100727949 /* TicketCell.xib in Resources */,
+				9F825FF525ED5612002A4560 /* GoogleService-Info.plist in Resources */,
 				C9DFD47F2565721F00BF1740 /* MetricStatsCell.xib in Resources */,
 				C93FCF0925648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				C93FCF1C2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
@@ -1927,6 +1940,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/FirebaseCrashlytics/run\n${PODS_ROOT}/FirebaseCrashlytics/upload-symbols -gsp ${PROJECT_DIR}/GTA/Plists/GooglePlists/GTAStage/GoogleService-Info.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\n";
+		};
+		9F825FE025ED4F20002A4560 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/FirebaseCrashlytics/run\n${DWARF_DSYM_FOLDER_PATH} -name \"*.dSYM\" | xargs -I \\{\\} $PODS_ROOT/FirebaseCrashlytics/upload-symbols -gsp ${PROJECT_DIR}/GTA/Plists/GooglePlists/GTA/GoogleService-Info.plist -p ios\n";
 		};
 		C423BC76216EB2606416E826 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2424,6 +2456,7 @@
 				CODE_SIGN_ENTITLEMENTS = GTA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = GTA/Plists/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
