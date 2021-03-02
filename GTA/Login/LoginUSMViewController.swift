@@ -142,7 +142,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
             return
         }
         if navigationRequestURL.absoluteString.contains("app_code=1267") {
-            showLoginFailedAlert(message: "You don't have an account. Please, contact your administrator.", title: nil)
+            showLoginFailedAlert(message: "You don't have an account. Please, contact your administrator.", title: "Login Failed")
             decisionHandler(.cancel)
             return
         }
