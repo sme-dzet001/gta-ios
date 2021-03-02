@@ -108,6 +108,13 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         tableView.register(UINib(nibName: "SystemUpdatesCell", bundle: nil), forCellReuseIdentifier: "SystemUpdatesCell")
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "MetricStatsCell", bundle: nil), forCellReuseIdentifier: "MetricStatsCell")
+        /* TODO: Need to find a better solution
+         * Adding view for top bounce
+         */
+        let bounceView = UIView(frame: self.tableView.bounds)
+        bounceView.frame.origin.y = -self.tableView.bounds.height
+        bounceView.backgroundColor = UIColor(hex: 0xF7F7FA)
+        self.tableView.addSubview(bounceView)
     }
     
     private func setHardCodeData() {
