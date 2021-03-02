@@ -11,6 +11,7 @@ import CoreLocation
 protocol UserLocationManagerDelegate: class {
     func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?)
     func userDeniedToGetHisLocation()
+    func locationManagerFailed(with error: Error)
 }
 
 class UserLocationManager: NSObject {
@@ -72,6 +73,6 @@ extension UserLocationManager: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        
+        userLocationManagerDelegate?.locationManagerFailed(with: error)
     }
 }

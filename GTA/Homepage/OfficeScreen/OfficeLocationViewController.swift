@@ -266,12 +266,22 @@ extension OfficeLocationViewController: UserLocationManagerDelegate {
     
     func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?) {
         guard let officeCoord = officeCoord, let officeId = dataProvider?.getClosestOfficeId(by: officeCoord) else {
-            if !forceOfficeSelection {
-                useMyCurrentLocationIsInProgress = false
-                displayError(errorMessage: "Can't find your location. Please verify location permissions and try again", title: nil)
-            }
+            showLocationManagerAlert()
             return
         }
         setCurrentOffice(officeId: officeId, basedOnCurrentLocation: true)
     }
+    
+    func locationManagerFailed(with error: Error) {
+        //TODO: error handling
+        showLocationManagerAlert()
+    }
+    
+    private func showLocationManagerAlert() {
+        if !forceOfficeSelection {
+            useMyCurrentLocationIsInProgress = false
+            displayError(errorMessage: "Can't find your location. Please verify location permissions and try again", title: nil)
+        }
+    }
+    
 }
