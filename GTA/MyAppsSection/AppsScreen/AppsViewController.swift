@@ -176,6 +176,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicationCell", for: indexPath) as? ApplicationCell {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
                 cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
+                cell.separator.isHidden = indexPath.row != dataProvider.appsData[indexPath.section].cellData.count - 1
             } else {
                 print("!!!error my apps cell no data!!!!")
                 return createErrorCell(with: "No data available")

@@ -86,15 +86,28 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bn-Nu-co3">
+                        <rect key="frame" x="0.0" y="93" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="cDP-tU-Z5s"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="0ZE-SM-vhB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="3tg-DO-8Zp"/>
+                    <constraint firstItem="7bn-Nu-co3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4i9-CA-8Tq"/>
                     <constraint firstAttribute="trailing" secondItem="idg-Oi-FFL" secondAttribute="trailing" constant="20" id="NZV-Bf-E6t"/>
                     <constraint firstItem="0ZE-SM-vhB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="PXp-TY-bao"/>
                     <constraint firstItem="idg-Oi-FFL" firstAttribute="centerY" secondItem="0ZE-SM-vhB" secondAttribute="centerY" id="SNj-D9-bUE"/>
                     <constraint firstItem="idg-Oi-FFL" firstAttribute="leading" secondItem="FEH-Qe-7Ys" secondAttribute="trailing" constant="20" id="U1S-xK-2jP"/>
+                    <constraint firstAttribute="trailing" secondItem="7bn-Nu-co3" secondAttribute="trailing" id="fbl-0c-EkS"/>
                     <constraint firstItem="0ZE-SM-vhB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="oDg-ml-ztc"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0ZE-SM-vhB" secondAttribute="bottom" constant="10" id="qlY-xM-PCO"/>
+                    <constraint firstAttribute="bottom" secondItem="7bn-Nu-co3" secondAttribute="bottom" id="sEH-DW-Msf"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -104,6 +117,7 @@
                 <outlet property="appName" destination="idg-Oi-FFL" id="aVI-D9-RMW"/>
                 <outlet property="appStatus" destination="mq4-R7-yG1" id="THe-k3-ZKq"/>
                 <outlet property="iconLabel" destination="XHH-Yb-Cnv" id="4S7-Wn-mu7"/>
+                <outlet property="separator" destination="7bn-Nu-co3" id="Q6N-5Z-01b"/>
                 <outlet property="statusParentView" destination="hBH-g6-Kh7" id="9K0-T6-0MK"/>
             </connections>
             <point key="canvasLocation" x="121.73913043478262" y="101.11607142857143"/>
