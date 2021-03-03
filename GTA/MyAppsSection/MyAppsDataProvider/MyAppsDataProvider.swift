@@ -204,6 +204,23 @@ class MyAppsDataProvider {
         }
     }
     
+    func getTipsAndTricksPDF(with urlString: String, for app: String, completion: @escaping ((_ pdfData: Data?, _ code: Int?, _ error: Error?) -> Void)) {
+        getCachedResponse(for: .getAppTipsAndTricksPDF(detailsPath: app)) {[weak self] (data, cachedError) in
+            if let _ = data, cachedError == nil {
+                self?.cachedReportData = data
+                completion(data, 200, cachedError)
+            }
+            self?.apiManager.getTipsAndTricksPDF(urlString: urlString, completion: { (data, errorCode, error) in
+                self?.cacheData(data, path: .getAppTipsAndTricksPDF(detailsPath: app))
+                var newError = error
+                if let _ = error {
+                    newError = ResponseError.serverError
+                }
+                completion(data, errorCode, newError)
+            })
+        }
+    }
+    
     func invalidateStatusRefresh() {
         refreshTimer?.invalidate()
         refreshTimer = nil

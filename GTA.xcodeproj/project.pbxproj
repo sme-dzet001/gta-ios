@@ -87,6 +87,12 @@
 		9F37C96F257929C0002284B6 /* HelpDeskResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */; };
 		9F37C970257929C0002284B6 /* HelpDeskResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */; };
 		9F37C971257929C0002284B6 /* HelpDeskResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */; };
+		9F44AE1C25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
+		9F44AE1D25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
+		9F44AE1E25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
+		9F44AE1F25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */; };
+		9F44AE2025EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */; };
+		9F44AE2125EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */; };
 		9F5B105D2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */; };
 		9F5B105E2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */; };
 		9F5B105F2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */; };
@@ -522,6 +528,8 @@
 		9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageTableViewController.swift; sourceTree = "<group>"; };
 		9F36D4642562C286000EE0F1 /* HomepageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
 		9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpDeskResponses.swift; sourceTree = "<group>"; };
+		9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTipsAndTricksViewController.swift; sourceTree = "<group>"; };
+		9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTipsAndTricksViewController.xib; sourceTree = "<group>"; };
 		9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsViewController.swift; sourceTree = "<group>"; };
 		9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TicketDetailsViewController.xib; sourceTree = "<group>"; };
 		9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
@@ -891,6 +899,15 @@
 			path = xibs;
 			sourceTree = "<group>";
 		};
+		9F44AE2725EFDCBB00A0EDA4 /* AppTipsAndTricksScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */,
+				9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */,
+			);
+			path = AppTipsAndTricksScreen;
+			sourceTree = "<group>";
+		};
 		9F5B10582567BE03000A3CFD /* TicketDetailsScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -1023,6 +1040,7 @@
 				9F895AD7255C22D6004489C6 /* AppsScreen */,
 				9F895B67255D3CCB004489C6 /* HelpReportScreen */,
 				9F895B24255C2DDF004489C6 /* ApplicationStatus */,
+				9F44AE2725EFDCBB00A0EDA4 /* AppTipsAndTricksScreen */,
 				C93FCF1125648FAF001E86F6 /* AboutScreen */,
 				C907E0CB25D437DD00FB0B55 /* AppContactsScreen */,
 			);
@@ -1635,6 +1653,7 @@
 				9F78D0E1256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				C9EC9E9C25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
 				C907E0C325D437BF00FB0B55 /* AppContactsViewController.xib in Resources */,
+				9F44AE1F25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
 				65D1A2B12554CF1F00D71965 /* Apps.storyboard in Resources */,
 				C9424E0425642632003C247E /* MyDevicesViewController.xib in Resources */,
 				C907E0DB25D4382500FB0B55 /* AppContactCell.xib in Resources */,
@@ -1717,6 +1736,7 @@
 				9FCFA2A7259E138D00E893D2 /* GoogleService-Info.plist in Resources */,
 				C9705B802566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
 				C9EC9E9D25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
+				9F44AE2025EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
 				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9FF0546A25681F4A0071E596 /* SecondTicketDetailsViewController.xib in Resources */,
 				9F5B10612567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */,
@@ -1741,6 +1761,7 @@
 			files = (
 				C960A10225B08CAC004A9C65 /* ServiceDeskAboutCell.xib in Resources */,
 				9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
+				9F44AE2125EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
 				9F1620D92566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
 				C9EFDA3425A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */,
 				9FF0548325681FCD0071E596 /* SecondSendMessageView.xib in Resources */,
@@ -2095,6 +2116,7 @@
 				659C595B25924106007953A7 /* CacheManager.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
+				9F44AE1C25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2202,6 +2224,7 @@
 				659C595C25924106007953A7 /* CacheManager.swift in Sources */,
 				C962D8452566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
+				9F44AE1D25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2293,6 +2316,7 @@
 				659C595D25924106007953A7 /* CacheManager.swift in Sources */,
 				C962D8462566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
+				9F44AE1E25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

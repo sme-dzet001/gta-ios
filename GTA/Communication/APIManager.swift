@@ -180,6 +180,14 @@ class APIManager: NSObject, URLSessionDelegate {
         self.makeRequest(endpoint: .getAppTipsAndTricks(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
     }
     
+    func getTipsAndTricksPDF(urlString: String, completion: @escaping ((_ pdfData: Data?, _ errorCode: Int, _ error: Error?) -> Void)) {
+        if let url = URL(string: urlString) {
+            networkManager.performURLRequest(URLRequest(url: url), completion: completion)
+        } else {
+            completion(nil, 401, ResponseError.serverError)
+        }
+    }
+    
     
 //    func getAppsServiceAlert(for generationNumber: Int, completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
 //        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
