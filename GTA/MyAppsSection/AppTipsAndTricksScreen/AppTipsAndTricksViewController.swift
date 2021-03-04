@@ -21,6 +21,7 @@ class AppTipsAndTricksViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barTintColor = .white
         setUpNavigationItem()
+        setUpPDFView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +42,13 @@ class AppTipsAndTricksViewController: UIViewController {
         self.navigationItem.titleView = tlabel
         self.navigationItem.title = appName
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
+    }
+    
+    private func setUpPDFView() {
+        pdfView.displayDirection = .horizontal
+        pdfView.autoScales = true
+        pdfView.displayMode = .singlePageContinuous
+        pdfView.clipsToBounds = true
     }
     
     private func startAnimation() {
@@ -84,8 +92,6 @@ class AppTipsAndTricksViewController: UIViewController {
         guard let _ = data else { return }
         DispatchQueue.main.async {
             self.pdfView.document = PDFDocument(data: data!)
-            self.pdfView.displayDirection = .horizontal
-            
         }
     }
     
