@@ -21,11 +21,11 @@ class AppTipsAndTricksViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barTintColor = .white
         setUpNavigationItem()
-        setUpPDFView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setUpPDFView()
         startAnimation()
         getAppTipsAndTricks()
     }
@@ -47,8 +47,8 @@ class AppTipsAndTricksViewController: UIViewController {
     private func setUpPDFView() {
         pdfView.displayDirection = .horizontal
         pdfView.autoScales = true
+        pdfView.usePageViewController(true, withViewOptions: nil)
         pdfView.displayMode = .singlePageContinuous
-        pdfView.clipsToBounds = true
     }
     
     private func startAnimation() {
@@ -70,7 +70,8 @@ class AppTipsAndTricksViewController: UIViewController {
     
     private func getAppTipsAndTricks() {
         // hardcoded url POC
-        dataProvider.getTipsAndTricksPDF(with: "http://www.africau.edu/images/default/sample.pdf", for: appName ?? "") {[weak self] (data, code, error) in
+        let url = "http://www.africau.edu/images/default/sample.pdf"
+        dataProvider.getTipsAndTricksPDF(with: url, for: appName ?? "") {[weak self] (data, code, error) in
             self?.stopAnimation()
             if let _ = error {
                 self?.showErrorLabel(with: (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong")
@@ -91,7 +92,9 @@ class AppTipsAndTricksViewController: UIViewController {
     private func showPDFView(with data: Data?) {
         guard let _ = data else { return }
         DispatchQueue.main.async {
-            self.pdfView.document = PDFDocument(data: data!)
+            if let document = PDFDocument(data: data!), document != self.pdfView.document {
+                self.pdfView.document = document
+            }
         }
     }
     
