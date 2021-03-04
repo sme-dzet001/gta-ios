@@ -367,8 +367,9 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        if let date = allAppsResponse?.data?.requestDate, isNeedToRemoveResponseForDate(date) {
+        if let date = allAppsResponse?.data?.requestDate, isNeedToRemoveResponseForDate(date), isFromCache {
             cacheManager.removeCachedData(for: CacheManager.path.getAllAppsData.endpoint)
+            completion?(0, ResponseError.noDataAvailable, isFromCache)
             return
         }
         let columns = allAppsResponse?.meta?.widgetsDataSource?.params?.columns
