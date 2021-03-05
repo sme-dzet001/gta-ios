@@ -46,7 +46,6 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        startAnimation()
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppDetailsData()
         }
@@ -59,6 +58,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     }
     
     private func getAppDetailsData() {
+        startAnimation()
         dataProvider?.getAppDetailsData(for: appName) { [weak self] (detailsData, errorCode, error) in
             self?.detailsDataResponseError = error
             if error == nil, errorCode == 200 {
@@ -220,7 +220,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dataArray = dataSource[indexPath.section].cellData
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
-            cell.separator.isHidden = indexPath.row == dataArray.count - 1
+            cell.separator.isHidden = false//indexPath.row == dataArray.count - 1
             let isDisabled = indexPath.row < 2 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty)
             cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, error: indexPath.row == 3 ? nil : detailsDataResponseError)
             return cell

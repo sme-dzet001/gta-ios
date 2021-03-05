@@ -15,6 +15,7 @@ class ApplicationCell: UITableViewCell {
     @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var statusParentView: UIView!
+    @IBOutlet weak var separator: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
