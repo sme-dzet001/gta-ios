@@ -63,8 +63,8 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
             self?.detailsDataResponseError = error
             if error == nil, errorCode == 200 {
                 self?.lastUpdateDate = Date().addingTimeInterval(60)
+                self?.appDetailsData = detailsData
             }
-            self?.appDetailsData = detailsData
             self?.stopAnimation()
         }
     }

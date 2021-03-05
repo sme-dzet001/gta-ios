@@ -151,7 +151,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.section == 1, detailsDataResponseError == nil, details == nil  {
             return createLoadingCell()
-        } else if indexPath.section == 1, let error = detailsDataResponseError as? ResponseError {
+        } else if indexPath.section == 1, let error = detailsDataResponseError as? ResponseError, details == nil {
             return createErrorCell(with: error.localizedDescription)
         }
         
