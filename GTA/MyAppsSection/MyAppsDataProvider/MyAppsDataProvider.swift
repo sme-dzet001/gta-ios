@@ -262,6 +262,10 @@ class MyAppsDataProvider {
     private func crateGeneralResponse() -> [AppsDataSource]? {
         guard let allAppsInfo = allAppsData?.myAppsStatus else { return nil }
         guard !allAppsInfo.isEmpty else { return nil }
+        var isNeedToRemoveStatus = false
+        if let date = allAppsData?.data?.requestDate, self.isNeedToRemoveStatusForDate(date) {
+            isNeedToRemoveStatus = true
+        }
         var response = allAppsInfo
         var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
@@ -271,6 +275,9 @@ class MyAppsDataProvider {
             if appImageData.keys.contains(response[index].appImageData.app_icon ?? ""), let data =  appImageData[response[index].appImageData.app_icon ?? ""] {
                 response[index].appImageData.imageData = data
                 response[index].appImageData.imageStatus = .loaded
+            }
+            if isNeedToRemoveStatus {
+                response[index].appStatus = .expired
             }
             if isMyApp {
                 myAppsSection.cellData.append(response[index])
@@ -347,7 +354,7 @@ class MyAppsDataProvider {
         return data
     }
     
-    private func isNeedToRemoveResponseForDate(_ date: String) -> Bool {
+    private func isNeedToRemoveStatusForDate(_ date: String) -> Bool {
         let dateFormatter = DateFormatter()        
         dateFormatter.dateFormat = String.comapreDateFormat
         guard var comparingDate = dateFormatter.date(from:date) else { return true }
@@ -367,11 +374,11 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        if let date = allAppsResponse?.data?.requestDate, isNeedToRemoveResponseForDate(date), isFromCache {
-            cacheManager.removeCachedData(for: CacheManager.path.getAllAppsData.endpoint)
-            completion?(0, ResponseError.noDataAvailable, isFromCache)
-            return
-        }
+//        if let date = allAppsResponse?.data?.requestDate, isNeedToRemoveResponseForDate(date), isFromCache {
+//            cacheManager.removeCachedData(for: CacheManager.path.getAllAppsData.endpoint)
+//            completion?(0, ResponseError.noDataAvailable, isFromCache)
+//            return
+//        }
         let columns = allAppsResponse?.meta?.widgetsDataSource?.params?.columns
         allAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let allAppsResponse = allAppsResponse, allAppsResponse != self.allAppsData {

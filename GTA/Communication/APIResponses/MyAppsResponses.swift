@@ -135,6 +135,7 @@ enum SystemStatus {
     case online
     case offline
     case pendingAlerts
+    case expired // if data from cache older then 10 min
     case none
 }
 

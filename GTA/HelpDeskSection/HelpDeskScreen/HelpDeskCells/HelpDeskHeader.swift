@@ -20,7 +20,7 @@ class HelpDeskHeader: UIView {
     
     func setStatus(statusData: HelpDeskStatus) {
         switch statusData.status {
-        case .online, .none:
+        case .online, .none, .expired:
             statusView.backgroundColor = UIColor(hex: 0x34C759)
             statusLabel.text = "Avg wait time is under 1 minute"
         case .offline:

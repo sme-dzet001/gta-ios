@@ -22,7 +22,7 @@ class ApplicationCell: UITableViewCell {
         // Initialization code
     }
     
-    func setUpCell(with data: AppInfo, hideStatusView: Bool = false) {
+    func setUpCell(with data: AppInfo) {
         iconLabel.isHidden = true
         if data.appImageData.imageStatus == .loading {//} imageData == nil && !data.isImageDataEmpty {
             startAnimation()
@@ -35,20 +35,26 @@ class ApplicationCell: UITableViewCell {
             showFirstCharFrom(data.app_name)
         }
         appName.text = data.app_name
-        if hideStatusView {
+        var color: UIColor = .clear
+        switch data.appStatus {
+        case .expired:
             appStatus.backgroundColor = .clear
             statusParentView.backgroundColor = .clear
-        } else {
-            switch data.appStatus {
-            case .online, .none:
-                appStatus.backgroundColor = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
-            case .offline:
-                appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 62.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
-            default:
-                appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 153.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
-            }
-            statusParentView.backgroundColor = .white
+        case .online, .none:
+            color = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
+        case .offline:
+            color = UIColor(red: 255.0 / 255.0, green: 62.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
+        default:
+            color = UIColor(red: 255.0 / 255.0, green: 153.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
         }
+        if data.appStatus != .expired {
+            setUpStatusCircle(with: color)
+        }
+    }
+    
+    private func setUpStatusCircle(with color: UIColor) {
+        appStatus.backgroundColor = color
+        statusParentView.backgroundColor = .white
         statusParentView.layer.cornerRadius = statusParentView.frame.size.width / 2
         appStatus.layer.cornerRadius = appStatus.frame.size.width / 2
     }
