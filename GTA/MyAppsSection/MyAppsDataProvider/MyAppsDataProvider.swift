@@ -204,20 +204,61 @@ class MyAppsDataProvider {
         }
     }
     
-    func getTipsAndTricksPDF(with urlString: String, for app: String, completion: @escaping ((_ pdfData: Data?, _ code: Int?, _ error: Error?) -> Void)) {
+    func getTipsAndTricksPDF(for app: String, completion: @escaping ((_ pdfData: Data?, _ code: Int?, _ error: Error?) -> Void)) {
         getCachedResponse(for: .getAppTipsAndTricksPDF(detailsPath: app)) {[weak self] (data, cachedError) in
             if let _ = data, cachedError == nil {
                 self?.cachedReportData = data
                 completion(data, 200, cachedError)
             }
-            self?.apiManager.getTipsAndTricksPDF(urlString: urlString, completion: { (data, errorCode, error) in
-                self?.cacheData(data, path: .getAppTipsAndTricksPDF(detailsPath: app))
-                var newError = error
-                if let _ = error {
-                    newError = ResponseError.serverError
-                }
-                completion(data, errorCode, newError)
+            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                self?.cacheData(reportResponse, path: .getSectionReport)
+                self?.handleTipsAndTricksPDFSectionReport(sectionReport: reportResponse, appName: app, completion: completion)
             })
+        }
+    }
+    
+    private func handleTipsAndTricksPDFSectionReport(sectionReport: Data?, appName: String, completion: @escaping ((_ pdfData: Data?, _ code: Int?, _ error: Error?) -> Void)) {
+        let reportData = parseSectionReport(data: sectionReport)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appTipsAndTricksPDF.rawValue }?.generationNumber
+        if let _ = generationNumber {
+        self.apiManager.getTipsAndTricksPDF(appName: appName, generationNumber: generationNumber!, completion: {[weak self] (data, errorCode, error) in
+            var tipsAndTricksResponse: AppsTipsAndTricksResponsePDF?
+            var retErr = error
+            if let responseData = data {
+                do {
+                    tipsAndTricksResponse = try DataParser.parse(data: responseData)
+                } catch {
+                    retErr = ResponseError.parsingError
+                }
+            } else {
+                retErr = ResponseError.commonError
+            }
+            let columns = tipsAndTricksResponse?.meta?.widgetsDataSource?.params?.columns
+            tipsAndTricksResponse?.data[appName]??.data?.indexes = self?.getDataIndexes(columns: columns) ?? [:]
+            if let url = tipsAndTricksResponse?.data[appName]??.data?.pdfPath {
+                self?.getPDFData(appName: appName, urlString: url, completion: completion)
+                return
+            }
+            if retErr == nil {
+                retErr = ResponseError.noDataAvailable
+            }
+            completion(data, errorCode, retErr)
+        })
+        } else {
+            completion(nil, 0, ResponseError.serverError)
+        }
+    }
+    
+    private func getPDFData(appName: String, urlString: String, completion: @escaping ((_ pdfData: Data?, _ code: Int?, _ error: Error?) -> Void)) {
+        guard let url = URL(string: formImageURL(from: urlString)) else { return }
+        self.apiManager.getPDFData(endpoint: url) { (pdfData, response, error) in
+            self.cacheData(pdfData, path: .getAppTipsAndTricksPDF(detailsPath: appName))
+            let code = response as? HTTPURLResponse
+            if let _ = error {
+                completion(pdfData, code?.statusCode, ResponseError.serverError)
+            } else {
+                completion(pdfData, 200, nil)
+            }
         }
     }
     

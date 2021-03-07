@@ -62,28 +62,28 @@ class AppTipsAndTricksViewController: UIViewController {
     
     private func stopAnimation() {
         DispatchQueue.main.async {
-            self.pdfView.alpha = 1
+            if let _ = self.pdfView.document {
+                self.pdfView.alpha = 1
+            }
             self.activityIndicator.stopAnimating()
             self.activityIndicator.removeFromSuperview()
         }
     }
     
     private func getAppTipsAndTricks() {
-        // hardcoded url POC
-        let url = "http://www.africau.edu/images/default/sample.pdf"
-        dataProvider.getTipsAndTricksPDF(with: url, for: appName ?? "") {[weak self] (data, code, error) in
-            self?.stopAnimation()
+        dataProvider.getTipsAndTricksPDF(for: appName ?? "") {[weak self] (data, code, error) in
             if let _ = error {
                 self?.showErrorLabel(with: (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong")
                 return
             }
             self?.showPDFView(with: data)
-            
+            self?.stopAnimation()
         }
     }
     
     private func showErrorLabel(with text: String) {
         DispatchQueue.main.async {
+            self.stopAnimation()
             self.errorLabel.text = text
             self.errorLabel.isHidden = false
         }
@@ -102,4 +102,8 @@ class AppTipsAndTricksViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
 
+}
+
+extension AppTipsAndTricksViewController: PDFViewDelegate {
+    
 }
