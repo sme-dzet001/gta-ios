@@ -374,14 +374,13 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-//        if let date = allAppsResponse?.data?.requestDate, isNeedToRemoveResponseForDate(date), isFromCache {
-//            cacheManager.removeCachedData(for: CacheManager.path.getAllAppsData.endpoint)
-//            completion?(0, ResponseError.noDataAvailable, isFromCache)
-//            return
-//        }
+        var isNeedToRemoveStatus = false
+        if let date = allAppsResponse?.data?.requestDate, isNeedToRemoveStatusForDate(date), isFromCache {
+            isNeedToRemoveStatus = true
+        }
         let columns = allAppsResponse?.meta?.widgetsDataSource?.params?.columns
         allAppsResponse?.indexes = getDataIndexes(columns: columns)
-        if let allAppsResponse = allAppsResponse, allAppsResponse != self.allAppsData {
+        if let allAppsResponse = allAppsResponse, (allAppsResponse != self.allAppsData || isNeedToRemoveStatus) {
             self.allAppsData = allAppsResponse
         }
         if allAppsResponse == nil || (allAppsResponse?.myAppsStatus ?? []).isEmpty {
