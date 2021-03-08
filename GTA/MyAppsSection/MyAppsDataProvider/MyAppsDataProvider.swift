@@ -80,9 +80,26 @@ class MyAppsDataProvider {
     }
     
     func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
-            self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, isFromCache, completion)
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.processMyAppsStatusSectionReport(data, code, cachedError, true, { (code, error, _) in
+                if error == nil {
+                    completion?(code, cachedError, true)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    if let _ = error {
+                        completion?(errorCode, ResponseError.serverError, false)
+                    } else {
+                        self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
         }
+        
+        
+//        getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
+//            self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, isFromCache, completion)
+//        }
     }
     
     func getAllApps(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
@@ -262,10 +279,6 @@ class MyAppsDataProvider {
     private func crateGeneralResponse() -> [AppsDataSource]? {
         guard let allAppsInfo = allAppsData?.myAppsStatus else { return nil }
         guard !allAppsInfo.isEmpty else { return nil }
-        var isNeedToRemoveStatus = false
-        if let date = allAppsData?.data?.requestDate, self.isNeedToRemoveStatusForDate(date) {
-            isNeedToRemoveStatus = true
-        }
         var response = allAppsInfo
         var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
@@ -275,9 +288,6 @@ class MyAppsDataProvider {
             if appImageData.keys.contains(response[index].appImageData.app_icon ?? ""), let data =  appImageData[response[index].appImageData.app_icon ?? ""] {
                 response[index].appImageData.imageData = data
                 response[index].appImageData.imageStatus = .loaded
-            }
-            if isNeedToRemoveStatus {
-                response[index].appStatus = .expired
             }
             if isMyApp {
                 myAppsSection.cellData.append(response[index])
@@ -325,9 +335,9 @@ class MyAppsDataProvider {
         if let _ = generationNumber {
             if fromCache {
                 getCachedResponse(for: .getMyAppsData) {[weak self] (data, error) in
-                    if let _ = data, error == nil {
-                        self?.processMyApps(reportData, data!, errorCode, error, completion)
-                    }
+                    //if let _ = data, error == nil {
+                        self?.processMyApps(reportData, data, errorCode, error, completion)
+                   // }
                 }
                 return
             }
@@ -380,7 +390,8 @@ class MyAppsDataProvider {
         }
         let columns = allAppsResponse?.meta?.widgetsDataSource?.params?.columns
         allAppsResponse?.indexes = getDataIndexes(columns: columns)
-        if let allAppsResponse = allAppsResponse, (allAppsResponse != self.allAppsData || isNeedToRemoveStatus) {
+        allAppsResponse?.isStatusExpired = isNeedToRemoveStatus
+         if let allAppsResponse = allAppsResponse, (allAppsResponse != self.allAppsData || isNeedToRemoveStatus) {
             self.allAppsData = allAppsResponse
         }
         if allAppsResponse == nil || (allAppsResponse?.myAppsStatus ?? []).isEmpty {
