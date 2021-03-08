@@ -22,9 +22,9 @@ class ApplicationCell: UITableViewCell {
         // Initialization code
     }
     
-    func setUpCell(with data: AppInfo, hideStatusView: Bool = false) {
+    func setUpCell(with data: AppInfo) {
         iconLabel.isHidden = true
-        if data.appImageData.imageStatus == .loading {//} imageData == nil && !data.isImageDataEmpty {
+        if data.appImageData.imageStatus == .loading {
             startAnimation()
         } else {
             stopAnimation()
@@ -35,20 +35,15 @@ class ApplicationCell: UITableViewCell {
             showFirstCharFrom(data.app_name)
         }
         appName.text = data.app_name
-        if hideStatusView {
-            appStatus.backgroundColor = .clear
-            statusParentView.backgroundColor = .clear
-        } else {
-            switch data.appStatus {
-            case .online, .none:
-                appStatus.backgroundColor = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
-            case .offline:
-                appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 62.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
-            default:
-                appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 153.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
-            }
-            statusParentView.backgroundColor = .white
+        switch data.appStatus {
+        case .online, .none:
+            appStatus.backgroundColor = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
+        case .offline:
+            appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 62.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
+        default:
+            appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 153.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
         }
+        statusParentView.backgroundColor = .white
         statusParentView.layer.cornerRadius = statusParentView.frame.size.width / 2
         appStatus.layer.cornerRadius = appStatus.frame.size.width / 2
     }

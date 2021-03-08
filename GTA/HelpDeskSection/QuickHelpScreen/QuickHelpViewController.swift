@@ -77,7 +77,7 @@ class QuickHelpViewController: UIViewController {
     }
     
     private func setUpNavigationItem() {
-        navigationItem.title = !isTipsAndTricks ? "Quick Help" : "Tips & Tricks"
+        navigationItem.title = !isTipsAndTricks ? "Quick Help" : "\(appName ?? "") - Tips & Tricks"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
         navigationItem.leftBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
     }

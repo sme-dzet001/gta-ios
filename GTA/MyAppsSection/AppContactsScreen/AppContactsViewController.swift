@@ -17,7 +17,7 @@ class AppContactsViewController: UIViewController {
     var dataProvider: MyAppsDataProvider?
     private var lastUpdateDate: Date?
     private var appContactsData: AppContactsData?
-    var appName: String? = ""
+    var appName: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class AppContactsViewController: UIViewController {
     }
 
     private func setUpNavigationItem() {
-        navigationItem.title = "Contacts"
+        navigationItem.title = "\(appName) - Contacts"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
     }
     

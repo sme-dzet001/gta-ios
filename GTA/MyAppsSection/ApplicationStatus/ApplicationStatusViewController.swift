@@ -272,7 +272,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         } else if indexPath.row == 4 {
             let contactsScreen = AppContactsViewController()
             contactsScreen.dataProvider = dataProvider
-            contactsScreen.appName = appName
+            contactsScreen.appName = appName ?? ""
             navigationController?.pushViewController(contactsScreen, animated: true)
         } else {
             if appDetailsData?.appSupportEmail == nil {
