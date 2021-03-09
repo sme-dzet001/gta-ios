@@ -368,7 +368,7 @@ class MyAppsDataProvider {
         let dateFormatter = DateFormatter()        
         dateFormatter.dateFormat = String.comapreDateFormat
         guard var comparingDate = dateFormatter.date(from:date) else { return true }
-        comparingDate.addTimeInterval(900)
+        comparingDate.addTimeInterval(600)
         return Date() >= comparingDate
     }
     
