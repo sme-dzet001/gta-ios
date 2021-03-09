@@ -257,7 +257,7 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-struct HelpDeskCellData {
+struct HelpDeskCellData: ContactsCellDataProtocol {
     var imageName: String?
     var cellTitle: String?
     var cellSubtitle: String?
@@ -270,4 +270,11 @@ struct HelpDeskStatus {
     var status: SystemStatus {
         return SystemStatus(status: statusString)
     }
+}
+
+protocol ContactsCellDataProtocol {
+    var imageName: String? {get set}
+    var cellTitle: String? {get set}
+    var cellSubtitle: String? {get set}
+    var updatesNumber: Int? {get set}
 }

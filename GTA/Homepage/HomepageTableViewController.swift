@@ -23,7 +23,6 @@ class HomepageTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
-        setHardcodedData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,10 +42,6 @@ class HomepageTableViewController: UITableViewController {
                 }
             }
         }
-    }
-    
-    private func setHardcodedData() {
-        dataSource = [/*HomepageCellData(mainText: "Return to work", additionalText: "Updates on reopenings, precautions, etc...", image: "return_to_work", infoType: .returnToWork), HomepageCellData(mainText: "Desk Finder", additionalText: "Finder a temporary safe work location", image: "desk_finder")*/]
     }
     
     private func setUpTableView() {

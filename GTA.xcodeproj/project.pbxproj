@@ -78,6 +78,9 @@
 		9F2F96C925F7921E00BCC37F /* CollaborationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F96C825F7921E00BCC37F /* CollaborationViewController.swift */; };
 		9F2F96CA25F7921E00BCC37F /* CollaborationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F96C825F7921E00BCC37F /* CollaborationViewController.swift */; };
 		9F2F96CB25F7921E00BCC37F /* CollaborationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F96C825F7921E00BCC37F /* CollaborationViewController.swift */; };
+		9F2F96FC25F7C9E500BCC37F /* CollaborationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F96FB25F7C9E500BCC37F /* CollaborationDataProvider.swift */; };
+		9F2F96FD25F7C9E500BCC37F /* CollaborationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F96FB25F7C9E500BCC37F /* CollaborationDataProvider.swift */; };
+		9F2F96FE25F7C9E500BCC37F /* CollaborationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F96FB25F7C9E500BCC37F /* CollaborationDataProvider.swift */; };
 		9F36D4332562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
 		9F36D4342562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
 		9F36D4352562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
@@ -525,6 +528,7 @@
 		9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficeInfoCell.swift; sourceTree = "<group>"; };
 		9F2F96BF25F791E700BCC37F /* Collaboration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Collaboration.storyboard; sourceTree = "<group>"; };
 		9F2F96C825F7921E00BCC37F /* CollaborationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollaborationViewController.swift; sourceTree = "<group>"; };
+		9F2F96FB25F7C9E500BCC37F /* CollaborationDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollaborationDataProvider.swift; sourceTree = "<group>"; };
 		9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.ttf"; sourceTree = "<group>"; };
 		9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.ttf"; sourceTree = "<group>"; };
 		9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageTableViewController.swift; sourceTree = "<group>"; };
@@ -903,10 +907,19 @@
 		9F2F96BE25F791B500BCC37F /* CollaborationSection */ = {
 			isa = PBXGroup;
 			children = (
+				9F2F96F925F7C9C600BCC37F /* CollaborationDataProvider */,
 				9F2F96C825F7921E00BCC37F /* CollaborationViewController.swift */,
 				9F2F96BF25F791E700BCC37F /* Collaboration.storyboard */,
 			);
 			path = CollaborationSection;
+			sourceTree = "<group>";
+		};
+		9F2F96F925F7C9C600BCC37F /* CollaborationDataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				9F2F96FB25F7C9E500BCC37F /* CollaborationDataProvider.swift */,
+			);
+			path = CollaborationDataProvider;
 			sourceTree = "<group>";
 		};
 		9F5B10582567BE03000A3CFD /* TicketDetailsScreen */ = {
@@ -2082,6 +2095,7 @@
 				9FF0542F2567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035DE2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
+				9F2F96FC25F7C9E500BCC37F /* CollaborationDataProvider.swift in Sources */,
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9D035962578095A0068441F /* CommonResponses.swift in Sources */,
 				9FA8E90D25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
@@ -2190,6 +2204,7 @@
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035DF2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
+				9F2F96FD25F7C9E500BCC37F /* CollaborationDataProvider.swift in Sources */,
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035972578095A0068441F /* CommonResponses.swift in Sources */,
 				9FA8E90E25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
@@ -2282,6 +2297,7 @@
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035E02579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
+				9F2F96FE25F7C9E500BCC37F /* CollaborationDataProvider.swift in Sources */,
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035982578095A0068441F /* CommonResponses.swift in Sources */,
 				9FA8E90F25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,

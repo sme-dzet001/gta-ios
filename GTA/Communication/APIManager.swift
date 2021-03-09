@@ -39,6 +39,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getAppContacts(generationNumber: Int)
         case getGSDStatus(generationNumber: Int)
         case getAppTipsAndTricks(generationNumber: Int)
+        case getCollaborationTeamsContacts(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -56,6 +57,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getAppContacts(let generationNumber): return "/v3/widgets/app_contacts_all/data/\(generationNumber)/detailed"
                 case .getGSDStatus(let generationNumber): return "/v3/widgets/gsd_status/data/\(generationNumber)/detailed"
                 case .getAppTipsAndTricks(let generationNumber): return "/v3/widgets/app_tips_and_tricks/data/\(generationNumber)/detailed"
+                case .getCollaborationTeamsContacts(let generationNumber): return "/v3/widgets/collaboration_team_contacts/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -77,6 +79,8 @@ class APIManager: NSObject, URLSessionDelegate {
         case productionAlerts = "production_alerts"
         case gsdStatus = "gsd_status"
         case appTipsAndTricks = "app_tips_and_tricks"
+        case collaboration = "collaboration_app_suite_details"
+        case getCollaborationTeamsContacts = "collaboration_team_contacts"
     }
     
     init(accessToken: String?) {
@@ -196,6 +200,14 @@ class APIManager: NSObject, URLSessionDelegate {
 //            completion?(reportDataResponse, errorCode, retErr)
 //        }
 //    }
+    
+    // MARK: - Collaboration methods
+    
+    func getCollaborationTeamContacts(for generationNumber: Int, appName: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        let requestBodyParams = ["s1": appName]
+        self.makeRequest(endpoint: .getCollaborationTeamsContacts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
+    }
     
     //MARK: - Common methods
     
