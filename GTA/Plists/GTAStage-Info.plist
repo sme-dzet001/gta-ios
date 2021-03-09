@@ -75,10 +75,5 @@
 	<string>Light</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>GTA app needs access to your face id to authenticate you.</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 </dict>
 </plist>
