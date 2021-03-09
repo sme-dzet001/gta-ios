@@ -18,6 +18,8 @@ class ServiceDeskContactCell: UITableViewCell {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var locationIcon: UIImageView!
+    @IBOutlet weak var descLabelBottom: NSLayoutConstraint!
+    @IBOutlet weak var funFactLabelBottom: NSLayoutConstraint!
     
     var imageUrl: String?
     var contactEmail: String?
@@ -46,6 +48,21 @@ class ServiceDeskContactCell: UITableViewCell {
         locationLabel.text = data?.contactLocation
         let locationIsMissing = data?.contactLocation == nil || (data?.contactLocation ?? "").isEmpty
         locationIcon.isHidden = locationIsMissing
+        setUpMargins(descIsEmpty: data?.contactBio?.isEmpty ?? true, funFactIsEmpty: data?.contactFunFact?.isEmpty ?? true)
+    }
+    
+    private func setUpMargins(descIsEmpty: Bool, funFactIsEmpty: Bool) {
+        switch (descIsEmpty, funFactIsEmpty) {
+        case (false, false):
+            descLabelBottom.constant = 12
+            funFactLabelBottom.constant = 14
+        case (false, true), (true, false):
+            descLabelBottom.constant = 0
+            funFactLabelBottom.constant = 14
+        case (true, true):
+            descLabelBottom.constant = 8
+            funFactLabelBottom.constant = 0
+        }
     }
     
     private func formEmailLink(from text: String?) -> NSMutableAttributedString? {
