@@ -12,6 +12,7 @@ class AppTipsAndTricksViewController: UIViewController {
 
     @IBOutlet var pdfView: PDFView!
     @IBOutlet weak var errorLabel: UILabel!
+    private var documentData: Data?
     
     var appName: String?
     private var dataProvider: MyAppsDataProvider = MyAppsDataProvider()
@@ -92,8 +93,9 @@ class AppTipsAndTricksViewController: UIViewController {
     private func showPDFView(with data: Data?) {
         guard let _ = data else { return }
         DispatchQueue.main.async {
-            if let document = PDFDocument(data: data!), document != self.pdfView.document {
-                self.pdfView.document = document
+            if data != self.documentData {
+                self.pdfView.document = PDFDocument(data: data!)
+                self.documentData = data
             }
         }
     }
