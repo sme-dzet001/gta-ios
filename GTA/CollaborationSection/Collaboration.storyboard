@@ -54,26 +54,26 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="331"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Office 365" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O1C-DP-h5c">
-                                        <rect key="frame" x="169" y="47" width="105" height="24"/>
+                                        <rect key="frame" x="154" y="37.5" width="105" height="24"/>
                                         <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="office360_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Az3-XM-BiO">
-                                        <rect key="frame" x="74" y="34" width="100" height="80"/>
+                                        <rect key="frame" x="89" y="34" width="70" height="56"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Az3-XM-BiO" secondAttribute="height" multiplier="1:0.8" id="izg-Xh-IRp"/>
-                                            <constraint firstAttribute="width" constant="100" id="mgD-gx-mlT"/>
+                                            <constraint firstAttribute="width" constant="70" id="mgD-gx-mlT"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Application Suite" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSQ-3L-OP5">
-                                        <rect key="frame" x="169" y="81" width="125.5" height="18"/>
+                                        <rect key="frame" x="154" y="66.5" width="125.5" height="18"/>
                                         <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="15"/>
                                         <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EsG-5x-C6c">
-                                        <rect key="frame" x="20" y="114" width="374" height="207"/>
+                                        <rect key="frame" x="20" y="90" width="374" height="231"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <attributedString key="attributedText">
                                             <fragment>
@@ -98,7 +98,7 @@
                                     <constraint firstItem="O1C-DP-h5c" firstAttribute="centerY" secondItem="Az3-XM-BiO" secondAttribute="centerY" multiplier="0.8" id="k3A-Ic-RLS"/>
                                     <constraint firstAttribute="bottom" secondItem="EsG-5x-C6c" secondAttribute="bottom" constant="10" id="sEZ-53-ydM"/>
                                     <constraint firstItem="O1C-DP-h5c" firstAttribute="leading" secondItem="Az3-XM-BiO" secondAttribute="trailing" constant="-5" id="vK2-UD-Cee"/>
-                                    <constraint firstItem="kSQ-3L-OP5" firstAttribute="top" secondItem="O1C-DP-h5c" secondAttribute="bottom" constant="10" id="xjP-pk-jp9"/>
+                                    <constraint firstItem="kSQ-3L-OP5" firstAttribute="top" secondItem="O1C-DP-h5c" secondAttribute="bottom" constant="5" id="xjP-pk-jp9"/>
                                     <constraint firstItem="Az3-XM-BiO" firstAttribute="top" secondItem="kOe-Sw-t4w" secondAttribute="top" constant="34" id="yq8-97-Uff"/>
                                 </constraints>
                             </view>
