@@ -20,6 +20,7 @@
                 <navigationController storyboardIdentifier="CollaborationTab" navigationBarHidden="YES" id="5gs-p3-RL6" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5fx-CY-vCi">
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9bO-83-yF8">
                         <autoresizingMask key="autoresizingMask"/>

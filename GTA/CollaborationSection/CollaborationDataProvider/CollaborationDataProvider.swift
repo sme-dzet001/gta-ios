@@ -67,6 +67,7 @@ class CollaborationDataProvider {
         }
         let columns = appContactsData?.meta.widgetsDataSource?.params?.columns
         appContactsData?.indexes = getDataIndexes(columns: columns)
+        appContactsData?.isCollaboration = true
         if let contacts = appContactsData?.contactsData, contacts.isEmpty {
             retErr = ResponseError.noDataAvailable
         }

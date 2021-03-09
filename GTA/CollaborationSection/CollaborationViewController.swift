@@ -23,10 +23,7 @@ class CollaborationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
-        dataProvider.getTeamContacts(appSuite: "Office365") { (_, _, _) in
-            
-        }
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     private func setUpTableView() {
@@ -45,7 +42,7 @@ class CollaborationViewController: UIViewController {
 extension CollaborationViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return dataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,12 +56,10 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == 0 else { return }
-
-//            let contactsScreen = AppContactsViewController()
-//            contactsScreen.dataProvider = dataProvider
-//            contactsScreen.appName = appName ?? ""
-            //navigationController?.pushViewController(contactsScreen, animated: true)
+        let contactsScreen = AppContactsViewController()
+        contactsScreen.isCollaborationContacts = true
+        contactsScreen.appName = "Office365"
+        navigationController?.pushViewController(contactsScreen, animated: true)
     }
     
 }
