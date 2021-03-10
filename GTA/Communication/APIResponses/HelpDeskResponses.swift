@@ -72,7 +72,7 @@ struct HelpDeskValues: Codable {
 
 // MARK: - Quick Help Response
 
-struct QuickHelpRow: Codable, Equatable {
+struct QuickHelpRow: Codable, Equatable, QuickHelpDataProtocol {
     var values: [QuantumValue?]?
     var indexes: [String : Int] = [:]
     

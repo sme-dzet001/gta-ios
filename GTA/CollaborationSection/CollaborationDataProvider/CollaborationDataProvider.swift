@@ -11,29 +11,30 @@ class CollaborationDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
-    private(set) var tipsAndTricksData = [QuickHelpRow]()
+    private(set) var tipsAndTricksData = [TipsAndTricksRow]()
     
     // MARK: - Tips & Tricks handling
     
-    func getTipsAndTricks(appSuite: String, completion: ((_ contacts: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        self.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, cachedError) in
+    func getTipsAndTricks(appSuite: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (reportResponse, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.handleTipsAndTricksSectionReport(appSuite: appSuite, reportResponse, code, cachedError, true, { (data, code, error) in
+            self?.handleTipsAndTricksSectionReport(appSuite: appSuite, reportResponse, code, cachedError, true, { (code, error) in
                 if error == nil {
-                    completion?(data, code, error)
+                    completion?(code, error)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(nil, errorCode, ResponseError.serverError)
+                        completion?( errorCode, ResponseError.serverError)
                     } else {
                         self?.handleTipsAndTricksSectionReport(appSuite: appSuite, reportResponse, errorCode, error, false, completion)
                     }
                 })
             })
-        })
+        }
     }
     
-    private func handleTipsAndTricksSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ contacts: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func handleTipsAndTricksSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.getCollaborationTipsAndTricks.rawValue }?.generationNumber
         if let _ = generationNumber {
@@ -49,14 +50,14 @@ class CollaborationDataProvider {
             })
         } else {
             if let _ = error {
-                completion?(nil, errorCode, ResponseError.commonError)
+                completion?(errorCode, ResponseError.commonError)
                 return
             }
-            completion?(nil, errorCode, error)
+            completion?(errorCode, error)
         }
     }
     
-    private func processTipsAndTricks(_ reportData: ReportDataResponse?, _ tipsAndTricksData: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ appContactsData: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processTipsAndTricks(_ reportData: ReportDataResponse?, _ tipsAndTricksData: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var tipsAndTricksResponse: CollaborationTipsAndTricksResponse?
         var retErr = error
         if let responseData = tipsAndTricksData {
@@ -74,10 +75,7 @@ class CollaborationDataProvider {
                 retErr = ResponseError.noDataAvailable
             }
         }
-//        if let contacts = appContactsData?.contactsData, contacts.isEmpty {
-//            retErr = ResponseError.noDataAvailable
-//        }
-        completion?(nil, errorCode, retErr)
+        completion?(errorCode, retErr)
     }
     
     
@@ -90,6 +88,7 @@ class CollaborationDataProvider {
                     completion?(data, code, error)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(nil, errorCode, ResponseError.serverError)
                     } else {
@@ -190,6 +189,25 @@ class CollaborationDataProvider {
             }
         }
         tipsAndTricksData = response.data?[key]??.data?.rows ?? []
+    }
+    
+    func formTipsAndTricksAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
+        guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
+        
+        let res = NSMutableAttributedString(attributedString: htmlAttrString)
+        
+        guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return res }
+        
+        let wholeRange = NSRange(res.string.startIndex..., in: res.string)
+        let matches = (mailRegex.matches(in: res.string, options: [], range: wholeRange))
+        for match in matches {
+            guard let mailLinkRange = Range(match.range, in: res.string) else { continue }
+            let mailLinkStr = res.string[mailLinkRange]
+            if let linkUrl = URL(string: "mailto:\(mailLinkStr)") {
+                res.addAttribute(.link, value: linkUrl, range: match.range)
+            }
+        }
+        return res
     }
     
 }
