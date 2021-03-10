@@ -10,9 +10,7 @@ import UIKit
 class CollaborationViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    
-    private var dataProvider: CollaborationDataProvider = CollaborationDataProvider()
-    
+        
     private var dataSource: [CollaborationCellData] = []
     
     override func viewDidLoad() {
@@ -49,7 +47,6 @@ class CollaborationViewController: UIViewController {
         let quickHelpVC = QuickHelpViewController()
         quickHelpVC.appName = "Office365"
         quickHelpVC.isTipsAndTricks = true
-        //quickHelpVC.dataProvider = dataProvider
         navigationController?.pushViewController(quickHelpVC, animated: true)
     }
 
@@ -64,7 +61,6 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "HelpDeskCell", for: indexPath) as? HelpDeskCell {
             let cellData = dataSource[indexPath.row]
-            //let cellIsActive = cellData.cellSubtitle != "Oops, something went wrong"
             cell.setUpCell(with: cellData, isActive: true, isNeedCornerRadius: true)
             return cell
         }
