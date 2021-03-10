@@ -11,7 +11,77 @@ class CollaborationDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
+    private(set) var tipsAndTricksData = [QuickHelpRow]()
     
+    // MARK: - Tips & Tricks handling
+    
+    func getTipsAndTricks(appSuite: String, completion: ((_ contacts: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        self.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleTipsAndTricksSectionReport(appSuite: appSuite, reportResponse, code, cachedError, true, { (data, code, error) in
+                if error == nil {
+                    completion?(data, code, error)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    if let _ = error {
+                        completion?(nil, errorCode, ResponseError.serverError)
+                    } else {
+                        self?.handleTipsAndTricksSectionReport(appSuite: appSuite, reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        })
+    }
+    
+    private func handleTipsAndTricksSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ contacts: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.getCollaborationTipsAndTricks.rawValue }?.generationNumber
+        if let _ = generationNumber {
+            if fromCache {
+                getCachedResponse(for: .getCollaborationTipsAndTricks(detailsPath: appSuite)) {[weak self] (data, error) in
+                    self?.processTipsAndTricks(reportData, data, errorCode, error, completion)
+                }
+                return
+            }
+            apiManager.getCollaborationTipsAndTricks(for: generationNumber!, appName: appSuite,  completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getCollaborationTipsAndTricks(detailsPath: appSuite))
+                self?.processTipsAndTricks(reportData, data, errorCode, error, completion)
+            })
+        } else {
+            if let _ = error {
+                completion?(nil, errorCode, ResponseError.commonError)
+                return
+            }
+            completion?(nil, errorCode, error)
+        }
+    }
+    
+    private func processTipsAndTricks(_ reportData: ReportDataResponse?, _ tipsAndTricksData: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ appContactsData: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var tipsAndTricksResponse: CollaborationTipsAndTricksResponse?
+        var retErr = error
+        if let responseData = tipsAndTricksData {
+            do {
+                tipsAndTricksResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        } else {
+            retErr = ResponseError.commonError
+        }
+        if let quickHelpResponse = tipsAndTricksResponse {
+//            fillQuickHelpData(with: quickHelpResponse)
+//            if (quickHelpResponse.data?.rows ?? []).isEmpty {
+//                retErr = ResponseError.noDataAvailable
+//            }
+        }
+//        if let contacts = appContactsData?.contactsData, contacts.isEmpty {
+//            retErr = ResponseError.noDataAvailable
+//        }
+        completion?(nil, errorCode, retErr)
+    }
+    
+    
+    // MARK: - Team contacts handling
     func getTeamContacts(appSuite: String, completion: ((_ contacts: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
@@ -108,6 +178,17 @@ class CollaborationDataProvider {
             }
         }
         return indexes
+    }
+    
+    private func fillQuickHelpData(with quickHelpResponse: QuickHelpResponse) {
+        let indexes = getDataIndexes(columns: quickHelpResponse.meta.widgetsDataSource?.params?.columns)
+        var response: QuickHelpResponse = quickHelpResponse
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index].indexes = indexes
+            }
+        }
+        tipsAndTricksData = response.data?.rows ?? []
     }
     
 }

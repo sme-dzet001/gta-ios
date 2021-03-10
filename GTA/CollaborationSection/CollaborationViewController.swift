@@ -24,6 +24,7 @@ class CollaborationViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        dataProvider.getTipsAndTricks(appSuite: "")
     }
     
     private func setUpTableView() {
@@ -34,7 +35,23 @@ class CollaborationViewController: UIViewController {
     }
     
     private func setUpHardCodeData() {
+        dataSource.append(CollaborationCellData(imageName: "quick_help_icon", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "contacts_icon", cellTitle: "Team Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil))
+    }
+    
+    private func showContactsScreen() {
+        let contactsScreen = AppContactsViewController()
+        contactsScreen.isCollaborationContacts = true
+        contactsScreen.appName = "Office365"
+        navigationController?.pushViewController(contactsScreen, animated: true)
+    }
+    
+    private func showTipsAndTricksScreen() {
+        let quickHelpVC = QuickHelpViewController()
+        quickHelpVC.appName = "Office365"
+        quickHelpVC.screenType = .collaborationTipsAndTricks
+        //quickHelpVC.dataProvider = dataProvider
+        navigationController?.pushViewController(quickHelpVC, animated: true)
     }
 
 }
@@ -56,10 +73,14 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let contactsScreen = AppContactsViewController()
-        contactsScreen.isCollaborationContacts = true
-        contactsScreen.appName = "Office365"
-        navigationController?.pushViewController(contactsScreen, animated: true)
+        switch indexPath.row {
+        case 0:
+            showTipsAndTricksScreen()
+        case 1:
+            showContactsScreen()
+        default:
+            return
+        }
     }
     
 }

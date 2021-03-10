@@ -40,6 +40,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getGSDStatus(generationNumber: Int)
         case getAppTipsAndTricks(generationNumber: Int)
         case getCollaborationTeamsContacts(generationNumber: Int)
+        case getCollaborationTipsAndTricks(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -58,6 +59,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getGSDStatus(let generationNumber): return "/v3/widgets/gsd_status/data/\(generationNumber)/detailed"
                 case .getAppTipsAndTricks(let generationNumber): return "/v3/widgets/app_tips_and_tricks/data/\(generationNumber)/detailed"
                 case .getCollaborationTeamsContacts(let generationNumber): return "/v3/widgets/collaboration_team_contacts/data/\(generationNumber)/detailed"
+                case .getCollaborationTipsAndTricks(let generationNumber): return "/v3/widgets/collaboration_tips_and_tricks/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -81,6 +83,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case appTipsAndTricks = "app_tips_and_tricks"
         case collaboration = "collaboration_app_suite_details"
         case getCollaborationTeamsContacts = "collaboration_team_contacts"
+        case getCollaborationTipsAndTricks = "collaboration_tips_and_tricks"
     }
     
     init(accessToken: String?) {
@@ -207,6 +210,12 @@ class APIManager: NSObject, URLSessionDelegate {
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         let requestBodyParams = ["s1": appName]
         self.makeRequest(endpoint: .getCollaborationTeamsContacts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
+    }
+    
+    func getCollaborationTipsAndTricks(for generationNumber: Int, appName: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        let requestBodyParams = ["s1": appName]
+        self.makeRequest(endpoint: .getCollaborationTipsAndTricks(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
     }
     
     //MARK: - Common methods

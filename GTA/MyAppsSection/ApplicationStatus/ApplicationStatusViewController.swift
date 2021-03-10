@@ -266,7 +266,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         } else if indexPath.row == 3 {
             let quickHelpVC = QuickHelpViewController()
             quickHelpVC.appName = appName
-            quickHelpVC.isTipsAndTricks = true
+            quickHelpVC.screenType = .appTipsAndTricks
             //quickHelpVC.dataProvider = dataProvider
             navigationController?.pushViewController(quickHelpVC, animated: true)
         } else if indexPath.row == 4 {

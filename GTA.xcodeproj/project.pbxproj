@@ -81,6 +81,9 @@
 		9F2F96FC25F7C9E500BCC37F /* CollaborationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F96FB25F7C9E500BCC37F /* CollaborationDataProvider.swift */; };
 		9F2F96FD25F7C9E500BCC37F /* CollaborationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F96FB25F7C9E500BCC37F /* CollaborationDataProvider.swift */; };
 		9F2F96FE25F7C9E500BCC37F /* CollaborationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F96FB25F7C9E500BCC37F /* CollaborationDataProvider.swift */; };
+		9F2F973125F8FECB00BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F973025F8FECB00BCC37F /* CollaborationResponses.swift */; };
+		9F2F973225F8FECB00BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F973025F8FECB00BCC37F /* CollaborationResponses.swift */; };
+		9F2F973325F8FECB00BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F973025F8FECB00BCC37F /* CollaborationResponses.swift */; };
 		9F36D4332562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
 		9F36D4342562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
 		9F36D4352562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
@@ -529,6 +532,7 @@
 		9F2F96BF25F791E700BCC37F /* Collaboration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Collaboration.storyboard; sourceTree = "<group>"; };
 		9F2F96C825F7921E00BCC37F /* CollaborationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollaborationViewController.swift; sourceTree = "<group>"; };
 		9F2F96FB25F7C9E500BCC37F /* CollaborationDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollaborationDataProvider.swift; sourceTree = "<group>"; };
+		9F2F973025F8FECB00BCC37F /* CollaborationResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollaborationResponses.swift; sourceTree = "<group>"; };
 		9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.ttf"; sourceTree = "<group>"; };
 		9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.ttf"; sourceTree = "<group>"; };
 		9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomepageTableViewController.swift; sourceTree = "<group>"; };
@@ -1430,6 +1434,7 @@
 				C9D035952578095A0068441F /* LoginResponses.swift */,
 				9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */,
 				9F8164AE257FA7D9001507BF /* MyAppsResponses.swift */,
+				9F2F973025F8FECB00BCC37F /* CollaborationResponses.swift */,
 			);
 			path = APIResponses;
 			sourceTree = "<group>";
@@ -2088,6 +2093,7 @@
 				9F8164B8257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				65398BCC256D4C5F0039C24E /* Utils.swift in Sources */,
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				9F2F973125F8FECB00BCC37F /* CollaborationResponses.swift in Sources */,
 				9F0D269F2577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9FBAF4862577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
@@ -2197,6 +2203,7 @@
 				9F8164B9257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
 				C9D859392567FE850025F544 /* InfoViewController.swift in Sources */,
+				9F2F973225F8FECB00BCC37F /* CollaborationResponses.swift in Sources */,
 				9F0D26A02577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9FBAF4872577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				65398BCD256D4C5F0039C24E /* Utils.swift in Sources */,
@@ -2290,6 +2297,7 @@
 				9F8164BA257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
 				C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */,
+				9F2F973325F8FECB00BCC37F /* CollaborationResponses.swift in Sources */,
 				9F0D26A12577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9FBAF4882577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				65398BCE256D4C5F0039C24E /* Utils.swift in Sources */,
