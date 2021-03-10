@@ -34,11 +34,20 @@ class QuickHelpCell: UITableViewCell {
         guard let text = answerLabel.attributedText?.string else { return }
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
         let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
+        var isFindURL = false
         for match in matches {
             if gesture.didTapAttributedTextInLabel(label: answerLabel, inRange: match.range) {
                 guard let range = Range(match.range, in: text), let url = URL(string: "\(text[range])")  else { continue }
+                isFindURL = true
                 delegate?.openUrl(url)
             }
+        }
+        if !isFindURL {
+            answerLabel.attributedText?.enumerateAttribute(.link, in: NSRange(location: 0, length: text.utf16.count), options: [], using: { (object, range, _) in
+                if gesture.didTapAttributedTextInLabel(label: answerLabel, inRange: range), let url = object as? URL {
+                    delegate?.openUrl(url)
+                }
+            })
         }
     }
     
