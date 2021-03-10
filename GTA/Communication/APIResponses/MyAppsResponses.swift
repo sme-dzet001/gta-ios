@@ -263,3 +263,30 @@ struct AppsTipsAndTricksResponse: Codable {
 struct AppsTipsAndTricksData: Codable {
     var data: QuickHelpData?
 }
+
+struct AppsTipsAndTricksResponsePDF: Codable {
+    var meta: ResponseMetaData?
+    var data: [String : AppsTipsAndTricksPDFData?]
+}
+
+struct AppsTipsAndTricksPDFData: Codable {
+    var data: AppsTipsAndTricksPDFRows?
+}
+
+struct AppsTipsAndTricksPDFRows: Codable {
+    var rows: [AppsTipsAndTricksRow?]?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case rows = "rows"
+    }
+    
+    var pdfPath: String? {
+        guard let valuesArr = rows?.first??.values, let index = indexes["tips and tricks pdf"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+}
+
+struct AppsTipsAndTricksRow: Codable {
+    var values: [QuantumValue?]?
+}

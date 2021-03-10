@@ -39,6 +39,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getAppContacts(generationNumber: Int)
         case getGSDStatus(generationNumber: Int)
         case getAppTipsAndTricks(generationNumber: Int)
+        case getAppTipsAndTricksPDF(generationNumber: Int)
         case getCollaborationTeamsContacts(generationNumber: Int)
         case getCollaborationTipsAndTricks(generationNumber: Int)
         
@@ -58,6 +59,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getAppContacts(let generationNumber): return "/v3/widgets/app_contacts_all/data/\(generationNumber)/detailed"
                 case .getGSDStatus(let generationNumber): return "/v3/widgets/gsd_status/data/\(generationNumber)/detailed"
                 case .getAppTipsAndTricks(let generationNumber): return "/v3/widgets/app_tips_and_tricks/data/\(generationNumber)/detailed"
+                case .getAppTipsAndTricksPDF(let generationNumber): return "/v3/widgets/app_details_all_v1/data/\(generationNumber)/detailed"
                 case .getCollaborationTeamsContacts(let generationNumber): return "/v3/widgets/collaboration_team_contacts/data/\(generationNumber)/detailed"
                 case .getCollaborationTipsAndTricks(let generationNumber): return "/v3/widgets/collaboration_tips_and_tricks/data/\(generationNumber)/detailed"
             }
@@ -81,6 +83,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case productionAlerts = "production_alerts"
         case gsdStatus = "gsd_status"
         case appTipsAndTricks = "app_tips_and_tricks"
+        case appTipsAndTricksPDF = "app_details_all_v1"
         case collaboration = "collaboration_app_suite_details"
         case getCollaborationTeamsContacts = "collaboration_team_contacts"
         case getCollaborationTipsAndTricks = "collaboration_tips_and_tricks"
@@ -185,6 +188,17 @@ class APIManager: NSObject, URLSessionDelegate {
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         let requestBodyParams = ["s1": appName]
         self.makeRequest(endpoint: .getAppTipsAndTricks(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
+    }
+    
+    func getTipsAndTricksPDF(appName: String, generationNumber: Int, completion: @escaping ((_ pdfData: Data?, _ errorCode: Int, _ error: Error?) -> Void)) {
+        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        let requestBodyParams = ["s1": appName]
+        self.makeRequest(endpoint: .getAppTipsAndTricksPDF(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
+    }
+    
+    func getPDFData(endpoint: URL, completion: @escaping ((_ imageData: Data?, _ response: URLResponse?, _ error: Error?) -> Void)) {
+        let session = URLSession.shared
+        session.dataTask(with: endpoint, completionHandler: completion).resume()
     }
     
     

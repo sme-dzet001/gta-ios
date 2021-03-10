@@ -63,6 +63,7 @@ class CacheManager {
         case getAppContacts(contactsPath: String)// = "/v3/widgets/app_contacts/data/"
         case getGSDStatus
         case getAppTipsAndTricks(detailsPath: String)
+        case getAppTipsAndTricksPDF(detailsPath: String)
         case getCollaborationTeamContacts(detailsPath: String)
         case getCollaborationTipsAndTricks(detailsPath: String)
         
@@ -82,6 +83,7 @@ class CacheManager {
             case .getAppContacts(let contactsPath): return "/v3/widgets/app_contacts_all/data/\(contactsPath)"
             case .getGSDStatus: return "/v3/widgets/gsd_status/data/"
             case .getAppTipsAndTricks(let detailsPath): return "/v3/widgets/app_tips_and_tricks/data/\(detailsPath)"
+            case .getAppTipsAndTricksPDF(let detailsPath): return "/cachedPDF/\(detailsPath)"
             case .getCollaborationTeamContacts(let detailsPath): return "/collaboration/team_contacts/\(detailsPath)"
             case .getCollaborationTipsAndTricks(let detailsPath): return "/collaboration/TipsAndTricks/\(detailsPath)"
             }

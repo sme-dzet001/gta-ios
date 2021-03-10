@@ -114,7 +114,7 @@ struct SpecialAlertsResponse: Codable {
 
 enum QuantumValue: Codable, Equatable {
     
-    case int(Int), string(String), float(Float)
+    case int(Int), string(String), float(Float), bool(Bool)
     
     init(from decoder: Decoder) throws {
         if let int = try? decoder.singleValueContainer().decode(Int.self) {
@@ -129,6 +129,11 @@ enum QuantumValue: Codable, Equatable {
         
         if let float = try? decoder.singleValueContainer().decode(Float.self) {
             self = .float(float)
+            return
+        }
+        
+        if let bool = try? decoder.singleValueContainer().decode(Bool.self) {
+            self = .bool(bool)
             return
         }
         
@@ -148,6 +153,7 @@ enum QuantumValue: Codable, Equatable {
         case .int(let value): return value
         case .string(let value): return Int(value)
         case .float(let value): return Int(value)
+        case .bool: return nil
         }
     }
     
@@ -156,6 +162,7 @@ enum QuantumValue: Codable, Equatable {
         case .int(let value): return "\(value)"
         case .string(let value): return value
         case .float(let value): return "\(value)"
+        case .bool: return nil
         }
     }
     
@@ -164,6 +171,16 @@ enum QuantumValue: Codable, Equatable {
         case .int(let value): return Float(value)
         case .string(let value): return Float(value)
         case .float(let value): return value
+        case .bool: return nil
+        }
+    }
+    
+    var boolValue: Bool? {
+        switch self {
+        case .int: return false
+        case .string: return false
+        case .float: return false
+        case .bool(let value): return value
         }
     }
 }
