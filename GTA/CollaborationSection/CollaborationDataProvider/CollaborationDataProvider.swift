@@ -68,11 +68,11 @@ class CollaborationDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        if let quickHelpResponse = tipsAndTricksResponse {
-//            fillQuickHelpData(with: quickHelpResponse)
-//            if (quickHelpResponse.data?.rows ?? []).isEmpty {
-//                retErr = ResponseError.noDataAvailable
-//            }
+        if let response = tipsAndTricksResponse {
+            fillTipsAndTricksData(with: response)
+            if (response.data?.first?.value?.data?.rows ?? []).isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
         }
 //        if let contacts = appContactsData?.contactsData, contacts.isEmpty {
 //            retErr = ResponseError.noDataAvailable
@@ -180,15 +180,16 @@ class CollaborationDataProvider {
         return indexes
     }
     
-    private func fillQuickHelpData(with quickHelpResponse: QuickHelpResponse) {
-        let indexes = getDataIndexes(columns: quickHelpResponse.meta.widgetsDataSource?.params?.columns)
-        var response: QuickHelpResponse = quickHelpResponse
-        if let rows = response.data?.rows {
+    private func fillTipsAndTricksData(with dataResponse: CollaborationTipsAndTricksResponse) {
+        let indexes = getDataIndexes(columns: dataResponse.meta?.widgetsDataSource?.params?.columns)
+        var response: CollaborationTipsAndTricksResponse = dataResponse
+        let key = response.data?.keys.first ?? ""
+        if let rows = response.data?.first?.value?.data?.rows {
             for (index, _) in rows.enumerated() {
-                response.data?.rows?[index].indexes = indexes
+                response.data?[key]??.data?.rows?[index].indexes = indexes
             }
         }
-        tipsAndTricksData = response.data?.rows ?? []
+        tipsAndTricksData = response.data?[key]??.data?.rows ?? []
     }
     
 }

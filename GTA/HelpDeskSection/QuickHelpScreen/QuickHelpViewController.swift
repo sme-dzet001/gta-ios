@@ -80,7 +80,7 @@ class QuickHelpViewController: UIViewController {
                     self?.tableView.isHidden = false
                     self?.tableView.reloadData()
                 } else {
-                    self?.errorLabel.isHidden = !(self?.appsDataProvider.tipsAndTricksData.isEmpty ?? true)
+                    self?.errorLabel.isHidden = !(self?.collaborationDataProvider.tipsAndTricksData.isEmpty ?? true)
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
             }

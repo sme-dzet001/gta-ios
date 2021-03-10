@@ -9,5 +9,9 @@ import Foundation
 
 struct CollaborationTipsAndTricksResponse: Codable {
     var meta: ResponseMetaData?
-    var data: [String : QuickHelpResponse?]?
+    var data: [String : TipsAndTricksData?]?
+}
+
+struct TipsAndTricksData: Codable {
+    var data: QuickHelpData?
 }
