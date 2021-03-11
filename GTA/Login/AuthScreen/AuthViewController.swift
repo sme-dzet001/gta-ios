@@ -285,10 +285,16 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if let index = pinCodeBoxes.firstIndex(of: textField as! CustomTextField) {
+            selectFirstEmptyBoxIfNeeded(index: index)
             for i in index..<pinCodeBoxes.count {
                 pinCodeBoxes[i].text = ""
             }
         }
+    }
+    
+    private func selectFirstEmptyBoxIfNeeded(index: Int) {
+        guard pinCodeBoxes[index].text == "" else {  return }
+        let _ = pinCodeBoxes.first(where: {$0.text == ""})?.becomeFirstResponder()
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
