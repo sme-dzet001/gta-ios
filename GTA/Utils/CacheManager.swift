@@ -66,6 +66,7 @@ class CacheManager {
         case getAppTipsAndTricksPDF(detailsPath: String)
         case getCollaborationTeamContacts(detailsPath: String)
         case getCollaborationTipsAndTricks(detailsPath: String)
+        case getCollaborationDetails(detailsPath: String)
         
         var endpoint: String {
             switch self {
@@ -86,6 +87,7 @@ class CacheManager {
             case .getAppTipsAndTricksPDF(let detailsPath): return "/cachedPDF/\(detailsPath)"
             case .getCollaborationTeamContacts(let detailsPath): return "/collaboration/team_contacts/\(detailsPath)"
             case .getCollaborationTipsAndTricks(let detailsPath): return "/collaboration/TipsAndTricks/\(detailsPath)"
+            case .getCollaborationDetails(let detailsPath): return "/collaboration/details/\(detailsPath)"
             }
         }
     }
