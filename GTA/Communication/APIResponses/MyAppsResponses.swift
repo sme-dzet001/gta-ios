@@ -11,6 +11,7 @@ struct AllAppsResponse: Codable, Equatable {
     var meta: ResponseMetaData?
     var data: AllAppsRows?
     var indexes: [String : Int] = [:]
+    var isStatusExpired: Bool = false
     
     var myAppsStatus: [AppInfo] {
         var status = [AppInfo]()
@@ -19,10 +20,11 @@ struct AllAppsResponse: Codable, Equatable {
                 let appName = valuesArray.count > nameIndex ? valuesArray[nameIndex]?.stringValue : ""
                 let appTitle = valuesArray.count > titleIndex ? valuesArray[titleIndex]?.stringValue : ""
                 let appIcon = valuesArray.count > iconIndex ? valuesArray[iconIndex]?.stringValue : ""
-                let appStatus = valuesArray.count > statusIndex ? valuesArray[statusIndex]?.stringValue : ""
+                let appStatusString = valuesArray.count > statusIndex ? valuesArray[statusIndex]?.stringValue : ""
                 let appLastUpdate = valuesArray.count > lastUpdateIndex ? valuesArray[lastUpdateIndex]?.stringValue : ""
                 let appImageData = AppsImageData(app_icon: appIcon, imageData: nil, imageStatus: .loading)
-                let appInfo = AppInfo(app_name: appName, app_title: appTitle, appImageData: appImageData, appStatus: SystemStatus(status: appStatus), app_is_active: true, lastUpdateDate: appLastUpdate)
+                let appStatus: SystemStatus = isStatusExpired ? .expired : SystemStatus(status: appStatusString)
+                let appInfo = AppInfo(app_name: appName, app_title: appTitle, appImageData: appImageData, appStatus: appStatus, app_is_active: true, lastUpdateDate: appLastUpdate)
                 status.append(appInfo)
             }
         })
@@ -135,6 +137,7 @@ enum SystemStatus {
     case online
     case offline
     case pendingAlerts
+    case expired // if data from cache older then 10 min
     case none
 }
 

@@ -46,6 +46,8 @@ class SystemStatusHeader: UIView {
         case .pendingAlerts:
             otherStatusView.backgroundColor = otherStatusView.backgroundColor?.withAlphaComponent(1.0)
             appStatus = "Something Wrong "
+        case .expired:
+            appStatus = ""
         }
         appStatusDescription.text = appStatus
     }
