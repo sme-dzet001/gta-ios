@@ -136,9 +136,11 @@
             <connections>
                 <outlet property="activityIndicator" destination="FUn-67-vSd" id="BVG-QD-3pw"/>
                 <outlet property="contactNameLabel" destination="Pue-Mf-iUz" id="If4-gH-Xxu"/>
+                <outlet property="descLabelBottom" destination="6kz-ob-8m8" id="mue-vX-rMw"/>
                 <outlet property="descriptionLabel" destination="rjr-Af-T9X" id="xqV-eS-u3B"/>
                 <outlet property="emailLabel" destination="knh-Lu-rVO" id="zMg-fQ-9ir"/>
                 <outlet property="funFactLabel" destination="x79-i7-wJ3" id="9gk-jr-Oy5"/>
+                <outlet property="funFactLabelBottom" destination="caz-tw-78y" id="zkJ-Y9-8hr"/>
                 <outlet property="locationIcon" destination="cd8-Df-c1a" id="FlJ-rM-NXh"/>
                 <outlet property="locationLabel" destination="NgX-SP-FfD" id="Ref-Fh-diT"/>
                 <outlet property="photoImageView" destination="9e0-So-eHV" id="QBt-Ty-agH"/>
