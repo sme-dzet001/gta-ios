@@ -155,12 +155,17 @@ struct AppContactsData: Codable {
     var data: [String : UserData]?
     
     var indexes: [String : Int] = [:]
+    var isCollaboration: Bool = false
     
     var contactsData: [ContactData]? {
+        let emailKey = isCollaboration ? "email" : "app contact email"
+        let contactNameKey = isCollaboration ? "name" : "app contact name"
+        let contactTitleKey = isCollaboration ? "job_title" : "app contact title"
+        
         guard let appContactRows = data?.first?.value.data?.rows else { return nil }
-        guard let appContactEmailIdx = indexes["app contact email"] else { return nil }
-        guard let appContactNameIdx = indexes["app contact name"] else { return nil }
-        guard let appContactTitleIdx = indexes["app contact title"] else { return nil }
+        guard let appContactEmailIdx = indexes[emailKey] else { return nil }
+        guard let appContactNameIdx = indexes[contactNameKey] else { return nil }
+        guard let appContactTitleIdx = indexes[contactTitleKey] else { return nil }
         guard let appContactPictureIdx = indexes["profile picture"] else { return nil }
         guard let appContactLocationIdx = indexes["location"] else { return nil }
         guard let appContactBioIdx = indexes["bio"] else { return nil }

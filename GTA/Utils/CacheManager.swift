@@ -64,6 +64,7 @@ class CacheManager {
         case getGSDStatus
         case getAppTipsAndTricks(detailsPath: String)
         case getAppTipsAndTricksPDF(detailsPath: String)
+        case getCollaborationTeamContacts(detailsPath: String)
         
         var endpoint: String {
             switch self {
@@ -82,6 +83,7 @@ class CacheManager {
             case .getGSDStatus: return "/v3/widgets/gsd_status/data/"
             case .getAppTipsAndTricks(let detailsPath): return "/v3/widgets/app_tips_and_tricks/data/\(detailsPath)"
             case .getAppTipsAndTricksPDF(let detailsPath): return "/cachedPDF/\(detailsPath)"
+            case .getCollaborationTeamContacts(let detailsPath): return "/collaboration/team_contacts/\(detailsPath)"
             }
         }
     }

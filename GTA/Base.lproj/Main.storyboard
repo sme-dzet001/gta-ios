@@ -186,6 +186,16 @@
             </objects>
             <point key="canvasLocation" x="1785" y="-133"/>
         </scene>
+        <!--CollaborationTab-->
+        <scene sceneID="fjL-lO-x9J">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Collaboration" referencedIdentifier="CollaborationTab" id="jMb-np-EdZ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="LgS-Mf-Q4B"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oE1-B8-LqH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1798" y="-1"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="TlM-xG-mnu">
             <objects>
@@ -206,8 +216,8 @@
                         <segue destination="5Kk-U0-z9t" kind="relationship" relationship="viewControllers" id="Yrt-sG-URQ"/>
                         <segue destination="fPF-Lg-c73" kind="relationship" relationship="viewControllers" id="qLJ-VR-YPx"/>
                         <segue destination="GHa-vp-tdW" kind="relationship" relationship="viewControllers" id="Pcy-Iq-xNy"/>
-                        <segue destination="AmN-Zc-VMG" kind="relationship" relationship="viewControllers" id="5cr-ly-uBw"/>
-                        <segue destination="Id3-YA-WU9" kind="relationship" relationship="viewControllers" id="sYY-o1-wgD"/>
+                        <segue destination="jMb-np-EdZ" kind="relationship" relationship="viewControllers" id="aGW-7x-a1k"/>
+                        <segue destination="Id3-YA-WU9" kind="relationship" relationship="viewControllers" id="5iR-GO-uUA"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yh2-Lr-uTb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -217,6 +227,7 @@
         <!--Collaboration-->
         <scene sceneID="THd-wm-UQY">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Av3-Nv-ZnP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="AmN-Zc-VMG" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CyM-Md-zDw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -226,7 +237,6 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Collaboration" image="collaboration_tab_icon" id="36X-Jk-cVp"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Av3-Nv-ZnP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2381" y="123"/>
         </scene>

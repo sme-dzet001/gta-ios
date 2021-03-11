@@ -15,9 +15,11 @@ class AppContactsViewController: UIViewController {
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: MyAppsDataProvider?
+    lazy private var collaborationDataProvider: CollaborationDataProvider = CollaborationDataProvider()
     private var lastUpdateDate: Date?
     private var appContactsData: AppContactsData?
     var appName: String = ""
+    var isCollaborationContacts = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +30,11 @@ class AppContactsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barTintColor = UIColor.white
+        if isCollaborationContacts {
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
+            loadCollaborationContactsData()
+            return
+        }
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadContactsData()
         }
@@ -39,7 +46,7 @@ class AppContactsViewController: UIViewController {
     }
 
     private func setUpNavigationItem() {
-        navigationItem.title = "\(appName) - Contacts"
+        navigationItem.title = !isCollaborationContacts ? "\(appName) - Contacts" : "Team Contacts"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
     }
     
@@ -59,6 +66,28 @@ class AppContactsViewController: UIViewController {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.appContactsData = contactsData
+                    self?.errorLabel.isHidden = true
+                    self?.tableView.isHidden = false
+                    self?.tableView.reloadData()
+                } else {
+                    let contactsDataIsEmpty = self?.appContactsData?.contactsData == nil || self?.appContactsData?.contactsData?.count == 0
+                    self?.errorLabel.isHidden = !contactsDataIsEmpty
+                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                }
+            }
+        }
+    }
+    
+    private func loadCollaborationContactsData() {
+        let contactsDataIsEmpty = appContactsData?.contactsData == nil || appContactsData?.contactsData?.count == 0
+        if contactsDataIsEmpty {
+            startAnimation()
+        }
+        collaborationDataProvider.getTeamContacts(appSuite: appName) {[weak self] (contactsData, errorCode, error) in
+            DispatchQueue.main.async {
+                self?.stopAnimation()
+                if error == nil && errorCode == 200 {
                     self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false

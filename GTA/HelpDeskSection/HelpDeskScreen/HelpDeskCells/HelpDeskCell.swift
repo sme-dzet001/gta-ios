@@ -13,13 +13,14 @@ class HelpDeskCell: UITableViewCell {
     @IBOutlet weak var cellTitle: UILabel!
     @IBOutlet weak var cellSubtitle: UILabel!
     @IBOutlet weak var updatesNumberLabel: UILabel!
-
+    @IBOutlet weak var parentView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    func setUpCell(with data: HelpDeskCellData, isActive: Bool = true) {
+    func setUpCell(with data: ContactsCellDataProtocol, isActive: Bool = true, isNeedCornerRadius: Bool = false) {
         if let imageName = data.imageName {
             cellIcon.image = UIImage(named: imageName)
         }
@@ -30,6 +31,10 @@ class HelpDeskCell: UITableViewCell {
             updatesNumberLabel.text = "\(updatesNumber)"
         } else {
             updatesNumberLabel.text = nil
+        }
+        if isNeedCornerRadius {
+            self.parentView.layer.cornerRadius = 20
+            self.parentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         }
     }
 }
