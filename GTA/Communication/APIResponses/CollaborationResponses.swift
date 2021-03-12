@@ -7,6 +7,65 @@
 
 import Foundation
 
+struct CollaborationDetailsResponse: Codable, Equatable {
+    var meta: ResponseMetaData?
+    var data: [String : TipsAndTricksData?]?
+    var indexes: [String : Int] = [:]
+    
+    var isEmpty: Bool {
+        if let _ = values, let _ = title, let _ = description {
+            return false
+        }
+        return true
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case meta
+        case data
+    }
+    
+    private var values: [QuantumValue?]? {
+        return data?.first?.value?.data?.rows?.first?.values
+    }
+    
+    var icon: String? {
+        guard let valuesArr = values, let index = indexes["icon"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var title: String? {
+        guard let valuesArr = values, let index = indexes["app suite"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var type: String? {
+        guard let valuesArr = values, let index = indexes["title"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var description: String? {
+        guard let valuesArr = values, let index = indexes["description"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    static func ==(lhs: CollaborationDetailsResponse, rhs: CollaborationDetailsResponse) -> Bool {
+        return lhs.description == rhs.description && lhs.title == rhs.title //&& lhs.title == rhs.title
+    }
+    
+}
+
+struct CollaborationDetailsData: Codable {
+    var data: CollaborationDetailsRows?
+}
+
+struct CollaborationDetailsRows: Codable {
+    var rows: [CollaborationDetailsRow]?
+}
+
+struct CollaborationDetailsRow: Codable {
+    var values: [QuantumValue?]?
+}
+
 struct CollaborationTipsAndTricksResponse: Codable {
     var meta: ResponseMetaData?
     var data: [String : TipsAndTricksData?]?

@@ -13,17 +13,64 @@ class CollaborationViewController: UIViewController {
     
     private var dataProvider: CollaborationDataProvider = CollaborationDataProvider()
     
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerTitleLabel: UILabel!
+    @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var headerTextView: UITextView!
+    @IBOutlet weak var headerTypeLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     private var dataSource: [CollaborationCellData] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
         setUpHardCodeData()
+        dataProvider.appSuiteIconDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        getCollaborationDetails()
+    }
+    
+    private func getCollaborationDetails() {
+        if dataProvider.collaborationDetails == nil {
+            activityIndicator.startAnimating()
+            errorLabel.isHidden = true
+        }
+        dataProvider.getCollaborationDetails(appSuite: "Office365") {[weak self] (errorCode, error) in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                if error == nil && errorCode == 200 {
+                    self?.errorLabel.isHidden = true
+                    self?.fillData()
+                } else {
+                    self?.errorLabel.isHidden = self?.dataProvider.collaborationDetails != nil
+                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                }
+            }
+        }
+    }
+    
+    private func fillData() {
+        let data = self.dataProvider.collaborationDetails
+        self.headerTitleLabel.text = data?.title
+        self.headerTextView.attributedText = createAttributedString(for: data?.description)
+        self.headerTypeLabel.text = data?.type
+    }
+    
+    private func createAttributedString(for text: String?) -> NSAttributedString? {
+        let attributedText = NSMutableAttributedString(string: text ?? "")
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        if let font = UIFont(name: "SFProDisplay-Medium", size: 15.0) {
+            attributedText.addAttribute(.font, value: font, range: NSRange(location: 0, length: attributedText.length))
+        }
+        attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+        return attributedText
     }
     
     private func setUpTableView() {
@@ -79,7 +126,16 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
             return
         }
     }
-    
+}
+
+extension CollaborationViewController: AppSuiteIconDelegate {
+    func appSuiteIconChanged(with data: Data?) {
+        DispatchQueue.main.async {
+            if let _ = data {
+                self.headerImageView.image = UIImage(data: data!)
+            }
+        }
+    }
 }
 
 struct CollaborationCellData: ContactsCellDataProtocol {
