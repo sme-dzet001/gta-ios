@@ -31,7 +31,6 @@ class AppContactsViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barTintColor = UIColor.white
         if isCollaborationContacts {
-            self.navigationController?.setNavigationBarHidden(false, animated: false)
             loadCollaborationContactsData()
             return
         }

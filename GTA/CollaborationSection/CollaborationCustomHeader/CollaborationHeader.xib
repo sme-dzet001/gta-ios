@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Medium.otf">
+            <string>SFProDisplay-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="6Fk-yP-fhQ" customClass="CollaborationHeader" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="360" height="173"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k0Q-U7-XHx">
+                    <rect key="frame" x="158" y="72.5" width="35" height="28"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="jre-FP-QOA"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nub-Gl-I5R">
+                    <rect key="frame" x="198" y="86.5" width="0.0" height="0.0"/>
+                    <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="DZX-Yg-jfJ"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="DZX-Yg-jfJ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nub-Gl-I5R" secondAttribute="trailing" constant="15" id="FUD-Hw-PJQ"/>
+                <constraint firstItem="k0Q-U7-XHx" firstAttribute="width" secondItem="k0Q-U7-XHx" secondAttribute="height" multiplier="1:0.8" id="UVb-QY-16q"/>
+                <constraint firstItem="nub-Gl-I5R" firstAttribute="leading" secondItem="k0Q-U7-XHx" secondAttribute="trailing" constant="5" id="Ui8-EH-MIf"/>
+                <constraint firstItem="k0Q-U7-XHx" firstAttribute="centerY" secondItem="nub-Gl-I5R" secondAttribute="centerY" id="XQg-3d-Qkn"/>
+                <constraint firstItem="nub-Gl-I5R" firstAttribute="centerY" secondItem="6Fk-yP-fhQ" secondAttribute="centerY" id="YCd-u9-Ln1"/>
+                <constraint firstItem="nub-Gl-I5R" firstAttribute="centerX" secondItem="DZX-Yg-jfJ" secondAttribute="centerX" multiplier="1.1" id="xK5-e1-xNL"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="headerImageView" destination="k0Q-U7-XHx" id="MSK-rh-Hj3"/>
+                <outlet property="headerTitle" destination="nub-Gl-I5R" id="SBm-cW-6oz"/>
+                <outlet property="titleCenterX" destination="xK5-e1-xNL" id="jGn-lk-ZN2"/>
+            </connections>
+            <point key="canvasLocation" x="2.8985507246376816" y="-164.39732142857142"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
