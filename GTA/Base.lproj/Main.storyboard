@@ -117,6 +117,7 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
                                         <color key="value" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="canPerformAction" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
                         </subviews>
@@ -227,7 +228,6 @@
         <!--Collaboration-->
         <scene sceneID="THd-wm-UQY">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Av3-Nv-ZnP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="AmN-Zc-VMG" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CyM-Md-zDw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -237,6 +237,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Collaboration" image="collaboration_tab_icon" id="36X-Jk-cVp"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Av3-Nv-ZnP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2381" y="123"/>
         </scene>
