@@ -10,13 +10,18 @@ import UIKit
 class CollaborationViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    private var dataProvider: CollaborationDataProvider = CollaborationDataProvider()
+    
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerTitleLabel: UILabel!
+    @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var errorLabel: UILabel!
 
     private var headerTitleView: CollaborationHeader = CollaborationHeader.instanceFromNib()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     private var dataSource: [CollaborationCellData] = []
-    private var dataProvider: CollaborationDataProvider = CollaborationDataProvider()
     
     
     override func viewDidLoad() {

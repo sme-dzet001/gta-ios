@@ -283,12 +283,29 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
         }
     }
     
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        let neededField = getFirstEmptyBoxIfNeeded(textField)
+        if textField != neededField {
+            neededField.becomeFirstResponder()
+            return false
+        }
+        return true
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if let index = pinCodeBoxes.firstIndex(of: textField as! CustomTextField) {
             for i in index..<pinCodeBoxes.count {
                 pinCodeBoxes[i].text = ""
             }
         }
+    }
+    
+    private func getFirstEmptyBoxIfNeeded(_ textField: UITextField) -> UITextField {
+        if let index = pinCodeBoxes.firstIndex(of: textField as! CustomTextField) {
+            guard pinCodeBoxes[index].text == "", index != 0 else {  return textField }
+            return pinCodeBoxes.first(where: {$0.text == ""}) ?? textField
+        }
+        return textField
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

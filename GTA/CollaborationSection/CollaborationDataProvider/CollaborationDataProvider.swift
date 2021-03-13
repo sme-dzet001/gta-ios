@@ -11,6 +11,7 @@ class CollaborationDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
+    
     private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     private(set) var tipsAndTricksData = [TipsAndTricksRow]()
     private(set) var collaborationDetails: CollaborationDetailsResponse?
@@ -155,6 +156,7 @@ class CollaborationDataProvider {
     
     
     // MARK: - Team contacts handling
+    
     func getTeamContacts(appSuite: String, completion: ((_ contacts: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0

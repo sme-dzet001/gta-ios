@@ -80,9 +80,26 @@ class MyAppsDataProvider {
     }
     
     func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
-            self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, isFromCache, completion)
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.processMyAppsStatusSectionReport(data, code, cachedError, true, { (code, error, _) in
+                if error == nil {
+                    completion?(code, cachedError, true)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    if let _ = error {
+                        completion?(errorCode, ResponseError.serverError, false)
+                    } else {
+                        self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
         }
+        
+        
+//        getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
+//            self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, isFromCache, completion)
+//        }
     }
     
     func getAllApps(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
@@ -376,9 +393,9 @@ class MyAppsDataProvider {
         if let _ = generationNumber {
             if fromCache {
                 getCachedResponse(for: .getMyAppsData) {[weak self] (data, error) in
-                    if let _ = data, error == nil {
-                        self?.processMyApps(reportData, data!, errorCode, error, completion)
-                    }
+                    //if let _ = data, error == nil {
+                        self?.processMyApps(reportData, data, errorCode, error, completion)
+                   // }
                 }
                 return
             }
@@ -405,11 +422,11 @@ class MyAppsDataProvider {
         return data
     }
     
-    private func isNeedToRemoveResponseForDate(_ date: String) -> Bool {
+    private func isNeedToRemoveStatusForDate(_ date: String) -> Bool {
         let dateFormatter = DateFormatter()        
         dateFormatter.dateFormat = String.comapreDateFormat
         guard var comparingDate = dateFormatter.date(from:date) else { return true }
-        comparingDate.addTimeInterval(900)
+        comparingDate.addTimeInterval(600)
         return Date() >= comparingDate
     }
     
@@ -425,14 +442,14 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        if let date = allAppsResponse?.data?.requestDate, isNeedToRemoveResponseForDate(date), isFromCache {
-            cacheManager.removeCachedData(for: CacheManager.path.getAllAppsData.endpoint)
-            completion?(0, ResponseError.noDataAvailable, isFromCache)
-            return
+        var isNeedToRemoveStatus = false
+        if let date = allAppsResponse?.data?.requestDate, isNeedToRemoveStatusForDate(date), isFromCache {
+            isNeedToRemoveStatus = true
         }
         let columns = allAppsResponse?.meta?.widgetsDataSource?.params?.columns
         allAppsResponse?.indexes = getDataIndexes(columns: columns)
-        if let allAppsResponse = allAppsResponse, allAppsResponse != self.allAppsData {
+        allAppsResponse?.isStatusExpired = isNeedToRemoveStatus
+         if let allAppsResponse = allAppsResponse, (allAppsResponse != self.allAppsData || isNeedToRemoveStatus) {
             self.allAppsData = allAppsResponse
         }
         if allAppsResponse == nil || (allAppsResponse?.myAppsStatus ?? []).isEmpty {

@@ -35,14 +35,25 @@ class ApplicationCell: UITableViewCell {
             showFirstCharFrom(data.app_name)
         }
         appName.text = data.app_name
+        var color: UIColor = .clear
         switch data.appStatus {
+        case .expired:
+            appStatus.backgroundColor = .clear
+            statusParentView.backgroundColor = .clear
         case .online, .none:
-            appStatus.backgroundColor = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
+            color = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
         case .offline:
-            appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 62.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
+            color = UIColor(red: 255.0 / 255.0, green: 62.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
         default:
-            appStatus.backgroundColor = UIColor(red: 255.0 / 255.0, green: 153.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
+            color = UIColor(red: 255.0 / 255.0, green: 153.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
         }
+        if data.appStatus != .expired {
+            setUpStatusCircle(with: color)
+        }
+    }
+    
+    private func setUpStatusCircle(with color: UIColor) {
+        appStatus.backgroundColor = color
         statusParentView.backgroundColor = .white
         statusParentView.layer.cornerRadius = statusParentView.frame.size.width / 2
         appStatus.layer.cornerRadius = appStatus.frame.size.width / 2

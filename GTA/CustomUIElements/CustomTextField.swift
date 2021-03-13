@@ -16,6 +16,7 @@ open class CustomTextField: UITextField {
     weak var backwardDelegate: BackwardDelegate?
     @IBInspectable var allowToShrinkPlaceholderSizeOnEditing = true
     @IBInspectable var shrinkSizeOfPlaceholder: CGFloat = 0
+    @IBInspectable var canPerformAction: Bool = false
     
     @IBInspectable var placeHolderColor: UIColor = .lightGray {
         didSet {
@@ -239,7 +240,7 @@ open class CustomTextField: UITextField {
     }
     
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        return inputView != nil ? false : super.canPerformAction(action, withSender: sender)
+        return canPerformAction//inputView != nil ? false : super.canPerformAction(action, withSender: sender)
     }
     
 }
