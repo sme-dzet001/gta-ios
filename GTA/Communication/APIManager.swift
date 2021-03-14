@@ -43,6 +43,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getCollaborationTeamsContacts(generationNumber: Int)
         case getCollaborationTipsAndTricks(generationNumber: Int)
         case getCollaborationDetails(generationNumber: Int)
+        case getCollaborationAppDetails(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -64,6 +65,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getCollaborationTeamsContacts(let generationNumber): return "/v3/widgets/collaboration_team_contacts/data/\(generationNumber)/detailed"
                 case .getCollaborationTipsAndTricks(let generationNumber): return "/v3/widgets/collaboration_tips_and_tricks/data/\(generationNumber)/detailed"
                 case .getCollaborationDetails(let generationNumber): return  "/v3/widgets/collaboration_app_suite_details/data/\(generationNumber)/detailed"
+            case .getCollaborationAppDetails(let generationNumber): return  "/v3/widgets/collaboration_app_details/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -89,6 +91,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case collaboration = "collaboration_app_suite_details"
         case collaborationTeamsContacts = "collaboration_team_contacts"
         case collaborationTipsAndTricks = "collaboration_tips_and_tricks"
+        case collaborationAppDetails = "collaboration_app_details"
     }
     
     init(accessToken: String?) {
@@ -222,7 +225,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     // MARK: - Collaboration methods
     
-    func getCollaborationNews(for generationNumber: Int, appName: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getCollaborationDetails(for generationNumber: Int, appName: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         let requestBodyParams = ["s1": appName]
         self.makeRequest(endpoint: .getCollaborationDetails(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
@@ -238,6 +241,12 @@ class APIManager: NSObject, URLSessionDelegate {
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         let requestBodyParams = ["s1": appName]
         self.makeRequest(endpoint: .getCollaborationTipsAndTricks(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
+    }
+    
+    func getCollaborationAppDetails(for generationNumber: Int, appName: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        let requestBodyParams = ["s1": appName]
+        self.makeRequest(endpoint: .getCollaborationAppDetails(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
     }
     
     //MARK: - Common methods

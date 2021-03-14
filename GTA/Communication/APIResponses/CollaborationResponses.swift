@@ -9,7 +9,7 @@ import Foundation
 
 struct CollaborationDetailsResponse: Codable, Equatable {
     var meta: ResponseMetaData?
-    var data: [String : TipsAndTricksData?]?
+    var data: [String : CollaborationDetailsData?]?
     var indexes: [String : Int] = [:]
     
     var isEmpty: Bool {
@@ -101,4 +101,90 @@ struct TipsAndTricksRows: Codable {
 protocol QuickHelpDataProtocol {
     var question: String? {get}
     var answer: String?{get}
+}
+
+
+struct CollaborationAppDetailsResponse: Codable {
+    var meta: ResponseMetaData?
+    var data: [String : CollaborationAppDetailsData?]?
+}
+
+struct CollaborationAppDetailsData: Codable {
+    var data: CollaborationAppDetailsRows?
+}
+
+struct CollaborationAppDetailsRows: Codable, Equatable {
+    var rows: [CollaborationAppDetailsRow]?
+    
+}
+
+struct CollaborationAppDetailsRow: Codable, Equatable {
+    var values: [QuantumValue?]?
+    
+    var indexes: [String : Int] = [:]
+    var imageData: Data?
+    var imageStatus: ImageLoadingStatus = .loading
+    enum CodingKeys: String, CodingKey {
+        case values
+    }
+    
+    var appSupportEmail: String? {
+        guard let valuesArr = values, let index = indexes["app support email"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var description: String? {
+        guard let valuesArr = values, let index = indexes["description"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var appSupportPhone: String? {
+        guard let valuesArr = values, let index = indexes["app support phone"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var appWikiUrl: String? {
+        guard let valuesArr = values, let index = indexes["app wiki url"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var icon: String? {
+        guard let valuesArr = values, let index = indexes["icon"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var title: String? {
+        guard let valuesArr = values, let index = indexes["title"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var appSupportUrl: String? {
+        guard let valuesArr = values, let index = indexes["app support url"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var appName: String? {
+        guard let valuesArr = values, let index = indexes["app name"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var appSuite: String? {
+        guard let valuesArr = values, let index = indexes["app suite"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var appSupportPolicy: String? {
+        guard let valuesArr = values, let index = indexes["app support policy"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var appNameFull: String? {
+        guard let valuesArr = values, let index = indexes["app name full"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    static func ==(lhs: CollaborationAppDetailsRow, rhs: CollaborationAppDetailsRow) -> Bool {
+        return lhs.description == rhs.description && lhs.title == rhs.title && lhs.appSupportUrl == rhs.appSupportUrl && lhs.appSupportPolicy == rhs.appSupportPolicy && lhs.appWikiUrl == rhs.appWikiUrl
+    }
+    
 }
