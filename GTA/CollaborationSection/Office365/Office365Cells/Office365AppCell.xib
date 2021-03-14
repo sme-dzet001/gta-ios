@@ -36,8 +36,8 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="quick_help_icon" translatesAutoresizingMaskIntoConstraints="NO" id="cJl-Z9-s9z">
                                 <rect key="frame" x="20" y="50.5" width="18" height="18"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="18" id="bgh-Ei-fOX"/>
-                                    <constraint firstAttribute="height" constant="18" id="olW-PN-KY3"/>
+                                    <constraint firstAttribute="width" constant="18" id="uNI-Db-h47"/>
+                                    <constraint firstAttribute="width" secondItem="cJl-Z9-s9z" secondAttribute="height" multiplier="1:1" id="us7-rV-g3S"/>
                                 </constraints>
                             </imageView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="8WK-zr-fen">
@@ -103,8 +103,9 @@
             <connections>
                 <outlet property="activityIndicator" destination="8WK-zr-fen" id="wCc-Fp-aTW"/>
                 <outlet property="appTitleLabel" destination="6S3-M0-ma0" id="xbK-SK-qfv"/>
-                <outlet property="descriptionLabel" destination="rBT-P6-bFq" id="njI-0C-gOX"/>
+                <outlet property="descriptionLabel" destination="rBT-P6-bFq" id="G9n-t2-1LV"/>
                 <outlet property="iconImageView" destination="cJl-Z9-s9z" id="i6G-Hk-iBI"/>
+                <outlet property="iconImageViewWidth" destination="uNI-Db-h47" id="p4r-nk-IXA"/>
             </connections>
             <point key="canvasLocation" x="128.98550724637681" y="38.504464285714285"/>
         </tableViewCell>

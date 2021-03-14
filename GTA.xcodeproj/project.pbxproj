@@ -986,12 +986,20 @@
 		9F35861A25FD23BE0003658D /* Office365 */ = {
 			isa = PBXGroup;
 			children = (
+				9F35863525FE430B0003658D /* Office365Cells */,
 				9F35861B25FD23FF0003658D /* Office365ViewController.swift */,
 				9F35861C25FD23FF0003658D /* Office365ViewController.xib */,
+			);
+			path = Office365;
+			sourceTree = "<group>";
+		};
+		9F35863525FE430B0003658D /* Office365Cells */ = {
+			isa = PBXGroup;
+			children = (
 				9F35862825FD37BF0003658D /* Office365AppCell.swift */,
 				9F35862925FD37BF0003658D /* Office365AppCell.xib */,
 			);
-			path = Office365;
+			path = Office365Cells;
 			sourceTree = "<group>";
 		};
 		9F44AE2725EFDCBB00A0EDA4 /* AppTipsAndTricksScreen */ = {
