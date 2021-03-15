@@ -44,10 +44,20 @@ class AppContactsViewController: UIViewController {
         super.viewWillDisappear(animated)
         stopAnimation()
     }
-
+    
     private func setUpNavigationItem() {
-        navigationItem.title = !isCollaborationContacts ? "\(appName) - Contacts" : "Team Contacts"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
+        let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+        let titleText = !isCollaborationContacts ? "\(appName) - Contacts" : "Team Contacts"
+        tlabel.text = titleText
+        tlabel.textColor = UIColor.black
+        tlabel.textAlignment = .center
+        tlabel.font = UIFont(name: "SFProDisplay-Medium", size: 20.0)
+        tlabel.backgroundColor = UIColor.clear
+        tlabel.minimumScaleFactor = 0.6
+        tlabel.numberOfLines = 2
+        tlabel.adjustsFontSizeToFitWidth = true
+        self.navigationItem.titleView = tlabel
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
     }
     
     private func setUpTableView() {

@@ -95,9 +95,9 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         tlabel.font = UIFont(name: "SFProDisplay-Medium", size: 20.0)
         tlabel.backgroundColor = UIColor.clear
         tlabel.minimumScaleFactor = 0.6
+        tlabel.numberOfLines = 2
         tlabel.adjustsFontSizeToFitWidth = true
         self.navigationItem.titleView = tlabel
-        self.navigationItem.title = appName
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
     }
 
