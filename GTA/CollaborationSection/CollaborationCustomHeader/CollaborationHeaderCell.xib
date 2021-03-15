@@ -17,8 +17,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fp1-DM-XX6">
-                        <rect key="frame" x="15" y="10" width="290" height="24"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fp1-DM-XX6">
+                        <rect key="frame" x="24" y="10" width="272" height="24"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -34,10 +34,10 @@
                 <constraints>
                     <constraint firstItem="Fp1-DM-XX6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Vw4-ED-Jl9"/>
                     <constraint firstItem="kxG-sB-bgM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="XLG-QZ-NNX"/>
-                    <constraint firstAttribute="trailing" secondItem="Fp1-DM-XX6" secondAttribute="trailing" constant="15" id="XMF-ff-W2a"/>
+                    <constraint firstAttribute="trailing" secondItem="Fp1-DM-XX6" secondAttribute="trailing" constant="24" id="XMF-ff-W2a"/>
                     <constraint firstAttribute="trailing" secondItem="kxG-sB-bgM" secondAttribute="trailing" id="Xps-bv-awJ"/>
                     <constraint firstAttribute="bottom" secondItem="Fp1-DM-XX6" secondAttribute="bottom" constant="10" id="mSx-VA-Jb5"/>
-                    <constraint firstItem="Fp1-DM-XX6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="meP-Gp-YPq"/>
+                    <constraint firstItem="Fp1-DM-XX6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="meP-Gp-YPq"/>
                     <constraint firstAttribute="bottom" secondItem="kxG-sB-bgM" secondAttribute="bottom" id="yXR-ec-2do"/>
                 </constraints>
             </tableViewCellContentView>
