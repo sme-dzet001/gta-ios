@@ -112,7 +112,7 @@ extension LoginUSMViewController: WKUIDelegate {
 extension LoginUSMViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         guard error.localizedDescription != "Frame load interrupted" else { return }
-        displayError(errorMessage: "Oops, something went wrong", title: "Login Failed") { (_) in
+        displayError(errorMessage: ErrorHandler.getErrorMessage(for: error), title: "Login Failed") { (_) in
             self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
         }
     }
