@@ -31,6 +31,11 @@ class AppTipsAndTricksViewController: UIViewController {
         getAppTipsAndTricks()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.stopAnimation()
+    }
+    
     private func setUpNavigationItem() {
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
         let titleText = appName != nil ? "\(appName!) - Tips & Tricks" : "Tips & Tricks"
