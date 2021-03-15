@@ -117,6 +117,23 @@ extension UINavigationController {
         self.view.bringSubviewToFront(activityIndicator)
         activityIndicator.center = self.view.center
     }
+    
+    func setNavigationBarSeparator(with color: UIColor) {
+        let shadowImage = getSeparatorImage(for: color) ?? UIImage()
+        self.navigationBar.shadowImage = shadowImage
+        self.toolbar.setShadowImage(shadowImage, forToolbarPosition: .any)
+    }
+    
+    private func getSeparatorImage(for color: UIColor) -> UIImage? {
+        UIGraphicsBeginImageContext(CGSize(width: self.view.frame.width, height: 2))
+        let context = UIGraphicsGetCurrentContext()
+        color.setFill()
+        guard let ctx = context else { return nil }
+        ctx.fill(CGRect(x: 0, y: 0, width: self.view.frame.width, height: 2))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
 }
 
 extension UITableView {

@@ -35,6 +35,7 @@ class CollaborationViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getCollaborationDetails()
+        self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
     }
     
     override func viewWillDisappear(_ animated: Bool) {

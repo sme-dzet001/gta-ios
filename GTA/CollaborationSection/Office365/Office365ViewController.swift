@@ -116,7 +116,7 @@ extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "Office365AppCell", for: indexPath) as? Office365AppCell {
             guard let cellData = dataProvider?.collaborationAppDetailsRows else { return cell }
-            cell.setUpCell(with: cellData[indexPath.row])
+            cell.setUpCell(with: cellData[indexPath.row], isAppsScreen: true)
             return cell
         }
         return UITableViewCell()
