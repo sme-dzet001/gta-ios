@@ -125,11 +125,11 @@ extension UINavigationController {
     }
     
     private func getSeparatorImage(for color: UIColor) -> UIImage? {
-        UIGraphicsBeginImageContext(CGSize(width: self.view.frame.width, height: 2))
+        UIGraphicsBeginImageContext(CGSize(width: self.view.frame.width, height: 1))
         let context = UIGraphicsGetCurrentContext()
         color.setFill()
         guard let ctx = context else { return nil }
-        ctx.fill(CGRect(x: 0, y: 0, width: self.view.frame.width, height: 2))
+        ctx.fill(CGRect(x: 0, y: 0, width: self.view.frame.width, height: 1))
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
