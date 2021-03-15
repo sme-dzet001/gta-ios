@@ -33,7 +33,8 @@ class AppTipsAndTricksViewController: UIViewController {
     
     private func setUpNavigationItem() {
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        tlabel.text = "Tips & Tricks"
+        let titleText = appName != nil ? "\(appName!) - Tips & Tricks" : "Tips & Tricks"
+        tlabel.text = titleText
         tlabel.textColor = UIColor.black
         tlabel.textAlignment = .center
         tlabel.font = UIFont(name: "SFProDisplay-Medium", size: 20.0)
@@ -41,7 +42,6 @@ class AppTipsAndTricksViewController: UIViewController {
         tlabel.minimumScaleFactor = 0.6
         tlabel.adjustsFontSizeToFitWidth = true
         self.navigationItem.titleView = tlabel
-        self.navigationItem.title = appName
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
     }
     
