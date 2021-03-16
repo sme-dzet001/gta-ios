@@ -65,17 +65,17 @@ struct AppsImageData: Equatable {
     var imageData: Data?
     var imageStatus: ImageLoadingStatus = .loading
     
-    enum ImageLoadingStatus {
-        case loading
-        case failed
-        case loaded
-    }
     
     static func == (lhs: AppsImageData, rhs: AppsImageData) -> Bool {
         return lhs.imageData == rhs.imageData && lhs.app_icon == rhs.app_icon
     }
 }
 
+enum ImageLoadingStatus {
+    case loading
+    case failed
+    case loaded
+}
 
 struct MyAppsResponse: Codable, Equatable {
     var meta: ResponseMetaData?

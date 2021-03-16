@@ -18,6 +18,9 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     var detailsDataResponseError: Error?
     var imageDataResponseError: Error?
     var appImageUrl: String = ""
+    var isCollaborationDetails: Bool = false
+    var collaborationDataProvider: CollaborationDataProvider?
+    var collaborationDetails: CollaborationAppDetailsRow?
     private var appImageData: Data?
 
     override func viewDidLoad() {
@@ -29,7 +32,16 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureDataSource()
+        if isCollaborationDetails {
+            getCollaborationAboutImageData()
+        } else {
+            getAppAboutImageData()
+        }
         navigationController?.navigationBar.barTintColor = UIColor.white
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    private func getAppAboutImageData() {
         dataProvider?.getAppImageData(from: appImageUrl, completion: { (imageData, error) in
             self.imageDataResponseError = error
             self.appImageData = imageData
@@ -37,7 +49,16 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
                 self.tableView.reloadData()
             }
         })
-        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    private func getCollaborationAboutImageData() {
+        collaborationDataProvider?.getAppImageData(from: appImageUrl, completion: { (imageData, error) in
+            self.imageDataResponseError = error
+            self.appImageData = imageData
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -82,16 +103,16 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     
     private func createSupportData() -> [SupportData]  {
         var supportData = [SupportData]()
-        if let supportPolicy = details?.appSupportPolicy {
+        if let supportPolicy = !isCollaborationDetails ? details?.appSupportPolicy : collaborationDetails?.appSupportPolicy {
             supportData.append(SupportData(title: "Support Policy: \(supportPolicy)", value: supportPolicy))
         }
-        if let decription = details?.appDescription {
+        if let decription = !isCollaborationDetails ? details?.appDescription : collaborationDetails?.description {
             supportData.append(SupportData(title: decription, value: decription))
         }
-        if let wikiUrlString = details?.appWikiUrl, let _ = URL(string: wikiUrlString) {
+        if let wikiUrlString = !isCollaborationDetails ? details?.appWikiUrl : collaborationDetails?.appWikiUrl, let _ = URL(string: wikiUrlString) {
             supportData.append(SupportData(title: "Wiki URL", value: wikiUrlString))
         }
-        if let supportUrlString = details?.appJiraSupportUrl, let _ = URL(string: supportUrlString) {
+        if let supportUrlString = !isCollaborationDetails ? details?.appJiraSupportUrl : collaborationDetails?.appSupportUrl, let _ = URL(string: supportUrlString) {
             supportData.append(SupportData(title: "Support URL", value: supportUrlString))
         }
         return supportData
@@ -145,13 +166,13 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.showFirstCharFrom(appTitle)
                 cell.stopAnimation()
             }
-            cell.headerTitleLabel.text = details?.appTitle
+            cell.headerTitleLabel.text = !isCollaborationDetails ? details?.appTitle : collaborationDetails?.appNameFull
             return cell
         }
-        
-        if indexPath.section == 1, detailsDataResponseError == nil, details == nil  {
+        let isDetailsNull = !isCollaborationDetails ? self.details == nil : collaborationDetails == nil
+        if indexPath.section == 1, detailsDataResponseError == nil, isDetailsNull  {
             return createLoadingCell()
-        } else if indexPath.section == 1, let error = detailsDataResponseError as? ResponseError, details == nil {
+        } else if indexPath.section == 1, let error = detailsDataResponseError as? ResponseError, isDetailsNull {
             return createErrorCell(with: error.localizedDescription)
         }
         
@@ -162,16 +183,24 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
                 cell?.policyLabel.text = dataSource?.supportData?[indexPath.row].title
                 return cell ?? UITableViewCell()
             case 1:
+                let isDescriptionNull = !isCollaborationDetails ? details?.appDescription == nil : collaborationDetails?.description == nil
+                if isDescriptionNull {
+                    return createSupportCell(for: indexPath)
+                }
                 let cell = tableView.dequeueReusableCell(withIdentifier: "AboutInfoCell", for: indexPath) as? AboutInfoCell
                 cell?.descriptionLabel.text = dataSource?.supportData?[indexPath.row].title
                 return cell ?? UITableViewCell()
             default:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "AboutSupportCell", for: indexPath) as? AboutSupportCell
-                cell?.supportNameLabel.text = dataSource?.supportData?[indexPath.row].title
-                return cell ?? UITableViewCell()
+                return createSupportCell(for: indexPath)
             }
         }
         return UITableViewCell()
+    }
+    
+    private func createSupportCell(for indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AboutSupportCell", for: indexPath) as? AboutSupportCell
+        cell?.supportNameLabel.text = dataSource?.supportData?[indexPath.row].title
+        return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

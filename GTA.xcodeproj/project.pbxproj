@@ -84,6 +84,30 @@
 		9F2F982E25F90D0600BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
 		9F2F982F25F90D0600BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
 		9F2F983025F90D0600BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
+		9F35860425FD219C0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
+		9F35860525FD219C0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
+		9F35860625FD219D0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
+		9F35860725FD219D0003658D /* CollaborationHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860125FD219C0003658D /* CollaborationHeader.xib */; };
+		9F35860825FD219D0003658D /* CollaborationHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860125FD219C0003658D /* CollaborationHeader.xib */; };
+		9F35860925FD219D0003658D /* CollaborationHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860125FD219C0003658D /* CollaborationHeader.xib */; };
+		9F35860A25FD219D0003658D /* CollaborationHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860225FD219C0003658D /* CollaborationHeaderCell.xib */; };
+		9F35860B25FD219D0003658D /* CollaborationHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860225FD219C0003658D /* CollaborationHeaderCell.xib */; };
+		9F35860C25FD219D0003658D /* CollaborationHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860225FD219C0003658D /* CollaborationHeaderCell.xib */; };
+		9F35860D25FD219D0003658D /* CollaborationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860325FD219C0003658D /* CollaborationHeader.swift */; };
+		9F35860E25FD219D0003658D /* CollaborationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860325FD219C0003658D /* CollaborationHeader.swift */; };
+		9F35860F25FD219D0003658D /* CollaborationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860325FD219C0003658D /* CollaborationHeader.swift */; };
+		9F35861D25FD23FF0003658D /* Office365ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35861B25FD23FF0003658D /* Office365ViewController.swift */; };
+		9F35861E25FD23FF0003658D /* Office365ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35861B25FD23FF0003658D /* Office365ViewController.swift */; };
+		9F35861F25FD23FF0003658D /* Office365ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35861B25FD23FF0003658D /* Office365ViewController.swift */; };
+		9F35862025FD23FF0003658D /* Office365ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35861C25FD23FF0003658D /* Office365ViewController.xib */; };
+		9F35862125FD23FF0003658D /* Office365ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35861C25FD23FF0003658D /* Office365ViewController.xib */; };
+		9F35862225FD23FF0003658D /* Office365ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35861C25FD23FF0003658D /* Office365ViewController.xib */; };
+		9F35862A25FD37BF0003658D /* Office365AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35862825FD37BF0003658D /* Office365AppCell.swift */; };
+		9F35862B25FD37BF0003658D /* Office365AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35862825FD37BF0003658D /* Office365AppCell.swift */; };
+		9F35862C25FD37BF0003658D /* Office365AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35862825FD37BF0003658D /* Office365AppCell.swift */; };
+		9F35862D25FD37BF0003658D /* Office365AppCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35862925FD37BF0003658D /* Office365AppCell.xib */; };
+		9F35862E25FD37BF0003658D /* Office365AppCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35862925FD37BF0003658D /* Office365AppCell.xib */; };
+		9F35862F25FD37BF0003658D /* Office365AppCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35862925FD37BF0003658D /* Office365AppCell.xib */; };
 		9F35867725FFBAC40003658D /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35867625FFBAC40003658D /* ErrorHandler.swift */; };
 		9F35867825FFBAC40003658D /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35867625FFBAC40003658D /* ErrorHandler.swift */; };
 		9F35867925FFBAC40003658D /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35867625FFBAC40003658D /* ErrorHandler.swift */; };
@@ -542,6 +566,14 @@
 		9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoArticleCell.swift; sourceTree = "<group>"; };
 		9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficeInfoCell.swift; sourceTree = "<group>"; };
 		9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationResponses.swift; sourceTree = "<group>"; };
+		9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationHeaderCell.swift; sourceTree = "<group>"; };
+		9F35860125FD219C0003658D /* CollaborationHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollaborationHeader.xib; sourceTree = "<group>"; };
+		9F35860225FD219C0003658D /* CollaborationHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollaborationHeaderCell.xib; sourceTree = "<group>"; };
+		9F35860325FD219C0003658D /* CollaborationHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationHeader.swift; sourceTree = "<group>"; };
+		9F35861B25FD23FF0003658D /* Office365ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Office365ViewController.swift; sourceTree = "<group>"; };
+		9F35861C25FD23FF0003658D /* Office365ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Office365ViewController.xib; sourceTree = "<group>"; };
+		9F35862825FD37BF0003658D /* Office365AppCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Office365AppCell.swift; sourceTree = "<group>"; };
+		9F35862925FD37BF0003658D /* Office365AppCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Office365AppCell.xib; sourceTree = "<group>"; };
 		9F35867625FFBAC40003658D /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.ttf"; sourceTree = "<group>"; };
 		9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.ttf"; sourceTree = "<group>"; };
@@ -721,9 +753,11 @@
 		6547566825FA4AE6002C45C4 /* CollaborationSection */ = {
 			isa = PBXGroup;
 			children = (
-				6547566925FA4AE6002C45C4 /* Collaboration.storyboard */,
-				6547566A25FA4AE6002C45C4 /* CollaborationViewController.swift */,
 				6547566B25FA4AE6002C45C4 /* CollaborationDataProvider */,
+				9F3585FF25FD219C0003658D /* CollaborationCustomHeader */,
+				9F35861A25FD23BE0003658D /* Office365 */,
+				6547566A25FA4AE6002C45C4 /* CollaborationViewController.swift */,
+				6547566925FA4AE6002C45C4 /* Collaboration.storyboard */,
 			);
 			path = CollaborationSection;
 			sourceTree = "<group>";
@@ -937,6 +971,36 @@
 				9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */,
 			);
 			path = xibs;
+			sourceTree = "<group>";
+		};
+		9F3585FF25FD219C0003658D /* CollaborationCustomHeader */ = {
+			isa = PBXGroup;
+			children = (
+				9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */,
+				9F35860125FD219C0003658D /* CollaborationHeader.xib */,
+				9F35860225FD219C0003658D /* CollaborationHeaderCell.xib */,
+				9F35860325FD219C0003658D /* CollaborationHeader.swift */,
+			);
+			path = CollaborationCustomHeader;
+			sourceTree = "<group>";
+		};
+		9F35861A25FD23BE0003658D /* Office365 */ = {
+			isa = PBXGroup;
+			children = (
+				9F35863525FE430B0003658D /* Office365Cells */,
+				9F35861B25FD23FF0003658D /* Office365ViewController.swift */,
+				9F35861C25FD23FF0003658D /* Office365ViewController.xib */,
+			);
+			path = Office365;
+			sourceTree = "<group>";
+		};
+		9F35863525FE430B0003658D /* Office365Cells */ = {
+			isa = PBXGroup;
+			children = (
+				9F35862825FD37BF0003658D /* Office365AppCell.swift */,
+				9F35862925FD37BF0003658D /* Office365AppCell.xib */,
+			);
+			path = Office365Cells;
 			sourceTree = "<group>";
 		};
 		9F44AE2725EFDCBB00A0EDA4 /* AppTipsAndTricksScreen */ = {
@@ -1674,10 +1738,12 @@
 				9F78D0952565321100BCD38F /* SF-Pro-Text-Light.ttf in Resources */,
 				659A5AF2255404F100E13B77 /* SF-Pro-Display-Bold.otf in Resources */,
 				C9766FAF2576394500E9E697 /* ServiceDeskContactsViewController.xib in Resources */,
+				9F35860725FD219D0003658D /* CollaborationHeader.xib in Resources */,
 				659A5ABD255401ED00E13B77 /* LaunchScreen.storyboard in Resources */,
 				C960A0E825B08B52004A9C65 /* ServiceDeskAboutViewController.xib in Resources */,
 				9FE173D225914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
 				659A5AF4255404F100E13B77 /* SF-Pro-Text-Medium.otf in Resources */,
+				9F35862D25FD37BF0003658D /* Office365AppCell.xib in Resources */,
 				659A5ABA255401ED00E13B77 /* Assets.xcassets in Resources */,
 				9F5B10602567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */,
 				659A5AF5255404F200E13B77 /* SF-Pro-Text-Regular.otf in Resources */,
@@ -1709,8 +1775,10 @@
 				C9DFD47F2565721F00BF1740 /* MetricStatsCell.xib in Resources */,
 				C93FCF0925648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				C93FCF1C2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
+				9F35860A25FD219D0003658D /* CollaborationHeaderCell.xib in Resources */,
 				C9424E17256427F0003C247E /* DeviceCell.xib in Resources */,
 				9FA8E8FE25B054C6007D3B9F /* AboutSupportPolicyCell.xib in Resources */,
+				9F35862025FD23FF0003658D /* Office365ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1758,10 +1826,12 @@
 				C9766FB02576394500E9E697 /* ServiceDeskContactsViewController.xib in Resources */,
 				9F819A9F255C1572007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
 				C9DFD49C25657B7600BF1740 /* MetricStatsHeader.xib in Resources */,
+				9F35860825FD219D0003658D /* CollaborationHeader.xib in Resources */,
 				9FE173D325914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
 				C91F708F2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
 				9F895AF1255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				9FA8E91125B056D5007D3B9F /* AboutHeaderCell.xib in Resources */,
+				9F35862E25FD37BF0003658D /* Office365AppCell.xib in Resources */,
 				9F819AA0255C1572007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F895B6E255D3D27004489C6 /* HelpReportScreenViewController.xib in Resources */,
 				C993A2B22576664300F9146A /* QuickHelpViewController.xib in Resources */,
@@ -1793,8 +1863,10 @@
 				C93FCF0A25648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				9F1620D52566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
 				C93FCF1D2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
+				9F35860B25FD219D0003658D /* CollaborationHeaderCell.xib in Resources */,
 				C9424E18256427F0003C247E /* DeviceCell.xib in Resources */,
 				C907E0DC25D4382500FB0B55 /* AppContactCell.xib in Resources */,
+				9F35862125FD23FF0003658D /* Office365ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1811,6 +1883,7 @@
 				9F819AC2255C1646007C1739 /* Home.storyboard in Resources */,
 				9F9D9CBA2588C59600DC4231 /* AuthViewController.xib in Resources */,
 				9F895B14255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
+				9F35862225FD23FF0003658D /* Office365ViewController.xib in Resources */,
 				9F36D43E2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F895AEC255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F36D4352562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */,
@@ -1832,6 +1905,7 @@
 				9F819AC9255C1646007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
 				C9DFD49D25657B7600BF1740 /* MetricStatsHeader.xib in Resources */,
 				C960A0EA25B08B52004A9C65 /* ServiceDeskAboutViewController.xib in Resources */,
+				9F35860C25FD219D0003658D /* CollaborationHeaderCell.xib in Resources */,
 				9FE173D425914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
 				C91F70902562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
 				9F895AF2255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
@@ -1856,10 +1930,12 @@
 				9F5B10622567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */,
 				9F78D080256530CE00BCD38F /* ArticleViewController.xib in Resources */,
 				9F819ACC255C1646007C1739 /* Main.storyboard in Resources */,
+				9F35862F25FD37BF0003658D /* Office365AppCell.xib in Resources */,
 				9F78CFEA2564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
 				C9DFD4812565721F00BF1740 /* MetricStatsCell.xib in Resources */,
 				C962D82D2566D21100727949 /* TicketCell.xib in Resources */,
 				C93FCF0B25648FA0001E86F6 /* AboutViewController.xib in Resources */,
+				9F35860925FD219D0003658D /* CollaborationHeader.xib in Resources */,
 				9F1620D62566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
 				C93FCF1E2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
 				C9424E19256427F0003C247E /* DeviceCell.xib in Resources */,
@@ -2090,6 +2166,7 @@
 				9F2F982E25F90D0600BCC37F /* CollaborationResponses.swift in Sources */,
 				9F6FD63E25B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9FF0543C2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
+				9F35860D25FD219D0003658D /* CollaborationHeader.swift in Sources */,
 				C993A2AE2576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */,
 				9F8164AF257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
@@ -2104,6 +2181,7 @@
 				9F9D9CB52588C59600DC4231 /* AuthViewController.swift in Sources */,
 				9F1620DA2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
+				9F35860425FD219C0003658D /* CollaborationHeaderCell.swift in Sources */,
 				9F78D07B256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				9F1620DD2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
 				9F35867725FFBAC40003658D /* ErrorHandler.swift in Sources */,
@@ -2125,11 +2203,13 @@
 				9FBAF4862577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9F5B105D2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
+				9F35861D25FD23FF0003658D /* Office365ViewController.swift in Sources */,
 				9FF0542F2567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035DE2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C9D035962578095A0068441F /* CommonResponses.swift in Sources */,
+				9F35862A25FD37BF0003658D /* Office365AppCell.swift in Sources */,
 				9FA8E90D25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
 				9FF0545C25680ED30071E596 /* SendMessageView.swift in Sources */,
 				C9EFDA2F25A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
@@ -2202,6 +2282,7 @@
 				9F2F982F25F90D0600BCC37F /* CollaborationResponses.swift in Sources */,
 				9F6FD63F25B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9F1620DB2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
+				9F35860E25FD219D0003658D /* CollaborationHeader.swift in Sources */,
 				C993A2AF2576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9F5B105E2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
 				9F8164B0257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
@@ -2216,6 +2297,7 @@
 				9F9D9CB62588C59600DC4231 /* AuthViewController.swift in Sources */,
 				9FF054302567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
+				9F35860525FD219C0003658D /* CollaborationHeaderCell.swift in Sources */,
 				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
 				9F35867825FFBAC40003658D /* ErrorHandler.swift in Sources */,
@@ -2237,11 +2319,13 @@
 				9FBAF4872577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				65398BCD256D4C5F0039C24E /* Utils.swift in Sources */,
 				9F895AE8255C22D7004489C6 /* ApplicationCell.swift in Sources */,
+				9F35861E25FD23FF0003658D /* Office365ViewController.swift in Sources */,
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035DF2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035972578095A0068441F /* CommonResponses.swift in Sources */,
+				9F35862B25FD37BF0003658D /* Office365AppCell.swift in Sources */,
 				9FA8E90E25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
 				9FF0543D2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				C9EFDA3025A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
@@ -2298,6 +2382,7 @@
 				9F2F983025F90D0600BCC37F /* CollaborationResponses.swift in Sources */,
 				9F6FD64025B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9F1620DC2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
+				9F35860F25FD219D0003658D /* CollaborationHeader.swift in Sources */,
 				C993A2B02576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9F5B105F2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
 				9F8164B1257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
@@ -2312,6 +2397,7 @@
 				9F9D9CB72588C59600DC4231 /* AuthViewController.swift in Sources */,
 				9FF054312567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
+				9F35860625FD219D0003658D /* CollaborationHeaderCell.swift in Sources */,
 				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,
 				9F35867925FFBAC40003658D /* ErrorHandler.swift in Sources */,
@@ -2333,11 +2419,13 @@
 				9FBAF4882577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				65398BCE256D4C5F0039C24E /* Utils.swift in Sources */,
 				9F895AE9255C22D7004489C6 /* ApplicationCell.swift in Sources */,
+				9F35861F25FD23FF0003658D /* Office365ViewController.swift in Sources */,
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035E02579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035982578095A0068441F /* CommonResponses.swift in Sources */,
+				9F35862C25FD37BF0003658D /* Office365AppCell.swift in Sources */,
 				9FA8E90F25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
 				9FF0543E2567F6FF0071E596 /* TicketDatailsHeader.swift in Sources */,
 				C9EFDA3125A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
