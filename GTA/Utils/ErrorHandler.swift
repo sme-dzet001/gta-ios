@@ -13,7 +13,7 @@ class ErrorHandler {
         let err = error as NSError
         switch err.code {
         case -1009:
-            return "No network connection"
+            return "No network connection."
         default:
             return "Oops, something went wrong"
         }
