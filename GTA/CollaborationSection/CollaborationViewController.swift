@@ -125,7 +125,7 @@ class CollaborationViewController: UIViewController {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4
         paragraphStyle.alignment = .left
-        if let font = UIFont(name: "SFProText-Light", size: 15.0) {
+        if let font = UIFont(name: "SFProText-Light", size: 16.0) {
             attributedText.addAttribute(.font, value: font, range: NSRange(location: 0, length: attributedText.length))
         }
         attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
