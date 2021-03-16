@@ -48,6 +48,11 @@ struct CollaborationDetailsResponse: Codable, Equatable {
         return valuesArr[index]?.stringValue
     }
     
+    var groupName: String? {
+        guard let valuesArr = values, let index = indexes["group name"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
     static func ==(lhs: CollaborationDetailsResponse, rhs: CollaborationDetailsResponse) -> Bool {
         return lhs.description == rhs.description && lhs.title == rhs.title //&& lhs.title == rhs.title
     }

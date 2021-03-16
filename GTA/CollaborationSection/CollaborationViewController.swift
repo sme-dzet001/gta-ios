@@ -80,7 +80,7 @@ class CollaborationViewController: UIViewController {
     
     private func setHeaderData() {
         let data = self.dataProvider.collaborationDetails
-        headerTitleView.headerTitle.text = data?.title
+        headerTitleView.headerTitle.text = data?.groupName
         headerTitleView.showViews()
     }
     
