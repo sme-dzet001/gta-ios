@@ -46,7 +46,7 @@ class AppContactsViewController: UIViewController {
     
     private func setUpNavigationItem() {
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        let titleText = !isCollaborationContacts ? "\(appName) - Contacts" : "Team Contacts"
+        let titleText = !isCollaborationContacts ? "\(appName)\nContacts" : "Team Contacts"
         tlabel.text = titleText
         tlabel.textColor = UIColor.black
         tlabel.textAlignment = .center

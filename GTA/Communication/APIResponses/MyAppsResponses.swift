@@ -240,6 +240,19 @@ struct AppDetailsData: Codable {
         return values?[index]?.stringValue
     }
     
+    var isNeedToUsePDF: Bool {
+        guard let _ = values, let index = indexes["use pdf for tips and tricks"], values!.count > index else { return false }
+        if let isNeedPDF = values?[index]?.boolValue {
+            return isNeedPDF
+        }
+        return false
+    }
+    
+    var tipsAndTricksPDF: String? {
+        guard let _ = values, let index = indexes["tips_and_tricks_pdf"], values!.count > index else { return nil }
+        return values?[index]?.stringValue
+    }
+        
     enum CodingKeys: String, CodingKey {
         case meta
         case data

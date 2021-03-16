@@ -109,7 +109,7 @@ class CollaborationViewController: UIViewController {
     private func showTipsAndTricksScreen() {
         let quickHelpVC = QuickHelpViewController()
         quickHelpVC.appName = "Office365"
-        quickHelpVC.isTipsAndTricks = true
+        quickHelpVC.screenType = .collaborationTipsAndTricks
         navigationController?.pushViewController(quickHelpVC, animated: true)
     }
     

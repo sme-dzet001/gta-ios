@@ -264,12 +264,18 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             aboutScreen.appImageUrl = appImageUrl
             navigationController?.pushViewController(aboutScreen, animated: true)
         } else if indexPath.row == 3 {
-            let appTipsAndTricksVC = AppTipsAndTricksViewController()
-            appTipsAndTricksVC.appName = appName
-            //quickHelpVC.appName = appName
-            //quickHelpVC.isTipsAndTricks = true
-            //quickHelpVC.dataProvider = dataProvider
-            navigationController?.pushViewController(appTipsAndTricksVC, animated: true)
+            if let _ = appDetailsData, appDetailsData!.isNeedToUsePDF {
+                let appTipsAndTricksVC = AppTipsAndTricksViewController()
+                appTipsAndTricksVC.appName = appName
+                appTipsAndTricksVC.pdfUrlString = appDetailsData?.tipsAndTricksPDF
+                navigationController?.pushViewController(appTipsAndTricksVC, animated: true)
+            } else {
+                let appTipsAndTricksVC = QuickHelpViewController()
+                appTipsAndTricksVC.appName = appName
+                appTipsAndTricksVC.screenType = .appTipsAndTricks
+                appTipsAndTricksVC.appsDataProvider = dataProvider
+                navigationController?.pushViewController(appTipsAndTricksVC, animated: true)
+            }
         } else if indexPath.row == 4 {
             let contactsScreen = AppContactsViewController()
             contactsScreen.dataProvider = dataProvider

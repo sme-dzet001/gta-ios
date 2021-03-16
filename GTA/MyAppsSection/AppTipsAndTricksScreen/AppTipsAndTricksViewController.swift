@@ -15,6 +15,7 @@ class AppTipsAndTricksViewController: UIViewController {
     private var documentData: Data?
     
     var appName: String?
+    var pdfUrlString: String?
     private var dataProvider: MyAppsDataProvider = MyAppsDataProvider()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
@@ -38,7 +39,7 @@ class AppTipsAndTricksViewController: UIViewController {
     
     private func setUpNavigationItem() {
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        let titleText = appName != nil ? "\(appName!) - Tips & Tricks" : "Tips & Tricks"
+        let titleText = appName != nil ? "\(appName!)\nTips & Tricks" : "Tips & Tricks"
         tlabel.text = titleText
         tlabel.textColor = UIColor.black
         tlabel.textAlignment = .center
@@ -78,7 +79,7 @@ class AppTipsAndTricksViewController: UIViewController {
     }
     
     private func getAppTipsAndTricks() {
-        dataProvider.getTipsAndTricksPDF(for: appName ?? "") {[weak self] (data, code, error) in
+        dataProvider.getPDFData(appName: appName ?? "", urlString: pdfUrlString ?? "") {[weak self] (data, code, error) in
             if let _ = error {
                 self?.showErrorLabel(with: (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong")
                 return
