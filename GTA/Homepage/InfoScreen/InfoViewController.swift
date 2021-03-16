@@ -17,10 +17,10 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var screenTitleLabel: UILabel!
     @IBOutlet weak var updateTitleLabel: UILabel!
     @IBOutlet weak var byLabel: UILabel!
-    @IBOutlet weak var mainLabelCenterY: NSLayoutConstraint!
-    @IBOutlet weak var dateLabelTop: NSLayoutConstraint!
-    @IBOutlet weak var dateLabelByLineTop: NSLayoutConstraint!
-    @IBOutlet weak var byLineHeight: NSLayoutConstraint!
+    @IBOutlet weak var mainLabelCenterY: NSLayoutConstraint?
+    @IBOutlet weak var dateLabelTop: NSLayoutConstraint?
+    @IBOutlet weak var dateLabelByLineTop: NSLayoutConstraint?
+    @IBOutlet weak var byLineHeight: NSLayoutConstraint?
     
     var dataProvider: HomeDataProvider?
     
@@ -58,11 +58,11 @@ class InfoViewController: UIViewController {
                 self.updateTitleLabel.attributedText = addShadow(for: updateDate)//text = "Updates \(updateDate)"
             }
             if let byLine = specialAlertData?.alertAuthor, !byLine.isEmpty {
-                byLineHeight.isActive = true
+                byLineHeight?.isActive = true
                 byLabel.attributedText = addShadow(for: byLine)//text = specialAlertData?.alertAuthor
             } else {
                 byLabel.attributedText = nil
-                byLineHeight.isActive = false
+                byLineHeight?.isActive = false
             }
             self.blurView.isHidden = false
             addBlurToView()
@@ -88,17 +88,19 @@ class InfoViewController: UIViewController {
             var newConstraint: NSLayoutConstraint?
             if let byLine = specialAlertData?.alertAuthor, !byLine.isEmpty {
                 multiplier = UIDevice.current.iPhone5_se ? 1.0 : 1.1
-                newConstraint = mainLabelCenterY.constraintWithMultiplier(multiplier)
+                newConstraint = mainLabelCenterY?.constraintWithMultiplier(multiplier)
             } else {
                 multiplier = UIDevice.current.iPhone5_se ? 1.3 : 1.4
-                newConstraint = mainLabelCenterY.constraintWithMultiplier(multiplier)
+                newConstraint = mainLabelCenterY?.constraintWithMultiplier(multiplier)
             }
-            self.view.removeConstraint(mainLabelCenterY)
-            self.view.addConstraint(newConstraint!)
+            if let _ = mainLabelCenterY, let _ = newConstraint {
+                self.view.removeConstraint(mainLabelCenterY!)
+                self.view.addConstraint(newConstraint!)
+            }
         } else {
             byLabel.isHidden = true
-            dateLabelByLineTop.isActive = false
-            dateLabelTop.isActive = true
+            dateLabelByLineTop?.isActive = false
+            dateLabelTop?.isActive = true
         }
         self.view.layoutIfNeeded()
     }
