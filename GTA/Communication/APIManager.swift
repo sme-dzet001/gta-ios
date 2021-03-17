@@ -195,12 +195,6 @@ class APIManager: NSObject, URLSessionDelegate {
         self.makeRequest(endpoint: .getAppTipsAndTricks(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
     }
     
-    func getTipsAndTricksPDF(appName: String, generationNumber: Int, completion: @escaping ((_ pdfData: Data?, _ errorCode: Int, _ error: Error?) -> Void)) {
-        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        let requestBodyParams = ["s1": appName]
-        //self.makeRequest(endpoint: .getAppTipsAndTricksPDF(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
-    }
-    
     func getPDFData(endpoint: URL, completion: @escaping ((_ imageData: Data?, _ response: URLResponse?, _ error: Error?) -> Void)) {
         let session = URLSession.shared
         session.dataTask(with: endpoint, completionHandler: completion).resume()
