@@ -49,11 +49,6 @@ class QuickHelpViewController: UIViewController {
 //        }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        stopAnimation()
-    }
-    
     private func loadAppTipsAndTricks() {
         startAnimation()
         appsDataProvider?.getAppTipsAndTricks(for: appName) {[weak self] (errorCode, error, isFromCache) in
@@ -93,8 +88,7 @@ class QuickHelpViewController: UIViewController {
     }
     
     private func startAnimation() {
-        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
-        activityIndicator.hidesWhenStopped = true
+        self.addAndCenteredView(activityIndicator, isGSD: screenType == .quickHelp)
         activityIndicator.startAnimating()
         errorLabel.isHidden = true
         tableView.isHidden = true

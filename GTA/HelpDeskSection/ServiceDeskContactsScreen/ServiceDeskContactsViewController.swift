@@ -10,7 +10,6 @@ import UIKit
 class ServiceDeskContactsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    //@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var errorLabel: UILabel!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -28,11 +27,6 @@ class ServiceDeskContactsViewController: UIViewController {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadContactsData()
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        stopAnimation()
     }
     
     private func setUpNavigationItem() {
@@ -68,8 +62,7 @@ class ServiceDeskContactsViewController: UIViewController {
     }
     
     private func startAnimation() {
-        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
-        activityIndicator.hidesWhenStopped = true
+        self.addAndCenteredView(activityIndicator, isGSD: true)
         activityIndicator.startAnimating()
         errorLabel.isHidden = true
         tableView.isHidden = true

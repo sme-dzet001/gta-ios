@@ -29,11 +29,6 @@ class Office365ViewController: UIViewController {
         dataProvider?.office365AppsDelegate = self
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        stopAnimation()
-    }
-    
     private func setUpNavigationItem() {
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
         tlabel.text = "Office 365 Applications"
@@ -51,8 +46,7 @@ class Office365ViewController: UIViewController {
     private func startAnimation() {
         self.tableView.alpha = 0
         errorLabel.isHidden = true
-        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
-        activityIndicator.hidesWhenStopped = true
+        self.addAndCenteredView(activityIndicator)
         activityIndicator.startAnimating()
     }
     

@@ -38,16 +38,10 @@ class CollaborationViewController: UIViewController {
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        stopAnimation()
-    }
-    
     private func startAnimation() {
         self.tableView.alpha = 0
         errorLabel.isHidden = true
-        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
-        activityIndicator.hidesWhenStopped = true
+        self.addAndCenteredView(activityIndicator)
         activityIndicator.startAnimating()
     }
     
