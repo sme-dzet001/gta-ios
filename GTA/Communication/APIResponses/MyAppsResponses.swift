@@ -249,7 +249,7 @@ struct AppDetailsData: Codable {
     }
     
     var tipsAndTricksPDF: String? {
-        guard let _ = values, let index = indexes["tips_and_tricks_pdf"], values!.count > index else { return nil }
+        guard let _ = values, let index = indexes["tips and tricks pdf"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
         
