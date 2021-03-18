@@ -140,6 +140,7 @@ class HomeDataProvider {
             }
         } else {
             if error != nil || generationNumber == 0 {
+                newsData = generationNumber == 0 ? [] : newsData
                 completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }

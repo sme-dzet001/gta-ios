@@ -55,7 +55,11 @@ class HomepageViewController: UIViewController {
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
                     self?.collectionView.reloadData()
                 } else {
-                    self?.errorLabel.isHidden = !(self?.dataProvider.newsDataIsEmpty ?? true)
+                    let isNoData = (self?.dataProvider.newsDataIsEmpty ?? true)
+                    if isNoData {
+                        self?.collectionView.reloadData()
+                    }
+                    self?.errorLabel.isHidden = !isNoData
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
             }
