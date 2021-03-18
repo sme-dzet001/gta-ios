@@ -140,11 +140,11 @@ class HomeDataProvider {
             }
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(errorCode, retError)
+            completion?(0, retError)
         }
     }
     
@@ -215,11 +215,11 @@ class HomeDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(errorCode, retError)
+            completion?(0, retError)
         }
     }
     
@@ -299,10 +299,10 @@ class HomeDataProvider {
             }
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(errorCode, error)
+            completion?(0, error)
         }
     }
     
