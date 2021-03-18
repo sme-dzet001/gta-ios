@@ -87,7 +87,7 @@ class CollaborationViewController: UIViewController {
     private func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "CollaborationHeaderCell", bundle: nil), forCellReuseIdentifier: "CollaborationHeaderCell")
+        tableView.register(UINib(nibName: "AboutInfoCell", bundle: nil), forCellReuseIdentifier: "AboutInfoCell")
         tableView.register(UINib(nibName: "HelpDeskCell", bundle: nil), forCellReuseIdentifier: "HelpDeskCell")
         tableView.register(UINib(nibName: "Office365AppCell", bundle: nil), forCellReuseIdentifier: "Office365AppCell")
     }
@@ -145,8 +145,8 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "CollaborationHeaderCell", for: indexPath) as? CollaborationHeaderCell {
-            cell.descriptionLabel.attributedText = createAttributedString(for: dataProvider.collaborationDetails?.description)
+        if indexPath.row == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AboutInfoCell", for: indexPath) as? AboutInfoCell {
+            cell.descriptionLabel.text = dataProvider.collaborationDetails?.description//createAttributedString(for: dataProvider.collaborationDetails?.description)
             return cell
         }
         if indexPath.row == 1, let cell = tableView.dequeueReusableCell(withIdentifier: "Office365AppCell", for: indexPath) as? Office365AppCell {
