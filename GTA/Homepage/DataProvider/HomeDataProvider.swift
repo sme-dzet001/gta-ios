@@ -125,7 +125,7 @@ class HomeDataProvider {
     private func processGlobalNewsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalNews.rawValue }?.generationNumber
-        if let generationNumber = generationNumber {
+        if let generationNumber = generationNumber, generationNumber != 0 {
             if isFromCache {
                 getCachedResponse(for: .getGlobalNews) { [weak self] (data, error) in
                     //if let _ = data, error == nil {
@@ -139,6 +139,10 @@ class HomeDataProvider {
                 self?.processGlobalNews(newsResponse: newsResponse, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
             }
         } else {
+            if error != nil || generationNumber == 0 {
+                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
             let retError = ResponseError.serverError
             completion?(errorCode, retError)
         }
@@ -196,7 +200,7 @@ class HomeDataProvider {
     private func processSpecialAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.specialAlerts.rawValue }?.generationNumber
-        if let generationNumber = generationNumber {
+        if let generationNumber = generationNumber, generationNumber != 0 {
             if isFromCache {
                 getCachedResponse(for: .getSpecialAlerts) {[weak self] (data, error) in
                     //if let _ = data, error == nil {
@@ -210,6 +214,10 @@ class HomeDataProvider {
                 self?.processSpecialAlerts(reportData, alertsResponse, errorCode, error, completion)
             })
         } else {
+            if error != nil || generationNumber == 0 {
+                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
             let retError = ResponseError.serverError
             completion?(errorCode, retError)
         }
@@ -276,7 +284,7 @@ class HomeDataProvider {
     private func processAllOfficesSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.officeStatus.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.allOffices.rawValue }?.generationNumber
-        if let generationNumber = generationNumber {
+        if let generationNumber = generationNumber, generationNumber != 0 {
             if isFromCache {
                 getCachedResponse(for: .getAllOffices) {[weak self] (data, error) in
                     //if let _ = data, error == nil {
@@ -290,6 +298,10 @@ class HomeDataProvider {
                 self?.processAllOffices(reportData, officesResponse, errorCode, error, completion)
             }
         } else {
+            if error != nil || generationNumber == 0 {
+                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
             completion?(errorCode, error)
         }
     }

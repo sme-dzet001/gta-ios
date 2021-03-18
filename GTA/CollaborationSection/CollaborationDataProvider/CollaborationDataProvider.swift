@@ -44,7 +44,7 @@ class CollaborationDataProvider {
     private func handleCollaborationDetailsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaboration.rawValue }?.generationNumber
-        if let _ = generationNumber {
+        if let _ = generationNumber, generationNumber! != 0 {
             if fromCache {
                 getCachedResponse(for: .getCollaborationDetails(detailsPath: appSuite)) {[weak self] (data, error) in
                     self?.processCollaborationDetails(reportData, data, errorCode, error, completion)
@@ -56,8 +56,8 @@ class CollaborationDataProvider {
                 self?.processCollaborationDetails(reportData, data, errorCode, error, completion)
             })
         } else {
-            if let _ = error {
-                completion?(errorCode, ResponseError.commonError)
+            if error != nil || generationNumber == 0 {
+                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             completion?(errorCode, error)
@@ -121,7 +121,7 @@ class CollaborationDataProvider {
     private func handleTipsAndTricksSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationTipsAndTricks.rawValue }?.generationNumber
-        if let _ = generationNumber {
+        if let _ = generationNumber, generationNumber != 0 {
             if fromCache {
                 getCachedResponse(for: .getCollaborationTipsAndTricks(detailsPath: appSuite)) {[weak self] (data, error) in
                     self?.processTipsAndTricks(reportData, data, errorCode, error, completion)
@@ -133,8 +133,8 @@ class CollaborationDataProvider {
                 self?.processTipsAndTricks(reportData, data, errorCode, error, completion)
             })
         } else {
-            if let _ = error {
-                completion?(errorCode, ResponseError.commonError)
+            if error != nil || generationNumber == 0 {
+                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             completion?(errorCode, error)
@@ -187,7 +187,7 @@ class CollaborationDataProvider {
     private func handleTeamContactsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ contacts: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationTeamsContacts.rawValue }?.generationNumber
-        if let _ = generationNumber {
+        if let _ = generationNumber, generationNumber != 0 {
             if fromCache {
                 getCachedResponse(for: .getCollaborationTeamContacts(detailsPath: appSuite)) {[weak self] (data, error) in
                     self?.processTeamContacts(reportData, data, errorCode, error, completion)
@@ -199,8 +199,8 @@ class CollaborationDataProvider {
                 self?.processTeamContacts(reportData, data, errorCode, error, completion)
             })
         } else {
-            if let _ = error {
-                completion?(nil, errorCode, ResponseError.commonError)
+            if error != nil || generationNumber == 0 {
+                completion?(nil, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             completion?(nil, errorCode, error)
@@ -252,7 +252,7 @@ class CollaborationDataProvider {
     private func handleAppDetailsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaborationAppDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationAppDetails.rawValue }?.generationNumber
-        if let _ = generationNumber {
+        if let _ = generationNumber, generationNumber != 0 {
             if fromCache {
                 getCachedResponse(for: .getCollaborationAppDetails(detailsPath: appSuite)) {[weak self] (data, error) in
                     self?.processAppDetails(appSuite, reportData, data, errorCode, error, completion)
@@ -264,8 +264,8 @@ class CollaborationDataProvider {
                 self?.processAppDetails(appSuite, reportData, data, errorCode, error, completion)
             })
         } else {
-            if let _ = error {
-                completion?(errorCode, ResponseError.commonError)
+            if error != nil || generationNumber == 0 {
+                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             completion?(errorCode, error)

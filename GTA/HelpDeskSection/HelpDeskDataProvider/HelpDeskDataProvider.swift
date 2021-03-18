@@ -30,7 +30,7 @@ class HelpDeskDataProvider {
         getSectionReport() { [weak self] (reportResponse, errorCode, error, isFromCache) in
             let reportData = self?.parseSectionReport(data: reportResponse)
             let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdStatus.rawValue }?.generationNumber
-            if let _ = generationNumber {
+            if let _ = generationNumber, generationNumber != 0 {
                 if isFromCache {
                     self?.getCachedResponse(for: .getGSDStatus) {[weak self] (data, error) in
                         if let _ = data {
@@ -45,6 +45,10 @@ class HelpDeskDataProvider {
                     self?.processGSDStatus(data: dataWithStatus, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
                 })
             } else {
+                if error != nil || generationNumber == 0 {
+                    completion?(nil, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
+                    return
+                }
                 let retError = ResponseError.serverError
                 completion?(nil, errorCode, retError, isFromCache)
             }
@@ -72,7 +76,7 @@ class HelpDeskDataProvider {
     private func handleHelpDeskSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, completion: ((_ reportData: HelpDeskResponse?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         let reportData = self.parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdProfile.rawValue }?.generationNumber
-        if let _ = generationNumber {
+        if let _ = generationNumber, generationNumber != 0 {
             if isFromCache {
                 self.getCachedResponse(for: .getHelpDeskData) {[weak self] (data, error) in
                     //if let _ = data {
@@ -86,6 +90,10 @@ class HelpDeskDataProvider {
                 self?.processHelpDeskData(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
             }
         } else {
+            if error != nil || generationNumber == 0 {
+                completion?(nil, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
+                return
+            }
             let retError = ResponseError.serverError
             completion?(nil, errorCode, retError, isFromCache)
         }
@@ -250,7 +258,7 @@ class HelpDeskDataProvider {
     private func processQuickHelpSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdQuickHelp.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdQuickHelp.rawValue }?.generationNumber
-        if let generationNumber = generationNumber {
+        if let generationNumber = generationNumber, generationNumber != 0 {
             getCachedResponse(for: .getQuickHelpData) {[weak self] (data, error) in
                 if let _ = data {
                     self?.processQuickHelp(reportData, data, 200, error, completion)
@@ -261,6 +269,10 @@ class HelpDeskDataProvider {
                 self?.processQuickHelp(reportData, quickHelpResponse, errorCode, error, completion)
             })
         } else {
+            if error != nil || generationNumber == 0 {
+                completion?(true, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
             let retError = ResponseError.serverError
             completion?(true, errorCode, retError)
         }
@@ -311,7 +323,7 @@ class HelpDeskDataProvider {
     private func processTeamContactsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdTeamContacts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdTeamContacts.rawValue }?.generationNumber
-        if let generationNumber = generationNumber {
+        if let generationNumber = generationNumber, generationNumber != 0 {
             getCachedResponse(for: .getTeamContactsData) {[weak self] (data, error) in
                 if let _ = data {
                     self?.processTeamContacts(reportData, data, 200, error, completion)
@@ -322,6 +334,10 @@ class HelpDeskDataProvider {
                 self?.processTeamContacts(reportData, teamContactsResponse, errorCode, error, completion)
             })
         } else {
+            if error != nil || generationNumber == 0 {
+                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
             let retError = ResponseError.serverError
             completion?(errorCode, retError)
         }
