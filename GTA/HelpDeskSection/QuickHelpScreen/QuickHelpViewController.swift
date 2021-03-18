@@ -20,7 +20,7 @@ class QuickHelpViewController: UIViewController {
     var screenType: QuickHelpScreenType = .quickHelp
     var appName: String?
     var appsDataProvider: MyAppsDataProvider?
-    private lazy var collaborationDataProvider: CollaborationDataProvider = CollaborationDataProvider()
+    var collaborationDataProvider: CollaborationDataProvider? 
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +50,9 @@ class QuickHelpViewController: UIViewController {
     }
     
     private func loadAppTipsAndTricks() {
-        startAnimation()
+        if self.appsDataProvider?.tipsAndTricksData == nil || (appsDataProvider?.tipsAndTricksData.isEmpty ?? true){
+            startAnimation()
+        }
         appsDataProvider?.getAppTipsAndTricks(for: appName) {[weak self] (errorCode, error, isFromCache) in
             DispatchQueue.main.async {
                 //self?.activityIndicator.stopAnimating()
@@ -69,8 +71,10 @@ class QuickHelpViewController: UIViewController {
     }
     
     private func loadCollaborationTipsAndTricks() {
-        startAnimation()
-        collaborationDataProvider.getTipsAndTricks(appSuite: appName ?? "", completion: {[weak self] (errorCode, error) in
+        if collaborationDataProvider?.tipsAndTricksData == nil || (collaborationDataProvider?.tipsAndTricksData.isEmpty ?? true) {
+            startAnimation()
+        }
+        collaborationDataProvider?.getTipsAndTricks(appSuite: appName ?? "", completion: {[weak self] (errorCode, error) in
             DispatchQueue.main.async {
                 //self?.activityIndicator.stopAnimating()
                 self?.stopAnimation()
@@ -80,7 +84,7 @@ class QuickHelpViewController: UIViewController {
                     self?.tableView.isHidden = false
                     self?.tableView.reloadData()
                 } else {
-                    self?.errorLabel.isHidden = !(self?.collaborationDataProvider.tipsAndTricksData.isEmpty ?? true)
+                    self?.errorLabel.isHidden = !(self?.collaborationDataProvider?.tipsAndTricksData.isEmpty ?? true)
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
             }
@@ -155,7 +159,7 @@ class QuickHelpViewController: UIViewController {
     private func getHelpData() -> [QuickHelpDataProtocol] {
         switch screenType {
         case .collaborationTipsAndTricks:
-            return collaborationDataProvider.tipsAndTricksData
+            return collaborationDataProvider?.tipsAndTricksData ?? []
         case .appTipsAndTricks:
             return appsDataProvider?.tipsAndTricksData ?? []
         default:
@@ -176,7 +180,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
         case .appTipsAndTricks:
             return appsDataProvider?.tipsAndTricksData.count ?? 0
         case .collaborationTipsAndTricks:
-            return collaborationDataProvider.tipsAndTricksData.count
+            return collaborationDataProvider?.tipsAndTricksData.count ?? 0
         default:
             return dataProvider?.quickHelpData.count ?? 0
         }
@@ -192,7 +196,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
             let cellDataSource = data[indexPath.row]
             cell.delegate = self
             let answerEncoded = cellDataSource.answer
-            let answerDecoded = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) ?? collaborationDataProvider.formTipsAndTricksAnswerBody(from: answerEncoded)
+            let answerDecoded = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) ?? collaborationDataProvider?.formTipsAndTricksAnswerBody(from: answerEncoded)
             if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
                 answerDecoded?.setFontFace(font: neededFont)
             }
@@ -208,7 +212,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     private func heightForAnswerAt(indexPath: IndexPath) -> CGFloat {
         let data: [QuickHelpDataProtocol] = getHelpData()
         guard let answerEncoded = data[indexPath.row].answer else { return 0 }
-        let answer = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) ?? collaborationDataProvider.formTipsAndTricksAnswerBody(from: answerEncoded)
+        let answer = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) ?? collaborationDataProvider?.formTipsAndTricksAnswerBody(from: answerEncoded)
         guard let answerBody = answer else { return 0 }
         if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
             answerBody.setFontFace(font: neededFont)

@@ -14,9 +14,15 @@ class AppContactsViewController: UIViewController {
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: MyAppsDataProvider?
-    lazy private var collaborationDataProvider: CollaborationDataProvider = CollaborationDataProvider()
+    var collaborationDataProvider: CollaborationDataProvider?
     private var lastUpdateDate: Date?
-    private var appContactsData: AppContactsData?
+    private var appContactsData: AppContactsData? {
+        if isCollaborationContacts {
+            return collaborationDataProvider?.appContactsData
+        } else {
+            return dataProvider?.appContactsData
+        }
+    }
     var appName: String = ""
     var isCollaborationContacts = false
 
@@ -37,11 +43,6 @@ class AppContactsViewController: UIViewController {
             loadContactsData()
         }
     }
-    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        stopAnimation()
-//    }
     
     private func setUpNavigationItem() {
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
@@ -69,12 +70,12 @@ class AppContactsViewController: UIViewController {
         if contactsDataIsEmpty {
             startAnimation()
         }
-        dataProvider.getAppContactsData(for: appName) { [weak self] (contactsData, errorCode, error) in
+        dataProvider.getAppContactsData(for: appName) { [weak self] (errorCode, error) in
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = Date().addingTimeInterval(60)
-                    self?.appContactsData = contactsData
+                    //self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
                     self?.tableView.reloadData()
@@ -88,15 +89,16 @@ class AppContactsViewController: UIViewController {
     }
     
     private func loadCollaborationContactsData() {
+        guard let collaborationDataProvider = collaborationDataProvider else { return }
         let contactsDataIsEmpty = appContactsData?.contactsData == nil || appContactsData?.contactsData?.count == 0
         if contactsDataIsEmpty {
             startAnimation()
         }
-        collaborationDataProvider.getTeamContacts(appSuite: appName) {[weak self] (contactsData, errorCode, error) in
+        collaborationDataProvider.getTeamContacts(appSuite: appName) {[weak self] (errorCode, error) in
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    self?.appContactsData = contactsData
+                    //self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
                     self?.tableView.reloadData()
@@ -138,17 +140,31 @@ extension AppContactsViewController: UITableViewDelegate, UITableViewDataSource 
             let cellDataSource = data[indexPath.row]
             cell.contactEmail = data[indexPath.row].contactEmail
             cell.setUpCell(with: cellDataSource)
-            if let imageURL = dataProvider?.formContactImageURL(from: cellDataSource.contactPhotoUrl), let url = URL(string: imageURL) {
+            let imageURL = isCollaborationContacts ? collaborationDataProvider?.formContactImageURL(from: cellDataSource.contactPhotoUrl) : dataProvider?.formContactImageURL(from: cellDataSource.contactPhotoUrl)
+            if let _ = imageURL, let url = URL(string: imageURL!) {
                 cell.activityIndicator.startAnimating()
                 cell.imageUrl = imageURL
-                dataProvider?.getContactImageData(from: url) { (data, error) in
-                    if cell.imageUrl != imageURL { return }
-                    cell.activityIndicator.stopAnimating()
-                    if let imageData = data, error == nil {
-                        let image = UIImage(data: imageData)
-                        cell.photoImageView.image = image
-                    } else {
-                        cell.photoImageView.image = UIImage(named: "contact_default_photo")
+                if !isCollaborationContacts {
+                    dataProvider?.getContactImageData(from: url) { (data, error) in
+                        if cell.imageUrl != imageURL { return }
+                        cell.activityIndicator.stopAnimating()
+                        if let imageData = data, error == nil {
+                            let image = UIImage(data: imageData)
+                            cell.photoImageView.image = image
+                        } else {
+                            cell.photoImageView.image = UIImage(named: "contact_default_photo")
+                        }
+                    }
+                } else {
+                    collaborationDataProvider?.getAppImageData(from: cellDataSource.contactPhotoUrl) { (data, error) in
+                        if cell.imageUrl != imageURL { return }
+                        cell.activityIndicator.stopAnimating()
+                        if let imageData = data, error == nil {
+                            let image = UIImage(data: imageData)
+                            cell.photoImageView.image = image
+                        } else {
+                            cell.photoImageView.image = UIImage(named: "contact_default_photo")
+                        }
                     }
                 }
             } else {
@@ -161,7 +177,7 @@ extension AppContactsViewController: UITableViewDelegate, UITableViewDataSource 
     
 }
 
-struct ContactData {
+struct ContactData: Equatable {
     var contactPhotoUrl: String?
     var contactName: String?
     var contactEmail: String?
@@ -169,4 +185,9 @@ struct ContactData {
     var contactLocation: String?
     var contactBio: String?
     var contactFunFact: String?
+    
+    static func == (lhs: ContactData, rhs: ContactData) -> Bool {
+        return lhs.contactName == rhs.contactName && lhs.contactEmail == rhs.contactEmail && lhs.contactPhotoUrl == rhs.contactPhotoUrl && lhs.contactPosition == rhs.contactPosition && lhs.contactBio == rhs.contactBio
+    }
+    
 }
