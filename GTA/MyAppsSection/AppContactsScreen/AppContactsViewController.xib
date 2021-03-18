@@ -8,15 +8,9 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-Pro-Text-Regular.otf">
-            <string>SFProText-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppContactsViewController" customModule="GTA" customModuleProvider="target">
             <connections>
-                <outlet property="errorLabel" destination="sFD-vz-nPK" id="ApS-nr-wAu"/>
                 <outlet property="tableView" destination="FSd-Bp-Ryx" id="vYG-kX-rkX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -34,12 +28,6 @@
                         <outlet property="delegate" destination="-1" id="0VL-64-dDG"/>
                     </connections>
                 </tableView>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sFD-vz-nPK">
-                    <rect key="frame" x="188.5" y="438" width="37.5" height="20"/>
-                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -47,9 +35,7 @@
                 <constraint firstItem="FSd-Bp-Ryx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5hF-yt-d1g"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FSd-Bp-Ryx" secondAttribute="trailing" id="B1f-ee-LJb"/>
                 <constraint firstItem="FSd-Bp-Ryx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="DRQ-ww-nAT"/>
-                <constraint firstItem="sFD-vz-nPK" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Guj-US-M46"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="FSd-Bp-Ryx" secondAttribute="bottom" id="W4q-PC-0VD"/>
-                <constraint firstItem="sFD-vz-nPK" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="pr5-0U-PfG"/>
             </constraints>
             <point key="canvasLocation" x="139" y="62"/>
         </view>

@@ -11,7 +11,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppTipsAndTricksViewController" customModule="GTA" customModuleProvider="target">
             <connections>
-                <outlet property="errorLabel" destination="QJw-ST-1cU" id="8Ie-ou-GV3"/>
                 <outlet property="pdfView" destination="KZX-Pj-YHm" id="NHS-u7-cuB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,12 +20,6 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJw-ST-1cU">
-                    <rect key="frame" x="186" y="442.5" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KZX-Pj-YHm" customClass="PDFView">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -36,9 +29,7 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="KZX-Pj-YHm" secondAttribute="bottom" id="2ol-6c-mnC"/>
-                <constraint firstItem="QJw-ST-1cU" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="34N-xw-ScV"/>
                 <constraint firstItem="KZX-Pj-YHm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="JMd-Da-61X"/>
-                <constraint firstItem="QJw-ST-1cU" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="hcd-JT-jmc"/>
                 <constraint firstItem="KZX-Pj-YHm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ufv-bo-gml"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="KZX-Pj-YHm" secondAttribute="trailing" id="yaa-Vp-Jmf"/>
             </constraints>

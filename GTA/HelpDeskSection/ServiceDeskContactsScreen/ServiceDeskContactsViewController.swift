@@ -10,8 +10,9 @@ import UIKit
 class ServiceDeskContactsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var errorLabel: UILabel!
+    //@IBOutlet weak var errorLabel: UILabel!
     
+    private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: HelpDeskDataProvider?
     private var lastUpdateDate: Date?
@@ -24,6 +25,7 @@ class ServiceDeskContactsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addErrorLabel(errorLabel, isGSD: true)
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadContactsData()
         }
@@ -62,7 +64,7 @@ class ServiceDeskContactsViewController: UIViewController {
     }
     
     private func startAnimation() {
-        self.addAndCenteredView(activityIndicator, isGSD: true)
+        self.addLoadingIndicator(activityIndicator, isGSD: true)
         activityIndicator.startAnimating()
         errorLabel.isHidden = true
         tableView.isHidden = true

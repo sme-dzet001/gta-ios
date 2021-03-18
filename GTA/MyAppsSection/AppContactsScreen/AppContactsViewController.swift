@@ -10,9 +10,9 @@ import UIKit
 class AppContactsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var errorLabel: UILabel!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var errorLabel: UILabel = UILabel()
     var dataProvider: MyAppsDataProvider?
     lazy private var collaborationDataProvider: CollaborationDataProvider = CollaborationDataProvider()
     private var lastUpdateDate: Date?
@@ -28,6 +28,7 @@ class AppContactsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addErrorLabel(errorLabel)
         navigationController?.navigationBar.barTintColor = UIColor.white
         if isCollaborationContacts {
             loadCollaborationContactsData()
@@ -37,11 +38,6 @@ class AppContactsViewController: UIViewController {
             loadContactsData()
         }
     }
-    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        stopAnimation()
-//    }
     
     private func setUpNavigationItem() {
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
@@ -110,7 +106,7 @@ class AppContactsViewController: UIViewController {
     }
     
     private func startAnimation() {
-        self.addAndCenteredView(activityIndicator)
+        self.addLoadingIndicator(activityIndicator)
         activityIndicator.startAnimating()
         errorLabel.isHidden = true
         tableView.isHidden = true

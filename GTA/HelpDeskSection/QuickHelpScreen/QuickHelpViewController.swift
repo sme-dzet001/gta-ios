@@ -10,9 +10,9 @@ import UIKit
 class QuickHelpViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    //@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var errorLabel: UILabel!
+    //@IBOutlet weak var errorLabel: UILabel!
     
+    private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: HelpDeskDataProvider?
     private var expandedRowsIndex = [Int]()
@@ -30,6 +30,7 @@ class QuickHelpViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addErrorLabel(errorLabel, isGSD: screenType == .quickHelp)
         navigationController?.navigationBar.barTintColor = UIColor.white
         switch screenType {
         case .appTipsAndTricks:
@@ -88,7 +89,7 @@ class QuickHelpViewController: UIViewController {
     }
     
     private func startAnimation() {
-        self.addAndCenteredView(activityIndicator, isGSD: screenType == .quickHelp)
+        self.addLoadingIndicator(activityIndicator, isGSD: screenType == .quickHelp)
         activityIndicator.startAnimating()
         errorLabel.isHidden = true
         tableView.isHidden = true

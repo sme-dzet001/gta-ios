@@ -245,7 +245,28 @@ extension UIViewController {
         return attributedString
     }
         
-    func addAndCenteredView(_ view: UIView, isGSD: Bool = false) {
+    func addLoadingIndicator(_ loadingIndicator: UIActivityIndicatorView, isGSD: Bool = false) {
+        self.view.addSubview(loadingIndicator)
+        self.view.bringSubviewToFront(loadingIndicator)
+        loadingIndicator.center = getActualViewCenter(isGSD: isGSD)
+    }
+    
+    func addErrorLabel(_ errorLabel: UILabel, isGSD: Bool = false) {
+        errorLabel.numberOfLines = 1
+        errorLabel.font = UIFont(name: "SFProText-Regular", size: 16)!
+        errorLabel.textAlignment = .center
+        errorLabel.textColor = .black
+        errorLabel.adjustsFontSizeToFitWidth = true
+        errorLabel.minimumScaleFactor = 0.7
+        errorLabel.frame.size.height = 20
+        errorLabel.frame.size.width = self.view.frame.width - 40
+        errorLabel.isHidden = true
+        self.view.addSubview(errorLabel)
+        self.view.bringSubviewToFront(errorLabel)
+        errorLabel.center = getActualViewCenter(isGSD: isGSD)
+    }
+    
+    fileprivate func getActualViewCenter(isGSD: Bool = false) -> CGPoint {
         let navigationControllerView = navigationController?.view ?? self.view
         let navigationControllerCenter = navigationControllerView?.center ?? self.view.center
         var center = navigationControllerView?.convert(navigationControllerCenter, to: self.view) ?? self.view.center
@@ -253,9 +274,7 @@ extension UIViewController {
             let diff = (navigationController?.navigationBar.frame.origin.y ?? 0.0) + (navigationController?.navigationBar.frame.height ?? 0)
             center = CGPoint(x: self.view.center.x, y: self.view.center.y - (diff))
         }
-        self.view.addSubview(view)
-        self.view.bringSubviewToFront(view)
-        view.center = center
+        return center
     }
     
 }

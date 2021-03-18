@@ -98,7 +98,7 @@ class AppsViewController: UIViewController {
     private func startAnimation() {
         guard dataProvider.appsData.isEmpty else { return }
         self.tableView.alpha = 0
-        self.addAndCenteredView(activityIndicator)
+        self.addLoadingIndicator(activityIndicator)
         self.activityIndicator.startAnimating()
     }
     

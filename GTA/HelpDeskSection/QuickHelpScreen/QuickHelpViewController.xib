@@ -8,15 +8,9 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-Pro-Text-Regular.otf">
-            <string>SFProText-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QuickHelpViewController" customModule="GTA" customModuleProvider="target">
             <connections>
-                <outlet property="errorLabel" destination="0bU-wr-fQ4" id="03Q-2C-C5O"/>
                 <outlet property="tableView" destination="tl9-Gb-GML" id="HFb-N7-Zvf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -35,20 +29,12 @@
                         <outlet property="delegate" destination="-1" id="yTV-DL-aoV"/>
                     </connections>
                 </tableView>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bU-wr-fQ4">
-                    <rect key="frame" x="188.5" y="443" width="37.5" height="20"/>
-                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="tl9-Gb-GML" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="0dQ-nN-ueG"/>
-                <constraint firstItem="0bU-wr-fQ4" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="5j7-Ze-gkf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tl9-Gb-GML" secondAttribute="trailing" id="L6T-Xo-ewy"/>
-                <constraint firstItem="0bU-wr-fQ4" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="cHq-KM-u6Y"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="tl9-Gb-GML" secondAttribute="bottom" id="j4q-y3-7za"/>
                 <constraint firstItem="tl9-Gb-GML" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="xVt-cn-Ccu"/>
             </constraints>

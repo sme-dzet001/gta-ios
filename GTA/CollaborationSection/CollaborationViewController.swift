@@ -16,10 +16,11 @@ class CollaborationViewController: UIViewController {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerTitleLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
-    @IBOutlet weak var errorLabel: UILabel!
+    //@IBOutlet weak var errorLabel: UILabel!
 
     private var headerTitleView: CollaborationHeader = CollaborationHeader.instanceFromNib()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var errorLabel: UILabel = UILabel()
     
     private var dataSource: [CollaborationCellData] = []
     
@@ -34,6 +35,7 @@ class CollaborationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addErrorLabel(errorLabel)
         getCollaborationDetails()
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
     }
@@ -41,7 +43,7 @@ class CollaborationViewController: UIViewController {
     private func startAnimation() {
         self.tableView.alpha = 0
         errorLabel.isHidden = true
-        self.addAndCenteredView(activityIndicator)
+        self.addLoadingIndicator(activityIndicator)
         activityIndicator.startAnimating()
     }
     
