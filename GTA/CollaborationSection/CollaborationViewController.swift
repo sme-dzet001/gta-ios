@@ -97,6 +97,7 @@ class CollaborationViewController: UIViewController {
     
     private func showContactsScreen() {
         let contactsScreen = AppContactsViewController()
+        contactsScreen.collaborationDataProvider = dataProvider
         contactsScreen.isCollaborationContacts = true
         contactsScreen.appName = "Office365"
         navigationController?.pushViewController(contactsScreen, animated: true)
@@ -106,6 +107,7 @@ class CollaborationViewController: UIViewController {
         let quickHelpVC = QuickHelpViewController()
         quickHelpVC.appName = "Office365"
         quickHelpVC.screenType = .collaborationTipsAndTricks
+        quickHelpVC.collaborationDataProvider = dataProvider
         navigationController?.pushViewController(quickHelpVC, animated: true)
     }
     
