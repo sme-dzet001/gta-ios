@@ -98,7 +98,7 @@ class HomepageTableViewController: UITableViewController {
                                 self?.openOfficeSelectionModalScreen()
                             }
                         } else {
-                            self?.officeLoadingError = "Oops, something went wrong"
+                            self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                             if self?.tableView.dataHasChanged == true {
                                 self?.tableView.reloadData()
                             } else {
@@ -111,7 +111,7 @@ class HomepageTableViewController: UITableViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self?.officeLoadingError = "Oops, something went wrong"
+                    self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()
                     } else {
