@@ -367,6 +367,53 @@ class HelpDeskDataProvider {
         teamContactsData.removeAll { $0.contactName == nil || ($0.contactName ?? "").isEmpty || $0.contactEmail == nil || ($0.contactEmail ?? "").isEmpty }
     }
     
+    // MARK: - My Tickets related methods
+    
+    func getMyTickets(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleMyTicketsSectionReport(data, code, cachedError, true, { (code, error, _) in
+                if error == nil {
+                    completion?(code, cachedError, true)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    if let _ = error {
+                        completion?(errorCode, ResponseError.serverError, false)
+                    } else {
+                        self?.handleMyTicketsSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    private func handleMyTicketsSectionReport(_ report: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool,
+                                            _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: report)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdTickets.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdTickets.rawValue }?.generationNumber
+        if let _ = generationNumber, generationNumber != 0 {
+            if fromCache {
+                getCachedResponse(for: .getGSDTickets) {[weak self] (data, error) in
+                    //self?.processAllApps(reportData, true, data, errorCode, error, completion)
+                }
+                return
+            }
+            apiManager.getAllApps(for: generationNumber!, completion: { [weak self] (data, errorCode, error) in
+                let dataWithStatus = self?.addStatusRequest(to: data)
+                self?.cacheData(dataWithStatus, path: .getGSDTickets)
+                //self?.processAllApps(reportData, false, dataWithStatus, errorCode, error, completion)
+            })
+        } else {
+            if error != nil || generationNumber == 0 {
+                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                return
+            }
+            completion?(errorCode, ResponseError.commonError, fromCache)
+        }
+    }
+    
+    // MARK: - Other methods
+    
     func formImageURL(from imagePath: String?) -> String? {
         guard let imagePath = imagePath, !imagePath.isEmpty else { return nil }
         guard !imagePath.contains("https://") else  { return imagePath }

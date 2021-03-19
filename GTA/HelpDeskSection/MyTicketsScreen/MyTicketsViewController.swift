@@ -25,12 +25,12 @@ class MyTicketsViewController: UIViewController {
         navigationItem.title = "My Tickets"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
         navigationItem.leftBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_icon"), style: .plain, target: self, action: #selector(searchPressed))
+       // navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_icon"), style: .plain, target: self, action: #selector(searchPressed))
         navigationItem.rightBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
     }
     
     private func setUpTableView() {
-        tableView.rowHeight = 158
+        //tableView.rowHeight = 260//300//158
         tableView.register(UINib(nibName: "TicketCell", bundle: nil), forCellReuseIdentifier: "TicketCell")
     }
 
@@ -43,12 +43,12 @@ class MyTicketsViewController: UIViewController {
         ]
         
         myTicketsData = [
-            TicketData(status: .closed, number: "ref:_00D70JLCa._500392GtqB:ref", issue: "Account Reset", comments: comments),
-            TicketData(status: .open, number: "ref:_22M76JOCa._520391GtqA:ref", issue: "Reactivate Account", comments: comments),
-            TicketData(status: .open, number: "ref:_24M76JOCa._570391GtqA:ref", issue: "VPN Issue", comments: comments),
-            TicketData(status: .closed, number: "ref:_12M76JOCa._521391GtgB:ref", issue: "System Issue", comments: comments),
-            TicketData(status: .open, number: "ref:_01K22POCa._420390GabB:ref", issue: "Account Reset", comments: comments),
-            TicketData(status: .open, number: "ref:_02K76JOCa._322390GtgB:ref", issue: "Account Reset", comments: comments)
+            TicketData(status: .closed, number: "87654321", issue: "Account Reset", comments: comments),
+            TicketData(status: .open, number: "87654321", issue: "Reactivate Account", comments: comments),
+            TicketData(status: .open, number: "87654321", issue: "VPN Issue", comments: comments),
+            TicketData(status: .closed, number: "87654321", issue: "System Issue", comments: comments),
+            TicketData(status: .open, number: "87654321", issue: "Account Reset", comments: comments),
+            TicketData(status: .open, number: "87654321", issue: "Account Reset", comments: comments)
         ]
     }
     
@@ -76,22 +76,29 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = MyTicketsHeader.instanceFromNib()
-        return header
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if myTicketsData[indexPath.row].status == .closed {
+            return 260
+        }
+        return 200
     }
     
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let header = MyTicketsHeader.instanceFromNib()
+//        return header
+//    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
-        case 2, 5:
-            let ticketDetailsVC = SecondTicketDetailsViewController()
-            ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
-            if !UIDevice.current.iPhone5_se {
-                let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
-                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / coefficient)
-            }
-            presentPanModal(ticketDetailsVC)
-        default:
+//        switch indexPath.row {
+//        case 2, 5:
+//            let ticketDetailsVC = SecondTicketDetailsViewController()
+//            ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
+//            if !UIDevice.current.iPhone5_se {
+//                let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
+//                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / coefficient)
+//            }
+//            presentPanModal(ticketDetailsVC)
+//        default:
             let ticketDetailsVC = TicketDetailsViewController()
             ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
             if !UIDevice.current.iPhone5_se {
@@ -99,19 +106,20 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
                 ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / coefficient)
             }
             presentPanModal(ticketDetailsVC)
-        }
+        //}
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 88
-    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 88
+//    }
     
 }
 
 struct TicketData {
     var status: TicketStatus
     var number: String?
-    var date: Date? = Date()
+    var openDate: Date? = Date()
+    var statusDate: Date? = Date()
     var issue: String?
     var comments: [TicketComment]
 }
