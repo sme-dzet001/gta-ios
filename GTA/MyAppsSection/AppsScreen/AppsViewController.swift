@@ -15,6 +15,7 @@ class AppsViewController: UIViewController {
     
     private var dataProvider: MyAppsDataProvider = MyAppsDataProvider()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var errorLabel: UILabel = UILabel()
     private var myAppsLastUpdateDate: Date?
     private var allAppsLastUpdateDate: Date?
     private var allAppsLoadingError: Error?
@@ -28,6 +29,7 @@ class AppsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addErrorLabel(errorLabel)
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
         startAnimation()
@@ -80,6 +82,7 @@ class AppsViewController: UIViewController {
             self?.allAppsLoadingError = isFromCache ? nil : error
             DispatchQueue.main.async {
                 if error == nil, errorCode == 200, let appsData = self?.dataProvider.appsData.first {
+                    self?.errorLabel.isHidden = true
                     if !isFromCache {
                         self?.allAppsLastUpdateDate = Date().addingTimeInterval(60)
                     }
@@ -97,6 +100,7 @@ class AppsViewController: UIViewController {
     
     private func startAnimation() {
         guard dataProvider.appsData.isEmpty else { return }
+        self.errorLabel.isHidden = true
         self.tableView.alpha = 0
         self.addLoadingIndicator(activityIndicator)
         self.activityIndicator.startAnimating()
@@ -106,7 +110,9 @@ class AppsViewController: UIViewController {
         guard dataProvider.myAppsStatusData != nil || myAppsLoadingError != nil else { return }
         DispatchQueue.main.async {
             self.tableView.reloadData()
-            self.tableView.alpha = 1
+            self.errorLabel.isHidden = !(self.dataProvider.appsData.isEmpty && self.allAppsLoadingError != nil)
+            self.errorLabel.text = (self.allAppsLoadingError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+            self.tableView.alpha = !self.dataProvider.appsData.isEmpty ? 1 : 0
             self.activityIndicator.stopAnimating()
             self.activityIndicator.removeFromSuperview()
         }
@@ -117,16 +123,6 @@ class AppsViewController: UIViewController {
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "ApplicationCell", bundle: nil), forCellReuseIdentifier: "ApplicationCell")
     }
-    
-//    private func setHardCodeData() {
-//        let serviceAlertIsAlreadyPresent = dataProvider.appsData.contains(where: { (appsDataSource) -> Bool in
-//            appsDataSource.cellData.first?.app_name == "Service Alert: VPN Outage"
-//        })
-//        guard !serviceAlertIsAlreadyPresent else { return }
-//        dataProvider.appsData.insert(AppsDataSource(sectionName: nil, description: nil, cellData: [AppInfo(app_name: "Service Alert: VPN Outage", app_title: "10:30 +5 GTM Wed 15", app_icon: nil, appStatus: .none, app_is_active: false, imageData: nil)]), at: 0)
-////        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: [AppInfo(app_name: "Service Alert: VPN Outage", app_title: "10:30 +5 GTM Wed 15", app_icon: nil, appStatus: .none, app_is_active: false, imageData: nil)])]
-////
-//    }
     
 }
 
