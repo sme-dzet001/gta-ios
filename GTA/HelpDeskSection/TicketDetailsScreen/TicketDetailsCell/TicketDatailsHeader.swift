@@ -20,21 +20,21 @@ class TicketDatailsHeader: UIView {
     }
     
     func fillHeaderLabels(with data: TicketData?) {
-        numberLabel.text = data?.number
-        issueLabel.text = data?.issue
-        let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = String.ticketsSectionDateFormat
-        // hardcoding date similar to Figma for now
-        dateLabel.text = "Wed 15, 2020 10:30 -5 GMT" //dateFormatterPrint.string(from: data?.date ?? Date())
-        let status = data?.status ?? .closed
-        switch status {
-        case .open:
-            statusLabel.textColor = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1)
-            statusLabel.text = "Open"
-        default:
-            statusLabel.textColor = UIColor(red: 255.0 / 255.0, green: 62.0 / 255.0, blue: 51.0 / 255.0, alpha: 1)
-            statusLabel.text = "Closed"
-        }
+//        numberLabel.text = data?.number
+//        issueLabel.text = data?.issue
+//        let dateFormatterPrint = DateFormatter()
+//        dateFormatterPrint.dateFormat = String.ticketsSectionDateFormat
+//        // hardcoding date similar to Figma for now
+//        dateLabel.text = "Wed 15, 2020 10:30 -5 GMT" //dateFormatterPrint.string(from: data?.date ?? Date())
+//        let status = data?.status ?? .closed
+//        switch status {
+//        case .open:
+//            statusLabel.textColor = UIColor(red: 52.0 / 255.0, green: 199.0 / 255.0, blue: 89.0 / 255.0, alpha: 1)
+//            statusLabel.text = "Open"
+//        default:
+//            statusLabel.textColor = UIColor(red: 255.0 / 255.0, green: 62.0 / 255.0, blue: 51.0 / 255.0, alpha: 1)
+//            statusLabel.text = "Closed"
+//        }
     }
     
 }

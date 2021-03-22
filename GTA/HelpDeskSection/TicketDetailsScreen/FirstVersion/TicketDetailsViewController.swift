@@ -16,6 +16,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
     @IBOutlet weak var screenTitleView: UIView!
     @IBOutlet weak var blurView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     private var heightObserver: NSKeyValueObservation?
     lazy var textView = SendMessageView.instanceFromNib()
@@ -25,7 +26,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
         
     var panScrollable: UIScrollView? {
-        return tableView
+        return scrollView//tableView
     }
     
     var topOffset: CGFloat {
@@ -120,7 +121,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
             coefficient = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? 86 : 66
         }
         textView.frame = CGRect(x: 24, y: self.view.frame.height - coefficient, width: self.view.frame.width - 48, height: 56)
-        tableViewBottom.constant = 66
+        tableViewBottom?.constant = 66
         self.view.addSubview(textView)
         textView.textView.delegate = self
         textView.sendButtonDelegate = self
@@ -131,7 +132,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         let coefficient: CGFloat = UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se ? 10 : 0
         textView.frame.origin.y = position - textView.frame.height - (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) - coefficient
         let subtract = self.view.frame.height - position + 66 + (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) + coefficient
-        tableViewBottom.constant = subtract <= 66 ? 66 : subtract
+        tableViewBottom?.constant = subtract <= 66 ? 66 : subtract
     }
     
     private func setUpTableView() {
@@ -172,6 +173,25 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         view.endEditing(true)
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y
+
+        if scrollView == self.scrollView {
+            //if yOffset >= scrollViewContentHeight - screenHeight {
+                scrollView.isScrollEnabled = false
+                tableView.isScrollEnabled = true
+            //}
+        }
+
+        if scrollView == self.tableView {
+            panModalTransition(to: .longForm)
+            if yOffset <= 0 {
+                self.scrollView.isScrollEnabled = true
+                self.tableView.isScrollEnabled = false
+            }
+        }
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -186,11 +206,11 @@ extension TicketDetailsViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = TicketDatailsHeader.instanceFromNib()
         header.fillHeaderLabels(with: dataSource)
-        return header
+        return nil//header
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 190
+        return 0//190
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
