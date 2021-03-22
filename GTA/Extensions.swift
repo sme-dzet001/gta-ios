@@ -112,12 +112,6 @@ extension UIView {
 
 extension UINavigationController {
     
-    func addAndCenteredActivityIndicator(_ activityIndicator: UIActivityIndicatorView) {
-        self.view.addSubview(activityIndicator)
-        self.view.bringSubviewToFront(activityIndicator)
-        activityIndicator.center = self.view.center
-    }
-    
     func setNavigationBarSeparator(with color: UIColor) {
         let shadowImage = getSeparatorImage(for: color) ?? UIImage()
         self.navigationBar.shadowImage = shadowImage
@@ -249,6 +243,19 @@ extension UIViewController {
         let attributedString = NSMutableAttributedString(string: text)
         attributedString.addAttribute(.shadow, value: shadow, range: NSRange(text.startIndex..., in: text))
         return attributedString
+    }
+        
+    func addAndCenteredView(_ view: UIView, isGSD: Bool = false) {
+        let navigationControllerView = navigationController?.view ?? self.view
+        let navigationControllerCenter = navigationControllerView?.center ?? self.view.center
+        var center = navigationControllerView?.convert(navigationControllerCenter, to: self.view) ?? self.view.center
+        if isGSD && center.y == self.view.center.y {
+            let diff = (navigationController?.navigationBar.frame.origin.y ?? 0.0) + (navigationController?.navigationBar.frame.height ?? 0)
+            center = CGPoint(x: self.view.center.x, y: self.view.center.y - (diff))
+        }
+        self.view.addSubview(view)
+        self.view.bringSubviewToFront(view)
+        view.center = center
     }
     
 }

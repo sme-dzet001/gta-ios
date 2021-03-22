@@ -29,6 +29,7 @@ class MyAppsDataProvider {
     private var refreshTimer: Timer?
     private var cachedReportData: Data?
     private(set) var tipsAndTricksData = [QuickHelpRow]()
+    private(set) var appContactsData: AppContactsData?
         
     // MARK: - Calling methods
     
@@ -129,7 +130,7 @@ class MyAppsDataProvider {
         }
     }
     
-    func getAppContactsData(for app: String?, completion: ((_ responseData: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getAppContactsData(for app: String?, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache)  in
             self?.processAppContactsSectionReport(app, reportResponse, errorCode, error, isFromCache, completion)
         }
@@ -450,7 +451,7 @@ class MyAppsDataProvider {
         }
     }
     
-    private func processAppContacts(_ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ appContactsData: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processAppContacts(_ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var appContactsData: AppContactsData?
         var retErr = error
         if let responseData = appContactsDataResponse {
@@ -467,10 +468,14 @@ class MyAppsDataProvider {
         if let contacts = appContactsData?.contactsData, contacts.isEmpty {
             retErr = ResponseError.noDataAvailable
         }
-        completion?(appContactsData, errorCode, retErr)
+        if appContactsData == nil && self.appContactsData != nil {
+        } else if appContactsData != self.appContactsData {
+            self.appContactsData = appContactsData
+        }
+        completion?(errorCode, retErr)
     }
     
-    private func processAppContactsSectionReport(_ app: String?, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ responseData: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processAppContactsSectionReport(_ app: String?, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appContacts.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {

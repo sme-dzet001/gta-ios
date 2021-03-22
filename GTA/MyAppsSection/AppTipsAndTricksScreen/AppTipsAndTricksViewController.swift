@@ -32,11 +32,6 @@ class AppTipsAndTricksViewController: UIViewController {
         getAppTipsAndTricks()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.stopAnimation()
-    }
-    
     private func setUpNavigationItem() {
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
         let titleText = appName != nil ? "\(appName!)\nTips & Tricks" : "Tips & Tricks"
@@ -63,8 +58,7 @@ class AppTipsAndTricksViewController: UIViewController {
         self.pdfView.alpha = 0
         self.errorLabel.isHidden = true
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
-        self.activityIndicator.hidesWhenStopped = true
+        self.addAndCenteredView(activityIndicator)
         self.activityIndicator.startAnimating()
     }
     

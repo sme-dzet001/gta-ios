@@ -153,7 +153,7 @@ struct ChartData {
     var value: Int?
 }
 
-struct AppContactsData: Codable {
+struct AppContactsData: Codable, Equatable {
     var meta: ResponseMetaData
     var data: [String : UserData]?
     
@@ -192,6 +192,11 @@ struct AppContactsData: Codable {
         case meta
         case data
     }
+    
+    static func == (lhs: AppContactsData, rhs: AppContactsData) -> Bool {
+        return lhs.contactsData == rhs.contactsData
+    }
+    
 }
 
 struct AppDetailsData: Codable {

@@ -52,11 +52,6 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.activityIndicator.removeFromSuperview()
-    }
-    
     private func getAppDetailsData() {
         startAnimation()
         dataProvider?.getAppDetailsData(for: appName) { [weak self] (detailsData, errorCode, error) in
@@ -73,8 +68,8 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         guard appDetailsData == nil else { return }
         self.tableView.alpha = 0
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
-        self.activityIndicator.hidesWhenStopped = true
+        self.addAndCenteredView(activityIndicator)
+//        self.activityIndicator.hidesWhenStopped = true
         self.activityIndicator.startAnimating()
     }
     

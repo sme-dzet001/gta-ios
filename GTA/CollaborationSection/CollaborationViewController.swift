@@ -38,16 +38,10 @@ class CollaborationViewController: UIViewController {
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        stopAnimation()
-    }
-    
     private func startAnimation() {
         self.tableView.alpha = 0
         errorLabel.isHidden = true
-        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
-        activityIndicator.hidesWhenStopped = true
+        self.addAndCenteredView(activityIndicator)
         activityIndicator.startAnimating()
     }
     
@@ -101,6 +95,7 @@ class CollaborationViewController: UIViewController {
     
     private func showContactsScreen() {
         let contactsScreen = AppContactsViewController()
+        contactsScreen.collaborationDataProvider = dataProvider
         contactsScreen.isCollaborationContacts = true
         contactsScreen.appName = "Office365"
         navigationController?.pushViewController(contactsScreen, animated: true)
@@ -110,6 +105,7 @@ class CollaborationViewController: UIViewController {
         let quickHelpVC = QuickHelpViewController()
         quickHelpVC.appName = "Office365"
         quickHelpVC.screenType = .collaborationTipsAndTricks
+        quickHelpVC.collaborationDataProvider = dataProvider
         navigationController?.pushViewController(quickHelpVC, animated: true)
     }
     

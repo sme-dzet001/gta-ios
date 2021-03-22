@@ -19,6 +19,7 @@ class CollaborationDataProvider {
     weak var appSuiteIconDelegate: AppSuiteIconDelegate?
     weak var office365AppsDelegate: AppIconLoadingDelegate?
     private(set) var collaborationAppDetailsRows: [CollaborationAppDetailsRow]?
+    private(set) var appContactsData: AppContactsData?
     
     // MARK: - Collaboration details handling
     
@@ -165,17 +166,17 @@ class CollaborationDataProvider {
     
     // MARK: - Team contacts handling
     
-    func getTeamContacts(appSuite: String, completion: ((_ contacts: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getTeamContacts(appSuite: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.handleTeamContactsSectionReport(appSuite: appSuite, data, code, cachedError, true, { (data, code, error) in
+            self?.handleTeamContactsSectionReport(appSuite: appSuite, data, code, cachedError, true, { (code, error) in
                 if error == nil {
-                    completion?(data, code, error)
+                    completion?(code, error)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(nil, errorCode, ResponseError.serverError)
+                        completion?(errorCode, ResponseError.serverError)
                     } else {
                         self?.handleTeamContactsSectionReport(appSuite: appSuite, reportResponse, errorCode, error, false, completion)
                     }
@@ -184,7 +185,7 @@ class CollaborationDataProvider {
         }
     }
     
-    private func handleTeamContactsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ contacts: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func handleTeamContactsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationTeamsContacts.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
@@ -203,11 +204,11 @@ class CollaborationDataProvider {
                 completion?(nil, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(nil, errorCode, error)
+            completion?(errorCode, error)
         }
     }
     
-    private func processTeamContacts(_ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ appContactsData: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processTeamContacts(_ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var appContactsData: AppContactsData?
         var retErr = error
         if let responseData = appContactsDataResponse {
@@ -225,7 +226,13 @@ class CollaborationDataProvider {
         if let contacts = appContactsData?.contactsData, contacts.isEmpty {
             retErr = ResponseError.noDataAvailable
         }
-        completion?(appContactsData, errorCode, retErr)
+        
+        if appContactsData == nil && self.appContactsData != nil {
+        } else if appContactsData != self.appContactsData {
+            self.appContactsData = appContactsData
+        }
+        
+        completion?(errorCode, retErr)
     }
     
     // MARK: - App details handling
@@ -326,14 +333,24 @@ class CollaborationDataProvider {
     
     // MARK:- Additional methods
     
+    func formContactImageURL(from imagePath: String?) -> String? {
+        guard let imagePath = imagePath, !imagePath.isEmpty else { return nil }
+        guard !imagePath.contains("https://") else  { return imagePath }
+        let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
+        return imageURL
+    }
+    
     func getAppImageData(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
         if let url = URL(string: formImageURL(from: urlString?.components(separatedBy: .whitespaces).joined() ?? "")) {
             if let cachedResponse = imageCacheManager.getCacheResponse(for: url), cachedResponse != appSuiteImage {
                 completion?(cachedResponse, nil)
             } else {
                 apiManager.loadImageData(from: url) { (data, response, error) in
-                    self.imageCacheManager.storeCacheResponse(response, data: data, error: error)
-                    completion?(data, error)
+                    self.imageCacheManager.storeCacheResponse(response, data: data)
+                    DispatchQueue.main.async {
+                        completion?(data, error)
+                    }
+                    //completion?(data, error)
                 }
             }
         } else {
