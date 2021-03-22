@@ -16,7 +16,8 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
     @IBOutlet weak var screenTitleView: UIView!
     @IBOutlet weak var blurView: UIView!
-    @IBOutlet weak var scrollView: UIScrollView!
+   // @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var detailsTableView: UITableView!
     
     private var heightObserver: NSKeyValueObservation?
     lazy var textView = SendMessageView.instanceFromNib()
@@ -26,7 +27,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
         
     var panScrollable: UIScrollView? {
-        return scrollView//tableView
+        return detailsTableView//tableView
     }
     
     var topOffset: CGFloat {
@@ -82,6 +83,9 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
             self?.configureBlurViewPosition()
             self?.configurePosition()
         })
+        let count = dataSource?.comments.count ?? 0
+        let indexPath = IndexPath(row: count < 0 ? 0 : count - 1, section: 0)
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
     override func viewDidLayoutSubviews() {
@@ -140,6 +144,10 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         tableView.dataSource = self
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "TicketDetailsMessageCell", bundle: nil), forCellReuseIdentifier: "TicketDetailsMessageCell")
+        detailsTableView.register(UINib(nibName: "TicketDetailsHeaderCell", bundle: nil), forCellReuseIdentifier: "TicketDetailsHeaderCell")
+        detailsTableView.dataSource = self
+        detailsTableView.delegate = self
+        detailsTableView.estimatedRowHeight = UITableView.automaticDimension
     }
 
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
@@ -173,25 +181,6 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         view.endEditing(true)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        let yOffset = scrollView.contentOffset.y
-
-        if scrollView == self.scrollView {
-            //if yOffset >= scrollViewContentHeight - screenHeight {
-                scrollView.isScrollEnabled = false
-                tableView.isScrollEnabled = true
-            //}
-        }
-
-        if scrollView == self.tableView {
-            panModalTransition(to: .longForm)
-            if yOffset <= 0 {
-                self.scrollView.isScrollEnabled = true
-                self.tableView.isScrollEnabled = false
-            }
-        }
-    }
-    
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -214,10 +203,15 @@ extension TicketDetailsViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource?.comments.count ?? 0
+        return tableView == detailsTableView ? 1 : dataSource?.comments.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView == detailsTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDetailsHeaderCell", for: indexPath) as? TicketDetailsHeaderCell
+            //cell?.fillCell(with: dataSource?.comments[indexPath.row])
+            return cell ?? UITableViewCell()
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDetailsMessageCell", for: indexPath) as? TicketDetailsMessageCell
         cell?.fillCell(with: dataSource?.comments[indexPath.row])
         return cell ?? UITableViewCell()
