@@ -58,10 +58,10 @@ class CollaborationDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(errorCode, error)
+            completion?(0, error)
         }
     }
     
@@ -135,10 +135,10 @@ class CollaborationDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(false, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(false, errorCode, error)
+            completion?(0, error)
         }
     }
     
@@ -202,10 +202,10 @@ class CollaborationDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(nil, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(errorCode, error)
+            completion?(nil, 0, error)
         }
     }
     
@@ -273,10 +273,10 @@ class CollaborationDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(errorCode, error)
+            completion?(0, error)
         }
     }
     

@@ -46,11 +46,11 @@ class HelpDeskDataProvider {
                 })
             } else {
                 if error != nil || generationNumber == 0 {
-                    completion?(nil, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
+                    completion?(nil, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
                     return
                 }
                 let retError = ResponseError.serverError
-                completion?(nil, errorCode, retError, isFromCache)
+                completion?(nil, 0, retError, isFromCache)
             }
         }
     }
@@ -91,11 +91,11 @@ class HelpDeskDataProvider {
             }
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(nil, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
+                completion?(nil, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(nil, errorCode, retError, isFromCache)
+            completion?(nil, 0, retError, isFromCache)
         }
     }
     
@@ -270,11 +270,11 @@ class HelpDeskDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(true, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(true, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(true, errorCode, retError)
+            completion?(true, 0, retError)
         }
     }
     
@@ -335,11 +335,11 @@ class HelpDeskDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(errorCode, retError)
+            completion?(0, retError)
         }
     }
     

@@ -172,10 +172,10 @@ class MyAppsDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(false, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
                 return
             }
-            completion?(false, errorCode, ResponseError.commonError, fromCache)
+            completion?(0, ResponseError.commonError, fromCache)
         }
     }
     
@@ -370,10 +370,10 @@ class MyAppsDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
                 return
             }
-            completion?(errorCode, error, false)
+            completion?(0, error, false)
         }
     }
     
@@ -445,10 +445,10 @@ class MyAppsDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
                 return
             }
-            completion?(errorCode, ResponseError.commonError, fromCache)
+            completion?(0, ResponseError.commonError, fromCache)
         }
     }
     
@@ -495,10 +495,10 @@ class MyAppsDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(nil, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(errorCode, ResponseError.commonError)
+            completion?(nil, 0, ResponseError.commonError)
         }
     }
     
@@ -538,10 +538,10 @@ class MyAppsDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(nil, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(nil, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(nil, errorCode, ResponseError.commonError)
+            completion?(nil, 0, ResponseError.commonError)
         }
     }
     
