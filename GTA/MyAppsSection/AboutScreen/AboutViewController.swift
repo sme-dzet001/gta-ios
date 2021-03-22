@@ -22,7 +22,8 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     var collaborationDataProvider: CollaborationDataProvider?
     var collaborationDetails: CollaborationAppDetailsRow?
     private var appImageData: Data?
-
+    private var errorLabel: UILabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationItem()
@@ -31,6 +32,9 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addErrorLabel(errorLabel)
+        self.errorLabel.isHidden = detailsDataResponseError == nil
+        self.errorLabel.text = (detailsDataResponseError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
         configureDataSource()
         if isCollaborationDetails {
             getCollaborationAboutImageData()
@@ -63,7 +67,7 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        detailsDataResponseError = nil
+        //detailsDataResponseError = nil
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
@@ -100,6 +104,8 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
             getAppAboutImageData()
         }
         DispatchQueue.main.async {
+            self.errorLabel.isHidden = error == nil
+            self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
             self.tableView.reloadData()
         }
     }
@@ -136,9 +142,9 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 1
+            return detailsDataResponseError == nil ? 1 : 0
         case 1:
-            return dataSource?.supportData?.count ?? 1 
+            return dataSource?.supportData?.count ?? 0
         default:
             return 0
         }
