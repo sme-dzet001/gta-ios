@@ -390,7 +390,7 @@ class HelpDeskDataProvider {
                         completion(nil, error)
                     }
                 } else {
-                    self.imageCacheManager.storeCacheResponse(response, data: data)
+                    self.imageCacheManager.storeCacheResponse(response, data: data, error: error)
                     DispatchQueue.main.async {
                         completion(data, error)
                     }

@@ -57,7 +57,7 @@ class MyAppsDataProvider {
                     if self.appImageData.keys.contains(urlString), error == nil {
                         self.appImageData[urlString] = data
                     }
-                    self.imageCacheManager.storeCacheResponse(response, data: data)
+                    self.imageCacheManager.storeCacheResponse(response, data: data, error: error)
                     DispatchQueue.main.async {
                         completion(data, error)
                     }
@@ -74,7 +74,7 @@ class MyAppsDataProvider {
             return
         } else {
             apiManager.loadImageData(from: url) { (data, response, error) in
-                self.imageCacheManager.storeCacheResponse(response, data: data)
+                self.imageCacheManager.storeCacheResponse(response, data: data, error: error)
                 DispatchQueue.main.async {
                     completion(data, error)
                 }

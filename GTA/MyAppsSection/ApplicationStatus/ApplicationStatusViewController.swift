@@ -261,7 +261,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             self.detailsDataDelegate = aboutScreen
             aboutScreen.dataProvider = dataProvider
             aboutScreen.appTitle = appTitle
-            aboutScreen.appImageUrl = appImageUrl
+            //aboutScreen.appImageUrl = appImageUrl
             navigationController?.pushViewController(aboutScreen, animated: true)
         } else if indexPath.row == 3 {
             if let _ = appDetailsData, appDetailsData!.isNeedToUsePDF {

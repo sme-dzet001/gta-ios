@@ -332,7 +332,7 @@ class CollaborationDataProvider {
                 completion?(cachedResponse, nil)
             } else {
                 apiManager.loadImageData(from: url) { (data, response, error) in
-                    self.imageCacheManager.storeCacheResponse(response, data: data)
+                    self.imageCacheManager.storeCacheResponse(response, data: data, error: error)
                     completion?(data, error)
                 }
             }

@@ -210,6 +210,11 @@ struct AppDetailsData: Codable {
         return values?[index]?.stringValue
     }
     
+    var appIcon: String? {
+        guard let _ = values, let index = indexes["app icon"], values!.count > index else { return nil }
+        return values?[index]?.stringValue
+    }
+    
     var appDescription: String? {
         guard let _ = values, let index = indexes["app desc"], values!.count > index else { return nil }
         return values?[index]?.stringValue

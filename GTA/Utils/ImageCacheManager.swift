@@ -19,8 +19,9 @@ class ImageCacheManager {
         }
     }
     
-    func storeCacheResponse(_ response: URLResponse?, data: Data?) {
-        guard let _ = response, let _ = data, let responseURL = response?.url else { return }
+    func storeCacheResponse(_ response: URLResponse?, data: Data?, error: Error?) {
+        guard error == nil, let _ = response, let _ = data, let responseURL = response?.url else { return }
+        guard let resp = response as? HTTPURLResponse, resp.statusCode >= 200, resp.statusCode < 300 else { return }
         let cachedResponse = CachedURLResponse(response: response!, data: data!)
         ImageCacheManager.syncQueue.sync {
             URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: responseURL))

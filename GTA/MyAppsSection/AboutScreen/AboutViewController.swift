@@ -42,7 +42,7 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     }
     
     private func getAppAboutImageData() {
-        dataProvider?.getAppImageData(from: appImageUrl, completion: { (imageData, error) in
+        dataProvider?.getAppImageData(from: details?.appIcon ?? "", completion: { (imageData, error) in
             self.imageDataResponseError = error
             self.appImageData = imageData
             DispatchQueue.main.async {
@@ -96,6 +96,9 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         detailsDataResponseError = error
         details = detailsData
         configureDataSource()
+        if let _ = detailsData {
+            getAppAboutImageData()
+        }
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
