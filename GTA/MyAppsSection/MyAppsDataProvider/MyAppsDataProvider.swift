@@ -136,16 +136,16 @@ class MyAppsDataProvider {
         }
     }
     
-    func getAppTipsAndTricks(for app: String?, completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+    func getAppTipsAndTricks(for app: String?, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.handleAppTipsAndTricksSectionReport(app, data, code, cachedError, true, { (code, error, _) in
+            self?.handleAppTipsAndTricksSectionReport(app, data, code, cachedError, true, { (dataWasChanged, code, error, _) in
                 if error == nil {
-                    completion?(code, cachedError, true)
+                    completion?(dataWasChanged, code, cachedError, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError, false)
+                        completion?(false, errorCode, ResponseError.serverError, false)
                     } else {
                         self?.handleAppTipsAndTricksSectionReport(app, reportResponse, errorCode, error, false, completion)
                     }
@@ -154,7 +154,7 @@ class MyAppsDataProvider {
         }
     }
     
-    private func handleAppTipsAndTricksSectionReport(_ appName: String?, _ sectionReport: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+    private func handleAppTipsAndTricksSectionReport(_ appName: String?, _ sectionReport: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         let reportData = parseSectionReport(data: sectionReport)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appTipsAndTricks.rawValue }?.generationNumber
         let detailsPath = appName ?? ""
@@ -172,14 +172,14 @@ class MyAppsDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(false, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
                 return
             }
-            completion?(errorCode, ResponseError.commonError, fromCache)
+            completion?(false, errorCode, ResponseError.commonError, fromCache)
         }
     }
     
-    private func handleAppTipsAndTricks(_ reportData: ReportDataResponse?, _ fromCache: Bool, _ tipsAndTricksData: Data?, _ errorCode: Int, _ error: Error?, completion: ((_ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
+    private func handleAppTipsAndTricks(_ reportData: ReportDataResponse?, _ fromCache: Bool, _ tipsAndTricksData: Data?, _ errorCode: Int, _ error: Error?, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         var tipsAndTricksResponse: AppsTipsAndTricksResponse?
         var retErr = error
         if let responseData = tipsAndTricksData {
@@ -191,13 +191,14 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
+        var dataChanged: Bool = false
         if let tipsAndTricksResponse = tipsAndTricksResponse {
-            fillQuickHelpData(with: tipsAndTricksResponse)
+            dataChanged = fillQuickHelpData(with: tipsAndTricksResponse)
             if (tipsAndTricksResponse.data?.first?.value?.data?.rows ?? []).isEmpty {
                 retErr = ResponseError.noDataAvailable
             }
         }
-        completion?(errorCode, retErr, fromCache)
+        completion?(dataChanged, errorCode, retErr, fromCache)
     }
         
     private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
@@ -556,7 +557,7 @@ class MyAppsDataProvider {
         return reportDataResponse
     }
     
-    private func fillQuickHelpData(with quickHelpResponse: AppsTipsAndTricksResponse) {
+    private func fillQuickHelpData(with quickHelpResponse: AppsTipsAndTricksResponse) -> Bool {
         let indexes = getDataIndexes(columns: quickHelpResponse.meta?.widgetsDataSource?.params?.columns)
         var response: AppsTipsAndTricksResponse = quickHelpResponse
         let key = response.data?.keys.first
@@ -567,7 +568,11 @@ class MyAppsDataProvider {
                 }
             }
         }
-        tipsAndTricksData = response.data?.first?.value?.data?.rows ?? []
+        if tipsAndTricksData != response.data?.first?.value?.data?.rows ?? [] {
+            tipsAndTricksData = response.data?.first?.value?.data?.rows ?? []
+            return true
+        }
+        return false
     }
     
 }

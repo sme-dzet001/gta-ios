@@ -49,11 +49,36 @@ class QuickHelpViewController: UIViewController {
 //        }
     }
     
+    private func loadQuickHelpData() {
+        guard let dataProvider = dataProvider else { return }
+        if dataProvider.quickHelpDataIsEmpty {
+            startAnimation()
+//            activityIndicator.startAnimating()
+//            errorLabel.isHidden = true
+//            tableView.isHidden = true
+        }
+        dataProvider.getQuickHelpData { [weak self] (dataWasChanged, errorCode, error) in
+            DispatchQueue.main.async {
+                self?.stopAnimation()
+                //self?.activityIndicator.stopAnimating()
+                if error == nil && errorCode == 200 {
+                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.errorLabel.isHidden = true
+                    self?.tableView.isHidden = false
+                    if dataWasChanged { self?.tableView.reloadData() }
+                } else {
+                    self?.errorLabel.isHidden = !dataProvider.quickHelpDataIsEmpty
+                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                }
+            }
+        }
+    }
+    
     private func loadAppTipsAndTricks() {
         if self.appsDataProvider?.tipsAndTricksData == nil || (appsDataProvider?.tipsAndTricksData.isEmpty ?? true){
             startAnimation()
         }
-        appsDataProvider?.getAppTipsAndTricks(for: appName) {[weak self] (errorCode, error, isFromCache) in
+        appsDataProvider?.getAppTipsAndTricks(for: appName) {[weak self] (dataWasChanged, errorCode, error, isFromCache) in
             DispatchQueue.main.async {
                 //self?.activityIndicator.stopAnimating()
                 self?.stopAnimation()
@@ -61,7 +86,7 @@ class QuickHelpViewController: UIViewController {
                     self?.lastUpdateDate = Date().addingTimeInterval(60)
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
-                    self?.tableView.reloadData()
+                    if dataWasChanged { self?.tableView.reloadData() }
                 } else {
                     self?.errorLabel.isHidden = !(self?.appsDataProvider?.tipsAndTricksData.isEmpty ?? true)
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
@@ -74,7 +99,7 @@ class QuickHelpViewController: UIViewController {
         if collaborationDataProvider?.tipsAndTricksData == nil || (collaborationDataProvider?.tipsAndTricksData.isEmpty ?? true) {
             startAnimation()
         }
-        collaborationDataProvider?.getTipsAndTricks(appSuite: appName ?? "", completion: {[weak self] (errorCode, error) in
+        collaborationDataProvider?.getTipsAndTricks(appSuite: appName ?? "", completion: {[weak self] (dataWasChanged, errorCode, error) in
             DispatchQueue.main.async {
                 //self?.activityIndicator.stopAnimating()
                 self?.stopAnimation()
@@ -82,7 +107,8 @@ class QuickHelpViewController: UIViewController {
                     self?.lastUpdateDate = Date().addingTimeInterval(60)
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
-                    self?.tableView.reloadData()
+                    //self?.tableView.reloadData()
+                    if dataWasChanged { self?.tableView.reloadData() }
                 } else {
                     self?.errorLabel.isHidden = !(self?.collaborationDataProvider?.tipsAndTricksData.isEmpty ?? true)
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
@@ -129,31 +155,6 @@ class QuickHelpViewController: UIViewController {
     
     private func setUpTableView() {
         tableView.register(UINib(nibName: "QuickHelpCell", bundle: nil), forCellReuseIdentifier: "QuickHelpCell")
-    }
-    
-    private func loadQuickHelpData() {
-        guard let dataProvider = dataProvider else { return }
-        if dataProvider.quickHelpDataIsEmpty {
-            startAnimation()
-//            activityIndicator.startAnimating()
-//            errorLabel.isHidden = true
-//            tableView.isHidden = true
-        }
-        dataProvider.getQuickHelpData { [weak self] (dataWasChanged, errorCode, error) in
-            DispatchQueue.main.async {
-                self?.stopAnimation()
-                //self?.activityIndicator.stopAnimating()
-                if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
-                    self?.errorLabel.isHidden = true
-                    self?.tableView.isHidden = false
-                    if dataWasChanged { self?.tableView.reloadData() }
-                } else {
-                    self?.errorLabel.isHidden = !dataProvider.quickHelpDataIsEmpty
-                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                }
-            }
-        }
     }
     
     private func getHelpData() -> [QuickHelpDataProtocol] {

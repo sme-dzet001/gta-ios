@@ -100,17 +100,17 @@ class CollaborationDataProvider {
     
     // MARK: - Tips & Tricks handling
     
-    func getTipsAndTricks(appSuite: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getTipsAndTricks(appSuite: String, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (reportResponse, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.handleTipsAndTricksSectionReport(appSuite: appSuite, reportResponse, code, cachedError, true, { (code, error) in
+            self?.handleTipsAndTricksSectionReport(appSuite: appSuite, reportResponse, code, cachedError, true, { (dataWasChanged, code, error) in
                 if error == nil {
-                    completion?(code, error)
+                    completion?(dataWasChanged, code, error)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?( errorCode, ResponseError.serverError)
+                        completion?(false, errorCode, ResponseError.serverError)
                     } else {
                         self?.handleTipsAndTricksSectionReport(appSuite: appSuite, reportResponse, errorCode, error, false, completion)
                     }
@@ -119,7 +119,7 @@ class CollaborationDataProvider {
         }
     }
     
-    private func handleTipsAndTricksSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func handleTipsAndTricksSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationTipsAndTricks.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
@@ -135,14 +135,14 @@ class CollaborationDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(false, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(errorCode, error)
+            completion?(false, errorCode, error)
         }
     }
     
-    private func processTipsAndTricks(_ reportData: ReportDataResponse?, _ tipsAndTricksData: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processTipsAndTricks(_ reportData: ReportDataResponse?, _ tipsAndTricksData: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var tipsAndTricksResponse: CollaborationTipsAndTricksResponse?
         var retErr = error
         if let responseData = tipsAndTricksData {
@@ -154,13 +154,14 @@ class CollaborationDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
+        var isDataChanged: Bool = false
         if let response = tipsAndTricksResponse {
-            fillTipsAndTricksData(with: response)
+            isDataChanged = fillTipsAndTricksData(with: response)
             if (response.data?.first?.value?.data?.rows ?? []).isEmpty {
                 retErr = ResponseError.noDataAvailable
             }
         }
-        completion?(errorCode, retErr)
+        completion?(isDataChanged, errorCode, retErr)
     }
     
     
@@ -401,7 +402,7 @@ class CollaborationDataProvider {
         return indexes
     }
     
-    private func fillTipsAndTricksData(with dataResponse: CollaborationTipsAndTricksResponse) {
+    private func fillTipsAndTricksData(with dataResponse: CollaborationTipsAndTricksResponse) -> Bool {
         let indexes = getDataIndexes(columns: dataResponse.meta?.widgetsDataSource?.params?.columns)
         var response: CollaborationTipsAndTricksResponse = dataResponse
         let key = response.data?.keys.first ?? ""
@@ -410,7 +411,11 @@ class CollaborationDataProvider {
                 response.data?[key]??.data?.rows?[index].indexes = indexes
             }
         }
-        tipsAndTricksData = response.data?[key]??.data?.rows ?? []
+        if tipsAndTricksData != response.data?[key]??.data?.rows ?? [] {
+            tipsAndTricksData = response.data?[key]??.data?.rows ?? []
+            return true
+        }
+        return false
     }
     
     func formTipsAndTricksAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
