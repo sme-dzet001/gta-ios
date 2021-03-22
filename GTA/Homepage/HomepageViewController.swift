@@ -59,6 +59,7 @@ class HomepageViewController: UIViewController {
                     if isNoData {
                         self?.collectionView.reloadData()
                     }
+                    self?.pageControl.isHidden = isNoData
                     self?.errorLabel.isHidden = !isNoData
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
