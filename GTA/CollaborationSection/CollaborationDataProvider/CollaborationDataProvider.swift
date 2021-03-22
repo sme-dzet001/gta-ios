@@ -201,7 +201,7 @@ class CollaborationDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(nil, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             completion?(errorCode, error)
@@ -346,7 +346,7 @@ class CollaborationDataProvider {
                 completion?(cachedResponse, nil)
             } else {
                 apiManager.loadImageData(from: url) { (data, response, error) in
-                    self.imageCacheManager.storeCacheResponse(response, data: data)
+                    self.imageCacheManager.storeCacheResponse(response, data: data, error: error)
                     DispatchQueue.main.async {
                         completion?(data, error)
                     }

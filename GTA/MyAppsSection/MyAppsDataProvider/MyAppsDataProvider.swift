@@ -494,10 +494,10 @@ class MyAppsDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(nil, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(nil, errorCode, ResponseError.commonError)
+            completion?(errorCode, ResponseError.commonError)
         }
     }
     
