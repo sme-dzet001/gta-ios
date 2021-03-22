@@ -172,10 +172,10 @@ class MyAppsDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
                 return
             }
-            completion?(0, ResponseError.commonError, fromCache)
+            completion?(false, 0, ResponseError.commonError, fromCache)
         }
     }
     
@@ -495,10 +495,10 @@ class MyAppsDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(nil, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(nil, 0, ResponseError.commonError)
+            completion?(0, ResponseError.commonError)
         }
     }
     
