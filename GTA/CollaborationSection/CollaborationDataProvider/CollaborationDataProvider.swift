@@ -91,7 +91,7 @@ class CollaborationDataProvider {
     
     private func getAppImage(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
         getAppImageData(from: urlString) { (imageData, error) in
-            if imageData != self.appSuiteImage {
+            if self.appSuiteImage == nil || imageData != self.appSuiteImage {
                 self.appSuiteImage = imageData
                 self.appSuiteIconDelegate?.appSuiteIconChanged(with: imageData, status: error == nil ? .loaded : .failed)
             }
