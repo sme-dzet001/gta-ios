@@ -68,7 +68,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         guard appDetailsData == nil else { return }
         self.tableView.alpha = 0
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.addAndCenteredView(activityIndicator)
+        self.addLoadingIndicator(activityIndicator)
 //        self.activityIndicator.hidesWhenStopped = true
         self.activityIndicator.startAnimating()
     }

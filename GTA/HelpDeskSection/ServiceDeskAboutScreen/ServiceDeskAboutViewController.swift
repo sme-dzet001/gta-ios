@@ -10,8 +10,9 @@ import UIKit
 class ServiceDeskAboutViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var errorLabel: UILabel!
+    //@IBOutlet weak var errorLabel: UILabel!
     
+    private var errorLabel: UILabel = UILabel()
     var dataProvider: HelpDeskDataProvider?
     var aboutData: (imageUrl: String?, desc: String?)?
     
@@ -20,6 +21,11 @@ class ServiceDeskAboutViewController: UIViewController {
         setUpNavigationItem()
         setUpTableView()
         setUpScreenLook()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addErrorLabel(errorLabel, isGSD: true)
     }
     
     private func setUpNavigationItem() {
