@@ -130,16 +130,16 @@ class MyAppsDataProvider {
         }
     }
     
-    func getAppContactsData(for app: String?, completion: ((_ responseData: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getAppContactsData(for app: String?, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.processAppContactsSectionReport(app, data, code, cachedError, true, { (data, code, error) in
+            self?.processAppContactsSectionReport(app, data, code, cachedError, true, { (code, error) in
                 if error == nil {
-                    completion?(data, code, cachedError)
+                    completion?(code, cachedError)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     if let _ = error {
-                        completion?(nil, errorCode, ResponseError.serverError)
+                        completion?(errorCode, ResponseError.serverError)
                     } else {
                         self?.processAppContactsSectionReport(app, reportResponse, errorCode, error, false, completion)
                     }
