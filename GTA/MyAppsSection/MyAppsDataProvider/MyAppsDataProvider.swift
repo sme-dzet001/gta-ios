@@ -130,9 +130,24 @@ class MyAppsDataProvider {
     }
     
     func getAppContactsData(for app: String?, completion: ((_ responseData: AppContactsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache)  in
-            self?.processAppContactsSectionReport(app, reportResponse, errorCode, error, isFromCache, completion)
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.processAppContactsSectionReport(app, data, code, cachedError, true, { (data, code, error) in
+                if error == nil {
+                    completion?(data, code, cachedError)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    if let _ = error {
+                        completion?(nil, errorCode, ResponseError.serverError)
+                    } else {
+                        self?.processAppContactsSectionReport(app, reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
         }
+//        getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache)  in
+//            self?.processAppContactsSectionReport(app, reportResponse, errorCode, error, isFromCache, completion)
+//        }
     }
     
     func getAppTipsAndTricks(for app: String?, completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
@@ -477,9 +492,9 @@ class MyAppsDataProvider {
             let contactsPath = app ?? ""
             if fromCache {
                 getCachedResponse(for: .getAppContacts(contactsPath: contactsPath)) {[weak self] (data, error) in
-                    if let _ = data, error == nil {
-                        self?.processAppContacts(reportData, data, errorCode, error, completion)
-                    }
+//                    if let _ = data, error == nil {
+                    self?.processAppContacts(reportData, data, errorCode, error, completion)
+                    //}
                 }
                 return
             }
