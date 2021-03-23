@@ -198,7 +198,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
             let cellDataSource = data[indexPath.row]
             cell.delegate = self
             let answerEncoded = cellDataSource.answer
-            let answerDecoded = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) ?? collaborationDataProvider?.formTipsAndTricksAnswerBody(from: answerEncoded)
+            let answerDecoded = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) ?? appsDataProvider?.formTipsAndTricksAnswerBody(from: answerEncoded) ?? collaborationDataProvider?.formTipsAndTricksAnswerBody(from: answerEncoded)
             if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
                 answerDecoded?.setFontFace(font: neededFont)
             }
@@ -214,7 +214,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     private func heightForAnswerAt(indexPath: IndexPath) -> CGFloat {
         let data: [QuickHelpDataProtocol] = getHelpData()
         guard let answerEncoded = data[indexPath.row].answer else { return 0 }
-        let answer = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) ?? collaborationDataProvider?.formTipsAndTricksAnswerBody(from: answerEncoded)
+        let answer = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) ?? appsDataProvider?.formTipsAndTricksAnswerBody(from: answerEncoded) ?? collaborationDataProvider?.formTipsAndTricksAnswerBody(from: answerEncoded)
         guard let answerBody = answer else { return 0 }
         if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
             answerBody.setFontFace(font: neededFont)
