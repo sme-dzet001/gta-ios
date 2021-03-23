@@ -135,6 +135,7 @@ class CollaborationDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
+                self.tipsAndTricksData = generationNumber == 0 ? [] : tipsAndTricksData
                 completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }

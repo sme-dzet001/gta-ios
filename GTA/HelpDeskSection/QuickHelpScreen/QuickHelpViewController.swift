@@ -68,6 +68,9 @@ class QuickHelpViewController: UIViewController {
                     self?.tableView.isHidden = false
                     if dataWasChanged { self?.tableView.reloadData() }
                 } else {
+                    if dataProvider.quickHelpDataIsEmpty {
+                        self?.tableView.reloadData()
+                    }
                     self?.errorLabel.isHidden = !dataProvider.quickHelpDataIsEmpty
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
@@ -89,6 +92,9 @@ class QuickHelpViewController: UIViewController {
                     self?.tableView.isHidden = false
                     if dataWasChanged { self?.tableView.reloadData() }
                 } else {
+                    if self?.appsDataProvider?.tipsAndTricksData.isEmpty ?? true {
+                        self?.tableView.reloadData()
+                    }
                     self?.errorLabel.isHidden = !(self?.appsDataProvider?.tipsAndTricksData.isEmpty ?? true)
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
@@ -111,6 +117,9 @@ class QuickHelpViewController: UIViewController {
                     //self?.tableView.reloadData()
                     if dataWasChanged { self?.tableView.reloadData() }
                 } else {
+                    if self?.collaborationDataProvider?.tipsAndTricksData.isEmpty ?? true {
+                        self?.tableView.reloadData()
+                    }
                     self?.errorLabel.isHidden = !(self?.collaborationDataProvider?.tipsAndTricksData.isEmpty ?? true)
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }

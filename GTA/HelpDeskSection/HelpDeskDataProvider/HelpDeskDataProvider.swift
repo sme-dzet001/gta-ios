@@ -289,6 +289,7 @@ class HelpDeskDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
+                self.quickHelpData = generationNumber == 0 ? [] : quickHelpData
                 completion?(true, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
