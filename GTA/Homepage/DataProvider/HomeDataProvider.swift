@@ -53,7 +53,7 @@ class HomeDataProvider {
             return
         } else {
             apiManager.loadImageData(from: url) { (data, response, error) in
-                self.imageCacheManager.storeCacheResponse(response, data: data, error: error)
+                self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
                 DispatchQueue.main.async {
                     completion(data, error)
                 }
@@ -109,6 +109,7 @@ class HomeDataProvider {
                     completion?(code, cachedError)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(errorCode, ResponseError.serverError)
                     } else {
@@ -231,6 +232,7 @@ class HomeDataProvider {
                     completion?(code, cachedError)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(errorCode, ResponseError.serverError)
                     } else {
@@ -266,6 +268,7 @@ class HomeDataProvider {
                     completion?(code, cachedError)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(errorCode, ResponseError.serverError)
                     } else {

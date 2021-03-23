@@ -347,7 +347,7 @@ class CollaborationDataProvider {
                 completion?(cachedResponse, nil)
             } else {
                 apiManager.loadImageData(from: url) { (data, response, error) in
-                    self.imageCacheManager.storeCacheResponse(response, data: data, error: error)
+                    self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
                     DispatchQueue.main.async {
                         completion?(data, error)
                     }

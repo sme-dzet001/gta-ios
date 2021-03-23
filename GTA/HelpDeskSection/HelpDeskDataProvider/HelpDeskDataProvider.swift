@@ -63,6 +63,7 @@ class HelpDeskDataProvider {
                     completion?(cachedResponse, code, error, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(nil, errorCode, ResponseError.serverError, false)
                     } else {
@@ -115,6 +116,7 @@ class HelpDeskDataProvider {
     func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                self?.cacheData(reportResponse, path: .getSectionReport)
                 if let cahcedReport = self?.parseSectionReport(data: self?.cachedReportData), let serverReport = self?.parseSectionReport(data: reportResponse) {
                     completion(serverReport != cahcedReport)
                 } else {
@@ -280,14 +282,17 @@ class HelpDeskDataProvider {
     
     func getQuickHelpData(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
-            if let _ = data {
-                self?.processQuickHelpSectionReport(data, 200, error, false, completion)
-            }
+            //if let _ = data {
+            self?.processQuickHelpSectionReport(data, error == nil ? 200 : 0, error, true, { (dataWasChanged, code, error) in
+                if error == nil {
+                    completion?(dataWasChanged, code, error)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    self?.processQuickHelpSectionReport(reportResponse, errorCode, error, false, completion)
+                })
+            })
         }
-        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-            self?.cacheData(reportResponse, path: .getSectionReport)
-            self?.processQuickHelpSectionReport(reportResponse, errorCode, error, false, completion)
-        })
     }
     
     private func fillQuickHelpData(with quickHelpResponse: QuickHelpResponse) {
@@ -390,7 +395,7 @@ class HelpDeskDataProvider {
                         completion(nil, error)
                     }
                 } else {
-                    self.imageCacheManager.storeCacheResponse(response, data: data, error: error)
+                    self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
                     DispatchQueue.main.async {
                         completion(data, error)
                     }

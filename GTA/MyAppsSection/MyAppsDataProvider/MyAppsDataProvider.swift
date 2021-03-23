@@ -58,7 +58,7 @@ class MyAppsDataProvider {
                     if self.appImageData.keys.contains(urlString), error == nil {
                         self.appImageData[urlString] = data
                     }
-                    self.imageCacheManager.storeCacheResponse(response, data: data, error: error)
+                    self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
                     DispatchQueue.main.async {
                         completion(data, error)
                     }
@@ -75,7 +75,7 @@ class MyAppsDataProvider {
             return
         } else {
             apiManager.loadImageData(from: url) { (data, response, error) in
-                self.imageCacheManager.storeCacheResponse(response, data: data, error: error)
+                self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
                 DispatchQueue.main.async {
                     completion(data, error)
                 }
@@ -91,6 +91,7 @@ class MyAppsDataProvider {
                     completion?(code, cachedError, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(errorCode, ResponseError.serverError, false)
                     } else {
@@ -114,6 +115,7 @@ class MyAppsDataProvider {
                     completion?(code, cachedError, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(errorCode, ResponseError.serverError, false)
                     } else {
@@ -159,6 +161,7 @@ class MyAppsDataProvider {
                     completion?(dataWasChanged, code, cachedError, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(false, errorCode, ResponseError.serverError, false)
                     } else {
@@ -236,6 +239,7 @@ class MyAppsDataProvider {
     func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                self?.cacheData(reportResponse, path: .getSectionReport)
                 if let cachedReport = self?.parseSectionReport(data: self?.cachedReportData), let serverReport = self?.parseSectionReport(data: reportResponse) {
                     completion(serverReport != cachedReport)
                 } else {
