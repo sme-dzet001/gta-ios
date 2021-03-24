@@ -11,12 +11,13 @@ import PDFKit
 class AppTipsAndTricksViewController: UIViewController {
 
     @IBOutlet var pdfView: PDFView!
-    @IBOutlet weak var errorLabel: UILabel!
+    //@IBOutlet weak var errorLabel: UILabel!
     private var documentData: Data?
     
     var appName: String?
     var pdfUrlString: String?
     private var dataProvider: MyAppsDataProvider = MyAppsDataProvider()
+    private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidLoad() {
@@ -27,14 +28,10 @@ class AppTipsAndTricksViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addErrorLabel(errorLabel)
         setUpPDFView()
         startAnimation()
         getAppTipsAndTricks()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.stopAnimation()
     }
     
     private func setUpNavigationItem() {
@@ -63,8 +60,7 @@ class AppTipsAndTricksViewController: UIViewController {
         self.pdfView.alpha = 0
         self.errorLabel.isHidden = true
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
-        self.activityIndicator.hidesWhenStopped = true
+        self.addLoadingIndicator(activityIndicator)
         self.activityIndicator.startAnimating()
     }
     

@@ -16,10 +16,11 @@ class CollaborationViewController: UIViewController {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerTitleLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
-    @IBOutlet weak var errorLabel: UILabel!
+    //@IBOutlet weak var errorLabel: UILabel!
 
     private var headerTitleView: CollaborationHeader = CollaborationHeader.instanceFromNib()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var errorLabel: UILabel = UILabel()
     
     private var dataSource: [CollaborationCellData] = []
     
@@ -34,20 +35,15 @@ class CollaborationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addErrorLabel(errorLabel)
         getCollaborationDetails()
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        stopAnimation()
     }
     
     private func startAnimation() {
         self.tableView.alpha = 0
         errorLabel.isHidden = true
-        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
-        activityIndicator.hidesWhenStopped = true
+        self.addLoadingIndicator(activityIndicator)
         activityIndicator.startAnimating()
     }
     
@@ -87,7 +83,7 @@ class CollaborationViewController: UIViewController {
     private func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "CollaborationHeaderCell", bundle: nil), forCellReuseIdentifier: "CollaborationHeaderCell")
+        tableView.register(UINib(nibName: "AboutInfoCell", bundle: nil), forCellReuseIdentifier: "AboutInfoCell")
         tableView.register(UINib(nibName: "HelpDeskCell", bundle: nil), forCellReuseIdentifier: "HelpDeskCell")
         tableView.register(UINib(nibName: "Office365AppCell", bundle: nil), forCellReuseIdentifier: "Office365AppCell")
     }
@@ -101,6 +97,7 @@ class CollaborationViewController: UIViewController {
     
     private func showContactsScreen() {
         let contactsScreen = AppContactsViewController()
+        contactsScreen.collaborationDataProvider = dataProvider
         contactsScreen.isCollaborationContacts = true
         contactsScreen.appName = "Office365"
         navigationController?.pushViewController(contactsScreen, animated: true)
@@ -110,6 +107,7 @@ class CollaborationViewController: UIViewController {
         let quickHelpVC = QuickHelpViewController()
         quickHelpVC.appName = "Office365"
         quickHelpVC.screenType = .collaborationTipsAndTricks
+        quickHelpVC.collaborationDataProvider = dataProvider
         navigationController?.pushViewController(quickHelpVC, animated: true)
     }
     
@@ -145,8 +143,8 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "CollaborationHeaderCell", for: indexPath) as? CollaborationHeaderCell {
-            cell.descriptionLabel.attributedText = createAttributedString(for: dataProvider.collaborationDetails?.description)
+        if indexPath.row == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AboutInfoCell", for: indexPath) as? AboutInfoCell {
+            cell.descriptionLabel.text = dataProvider.collaborationDetails?.description//createAttributedString(for: dataProvider.collaborationDetails?.description)
             return cell
         }
         if indexPath.row == 1, let cell = tableView.dequeueReusableCell(withIdentifier: "Office365AppCell", for: indexPath) as? Office365AppCell {

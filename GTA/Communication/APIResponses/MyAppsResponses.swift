@@ -153,7 +153,7 @@ struct ChartData {
     var value: Int?
 }
 
-struct AppContactsData: Codable {
+struct AppContactsData: Codable, Equatable {
     var meta: ResponseMetaData
     var data: [String : UserData]?
     
@@ -192,6 +192,11 @@ struct AppContactsData: Codable {
         case meta
         case data
     }
+    
+    static func == (lhs: AppContactsData, rhs: AppContactsData) -> Bool {
+        return lhs.contactsData == rhs.contactsData
+    }
+    
 }
 
 struct AppDetailsData: Codable {
@@ -207,6 +212,11 @@ struct AppDetailsData: Codable {
     
     var appTitle: String? {
         guard let _ = values, let index = indexes["app title"], values!.count > index else { return nil }
+        return values?[index]?.stringValue
+    }
+    
+    var appIcon: String? {
+        guard let _ = values, let index = indexes["app icon"], values!.count > index else { return nil }
         return values?[index]?.stringValue
     }
     

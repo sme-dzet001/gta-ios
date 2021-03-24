@@ -80,7 +80,7 @@ struct TipsAndTricksData: Codable {
     var data: TipsAndTricksRows?
 }
 
-struct TipsAndTricksRow: Codable, QuickHelpDataProtocol {
+struct TipsAndTricksRow: Codable, QuickHelpDataProtocol, Equatable {
     var values: [QuantumValue?]?
     var indexes: [String : Int] = [:]
     

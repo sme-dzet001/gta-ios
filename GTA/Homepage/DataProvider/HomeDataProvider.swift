@@ -53,7 +53,7 @@ class HomeDataProvider {
             return
         } else {
             apiManager.loadImageData(from: url) { (data, response, error) in
-                self.imageCacheManager.storeCacheResponse(response, data: data)
+                self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
                 DispatchQueue.main.async {
                     completion(data, error)
                 }
@@ -109,6 +109,7 @@ class HomeDataProvider {
                     completion?(code, cachedError)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(errorCode, ResponseError.serverError)
                     } else {
@@ -140,11 +141,11 @@ class HomeDataProvider {
             }
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(errorCode, retError)
+            completion?(0, retError)
         }
     }
     
@@ -215,11 +216,11 @@ class HomeDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(errorCode, retError)
+            completion?(0, retError)
         }
     }
     
@@ -231,6 +232,7 @@ class HomeDataProvider {
                     completion?(code, cachedError)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(errorCode, ResponseError.serverError)
                     } else {
@@ -266,6 +268,7 @@ class HomeDataProvider {
                     completion?(code, cachedError)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(errorCode, ResponseError.serverError)
                     } else {
@@ -299,10 +302,10 @@ class HomeDataProvider {
             }
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(errorCode, error)
+            completion?(0, error)
         }
     }
     

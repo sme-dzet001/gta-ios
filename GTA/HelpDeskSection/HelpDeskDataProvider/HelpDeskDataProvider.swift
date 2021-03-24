@@ -27,31 +27,48 @@ class HelpDeskDataProvider {
     }
     
     func getGSDStatus(completion: ((_ reportData: GSDStatus?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        getSectionReport() { [weak self] (reportResponse, errorCode, error, isFromCache) in
-            let reportData = self?.parseSectionReport(data: reportResponse)
-            let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdStatus.rawValue }?.generationNumber
-            if let _ = generationNumber, generationNumber != 0 {
-                if isFromCache {
-                    self?.getCachedResponse(for: .getGSDStatus) {[weak self] (data, error) in
-                        if let _ = data {
-                            self?.processGSDStatus(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
-                        }
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleGSDStatusSectionReport(reportData: data, isFromCache: true, errorCode: code, error: cachedError, completion: { (data, code, error, _) in
+                if error == nil {
+                    completion?(data, code, cachedError, true)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    if let _ = error {
+                        completion?(nil, errorCode, ResponseError.serverError, false)
+                    } else {
+                        self?.handleGSDStatusSectionReport(reportData: reportResponse, isFromCache: false, errorCode: code, error: error, completion: completion)
                     }
-                    return
-                }
-                self?.apiManager.getGSDStatus(generationNumber: generationNumber!, completion: { (data, errorCode, error) in
-                    let dataWithStatus = self?.addStatusRequest(to: data)
-                    self?.cacheData(dataWithStatus, path: .getGSDStatus)
-                    self?.processGSDStatus(data: dataWithStatus, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
                 })
-            } else {
-                if error != nil || generationNumber == 0 {
-                    completion?(nil, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
-                    return
+            })
+        }
+        
+    }
+        
+    
+    private func handleGSDStatusSectionReport(reportData: Data?, isFromCache: Bool, errorCode: Int, error: Error?, completion: ((_ reportData: GSDStatus?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+        let reportData = self.parseSectionReport(data: reportData)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdProfile.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdStatus.rawValue }?.generationNumber
+        if let _ = generationNumber, generationNumber != 0 {
+            if isFromCache {
+                self.getCachedResponse(for: .getGSDStatus) {[weak self] (data, error) in
+                    if error == nil{
+                        self?.processGSDStatus(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+                    }
                 }
-                let retError = ResponseError.serverError
-                completion?(nil, errorCode, retError, isFromCache)
+                return
             }
+            self.apiManager.getGSDStatus(generationNumber: generationNumber!, completion: {[weak self] (data, errorCode, error) in
+                let dataWithStatus = self?.addStatusRequest(to: data)
+                self?.cacheData(dataWithStatus, path: .getGSDStatus)
+                self?.processGSDStatus(data: dataWithStatus, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+            })
+        } else {
+            if error != nil || generationNumber == 0 {
+                completion?(nil, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
+                return
+            }
+            completion?(nil, 0, error, false)
         }
     }
     
@@ -63,6 +80,7 @@ class HelpDeskDataProvider {
                     completion?(cachedResponse, code, error, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(nil, errorCode, ResponseError.serverError, false)
                     } else {
@@ -91,30 +109,31 @@ class HelpDeskDataProvider {
             }
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(nil, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
+                completion?(nil, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(nil, errorCode, retError, isFromCache)
+            completion?(nil, 0, retError, isFromCache)
         }
     }
     
-    private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
-        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
-            self?.cachedReportData = data
-            if let _ = data, cachedError == nil {
-                completion?(data, 200, cachedError, true)
-            }
-            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-                self?.cacheData(reportResponse, path: .getSectionReport)
-                completion?(reportResponse, errorCode, error, false)
-            })
-        }
-    }
+//    private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
+//        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+//            self?.cachedReportData = data
+//            if let _ = data, cachedError == nil {
+//                completion?(data, 200, cachedError, true)
+//            }
+//            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+//                self?.cacheData(reportResponse, path: .getSectionReport)
+//                completion?(reportResponse, errorCode, error, false)
+//            })
+//        }
+//    }
     
     func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                self?.cacheData(reportResponse, path: .getSectionReport)
                 if let cahcedReport = self?.parseSectionReport(data: self?.cachedReportData), let serverReport = self?.parseSectionReport(data: reportResponse) {
                     completion(serverReport != cahcedReport)
                 } else {
@@ -270,24 +289,28 @@ class HelpDeskDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(true, errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                self.quickHelpData = generationNumber == 0 ? [] : quickHelpData
+                completion?(true, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(true, errorCode, retError)
+            completion?(true, 0, retError)
         }
     }
     
     func getQuickHelpData(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
-            if let _ = data {
-                self?.processQuickHelpSectionReport(data, 200, error, false, completion)
-            }
+            //if let _ = data {
+            self?.processQuickHelpSectionReport(data, error == nil ? 200 : 0, error, true, { (dataWasChanged, code, error) in
+                if error == nil {
+                    completion?(dataWasChanged, code, error)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    self?.processQuickHelpSectionReport(reportResponse, errorCode, error, false, completion)
+                })
+            })
         }
-        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-            self?.cacheData(reportResponse, path: .getSectionReport)
-            self?.processQuickHelpSectionReport(reportResponse, errorCode, error, false, completion)
-        })
     }
     
     private func fillQuickHelpData(with quickHelpResponse: QuickHelpResponse) {
@@ -335,11 +358,11 @@ class HelpDeskDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(errorCode, retError)
+            completion?(0, retError)
         }
     }
     
@@ -437,7 +460,7 @@ class HelpDeskDataProvider {
                         completion(nil, error)
                     }
                 } else {
-                    self.imageCacheManager.storeCacheResponse(response, data: data)
+                    self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
                     DispatchQueue.main.async {
                         completion(data, error)
                     }

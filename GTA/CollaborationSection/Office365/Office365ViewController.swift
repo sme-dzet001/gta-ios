@@ -10,10 +10,11 @@ import UIKit
 class Office365ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var errorLabel: UILabel!
+    //@IBOutlet weak var errorLabel: UILabel!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-        
+    private var errorLabel: UILabel = UILabel()
+    
     var dataProvider: CollaborationDataProvider?
     var appName: String = ""
     
@@ -25,13 +26,9 @@ class Office365ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addErrorLabel(errorLabel)
         getAppSuiteDetails()
         dataProvider?.office365AppsDelegate = self
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        stopAnimation()
     }
     
     private func setUpNavigationItem() {
@@ -51,8 +48,7 @@ class Office365ViewController: UIViewController {
     private func startAnimation() {
         self.tableView.alpha = 0
         errorLabel.isHidden = true
-        self.navigationController?.addAndCenteredActivityIndicator(activityIndicator)
-        activityIndicator.hidesWhenStopped = true
+        self.addLoadingIndicator(activityIndicator)
         activityIndicator.startAnimating()
     }
     
