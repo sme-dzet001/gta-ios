@@ -43,12 +43,12 @@ class MyTicketsViewController: UIViewController {
         ]
         
         myTicketsData = [
-            TicketData(status: .closed, number: "87654321", issue: "Account Reset", comments: comments),
-            TicketData(status: .open, number: "87654321", issue: "Reactivate Account", comments: comments),
-            TicketData(status: .open, number: "87654321", issue: "VPN Issue", comments: comments),
-            TicketData(status: .closed, number: "87654321", issue: "System Issue", comments: comments),
-            TicketData(status: .open, number: "87654321", issue: "Account Reset", comments: comments),
-            TicketData(status: .open, number: "87654321", issue: "Account Reset", comments: comments)
+            TicketData(status: .closed, number: "87654321", owner: "Name", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments),
+            TicketData(status: .new, number: "87654321", owner: "Namet", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments),
+            TicketData(status: .new, number: "87654321", owner: "Name", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments),
+            TicketData(status: .closed, number: "87654321", owner: "Name", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments),
+            TicketData(status: .new, number: "87654321", owner: "Name", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments),
+            TicketData(status: .new, number: "87654321", owner: "Name", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments)
         ]
     }
     
@@ -103,7 +103,7 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
             ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
             if !UIDevice.current.iPhone5_se {
                 let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
-                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / coefficient)
+                ticketDetailsVC.initialHeight = .maxHeight// PanModalHeight.contentHeight(self.view.frame.height / coefficient)
             }
             presentPanModal(ticketDetailsVC)
         //}
@@ -116,11 +116,16 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 struct TicketData {
+    var ticketSubject: String?
     var status: TicketStatus
     var number: String?
     var openDate: Date? = Date()
     var statusDate: Date? = Date()
-    var issue: String?
+    var owner: String?
+    var approvalStatus: String?
+    var SLAPriority: String?
+    var description: String?
+    var finalNote: String?
     var comments: [TicketComment]
 }
 
@@ -131,6 +136,6 @@ struct TicketComment {
 }
 
 enum TicketStatus {
-    case open
+    case new
     case closed
 }

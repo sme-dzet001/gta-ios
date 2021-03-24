@@ -83,7 +83,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     
     override func viewDidLayoutSubviews() {
         configureBlurViewPosition()
-        if dataSource?.status == .open {
+        if dataSource?.status == .new {
             panModalTransition(to: .longForm)
         }
     }
@@ -104,11 +104,11 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     private func addDetailsView() {
-        let detailsView = TicketDatailsHeader.instanceFromNib()
-        detailsView.fillHeaderLabels(with: dataSource)
-        let sdsdd = self.headerView.frame.height + self.headerView.frame.origin.y
-        detailsView.frame = CGRect(x: 0, y: sdsdd, width: self.view.frame.width, height: 190)
-        view.insertSubview(detailsView, belowSubview: navigationView) //addSubview(detailsView)
+//        let detailsView = TicketDatailsHeader.instanceFromNib()
+//        detailsView.fillHeaderLabels(with: dataSource)
+//        let sdsdd = self.headerView.frame.height + self.headerView.frame.origin.y
+//        detailsView.frame = CGRect(x: 0, y: sdsdd, width: self.view.frame.width, height: 190)
+//        view.insertSubview(detailsView, belowSubview: navigationView) //addSubview(detailsView)
     }
     
     private func setUpTableView() {

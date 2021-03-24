@@ -25,8 +25,8 @@ class TicketCell: UITableViewCell {
 
     func setUpCell(with data: TicketData, hideSeparator: Bool = false) {
         switch data.status {
-        case .open:
-            statusLabel.text = "Open"
+        case .new:
+            statusLabel.text = "New"
             statusDateStackView.isHidden = true
             separatorUnderStatusDate.isHidden = true
             statusLabel.textColor = UIColor(hex: 0x34C759)

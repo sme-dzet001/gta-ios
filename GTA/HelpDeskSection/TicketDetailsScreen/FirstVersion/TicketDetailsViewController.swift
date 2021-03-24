@@ -16,8 +16,6 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
     @IBOutlet weak var screenTitleView: UIView!
     @IBOutlet weak var blurView: UIView!
-   // @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var detailsTableView: UITableView!
     
     private var heightObserver: NSKeyValueObservation?
     lazy var textView = SendMessageView.instanceFromNib()
@@ -27,7 +25,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
         
     var panScrollable: UIScrollView? {
-        return detailsTableView//tableView
+        return tableView
     }
     
     var topOffset: CGFloat {
@@ -83,14 +81,11 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
             self?.configureBlurViewPosition()
             self?.configurePosition()
         })
-        let count = dataSource?.comments.count ?? 0
-        let indexPath = IndexPath(row: count < 0 ? 0 : count - 1, section: 0)
-        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
     override func viewDidLayoutSubviews() {
         configureBlurViewPosition()
-        if dataSource?.status == .open && isFirstTime {
+        if dataSource?.status == .new && isFirstTime {
             panModalTransition(to: .longForm)
         }
     }
@@ -116,27 +111,27 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     private func setUpTextViewIfNeeded() {
-        guard dataSource?.status == .open else { return }
-        textView.setUpTextView()
-        var coefficient: CGFloat = 0
-        if #available(iOS 13.0, *) {
-            coefficient = view.window?.safeAreaInsets.top ?? 0 > 24 ? 86 : 66
-        } else {
-            coefficient = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? 86 : 66
-        }
-        textView.frame = CGRect(x: 24, y: self.view.frame.height - coefficient, width: self.view.frame.width - 48, height: 56)
-        tableViewBottom?.constant = 66
-        self.view.addSubview(textView)
-        textView.textView.delegate = self
-        textView.sendButtonDelegate = self
+        guard dataSource?.status == .new else { return }
+//        textView.setUpTextView()
+//        var coefficient: CGFloat = 0
+//        if #available(iOS 13.0, *) {
+//            coefficient = view.window?.safeAreaInsets.top ?? 0 > 24 ? 86 : 66
+//        } else {
+//            coefficient = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? 86 : 66
+//        }
+//        textView.frame = CGRect(x: 24, y: self.view.frame.height - coefficient, width: self.view.frame.width - 48, height: 56)
+//        tableViewBottom?.constant = 66
+//        self.view.addSubview(textView)
+//        textView.textView.delegate = self
+//        textView.sendButtonDelegate = self
     }
     
     private func configurePosition() {
-        guard dataSource?.status == .open else { return }
-        let coefficient: CGFloat = UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se ? 10 : 0
-        textView.frame.origin.y = position - textView.frame.height - (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) - coefficient
-        let subtract = self.view.frame.height - position + 66 + (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) + coefficient
-        tableViewBottom?.constant = subtract <= 66 ? 66 : subtract
+        guard dataSource?.status == .new else { return }
+//        let coefficient: CGFloat = UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se ? 10 : 0
+//        textView.frame.origin.y = position - textView.frame.height - (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) - coefficient
+//        let subtract = self.view.frame.height - position + 66 + (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) + coefficient
+//        tableViewBottom?.constant = subtract <= 66 ? 66 : subtract
     }
     
     private func setUpTableView() {
@@ -144,10 +139,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         tableView.dataSource = self
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "TicketDetailsMessageCell", bundle: nil), forCellReuseIdentifier: "TicketDetailsMessageCell")
-        detailsTableView.register(UINib(nibName: "TicketDetailsHeaderCell", bundle: nil), forCellReuseIdentifier: "TicketDetailsHeaderCell")
-        detailsTableView.dataSource = self
-        detailsTableView.delegate = self
-        detailsTableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.register(UINib(nibName: "TicketDescriptionCell", bundle: nil), forCellReuseIdentifier: "TicketDescriptionCell")
     }
 
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
@@ -192,28 +184,28 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
 
 extension TicketDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = TicketDatailsHeader.instanceFromNib()
-        header.fillHeaderLabels(with: dataSource)
-        return nil//header
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0//190
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let header = TicketDatailsHeader.instanceFromNib()
+//        header.fillHeaderLabels(with: dataSource)
+//        return nil//header
+//    }
+//    
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 0//290
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableView == detailsTableView ? 1 : dataSource?.comments.count ?? 0
+        return (dataSource?.comments.count ?? 0) + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == detailsTableView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDetailsHeaderCell", for: indexPath) as? TicketDetailsHeaderCell
-            //cell?.fillCell(with: dataSource?.comments[indexPath.row])
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDescriptionCell", for: indexPath) as? TicketDescriptionCell
+            cell?.setUpCell(with: dataSource)
             return cell ?? UITableViewCell()
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDetailsMessageCell", for: indexPath) as? TicketDetailsMessageCell
-        cell?.fillCell(with: dataSource?.comments[indexPath.row])
+        cell?.fillCell(with: dataSource?.comments[indexPath.row - 1])
         return cell ?? UITableViewCell()
     }
     
