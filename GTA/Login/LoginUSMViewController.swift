@@ -38,11 +38,7 @@ class LoginUSMViewController: UIViewController {
         ])
         usmWebView.navigationDelegate = self
         usmWebView.uiDelegate = self
-        #if QA_GTAStage
-        validateToken(token: token)
-        #else
         loadUsmLogon()
-        #endif
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +78,10 @@ class LoginUSMViewController: UIViewController {
     }
     
     private func loadUsmLogon() {
+        if !token.isEmpty {
+            validateToken(token: token)
+            return
+        }
         removeCookies()
         
         let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)

@@ -76,7 +76,8 @@ class LoginViewController: UIViewController {
         if let usmLoginScreen = storyboard.instantiateViewController(withIdentifier: "LoginUSMViewController") as? LoginUSMViewController {
             usmLoginScreen.emailAddress = emailText
             #if QA_GTAStage
-            usmLoginScreen.token = String(emailTextField.text?.split(separator: " ").last ?? "")
+            let token = String(emailTextField.text?.split(separator: " ").last ?? "")
+            usmLoginScreen.token = token != emailText ? token : ""
             #endif
             self.navigationController?.pushViewController(usmLoginScreen, animated: true)
         }
