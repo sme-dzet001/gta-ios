@@ -309,6 +309,10 @@ extension String {
         return "yyyy-MM-dd'T'HH:mm:ss"
     }
     
+    static func getTicketDateFormat(for date: Date) -> String {
+        return "E MMM d'\(date.daySuffix())', yyyy h:mm a"
+    }
+    
     static var ticketsSectionDateFormat: String {
         return "E MMM dd, yyyy hh:mm a"
     }
@@ -353,7 +357,7 @@ extension String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.ticketDateFormat
         guard let date = dateFormatterPrint.date(from: self) else { return self }
-        dateFormatterPrint.dateFormat = String.ticketsSectionDateFormat
+        dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
         return dateFormatterPrint.string(from: date)
     }
     
