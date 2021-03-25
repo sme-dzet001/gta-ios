@@ -21,6 +21,10 @@ class HelpDeskViewController: UIViewController {
     var helpDeskResponseError: Error?
     
     private var helpDeskCellsData: [[HelpDeskCellData]] = []
+    weak var ticketsNumberDelegate: TicketsNumberDelegate?
+    private var numberOfTickets: Int? {
+        return dataProvider.myTickets?.count
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +41,17 @@ class HelpDeskViewController: UIViewController {
             startAnimation()
             self.getHelpDeskData()
         }
+        getMyTickets()
         navigationController?.setNavigationBarHidden(true, animated: animated)
         activateStatusRefresh()
+    }
+    
+    private func getMyTickets() {
+        dataProvider.getMyTickets {[weak self] (_, _, dataWasChanged) in
+            DispatchQueue.main.async {
+                if dataWasChanged { self?.ticketsNumberDelegate?.ticketNumberUpdated(self?.numberOfTickets) }
+            }
+        }
     }
     
     private func activateStatusRefresh() {
@@ -129,7 +142,7 @@ class HelpDeskViewController: UIViewController {
             [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, etc.", updatesNumber: nil),
             HelpDeskCellData(imageName: "about_red_icon", cellTitle: "About", cellSubtitle: aboutCellSubtitle, updatesNumber: nil),
             HelpDeskCellData(imageName: "contacts_icon", cellTitle: "Service Desk Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil),
-            HelpDeskCellData(imageName: "my_tickets_icon", cellTitle: "My Tickets", cellSubtitle: "Help Desk Ticket History", updatesNumber: 6)]
+            HelpDeskCellData(imageName: "my_tickets_icon", cellTitle: "My Tickets", cellSubtitle: "Help Desk Ticket History", updatesNumber: numberOfTickets)]
             //HelpDeskCellData(imageName: "my_devices_icon", cellTitle: "My Devices", cellSubtitle: "Manage Devices, Request Upgrades, etc.", updatesNumber: 5)]
         ]
     }
@@ -155,7 +168,11 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
             }
         } else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HelpDeskCell", for: indexPath) as? HelpDeskCell {
-                let cellData = helpDeskCellsData[indexPath.section][indexPath.row]
+                var cellData = helpDeskCellsData[indexPath.section][indexPath.row]
+                if cellData.cellTitle == "My Tickets" {
+                    ticketsNumberDelegate = cell
+                    cellData.updatesNumber = numberOfTickets
+                }
                 let cellIsActive = cellData.cellSubtitle != "Oops, something went wrong"
                 cell.setUpCell(with: cellData, isActive: cellIsActive)
                 return cell
@@ -209,6 +226,7 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(contactsVC, animated: true)
         } else if indexPath.row == 3 {
             let myTicketsVC = MyTicketsViewController()
+            myTicketsVC.dataProvider = dataProvider
             navigationController?.pushViewController(myTicketsVC, animated: true)
         } else if indexPath.row == 4 {
             let myDevicesVC = MyDevicesViewController()
@@ -278,3 +296,9 @@ protocol ContactsCellDataProtocol {
     var cellSubtitle: String? {get set}
     var updatesNumber: Int? {get set}
 }
+
+protocol TicketsNumberDelegate: class {
+    func ticketNumberUpdated(_ number: Int?)
+}
+
+

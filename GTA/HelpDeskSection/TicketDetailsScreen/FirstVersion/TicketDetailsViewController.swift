@@ -17,8 +17,11 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     @IBOutlet weak var screenTitleView: UIView!
     @IBOutlet weak var blurView: UIView!
     
+    var dataProvider: HelpDeskDataProvider?    
     private var heightObserver: NSKeyValueObservation?
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     lazy var textView = SendMessageView.instanceFromNib()
+    private var commentsLoadingError: Error?
     
     private var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
@@ -41,7 +44,9 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     var shortFormHeight: PanModalHeight {
-        return initialHeight
+        guard !UIDevice.current.iPhone5_se else { return .maxHeight }
+        let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
+        return PanModalHeight.contentHeight(self.view.frame.height / coefficient)
     }
     
     var allowsExtendedPanScrolling: Bool {
@@ -51,8 +56,6 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     var longFormHeight: PanModalHeight {
         return .maxHeight
     }
-        
-    var initialHeight: PanModalHeight = .maxHeight
     
     private var isFirstTime: Bool = true
     
@@ -60,7 +63,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         return 20
     }
     
-    var dataSource: TicketData?
+    var dataSource: GSDMyTicketsRow?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +84,43 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
             self?.configureBlurViewPosition()
             self?.configurePosition()
         })
+        loadComments()
+    }
+    
+    private func loadComments() {
+        startAnimation()
+        dataProvider?.getTicketComments(ticketNumber: dataSource?.ticketNumber ?? "", completion: {[weak self] (errorCode, error, dataWasChanged) in
+            DispatchQueue.main.async {
+                self?.commentsLoadingError = error
+                self?.stopAnimation()
+                if error == nil && errorCode == 200 {
+                    if let index = self?.dataProvider?.myTickets?.firstIndex(where: {$0.ticketNumber == self?.dataSource?.ticketNumber}) {
+                        self?.dataSource?.comments = self?.dataProvider?.myTickets?[index].comments?.compactMap({$0}) ?? []
+                    }
+                    //self?.tableView.isHidden = false
+                    if dataWasChanged { self?.tableView.reloadData() }
+                } else {
+                    if self?.dataSource?.comments == nil || (self?.dataSource?.comments ?? []).isEmpty {
+                        self?.tableView.reloadData()
+                    }
+                }
+            }
+        })
+    }
+    
+    private func startAnimation() {
+        self.commentsLoadingError = nil
+        guard (dataSource?.comments ?? []).isEmpty else { return }
+        self.tableView.alpha = 0
+        self.addLoadingIndicator(activityIndicator)
+        self.activityIndicator.startAnimating()
+        self.addLoadingIndicator(activityIndicator, isGSD: true)
+    }
+
+    private func stopAnimation() {
+        self.tableView.alpha = 1
+        self.activityIndicator.stopAnimating()
+        self.activityIndicator.removeFromSuperview()
     }
     
     override func viewDidLayoutSubviews() {
@@ -184,28 +224,29 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
 
 extension TicketDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let header = TicketDatailsHeader.instanceFromNib()
-//        header.fillHeaderLabels(with: dataSource)
-//        return nil//header
-//    }
-//    
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 0//290
-//    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (dataSource?.comments.count ?? 0) + 1
+        guard section > 0 else { return 1 }
+        if let _ = commentsLoadingError, (dataSource?.comments ?? []).isEmpty {
+            return 1
+        }
+        return dataSource?.comments?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+        if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDescriptionCell", for: indexPath) as? TicketDescriptionCell
             cell?.setUpCell(with: dataSource)
             return cell ?? UITableViewCell()
         }
+        if let _ = commentsLoadingError {
+            return createErrorCell(with: (commentsLoadingError as? ResponseError)?.localizedDescription)
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDetailsMessageCell", for: indexPath) as? TicketDetailsMessageCell
-        cell?.fillCell(with: dataSource?.comments[indexPath.row - 1])
+        cell?.fillCell(with: dataSource?.comments?[indexPath.row])
         return cell ?? UITableViewCell()
     }
     

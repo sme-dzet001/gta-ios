@@ -189,3 +189,134 @@ struct GSDStatusRow: Codable {
     var values: [QuantumValue?]?
 }
 
+struct GSDMyTickets: Codable {
+    var meta: ResponseMetaData?
+    var data: [String : GSDMyTicketsData?]?
+}
+
+struct GSDMyTicketsData: Codable {
+    var data: GSDMyTicketsRows?
+}
+
+struct GSDMyTicketsRows: Codable {
+    var rows: [GSDMyTicketsRow?]?
+}
+
+struct GSDMyTicketsRow: Codable, Equatable {
+    var values: [QuantumValue?]?
+    var indexes: [String : Int] = [:]
+    var comments: [GSDTicketCommentsRow?]?
+    
+    enum CodingKeys: String, CodingKey {
+        case values = "values"
+    }
+    
+    var ticketNumber: String? {
+        guard let values = values, let index = indexes["ticket number"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    var requestorEmail: String? {
+        guard let values = values, let index = indexes["requestor email"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    var openDate: String? {
+        guard let values = values, let index = indexes["open date"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    var closeDate: String? {
+        guard let values = values, let index = indexes["close date"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    var subject: String? {
+        guard let values = values, let index = indexes["subject"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    var description: String? {
+        guard let values = values, let index = indexes["description"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    var owner: String? {
+        guard let values = values, let index = indexes["owner"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    var status: TicketStatus {
+        guard let values = values, let index = indexes["status"], values.count > index else { return .none }
+        switch values[index]?.stringValue?.lowercased() {
+        case "new":
+            return .new
+        case "closed":
+            return .closed
+        case "open":
+            return .open
+        default:
+            return .none
+        }
+    }
+    
+    static func == (lhs: GSDMyTicketsRow, rhs: GSDMyTicketsRow) -> Bool {
+        return lhs.ticketNumber == rhs.ticketNumber && lhs.openDate == rhs.openDate && lhs.closeDate == rhs.closeDate && lhs.owner == rhs.owner && lhs.status == rhs.status && lhs.description == rhs.description && lhs.subject == rhs.subject
+    }
+    
+}
+
+struct GSDTicketCommentsResponse: Codable {
+    var meta: ResponseMetaData?
+    var data: [String : [String : GSDTicketCommentsData?]]?
+}
+
+struct GSDTicketCommentsData: Codable {
+    var data: GSDTicketCommentsRows?
+}
+
+struct GSDTicketCommentsRows: Codable {
+    var rows: [GSDTicketCommentsRow?]?
+}
+
+struct GSDTicketCommentsRow: Codable, Equatable {
+    var values: [QuantumValue?]?
+    var indexes: [String : Int] = [:]
+    var decodedBody: NSMutableAttributedString?
+    var isSenderMe: Bool = false
+    
+    enum CodingKeys: String, CodingKey {
+        case values = "values"
+    }
+    
+    var createdBy: String? {
+        guard let values = values, let index = indexes["created by"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    var ticketNumber: String? {
+        guard let values = values, let index = indexes["ticket number"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    var requestorEmail: String? {
+        guard let values = values, let index = indexes["ticket requestor email"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    var createdDate: String? {
+        guard let values = values, let index = indexes["created date"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    
+    var body: String? {
+        guard let values = values, let index = indexes["body"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    
+    static func == (lhs: GSDTicketCommentsRow, rhs: GSDTicketCommentsRow) -> Bool {
+        return lhs.ticketNumber == rhs.ticketNumber && lhs.requestorEmail == rhs.requestorEmail && lhs.body == rhs.body
+    }
+    
+}

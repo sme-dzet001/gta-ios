@@ -17,33 +17,36 @@ class TicketCell: UITableViewCell {
     @IBOutlet weak var separatorUnderStatusDate: UIView!
     @IBOutlet weak var statusDateStackView: UIStackView!
     @IBOutlet weak var statusDateLabel: UILabel!
+    @IBOutlet weak var ticketSubject: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    func setUpCell(with data: TicketData, hideSeparator: Bool = false) {
-        switch data.status {
-        case .new:
-            statusLabel.text = "New"
+    func setUpCell(with data: GSDMyTicketsRow?, hideSeparator: Bool = false) {
+        ticketSubject.text = data?.subject
+        separatorUnderStatusDate.isHidden = data?.closeDate == nil ? false : true
+        switch data?.status {
+        case .new, .open:
+            statusLabel.text = data?.status == .new ? "New" : "Open"
             statusDateStackView.isHidden = true
-            separatorUnderStatusDate.isHidden = true
+            //separatorUnderStatusDate.isHidden = true
             statusLabel.textColor = UIColor(hex: 0x34C759)
         case .closed:
             statusLabel.text = "Closed"
             statusDateTitleLabel.text = "Close Date"
-            separatorUnderStatusDate.isHidden = false
+            //separatorUnderStatusDate.isHidden = false
             statusDateStackView.isHidden = false
             statusLabel.textColor = UIColor(hex: 0xFF3E33)
+        default: statusLabel.text = ""
         }
-        numberLabel.text = data.number
-        let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = String.ticketsSectionDateFormat
-        // hardcoding date similar to Figma for now
-        openDateLabel.text = "Wed 15, 2020 10:30 -5 GMT" //dateFormatterPrint.string(from: data.openDate ?? Date())
-        statusDateLabel.text = "Wed 15, 2020 10:30 -5 GMT"//dateFormatterPrint.string(from: data.statusDate ?? Date())
+        numberLabel.text = data?.ticketNumber
+        openDateLabel.text = data?.openDate?.getFormattedDateStringForMyTickets()
+        statusDateLabel.text = data?.closeDate?.getFormattedDateStringForMyTickets()
+        separatorView.isHidden = hideSeparator
         separatorView.isHidden = hideSeparator
     }
     
 }
+

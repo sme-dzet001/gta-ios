@@ -305,8 +305,12 @@ extension String {
         return "yyyy-MM-dd HH:mm:ss"
     }
     
+    static var ticketDateFormat: String {
+        return "yyyy-MM-dd'T'HH:mm:ss"
+    }
+    
     static var ticketsSectionDateFormat: String {
-        return "E MMM d, yyyy"
+        return "E MMM dd, yyyy hh:mm a"
     }
     
     var isValidEmail: Bool {
@@ -344,6 +348,15 @@ extension String {
                                      context: nil)
         return ceil(size.height)
     }
+    
+    func getFormattedDateStringForMyTickets() -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.ticketDateFormat
+        guard let date = dateFormatterPrint.date(from: self) else { return self }
+        dateFormatterPrint.dateFormat = String.ticketsSectionDateFormat
+        return dateFormatterPrint.string(from: date)
+    }
+    
 }
 
 extension Date {

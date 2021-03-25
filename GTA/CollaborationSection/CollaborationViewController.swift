@@ -176,7 +176,7 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
 }
 
 extension CollaborationViewController: AppSuiteIconDelegate {
-    func appSuiteIconChanged(with data: Data?, status: ImageLoadingStatus) {
+    func appSuiteIconChanged(with data: Data?, status: LoadingStatus) {
         DispatchQueue.main.async {
             if let _ = data {
                 self.headerTitleView.headerImageView.image = UIImage(data: data!)
@@ -197,5 +197,5 @@ struct CollaborationCellData: ContactsCellDataProtocol {
     var cellSubtitle: String?
     var updatesNumber: Int?
     var imageData: Data?
-    var imageStatus: ImageLoadingStatus = .loading
+    var imageStatus: LoadingStatus = .loading
 }
