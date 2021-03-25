@@ -596,7 +596,11 @@ class MyAppsDataProvider {
     }
     
     func formTipsAndTricksAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
-        if let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString {
+        var text = base64EncodedText
+        if text?.first == " " {
+            text?.removeFirst()
+        }
+        if let encodedText = text, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString {
             
             let res = NSMutableAttributedString(attributedString: htmlAttrString)
             

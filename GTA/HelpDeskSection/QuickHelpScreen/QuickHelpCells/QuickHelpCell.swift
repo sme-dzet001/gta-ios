@@ -52,6 +52,10 @@ class QuickHelpCell: UITableViewCell {
     }
     
     func setUpCell(question: String?, answer: NSAttributedString?, expandBtnType: ExpandButtonType) {
+        var question = question
+        if question?.first == " " {
+            question?.removeFirst()
+        }
         questionLabel.text = question
         answerLabel.attributedText = answer
         switch expandBtnType {
