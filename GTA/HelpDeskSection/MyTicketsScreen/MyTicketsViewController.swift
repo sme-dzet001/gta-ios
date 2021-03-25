@@ -39,6 +39,8 @@ class MyTicketsViewController: UIViewController {
         let comments = [
             TicketComment(author: "jsmith123", text: "Hello, please reeset my SFTS account access. Thanks!"),
             TicketComment(author: "Help Desk Mario", text: "I have received your request. We will get back to your shortly."),
+            TicketComment(author: "Help Desk Mario", text: "We have reset your account. Please clear your caches and saved passwords. Let us know if you have any further issues."), TicketComment(author: "jsmith123", text: "Hello, please reeset my SFTS account access. Thanks!"),
+            TicketComment(author: "Help Desk Mario", text: "I have received your request. We will get back to your shortly."),
             TicketComment(author: "Help Desk Mario", text: "We have reset your account. Please clear your caches and saved passwords. Let us know if you have any further issues.")
         ]
         
