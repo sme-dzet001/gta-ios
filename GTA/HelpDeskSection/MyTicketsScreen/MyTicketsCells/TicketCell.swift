@@ -43,7 +43,7 @@ class TicketCell: UITableViewCell {
         // hardcoding date similar to Figma for now
         openDateLabel.text = "Wed 15, 2020 10:30 -5 GMT" //dateFormatterPrint.string(from: data.openDate ?? Date())
         statusDateLabel.text = "Wed 15, 2020 10:30 -5 GMT"//dateFormatterPrint.string(from: data.statusDate ?? Date())
-        separatorView.isHidden = hideSeparator
+        //separatorView.isHidden = hideSeparator
     }
     
 }
