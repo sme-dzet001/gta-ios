@@ -45,7 +45,7 @@ class TicketCell: UITableViewCell {
         openDateLabel.text = data?.openDate?.getFormattedDateStringForMyTickets()
         statusDateLabel.text = data?.closeDate?.getFormattedDateStringForMyTickets()
         separatorView.isHidden = hideSeparator
-        separatorView.isHidden = hideSeparator
+        //separatorView.isHidden = hideSeparator
     }
     
 }
