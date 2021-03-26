@@ -12,7 +12,7 @@ class TicketCell: UITableViewCell {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var openDateLabel: UILabel!
-    @IBOutlet weak var separatorView: UIView!
+    //@IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var statusDateTitleLabel: UILabel!
     @IBOutlet weak var separatorUnderStatusDate: UIView!
     @IBOutlet weak var statusDateStackView: UIStackView!
@@ -44,7 +44,6 @@ class TicketCell: UITableViewCell {
         numberLabel.text = data?.ticketNumber
         openDateLabel.text = data?.openDate?.getFormattedDateStringForMyTickets()
         statusDateLabel.text = data?.closeDate?.getFormattedDateStringForMyTickets()
-        separatorView.isHidden = hideSeparator
         //separatorView.isHidden = hideSeparator
     }
     
