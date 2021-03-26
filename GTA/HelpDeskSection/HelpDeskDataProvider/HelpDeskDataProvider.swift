@@ -368,14 +368,16 @@ class HelpDeskDataProvider {
     
     func getTeamContactsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
-            if let _ = data {
-                self?.processTeamContactsSectionReport(data, 200, error, completion)
-            }
+            self?.processTeamContactsSectionReport(data, error == nil ? 200 : 0, error, { (code, error) in
+                if error == nil {
+                    completion?(code, error)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    self?.processTeamContactsSectionReport(reportResponse, errorCode, error, completion)
+                })
+            })
         }
-        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-            self?.cacheData(reportResponse, path: .getSectionReport)
-            self?.processTeamContactsSectionReport(reportResponse, errorCode, error, completion)
-        })
     }
     
     private func fillTeamContactsData(with teamContactsResponse: TeamContactsResponse) {
