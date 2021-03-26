@@ -78,7 +78,7 @@ class LoginUSMViewController: UIViewController {
     }
     
     private func loadUsmLogon() {
-        if !token.isEmpty {
+        if !token.isEmptyOrWhitespace() {
             validateToken(token: token)
             return
         }
