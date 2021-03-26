@@ -47,6 +47,7 @@ class InfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUpConstraints()
+        dataProvider?.officeSelectionDelegate = self
         updateTitleLabel.isHidden = infoType == .office
         officeStatusLabel.isHidden = true//infoType != .office
         officeStatusLabel.layer.cornerRadius = 5
@@ -241,7 +242,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
             }
             officeLocation.title = "Select Sony Music Office Region"
             officeLocation.dataProvider = dataProvider
-            officeLocation.officeSelectionDelegate = self
+            //officeLocation.officeSelectionDelegate = self
             let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
             panModalNavigationController.setNavigationBarHidden(true, animated: true)
             panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight
@@ -297,11 +298,13 @@ extension InfoViewController: OfficeSelectionDelegate {
     }
     
     private func updateUIWithSelectedOffice() {
-        selectedOfficeData = dataProvider?.userOffice
-        self.title = selectedOfficeData?.officeName
-        infoLabel.text = self.title
-        setDataSource()
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.selectedOfficeData = self.dataProvider?.userOffice
+            self.title = self.selectedOfficeData?.officeName
+            self.infoLabel.text = self.title
+            self.setDataSource()
+            self.tableView.reloadData()
+        }
     }
 }
 

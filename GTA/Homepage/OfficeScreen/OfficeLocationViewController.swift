@@ -23,7 +23,7 @@ class OfficeLocationViewController: UIViewController {
     
     private let defaultBackButtonLeading: CGFloat = 24
     
-    weak var officeSelectionDelegate: OfficeSelectionDelegate?
+    //weak var officeSelectionDelegate: OfficeSelectionDelegate?
     
     // bottom params are used to determine if office selection is in progress
     var useMyCurrentLocationIsInProgress = false {
@@ -218,7 +218,7 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
     private func showOfficeLocationVC(for regionName: String) {
         let office = OfficeLocationViewController()
         office.forceOfficeSelection = forceOfficeSelection
-        office.officeSelectionDelegate = officeSelectionDelegate
+        //office.officeSelectionDelegate = officeSelectionDelegate
         office.regionSelectionIsOn = false
         office.title = regionName
         office.selectedRegionName = regionName
@@ -245,7 +245,7 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
                     self?.officeIdGoingToBeSelected = nil
                 }
                 if errorCode == 200, error == nil {
-                    self?.officeSelectionDelegate?.officeWasSelected()
+                    //self?.officeSelectionDelegate?.officeWasSelected()
                     self?.dismiss(animated: true, completion: nil)
                 } else {
                     self?.displayError(errorMessage: "Office Selection Failed", title: nil)
