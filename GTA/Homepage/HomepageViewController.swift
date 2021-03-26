@@ -55,7 +55,12 @@ class HomepageViewController: UIViewController {
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
                     self?.collectionView.reloadData()
                 } else {
-                    self?.errorLabel.isHidden = !(self?.dataProvider.newsDataIsEmpty ?? true)
+                    let isNoData = (self?.dataProvider.newsDataIsEmpty ?? true)
+                    if isNoData {
+                        self?.collectionView.reloadData()
+                    }
+                    self?.pageControl.isHidden = isNoData
+                    self?.errorLabel.isHidden = !isNoData
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
             }
@@ -102,6 +107,7 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard dataProvider.newsData.count > indexPath.row else { return UICollectionViewCell() }
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewsCollectionViewCell", for: indexPath) as? NewsCollectionViewCell {
             let cellDataSource = dataProvider.newsData[indexPath.row]
             let imageURL = dataProvider.formImageURL(from: cellDataSource.posterUrl)
@@ -130,6 +136,7 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard dataProvider.newsData.count > indexPath.row else { return }
         let articleViewController = ArticleViewController()
         articleViewController.appearanceDelegate = self
         var statusBarHeight: CGFloat = 0.0
