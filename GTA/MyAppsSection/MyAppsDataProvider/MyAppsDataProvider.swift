@@ -179,11 +179,14 @@ class MyAppsDataProvider {
         if let _ = generationNumber, generationNumber != 0 {
             if fromCache {
                 getCachedResponse(for: .getAppTipsAndTricks(detailsPath: detailsPath)) {[weak self] (data, error) in
-                    self?.handleAppTipsAndTricks(reportData, false, data, errorCode, error, completion: completion)
+                    self?.handleAppTipsAndTricks(reportData, true, data, errorCode, error, completion: completion)
                 }
                 return
             }
-            guard !detailsPath.isEmptyOrWhitespace() else { return }
+            if detailsPath.isEmptyOrWhitespace() {
+                completion?(false, 0, ResponseError.commonError, fromCache)
+                return
+            }
             apiManager.getAppTipsAndTricks(for: generationNumber!, appName: detailsPath, completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAppTipsAndTricks(detailsPath: detailsPath))
                 self?.handleAppTipsAndTricks(reportData, false, data, errorCode, error, completion: completion)
@@ -212,7 +215,7 @@ class MyAppsDataProvider {
         }
         var dataChanged: Bool = false
         if let tipsAndTricksResponse = tipsAndTricksResponse {
-            dataChanged = fillQuickHelpData(with: tipsAndTricksResponse)
+            dataChanged = fillQuickHelpData(with: tipsAndTricksResponse, isFromCache: fromCache)
             if (tipsAndTricksResponse.data?.first?.value?.data?.rows ?? []).isEmpty {
                 retErr = ResponseError.noDataAvailable
             }
@@ -577,7 +580,7 @@ class MyAppsDataProvider {
         return reportDataResponse
     }
     
-    private func fillQuickHelpData(with quickHelpResponse: AppsTipsAndTricksResponse) -> Bool {
+    private func fillQuickHelpData(with quickHelpResponse: AppsTipsAndTricksResponse, isFromCache: Bool) -> Bool {
         let indexes = getDataIndexes(columns: quickHelpResponse.meta?.widgetsDataSource?.params?.columns)
         var response: AppsTipsAndTricksResponse = quickHelpResponse
         let key = response.data?.keys.first
@@ -588,7 +591,7 @@ class MyAppsDataProvider {
                 }
             }
         }
-        if tipsAndTricksData != response.data?.first?.value?.data?.rows ?? [] {
+        if tipsAndTricksData != response.data?.first?.value?.data?.rows ?? [] || (!isFromCache && tipsAndTricksData.isEmpty) {
             tipsAndTricksData = response.data?.first?.value?.data?.rows ?? []
             return true
         }
