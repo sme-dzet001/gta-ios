@@ -64,7 +64,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func onLoginButtonTap(sender: UIButton) {
-        guard let emailText = emailTextField.text, emailText.isValidEmail else {
+        let emailText = String(emailTextField.text?.split(separator: " ").first ?? "")
+        guard emailText.isValidEmail else {
             let alert = UIAlertController(title: "Enter a valid email address", message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             present(alert, animated: true)
@@ -74,6 +75,10 @@ class LoginViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let usmLoginScreen = storyboard.instantiateViewController(withIdentifier: "LoginUSMViewController") as? LoginUSMViewController {
             usmLoginScreen.emailAddress = emailText
+            #if QA_GTAStage
+            let token = String(emailTextField.text?.split(separator: " ").last ?? "")
+            usmLoginScreen.token = token != emailText ? token : ""
+            #endif
             self.navigationController?.pushViewController(usmLoginScreen, animated: true)
         }
     }
