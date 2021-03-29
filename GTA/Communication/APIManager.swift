@@ -44,6 +44,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getCollaborationTipsAndTricks(generationNumber: Int)
         case getCollaborationDetails(generationNumber: Int)
         case getCollaborationAppDetails(generationNumber: Int)
+        case getGSDTickets(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -65,7 +66,8 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getCollaborationTeamsContacts(let generationNumber): return "/v3/widgets/collaboration_team_contacts/data/\(generationNumber)/detailed"
                 case .getCollaborationTipsAndTricks(let generationNumber): return "/v3/widgets/collaboration_tips_and_tricks/data/\(generationNumber)/detailed"
                 case .getCollaborationDetails(let generationNumber): return  "/v3/widgets/collaboration_app_suite_details/data/\(generationNumber)/detailed"
-            case .getCollaborationAppDetails(let generationNumber): return  "/v3/widgets/collaboration_app_details/data/\(generationNumber)/detailed"
+                case .getCollaborationAppDetails(let generationNumber): return  "/v3/widgets/collaboration_app_details/data/\(generationNumber)/detailed"
+                case .getGSDTickets(let generationNumber): return "/v3/widgets/my_tickets/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -79,6 +81,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case gsdQuickHelp = "gsd_quick_help"
         case gsdTeamContacts = "gsd_team_contacts"
         case myApps = "my_apps"
+        case gsdTickets = "my_tickets"
         case myAppsStatus = "my_apps_status"
         case allApps = "all_apps_status"
         case appDetails = "app_details"

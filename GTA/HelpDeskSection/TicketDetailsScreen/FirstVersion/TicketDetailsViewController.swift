@@ -85,7 +85,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     
     override func viewDidLayoutSubviews() {
         configureBlurViewPosition()
-        if dataSource?.status == .open && isFirstTime {
+        if dataSource?.status == .new && isFirstTime {
             panModalTransition(to: .longForm)
         }
     }
@@ -111,27 +111,27 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     private func setUpTextViewIfNeeded() {
-        guard dataSource?.status == .open else { return }
-        textView.setUpTextView()
-        var coefficient: CGFloat = 0
-        if #available(iOS 13.0, *) {
-            coefficient = view.window?.safeAreaInsets.top ?? 0 > 24 ? 86 : 66
-        } else {
-            coefficient = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? 86 : 66
-        }
-        textView.frame = CGRect(x: 24, y: self.view.frame.height - coefficient, width: self.view.frame.width - 48, height: 56)
-        tableViewBottom.constant = 66
-        self.view.addSubview(textView)
-        textView.textView.delegate = self
-        textView.sendButtonDelegate = self
+        guard dataSource?.status == .new else { return }
+//        textView.setUpTextView()
+//        var coefficient: CGFloat = 0
+//        if #available(iOS 13.0, *) {
+//            coefficient = view.window?.safeAreaInsets.top ?? 0 > 24 ? 86 : 66
+//        } else {
+//            coefficient = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? 86 : 66
+//        }
+//        textView.frame = CGRect(x: 24, y: self.view.frame.height - coefficient, width: self.view.frame.width - 48, height: 56)
+//        tableViewBottom?.constant = 66
+//        self.view.addSubview(textView)
+//        textView.textView.delegate = self
+//        textView.sendButtonDelegate = self
     }
     
     private func configurePosition() {
-        guard dataSource?.status == .open else { return }
-        let coefficient: CGFloat = UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se ? 10 : 0
-        textView.frame.origin.y = position - textView.frame.height - (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) - coefficient
-        let subtract = self.view.frame.height - position + 66 + (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) + coefficient
-        tableViewBottom.constant = subtract <= 66 ? 66 : subtract
+        guard dataSource?.status == .new else { return }
+//        let coefficient: CGFloat = UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se ? 10 : 0
+//        textView.frame.origin.y = position - textView.frame.height - (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) - coefficient
+//        let subtract = self.view.frame.height - position + 66 + (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) + coefficient
+//        tableViewBottom?.constant = subtract <= 66 ? 66 : subtract
     }
     
     private func setUpTableView() {
@@ -139,6 +139,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         tableView.dataSource = self
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "TicketDetailsMessageCell", bundle: nil), forCellReuseIdentifier: "TicketDetailsMessageCell")
+        tableView.register(UINib(nibName: "TicketDescriptionCell", bundle: nil), forCellReuseIdentifier: "TicketDescriptionCell")
     }
 
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
@@ -172,6 +173,14 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         view.endEditing(true)
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if tableView.contentOffset.y >= (tableView.contentSize.height - tableView.frame.size.height) {
+            blurView.isHidden = true
+        } else {
+            blurView.isHidden = false
+        }
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -183,23 +192,28 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
 
 extension TicketDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = TicketDatailsHeader.instanceFromNib()
-        header.fillHeaderLabels(with: dataSource)
-        return header
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 190
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let header = TicketDatailsHeader.instanceFromNib()
+//        header.fillHeaderLabels(with: dataSource)
+//        return nil//header
+//    }
+//    
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 0//290
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource?.comments.count ?? 0
+        return (dataSource?.comments.count ?? 0) + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDescriptionCell", for: indexPath) as? TicketDescriptionCell
+            cell?.setUpCell(with: dataSource)
+            return cell ?? UITableViewCell()
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDetailsMessageCell", for: indexPath) as? TicketDetailsMessageCell
-        cell?.fillCell(with: dataSource?.comments[indexPath.row])
+        cell?.fillCell(with: dataSource?.comments[indexPath.row - 1])
         return cell ?? UITableViewCell()
     }
     
