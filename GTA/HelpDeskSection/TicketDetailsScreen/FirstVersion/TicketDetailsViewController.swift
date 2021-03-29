@@ -213,6 +213,14 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         view.endEditing(true)
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if tableView.contentOffset.y >= (tableView.contentSize.height - tableView.frame.size.height) {
+            blurView.isHidden = true
+        } else {
+            blurView.isHidden = false
+        }
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)

@@ -20,10 +20,10 @@ class TicketDescriptionCell: UITableViewCell {
     @IBOutlet weak var SLAPriorityLabel: UILabel!
     @IBOutlet weak var decriptionLabel: UILabel!
     @IBOutlet weak var finalNoteLabel: UILabel!
-    @IBOutlet weak var SLAPriorityView: UIView!
-    @IBOutlet weak var approvalStatusView: UIView!
+    @IBOutlet weak var SLAPriorityView: UIStackView!
+    @IBOutlet weak var approvalStatusView: UIStackView!
     @IBOutlet weak var finalNoteStackView: UIStackView!
-    @IBOutlet weak var statusDateView: UIView!
+    @IBOutlet weak var statusDateView: UIStackView!
     @IBOutlet weak var decriptionStackView: UIStackView!
     
     override func awakeFromNib() {

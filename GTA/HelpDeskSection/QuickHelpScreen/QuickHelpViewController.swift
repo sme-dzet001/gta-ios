@@ -187,14 +187,14 @@ class QuickHelpViewController: UIViewController {
 extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch screenType {
-        case .appTipsAndTricks:
-            return appsDataProvider?.tipsAndTricksData.count ?? 0
-        case .collaborationTipsAndTricks:
-            return collaborationDataProvider?.tipsAndTricksData.count ?? 0
-        default:
-            return dataProvider?.quickHelpData.count ?? 0
-        }
+//        switch screenType {
+//        case .appTipsAndTricks:
+//            return appsDataProvider?.tipsAndTricksData.count ?? 0
+//        case .collaborationTipsAndTricks:
+//            return collaborationDataProvider?.tipsAndTricksData.count ?? 0
+//        default:
+        return getHelpData().count// dataProvider?.quickHelpData.count ?? 0
+        //}
 //        if isTipsAndTricks {
 //            return collaborationDataProvider.tipsAndTricksData.count
 //        }
@@ -260,6 +260,7 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
     
     func quickHelpCellTapped(_ cell: QuickHelpCell, animationDuration: Double) {
         guard let cellIndex = tableView.indexPath(for: cell)?.row else { return }
+        guard getHelpData().count > cellIndex else { return }
         if expandedRowsIndex.contains(cellIndex) {
             // hideAnimation
             cell.expandButton.setImage(UIImage(named: "plus_icon"), for: .normal)

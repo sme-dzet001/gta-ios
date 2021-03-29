@@ -19,6 +19,7 @@ class LoginUSMViewController: UIViewController {
     private let shortRequestTimeoutInterval: Double = 24
     
     var emailAddress = ""
+    var token: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,6 @@ class LoginUSMViewController: UIViewController {
         ])
         usmWebView.navigationDelegate = self
         usmWebView.uiDelegate = self
-        
         loadUsmLogon()
     }
     
@@ -46,6 +46,26 @@ class LoginUSMViewController: UIViewController {
         self.view.addSubview(activityIndicator)
         activityIndicator.center = self.view.center
         activityIndicator.startAnimating()
+    }
+    
+    private func validateToken(token: String) {
+        dataProvider.validateToken(token: token, userEmail: emailAddress) { [weak self] (_ errorCode: Int, _ error: Error?) in
+            DispatchQueue.main.async {
+                if error == nil && errorCode == 200 {
+                    UserDefaults.standard.set(true, forKey: "userLoggedIn")
+                    let authVC = AuthViewController()
+                    authVC.isSignUp = true
+                    if let sceneDelegate = self?.view.window?.windowScene?.delegate as? SceneDelegate {
+                        authVC.delegate = sceneDelegate
+                    }
+                    self?.navigationController?.pushViewController(authVC, animated: true)
+                } else {
+                    self?.performSegue(withIdentifier: "unwindToLogin", sender: nil)
+                }
+                self?.usmWebView.alpha = 1
+                self?.activityIndicator.stopAnimating()
+            }
+        }
     }
     
     func removeCookies() {
@@ -58,6 +78,10 @@ class LoginUSMViewController: UIViewController {
     }
     
     private func loadUsmLogon() {
+        if !token.isEmptyOrWhitespace() {
+            validateToken(token: token)
+            return
+        }
         removeCookies()
         
         let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
@@ -157,23 +181,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
             }
             usmWebView.alpha = 0.5
             activityIndicator.startAnimating()
-            dataProvider.validateToken(token: aToken, userEmail: emailAddress) { [weak self] (_ errorCode: Int, _ error: Error?) in
-                DispatchQueue.main.async {
-                    if error == nil && errorCode == 200 {
-                        UserDefaults.standard.set(true, forKey: "userLoggedIn")
-                        let authVC = AuthViewController()
-                        authVC.isSignUp = true
-                        if let sceneDelegate = self?.view.window?.windowScene?.delegate as? SceneDelegate {
-                            authVC.delegate = sceneDelegate
-                        }
-                        self?.navigationController?.pushViewController(authVC, animated: true)
-                    } else {
-                        self?.performSegue(withIdentifier: "unwindToLogin", sender: nil)
-                    }
-                    self?.usmWebView.alpha = 1
-                    self?.activityIndicator.stopAnimating()
-                }
-            }
+            validateToken(token: aToken)
             decisionHandler(.cancel)
             return
         }
