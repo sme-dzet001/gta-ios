@@ -38,3 +38,13 @@ class HelpDeskCell: UITableViewCell {
         }
     }
 }
+
+extension HelpDeskCell: TicketsNumberDelegate {
+    func ticketNumberUpdated(_ number: Int?) {
+        if let updatesNumber = number {
+            updatesNumberLabel.text = "\(updatesNumber)"
+        } else {
+            updatesNumberLabel.text = nil
+        }
+    }
+}

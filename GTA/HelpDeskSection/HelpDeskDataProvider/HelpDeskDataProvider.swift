@@ -15,6 +15,7 @@ class HelpDeskDataProvider {
     
     private(set) var quickHelpData = [QuickHelpRow]()
     private(set) var teamContactsData = [TeamContactsRow]()
+    private(set) var myTickets: [GSDMyTicketsRow]?// = [GSDMyTicketsRow]()
     private var refreshTimer: Timer?
     private var cachedReportData: Data?
     
@@ -34,6 +35,7 @@ class HelpDeskDataProvider {
                     completion?(data, code, cachedError, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(nil, errorCode, ResponseError.serverError, false)
                     } else {
@@ -52,9 +54,7 @@ class HelpDeskDataProvider {
         if let _ = generationNumber, generationNumber != 0 {
             if isFromCache {
                 self.getCachedResponse(for: .getGSDStatus) {[weak self] (data, error) in
-                    if error == nil{
-                        self?.processGSDStatus(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
-                    }
+                    self?.processGSDStatus(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
                 }
                 return
             }
@@ -190,12 +190,13 @@ class HelpDeskDataProvider {
         }
         if let requestDate = statusResponse?.data?.requestDate, isNeedToRemoveResponseForDate(requestDate) {
             cacheManager.removeCachedData(for: CacheManager.path.getMyAppsData.endpoint)
+            completion?(nil, 0, ResponseError.noDataAvailable, isFromCache)
             return
         }
         let indexes = getDataIndexes(columns: statusResponse?.meta?.widgetsDataSource?.params?.columns)
         statusResponse?.indexes = indexes
         if (error != nil || statusResponse == nil) && isFromCache {
-            return
+            retErr = ResponseError.noDataAvailable
         }
         completion?(statusResponse, errorCode, retErr, isFromCache)
     }
@@ -394,7 +395,7 @@ class HelpDeskDataProvider {
     
     // MARK: - My Tickets related methods
     
-    func getMyTickets(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+    func getMyTickets(completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
             self?.handleMyTicketsSectionReport(data, code, cachedError, true, { (code, error, _) in
@@ -402,6 +403,7 @@ class HelpDeskDataProvider {
                     completion?(code, cachedError, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
                         completion?(errorCode, ResponseError.serverError, false)
                     } else {
@@ -413,29 +415,156 @@ class HelpDeskDataProvider {
     }
     
     private func handleMyTicketsSectionReport(_ report: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool,
-                                            _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+                                            _ completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
         let reportData = parseSectionReport(data: report)
+        let userEmail = KeychainManager.getUsername() ?? ""
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdTickets.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdTickets.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
             if fromCache {
-                getCachedResponse(for: .getGSDTickets) {[weak self] (data, error) in
-                    //self?.processAllApps(reportData, true, data, errorCode, error, completion)
+                getCachedResponse(for: .getGSDTickets(userEmail: userEmail)) {[weak self] (data, error) in
+                    self?.processMyTickets(data, error == nil ? 200 : 0, error, true, completion)
                 }
                 return
             }
-            apiManager.getAllApps(for: generationNumber!, completion: { [weak self] (data, errorCode, error) in
-                let dataWithStatus = self?.addStatusRequest(to: data)
-                self?.cacheData(dataWithStatus, path: .getGSDTickets)
-                //self?.processAllApps(reportData, false, dataWithStatus, errorCode, error, completion)
+            apiManager.getGSDTickets(generationNumber: generationNumber!, userEmail: userEmail, completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getGSDTickets(userEmail: userEmail))
+                self?.processMyTickets(data, errorCode, error, false, completion)
             })
         } else {
             if error != nil || generationNumber == 0 {
+                myTickets = []
                 completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
                 return
             }
             completion?(errorCode, ResponseError.commonError, fromCache)
         }
     }
+    
+    private func processMyTickets(_ response: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
+        var ticketsResponse: GSDMyTickets?
+        var retErr = error
+        if let responseData = response {
+            do {
+                ticketsResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        }
+        var dataWasChanged: Bool = false
+        if let ticketsResponse = ticketsResponse {
+            dataWasChanged = fillTicketsData(with: ticketsResponse)
+            if (ticketsResponse.data?.first?.value?.data?.rows ?? []).isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
+        }
+        completion?(errorCode, retErr, dataWasChanged)
+    }
+    
+    private func fillTicketsData(with ticketsResponse: GSDMyTickets) -> Bool {
+        let indexes = getDataIndexes(columns: ticketsResponse.meta?.widgetsDataSource?.params?.columns)
+        var response = ticketsResponse.data?.first?.value?.data?.rows
+        if let rows = response {
+            for (index, _) in rows.enumerated() {
+                response?[index]?.indexes = indexes
+            }
+        }
+        if let _ = response, (self.myTickets ?? []) != response! {
+            self.myTickets = response!.compactMap({$0})
+            return true
+        }
+        return false
+    }
+    
+    // MARK: - Ticket comments related methods
+    
+    func getTicketComments(ticketNumber: String, completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleTicketCommentsSectionReport(ticketNumber: ticketNumber, data, code, cachedError, true, { (code, error, dataWasChanged) in
+                if error == nil {
+                    completion?(code, cachedError, dataWasChanged)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let _ = error {
+                        completion?(errorCode, ResponseError.serverError, false)
+                    } else {
+                        self?.handleTicketCommentsSectionReport(ticketNumber: ticketNumber, reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    private func handleTicketCommentsSectionReport(ticketNumber: String, _ report: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool,
+                                            _ completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: report)
+        let userEmail = KeychainManager.getUsername() ?? ""
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdTickets.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdComments.rawValue }?.generationNumber
+        if let _ = generationNumber, generationNumber != 0 {
+            if fromCache {
+                getCachedResponse(for: .getGSDTicketComments(userEmail: userEmail, ticketNumber: ticketNumber)) {[weak self] (data, error) in
+                    self?.processTicketComments(data, userEmail, error == nil ? 200 : 0, error, true, completion)
+                }
+                return
+            }
+            apiManager.getGSDTicketComments(generationNumber: generationNumber!, userEmail: userEmail, ticketNumber: ticketNumber, completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getGSDTicketComments(userEmail: userEmail, ticketNumber: ticketNumber))
+                self?.processTicketComments(data, userEmail, errorCode, error, false, completion)
+            })
+        } else {
+            if error != nil || generationNumber == 0 {
+                myTickets = []
+                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                return
+            }
+            completion?(errorCode, ResponseError.commonError, fromCache)
+        }
+    }
+    
+    private func processTicketComments(_ response: Data?, _ userEmail: String, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
+        var commentsResponse: GSDTicketCommentsResponse?
+        var retErr = error
+        if let responseData = response {
+            do {
+                commentsResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        }
+        var dataWasChanged: Bool = false
+        let comments = commentsResponse?.data?.first?.value.first?.value?.data?.rows
+        if let commentsResponse = commentsResponse {
+            dataWasChanged = fillTicketComments(with: commentsResponse, userEmail: userEmail)
+            if (comments ?? []).isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
+        }
+        completion?(errorCode, retErr, dataWasChanged)
+    }
+    
+    private func fillTicketComments(with ticketComments: GSDTicketCommentsResponse, userEmail: String) -> Bool {
+        let indexes = getDataIndexes(columns: ticketComments.meta?.widgetsDataSource?.params?.columns)
+        var response = ticketComments.data?.first?.value.first?.value?.data?.rows
+        var ticketNumber = ""
+        if let rows = response {
+            for (index, _) in rows.enumerated() {
+                response?[index]?.indexes = indexes
+                let requestorEmail = response?[index]?.requestorEmail
+                //let decodedBody = formQuickHelpAnswerBody(from: response?[index]?.body)
+                response?[index]?.isSenderMe = userEmail == requestorEmail
+                //response?[index]?.decodedBody = decodedBody
+                ticketNumber = response?[index]?.ticketNumber ?? ""
+            }
+        }
+        let ticketIndex = self.myTickets?.firstIndex(where: {$0.ticketNumber == ticketNumber})
+        if let _ = response, self.myTickets?[ticketIndex ?? 0].comments != response! {
+            self.myTickets?[ticketIndex ?? 0].comments = response
+            return true
+        }
+        return false
+    }
+    
     
     // MARK: - Other methods
     

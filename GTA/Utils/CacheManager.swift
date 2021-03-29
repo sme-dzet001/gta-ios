@@ -68,7 +68,8 @@ class CacheManager {
         case getCollaborationTipsAndTricks(detailsPath: String)
         case getCollaborationDetails(detailsPath: String)
         case getCollaborationAppDetails(detailsPath: String)
-        case getGSDTickets
+        case getGSDTickets(userEmail: String)
+        case getGSDTicketComments(userEmail: String, ticketNumber: String)
         
         var endpoint: String {
             switch self {
@@ -91,7 +92,8 @@ class CacheManager {
             case .getCollaborationTipsAndTricks(let detailsPath): return "/collaboration/TipsAndTricks/\(detailsPath)"
             case .getCollaborationDetails(let detailsPath): return "/collaboration/details/\(detailsPath)"
             case .getCollaborationAppDetails(let detailsPath): return "/collaboration/collaboration_app_details/\(detailsPath)"
-            case .getGSDTickets: return "/v3/widgets/my_tickets/data/"
+            case .getGSDTickets(let userEmail): return "/v3/widgets/gsd_my_tickets/\(userEmail)/data/"
+            case .getGSDTicketComments(let userEmail, let ticketNumber): return "/v3/widgets/gsd_my_ticket_comments/\(userEmail)/\(ticketNumber)/data/"
             }
         }
     }

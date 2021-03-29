@@ -59,7 +59,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
         return 20
     }
     
-    var dataSource: TicketData?
+    var dataSource: GSDMyTicketsRow?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,8 +112,8 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     private func setUpTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
+//        tableView.delegate = self
+//        tableView.dataSource = self
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "TicketDetailsMessageCell", bundle: nil), forCellReuseIdentifier: "TicketDetailsMessageCell")
     }
@@ -163,34 +163,34 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
     
 }
 
-extension SecondTicketDetailsViewController: UITableViewDataSource, UITableViewDelegate {
+//extension SecondTicketDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if dataSource?.status == .closed {
-            return nil
-        }
-        messageHeaderView.setUpView()
-        return messageHeaderView
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        if dataSource?.status == .closed {
+//            return nil
+//        }
+//        messageHeaderView.setUpView()
+//        return messageHeaderView
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        if dataSource?.status == .closed {
+//            return 0
+//        }
+//        return 190
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return dataSource?.comments.count ?? 0
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDetailsMessageCell", for: indexPath) as? TicketDetailsMessageCell
+//        cell?.fillCell(with: dataSource?.comments[indexPath.row])
+//        return cell ?? UITableViewCell()
+//    }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if dataSource?.status == .closed {
-            return 0
-        }
-        return 190
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource?.comments.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDetailsMessageCell", for: indexPath) as? TicketDetailsMessageCell
-        cell?.fillCell(with: dataSource?.comments[indexPath.row])
-        return cell ?? UITableViewCell()
-    }
-    
-}
+//}
 
 extension SecondTicketDetailsViewController: UITextViewDelegate, SendButtonPressedDelegate {
     

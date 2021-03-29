@@ -63,7 +63,7 @@ struct AppInfo: Equatable {
 struct AppsImageData: Equatable {
     var app_icon: String?
     var imageData: Data?
-    var imageStatus: ImageLoadingStatus = .loading
+    var imageStatus: LoadingStatus = .loading
     
     
     static func == (lhs: AppsImageData, rhs: AppsImageData) -> Bool {
@@ -71,7 +71,7 @@ struct AppsImageData: Equatable {
     }
 }
 
-enum ImageLoadingStatus {
+enum LoadingStatus {
     case loading
     case failed
     case loaded

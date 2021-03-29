@@ -45,6 +45,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getCollaborationDetails(generationNumber: Int)
         case getCollaborationAppDetails(generationNumber: Int)
         case getGSDTickets(generationNumber: Int)
+        case getGSDTicketComments(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -67,7 +68,8 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getCollaborationTipsAndTricks(let generationNumber): return "/v3/widgets/collaboration_tips_and_tricks/data/\(generationNumber)/detailed"
                 case .getCollaborationDetails(let generationNumber): return  "/v3/widgets/collaboration_app_suite_details/data/\(generationNumber)/detailed"
                 case .getCollaborationAppDetails(let generationNumber): return  "/v3/widgets/collaboration_app_details/data/\(generationNumber)/detailed"
-                case .getGSDTickets(let generationNumber): return "/v3/widgets/my_tickets/data/\(generationNumber)/detailed"
+                case .getGSDTickets(let generationNumber): return "/v3/widgets/gsd_my_tickets/data/\(generationNumber)/detailed"
+                case .getGSDTicketComments(let generationNumber): return "/v3/widgets/gsd_ticket_comments/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -81,7 +83,8 @@ class APIManager: NSObject, URLSessionDelegate {
         case gsdQuickHelp = "gsd_quick_help"
         case gsdTeamContacts = "gsd_team_contacts"
         case myApps = "my_apps"
-        case gsdTickets = "my_tickets"
+        case gsdTickets = "gsd_my_tickets"
+        case gsdComments = "gsd_ticket_comments"
         case myAppsStatus = "my_apps_status"
         case allApps = "all_apps_status"
         case appDetails = "app_details"
@@ -167,6 +170,19 @@ class APIManager: NSObject, URLSessionDelegate {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         makeRequest(endpoint: .getGSDStatus(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
+    
+    func getGSDTickets(generationNumber: Int, userEmail: String, completion: ((_ statusData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        let requestBodyParams = ["s1": userEmail]
+        self.makeRequest(endpoint: .getGSDTickets(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
+    }
+    
+    func getGSDTicketComments(generationNumber: Int, userEmail: String, ticketNumber: String, completion: ((_ statusData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        let requestBodyParams = ["s1": userEmail, "s2" : ticketNumber]
+        self.makeRequest(endpoint: .getGSDTicketComments(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
+    }
+    
     //MARK: - My Apps methods
     
     func getMyAppsData(for generationNumber: Int, username: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {

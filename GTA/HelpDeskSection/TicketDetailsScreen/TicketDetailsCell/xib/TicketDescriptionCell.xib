@@ -323,6 +323,7 @@
                 <outlet property="openDateLabel" destination="HA2-Dh-d8w" id="Yot-q0-nV8"/>
                 <outlet property="ownerLabel" destination="a45-de-hOb" id="Uhz-4T-IBJ"/>
                 <outlet property="statusDateLabel" destination="GCf-c8-G6a" id="6b4-dD-TFM"/>
+                <outlet property="statusDateSeparator" destination="NHj-7f-R3y" id="g2D-UM-Ll9"/>
                 <outlet property="statusDateView" destination="seZ-75-MGc" id="GOs-I0-wg4"/>
                 <outlet property="statusLabel" destination="xWI-KQ-mf6" id="DOP-tF-qWt"/>
                 <outlet property="statusTitleLabel" destination="3ia-Gf-1ul" id="X7x-bi-xp0"/>

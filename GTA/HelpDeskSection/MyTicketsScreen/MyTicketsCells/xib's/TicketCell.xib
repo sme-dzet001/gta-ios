@@ -176,6 +176,7 @@
                 <outlet property="statusDateStackView" destination="8mu-0N-DRw" id="oSJ-hf-22c"/>
                 <outlet property="statusDateTitleLabel" destination="V8r-oE-EjH" id="YPJ-Nv-UUN"/>
                 <outlet property="statusLabel" destination="zA0-Jc-fhq" id="ZM9-qx-IjA"/>
+                <outlet property="ticketSubject" destination="FLH-DT-8m0" id="sAs-0p-xm0"/>
             </connections>
             <point key="canvasLocation" x="8.6956521739130448" y="2.0089285714285712"/>
         </tableViewCell>

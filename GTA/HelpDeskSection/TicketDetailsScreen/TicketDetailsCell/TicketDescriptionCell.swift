@@ -25,27 +25,33 @@ class TicketDescriptionCell: UITableViewCell {
     @IBOutlet weak var finalNoteStackView: UIStackView!
     @IBOutlet weak var statusDateView: UIStackView!
     @IBOutlet weak var decriptionStackView: UIStackView!
+    @IBOutlet weak var statusDateSeparator: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    func setUpCell(with data: TicketData?) {
+    func setUpCell(with data: GSDMyTicketsRow?) {
         guard let data = data else { return }
-        ticketSubjectLabel.text = data.ticketSubject ?? ticketSubjectLabel.text
+        ticketSubjectLabel.text = data.subject ?? ticketSubjectLabel.text
+        statusDateView.isHidden = data.closeDate == nil ? true : false
         switch data.status {
-        case .new:
-            statusLabel.text = "New"
+        case .new, .open:
+            statusLabel.text = data.status == .new ? "New" : "Open"
             statusLabel.textColor = UIColor(hex: 0x34C759)
         case .closed:
             statusLabel.text = "Closed"
             statusTitleLabel.text = "Close Date"
-            //separatorUnderStatusDate.isHidden = false
-            //statusDateStackView.isHidden = false
             statusLabel.textColor = UIColor(hex: 0xFF3E33)
+        default: statusLabel.text = ""
         }
-        //openDateLabel.text = data.openDate
+        statusDateLabel.text = data.closeDate?.getFormattedDateStringForMyTickets()
+        openDateLabel.text = data.openDate?.getFormattedDateStringForMyTickets()
+        decriptionLabel.text = data.description
+        ownerLabel.text = data.owner
+        ticketNumberLabel.text = data.ticketNumber
+        statusDateSeparator.isHidden = statusDateView.isHidden
     }
     
 }

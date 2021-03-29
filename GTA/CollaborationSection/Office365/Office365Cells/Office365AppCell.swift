@@ -29,7 +29,7 @@ class Office365AppCell: UITableViewCell {
         descriptionLabel.text = data.title
     }
     
-    func setImage(with data: Data?, status: ImageLoadingStatus) {
+    func setImage(with data: Data?, status: LoadingStatus) {
         if status == .loading {
             startAnimation()
         } else {

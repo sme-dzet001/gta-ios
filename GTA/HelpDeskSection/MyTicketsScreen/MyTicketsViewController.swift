@@ -12,13 +12,60 @@ class MyTicketsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private var myTicketsData: [TicketData] = []
+    private var errorLabel: UILabel = UILabel()
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var myTicketsData: [GSDMyTicketsRow]? {
+        return dataProvider?.myTickets
+    }
+    var dataProvider: HelpDeskDataProvider?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationItem()
         setUpTableView()
-        setHardCodeData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addErrorLabel(errorLabel, isGSD: true)
+        getMyTickets()
+    }
+    
+    private func getMyTickets() {
+        startAnimation()
+        dataProvider?.getMyTickets(completion: {[weak self] (errorCode, error, dataWasChanged) in
+            DispatchQueue.main.async {
+                self?.stopAnimation()
+                if error == nil && errorCode == 200 {
+                    self?.errorLabel.isHidden = true
+                    //self?.tableView.isHidden = false
+                    if dataWasChanged { self?.tableView.reloadData() }
+                } else {
+                    if let myTickets = self?.myTicketsData, myTickets.isEmpty {
+                        self?.tableView.reloadData()
+                    }
+                    self?.errorLabel.isHidden = !(self?.myTicketsData?.isEmpty ?? true)
+                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                }
+            }
+        })
+    }
+    
+    private func startAnimation() {
+        guard myTicketsData == nil || (myTicketsData ?? []).isEmpty else { return }
+        self.errorLabel.isHidden = true
+        self.tableView.alpha = 0
+        self.addLoadingIndicator(activityIndicator)
+        self.activityIndicator.startAnimating()
+        self.addLoadingIndicator(activityIndicator, isGSD: true)
+    }
+    
+    private func stopAnimation() {
+        if !(myTicketsData ?? []).isEmpty {
+            self.tableView.alpha = 1
+        }
+        self.activityIndicator.stopAnimating()
+        self.activityIndicator.removeFromSuperview()
     }
     
     private func setUpNavigationItem() {
@@ -32,26 +79,6 @@ class MyTicketsViewController: UIViewController {
     private func setUpTableView() {
         //tableView.rowHeight = 260//300//158
         tableView.register(UINib(nibName: "TicketCell", bundle: nil), forCellReuseIdentifier: "TicketCell")
-    }
-
-    private func setHardCodeData() {
-        // temp
-        let comments = [
-            TicketComment(author: "jsmith123", text: "Hello, please reeset my SFTS account access. Thanks!"),
-            TicketComment(author: "Help Desk Mario", text: "I have received your request. We will get back to your shortly."),
-            TicketComment(author: "Help Desk Mario", text: "We have reset your account. Please clear your caches and saved passwords. Let us know if you have any further issues."), TicketComment(author: "jsmith123", text: "Hello, please reeset my SFTS account access. Thanks!"),
-            TicketComment(author: "Help Desk Mario", text: "I have received your request. We will get back to your shortly."),
-            TicketComment(author: "Help Desk Mario", text: "We have reset your account. Please clear your caches and saved passwords. Let us know if you have any further issues.")
-        ]
-        
-        myTicketsData = [
-            TicketData(status: .closed, number: "87654321", owner: "Name", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments),
-            TicketData(status: .new, number: "87654321", owner: "Namet", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments),
-            TicketData(status: .new, number: "87654321", owner: "Name", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments),
-            TicketData(status: .closed, number: "87654321", owner: "Name", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments),
-            TicketData(status: .new, number: "87654321", owner: "Name", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments),
-            TicketData(status: .new, number: "87654321", owner: "Name", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", comments: comments)
-        ]
     }
     
     @objc private func backPressed() {
@@ -67,19 +94,19 @@ class MyTicketsViewController: UIViewController {
 extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myTicketsData.count
+        return myTicketsData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TicketCell", for: indexPath) as? TicketCell {
-            cell.setUpCell(with: myTicketsData[indexPath.row], hideSeparator: indexPath.row == myTicketsData.count - 1)
+            cell.setUpCell(with: myTicketsData?[indexPath.row], hideSeparator: indexPath.row == (myTicketsData?.count ?? 0) - 1)
             return cell
         }
         return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if myTicketsData[indexPath.row].status == .closed {
+        if myTicketsData?[indexPath.row].status == .closed {
             return 260
         }
         return 200
@@ -91,6 +118,7 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
 //    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard (myTicketsData?.count ?? 0) > indexPath.row else { return }
 //        switch indexPath.row {
 //        case 2, 5:
 //            let ticketDetailsVC = SecondTicketDetailsViewController()
@@ -102,11 +130,13 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
 //            presentPanModal(ticketDetailsVC)
 //        default:
             let ticketDetailsVC = TicketDetailsViewController()
-            ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
-            if !UIDevice.current.iPhone5_se {
-                let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
-                ticketDetailsVC.initialHeight = .maxHeight// PanModalHeight.contentHeight(self.view.frame.height / coefficient)
-            }
+        ticketDetailsVC.dataSource = myTicketsData?[indexPath.row]
+        ticketDetailsVC.dataProvider = dataProvider
+            //ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
+//            if !UIDevice.current.iPhone5_se {
+//                //let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
+//                ticketDetailsVC.initialHeight = .maxHeight// PanModalHeight.contentHeight(self.view.frame.height / coefficient)
+//            }
             presentPanModal(ticketDetailsVC)
         //}
     }
@@ -117,27 +147,9 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-struct TicketData {
-    var ticketSubject: String?
-    var status: TicketStatus
-    var number: String?
-    var openDate: Date? = Date()
-    var statusDate: Date? = Date()
-    var owner: String?
-    var approvalStatus: String?
-    var SLAPriority: String?
-    var description: String?
-    var finalNote: String?
-    var comments: [TicketComment]
-}
-
-struct TicketComment {
-    var author: String?
-    var text: String?
-    var date: Date? = Date()
-}
-
 enum TicketStatus {
     case new
+    case open
     case closed
+    case none
 }

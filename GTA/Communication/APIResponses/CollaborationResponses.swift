@@ -128,7 +128,7 @@ struct CollaborationAppDetailsRow: Codable, Equatable {
     
     var indexes: [String : Int] = [:]
     var imageData: Data?
-    var imageStatus: ImageLoadingStatus = .loading
+    var imageStatus: LoadingStatus = .loading
     enum CodingKeys: String, CodingKey {
         case values
     }

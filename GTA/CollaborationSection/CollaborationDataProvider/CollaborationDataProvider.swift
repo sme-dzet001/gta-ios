@@ -441,7 +441,7 @@ class CollaborationDataProvider {
 }
 
 protocol AppSuiteIconDelegate: class {
-    func appSuiteIconChanged(with data: Data?, status: ImageLoadingStatus)
+    func appSuiteIconChanged(with data: Data?, status: LoadingStatus)
 }
 
 protocol AppIconLoadingDelegate: class {
