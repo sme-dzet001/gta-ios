@@ -189,7 +189,7 @@ class HelpDeskDataProvider {
             }
         }
         if let requestDate = statusResponse?.data?.requestDate, isNeedToRemoveResponseForDate(requestDate) {
-            cacheManager.removeCachedData(for: CacheManager.path.getMyAppsData.endpoint)
+            cacheManager.removeCachedData(for: CacheManager.path.getGSDStatus.endpoint)
             completion?(nil, 0, ResponseError.noDataAvailable, isFromCache)
             return
         }
