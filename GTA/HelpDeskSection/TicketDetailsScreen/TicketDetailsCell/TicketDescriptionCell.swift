@@ -25,6 +25,7 @@ class TicketDescriptionCell: UITableViewCell {
     @IBOutlet weak var finalNoteStackView: UIStackView!
     @IBOutlet weak var statusDateView: UIStackView!
     @IBOutlet weak var decriptionStackView: UIStackView!
+    @IBOutlet weak var statusDateSeparator: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -50,7 +51,7 @@ class TicketDescriptionCell: UITableViewCell {
         decriptionLabel.text = data.description
         ownerLabel.text = data.owner
         ticketNumberLabel.text = data.ticketNumber
-        
+        statusDateSeparator.isHidden = statusDateView.isHidden
     }
     
 }

@@ -26,7 +26,7 @@ class TicketCell: UITableViewCell {
 
     func setUpCell(with data: GSDMyTicketsRow?, hideSeparator: Bool = false) {
         ticketSubject.text = data?.subject
-        separatorUnderStatusDate.isHidden = data?.closeDate == nil ? false : true
+        separatorUnderStatusDate.isHidden = data?.closeDate == nil ? true : false
         switch data?.status {
         case .new, .open:
             statusLabel.text = data?.status == .new ? "New" : "Open"
