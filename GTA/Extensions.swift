@@ -147,7 +147,7 @@ extension UITableView {
 }
 
 extension UIViewController {
-    func displayError(errorMessage: String, title: String? = "Error", onClose: @escaping ((UIAlertAction) -> Void) = { _ in }) {
+    func displayError(errorMessage: String, title: String? = "Error", onClose: ((UIAlertAction?) -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: errorMessage, preferredStyle: .alert)
         let closeAction = UIAlertAction(title: "OK", style: .default, handler: onClose)
         alertController.addAction(closeAction)
