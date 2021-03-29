@@ -19,6 +19,8 @@ class HomeDataProvider {
     private(set) var allOfficesData = [OfficeRow]()
     private var selectedOfficeId: Int?
     
+    weak var officeSelectionDelegate: OfficeSelectionDelegate?
+    
     var newsDataIsEmpty: Bool {
         return newsData.isEmpty
     }
@@ -401,6 +403,7 @@ class HomeDataProvider {
     func setCurrentOffice(officeId: Int, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.setCurrentOffice(officeId: officeId) { [weak self] (response, errorCode, error) in
             if let _ = response, errorCode == 200, error == nil {
+                self?.officeSelectionDelegate?.officeWasSelected()
                 self?.selectedOfficeId = officeId
             }
             completion?(errorCode, error)

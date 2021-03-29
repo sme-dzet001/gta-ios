@@ -27,6 +27,7 @@ class HomepageTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        dataProvider?.officeSelectionDelegate = self
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadSpecialAlertsData()
             if officeLoadingIsEnabled { loadOfficesData() }
@@ -137,7 +138,7 @@ class HomepageTableViewController: UITableViewController {
         officeLocation.title = "Select Sony Music Office Region"
         officeLocation.dataProvider = dataProvider
         officeLocation.forceOfficeSelection = true
-        officeLocation.officeSelectionDelegate = self
+        //officeLocation.officeSelectionDelegate = self
         let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
         panModalNavigationController.setNavigationBarHidden(true, animated: true)
         panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight
@@ -263,12 +264,14 @@ extension HomepageTableViewController: OfficeSelectionDelegate {
     }
     
     private func updateUIWithSelectedOffice() {
-        officeLoadingError = nil
-        if tableView.dataHasChanged {
-            tableView.reloadData()
-        } else {
-            UIView.performWithoutAnimation {
-                tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+        DispatchQueue.main.async {
+            self.officeLoadingError = nil
+            if self.tableView.dataHasChanged {
+                self.tableView.reloadData()
+            } else {
+                UIView.performWithoutAnimation {
+                    self.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                }
             }
         }
     }
