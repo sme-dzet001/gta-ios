@@ -28,6 +28,9 @@ class InfoViewController: UIViewController {
     var selectedOfficeData: OfficeRow?
     var officeDataSoure: [Hardcode] = []
     var specialAlertData: SpecialAlertRow?
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +40,6 @@ class InfoViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
@@ -232,14 +232,8 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         guard infoType == .office else { return }
         if indexPath.row == officeDataSoure.count - 1 {
             let officeLocation = OfficeLocationViewController()
-            var statusBarHeight: CGFloat = 0.0
-            if #available(iOS 13.0, *) {
-                statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-                statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
-            } else {
-                statusBarHeight = self.view.bounds.height - UIApplication.shared.statusBarFrame.height
-                statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
-            }
+            var statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 10 : statusBarHeight - 20
             officeLocation.title = "Select Sony Music Office Region"
             officeLocation.dataProvider = dataProvider
             //officeLocation.officeSelectionDelegate = self
