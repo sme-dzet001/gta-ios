@@ -125,7 +125,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     
     override func viewDidLayoutSubviews() {
         configureBlurViewPosition()
-        if dataSource?.status == .new && isFirstTime {
+        if isFirstTime {
             panModalTransition(to: .longForm)
         }
     }
