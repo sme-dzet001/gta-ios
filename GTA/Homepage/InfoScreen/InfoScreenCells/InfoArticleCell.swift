@@ -22,14 +22,23 @@ class InfoArticleCell: UITableViewCell {
         guard let text = infoLabel.attributedText?.string else { return }
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
         let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
+        var isFindURL = false
         for match in matches {
             if gesture.didTapAttributedTextInLabel(label: infoLabel, inRange: match.range) {
                 guard let range = Range(match.range, in: text) else { continue }
                 let urlString = "\(text[range])".hasPrefix("http") ? "\(text[range])" : "https://\(text[range])"
                 if let url = URL(string: urlString) {
+                    isFindURL = true
                     delegate?.openUrl(url)
                 }
             }
+        }
+        if !isFindURL {
+            infoLabel.attributedText?.enumerateAttribute(.link, in: NSRange(location: 0, length: text.utf16.count), options: [], using: { (object, range, _) in
+                if gesture.didTapAttributedTextInLabel(label: infoLabel, inRange: range), let url = object as? URL {
+                    delegate?.openUrl(url)
+                }
+            })
         }
     }
     
