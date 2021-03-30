@@ -452,6 +452,19 @@ extension NSMutableAttributedString {
         }
         endEditing()
     }
+    
+    public func trimCharactersInSet(_ charSet: CharacterSet) {
+        var range = (string as NSString).rangeOfCharacter(from: charSet as CharacterSet)
+        while range.length != 0 && range.location == 0 {
+            replaceCharacters(in: range, with: "")
+            range = (string as NSString).rangeOfCharacter(from: charSet)
+        }
+        range = (string as NSString).rangeOfCharacter(from: charSet, options: .backwards)
+        while range.length != 0 && NSMaxRange(range) == length {
+            replaceCharacters(in: range, with: "")
+            range = (string as NSString).rangeOfCharacter(from: charSet, options: .backwards)
+        }
+    }
 }
 
 extension UINavigationController {
