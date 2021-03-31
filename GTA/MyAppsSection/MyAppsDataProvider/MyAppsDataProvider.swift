@@ -127,9 +127,25 @@ class MyAppsDataProvider {
     }
     
     func getAppDetailsData(for app: String?, completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
-            self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, isFromCache, completion)
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.processAppDetailsSectionReport(app, data, code, cachedError, true, { (responseData, code, error)  in
+                if error == nil {
+                    completion?(responseData, code, error)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    if let _ = error {
+                        completion?(nil, errorCode, ResponseError.serverError)
+                    } else {
+                        self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
         }
+        
+//        getSectionReport {[weak self] (reportResponse, errorCode, error, isFromCache) in
+//            self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, isFromCache, completion)
+//        }
     }
     
     func getAppContactsData(for app: String?, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -223,22 +239,22 @@ class MyAppsDataProvider {
         completion?(dataChanged, errorCode, retErr, fromCache)
     }
         
-    private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
-        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
-            if let _ = data, cachedError == nil {
-                self?.cachedReportData = data
-                completion?(data, 200, cachedError, true)
-            }
-            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-                self?.cacheData(reportResponse, path: .getSectionReport)
-                var newError = error
-                if let _ = error {
-                    newError = ResponseError.commonError
-                }
-                completion?(reportResponse, errorCode, newError, false)
-            })
-        }
-    }
+//    private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
+//        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+//            if let _ = data, cachedError == nil {
+//                self?.cachedReportData = data
+//                completion?(data, 200, cachedError, true)
+//            }
+//            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+//                self?.cacheData(reportResponse, path: .getSectionReport)
+//                var newError = error
+//                if let _ = error {
+//                    newError = ResponseError.commonError
+//                }
+//                completion?(reportResponse, errorCode, newError, false)
+//            })
+//        }
+//    }
     
     func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
@@ -549,9 +565,7 @@ class MyAppsDataProvider {
             let detailsPath = app ?? ""
             if fromCache {
                 getCachedResponse(for: .getAppDetails(detailsPath: detailsPath)) {[weak self] (data, error) in
-                    if let _ = data, error == nil {
-                        self?.processAppDetails(reportData, data, errorCode, error, completion)
-                    }
+                    self?.processAppDetails(reportData, data, errorCode, error, completion)
                 }
                 return
             }

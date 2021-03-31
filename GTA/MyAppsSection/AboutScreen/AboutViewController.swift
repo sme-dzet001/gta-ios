@@ -33,7 +33,12 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel)
-        self.errorLabel.isHidden = detailsDataResponseError == nil
+        //self.errorLabel.isHidden = detailsDataResponseError == nil
+        if let _ = self.details {
+            self.errorLabel.isHidden = true
+        } else {
+            self.errorLabel.isHidden = detailsDataResponseError == nil
+        }
         self.errorLabel.text = (detailsDataResponseError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
         configureDataSource()
         if isCollaborationDetails {
@@ -104,7 +109,12 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
             getAppAboutImageData()
         }
         DispatchQueue.main.async {
-            self.errorLabel.isHidden = error == nil
+            if let _ = self.details {
+                self.errorLabel.isHidden = true
+            } else {
+                self.errorLabel.isHidden = error == nil
+            }
+            //self.errorLabel.isHidden = error == nil && self.details != nil
             self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
             self.tableView.reloadData()
         }
