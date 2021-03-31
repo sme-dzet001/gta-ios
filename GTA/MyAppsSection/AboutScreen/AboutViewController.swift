@@ -51,23 +51,23 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     }
     
     private func getAppAboutImageData() {
-        dataProvider?.getAppImageData(from: details?.appIcon ?? "", completion: { (imageData, error) in
-            self.imageDataResponseError = error
-            self.appImageData = imageData
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+        dataProvider?.getAppImageData(from: details?.appIcon ?? "", completion: {[weak self] (imageData, error) in
+            self?.setImageData(imageData, error: error)
         })
     }
     
     private func getCollaborationAboutImageData() {
-        collaborationDataProvider?.getAppImageData(from: appImageUrl, completion: { (imageData, error) in
-            self.imageDataResponseError = error
-            self.appImageData = imageData
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+        collaborationDataProvider?.getAppImageData(from: appImageUrl, completion: {[weak self] (imageData, error) in
+            self?.setImageData(imageData, error: error)
         })
+    }
+    
+    private func setImageData(_ data: Data?, error: Error?) {
+        self.imageDataResponseError = error
+        self.appImageData = data != nil && error == nil ? data : self.appImageData
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -152,7 +152,11 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return detailsDataResponseError == nil ? 1 : 0
+            if let _ = appImageData {
+                return 1
+            } else {
+                return detailsDataResponseError == nil ? 1 : 0
+            }
         case 1:
             return dataSource?.supportData?.count ?? 0
         default:
