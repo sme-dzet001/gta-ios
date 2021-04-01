@@ -58,12 +58,12 @@ class QuickHelpViewController: UIViewController {
 //            errorLabel.isHidden = true
 //            tableView.isHidden = true
         }
-        dataProvider.getQuickHelpData { [weak self] (dataWasChanged, errorCode, error) in
+        dataProvider.getQuickHelpData { [weak self] (dataWasChanged, errorCode, error, fromCache) in
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 //self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
                     if dataWasChanged { self?.tableView.reloadData() }
@@ -87,7 +87,7 @@ class QuickHelpViewController: UIViewController {
                 //self?.activityIndicator.stopAnimating()
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
                     if dataWasChanged { self?.tableView.reloadData() }
@@ -106,12 +106,12 @@ class QuickHelpViewController: UIViewController {
         if collaborationDataProvider?.tipsAndTricksData == nil || (collaborationDataProvider?.tipsAndTricksData.isEmpty ?? true) {
             startAnimation()
         }
-        collaborationDataProvider?.getTipsAndTricks(appSuite: appName ?? "", completion: {[weak self] (dataWasChanged, errorCode, error) in
+        collaborationDataProvider?.getTipsAndTricks(appSuite: appName ?? "", completion: {[weak self] (dataWasChanged, errorCode, error, fromCache) in
             DispatchQueue.main.async {
                 //self?.activityIndicator.stopAnimating()
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
                     //self?.tableView.reloadData()

@@ -103,17 +103,17 @@ class HomeDataProvider {
         return formattedDateString
     }
     
-    func getGlobalNewsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getGlobalNewsData(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.processGlobalNewsSectionReport(data, code, cachedError, true, { (code, error) in
+            self?.processGlobalNewsSectionReport(data, code, cachedError, true, { (code, error, _) in
                 if error == nil {
-                    completion?(code, cachedError)
+                    completion?(code, error, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError)
+                        completion?(errorCode, ResponseError.serverError, false)
                     } else {
                         self?.processGlobalNewsSectionReport(reportResponse, errorCode, error, false, completion)
                     }
@@ -125,34 +125,34 @@ class HomeDataProvider {
 //        }
     }
     
-    private func processGlobalNewsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processGlobalNewsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalNews.rawValue }?.generationNumber
         if let generationNumber = generationNumber, generationNumber != 0 {
             if isFromCache {
                 getCachedResponse(for: .getGlobalNews) { [weak self] (data, error) in
                     //if let _ = data, error == nil {
-                    self?.processGlobalNews(newsResponse: data, reportDataResponse: reportData, error: error, errorCode: 200, completion: completion)
+                    self?.processGlobalNews(newsResponse: data, reportDataResponse: reportData, isFromCache: true, error: error, errorCode: 200, completion: completion)
                     //}
                 }
                 return
             }
             apiManager.getGlobalNews(generationNumber: generationNumber) { [weak self] (newsResponse, errorCode, error) in
                 self?.cacheData(newsResponse, path: .getGlobalNews)
-                self?.processGlobalNews(newsResponse: newsResponse, reportDataResponse: reportData, error: error, errorCode: errorCode, completion: completion)
+                self?.processGlobalNews(newsResponse: newsResponse, reportDataResponse: reportData, isFromCache: false, error: error, errorCode: errorCode, completion: completion)
             }
         } else {
             if error != nil || generationNumber == 0 {
                 newsData = generationNumber == 0 ? [] : newsData
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(0, retError)
+            completion?(0, retError, isFromCache)
         }
     }
     
-    private func processGlobalNews(newsResponse: Data?, reportDataResponse: ReportDataResponse?, error: Error?, errorCode: Int, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processGlobalNews(newsResponse: Data?, reportDataResponse: ReportDataResponse?, isFromCache: Bool, error: Error?, errorCode: Int, completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         var newsDataResponse: GlobalNewsResponse?
         var retErr = error
         if let responseData = newsResponse {
@@ -168,7 +168,7 @@ class HomeDataProvider {
                 retErr = ResponseError.noDataAvailable
             }
         }
-        completion?(errorCode, retErr)
+        completion?(errorCode, retErr, isFromCache)
     }
     
     private func fillNewsData(with newsResponse: GlobalNewsResponse) {
@@ -182,7 +182,7 @@ class HomeDataProvider {
         newsData = response.data?.rows?.compactMap({$0}) ?? []
     }
     
-    private func processSpecialAlerts(_ reportData: ReportDataResponse?, _ alertsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processSpecialAlerts(_ reportData: ReportDataResponse?, _ alertsResponse: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         var specialAlertsDataResponse: SpecialAlertsResponse?
         var retErr = error
         if let responseData = alertsResponse {
@@ -198,46 +198,46 @@ class HomeDataProvider {
                 retErr = ResponseError.noDataAvailable
             }
         }
-        completion?(errorCode, retErr)
+        completion?(errorCode, retErr, isFromCache)
     }
     
-    private func processSpecialAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processSpecialAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.specialAlerts.rawValue }?.generationNumber
         if let generationNumber = generationNumber, generationNumber != 0 {
             if isFromCache {
                 getCachedResponse(for: .getSpecialAlerts) {[weak self] (data, error) in
                     //if let _ = data, error == nil {
-                    self?.processSpecialAlerts(reportData, data, 200, error, completion)
+                    self?.processSpecialAlerts(reportData, data, true, 200, error, completion)
                     //}
                 }
                 return
             }
             apiManager.getSpecialAlerts(generationNumber: generationNumber, completion: { [weak self] (alertsResponse, errorCode, error) in
                 self?.cacheData(alertsResponse, path: .getSpecialAlerts)
-                self?.processSpecialAlerts(reportData, alertsResponse, errorCode, error, completion)
+                self?.processSpecialAlerts(reportData, alertsResponse, false, errorCode, error, completion)
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(0, retError)
+            completion?(0, retError, isFromCache)
         }
     }
     
-    func getSpecialAlertsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getSpecialAlertsData(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.processSpecialAlertsSectionReport(data, code, cachedError, true, { (code, error) in
+            self?.processSpecialAlertsSectionReport(data, code, cachedError, true, { (code, error, _) in
                 if error == nil {
-                    completion?(code, cachedError)
+                    completion?(code, error, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError)
+                        completion?(errorCode, ResponseError.serverError, false)
                     } else {
                         self?.processSpecialAlertsSectionReport(reportResponse, errorCode, error, false, completion)
                     }
@@ -280,11 +280,6 @@ class HomeDataProvider {
                 })
             })
         }
-        
-        
-//        getSectionReport {[weak self] (data, errorCode, error, isFromCache) in
-//            self?.processAllOfficesSectionReport(data, errorCode, error, isFromCache, completion)
-//        }
     }
     
     private func processAllOfficesSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -293,9 +288,7 @@ class HomeDataProvider {
         if let generationNumber = generationNumber, generationNumber != 0 {
             if isFromCache {
                 getCachedResponse(for: .getAllOffices) {[weak self] (data, error) in
-                    //if let _ = data, error == nil {
                     self?.processAllOffices(reportData, data, 200, error, completion)
-                    //}
                 }
                 return
             }
@@ -367,22 +360,24 @@ class HomeDataProvider {
         return officeId
     }
     
-    func getCurrentOffice(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getCurrentOffice(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getCurrentOffice) {[weak self] (data, cacheError) in
-            if let _ = data, cacheError == nil {
-                self?.processGetCurrentOffice(data, 200, cacheError, true, completion)
-            }
-            self?.apiManager.getCurrentOffice { [weak self] (response, errorCode, error) in
-                if let _ = error, response == nil, let _ = data, cacheError == nil {
-                    return
+            self?.processGetCurrentOffice(data, cacheError == nil ? 200 : 0, cacheError, true, { (code, error, _) in
+                if error == nil {
+                    completion?(code, error, true)
                 }
-                self?.cacheData(response, path: .getCurrentOffice)
-                self?.processGetCurrentOffice(response, errorCode, error, false, completion)
-            }
+                self?.apiManager.getCurrentOffice { [weak self] (response, errorCode, error) in
+//                    if let _ = error, response == nil, let _ = data, cacheError == nil {
+//                        return
+//                    }
+                    self?.cacheData(response, path: .getCurrentOffice)
+                    self?.processGetCurrentOffice(response, errorCode, error, false, completion)
+                }
+            })
         }
     }
     
-    private func processGetCurrentOffice(_ currentOfficeResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processGetCurrentOffice(_ currentOfficeResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         var userPreferencesResponse: UserPreferencesResponse?
         var retErr = error
         if let responseData = currentOfficeResponse {
@@ -397,7 +392,7 @@ class HomeDataProvider {
                 selectedOfficeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
             }
         }
-        completion?(errorCode, retErr)
+        completion?(errorCode, retErr, fromCache)
     }
     
     func setCurrentOffice(officeId: Int, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {

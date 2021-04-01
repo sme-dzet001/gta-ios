@@ -45,11 +45,11 @@ class HomepageViewController: UIViewController {
             errorLabel.isHidden = true
             pageControl.isHidden = true
         }
-        dataProvider.getGlobalNewsData { [weak self] (errorCode, error) in
+        dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0

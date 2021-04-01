@@ -254,7 +254,7 @@ class HelpDeskDataProvider {
         return dataWasUpdated
     }
     
-    private func processQuickHelp(_ reportData: ReportDataResponse?, _ quickHelpResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processQuickHelp(_ reportData: ReportDataResponse?, _ fromCache: Bool, _ quickHelpResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         var quickHelpDataResponse: QuickHelpResponse?
         var retErr = error
         if let responseData = quickHelpResponse {
@@ -272,39 +272,39 @@ class HelpDeskDataProvider {
             }
         }
         let dataWasChanged = checkQuickHelpDataForUpdates(previousData: previousData)
-        completion?(dataWasChanged, errorCode, retErr)
+        completion?(dataWasChanged, errorCode, retErr, fromCache)
     }
     
-    private func processQuickHelpSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processQuickHelpSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdQuickHelp.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdQuickHelp.rawValue }?.generationNumber
         if let generationNumber = generationNumber, generationNumber != 0 {
             getCachedResponse(for: .getQuickHelpData) {[weak self] (data, error) in
                 if let _ = data {
-                    self?.processQuickHelp(reportData, data, 200, error, completion)
+                    self?.processQuickHelp(reportData, true, data, 200, error, completion)
                 }
             }
             apiManager.getQuickHelp(generationNumber: generationNumber, completion: { [weak self] (quickHelpResponse, errorCode, error) in
                 self?.cacheData(quickHelpResponse, path: .getQuickHelpData)
-                self?.processQuickHelp(reportData, quickHelpResponse, errorCode, error, completion)
+                self?.processQuickHelp(reportData, false, quickHelpResponse, errorCode, error, completion)
             })
         } else {
             if error != nil || generationNumber == 0 {
                 self.quickHelpData = generationNumber == 0 ? [] : quickHelpData
-                completion?(true, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(true, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(true, 0, retError)
+            completion?(true, 0, retError, fromCache)
         }
     }
     
-    func getQuickHelpData(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getQuickHelpData(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
             //if let _ = data {
-            self?.processQuickHelpSectionReport(data, error == nil ? 200 : 0, error, true, { (dataWasChanged, code, error) in
+            self?.processQuickHelpSectionReport(data, error == nil ? 200 : 0, error, true, { (dataWasChanged, code, error, _) in
                 if error == nil {
-                    completion?(dataWasChanged, code, error)
+                    completion?(dataWasChanged, code, error, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
@@ -325,7 +325,7 @@ class HelpDeskDataProvider {
         quickHelpData = response.data?.rows ?? []
     }
     
-    private func processTeamContacts(_ reportData: ReportDataResponse?, _ teamContactsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processTeamContacts(_ reportData: ReportDataResponse?, _ teamContactsResponse: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         var teamContactsDataResponse: TeamContactsResponse?
         var retErr = error
         if let responseData = teamContactsResponse {
@@ -341,41 +341,42 @@ class HelpDeskDataProvider {
                 retErr = ResponseError.noDataAvailable
             }
         }
-        completion?(errorCode, retErr)
+        completion?(errorCode, retErr, isFromCache)
     }
     
-    private func processTeamContactsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processTeamContactsSectionReport(_ reportResponse: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdTeamContacts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdTeamContacts.rawValue }?.generationNumber
         if let generationNumber = generationNumber, generationNumber != 0 {
-            getCachedResponse(for: .getTeamContactsData) {[weak self] (data, error) in
-                if let _ = data {
-                    self?.processTeamContacts(reportData, data, 200, error, completion)
+            if isFromCache {
+                getCachedResponse(for: .getTeamContactsData) {[weak self] (data, error) in
+                    self?.processTeamContacts(reportData, data, isFromCache, 200, error, completion)
                 }
+                return
             }
             apiManager.getTeamContacts(generationNumber: generationNumber, completion: { [weak self] (teamContactsResponse, errorCode, error) in
                 self?.cacheData(teamContactsResponse, path: .getTeamContactsData)
-                self?.processTeamContacts(reportData, teamContactsResponse, errorCode, error, completion)
+                self?.processTeamContacts(reportData, teamContactsResponse, isFromCache, errorCode, error, completion)
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(0, retError)
+            completion?(0, retError, isFromCache)
         }
     }
     
-    func getTeamContactsData(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getTeamContactsData(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
-            self?.processTeamContactsSectionReport(data, error == nil ? 200 : 0, error, { (code, error) in
+            self?.processTeamContactsSectionReport(data, true, error == nil ? 200 : 0, error, { (code, error, _) in
                 if error == nil {
-                    completion?(code, error)
+                    completion?(code, error, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
-                    self?.processTeamContactsSectionReport(reportResponse, errorCode, error, completion)
+                    self?.processTeamContactsSectionReport(reportResponse, false, errorCode, error, completion)
                 })
             })
         }
