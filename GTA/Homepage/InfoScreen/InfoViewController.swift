@@ -233,7 +233,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == officeDataSoure.count - 1 {
             let officeLocation = OfficeLocationViewController()
             var statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-            statusBarHeight = view.window?.safeAreaInsets.bottom ?? 0 > 24 ? statusBarHeight - 10 : statusBarHeight - 20
+            statusBarHeight = view.window?.safeAreaInsets.bottom ?? 0 > 24 ? statusBarHeight - 15 : statusBarHeight - 20
             officeLocation.title = "Select Sony Music Office Region"
             officeLocation.dataProvider = dataProvider
             //officeLocation.officeSelectionDelegate = self
