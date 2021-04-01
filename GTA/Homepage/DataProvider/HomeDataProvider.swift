@@ -69,7 +69,6 @@ class HomeDataProvider {
         
         let res = NSMutableAttributedString(attributedString: htmlAttrString)
         res.trimCharactersInSet(.whitespacesAndNewlines)
-        res.mutableString.insert("\n", at: res.mutableString.length)
         guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return res }
         
         let wholeRange = NSRange(res.string.startIndex..., in: res.string)
