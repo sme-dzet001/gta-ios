@@ -214,7 +214,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 8
             answerDecoded?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, answerDecoded?.length ?? 0))
-            cell.setUpCell(question: cellDataSource.question, answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .minus : .plus)
+            cell.setUpCell(question: cellDataSource.question, answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .collapse : .expand)
             return cell
         }
         return UITableViewCell()
@@ -263,7 +263,7 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
         guard getHelpData().count > cellIndex else { return }
         if expandedRowsIndex.contains(cellIndex) {
             // hideAnimation
-            cell.expandButton.setImage(UIImage(named: "plus_icon"), for: .normal)
+            cell.expandButton.setImage(UIImage(named: "disclosure_arrow_down"), for: .normal)
             UIView.animate(withDuration: animationDuration, animations: { [weak self] in
                 guard let self = self else { return }
                 CATransaction.begin()
@@ -275,7 +275,7 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
             }
         } else {
             // showAnimation
-            cell.expandButton.setImage(UIImage(named: "minus_icon"), for: .normal)
+            cell.expandButton.setImage(UIImage(named: "disclosure_arrow_up"), for: .normal)
             UIView.animate(withDuration: animationDuration, animations: { [weak self] in
                 guard let self = self else { return }
                 CATransaction.begin()
@@ -293,8 +293,8 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
 }
 
 enum ExpandButtonType {
-    case plus
-    case minus
+    case expand
+    case collapse
 }
 
 enum QuickHelpScreenType {

@@ -59,10 +59,10 @@ class QuickHelpCell: UITableViewCell {
         questionLabel.text = question
         answerLabel.attributedText = answer
         switch expandBtnType {
-        case .plus:
-            expandButton.setImage(UIImage(named: "plus_icon"), for: .normal)
-        case .minus:
-            expandButton.setImage(UIImage(named: "minus_icon"), for: .normal)
+        case .expand:
+            expandButton.setImage(UIImage(named: "disclosure_arrow_down"), for: .normal)
+        case .collapse:
+            expandButton.setImage(UIImage(named: "disclosure_arrow_up"), for: .normal)
         }
     }
 
