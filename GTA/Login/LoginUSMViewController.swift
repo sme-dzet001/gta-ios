@@ -136,9 +136,7 @@ extension LoginUSMViewController: WKUIDelegate {
 extension LoginUSMViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         guard error.localizedDescription != "Frame load interrupted" else { return }
-        displayError(errorMessage: ErrorHandler.getErrorMessage(for: error), title: "Login Failed") { (_) in
-            self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
-        }
+        showLoginFailedAlert(message: ErrorHandler.getErrorMessage(for: error), title: "Login Failed")
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
@@ -202,8 +200,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
     private func showLoginFailedAlert(message: String, title: String?) {
         usmWebView.alpha = 0
         activityIndicator.stopAnimating()
-        displayError(errorMessage: message, title: title) { (_) in
-            self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
-        }
+        self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
+        displayError(errorMessage: message, title: title, onClose: nil)
     }
 }
