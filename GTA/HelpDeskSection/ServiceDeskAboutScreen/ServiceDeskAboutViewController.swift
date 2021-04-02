@@ -20,12 +20,12 @@ class ServiceDeskAboutViewController: UIViewController {
         super.viewDidLoad()
         setUpNavigationItem()
         setUpTableView()
-        setUpScreenLook()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel, isGSD: true)
+        setUpScreenLook()
     }
     
     private func setUpNavigationItem() {
