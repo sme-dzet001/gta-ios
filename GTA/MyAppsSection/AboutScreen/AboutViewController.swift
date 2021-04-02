@@ -33,7 +33,12 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel)
-        self.errorLabel.isHidden = detailsDataResponseError == nil
+        //self.errorLabel.isHidden = detailsDataResponseError == nil
+        if let _ = self.details {
+            self.errorLabel.isHidden = true
+        } else {
+            self.errorLabel.isHidden = detailsDataResponseError == nil
+        }
         self.errorLabel.text = (detailsDataResponseError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
         configureDataSource()
         if isCollaborationDetails {
@@ -46,23 +51,23 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     }
     
     private func getAppAboutImageData() {
-        dataProvider?.getAppImageData(from: details?.appIcon ?? "", completion: { (imageData, error) in
-            self.imageDataResponseError = error
-            self.appImageData = imageData
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+        dataProvider?.getAppImageData(from: details?.appIcon ?? "", completion: {[weak self] (imageData, error) in
+            self?.setImageData(imageData, error: error)
         })
     }
     
     private func getCollaborationAboutImageData() {
-        collaborationDataProvider?.getAppImageData(from: appImageUrl, completion: { (imageData, error) in
-            self.imageDataResponseError = error
-            self.appImageData = imageData
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+        collaborationDataProvider?.getAppImageData(from: appImageUrl, completion: {[weak self] (imageData, error) in
+            self?.setImageData(imageData, error: error)
         })
+    }
+    
+    private func setImageData(_ data: Data?, error: Error?) {
+        self.imageDataResponseError = error
+        self.appImageData = data != nil && error == nil ? data : self.appImageData
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,7 +109,12 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
             getAppAboutImageData()
         }
         DispatchQueue.main.async {
-            self.errorLabel.isHidden = error == nil
+            if let _ = self.details {
+                self.errorLabel.isHidden = true
+            } else {
+                self.errorLabel.isHidden = error == nil
+            }
+            //self.errorLabel.isHidden = error == nil && self.details != nil
             self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
             self.tableView.reloadData()
         }
@@ -142,7 +152,11 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return detailsDataResponseError == nil ? 1 : 0
+            if let _ = appImageData {
+                return 1
+            } else {
+                return detailsDataResponseError == nil ? 1 : 0
+            }
         case 1:
             return dataSource?.supportData?.count ?? 0
         default:
