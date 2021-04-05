@@ -29,7 +29,7 @@ class CollaborationViewController: UIViewController {
         super.viewDidLoad()
         setUpTableView()
         setUpHardCodeData()
-        self.navigationItem.titleView = headerTitleView
+        setUpHeaderView()
         dataProvider.appSuiteIconDelegate = self
     }
     
@@ -38,6 +38,12 @@ class CollaborationViewController: UIViewController {
         addErrorLabel(errorLabel)
         getCollaborationDetails()
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     private func startAnimation() {
@@ -77,7 +83,16 @@ class CollaborationViewController: UIViewController {
     private func setHeaderData() {
         let data = self.dataProvider.collaborationDetails
         headerTitleView.headerTitle.text = data?.groupName
+        headerTitleView.headerSubtitle.text = data?.type
         headerTitleView.showViews()
+    }
+    
+    private func setUpHeaderView() {
+        DispatchQueue.main.async {
+            let header = self.headerTitleView
+            self.headerView.addSubview(header)
+            header.pinEdges(to: self.headerView)
+        }
     }
     
     private func setUpTableView() {
