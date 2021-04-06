@@ -98,6 +98,73 @@ class CollaborationDataProvider {
         }
     }
     
+    // MARK: - What's new handling
+    
+    func getWhatsNewData(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (reportResponse, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleWhatsNewSectionReport(appSuite: "appSuite", reportResponse, code, cachedError, true, { (dataWasChanged, code, error) in
+                if error == nil {
+                    completion?(dataWasChanged, code, error)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let _ = error {
+                        completion?(false, errorCode, ResponseError.serverError)
+                    } else {
+                        self?.handleWhatsNewSectionReport(appSuite: "appSuite", reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    private func handleWhatsNewSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationTipsAndTricks.rawValue }?.generationNumber
+        if let _ = generationNumber, generationNumber != 0 {
+            if fromCache {
+                getCachedResponse(for: .getCollaborationWhatsNew(detailsPath: appSuite)) {[weak self] (data, error) in
+                    self?.processWhatsNew(reportData, data, errorCode, error, completion)
+                }
+                return
+            }
+            apiManager.getCollaborationTipsAndTricks(for: generationNumber!, appName: appSuite,  completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getCollaborationWhatsNew(detailsPath: appSuite))
+                self?.processWhatsNew(reportData, data, errorCode, error, completion)
+            })
+        } else {
+            if error != nil || generationNumber == 0 {
+                self.tipsAndTricksData = generationNumber == 0 ? [] : tipsAndTricksData
+                completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
+            completion?(false, 0, error)
+        }
+    }
+    
+    private func processWhatsNew(_ reportData: ReportDataResponse?, _ tipsAndTricksData: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var tipsAndTricksResponse: CollaborationTipsAndTricksResponse?
+        var retErr = error
+        if let responseData = tipsAndTricksData {
+            do {
+                tipsAndTricksResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        } else {
+            retErr = ResponseError.commonError
+        }
+        var isDataChanged: Bool = false
+        if let response = tipsAndTricksResponse {
+            isDataChanged = fillTipsAndTricksData(with: response)
+            if (response.data?.first?.value?.data?.rows ?? []).isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
+        }
+        completion?(isDataChanged, errorCode, retErr)
+    }
+    
     // MARK: - Tips & Tricks handling
     
     func getTipsAndTricks(appSuite: String, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {

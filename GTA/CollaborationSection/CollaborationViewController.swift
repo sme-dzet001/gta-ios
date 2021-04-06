@@ -31,6 +31,7 @@ class CollaborationViewController: UIViewController {
         setUpHardCodeData()
         self.navigationItem.titleView = headerTitleView
         dataProvider.appSuiteIconDelegate = self
+        dataProvider.getWhatsNewData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,8 +92,9 @@ class CollaborationViewController: UIViewController {
     private func setUpHardCodeData() {
         dataSource.append(CollaborationCellData(cellTitle: dataProvider.collaborationDetails?.description, updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: nil, cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: nil, imageStatus: .loading))
-        dataSource.append(CollaborationCellData(imageName: "quick_help_icon", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
-        dataSource.append(CollaborationCellData(imageName: "contacts_icon", cellTitle: "Team Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil))
+        dataSource.append(CollaborationCellData(imageName: "whatsNew_icon", cellTitle: "What’s New", cellSubtitle: "Learn about new features", updatesNumber: nil))
+        dataSource.append(CollaborationCellData(imageName: "collaboration_TipsAndTricks", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
+        dataSource.append(CollaborationCellData(imageName: "collaboration_TeamContacts", cellTitle: "Team Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil))
     }
     
     private func showContactsScreen() {
@@ -116,6 +118,13 @@ class CollaborationViewController: UIViewController {
         office365.appName = "Office365"
         office365.dataProvider = dataProvider
         navigationController?.pushViewController(office365, animated: true)
+    }
+    
+    private func showWhatsNewScreen() {
+        let whatsNew = WhatsNewViewController()
+        //office365.appName = "Office365"
+        whatsNew.dataProvider = dataProvider
+        navigationController?.pushViewController(whatsNew, animated: true)
     }
 
     private func createAttributedString(for text: String?) -> NSAttributedString? {
@@ -166,8 +175,10 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
         case 1:
             showOffice365Screen()
         case 2:
-            showTipsAndTricksScreen()
+            showWhatsNewScreen()
         case 3:
+            showTipsAndTricksScreen()
+        case 4:
             showContactsScreen()
         default:
             return
