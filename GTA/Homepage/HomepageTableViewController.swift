@@ -173,7 +173,7 @@ class HomepageTableViewController: UITableViewController {
             let data = dataProvider?.alertsData ?? []
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
             cell?.separator.isHidden = false
-            cell?.iconImageView.image = UIImage(named: "alert_icon")
+            cell?.iconImageView.image = UIImage(named: "info_icon")
             cell?.mainLabel.text = data[indexPath.row].alertTitle
             cell?.mainLabel.textColor = .black
             if let date = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {

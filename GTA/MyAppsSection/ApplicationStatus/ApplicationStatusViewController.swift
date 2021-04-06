@@ -115,8 +115,8 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     private func setHardCodeData() {
         let bellData = UIImage(named: "report_icon")
         let loginHelpData = UIImage(named: "login_help")
-        let aboutData = UIImage(named: "about_icon")
-        let contactsData = UIImage(named: "app_contacts_icon")
+        let aboutData = UIImage(named: "info_icon")
+        let contactsData = UIImage(named: "contacts_icon")
         let tipsNtricksData = UIImage(named: "tips_n_tricks_icon")
         
         let metricsData = MetricsData(
