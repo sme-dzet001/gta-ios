@@ -52,10 +52,10 @@ class HomepageTableViewController: UITableViewController {
     }
     
     private func loadSpecialAlertsData() {
-        dataProvider?.getSpecialAlertsData { [weak self] (errorCode, error) in
+        dataProvider?.getSpecialAlertsData { [weak self] (errorCode, error, isFromCache) in
             DispatchQueue.main.async {
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
                 } else {
                     //self?.displayError(errorMessage: "Error was happened!")
@@ -74,12 +74,12 @@ class HomepageTableViewController: UITableViewController {
                 tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
             }
         }
-        dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error) in
+        dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error, isFromCache) in
             if error == nil && errorCode == 200 {
                 self?.dataProvider?.getAllOfficesData { [weak self] (errorCode, error) in
                     DispatchQueue.main.async {
                         if error == nil && errorCode == 200 {
-                            self?.lastUpdateDate = Date().addingTimeInterval(60)
+                            self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                             if self?.dataProvider?.allOfficesDataIsEmpty == true {
                                 self?.officeLoadingError = "No data available"
                             } else if self?.dataProvider?.userOffice == nil {
@@ -258,7 +258,7 @@ extension HomepageTableViewController: OfficeSelectionDelegate {
     func officeWasSelected() {
         officeLoadingIsEnabled = false
         updateUIWithSelectedOffice()
-        dataProvider?.getCurrentOffice(completion: { [weak self] (_, _) in
+        dataProvider?.getCurrentOffice(completion: { [weak self] (_, _, _) in
             self?.officeLoadingIsEnabled = true
         })
     }

@@ -54,10 +54,10 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     
     private func getAppDetailsData() {
         startAnimation()
-        dataProvider?.getAppDetailsData(for: appName) { [weak self] (detailsData, errorCode, error) in
+        dataProvider?.getAppDetailsData(for: appName) { [weak self] (detailsData, errorCode, error, fromCache) in
             self?.detailsDataResponseError = error
             if error == nil, errorCode == 200 {
-                self?.lastUpdateDate = Date().addingTimeInterval(60)
+                self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                 self?.appDetailsData = detailsData
             }
             self?.stopAnimation()
