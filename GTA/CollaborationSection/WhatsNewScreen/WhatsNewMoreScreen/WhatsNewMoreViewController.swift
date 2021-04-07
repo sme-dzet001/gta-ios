@@ -13,8 +13,9 @@ class WhatsNewMoreViewController: UIViewController {
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var blurView: UIView!
     @IBOutlet weak var infoTextView: UITextView!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var dataProvider: CollaborationDataProvider?
+    var dataSource: CollaborationNewsRow?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,27 @@ class WhatsNewMoreViewController: UIViewController {
         self.blurView.isHidden = false
         addBlurToView()
         self.tabBarController?.tabBar.isHidden = true
+        infoTextView.attributedText = dataProvider?.formAnswerBody(from: dataSource?.body)
+        startAnimation()
+        dataProvider?.getAppImageData(from: dataSource?.imageUrl, completion: { (data, error) in
+            if let _ = data, error == nil {
+                self.headerImageView.image = UIImage(data: data!)
+            }
+            self.stopAnimation()
+        })
+    }
+    
+    private func startAnimation() {
+        titleLabel.isHidden = true
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    
+    private func stopAnimation() {
+        titleLabel.text = dataSource?.headline
+        titleLabel.isHidden = false
+        activityIndicator.stopAnimating()
+        
     }
     
     override func viewWillLayoutSubviews() {

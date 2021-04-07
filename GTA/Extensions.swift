@@ -49,22 +49,22 @@ extension UILabel {
         }
     }
     
-    func addTrailing(with trailingText: String, moreText: String, moreTextFont: UIFont, moreTextColor: UIColor) {
-//        self.text = trailingText
-//        let readMoreText: String = trailingText + moreText
-//        let lengthForVisibleString: Int = self.vissibleTextLength
-//        let mutableString: String = self.text!
-//        let trimmedString: String? = (mutableString as NSString).replacingCharacters(in: NSRange(location: lengthForVisibleString, length: ((self.text?.count)! - lengthForVisibleString + 8)), with: "")
-//        trimmedString?.removeLast(<#T##k: Int##Int#>)
-//        self.text = trimmedString
-//        let readMoreLength: Int = (readMoreText.count)
-//        var range = NSRange(location: 124, length: (trailingText as NSString).length)
-//        let trimmedForReadMore: String = (trimmedString! as NSString).replacingCharacters(in: range, with: "... ") + trailingText
-//        guard let _ = self.font else { return }
-//        let answerAttributed = NSMutableAttributedString(string: trimmedForReadMore, attributes: [NSAttributedString.Key.font: self.font!])
-//        let readMoreAttributed = NSMutableAttributedString(string: moreText, attributes: [NSAttributedString.Key.font: moreTextFont, NSAttributedString.Key.foregroundColor: moreTextColor])
-//        answerAttributed.append(readMoreAttributed)
-//        self.attributedText = answerAttributed
+    func addReadMoreString(_ readMoreText: String) {
+        let countString = self.text?.count
+        if let _ = countString, countString! >= 30 {
+            let lengthForVisibleString = vissibleTextLength
+            let mutableString = NSMutableString(string: self.text ?? "")
+            let trimmedString = (mutableString as NSString).replacingCharacters(in: NSMakeRange(lengthForVisibleString, ((self.text ?? "").count - lengthForVisibleString)), with: "") as NSString
+            let readMoreLength = readMoreText.count;
+            let trimmedForReadMore = trimmedString.replacingCharacters(in: NSMakeRange((trimmedString.length - readMoreLength), readMoreLength), with: "... ")
+            guard let font = self.font else { return }
+            let answerAttributed = NSMutableAttributedString(string: trimmedForReadMore, attributes: [NSAttributedString.Key.font : font])
+            let readMoreAttributed = NSMutableAttributedString(string: readMoreText, attributes: [NSAttributedString.Key.font : font, NSAttributedString.Key.foregroundColor: UIColor.gray])
+            answerAttributed.append(readMoreAttributed)
+            self.attributedText = answerAttributed
+        } else {
+            print("No need for 'Read More'...")
+        }
     }
 
     var vissibleTextLength: Int {
@@ -81,7 +81,7 @@ extension UILabel {
         if boundingRect.size.height > labelHeight {
             var index: Int = 0
             var prev: Int = 0
-            let characterSet = CharacterSet.whitespacesAndNewlines
+            let characterSet = CharacterSet.newlines
             repeat {
                 prev = index
                 if mode == NSLineBreakMode.byCharWrapping {

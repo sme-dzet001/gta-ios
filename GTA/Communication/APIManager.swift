@@ -43,6 +43,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getCollaborationTeamsContacts(generationNumber: Int)
         case getCollaborationTipsAndTricks(generationNumber: Int)
         case getCollaborationDetails(generationNumber: Int)
+        case getCollaborationNews(generationNumber: Int)
         case getCollaborationAppDetails(generationNumber: Int)
         case getGSDTickets(generationNumber: Int)
         case getGSDTicketComments(generationNumber: Int)
@@ -67,6 +68,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getCollaborationTeamsContacts(let generationNumber): return "/v3/widgets/collaboration_team_contacts/data/\(generationNumber)/detailed"
                 case .getCollaborationTipsAndTricks(let generationNumber): return "/v3/widgets/collaboration_tips_and_tricks/data/\(generationNumber)/detailed"
                 case .getCollaborationDetails(let generationNumber): return  "/v3/widgets/collaboration_app_suite_details/data/\(generationNumber)/detailed"
+                case .getCollaborationNews(let generationNumber): return  "/v3/widgets/collaboration_news/data/\(generationNumber)/detailed"
                 case .getCollaborationAppDetails(let generationNumber): return  "/v3/widgets/collaboration_app_details/data/\(generationNumber)/detailed"
                 case .getGSDTickets(let generationNumber): return "/v3/widgets/gsd_my_tickets/data/\(generationNumber)/detailed"
                 case .getGSDTicketComments(let generationNumber): return "/v3/widgets/gsd_ticket_comments/data/\(generationNumber)/detailed"
@@ -98,6 +100,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case collaborationTeamsContacts = "collaboration_team_contacts"
         case collaborationTipsAndTricks = "collaboration_tips_and_tricks"
         case collaborationAppDetails = "collaboration_app_details"
+        case collaborationNews = "collaboration_news"
     }
     
     init(accessToken: String?) {
@@ -260,6 +263,11 @@ class APIManager: NSObject, URLSessionDelegate {
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         let requestBodyParams = ["s1": appName]
         self.makeRequest(endpoint: .getCollaborationAppDetails(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
+    }
+    
+    func getCollaborationNews(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        self.makeRequest(endpoint: .getCollaborationNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders,  completion: completion)
     }
     
     //MARK: - Common methods

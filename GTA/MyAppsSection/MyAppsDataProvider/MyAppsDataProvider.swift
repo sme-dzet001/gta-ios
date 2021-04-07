@@ -49,38 +49,43 @@ class MyAppsDataProvider {
     
     func getAppImageData(from urlString: String, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
         if let url = URL(string: formImageURL(from: urlString)) {
-            if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
-                appImageData[urlString] = cachedResponse
-                completion(cachedResponse, nil)
-                return
-            } else {
-                apiManager.loadImageData(from: url) { (data, response, error) in
-                    if self.appImageData.keys.contains(urlString), error == nil {
-                        self.appImageData[urlString] = data
+            getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
+                if cachedError == nil {
+                    self?.appImageData[urlString] = cachedData
+                    completion(cachedData, nil)
+                }
+                self?.apiManager.loadImageData(from: url) { (data, response, error) in
+                    if let isContains = self?.appImageData.keys.contains(urlString), isContains, error == nil {
+                        self?.appImageData[urlString] = data
                     }
-                    self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
+                    self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
                     DispatchQueue.main.async {
-                        completion(data, error)
+                        if cachedData == nil ? true : cachedData != data {
+                            if cachedError == nil && error != nil { return }
+                            completion(data, error)
+                        }
                     }
                 }
-            }
+                
+            })
         } else {
             completion(nil, ResponseError.noDataAvailable)
         }
     }
     
     func getContactImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
-            completion(cachedResponse, nil)
-            return
-        } else {
-            apiManager.loadImageData(from: url) { (data, response, error) in
-                self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
+        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, error) in
+            if error == nil {
+                completion(cachedData, nil)
+            }
+            self?.apiManager.loadImageData(from: url) { (data, response, error) in
+                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
                 DispatchQueue.main.async {
                     completion(data, error)
                 }
             }
-        }
+            
+        })
     }
     
     func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {

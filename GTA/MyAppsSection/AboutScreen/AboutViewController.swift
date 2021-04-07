@@ -189,7 +189,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.showFirstCharFrom(appTitle)
                 cell.stopAnimation()
             }
-            cell.headerTitleLabel.text = !isCollaborationDetails ? details?.appTitle : collaborationDetails?.appNameFull
+            cell.headerTitleLabel.text = !isCollaborationDetails ? details?.appTitle : collaborationDetails?.fullTitle
             return cell
         }
         let isDetailsNull = !isCollaborationDetails ? self.details == nil : collaborationDetails == nil

@@ -28,7 +28,7 @@ class Office365ViewController: UIViewController {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel)
         getAppSuiteDetails()
-        dataProvider?.office365AppsDelegate = self
+        dataProvider?.imageLoadingDelegate = self
     }
     
     private func setUpNavigationItem() {
@@ -89,8 +89,8 @@ class Office365ViewController: UIViewController {
         aboutScreen.isCollaborationDetails = true
         aboutScreen.collaborationDetails = details
         aboutScreen.collaborationDataProvider = dataProvider
-        aboutScreen.appTitle = details.appNameFull
-        aboutScreen.appImageUrl = details.icon ?? ""
+        aboutScreen.appTitle = details.fullTitle
+        aboutScreen.appImageUrl = details.imageUrl ?? ""
         navigationController?.pushViewController(aboutScreen, animated: true)
     }
     
@@ -124,11 +124,11 @@ extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension Office365ViewController: AppIconLoadingDelegate {
+extension Office365ViewController: ImageLoadingDelegate {
 
     func setImage(for app: String) {
         DispatchQueue.main.async {
-            let rowIndex = self.dataProvider?.collaborationAppDetailsRows?.firstIndex(where: {$0.appNameFull == app})
+            let rowIndex = self.dataProvider?.collaborationAppDetailsRows?.firstIndex(where: {$0.fullTitle == app})
             guard let _ = rowIndex else { return }
             if let cell = self.tableView.cellForRow(at: IndexPath(row: rowIndex!, section: 0)) as? Office365AppCell, let cellData = self.dataProvider?.collaborationAppDetailsRows?[rowIndex!] {
                 cell.setUpCell(with: cellData)

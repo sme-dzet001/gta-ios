@@ -25,7 +25,7 @@ class Office365AppCell: UITableViewCell {
             iconImageViewWidth?.constant = 48
         }
         setImage(with: data.imageData, status: data.imageStatus)
-        appTitleLabel.text = data.appNameFull
+        appTitleLabel.text = data.fullTitle
         descriptionLabel.text = data.title
     }
     

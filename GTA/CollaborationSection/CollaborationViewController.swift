@@ -31,7 +31,6 @@ class CollaborationViewController: UIViewController {
         setUpHardCodeData()
         self.navigationItem.titleView = headerTitleView
         dataProvider.appSuiteIconDelegate = self
-        dataProvider.getWhatsNewData()
     }
     
     override func viewWillAppear(_ animated: Bool) {

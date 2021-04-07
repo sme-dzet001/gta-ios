@@ -14,10 +14,11 @@ class CollaborationDataProvider {
     
     private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     private(set) var tipsAndTricksData = [TipsAndTricksRow]()
+    private(set) var collaborationNewsData = [CollaborationNewsRow]()
     private(set) var collaborationDetails: CollaborationDetailsResponse?
     private var appSuiteImage: Data?
     weak var appSuiteIconDelegate: AppSuiteIconDelegate?
-    weak var office365AppsDelegate: AppIconLoadingDelegate?
+    weak var imageLoadingDelegate: ImageLoadingDelegate?
     private(set) var collaborationAppDetailsRows: [CollaborationAppDetailsRow]?
     private(set) var appContactsData: AppContactsData?
     
@@ -103,7 +104,7 @@ class CollaborationDataProvider {
     func getWhatsNewData(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (reportResponse, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.handleWhatsNewSectionReport(appSuite: "appSuite", reportResponse, code, cachedError, true, { (dataWasChanged, code, error) in
+            self?.handleWhatsNewSectionReport(reportResponse, code, cachedError, true, { (dataWasChanged, code, error) in
                 if error == nil {
                     completion?(dataWasChanged, code, error)
                 }
@@ -112,30 +113,30 @@ class CollaborationDataProvider {
                     if let _ = error {
                         completion?(false, errorCode, ResponseError.serverError)
                     } else {
-                        self?.handleWhatsNewSectionReport(appSuite: "appSuite", reportResponse, errorCode, error, false, completion)
+                        self?.handleWhatsNewSectionReport(reportResponse, errorCode, error, false, completion)
                     }
                 })
             })
         }
     }
     
-    private func handleWhatsNewSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func handleWhatsNewSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
-        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationTipsAndTricks.rawValue }?.generationNumber
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationNews.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
             if fromCache {
-                getCachedResponse(for: .getCollaborationWhatsNew(detailsPath: appSuite)) {[weak self] (data, error) in
+                getCachedResponse(for: .getCollaborationNews) {[weak self] (data, error) in
                     self?.processWhatsNew(reportData, data, errorCode, error, completion)
                 }
                 return
             }
-            apiManager.getCollaborationTipsAndTricks(for: generationNumber!, appName: appSuite,  completion: { [weak self] (data, errorCode, error) in
-                self?.cacheData(data, path: .getCollaborationWhatsNew(detailsPath: appSuite))
+            apiManager.getCollaborationNews(for: generationNumber!, completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getCollaborationNews)
                 self?.processWhatsNew(reportData, data, errorCode, error, completion)
             })
         } else {
             if error != nil || generationNumber == 0 {
-                self.tipsAndTricksData = generationNumber == 0 ? [] : tipsAndTricksData
+                self.collaborationNewsData = generationNumber == 0 ? [] : collaborationNewsData
                 completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
@@ -143,12 +144,12 @@ class CollaborationDataProvider {
         }
     }
     
-    private func processWhatsNew(_ reportData: ReportDataResponse?, _ tipsAndTricksData: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        var tipsAndTricksResponse: CollaborationTipsAndTricksResponse?
+    private func processWhatsNew(_ reportData: ReportDataResponse?, _ newsData: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var newsResponse: CollaborationNewsResponse?
         var retErr = error
-        if let responseData = tipsAndTricksData {
+        if let responseData = newsData {
             do {
-                tipsAndTricksResponse = try DataParser.parse(data: responseData)
+                newsResponse = try DataParser.parse(data: responseData)
             } catch {
                 retErr = ResponseError.parsingError
             }
@@ -156,13 +157,28 @@ class CollaborationDataProvider {
             retErr = ResponseError.commonError
         }
         var isDataChanged: Bool = false
-        if let response = tipsAndTricksResponse {
-            isDataChanged = fillTipsAndTricksData(with: response)
-            if (response.data?.first?.value?.data?.rows ?? []).isEmpty {
+        if let response = newsResponse {
+            isDataChanged = fillNewsData(with: response)
+            if (response.data?.rows ?? []).isEmpty {
                 retErr = ResponseError.noDataAvailable
             }
         }
         completion?(isDataChanged, errorCode, retErr)
+    }
+    
+    private func fillNewsData(with dataResponse: CollaborationNewsResponse) -> Bool {
+        let indexes = getDataIndexes(columns: dataResponse.meta?.widgetsDataSource?.params?.columns)
+        var response: CollaborationNewsResponse = dataResponse
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index].indexes = indexes
+            }
+        }
+        if collaborationNewsData != response.data?.rows ?? [] {
+            collaborationNewsData = response.data?.rows ?? []
+            return true
+        }
+        return false
     }
     
     // MARK: - Tips & Tricks handling
@@ -383,51 +399,48 @@ class CollaborationDataProvider {
         completion?(errorCode, retErr)
     }
     
-    private func getRowsImageData(for appInfo: [CollaborationAppDetailsRow]) {
+    func getRowsImageData(for appInfo: [ImageDataProtocol]) {
         for (index, info) in appInfo.enumerated() {
-            if let url = info.icon {
+            if let url = info.imageUrl {
                 getAppImageData(from: url) { (imageData, error) in
                     if info.imageData == nil || (imageData != nil && imageData != info.imageData) {
                         self.collaborationAppDetailsRows?[index].imageData = imageData
                         self.collaborationAppDetailsRows?[index].imageStatus = error == nil ? .loaded : .failed
-                        self.office365AppsDelegate?.setImage(for: info.appNameFull ?? "")
+                        self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
                     }
                 }
             } else {
                 self.collaborationAppDetailsRows?[index].imageStatus = .failed
-                self.office365AppsDelegate?.setImage(for: info.appNameFull ?? "")
+                self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
             }
         }
     }
     
     // MARK:- Additional methods
     
-    func formContactImageURL(from imagePath: String?) -> String? {
-        guard let imagePath = imagePath, !imagePath.isEmpty else { return nil }
-        guard !imagePath.contains("https://") else  { return imagePath }
-        let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
-        return imageURL
-    }
-    
     func getAppImageData(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
         if let url = URL(string: formImageURL(from: urlString?.components(separatedBy: .whitespaces).joined() ?? "")) {
-            if let cachedResponse = imageCacheManager.getCacheResponse(for: url), cachedResponse != appSuiteImage {
-                completion?(cachedResponse, nil)
-            } else {
-                apiManager.loadImageData(from: url) { (data, response, error) in
-                    self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
-                    DispatchQueue.main.async {
-                        completion?(data, error)
-                    }
-                    //completion?(data, error)
+            getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
+                if cachedError == nil {
+                    completion?(cachedData, cachedError)
                 }
-            }
+                self?.apiManager.loadImageData(from: url) { (data, response, error) in
+                    self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
+                    DispatchQueue.main.async {
+                        if cachedData == nil ? true : cachedData != data {
+                            if cachedError == nil && error != nil { return }
+                            completion?(data, error)
+                        }
+                    }
+                }
+                
+            })
         } else {
             completion?(nil, ResponseError.commonError)
         }
     }
     
-    private func formImageURL(from imagePath: String?) -> String {
+    func formImageURL(from imagePath: String?) -> String {
         guard let imagePath = imagePath else { return "" }
         guard !imagePath.contains("https://") else  { return imagePath }
         let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
@@ -486,7 +499,7 @@ class CollaborationDataProvider {
         return false
     }
     
-    func formTipsAndTricksAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
+    func formAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
         guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
         
         let res = NSMutableAttributedString(attributedString: htmlAttrString)
@@ -511,6 +524,6 @@ protocol AppSuiteIconDelegate: class {
     func appSuiteIconChanged(with data: Data?, status: LoadingStatus)
 }
 
-protocol AppIconLoadingDelegate: class {
+protocol ImageLoadingDelegate: class {
     func setImage(for app: String)
 }
