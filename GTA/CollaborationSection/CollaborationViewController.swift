@@ -29,7 +29,7 @@ class CollaborationViewController: UIViewController {
         super.viewDidLoad()
         setUpTableView()
         setUpHardCodeData()
-        self.navigationItem.titleView = headerTitleView
+        setUpHeaderView()
         dataProvider.appSuiteIconDelegate = self
     }
     
@@ -38,6 +38,12 @@ class CollaborationViewController: UIViewController {
         addErrorLabel(errorLabel)
         getCollaborationDetails()
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     private func startAnimation() {
@@ -77,7 +83,16 @@ class CollaborationViewController: UIViewController {
     private func setHeaderData() {
         let data = self.dataProvider.collaborationDetails
         headerTitleView.headerTitle.text = data?.groupName
+        headerTitleView.headerSubtitle.text = data?.type
         headerTitleView.showViews()
+    }
+    
+    private func setUpHeaderView() {
+        DispatchQueue.main.async {
+            let header = self.headerTitleView
+            self.headerView.addSubview(header)
+            header.pinEdges(to: self.headerView)
+        }
     }
     
     private func setUpTableView() {
@@ -90,9 +105,9 @@ class CollaborationViewController: UIViewController {
     
     private func setUpHardCodeData() {
         dataSource.append(CollaborationCellData(cellTitle: dataProvider.collaborationDetails?.description, updatesNumber: nil))
-        dataSource.append(CollaborationCellData(imageName: nil, cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: nil, imageStatus: .loading))
-        dataSource.append(CollaborationCellData(imageName: "quick_help_icon", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
-        dataSource.append(CollaborationCellData(imageName: "contacts_icon", cellTitle: "Team Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil))
+        dataSource.append(CollaborationCellData(imageName: "applications_icon", cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: nil, imageStatus: .loading))
+        dataSource.append(CollaborationCellData(imageName: "tips_n_tricks_icon", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
+        dataSource.append(CollaborationCellData(imageName: "team_contacts_icon", cellTitle: "Team Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil))
     }
     
     private func showContactsScreen() {
@@ -147,12 +162,6 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
             cell.descriptionLabel.text = dataProvider.collaborationDetails?.description//createAttributedString(for: dataProvider.collaborationDetails?.description)
             return cell
         }
-        if indexPath.row == 1, let cell = tableView.dequeueReusableCell(withIdentifier: "Office365AppCell", for: indexPath) as? Office365AppCell {
-            cell.appTitleLabel.text = dataSource[indexPath.row].cellTitle
-            cell.descriptionLabel.text = dataSource[indexPath.row].cellSubtitle
-            cell.setImage(with: dataSource[indexPath.row].imageData, status: dataSource[indexPath.row].imageStatus)
-            return cell
-        }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "HelpDeskCell", for: indexPath) as? HelpDeskCell {
             let cellData = dataSource[indexPath.row]
             cell.setUpCell(with: cellData, isActive: true, isNeedCornerRadius: true)
@@ -180,12 +189,6 @@ extension CollaborationViewController: AppSuiteIconDelegate {
         DispatchQueue.main.async {
             if let _ = data {
                 self.headerTitleView.headerImageView.image = UIImage(data: data!)
-            }
-            guard self.dataSource.count > 1 else { return }
-            if let cell = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? Office365AppCell {
-                self.dataSource[1].imageData = data
-                self.dataSource[1].imageStatus = status
-                cell.setImage(with: data, status: status)
             }
         }
     }
