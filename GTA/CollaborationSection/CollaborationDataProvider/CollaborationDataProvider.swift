@@ -418,6 +418,27 @@ class CollaborationDataProvider {
     
     // MARK:- Additional methods
     
+    func addArticle(_ article: String) {
+        if var arr = UserDefaults.standard.array(forKey: "NumberOfNews") as? [Data] {
+            guard let data = article.data(using: .utf8), !arr.contains(data) else { return }
+            arr.append(data)
+            UserDefaults.standard.setValue(arr, forKey: "NumberOfNews")
+        } else {
+            UserDefaults.standard.setValue([article.data(using: .utf8) as Any], forKey: "NumberOfNews")
+        }
+    }
+    
+    func getUnreadArticlesNumber() -> Int? {
+        var number: Int = 0
+        guard let storedArticle = UserDefaults.standard.array(forKey: "NumberOfNews") as? [Data] else { return self.collaborationNewsData.count }
+        for data in self.collaborationNewsData {
+            if let bodyData = data.body?.data(using: .utf8), !storedArticle.contains(bodyData) {
+                number += 1
+            }
+        }
+        return number != 0 ? number : nil
+    }
+    
     func getAppImageData(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
         if let url = URL(string: formImageURL(from: urlString?.components(separatedBy: .whitespaces).joined() ?? "")) {
             getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in

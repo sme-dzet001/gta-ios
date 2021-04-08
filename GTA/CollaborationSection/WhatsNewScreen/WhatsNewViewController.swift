@@ -117,6 +117,9 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         let cellDataSource = dataProvider?.collaborationNewsData[indexPath.row]
         whatsNewMoreScreen.dataProvider = dataProvider
         whatsNewMoreScreen.dataSource = cellDataSource
+        if let article = cellDataSource?.body {
+            dataProvider?.addArticle(article)
+        }
         self.navigationController?.pushViewController(whatsNewMoreScreen, animated: true)
     }
     

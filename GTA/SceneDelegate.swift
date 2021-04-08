@@ -119,6 +119,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         KeychainManager.deletePinData()
         CacheManager().clearCache()
         ImageCacheManager().removeCachedData()
+        UserDefaults.standard.removeObject(forKey: "NumberOfNews")
     }
 
     func startLoginFlow(sessionExpired: Bool = false) {
