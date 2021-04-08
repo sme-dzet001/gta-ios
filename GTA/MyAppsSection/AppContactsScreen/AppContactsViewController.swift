@@ -71,11 +71,11 @@ class AppContactsViewController: UIViewController {
         if contactsDataIsEmpty {
             startAnimation()
         }
-        dataProvider.getAppContactsData(for: appName) { [weak self] (errorCode, error) in
+        dataProvider.getAppContactsData(for: appName) { [weak self] (errorCode, error, fromCache) in
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     //self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false

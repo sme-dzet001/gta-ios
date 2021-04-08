@@ -12,43 +12,71 @@
         <array key="SF-Pro-Display-Medium.otf">
             <string>SFProDisplay-Medium</string>
         </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="6Fk-yP-fhQ" customClass="CollaborationHeader" customModule="GTA" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="360" height="173"/>
+            <rect key="frame" x="0.0" y="0.0" width="360" height="67"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k0Q-U7-XHx">
-                    <rect key="frame" x="158" y="72.5" width="35" height="28"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="rEq-fc-R1j">
+                    <rect key="frame" x="137.5" y="12" width="85" height="36"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k0Q-U7-XHx">
+                            <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="36" id="jre-FP-QOA"/>
+                            </constraints>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="l8z-q7-Ph8">
+                            <rect key="frame" x="41" y="0.0" width="44" height="36"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nub-Gl-I5R">
+                                    <rect key="frame" x="0.0" y="0.0" width="44" height="24"/>
+                                    <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Subtitle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="il5-eG-4zz">
+                                    <rect key="frame" x="0.0" y="24" width="44" height="12"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="width" constant="35" id="jre-FP-QOA"/>
+                        <constraint firstItem="k0Q-U7-XHx" firstAttribute="width" secondItem="k0Q-U7-XHx" secondAttribute="height" multiplier="1:1" id="JYj-ZF-Jtq"/>
                     </constraints>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nub-Gl-I5R">
-                    <rect key="frame" x="198" y="86.5" width="0.0" height="0.0"/>
-                    <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ta9-m7-Ceh">
+                    <rect key="frame" x="0.0" y="66" width="360" height="1"/>
+                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="7W4-8E-Xig"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="DZX-Yg-jfJ"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="DZX-Yg-jfJ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nub-Gl-I5R" secondAttribute="trailing" constant="15" id="FUD-Hw-PJQ"/>
-                <constraint firstItem="k0Q-U7-XHx" firstAttribute="width" secondItem="k0Q-U7-XHx" secondAttribute="height" multiplier="1:0.8" id="UVb-QY-16q"/>
-                <constraint firstItem="nub-Gl-I5R" firstAttribute="leading" secondItem="k0Q-U7-XHx" secondAttribute="trailing" constant="5" id="Ui8-EH-MIf"/>
-                <constraint firstItem="k0Q-U7-XHx" firstAttribute="centerY" secondItem="nub-Gl-I5R" secondAttribute="centerY" id="XQg-3d-Qkn"/>
-                <constraint firstItem="nub-Gl-I5R" firstAttribute="centerY" secondItem="6Fk-yP-fhQ" secondAttribute="centerY" id="YCd-u9-Ln1"/>
-                <constraint firstItem="nub-Gl-I5R" firstAttribute="centerX" secondItem="DZX-Yg-jfJ" secondAttribute="centerX" multiplier="1.1" id="xK5-e1-xNL"/>
+                <constraint firstItem="rEq-fc-R1j" firstAttribute="centerX" secondItem="6Fk-yP-fhQ" secondAttribute="centerX" id="GAC-lj-l6Z"/>
+                <constraint firstItem="rEq-fc-R1j" firstAttribute="centerY" secondItem="6Fk-yP-fhQ" secondAttribute="centerY" multiplier="0.9" id="PU3-jk-P1I"/>
+                <constraint firstItem="ta9-m7-Ceh" firstAttribute="trailing" secondItem="DZX-Yg-jfJ" secondAttribute="trailing" id="a0x-pd-uvZ"/>
+                <constraint firstItem="DZX-Yg-jfJ" firstAttribute="leading" secondItem="ta9-m7-Ceh" secondAttribute="leading" id="lxY-LM-8SO"/>
+                <constraint firstItem="DZX-Yg-jfJ" firstAttribute="bottom" secondItem="ta9-m7-Ceh" secondAttribute="bottom" id="x04-zl-Zr0"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="headerImageView" destination="k0Q-U7-XHx" id="MSK-rh-Hj3"/>
+                <outlet property="headerSubtitle" destination="il5-eG-4zz" id="MhK-PL-bpQ"/>
                 <outlet property="headerTitle" destination="nub-Gl-I5R" id="SBm-cW-6oz"/>
-                <outlet property="titleCenterX" destination="xK5-e1-xNL" id="jGn-lk-ZN2"/>
             </connections>
             <point key="canvasLocation" x="2.8985507246376816" y="-164.39732142857142"/>
         </view>

@@ -58,12 +58,12 @@ class QuickHelpViewController: UIViewController {
 //            errorLabel.isHidden = true
 //            tableView.isHidden = true
         }
-        dataProvider.getQuickHelpData { [weak self] (dataWasChanged, errorCode, error) in
+        dataProvider.getQuickHelpData { [weak self] (dataWasChanged, errorCode, error, fromCache) in
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 //self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
                     if dataWasChanged { self?.tableView.reloadData() }
@@ -87,7 +87,7 @@ class QuickHelpViewController: UIViewController {
                 //self?.activityIndicator.stopAnimating()
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
                     if dataWasChanged { self?.tableView.reloadData() }
@@ -106,12 +106,12 @@ class QuickHelpViewController: UIViewController {
         if collaborationDataProvider?.tipsAndTricksData == nil || (collaborationDataProvider?.tipsAndTricksData.isEmpty ?? true) {
             startAnimation()
         }
-        collaborationDataProvider?.getTipsAndTricks(appSuite: appName ?? "", completion: {[weak self] (dataWasChanged, errorCode, error) in
+        collaborationDataProvider?.getTipsAndTricks(appSuite: appName ?? "", completion: {[weak self] (dataWasChanged, errorCode, error, fromCache) in
             DispatchQueue.main.async {
                 //self?.activityIndicator.stopAnimating()
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
                     //self?.tableView.reloadData()
@@ -214,7 +214,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 8
             answerDecoded?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, answerDecoded?.length ?? 0))
-            cell.setUpCell(question: cellDataSource.question, answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .minus : .plus)
+            cell.setUpCell(question: cellDataSource.question, answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .collapse : .expand)
             return cell
         }
         return UITableViewCell()
@@ -263,7 +263,7 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
         guard getHelpData().count > cellIndex else { return }
         if expandedRowsIndex.contains(cellIndex) {
             // hideAnimation
-            cell.expandButton.setImage(UIImage(named: "plus_icon"), for: .normal)
+            cell.expandButton.setImage(UIImage(named: "disclosure_arrow_down"), for: .normal)
             UIView.animate(withDuration: animationDuration, animations: { [weak self] in
                 guard let self = self else { return }
                 CATransaction.begin()
@@ -275,7 +275,7 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
             }
         } else {
             // showAnimation
-            cell.expandButton.setImage(UIImage(named: "minus_icon"), for: .normal)
+            cell.expandButton.setImage(UIImage(named: "disclosure_arrow_up"), for: .normal)
             UIView.animate(withDuration: animationDuration, animations: { [weak self] in
                 guard let self = self else { return }
                 CATransaction.begin()
@@ -293,8 +293,8 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
 }
 
 enum ExpandButtonType {
-    case plus
-    case minus
+    case expand
+    case collapse
 }
 
 enum QuickHelpScreenType {
