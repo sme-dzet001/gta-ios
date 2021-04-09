@@ -79,9 +79,7 @@ class QuickHelpViewController: UIViewController {
     }
     
     private func loadAppTipsAndTricks() {
-        if self.appsDataProvider?.tipsAndTricksData == nil || (appsDataProvider?.tipsAndTricksData.isEmpty ?? true){
-            startAnimation()
-        }
+        startAnimation()
         appsDataProvider?.getAppTipsAndTricks(for: appName) {[weak self] (dataWasChanged, errorCode, error, isFromCache) in
             DispatchQueue.main.async {
                 //self?.activityIndicator.stopAnimating()

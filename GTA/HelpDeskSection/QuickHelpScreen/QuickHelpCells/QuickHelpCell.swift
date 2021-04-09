@@ -37,7 +37,7 @@ class QuickHelpCell: UITableViewCell {
         var isFindURL = false
         for match in matches {
             if gesture.didTapAttributedTextInLabel(label: answerLabel, inRange: match.range) {
-                guard let range = Range(match.range, in: text), let url = URL(string: "\(text[range])")  else { continue }
+                guard let range = Range(match.range, in: text), let url = getUrl(for: range, match: match) else { continue }
                 isFindURL = true
                 delegate?.openUrl(url)
             }
@@ -49,6 +49,26 @@ class QuickHelpCell: UITableViewCell {
                 }
             })
         }
+    }
+    
+    private func getUrl(for range: Range<String.Index>, match: NSTextCheckingResult) -> URL? {
+        let text = (answerLabel.attributedText?.string)!
+        if isMatchEmail(match: match), let url = URL(string: "mailto:\(text[range])") {
+            return url
+        }
+        if let url = URL(string: "\(text[range])") {
+            return url
+        }
+        return nil
+    }
+    
+    private func isMatchEmail(match: NSTextCheckingResult) -> Bool {
+        guard let text = answerLabel.attributedText?.string else { return false }
+        guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return false }
+        if let _ = mailRegex.firstMatch(in: text, options: .anchored, range: match.range) {
+            return true
+        }
+        return false
     }
     
     func setUpCell(question: String?, answer: NSAttributedString?, expandBtnType: ExpandButtonType) {
