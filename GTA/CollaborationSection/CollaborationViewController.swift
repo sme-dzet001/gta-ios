@@ -35,6 +35,10 @@ class CollaborationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+        
         addErrorLabel(errorLabel)
         getCollaborationDetails()
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
@@ -106,6 +110,7 @@ class CollaborationViewController: UIViewController {
     private func setUpHardCodeData() {
         dataSource.append(CollaborationCellData(cellTitle: dataProvider.collaborationDetails?.description, updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "applications_icon", cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: nil, imageStatus: .loading))
+        dataSource.append(CollaborationCellData(imageName: "usage_metrics_icon", cellTitle: "Usage Metrics", cellSubtitle: "Collaboration Analytics", updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "tips_n_tricks_icon", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "team_contacts_icon", cellTitle: "Team Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil))
     }
@@ -124,6 +129,12 @@ class CollaborationViewController: UIViewController {
         quickHelpVC.screenType = .collaborationTipsAndTricks
         quickHelpVC.collaborationDataProvider = dataProvider
         navigationController?.pushViewController(quickHelpVC, animated: true)
+    }
+    
+    private func showUsageMetricsScreen() {
+        let usageMetricsVC = UsageMetricsViewController()
+        usageMetricsVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(usageMetricsVC, animated: true)
     }
     
     private func showOffice365Screen() {
@@ -175,8 +186,10 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
         case 1:
             showOffice365Screen()
         case 2:
-            showTipsAndTricksScreen()
+            showUsageMetricsScreen()
         case 3:
+            showTipsAndTricksScreen()
+        case 4:
             showContactsScreen()
         default:
             return
