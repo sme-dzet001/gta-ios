@@ -254,17 +254,17 @@ class CollaborationDataProvider {
     
     // MARK: - Team contacts handling
     
-    func getTeamContacts(appSuite: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getTeamContacts(appSuite: String, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.handleTeamContactsSectionReport(appSuite: appSuite, data, code, cachedError, true, { (code, error) in
+            self?.handleTeamContactsSectionReport(appSuite: appSuite, data, code, cachedError, true, { (dataWasChanged, code, error) in
                 if error == nil {
-                    completion?(code, error)
+                    completion?(dataWasChanged, code, error)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError)
+                        completion?(false, errorCode, ResponseError.serverError)
                     } else {
                         self?.handleTeamContactsSectionReport(appSuite: appSuite, reportResponse, errorCode, error, false, completion)
                     }
@@ -273,7 +273,7 @@ class CollaborationDataProvider {
         }
     }
     
-    private func handleTeamContactsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func handleTeamContactsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationTeamsContacts.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
@@ -289,14 +289,14 @@ class CollaborationDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(generationNumber == 0 ? true : false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(0, error)
+            completion?(false, 0, error)
         }
     }
     
-    private func processTeamContacts(_ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processTeamContacts(_ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var appContactsData: AppContactsData?
         var retErr = error
         if let responseData = appContactsDataResponse {
@@ -314,28 +314,29 @@ class CollaborationDataProvider {
         if let contacts = appContactsData?.contactsData, contacts.isEmpty {
             retErr = ResponseError.noDataAvailable
         }
-        
+        var dataWasChanged: Bool = false
         if appContactsData == nil && self.appContactsData != nil {
         } else if appContactsData != self.appContactsData {
             self.appContactsData = appContactsData
+            dataWasChanged = true
         }
         
-        completion?(errorCode, retErr)
+        completion?(dataWasChanged, errorCode, retErr)
     }
     
     // MARK: - App details handling
     
-    func getAppDetails(appSuite: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getAppDetails(appSuite: String, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (reportResponse, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.handleAppDetailsSectionReport(appSuite: appSuite, reportResponse, code, cachedError, true, { (code, error) in
+            self?.handleAppDetailsSectionReport(appSuite: appSuite, reportResponse, code, cachedError, true, { (dataWasChanged, code, error) in
                 if error == nil {
-                    completion?(code, error)
+                    completion?(dataWasChanged, code, error)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?( errorCode, ResponseError.serverError)
+                        completion?(dataWasChanged, errorCode, ResponseError.serverError)
                     } else {
                         self?.handleAppDetailsSectionReport(appSuite: appSuite, reportResponse, errorCode, error, false, completion)
                     }
@@ -344,7 +345,7 @@ class CollaborationDataProvider {
         }
     }
     
-    private func handleAppDetailsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func handleAppDetailsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaborationAppDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationAppDetails.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
@@ -360,14 +361,14 @@ class CollaborationDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(generationNumber == 0 ? true : false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(0, error)
+            completion?(false, 0, error)
         }
     }
     
-    private func processAppDetails(_ appName: String, _ reportData: ReportDataResponse?, _ detailsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processAppDetails(_ appName: String, _ reportData: ReportDataResponse?, _ detailsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var detailsData: CollaborationAppDetailsResponse?
         var retErr = error
         if let responseData = detailsResponse {
@@ -387,19 +388,21 @@ class CollaborationDataProvider {
                 detailsData?.data?[appName]??.data?.rows?[index].indexes = indexes
             }
         }
+        var dataWasChanged: Bool = false
         if detailsData?.data?.first?.value?.data?.rows != self.collaborationAppDetailsRows {
             if detailsData?.data?.first?.value?.data?.rows == nil && self.collaborationAppDetailsRows != nil {
             } else {
                 self.collaborationAppDetailsRows = detailsData?.data?.first?.value?.data?.rows
+                dataWasChanged = true
             }
             
         }
         DispatchQueue.main.async {
             if let rows = detailsData?.data?[appName]??.data?.rows {
-                self.getRowsImageData(for: rows)
+                //self.getRowsImageData(for: rows)
             }
         }
-        completion?(errorCode, retErr)
+        completion?(dataWasChanged, errorCode, retErr)
     }
     
     func getRowsImageData(for appInfo: [ImageDataProtocol]) {
