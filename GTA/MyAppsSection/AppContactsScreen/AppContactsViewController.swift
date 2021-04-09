@@ -20,7 +20,7 @@ class AppContactsViewController: UIViewController {
         if isCollaborationContacts {
             return collaborationDataProvider?.appContactsData
         } else {
-            return dataProvider?.appContactsData
+            return dataProvider?.appContactsData?[appName] ?? nil
         }
     }
     var appName: String = ""
