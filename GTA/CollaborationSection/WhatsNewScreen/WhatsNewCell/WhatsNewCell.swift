@@ -16,45 +16,20 @@ class WhatsNewCell: UITableViewCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
         
     var imageUrl: String?
+    var relativePath: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         //setUpCell()
     }
     
-    func setUpCell(with data: CollaborationNewsRow?) {
-        setImage(with: data?.imageData, status: data?.imageStatus ?? .loading)
-        titleLabel.text = data?.headline
-        subtitleLabel.text = data?.headline
-        //descriptionLabel.text = data.title
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.mainImageView.clear()
+//        mainImageView.gifImage = nil
+//        mainImageView.image = nil
     }
-    
-    func setImage(with data: Data?, status: LoadingStatus) {
-        if status == .loading {
-            startAnimation()
-        } else {
-            stopAnimation()
-        }
-        if let imageData = data, let image = UIImage(data: imageData) {
-            mainImageView.image = image
-        } else if status == .failed {
-            mainImageView.image = nil
-            //showFirstCharFrom(data.app_name)
-        }
-    }
-    
-    private func startAnimation() {
-        mainImageView.isHidden = true
-        self.activityIndicator.isHidden = false
-        self.activityIndicator.hidesWhenStopped = true
-        self.activityIndicator.startAnimating()
-    }
-    
-    private func stopAnimation() {
-        mainImageView.isHidden = false
-        self.activityIndicator.isHidden = true
-        self.activityIndicator.stopAnimating()
-    }
+     
     
 //    func setUpCell() {
 //        let font = UIFont(name: "SFProText-Light", size: 16)!

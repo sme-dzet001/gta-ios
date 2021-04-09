@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftyGif
 
 class WhatsNewViewController: UIViewController {
     
@@ -14,6 +15,8 @@ class WhatsNewViewController: UIViewController {
     var dataProvider: CollaborationDataProvider?
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
+    
+    private var cellForAnimation: WhatsNewCell?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,10 +91,10 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         guard (dataProvider?.collaborationNewsData.count ?? 0) > indexPath.row else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: "WhatsNewCell", for: indexPath) as? WhatsNewCell
         let cellDataSource = dataProvider?.collaborationNewsData[indexPath.row]
-        //cell?.setUpCell(with: cellData)
         cell?.titleLabel.text = cellDataSource?.headline
         cell?.subtitleLabel.text = cellDataSource?.subHeadline
         cell?.descriptionLabel.attributedText = dataProvider?.formAnswerBody(from: cellDataSource?.body)
+        cell?.relativePath = cellDataSource?.imageUrl
         if let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl), let _ = URL(string: imageURL) {
             cell?.activityIndicator.startAnimating()
             cell?.imageUrl = imageURL
@@ -100,7 +103,15 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
                 cell?.activityIndicator.stopAnimating()
                 if let imageData = data, error == nil {
                     let image = UIImage(data: imageData)
-                    cell?.mainImageView.image = image
+                    if !imageURL.contains(".gif"), let _ = image {
+                        cell?.mainImageView.setImage(image!)
+                    } else {
+                        if let gif = try? UIImage(gifData: imageData) {
+                            cell?.mainImageView.setGifImage(gif)
+                        } else {
+                            cell?.mainImageView.image = nil
+                        }
+                    }
                 } else {
                     cell?.mainImageView.image = nil// UIImage(named: "contact_default_photo")
                 }
@@ -122,5 +133,37 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         }
         self.navigationController?.pushViewController(whatsNewMoreScreen, animated: true)
     }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let _ = cellForAnimation, tableView.visibleCells.contains(cellForAnimation!) else { return }
+        cellForAnimation?.mainImageView.startAnimatingGif()
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard let _ = cellForAnimation, tableView.visibleCells.contains(cellForAnimation!) else { return }
+        cellForAnimation?.mainImageView.startAnimatingGif()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let cells = tableView.visibleCells as? [WhatsNewCell] else { return }
+        if scrollView.contentOffset.y <= 0 {
+            cells.forEach({$0.mainImageView.stopAnimatingGif()})
+            cells.first?.mainImageView.startAnimatingGif()
+            return
+        }
+        var distanceToCenter: CGFloat = 0
+        for cell in cells {
+            let row = dataProvider?.collaborationNewsData.firstIndex(where: {((cell.relativePath ?? "").contains($0.imageUrl ?? ""))})
+            guard let _ = row else { continue }
+            let rect = self.tableView.rectForRow(at: IndexPath(row: row!, section: 0))
+            let currentDistanceToCenter = self.view.center.y - tableView.convert(rect, to: self.tableView.superview).origin.y
+            if distanceToCenter == 0 || (distanceToCenter > currentDistanceToCenter && currentDistanceToCenter > 0) {
+                distanceToCenter = currentDistanceToCenter
+                cellForAnimation = cell
+            }
+        }
+        cells.forEach({$0.mainImageView.stopAnimatingGif()})
+    }
+
     
 }
