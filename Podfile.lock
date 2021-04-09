@@ -41,12 +41,14 @@ PODS:
   - PanModal (1.2.7)
   - PromisesObjC (1.2.12)
   - RNCryptor (5.1.0)
+  - SwiftyGif (5.4.0)
 
 DEPENDENCIES:
   - AdvancedPageControl
   - Firebase/Crashlytics
   - PanModal
   - RNCryptor
+  - SwiftyGif
 
 SPEC REPOS:
   trunk:
@@ -62,6 +64,7 @@ SPEC REPOS:
     - PanModal
     - PromisesObjC
     - RNCryptor
+    - SwiftyGif
 
 SPEC CHECKSUMS:
   AdvancedPageControl: df5912b03c7b78a7719d4f479b79f7eb3a2966bb
@@ -76,7 +79,8 @@ SPEC CHECKSUMS:
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
+  SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
 
-PODFILE CHECKSUM: 6e405aba4104dd743f6de6e150c360ce70f46041
+PODFILE CHECKSUM: bce6e0613735f7924f2cd57df320d6e85de149f1
 
 COCOAPODS: 1.10.1
