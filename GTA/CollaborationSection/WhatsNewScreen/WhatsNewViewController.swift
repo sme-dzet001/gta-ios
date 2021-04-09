@@ -93,7 +93,8 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         let cellDataSource = dataProvider?.collaborationNewsData[indexPath.row]
         cell?.titleLabel.text = cellDataSource?.headline
         cell?.subtitleLabel.text = cellDataSource?.subHeadline
-        cell?.descriptionLabel.attributedText = dataProvider?.formAnswerBody(from: cellDataSource?.body)
+        cell?.descriptionLabel.attributedText = cellDataSource?.decodeBody
+        cell?.descriptionLabel.addReadMoreString("More")
         cell?.relativePath = cellDataSource?.imageUrl
         if let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl), let _ = URL(string: imageURL) {
             cell?.activityIndicator.startAnimating()
@@ -121,7 +122,7 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return cell ?? UITableViewCell()
     }
-    
+        
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard (dataProvider?.collaborationNewsData.count ?? 0) > indexPath.row else { return }
         let whatsNewMoreScreen = WhatsNewMoreViewController()

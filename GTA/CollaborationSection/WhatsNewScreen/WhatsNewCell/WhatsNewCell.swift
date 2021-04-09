@@ -20,21 +20,13 @@ class WhatsNewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        //setUpCell()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        activityIndicator.stopAnimating()
         self.mainImageView.clear()
-//        mainImageView.gifImage = nil
-//        mainImageView.image = nil
+        self.layoutIfNeeded()
     }
-     
-    
-//    func setUpCell() {
-//        let font = UIFont(name: "SFProText-Light", size: 16)!
-//        descriptionLabel.addReadMoreString("More")
-//        //descriptionLabel.addTrailing(with: "On 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases report dsdssd dsds sddsds vdfdffdkdfkjdfjkdf dkjfdjkfdjkfdkj dffddfkjdfkjdf", moreText: "More", moreTextFont: font, moreTextColor: .lightGray)
-//    }
     
 }

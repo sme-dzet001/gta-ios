@@ -50,21 +50,37 @@ extension UILabel {
     }
     
     func addReadMoreString(_ readMoreText: String) {
-        let countString = self.text?.count
-        if let _ = countString, countString! >= 30 {
-            let lengthForVisibleString = vissibleTextLength
-            let mutableString = NSMutableString(string: self.text ?? "")
-            let trimmedString = (mutableString as NSString).replacingCharacters(in: NSMakeRange(lengthForVisibleString, ((self.text ?? "").count - lengthForVisibleString)), with: "") as NSString
-            let readMoreLength = readMoreText.count;
-            let trimmedForReadMore = trimmedString.replacingCharacters(in: NSMakeRange((trimmedString.length - readMoreLength), readMoreLength), with: "... ")
-            guard let font = self.font else { return }
-            let answerAttributed = NSMutableAttributedString(string: trimmedForReadMore, attributes: [NSAttributedString.Key.font : font])
-            let readMoreAttributed = NSMutableAttributedString(string: readMoreText, attributes: [NSAttributedString.Key.font : font, NSAttributedString.Key.foregroundColor: UIColor.gray])
-            answerAttributed.append(readMoreAttributed)
-            self.attributedText = answerAttributed
-        } else {
-            print("No need for 'Read More'...")
+        guard let text = self.text, !text.isEmptyOrWhitespace() else { return }
+        let readMoreAttributed = NSMutableAttributedString(string: readMoreText, attributes: [NSAttributedString.Key.font : font as Any, NSAttributedString.Key.foregroundColor: UIColor.gray])
+        let lengthForVisibleString = vissibleTextLength
+        if vissibleTextLength >= self.text!.count, let _ = self.attributedText {
+            self.text = text
+            let mutAttr = NSMutableAttributedString(attributedString: self.attributedText!)
+            mutAttr.mutableString.append("... ")
+            mutAttr.append(readMoreAttributed)
+            self.attributedText = mutAttr
+            return
         }
+        let mutableString = NSMutableString(string: self.attributedText?.string ?? "")
+        var trimmedString = (mutableString as NSString).replacingCharacters(in: NSMakeRange(lengthForVisibleString, ((self.text ?? "").count - lengthForVisibleString)), with: "")
+        if trimmedString.last == "." || trimmedString.last == " " {
+            trimmedString.removeLast()
+        }
+        repeat {
+            let lastSpaceIndex = trimmedString.lastIndex(of: " ")
+            if let _ = lastSpaceIndex {
+                trimmedString.removeSubrange(lastSpaceIndex!..<trimmedString.endIndex)
+            } else {
+                break
+            }
+        } while ("... " + readMoreText).count + trimmedString.count > lengthForVisibleString //- 7
+        trimmedString.append("... ")
+        let attrTrimm = NSMutableAttributedString(string: trimmedString)
+        self.attributedText?.enumerateAttributes(in: NSRange(location: 0, length: attrTrimm.length), options: .longestEffectiveRangeNotRequired, using: { (attributes, range, _) in
+            attrTrimm.addAttributes(attributes, range: range)
+        })
+        attrTrimm.append(readMoreAttributed)
+        self.attributedText = attrTrimm
     }
 
     var vissibleTextLength: Int {
@@ -81,7 +97,7 @@ extension UILabel {
         if boundingRect.size.height > labelHeight {
             var index: Int = 0
             var prev: Int = 0
-            let characterSet = CharacterSet.newlines
+            let characterSet = CharacterSet.whitespacesAndNewlines
             repeat {
                 prev = index
                 if mode == NSLineBreakMode.byCharWrapping {

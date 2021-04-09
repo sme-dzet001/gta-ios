@@ -210,6 +210,8 @@ struct CollaborationNewsRow: Codable, Equatable, ImageDataProtocol {
     var imageData: Data?
     var imageStatus: LoadingStatus = .loading
     
+    var decodeBody: NSMutableAttributedString?
+    
     enum CodingKeys: String, CodingKey {
         case values
     }

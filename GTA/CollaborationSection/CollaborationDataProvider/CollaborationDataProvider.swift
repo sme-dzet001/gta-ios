@@ -176,6 +176,9 @@ class CollaborationDataProvider {
         }
         if collaborationNewsData != response.data?.rows ?? [] {
             collaborationNewsData = response.data?.rows ?? []
+            for (index, row) in (response.data?.rows ?? []).enumerated() {
+                collaborationNewsData[index].decodeBody = formAnswerBody(from: row.body)
+            }
             return true
         }
         return false
