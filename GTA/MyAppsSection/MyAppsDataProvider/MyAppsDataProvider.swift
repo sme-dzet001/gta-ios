@@ -29,7 +29,7 @@ class MyAppsDataProvider {
     private var refreshTimer: Timer?
     private var cachedReportData: Data?
     private(set) var tipsAndTricksData = [String : [QuickHelpRow]]()
-    private(set) var appContactsData: [String : AppContactsData?]?
+    private(set) var appContactsData: [String : AppContactsData?] = [:]
         
     // MARK: - Calling methods
     
@@ -510,9 +510,9 @@ class MyAppsDataProvider {
         if let contacts = appContactsData?.contactsData, contacts.isEmpty {
             retErr = ResponseError.noDataAvailable
         }
-        if appContactsData == nil && self.appContactsData?[appName] != nil {
-        } else if appContactsData != self.appContactsData?[appName] {
-            self.appContactsData?[appName] = appContactsData
+        if appContactsData == nil && self.appContactsData[appName] != nil {
+        } else if appContactsData != self.appContactsData[appName] {
+            self.appContactsData[appName] = appContactsData
         }
         completion?(errorCode, retErr, isFromCache)
     }
