@@ -129,9 +129,6 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         let cellDataSource = dataProvider?.collaborationNewsData[indexPath.row]
         whatsNewMoreScreen.dataProvider = dataProvider
         whatsNewMoreScreen.dataSource = cellDataSource
-        if let article = cellDataSource?.body {
-            dataProvider?.addArticle(article)
-        }
         self.navigationController?.pushViewController(whatsNewMoreScreen, animated: true)
     }
     
@@ -150,17 +147,24 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         if scrollView.contentOffset.y <= 0 {
             cells.forEach({$0.mainImageView.stopAnimatingGif()})
             cells.first?.mainImageView.startAnimatingGif()
+            if let article = dataProvider?.collaborationNewsData.first?.body {
+                dataProvider?.addArticle(article)
+            }
             return
         }
         var distanceToCenter: CGFloat = 0
         for cell in cells {
             let row = dataProvider?.collaborationNewsData.firstIndex(where: {((cell.relativePath ?? "").contains($0.imageUrl ?? ""))})
             guard let _ = row else { continue }
-            let rect = self.tableView.rectForRow(at: IndexPath(row: row!, section: 0))
+            let indexPath = IndexPath(row: row!, section: 0)
+            let rect = self.tableView.rectForRow(at: indexPath)
             let currentDistanceToCenter = self.view.center.y - tableView.convert(rect, to: self.tableView.superview).origin.y
             if distanceToCenter == 0 || (distanceToCenter > currentDistanceToCenter && currentDistanceToCenter > 0) {
                 distanceToCenter = currentDistanceToCenter
                 cellForAnimation = cell
+                if let article = dataProvider?.collaborationNewsData[indexPath.row].body {
+                    dataProvider?.addArticle(article)
+                }
             }
         }
         cells.forEach({$0.mainImageView.stopAnimatingGif()})
