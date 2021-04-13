@@ -15,6 +15,9 @@
         <array key="SF-Pro-Display-Regular.otf">
             <string>SFProDisplay-Regular</string>
         </array>
+        <array key="SF-Pro-Text-Light.ttf">
+            <string>SFProText-Light</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WhatsNewMoreViewController" customModule="GTA" customModuleProvider="target">
@@ -57,19 +60,36 @@ situation?</string>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" allowsEditingTextAttributes="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mu6-zy-PJP">
-                    <rect key="frame" x="0.0" y="339.5" width="414" height="556.5"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="god-Io-g4g">
+                    <rect key="frame" x="4" y="339.5" width="406" height="556.5"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" allowsEditingTextAttributes="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mu6-zy-PJP">
+                            <rect key="frame" x="20" y="15" width="366" height="541.5"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <color key="textColor" systemColor="labelColor"/>
+                            <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textView>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                    <color key="textColor" systemColor="labelColor"/>
-                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <constraints>
+                        <constraint firstItem="Mu6-zy-PJP" firstAttribute="leading" secondItem="god-Io-g4g" secondAttribute="leading" constant="20" id="1Ax-et-tid"/>
+                        <constraint firstAttribute="trailing" secondItem="Mu6-zy-PJP" secondAttribute="trailing" constant="20" id="LKc-OS-NKD"/>
+                        <constraint firstAttribute="bottom" secondItem="Mu6-zy-PJP" secondAttribute="bottom" id="NvR-nF-2pW"/>
+                        <constraint firstItem="Mu6-zy-PJP" firstAttribute="top" secondItem="god-Io-g4g" secondAttribute="top" constant="15" id="hh2-vM-gv3"/>
+                    </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                             <real key="value" value="16"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                </textView>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="At4-Az-PY2">
                     <rect key="frame" x="24" y="49" width="24" height="24"/>
                     <constraints>
@@ -102,21 +122,21 @@ situation?</string>
                 <constraint firstItem="FsN-nR-ob9" firstAttribute="trailing" secondItem="LRt-ZS-OfF" secondAttribute="trailing" id="2Xh-aa-P6z"/>
                 <constraint firstItem="a7h-Az-5J2" firstAttribute="leading" secondItem="LRt-ZS-OfF" secondAttribute="leading" id="3t5-sx-GQi"/>
                 <constraint firstItem="At4-Az-PY2" firstAttribute="leading" secondItem="FsN-nR-ob9" secondAttribute="leading" constant="24" id="7BP-Dl-kM1"/>
-                <constraint firstItem="FsN-nR-ob9" firstAttribute="trailing" secondItem="Mu6-zy-PJP" secondAttribute="trailing" id="AgF-af-TtR"/>
                 <constraint firstItem="fYi-BU-lE1" firstAttribute="leading" secondItem="FsN-nR-ob9" secondAttribute="leading" id="Bdp-AU-WGp"/>
                 <constraint firstAttribute="bottom" secondItem="fYi-BU-lE1" secondAttribute="bottom" id="CYE-Ok-pMw"/>
-                <constraint firstItem="Mu6-zy-PJP" firstAttribute="leading" secondItem="FsN-nR-ob9" secondAttribute="leading" id="DDm-k0-Xrg"/>
+                <constraint firstItem="god-Io-g4g" firstAttribute="bottom" secondItem="zyU-EC-vqY" secondAttribute="bottom" id="F31-cH-HaR"/>
                 <constraint firstItem="FsN-nR-ob9" firstAttribute="trailing" secondItem="fYi-BU-lE1" secondAttribute="trailing" id="HEu-M0-weF"/>
                 <constraint firstItem="FsN-nR-ob9" firstAttribute="trailing" secondItem="idq-wA-GcR" secondAttribute="trailing" constant="53" id="I2H-az-ENS"/>
                 <constraint firstItem="LRt-ZS-OfF" firstAttribute="top" secondItem="zyU-EC-vqY" secondAttribute="top" id="QKc-jn-zD1"/>
+                <constraint firstItem="god-Io-g4g" firstAttribute="top" secondItem="LRt-ZS-OfF" secondAttribute="bottom" id="XIz-08-Ayk"/>
                 <constraint firstItem="a7h-Az-5J2" firstAttribute="top" secondItem="LRt-ZS-OfF" secondAttribute="top" id="XiP-rj-lYA"/>
+                <constraint firstItem="FsN-nR-ob9" firstAttribute="trailing" secondItem="god-Io-g4g" secondAttribute="trailing" constant="4" id="Y3Z-Tf-wxj"/>
                 <constraint firstItem="At4-Az-PY2" firstAttribute="top" secondItem="FsN-nR-ob9" secondAttribute="top" constant="5" id="YAq-8k-9Bo"/>
-                <constraint firstItem="Mu6-zy-PJP" firstAttribute="top" secondItem="LRt-ZS-OfF" secondAttribute="bottom" id="Ydm-f3-hIe"/>
                 <constraint firstItem="iuu-Rb-Q01" firstAttribute="centerY" secondItem="LRt-ZS-OfF" secondAttribute="centerY" multiplier="1.2" id="dnt-AF-HNC"/>
                 <constraint firstItem="FsN-nR-ob9" firstAttribute="trailing" secondItem="iuu-Rb-Q01" secondAttribute="trailing" constant="30" id="fKQ-pP-v6T"/>
                 <constraint firstItem="idq-wA-GcR" firstAttribute="top" secondItem="FsN-nR-ob9" secondAttribute="top" constant="5" id="ied-ou-ASi"/>
                 <constraint firstItem="a7h-Az-5J2" firstAttribute="bottom" secondItem="LRt-ZS-OfF" secondAttribute="bottom" id="imo-Zv-YuW"/>
-                <constraint firstAttribute="bottom" secondItem="Mu6-zy-PJP" secondAttribute="bottom" id="meB-AY-szm"/>
+                <constraint firstItem="god-Io-g4g" firstAttribute="leading" secondItem="FsN-nR-ob9" secondAttribute="leading" constant="4" id="ps7-jV-2hR"/>
                 <constraint firstItem="iuu-Rb-Q01" firstAttribute="leading" secondItem="FsN-nR-ob9" secondAttribute="leading" constant="30" id="qyE-XU-B1o"/>
                 <constraint firstItem="iuu-Rb-Q01" firstAttribute="top" relation="greaterThanOrEqual" secondItem="idq-wA-GcR" secondAttribute="bottom" constant="8" id="tfd-PN-0Ne"/>
                 <constraint firstItem="LRt-ZS-OfF" firstAttribute="leading" secondItem="FsN-nR-ob9" secondAttribute="leading" id="uBN-bh-hjV"/>

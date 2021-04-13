@@ -33,7 +33,16 @@ class WhatsNewMoreViewController: UIViewController {
         self.blurView.isHidden = false
         addBlurToView()
         self.tabBarController?.tabBar.isHidden = true
-        infoTextView.attributedText = dataProvider?.formAnswerBody(from: dataSource?.body)
+        let text = dataSource?.decodeBody
+        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+            let range = NSRange(text!.string.startIndex..., in: text!.string)
+            text?.addAttribute(.font, value: neededFont, range: range)
+        }
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        paragraphStyle.paragraphSpacing = 16
+        text?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, text?.length ?? 0))
+        infoTextView.attributedText = text
         startAnimation()
         dataProvider?.getAppImageData(from: dataSource?.imageUrl, completion: { (data, error) in
             if let _ = data, error == nil {

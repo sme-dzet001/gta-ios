@@ -93,7 +93,11 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         let cellDataSource = dataProvider?.collaborationNewsData[indexPath.row]
         cell?.titleLabel.text = cellDataSource?.headline
         cell?.subtitleLabel.text = cellDataSource?.subHeadline
-        cell?.descriptionLabel.attributedText = cellDataSource?.decodeBody
+        let text = cellDataSource?.decodeBody
+        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+            text?.setFontFace(font: neededFont)
+        }
+        cell?.descriptionLabel.attributedText = text//cellDataSource?.decodeBody
         cell?.descriptionLabel.addReadMoreString("More")
         cell?.relativePath = cellDataSource?.imageUrl
         if let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl), let _ = URL(string: imageURL) {
