@@ -133,8 +133,8 @@ struct CollaborationAppDetailsRow: Codable, Equatable {
         case values
     }
     
-    var appSupportEmail: String? {
-        guard let valuesArr = values, let index = indexes["app support email"], valuesArr.count > index else { return nil }
+    var openAppUrl: String? {
+        guard let valuesArr = values, let index = indexes["open app url"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
     }
     
@@ -148,8 +148,8 @@ struct CollaborationAppDetailsRow: Codable, Equatable {
         return valuesArr[index]?.stringValue
     }
     
-    var appWikiUrl: String? {
-        guard let valuesArr = values, let index = indexes["app wiki url"], valuesArr.count > index else { return nil }
+    var productPageUrl: String? {
+        guard let valuesArr = values, let index = indexes["product page url"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
     }
     
@@ -189,7 +189,7 @@ struct CollaborationAppDetailsRow: Codable, Equatable {
     }
     
     static func ==(lhs: CollaborationAppDetailsRow, rhs: CollaborationAppDetailsRow) -> Bool {
-        return lhs.description == rhs.description && lhs.title == rhs.title && lhs.appSupportUrl == rhs.appSupportUrl && lhs.appSupportPolicy == rhs.appSupportPolicy && lhs.appWikiUrl == rhs.appWikiUrl
+        return lhs.description == rhs.description && lhs.title == rhs.title && lhs.appSupportUrl == rhs.appSupportUrl && lhs.appSupportPolicy == rhs.appSupportPolicy && lhs.productPageUrl == rhs.productPageUrl && lhs.openAppUrl == rhs.openAppUrl
     }
     
 }
