@@ -37,7 +37,16 @@ class WhatsNewMoreViewController: UIViewController {
         startAnimation()
         dataProvider?.getAppImageData(from: dataSource?.imageUrl, completion: { (data, error) in
             if let _ = data, error == nil {
-                self.headerImageView.image = UIImage(data: data!)
+                if !(self.dataSource?.imageUrl ?? "").contains(".gif"), let image = UIImage(data: data!) {
+                    self.headerImageView.setImage(image)
+                } else {
+                    if let gif = try? UIImage(gifData: data!) {
+                        self.headerImageView.setGifImage(gif)
+                        self.headerImageView.startAnimatingGif()
+                    } else {
+                        self.headerImageView.image = nil
+                    }
+                }
             }
             self.stopAnimation()
         })
