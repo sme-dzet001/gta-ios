@@ -9,6 +9,9 @@ import UIKit
 
 class AppContactsViewController: UIViewController {
     
+    @IBOutlet weak var navBarView: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -34,7 +37,11 @@ class AppContactsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        addErrorLabel(errorLabel)
+        navBarView.isHidden = isCollaborationContacts
+        addErrorLabel(errorLabel, isGSD: !isCollaborationContacts)
+        if !isCollaborationContacts {
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        }
         navigationController?.navigationBar.barTintColor = UIColor.white
         if isCollaborationContacts {
             loadCollaborationContactsData()
@@ -45,7 +52,17 @@ class AppContactsViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
     private func setUpNavigationItem() {
+        if !isCollaborationContacts {
+            titleLabel.text = appName
+            subtitleLabel.text = "Contacts"
+            return
+        }
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
         let titleText = !isCollaborationContacts ? "\(appName)\nContacts" : "Team Contacts"
         tlabel.text = titleText
@@ -78,7 +95,7 @@ class AppContactsViewController: UIViewController {
                     self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     //self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
-                    self?.tableView.isHidden = false
+                    self?.tableView.alpha = 1
                     self?.tableView.reloadData()
                 } else {
                     let contactsDataIsEmpty = self?.appContactsData?.contactsData == nil || self?.appContactsData?.contactsData?.count == 0
@@ -101,7 +118,7 @@ class AppContactsViewController: UIViewController {
                 if error == nil && errorCode == 200 {
                     //self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
-                    self?.tableView.isHidden = false
+                    self?.tableView.alpha = 1
                     self?.tableView.reloadData()
                 } else {
                     let contactsDataIsEmpty = self?.appContactsData?.contactsData == nil || self?.appContactsData?.contactsData?.count == 0
@@ -116,12 +133,16 @@ class AppContactsViewController: UIViewController {
         self.addLoadingIndicator(activityIndicator)
         activityIndicator.startAnimating()
         errorLabel.isHidden = true
-        tableView.isHidden = true
+        tableView.alpha = 0
     }
     
     private func stopAnimation() {
         activityIndicator.stopAnimating()
         activityIndicator.removeFromSuperview()
+    }
+    
+    @IBAction func backButtonPressed(_ sender: UIButton) {
+        backPressed()
     }
     
     @objc private func backPressed() {

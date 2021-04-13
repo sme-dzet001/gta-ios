@@ -8,6 +8,11 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppTipsAndTricksViewController" customModule="GTA" customModuleProvider="target">
             <connections>
@@ -24,19 +29,69 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gWz-H3-qqF">
+                    <rect key="frame" x="0.0" y="44" width="414" height="77"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Fsq-Aj-Iv2">
+                            <rect key="frame" x="24" y="26.5" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="24" id="0LE-y0-F1P"/>
+                                <constraint firstAttribute="width" secondItem="Fsq-Aj-Iv2" secondAttribute="height" multiplier="1:1" id="nh9-Re-0F3"/>
+                            </constraints>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-11" translatesAutoresizingMaskIntoConstraints="NO" id="DpP-HV-mJm">
+                            <rect key="frame" x="58" y="0.0" width="298" height="77"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G3A-Qp-xfF">
+                                    <rect key="frame" x="0.0" y="0.0" width="298" height="44"/>
+                                    <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKO-Kg-IaU">
+                                    <rect key="frame" x="0.0" y="33" width="298" height="44"/>
+                                    <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="HKO-Kg-IaU" firstAttribute="leading" secondItem="DpP-HV-mJm" secondAttribute="leading" id="UhE-Uq-tgB"/>
+                                <constraint firstAttribute="trailing" secondItem="G3A-Qp-xfF" secondAttribute="trailing" id="WGK-li-CuG"/>
+                                <constraint firstItem="G3A-Qp-xfF" firstAttribute="leading" secondItem="DpP-HV-mJm" secondAttribute="leading" id="gAL-PE-QYo"/>
+                                <constraint firstAttribute="trailing" secondItem="HKO-Kg-IaU" secondAttribute="trailing" id="gOF-k4-zcJ"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="Fsq-Aj-Iv2" firstAttribute="leading" secondItem="gWz-H3-qqF" secondAttribute="leading" constant="24" id="7av-Hr-UO2"/>
+                        <constraint firstAttribute="trailing" secondItem="DpP-HV-mJm" secondAttribute="trailing" constant="58" id="AlV-rj-1O7"/>
+                        <constraint firstItem="DpP-HV-mJm" firstAttribute="leading" secondItem="Fsq-Aj-Iv2" secondAttribute="trailing" constant="10" id="OrN-oT-AbX"/>
+                        <constraint firstAttribute="bottom" secondItem="DpP-HV-mJm" secondAttribute="bottom" id="ihC-Df-kEz"/>
+                        <constraint firstItem="DpP-HV-mJm" firstAttribute="top" secondItem="gWz-H3-qqF" secondAttribute="top" id="j13-Pc-FRe"/>
+                        <constraint firstItem="DpP-HV-mJm" firstAttribute="centerY" secondItem="gWz-H3-qqF" secondAttribute="centerY" id="kkf-G7-dje"/>
+                        <constraint firstItem="Fsq-Aj-Iv2" firstAttribute="centerY" secondItem="gWz-H3-qqF" secondAttribute="centerY" id="uYN-Nx-BvN"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="KZX-Pj-YHm" secondAttribute="bottom" id="2ol-6c-mnC"/>
                 <constraint firstItem="KZX-Pj-YHm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="JMd-Da-61X"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="gWz-H3-qqF" secondAttribute="trailing" id="bCF-ya-Kdb"/>
+                <constraint firstItem="gWz-H3-qqF" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="67/780" id="eBF-su-oFN"/>
+                <constraint firstItem="gWz-H3-qqF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="mTZ-9d-tdJ"/>
                 <constraint firstItem="KZX-Pj-YHm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ufv-bo-gml"/>
+                <constraint firstItem="gWz-H3-qqF" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="wOK-wm-2eL"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="KZX-Pj-YHm" secondAttribute="trailing" id="yaa-Vp-Jmf"/>
             </constraints>
             <point key="canvasLocation" x="133" y="78"/>
         </view>
     </objects>
     <resources>
+        <image name="back_arrow" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
