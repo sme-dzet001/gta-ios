@@ -79,12 +79,11 @@ class QuickHelpViewController: UIViewController {
     }
     
     private func loadAppTipsAndTricks() {
-        if self.appsDataProvider?.tipsAndTricksData == nil || (appsDataProvider?.tipsAndTricksData.isEmpty ?? true){
+        if self.appsDataProvider?.tipsAndTricksData[appName ?? ""] == nil || (appsDataProvider?.tipsAndTricksData[appName ?? ""]?.isEmpty ?? true){
             startAnimation()
         }
         appsDataProvider?.getAppTipsAndTricks(for: appName) {[weak self] (dataWasChanged, errorCode, error, isFromCache) in
             DispatchQueue.main.async {
-                //self?.activityIndicator.stopAnimating()
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
@@ -92,10 +91,10 @@ class QuickHelpViewController: UIViewController {
                     self?.tableView.isHidden = false
                     if dataWasChanged { self?.tableView.reloadData() }
                 } else {
-                    if self?.appsDataProvider?.tipsAndTricksData.isEmpty ?? true {
+                    if self?.appsDataProvider?.tipsAndTricksData[self?.appName ?? ""]?.isEmpty ?? true {
                         self?.tableView.reloadData()
                     }
-                    self?.errorLabel.isHidden = !(self?.appsDataProvider?.tipsAndTricksData.isEmpty ?? true)
+                    self?.errorLabel.isHidden = !(self?.appsDataProvider?.tipsAndTricksData[self?.appName ?? ""]?.isEmpty ?? true)
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
             }
@@ -172,7 +171,7 @@ class QuickHelpViewController: UIViewController {
         case .collaborationTipsAndTricks:
             return collaborationDataProvider?.tipsAndTricksData ?? []
         case .appTipsAndTricks:
-            return appsDataProvider?.tipsAndTricksData ?? []
+            return appsDataProvider?.tipsAndTricksData[appName ?? ""] ?? []
         default:
             return dataProvider?.quickHelpData ?? []
         }
