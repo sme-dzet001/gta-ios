@@ -98,7 +98,7 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
             text?.setFontFace(font: neededFont)
         }
         cell?.descriptionLabel.attributedText = text//cellDataSource?.decodeBody
-        cell?.descriptionLabel.addReadMoreString("More")
+        cell?.descriptionLabel.addReadMoreString("more")
         cell?.relativePath = cellDataSource?.imageUrl
         if let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl), let _ = URL(string: imageURL) {
             cell?.activityIndicator.startAnimating()
