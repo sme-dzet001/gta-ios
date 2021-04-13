@@ -68,7 +68,7 @@
                     <constraint firstItem="4VD-Kk-p0A" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="kjU-wG-6IU"/>
                     <constraint firstAttribute="bottom" secondItem="WGP-dx-t9w" secondAttribute="bottom" id="qMX-RJ-4Az"/>
                     <constraint firstItem="4VD-Kk-p0A" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="rKy-Vv-tUR"/>
-                    <constraint firstItem="EaC-sN-4bg" firstAttribute="top" secondItem="uuO-05-CaX" secondAttribute="bottom" constant="15" id="xpk-vp-Xpr"/>
+                    <constraint firstItem="EaC-sN-4bg" firstAttribute="top" secondItem="4VD-Kk-p0A" secondAttribute="bottom" id="xpk-vp-Xpr"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -76,6 +76,7 @@
                 <outlet property="answerLabel" destination="EaC-sN-4bg" id="TSo-Du-c7d"/>
                 <outlet property="expandButton" destination="uuO-05-CaX" id="Zhw-9n-aTh"/>
                 <outlet property="questionLabel" destination="4VD-Kk-p0A" id="BNI-CI-Dcv"/>
+                <outlet property="questionLabelHeight" destination="onB-vO-uBR" id="ABx-di-nNA"/>
             </connections>
             <point key="canvasLocation" x="189.13043478260872" y="137.94642857142856"/>
         </tableViewCell>

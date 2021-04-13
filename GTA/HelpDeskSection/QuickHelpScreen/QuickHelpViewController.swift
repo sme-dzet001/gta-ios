@@ -213,10 +213,31 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 8
             answerDecoded?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, answerDecoded?.length ?? 0))
-            cell.setUpCell(question: cellDataSource.question, answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .collapse : .expand)
+            cell.setUpCell(question: cellDataSource.question, questionLabelHeight: heightForQuestionAt(indexPath: indexPath), answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .collapse : .expand)
             return cell
         }
         return UITableViewCell()
+    }
+    
+    private func heightForQuestionAt(indexPath: IndexPath) -> CGFloat {
+        let data: [QuickHelpDataProtocol] = getHelpData()
+        guard let question = data[indexPath.row].question else { return 0 }
+        guard let neededFont = UIFont(name: "SFProText-Semibold", size: 16) else { return 0 }
+        let fontAttributes = [NSAttributedString.Key.font: neededFont]
+        let attributedQuestion = NSMutableAttributedString(string: question, attributes: fontAttributes)
+        attributedQuestion.setFontFace(font: neededFont)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        attributedQuestion.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedQuestion.length))
+        let questionLabelLeftIndent: CGFloat = 24
+        let expandBtnRightIndent: CGFloat = 20
+        let expandBtnWidth: CGFloat = 35
+        let expandBtnSpace: CGFloat = 8
+        let questionLabelAdditionalSpace = questionLabelLeftIndent + expandBtnRightIndent + expandBtnWidth + expandBtnSpace
+        let textHeight = attributedQuestion.height(containerWidth: view.frame.width - questionLabelAdditionalSpace)
+        let bottomMargin: CGFloat = 8
+        let res = textHeight + bottomMargin
+        return (res > 64) ? res : 64
     }
     
     private func heightForAnswerAt(indexPath: IndexPath) -> CGFloat {
@@ -237,16 +258,16 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if expandedRowsIndex.contains(indexPath.row) {
-            return 64 + heightForAnswerAt(indexPath: indexPath)
+            return heightForQuestionAt(indexPath: indexPath) + heightForAnswerAt(indexPath: indexPath)
         }
-        return 64
+        return heightForQuestionAt(indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if expandedRowsIndex.contains(indexPath.row) {
-            return 64 + heightForAnswerAt(indexPath: indexPath)
+            return heightForQuestionAt(indexPath: indexPath) + heightForAnswerAt(indexPath: indexPath)
         }
-        return 64
+        return heightForQuestionAt(indexPath: indexPath)
     }
     
 }
