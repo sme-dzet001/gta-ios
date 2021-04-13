@@ -10,6 +10,7 @@ import UIKit
 class WhatsNewMoreViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var blurView: UIView!
     @IBOutlet weak var infoTextView: UITextView!
@@ -33,6 +34,11 @@ class WhatsNewMoreViewController: UIViewController {
         self.blurView.isHidden = false
         addBlurToView()
         self.tabBarController?.tabBar.isHidden = true
+        setLabelsText()
+        setImage()
+    }
+    
+    private func setLabelsText() {
         let text = dataSource?.decodeBody
         if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
             let range = NSRange(text!.string.startIndex..., in: text!.string)
@@ -43,6 +49,10 @@ class WhatsNewMoreViewController: UIViewController {
         paragraphStyle.paragraphSpacing = 16
         text?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, text?.length ?? 0))
         infoTextView.attributedText = text
+        subtitleLabel.text = dataSource?.subHeadline
+    }
+    
+    private func setImage() {
         startAnimation()
         dataProvider?.getAppImageData(from: dataSource?.imageUrl, completion: { (data, error) in
             if let _ = data, error == nil {

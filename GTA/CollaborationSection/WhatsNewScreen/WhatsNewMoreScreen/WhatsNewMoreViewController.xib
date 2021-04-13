@@ -18,6 +18,9 @@
         <array key="SF-Pro-Text-Light.ttf">
             <string>SFProText-Light</string>
         </array>
+        <array key="SF-Pro-Text-Medium.otf">
+            <string>SFProText-Medium</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WhatsNewMoreViewController" customModule="GTA" customModuleProvider="target">
@@ -26,6 +29,7 @@
                 <outlet property="blurView" destination="fYi-BU-lE1" id="SC1-QQ-qxs"/>
                 <outlet property="headerImageView" destination="LRt-ZS-OfF" id="JCV-eN-pfu"/>
                 <outlet property="infoTextView" destination="Mu6-zy-PJP" id="foN-xT-mHK"/>
+                <outlet property="subtitleLabel" destination="O6J-bS-jmU" id="0fn-cn-d4Y"/>
                 <outlet property="titleLabel" destination="iuu-Rb-Q01" id="aB9-Er-75T"/>
                 <outlet property="view" destination="zyU-EC-vqY" id="xJw-PY-CPe"/>
             </connections>
@@ -52,6 +56,12 @@
                         <constraint firstItem="U9J-ba-p2b" firstAttribute="centerY" secondItem="a7h-Az-5J2" secondAttribute="centerY" id="UHN-61-B8z"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6J-bS-jmU">
+                    <rect key="frame" x="30" y="242.5" width="354" height="0.0"/>
+                    <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="0.60367215733949831" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuu-Rb-Q01">
                     <rect key="frame" x="30" y="175" width="354" height="57.5"/>
                     <string key="text">What is the current
@@ -121,22 +131,26 @@ situation?</string>
                 <constraint firstItem="idq-wA-GcR" firstAttribute="leading" secondItem="At4-Az-PY2" secondAttribute="trailing" constant="5" id="1es-Tm-VBL"/>
                 <constraint firstItem="FsN-nR-ob9" firstAttribute="trailing" secondItem="LRt-ZS-OfF" secondAttribute="trailing" id="2Xh-aa-P6z"/>
                 <constraint firstItem="a7h-Az-5J2" firstAttribute="leading" secondItem="LRt-ZS-OfF" secondAttribute="leading" id="3t5-sx-GQi"/>
+                <constraint firstItem="O6J-bS-jmU" firstAttribute="top" secondItem="iuu-Rb-Q01" secondAttribute="bottom" constant="10" id="5fy-lC-WR4"/>
                 <constraint firstItem="At4-Az-PY2" firstAttribute="leading" secondItem="FsN-nR-ob9" secondAttribute="leading" constant="24" id="7BP-Dl-kM1"/>
                 <constraint firstItem="fYi-BU-lE1" firstAttribute="leading" secondItem="FsN-nR-ob9" secondAttribute="leading" id="Bdp-AU-WGp"/>
                 <constraint firstAttribute="bottom" secondItem="fYi-BU-lE1" secondAttribute="bottom" id="CYE-Ok-pMw"/>
                 <constraint firstItem="god-Io-g4g" firstAttribute="bottom" secondItem="zyU-EC-vqY" secondAttribute="bottom" id="F31-cH-HaR"/>
                 <constraint firstItem="FsN-nR-ob9" firstAttribute="trailing" secondItem="fYi-BU-lE1" secondAttribute="trailing" id="HEu-M0-weF"/>
                 <constraint firstItem="FsN-nR-ob9" firstAttribute="trailing" secondItem="idq-wA-GcR" secondAttribute="trailing" constant="53" id="I2H-az-ENS"/>
+                <constraint firstItem="O6J-bS-jmU" firstAttribute="trailing" secondItem="iuu-Rb-Q01" secondAttribute="trailing" id="MwB-Yd-HIX"/>
                 <constraint firstItem="LRt-ZS-OfF" firstAttribute="top" secondItem="zyU-EC-vqY" secondAttribute="top" id="QKc-jn-zD1"/>
                 <constraint firstItem="god-Io-g4g" firstAttribute="top" secondItem="LRt-ZS-OfF" secondAttribute="bottom" id="XIz-08-Ayk"/>
                 <constraint firstItem="a7h-Az-5J2" firstAttribute="top" secondItem="LRt-ZS-OfF" secondAttribute="top" id="XiP-rj-lYA"/>
                 <constraint firstItem="FsN-nR-ob9" firstAttribute="trailing" secondItem="god-Io-g4g" secondAttribute="trailing" constant="4" id="Y3Z-Tf-wxj"/>
                 <constraint firstItem="At4-Az-PY2" firstAttribute="top" secondItem="FsN-nR-ob9" secondAttribute="top" constant="5" id="YAq-8k-9Bo"/>
+                <constraint firstItem="O6J-bS-jmU" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="a7h-Az-5J2" secondAttribute="bottom" constant="10" id="ZYT-Sv-zHD"/>
                 <constraint firstItem="iuu-Rb-Q01" firstAttribute="centerY" secondItem="LRt-ZS-OfF" secondAttribute="centerY" multiplier="1.2" id="dnt-AF-HNC"/>
                 <constraint firstItem="FsN-nR-ob9" firstAttribute="trailing" secondItem="iuu-Rb-Q01" secondAttribute="trailing" constant="30" id="fKQ-pP-v6T"/>
                 <constraint firstItem="idq-wA-GcR" firstAttribute="top" secondItem="FsN-nR-ob9" secondAttribute="top" constant="5" id="ied-ou-ASi"/>
                 <constraint firstItem="a7h-Az-5J2" firstAttribute="bottom" secondItem="LRt-ZS-OfF" secondAttribute="bottom" id="imo-Zv-YuW"/>
                 <constraint firstItem="god-Io-g4g" firstAttribute="leading" secondItem="FsN-nR-ob9" secondAttribute="leading" constant="4" id="ps7-jV-2hR"/>
+                <constraint firstItem="O6J-bS-jmU" firstAttribute="leading" secondItem="iuu-Rb-Q01" secondAttribute="leading" id="q7C-yu-nb9"/>
                 <constraint firstItem="iuu-Rb-Q01" firstAttribute="leading" secondItem="FsN-nR-ob9" secondAttribute="leading" constant="30" id="qyE-XU-B1o"/>
                 <constraint firstItem="iuu-Rb-Q01" firstAttribute="top" relation="greaterThanOrEqual" secondItem="idq-wA-GcR" secondAttribute="bottom" constant="8" id="tfd-PN-0Ne"/>
                 <constraint firstItem="LRt-ZS-OfF" firstAttribute="leading" secondItem="FsN-nR-ob9" secondAttribute="leading" id="uBN-bh-hjV"/>
