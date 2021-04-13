@@ -233,12 +233,19 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1, let supData = dataSource?.supportData, indexPath.row < supData.count, let stringUrl = supData[indexPath.row].value, let url = URL(string: stringUrl) {
-            UIApplication.shared.open(url, options: [:]) { (isSuccess) in
+        if indexPath.section == 1, let supData = dataSource?.supportData, indexPath.row < supData.count, let stringUrl = supData[indexPath.row].value {
+            openUrl(stringUrl) {[weak self] (isSuccess) in
                 if !isSuccess {
-                    self.displayError(errorMessage: "", title: "Invalid link")
+                    self?.openUrl(self?.collaborationDetails?.productPageUrl ?? "")
                 }
             }
+        }
+    }
+    
+    private func openUrl(_ url: String, completion: ((Bool) -> Void)? = nil) {
+        guard let url = URL(string: url) else { return }
+        UIApplication.shared.open(url, options: [:]) { (isSuccess) in
+            completion?(isSuccess)
         }
     }
     
