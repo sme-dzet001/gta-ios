@@ -44,13 +44,13 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Office 365 Applications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6S3-M0-ma0">
-                                <rect key="frame" x="54" y="40.5" width="178.5" height="19"/>
+                                <rect key="frame" x="54" y="40.5" width="207" height="19"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create, Collaborate &amp; Connect" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBT-P6-bFq">
-                                <rect key="frame" x="54" y="63.5" width="230" height="14.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create, Collaborate &amp; Connect " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBT-P6-bFq">
+                                <rect key="frame" x="54" y="63.5" width="207" height="14.5"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                 <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -68,12 +68,13 @@
                             <constraint firstItem="8WK-zr-fen" firstAttribute="centerY" secondItem="cJl-Z9-s9z" secondAttribute="centerY" id="2Di-xo-5Ay"/>
                             <constraint firstAttribute="trailing" secondItem="2vo-QD-Vek" secondAttribute="trailing" id="2ca-yB-wL6"/>
                             <constraint firstItem="rBT-P6-bFq" firstAttribute="leading" secondItem="cJl-Z9-s9z" secondAttribute="trailing" constant="16" id="4lJ-r0-Jef"/>
-                            <constraint firstItem="1dw-gg-sTb" firstAttribute="leading" secondItem="rBT-P6-bFq" secondAttribute="trailing" constant="-8" id="6tj-K1-11V"/>
+                            <constraint firstItem="1dw-gg-sTb" firstAttribute="leading" secondItem="rBT-P6-bFq" secondAttribute="trailing" constant="15" id="6tj-K1-11V"/>
                             <constraint firstItem="6S3-M0-ma0" firstAttribute="bottom" secondItem="had-KW-S4i" secondAttribute="centerY" id="8ad-Wd-uQz"/>
                             <constraint firstItem="cJl-Z9-s9z" firstAttribute="leading" secondItem="had-KW-S4i" secondAttribute="leading" constant="20" id="IzT-im-bn9"/>
                             <constraint firstAttribute="trailing" secondItem="1dw-gg-sTb" secondAttribute="trailing" constant="20" id="Qq5-Uh-s5W"/>
                             <constraint firstItem="2vo-QD-Vek" firstAttribute="leading" secondItem="had-KW-S4i" secondAttribute="leading" id="VOL-ea-OY1"/>
                             <constraint firstItem="rBT-P6-bFq" firstAttribute="top" secondItem="had-KW-S4i" secondAttribute="centerY" constant="4" id="fsl-iX-w0L"/>
+                            <constraint firstItem="6S3-M0-ma0" firstAttribute="trailing" secondItem="rBT-P6-bFq" secondAttribute="trailing" id="mhT-bT-3Lm"/>
                             <constraint firstItem="6S3-M0-ma0" firstAttribute="leading" secondItem="cJl-Z9-s9z" secondAttribute="trailing" constant="16" id="nxE-qp-gPH"/>
                             <constraint firstAttribute="bottom" secondItem="2vo-QD-Vek" secondAttribute="bottom" id="uj3-vG-lPL"/>
                             <constraint firstItem="1dw-gg-sTb" firstAttribute="centerY" secondItem="had-KW-S4i" secondAttribute="centerY" id="w7x-6L-JaC"/>
