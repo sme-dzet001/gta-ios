@@ -22,7 +22,7 @@ class Office365AppCell: UITableViewCell {
     
     func setUpCell(with data: CollaborationAppDetailsRow, isAppsScreen: Bool = false) {
         if isAppsScreen {
-            iconImageViewWidth?.constant = 48
+            iconImageViewWidth?.constant = 24
         }
         setImage(with: data.imageData, status: data.imageStatus)
         appTitleLabel.text = data.appNameFull
