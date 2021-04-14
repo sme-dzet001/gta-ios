@@ -49,7 +49,8 @@ class HelpDeskViewController: UIViewController {
     private func getMyTickets() {
         dataProvider.getMyTickets {[weak self] (_, _, dataWasChanged) in
             DispatchQueue.main.async {
-                if dataWasChanged { self?.ticketsNumberDelegate?.ticketNumberUpdated(self?.numberOfTickets) }
+                self?.ticketsNumberDelegate?.ticketNumberUpdated(self?.numberOfTickets)
+                //if dataWasChanged { self?.ticketsNumberDelegate?.ticketNumberUpdated(self?.numberOfTickets) }
             }
         }
     }
