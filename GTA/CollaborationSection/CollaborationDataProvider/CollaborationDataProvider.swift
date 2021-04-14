@@ -61,7 +61,7 @@ class CollaborationDataProvider {
                 completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(0, error)
+            completion?(0, ResponseError.commonError)
         }
     }
     

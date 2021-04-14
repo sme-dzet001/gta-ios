@@ -410,11 +410,12 @@ class MyAppsDataProvider {
                 self?.processMyApps(isFromCache: false, reportData, data, errorCode, error, completion)
             })
         } else {
+            let err = error == nil ? ResponseError.commonError : error
             if error != nil || generationNumber == 0 {
                 completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
                 return
             }
-            completion?(0, error, false)
+            completion?(0, err, false)
         }
     }
     
