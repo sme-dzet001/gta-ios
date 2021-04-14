@@ -15,7 +15,7 @@ class HelpDeskDataProvider {
     
     private(set) var quickHelpData = [QuickHelpRow]()
     private(set) var teamContactsData = [TeamContactsRow]()
-    private(set) var myTickets: [GSDMyTicketsRow]?// = [GSDMyTicketsRow]()
+    private(set) var myTickets: [GSDTickets]?// = [GSDMyTicketsRow]()
     private var refreshTimer: Timer?
     private var cachedReportData: Data?
     
@@ -396,6 +396,7 @@ class HelpDeskDataProvider {
     
     // MARK: - My Tickets related methods
     
+    /*
     func getMyTickets(completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
@@ -440,8 +441,23 @@ class HelpDeskDataProvider {
             completion?(errorCode, ResponseError.commonError, fromCache)
         }
     }
+ */
+    func getMyTickets(completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
+        let userEmail = KeychainManager.getUsername() ?? ""
+        getCachedResponse(for: .getGSDTickets(userEmail: userEmail)) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            if cachedError == nil {
+                self?.processMyTickets(data, code, cachedError, completion)
+                //completion?(code, cachedError, true)
+            }
+            self?.apiManager.getGSDTickets(completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getGSDTickets(userEmail: userEmail))
+                self?.processMyTickets(data, errorCode, error, completion)
+            })
+        }
+    }
     
-    private func processMyTickets(_ response: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
+    private func processMyTickets(_ response: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
         var ticketsResponse: GSDMyTickets?
         var retErr = error
         if let responseData = response {
@@ -454,7 +470,7 @@ class HelpDeskDataProvider {
         var dataWasChanged: Bool = false
         if let ticketsResponse = ticketsResponse {
             dataWasChanged = fillTicketsData(with: ticketsResponse)
-            if (ticketsResponse.data?.first?.value?.data?.rows ?? []).isEmpty {
+            if (ticketsResponse.data?.isEmpty ?? true) {
                 retErr = ResponseError.noDataAvailable
             }
         }
@@ -462,13 +478,7 @@ class HelpDeskDataProvider {
     }
     
     private func fillTicketsData(with ticketsResponse: GSDMyTickets) -> Bool {
-        let indexes = getDataIndexes(columns: ticketsResponse.meta?.widgetsDataSource?.params?.columns)
-        var response = ticketsResponse.data?.first?.value?.data?.rows
-        if let rows = response {
-            for (index, _) in rows.enumerated() {
-                response?[index]?.indexes = indexes
-            }
-        }
+        let response = ticketsResponse.data
         if let _ = response, (self.myTickets ?? []) != response! {
             self.myTickets = response!.compactMap({$0})
             return true
@@ -545,24 +555,24 @@ class HelpDeskDataProvider {
     }
     
     private func fillTicketComments(with ticketComments: GSDTicketCommentsResponse, userEmail: String) -> Bool {
-        let indexes = getDataIndexes(columns: ticketComments.meta?.widgetsDataSource?.params?.columns)
-        var response = ticketComments.data?.first?.value.first?.value?.data?.rows
-        var ticketNumber = ""
-        if let rows = response {
-            for (index, _) in rows.enumerated() {
-                response?[index]?.indexes = indexes
-                let requestorEmail = response?[index]?.requestorEmail
-                //let decodedBody = formQuickHelpAnswerBody(from: response?[index]?.body)
-                response?[index]?.isSenderMe = userEmail == requestorEmail
-                //response?[index]?.decodedBody = decodedBody
-                ticketNumber = response?[index]?.ticketNumber ?? ""
-            }
-        }
-        let ticketIndex = self.myTickets?.firstIndex(where: {$0.ticketNumber == ticketNumber})
-        if let _ = response, self.myTickets?[ticketIndex ?? 0].comments != response! {
-            self.myTickets?[ticketIndex ?? 0].comments = response
-            return true
-        }
+//        let indexes = getDataIndexes(columns: ticketComments.meta?.widgetsDataSource?.params?.columns)
+//        var response = ticketComments.data?.first?.value.first?.value?.data?.rows
+//        var ticketNumber = ""
+//        if let rows = response {
+//            for (index, _) in rows.enumerated() {
+//                response?[index]?.indexes = indexes
+//                let requestorEmail = response?[index]?.requestorEmail
+//                //let decodedBody = formQuickHelpAnswerBody(from: response?[index]?.body)
+//                response?[index]?.isSenderMe = userEmail == requestorEmail
+//                //response?[index]?.decodedBody = decodedBody
+//                ticketNumber = response?[index]?.ticketNumber ?? ""
+//            }
+//        }
+//        let ticketIndex = self.myTickets?.firstIndex(where: {$0.ticketNumber == ticketNumber})
+//        if let _ = response, self.myTickets?[ticketIndex ?? 0].comments != response! {
+//            self.myTickets?[ticketIndex ?? 0].comments = response
+//            return true
+//        }
         return false
     }
     

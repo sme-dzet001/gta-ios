@@ -15,7 +15,6 @@ class TicketDescriptionCell: UITableViewCell {
     @IBOutlet weak var openDateLabel: UILabel!
     @IBOutlet weak var statusTitleLabel: UILabel!
     @IBOutlet weak var statusDateLabel: UILabel!
-    @IBOutlet weak var ownerLabel: UILabel!
     @IBOutlet weak var approvalStatusLabel: UILabel!
     @IBOutlet weak var SLAPriorityLabel: UILabel!
     @IBOutlet weak var decriptionLabel: UILabel!
@@ -32,7 +31,7 @@ class TicketDescriptionCell: UITableViewCell {
         // Initialization code
     }
 
-    func setUpCell(with data: GSDMyTicketsRow?) {
+    func setUpCell(with data: GSDTickets?) {
         guard let data = data else { return }
         ticketSubjectLabel.text = data.subject ?? ticketSubjectLabel.text
         statusDateView.isHidden = data.closeDate == nil ? true : false
@@ -49,7 +48,6 @@ class TicketDescriptionCell: UITableViewCell {
         statusDateLabel.text = data.closeDate?.getFormattedDateStringForMyTickets()
         openDateLabel.text = data.openDate?.getFormattedDateStringForMyTickets()
         decriptionLabel.text = data.description
-        ownerLabel.text = data.owner
         ticketNumberLabel.text = data.ticketNumber
         statusDateSeparator.isHidden = statusDateView.isHidden
     }
