@@ -50,8 +50,7 @@ extension UILabel {
     }
     
     func addReadMoreString(_ readMoreText: String) {
-        //let font: UIFont = UIFont(name: "SFProText-Light", size: 16) ?? self.font
-        self.font = UIFont(name: "SFProText-Light", size: 16) ?? self.font
+        self.font = UIFont(name: "SFProText-Regular", size: 16) ?? self.font
         guard let text = self.text, !text.isEmptyOrWhitespace() else { return }
         let readMoreAttributed = NSMutableAttributedString(string: readMoreText, attributes: [NSAttributedString.Key.font : font as Any, NSAttributedString.Key.foregroundColor: UIColor.gray])
         let lengthForVisibleString = vissibleTextLength
@@ -86,7 +85,7 @@ extension UILabel {
     }
 
     var vissibleTextLength: Int {
-        let font: UIFont = UIFont(name: "SFProText-Light", size: 16) ?? self.font
+        let font: UIFont = UIFont(name: "SFProText-Regular", size: 16) ?? self.font
         let mode: NSLineBreakMode = self.lineBreakMode
         let labelWidth: CGFloat = self.frame.size.width
         let labelHeight: CGFloat = self.frame.size.height
@@ -108,17 +107,10 @@ extension UILabel {
                     index = (self.attributedText!.string as NSString).rangeOfCharacter(from: characterSet, options: [], range: NSRange(location: index + 1, length: self.attributedText!.string.count - index - 1)).location
                 }
             } while index != NSNotFound && index < self.attributedText!.string.count && (self.attributedText!.string as NSString).substring(to: index).boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, attributes: attributes as? [NSAttributedString.Key : Any], context: nil).size.height <= labelHeight
-            return index
+            return index //prev
         }
         return self.attributedText!.string.count
     }
-    
-//    var sdsdsd: CGRect {
-//        let labelWidth: CGFloat = self.frame.size.width
-//        let labelHeight: CGFloat = self.frame.size.height
-//        let sizeConstraint = CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude)
-//        self.attributedText!.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
-//    }
     
 }
 

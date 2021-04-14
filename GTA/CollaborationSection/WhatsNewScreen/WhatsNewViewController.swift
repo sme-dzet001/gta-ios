@@ -94,9 +94,13 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.titleLabel.text = cellDataSource?.headline
         cell?.subtitleLabel.text = cellDataSource?.subHeadline
         let text = cellDataSource?.decodeBody
-        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+        if let neededFont = UIFont(name: "SFProText-Regular", size: 16) {
             text?.setFontFace(font: neededFont)
         }
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        paragraphStyle.paragraphSpacing = 22
+        text?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, text?.length ?? 0))
         cell?.descriptionLabel.attributedText = text//cellDataSource?.decodeBody
         cell?.descriptionLabel.addReadMoreString("more")
         cell?.relativePath = cellDataSource?.imageUrl

@@ -40,13 +40,13 @@ class WhatsNewMoreViewController: UIViewController {
     
     private func setLabelsText() {
         let text = dataSource?.decodeBody
-        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+        if let neededFont = UIFont(name: "SFProText-Regular", size: 16) {
             let range = NSRange(text!.string.startIndex..., in: text!.string)
             text?.addAttribute(.font, value: neededFont, range: range)
         }
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 8
-        paragraphStyle.paragraphSpacing = 16
+        paragraphStyle.paragraphSpacing = 22
         text?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, text?.length ?? 0))
         infoTextView.attributedText = text
         subtitleLabel.text = dataSource?.subHeadline
