@@ -240,7 +240,7 @@ open class CustomTextField: UITextField {
     }
     
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        return canPerformAction//inputView != nil ? false : super.canPerformAction(action, withSender: sender)
+        return canPerformAction ? super.canPerformAction(action, withSender: sender) : false//inputView != nil ? false : super.canPerformAction(action, withSender: sender)
     }
     
 }
