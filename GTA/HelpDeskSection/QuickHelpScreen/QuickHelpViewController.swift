@@ -213,30 +213,41 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 8
             answerDecoded?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, answerDecoded?.length ?? 0))
-            cell.setUpCell(question: cellDataSource.question, questionLabelHeight: heightForQuestionAt(indexPath: indexPath), answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .collapse : .expand)
+            let questionFormatted = formAttributedQuestion(from: cellDataSource.question ?? "")
+            cell.setUpCell(question: questionFormatted, questionLabelHeight: heightForQuestionAt(indexPath: indexPath) - 32, answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .collapse : .expand)
             return cell
         }
         return UITableViewCell()
     }
     
-    private func heightForQuestionAt(indexPath: IndexPath) -> CGFloat {
-        let data: [QuickHelpDataProtocol] = getHelpData()
-        guard let question = data[indexPath.row].question else { return 0 }
-        guard let neededFont = UIFont(name: "SFProText-Semibold", size: 16) else { return 0 }
+    func formAttributedQuestion(from question: String) -> NSMutableAttributedString? {
+        guard let neededFont = UIFont(name: "SFProText-Semibold", size: 16) else { return nil }
         let fontAttributes = [NSAttributedString.Key.font: neededFont]
+        var question = question
+        if question.first == " " {
+            question.removeFirst()
+        }
         let attributedQuestion = NSMutableAttributedString(string: question, attributes: fontAttributes)
         attributedQuestion.setFontFace(font: neededFont)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 8
         attributedQuestion.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedQuestion.length))
+        return attributedQuestion
+    }
+    
+    private func heightForQuestionAt(indexPath: IndexPath) -> CGFloat {
+        let data: [QuickHelpDataProtocol] = getHelpData()
+        guard let question = data[indexPath.row].question else { return 0 }
+        guard let attributedQuestion = formAttributedQuestion(from: question) else { return 0 }
         let questionLabelLeftIndent: CGFloat = 24
         let expandBtnRightIndent: CGFloat = 20
         let expandBtnWidth: CGFloat = 35
         let expandBtnSpace: CGFloat = 8
         let questionLabelAdditionalSpace = questionLabelLeftIndent + expandBtnRightIndent + expandBtnWidth + expandBtnSpace
         let textHeight = attributedQuestion.height(containerWidth: view.frame.width - questionLabelAdditionalSpace)
-        let bottomMargin: CGFloat = 8
-        let res = textHeight + bottomMargin
+        let topMargin: CGFloat = 16
+        let bottomMargin: CGFloat = 16
+        let res = textHeight + topMargin + bottomMargin
         return (res > 64) ? res : 64
     }
     
@@ -252,7 +263,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
         paragraphStyle.lineSpacing = 8
         answerBody.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, answerBody.length))
         let textHeight = answerBody.height(containerWidth: view.frame.width - 48)
-        let bottomMargin: CGFloat = 8
+        let bottomMargin: CGFloat = 16
         return textHeight + bottomMargin
     }
     

@@ -73,12 +73,8 @@ class QuickHelpCell: UITableViewCell {
         return false
     }
     
-    func setUpCell(question: String?, questionLabelHeight: CGFloat, answer: NSAttributedString?, expandBtnType: ExpandButtonType) {
-        var question = question
-        if question?.first == " " {
-            question?.removeFirst()
-        }
-        questionLabel.text = question
+    func setUpCell(question: NSAttributedString?, questionLabelHeight: CGFloat, answer: NSAttributedString?, expandBtnType: ExpandButtonType) {
+        questionLabel.attributedText = question
         self.questionLabelHeight.constant = questionLabelHeight
         answerLabel.attributedText = answer
         switch expandBtnType {
