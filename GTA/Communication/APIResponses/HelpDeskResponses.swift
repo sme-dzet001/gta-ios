@@ -308,7 +308,7 @@ struct GSDTickets: Codable, Equatable {
         case ticketStatus = "status"
         case origin
         case referenceNumber = "reference_number"
-       // case comments
+        case comments
     }
     
 }
