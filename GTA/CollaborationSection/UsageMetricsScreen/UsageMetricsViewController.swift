@@ -36,11 +36,17 @@ class UsageMetricsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        let value = UIInterfaceOrientation.landscapeLeft.rawValue
+        let value = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         
         loadUsageMetrics()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     private func setUpNavigationItem() {

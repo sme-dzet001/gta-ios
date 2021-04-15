@@ -35,7 +35,7 @@ class CollaborationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.tabBarController?.tabBar.isHidden = false
         addErrorLabel(errorLabel)
         getCollaborationDetails()
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
@@ -44,9 +44,8 @@ class CollaborationViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        let value = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
+//        let value = UIInterfaceOrientation.portrait.rawValue
+//        UIDevice.current.setValue(value, forKey: "orientation")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -137,7 +136,8 @@ class CollaborationViewController: UIViewController {
     
     private func showUsageMetricsScreen() {
         let usageMetricsVC = UsageMetricsViewController()
-        usageMetricsVC.hidesBottomBarWhenPushed = true
+        //usageMetricsVC.hidesBottomBarWhenPushed = true
+        self.tabBarController?.tabBar.isHidden = true
         navigationController?.pushViewController(usageMetricsVC, animated: true)
     }
     
