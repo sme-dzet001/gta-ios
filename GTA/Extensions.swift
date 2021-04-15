@@ -306,7 +306,7 @@ extension String {
     }
     
     static var ticketDateFormat: String {
-        return "yyyy-MM-dd'T'HH:mm:ss"
+        return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//"yyyy-MM-dd'T'HH:mm:ss.SSS Z"
     }
     
     static func getTicketDateFormat(for date: Date) -> String {
