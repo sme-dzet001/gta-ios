@@ -979,7 +979,7 @@
 				AF54165B9647D14EE3FFEAB6 /* Pods_GTAUITests.framework */,
 			);
 			name = Frameworks;
-        }
+        };
 		653E78E7261FC51A00CABB4C /* UsageMetricsScreen */ = {
 			isa = PBXGroup;
 			children = (
