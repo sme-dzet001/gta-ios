@@ -45,11 +45,10 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     
     var shortFormHeight: PanModalHeight {
         guard !UIDevice.current.iPhone5_se else { return .maxHeight }
-        let sdsd = (UIScreen.main.bounds.width * 0.8)
+        let coefficient = (UIScreen.main.bounds.width * 0.8)
         var statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 10 : statusBarHeight - 20
-        //let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
-        return PanModalHeight.contentHeight(UIScreen.main.bounds.height - (sdsd + statusBarHeight))
+        return PanModalHeight.contentHeight(UIScreen.main.bounds.height - (coefficient + statusBarHeight))
     }
     
     var allowsExtendedPanScrolling: Bool {
