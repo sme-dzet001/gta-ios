@@ -476,10 +476,8 @@
 		9F9D9CF7258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
 		9F9D9CF8258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
 		9F9D9CF9258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
-		9FA83DBA2625D72D009A0BAD /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA83DB92625D72C009A0BAD /* Apps.storyboard */; };
-		9FA83DBB2625D72D009A0BAD /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA83DB92625D72C009A0BAD /* Apps.storyboard */; };
-		9FA83DBC2625D72D009A0BAD /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA83DB92625D72C009A0BAD /* Apps.storyboard */; };
-		9FA83DBD2625D72D009A0BAD /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA83DB92625D72C009A0BAD /* Apps.storyboard */; };
+		9FA83E70262739DB009A0BAD /* TicketDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F803242260A666900ED6224 /* TicketDescriptionCell.swift */; };
+		9FA83E77262739DE009A0BAD /* TicketDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F803243260A666900ED6224 /* TicketDescriptionCell.xib */; };
 		9FA8E8FB25B054C6007D3B9F /* AboutSupportPolicyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */; };
 		9FA8E8FC25B054C6007D3B9F /* AboutSupportPolicyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */; };
 		9FA8E8FD25B054C6007D3B9F /* AboutSupportPolicyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */; };
@@ -2150,6 +2148,7 @@
 				9F33F6D2260A3C4000470A47 /* SystemUpdatesCell.xib in Resources */,
 				9F33F6D3260A3C4000470A47 /* OfficeSelectionCell.xib in Resources */,
 				9F33F6D4260A3C4000470A47 /* GoogleService-Info.plist in Resources */,
+				9FA83E77262739DE009A0BAD /* TicketDescriptionCell.xib in Resources */,
 				9F33F6D5260A3C4000470A47 /* MyTicketsViewController.xib in Resources */,
 				9F33F6D6260A3C4000470A47 /* HelpDeskContactOptionCell.xib in Resources */,
 				9F33F6D7260A3C4000470A47 /* AppTipsAndTricksViewController.xib in Resources */,
@@ -2759,6 +2758,7 @@
 				9F33F68C260A3C4000470A47 /* CustomTextView.swift in Sources */,
 				9F33F68D260A3C4000470A47 /* NetworkManager.swift in Sources */,
 				9F33F68E260A3C4000470A47 /* MainViewController.swift in Sources */,
+				9FA83E70262739DB009A0BAD /* TicketDescriptionCell.swift in Sources */,
 				9F33F68F260A3C4000470A47 /* UserLocationManager.swift in Sources */,
 				9F33F690260A3C4000470A47 /* OfficeInfoCell.swift in Sources */,
 				9F33F691260A3C4000470A47 /* HelpReportScreenViewController.swift in Sources */,

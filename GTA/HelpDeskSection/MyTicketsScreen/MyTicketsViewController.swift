@@ -14,7 +14,7 @@ class MyTicketsViewController: UIViewController {
     
     private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    private var myTicketsData: [GSDMyTicketsRow]? {
+    private var myTicketsData: [GSDTickets]? {
         return dataProvider?.myTickets
     }
     var dataProvider: HelpDeskDataProvider?

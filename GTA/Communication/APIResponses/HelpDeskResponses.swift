@@ -189,6 +189,7 @@ struct GSDStatusRow: Codable {
     var values: [QuantumValue?]?
 }
 
+/*
 struct GSDMyTickets: Codable {
     var meta: ResponseMetaData?
     var data: [String : GSDMyTicketsData?]?
@@ -264,6 +265,65 @@ struct GSDMyTicketsRow: Codable, Equatable {
         return lhs.ticketNumber == rhs.ticketNumber && lhs.openDate == rhs.openDate && lhs.closeDate == rhs.closeDate && lhs.owner == rhs.owner && lhs.status == rhs.status && lhs.description == rhs.description && lhs.subject == rhs.subject
     }
     
+}
+*/
+
+struct GSDMyTickets: Codable  {
+    var data: [GSDTickets?]?
+}
+
+struct GSDTickets: Codable, Equatable {
+    var ticketNumber: String?
+    var requestorEmail: String?
+    var openDate: String?
+    var closeDate: String?
+    var subject: String?
+    var description: String?
+    var ticketStatus: String?
+    var origin: String?
+    var referenceNumber: String?
+    var comments: [GSDTicketComment?]?
+    
+    var status: TicketStatus {
+        guard let _ = ticketStatus else { return .none }
+        switch ticketStatus!.lowercased() {
+        case "new":
+            return .new
+        case "closed":
+            return .closed
+        case "open":
+            return .open
+        default:
+            return .none
+        }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case ticketNumber = "ticket_number"
+        case requestorEmail = "requestor_email"
+        case openDate = "open_date"
+        case closeDate = "close_date"
+        case subject
+        case description
+        case ticketStatus = "status"
+        case origin
+        case referenceNumber = "reference_number"
+        case comments
+    }
+    
+}
+
+struct GSDTicketComment: Codable, Equatable {
+    
+    var createdBy: String?
+    var createdDate: String?
+    var body: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case createdBy = "created_by"
+        case createdDate = "created_date"
+        case body
+    }
 }
 
 struct GSDTicketCommentsResponse: Codable {
