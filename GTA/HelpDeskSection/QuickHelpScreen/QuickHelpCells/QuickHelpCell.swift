@@ -18,6 +18,8 @@ class QuickHelpCell: UITableViewCell {
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var expandButton: UIButton!
     
+    @IBOutlet weak var questionLabelHeight: NSLayoutConstraint!
+    
     private let animationPeriod = 0.4
     weak var delegate: QuickHelpCellDelegate?
 
@@ -71,12 +73,9 @@ class QuickHelpCell: UITableViewCell {
         return false
     }
     
-    func setUpCell(question: String?, answer: NSAttributedString?, expandBtnType: ExpandButtonType) {
-        var question = question
-        if question?.first == " " {
-            question?.removeFirst()
-        }
-        questionLabel.text = question
+    func setUpCell(question: NSAttributedString?, questionLabelHeight: CGFloat, answer: NSAttributedString?, expandBtnType: ExpandButtonType) {
+        questionLabel.attributedText = question
+        self.questionLabelHeight.constant = questionLabelHeight
         answerLabel.attributedText = answer
         switch expandBtnType {
         case .expand:
