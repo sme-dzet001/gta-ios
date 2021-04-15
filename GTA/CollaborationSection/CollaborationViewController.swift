@@ -35,11 +35,18 @@ class CollaborationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
         addErrorLabel(errorLabel)
         getCollaborationDetails()
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
         navigationController?.setNavigationBarHidden(true, animated: animated)
         getMyTickets()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        let value = UIInterfaceOrientation.portrait.rawValue
+//        UIDevice.current.setValue(value, forKey: "orientation")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -118,6 +125,7 @@ class CollaborationViewController: UIViewController {
         dataSource.append(CollaborationCellData(cellTitle: dataProvider.collaborationDetails?.description, updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "applications_icon", cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: nil, imageStatus: .loading))
         dataSource.append(CollaborationCellData(imageName: "whatsNew_icon", cellTitle: "What’s New", cellSubtitle: "Learn about new features", updatesNumber: nil))
+        dataSource.append(CollaborationCellData(imageName: "usage_metrics_icon", cellTitle: "Usage Metrics", cellSubtitle: "Collaboration Analytics", updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "tips_n_tricks_icon", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "team_contacts_icon", cellTitle: "Team Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil))
     }
@@ -136,6 +144,13 @@ class CollaborationViewController: UIViewController {
         quickHelpVC.screenType = .collaborationTipsAndTricks
         quickHelpVC.collaborationDataProvider = dataProvider
         navigationController?.pushViewController(quickHelpVC, animated: true)
+    }
+    
+    private func showUsageMetricsScreen() {
+        let usageMetricsVC = UsageMetricsViewController()
+        //usageMetricsVC.hidesBottomBarWhenPushed = true
+        self.tabBarController?.tabBar.isHidden = true
+        navigationController?.pushViewController(usageMetricsVC, animated: true)
     }
     
     private func showOffice365Screen() {
@@ -200,8 +215,10 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
         case 2:
             showWhatsNewScreen()
         case 3:
-            showTipsAndTricksScreen()
+            showUsageMetricsScreen()
         case 4:
+            showTipsAndTricksScreen()
+        case 5:
             showContactsScreen()
         default:
             return

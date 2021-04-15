@@ -12,6 +12,10 @@
 		65398BCC256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
 		65398BCD256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
 		65398BCE256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
+		653E78E9261FC58700CABB4C /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
+		653E78EA261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
+		653E78EB261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
+		653E78EC261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
 		6547566D25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6547566925FA4AE6002C45C4 /* Collaboration.storyboard */; };
 		6547566E25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6547566925FA4AE6002C45C4 /* Collaboration.storyboard */; };
 		6547566F25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6547566925FA4AE6002C45C4 /* Collaboration.storyboard */; };
@@ -715,6 +719,7 @@
 		432F78D79D9FDC3352B505CE /* Pods-GTATests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.debug.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.debug.xcconfig"; sourceTree = "<group>"; };
 		49C7A52E00D3DA781AA72A54 /* Pods-GTAStage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.debug.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.debug.xcconfig"; sourceTree = "<group>"; };
 		65398BCB256D4C5E0039C24E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageMetricsViewController.swift; sourceTree = "<group>"; };
 		6547566925FA4AE6002C45C4 /* Collaboration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Collaboration.storyboard; sourceTree = "<group>"; };
 		6547566A25FA4AE6002C45C4 /* CollaborationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationViewController.swift; sourceTree = "<group>"; };
 		6547566C25FA4AE6002C45C4 /* CollaborationDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationDataProvider.swift; sourceTree = "<group>"; };
@@ -974,6 +979,13 @@
 				AF54165B9647D14EE3FFEAB6 /* Pods_GTAUITests.framework */,
 			);
 			name = Frameworks;
+        }
+		653E78E7261FC51A00CABB4C /* UsageMetricsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */,
+			);
+			path = UsageMetricsScreen;
 			sourceTree = "<group>";
 		};
 		6547566825FA4AE6002C45C4 /* CollaborationSection */ = {
@@ -983,6 +995,7 @@
 				9F3585FF25FD219C0003658D /* CollaborationCustomHeader */,
 				9F64354D261B1C67000D94A4 /* WhatsNewScreen */,
 				9F35861A25FD23BE0003658D /* Office365 */,
+				653E78E7261FC51A00CABB4C /* UsageMetricsScreen */,
 				6547566A25FA4AE6002C45C4 /* CollaborationViewController.swift */,
 				6547566925FA4AE6002C45C4 /* Collaboration.storyboard */,
 			);
@@ -2549,6 +2562,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				653E78E9261FC58700CABB4C /* UsageMetricsViewController.swift in Sources */,
 				6547567325FA4AE6002C45C4 /* CollaborationDataProvider.swift in Sources */,
 				C907E0D825D4382500FB0B55 /* AppContactCell.swift in Sources */,
 				9F83A8EB2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
@@ -2669,6 +2683,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				653E78EC261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */,
 				9F33F647260A3C4000470A47 /* CollaborationDataProvider.swift in Sources */,
 				9F33F648260A3C4000470A47 /* AppContactCell.swift in Sources */,
 				9F33F649260A3C4000470A47 /* HelpDeskDataProvider.swift in Sources */,
@@ -2773,6 +2788,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				653E78EA261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */,
 				6547567425FA4AE6002C45C4 /* CollaborationDataProvider.swift in Sources */,
 				C907E0D925D4382500FB0B55 /* AppContactCell.swift in Sources */,
 				9F83A8EC2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
@@ -2877,6 +2893,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				653E78EB261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */,
 				6547567525FA4AE6002C45C4 /* CollaborationDataProvider.swift in Sources */,
 				C907E0DA25D4382500FB0B55 /* AppContactCell.swift in Sources */,
 				9F83A8ED2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
