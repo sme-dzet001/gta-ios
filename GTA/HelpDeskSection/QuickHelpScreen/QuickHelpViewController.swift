@@ -10,8 +10,9 @@ import UIKit
 class QuickHelpViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    //@IBOutlet weak var errorLabel: UILabel!
-    
+    @IBOutlet weak var navBarView: UIView!
+    @IBOutlet weak var subTitleLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: HelpDeskDataProvider?
@@ -30,7 +31,11 @@ class QuickHelpViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        addErrorLabel(errorLabel, isGSD: screenType == .quickHelp)
+        if screenType == .appTipsAndTricks {
+            navBarView.isHidden = false
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+        }
+        addErrorLabel(errorLabel, isGSD: screenType != .collaborationTipsAndTricks)
         navigationController?.navigationBar.barTintColor = UIColor.white
         switch screenType {
         case .appTipsAndTricks:
@@ -42,30 +47,26 @@ class QuickHelpViewController: UIViewController {
                 loadQuickHelpData()
             }
         }
-//        if isTipsAndTricks {
-//            loadCollaborationTipsAndTricks()
-//        }
-//        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
-//            loadQuickHelpData()
-//        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        guard screenType != .quickHelp else { return }
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     private func loadQuickHelpData() {
         guard let dataProvider = dataProvider else { return }
         if dataProvider.quickHelpDataIsEmpty {
             startAnimation()
-//            activityIndicator.startAnimating()
-//            errorLabel.isHidden = true
-//            tableView.isHidden = true
         }
         dataProvider.getQuickHelpData { [weak self] (dataWasChanged, errorCode, error, fromCache) in
             DispatchQueue.main.async {
                 self?.stopAnimation()
-                //self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
-                    self?.tableView.isHidden = false
+                    self?.tableView.alpha = 1
                     if dataWasChanged { self?.tableView.reloadData() }
                 } else {
                     if dataProvider.quickHelpDataIsEmpty {
@@ -88,7 +89,7 @@ class QuickHelpViewController: UIViewController {
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
-                    self?.tableView.isHidden = false
+                    self?.tableView.alpha = 1
                     if dataWasChanged { self?.tableView.reloadData() }
                 } else {
                     if self?.appsDataProvider?.tipsAndTricksData[self?.appName ?? ""]?.isEmpty ?? true {
@@ -107,13 +108,11 @@ class QuickHelpViewController: UIViewController {
         }
         collaborationDataProvider?.getTipsAndTricks(appSuite: appName ?? "", completion: {[weak self] (dataWasChanged, errorCode, error, fromCache) in
             DispatchQueue.main.async {
-                //self?.activityIndicator.stopAnimating()
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
-                    self?.tableView.isHidden = false
-                    //self?.tableView.reloadData()
+                    self?.tableView.alpha = 1
                     if dataWasChanged { self?.tableView.reloadData() }
                 } else {
                     if self?.collaborationDataProvider?.tipsAndTricksData.isEmpty ?? true {
@@ -127,10 +126,10 @@ class QuickHelpViewController: UIViewController {
     }
     
     private func startAnimation() {
-        self.addLoadingIndicator(activityIndicator, isGSD: screenType == .quickHelp)
+        self.addLoadingIndicator(activityIndicator, isGSD: screenType != .collaborationTipsAndTricks)
         activityIndicator.startAnimating()
         errorLabel.isHidden = true
-        tableView.isHidden = true
+        tableView.alpha = 0// = true
     }
     
     private func stopAnimation() {
@@ -139,6 +138,11 @@ class QuickHelpViewController: UIViewController {
     }
     
     private func setUpNavigationItem() {
+        if screenType == .appTipsAndTricks {
+            titleLabel.text = appName ?? ""
+            subTitleLabel.text = "Tips & Tricks"
+            return
+        }
         var title = ""
         switch screenType {
         case .quickHelp:
@@ -175,6 +179,10 @@ class QuickHelpViewController: UIViewController {
         default:
             return dataProvider?.quickHelpData ?? []
         }
+    }
+    
+    @IBAction func backNavButtonPressed(_ sender: Any) {
+        backPressed()
     }
     
     @objc private func backPressed() {

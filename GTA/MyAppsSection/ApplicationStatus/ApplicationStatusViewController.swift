@@ -268,6 +268,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
                 let appTipsAndTricksVC = QuickHelpViewController()
                 appTipsAndTricksVC.appName = appName
                 appTipsAndTricksVC.screenType = .appTipsAndTricks
+                self.navigationController?.setNavigationBarHidden(true, animated: false)
                 appTipsAndTricksVC.appsDataProvider = dataProvider
                 navigationController?.pushViewController(appTipsAndTricksVC, animated: true)
             }
@@ -275,6 +276,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             let contactsScreen = AppContactsViewController()
             contactsScreen.dataProvider = dataProvider
             contactsScreen.appName = appName ?? ""
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
             navigationController?.pushViewController(contactsScreen, animated: true)
         } else {
             if appDetailsData?.appSupportEmail == nil {
