@@ -55,17 +55,17 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-4" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IK0-0K-krn">
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IK0-0K-krn">
                                     <rect key="frame" x="48" y="0.0" width="318" height="80.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ax-EY-giZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="318" height="54"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="318" height="54.5"/>
                                             <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hla-q2-sCI">
-                                            <rect key="frame" x="0.0" y="26" width="318" height="54.5"/>
+                                            <rect key="frame" x="0.0" y="25.5" width="318" height="55"/>
                                             <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>

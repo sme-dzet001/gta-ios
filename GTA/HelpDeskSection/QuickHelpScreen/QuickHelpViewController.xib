@@ -55,17 +55,17 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-6" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PPv-Tq-71a">
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-8" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PPv-Tq-71a">
                                     <rect key="frame" x="48" y="0.0" width="318" height="84.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LEw-xm-B2Z">
-                                            <rect key="frame" x="0.0" y="0.0" width="318" height="57.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="318" height="58.5"/>
                                             <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ql-zW-eTR">
-                                            <rect key="frame" x="0.0" y="27.5" width="318" height="57"/>
+                                            <rect key="frame" x="0.0" y="26.5" width="318" height="58"/>
                                             <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
