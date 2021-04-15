@@ -19,9 +19,6 @@ class UsageMetricsViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = .white
         
         setUpNavigationItem()
-        
-        let value = UIInterfaceOrientation.landscapeLeft.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
 
         usageMetricsWebView = WKWebView(frame: CGRect.zero)
         usageMetricsWebView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,6 +36,10 @@ class UsageMetricsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        let value = UIInterfaceOrientation.landscapeLeft.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+        
         loadUsageMetrics()
     }
     
