@@ -15,17 +15,25 @@ class Office365AppCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var iconImageViewWidth: NSLayoutConstraint?
     
+    var imageUrl: String?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        iconImageView.image = nil
+        activityIndicator.stopAnimating()
     }
     
     func setUpCell(with data: CollaborationAppDetailsRow, isAppsScreen: Bool = false) {
         if isAppsScreen {
             iconImageViewWidth?.constant = 24
         }
-        setImage(with: data.imageData, status: data.imageStatus)
-        appTitleLabel.text = data.appNameFull
+        //setImage(with: data.imageData, status: data.imageStatus)
+        appTitleLabel.text = data.fullTitle
         descriptionLabel.text = data.title
     }
     

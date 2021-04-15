@@ -66,10 +66,12 @@ class CacheManager {
         case getAppTipsAndTricksPDF(detailsPath: String)
         case getCollaborationTeamContacts(detailsPath: String)
         case getCollaborationTipsAndTricks(detailsPath: String)
+        case getCollaborationNews
         case getCollaborationDetails(detailsPath: String)
         case getCollaborationAppDetails(detailsPath: String)
         case getGSDTickets(userEmail: String)
         case getGSDTicketComments(userEmail: String, ticketNumber: String)
+        case getImageDataFor(detailsPath: String)
         
         var endpoint: String {
             switch self {
@@ -90,10 +92,12 @@ class CacheManager {
             case .getAppTipsAndTricksPDF(let detailsPath): return "/cachedPDF/\(detailsPath)"
             case .getCollaborationTeamContacts(let detailsPath): return "/collaboration/team_contacts/\(detailsPath)"
             case .getCollaborationTipsAndTricks(let detailsPath): return "/collaboration/TipsAndTricks/\(detailsPath)"
+            case .getCollaborationNews: return "collaboration_news/data"
             case .getCollaborationDetails(let detailsPath): return "/collaboration/details/\(detailsPath)"
             case .getCollaborationAppDetails(let detailsPath): return "/collaboration/collaboration_app_details/\(detailsPath)"
             case .getGSDTickets(let userEmail): return "/v3/widgets/gsd_my_tickets/\(userEmail)/data/"
             case .getGSDTicketComments(let userEmail, let ticketNumber): return "/v3/widgets/gsd_my_ticket_comments/\(userEmail)/\(ticketNumber)/data/"
+            case .getImageDataFor(let detailsPath): return "/images/\(detailsPath)/"
             }
         }
     }

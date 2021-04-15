@@ -71,7 +71,7 @@ class AppContactsViewController: UIViewController {
         if contactsDataIsEmpty {
             startAnimation()
         }
-        dataProvider.getAppContactsData(for: appName) { [weak self] (errorCode, error, fromCache) in
+        dataProvider.getAppContactsData(for: appName) { [weak self] (dataWasChanged, errorCode, error, fromCache) in
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
@@ -79,7 +79,7 @@ class AppContactsViewController: UIViewController {
                     //self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
-                    self?.tableView.reloadData()
+                    if dataWasChanged { self?.tableView.reloadData() }
                 } else {
                     let contactsDataIsEmpty = self?.appContactsData?.contactsData == nil || self?.appContactsData?.contactsData?.count == 0
                     self?.errorLabel.isHidden = !contactsDataIsEmpty
@@ -95,14 +95,14 @@ class AppContactsViewController: UIViewController {
         if contactsDataIsEmpty {
             startAnimation()
         }
-        collaborationDataProvider.getTeamContacts(appSuite: appName) {[weak self] (errorCode, error) in
+        collaborationDataProvider.getTeamContacts(appSuite: appName) {[weak self] (dataWasChanged, errorCode, error) in
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     //self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
-                    self?.tableView.reloadData()
+                    if dataWasChanged { self?.tableView.reloadData() }
                 } else {
                     let contactsDataIsEmpty = self?.appContactsData?.contactsData == nil || self?.appContactsData?.contactsData?.count == 0
                     self?.errorLabel.isHidden = !contactsDataIsEmpty
@@ -141,7 +141,7 @@ extension AppContactsViewController: UITableViewDelegate, UITableViewDataSource 
             let cellDataSource = data[indexPath.row]
             cell.contactEmail = data[indexPath.row].contactEmail
             cell.setUpCell(with: cellDataSource)
-            let imageURL = isCollaborationContacts ? collaborationDataProvider?.formContactImageURL(from: cellDataSource.contactPhotoUrl) : dataProvider?.formContactImageURL(from: cellDataSource.contactPhotoUrl)
+            let imageURL = isCollaborationContacts ? collaborationDataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl) : dataProvider?.formContactImageURL(from: cellDataSource.contactPhotoUrl)
             if let _ = imageURL, let url = URL(string: imageURL!) {
                 cell.activityIndicator.startAnimating()
                 cell.imageUrl = imageURL

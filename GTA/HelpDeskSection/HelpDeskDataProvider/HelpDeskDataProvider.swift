@@ -325,7 +325,7 @@ class HelpDeskDataProvider {
         quickHelpData = response.data?.rows ?? []
     }
     
-    private func processTeamContacts(_ reportData: ReportDataResponse?, _ teamContactsResponse: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+    private func processTeamContacts(_ reportData: ReportDataResponse?, _ teamContactsResponse: Data?, _ fromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         var teamContactsDataResponse: TeamContactsResponse?
         var retErr = error
         if let responseData = teamContactsResponse {
@@ -335,44 +335,45 @@ class HelpDeskDataProvider {
                 retErr = ResponseError.parsingError
             }
         }
+        var dataWasChanged: Bool = false
         if let teamContactsResponse = teamContactsDataResponse {
-            fillTeamContactsData(with: teamContactsResponse)
+            dataWasChanged = fillTeamContactsData(with: teamContactsResponse)
             if (teamContactsResponse.data?.rows ?? []).isEmpty {
                 retErr = ResponseError.noDataAvailable
             }
         }
-        completion?(errorCode, retErr, isFromCache)
+        completion?(dataWasChanged, errorCode, retErr, fromCache)
     }
     
-    private func processTeamContactsSectionReport(_ reportResponse: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+    private func processTeamContactsSectionReport(_ reportResponse: Data?, _ fromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdTeamContacts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdTeamContacts.rawValue }?.generationNumber
         if let generationNumber = generationNumber, generationNumber != 0 {
-            if isFromCache {
+            if fromCache {
                 getCachedResponse(for: .getTeamContactsData) {[weak self] (data, error) in
-                    self?.processTeamContacts(reportData, data, isFromCache, 200, error, completion)
+                    self?.processTeamContacts(reportData, data, true, 200, error, completion)
                 }
                 return
             }
             apiManager.getTeamContacts(generationNumber: generationNumber, completion: { [weak self] (teamContactsResponse, errorCode, error) in
                 self?.cacheData(teamContactsResponse, path: .getTeamContactsData)
-                self?.processTeamContacts(reportData, teamContactsResponse, isFromCache, errorCode, error, completion)
+                self?.processTeamContacts(reportData, teamContactsResponse, fromCache, errorCode, error, completion)
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
+                completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
                 return
             }
             let retError = ResponseError.serverError
-            completion?(0, retError, isFromCache)
+            completion?(false, 0, retError, fromCache)
         }
     }
     
-    func getTeamContactsData(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+    func getTeamContactsData(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, error) in
-            self?.processTeamContactsSectionReport(data, true, error == nil ? 200 : 0, error, { (code, error, _) in
+            self?.processTeamContactsSectionReport(data, true, error == nil ? 200 : 0, error, { (dataWasChanged, code, error, _) in
                 if error == nil {
-                    completion?(code, error, true)
+                    completion?(dataWasChanged, code, error, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
@@ -382,7 +383,7 @@ class HelpDeskDataProvider {
         }
     }
     
-    private func fillTeamContactsData(with teamContactsResponse: TeamContactsResponse) {
+    private func fillTeamContactsData(with teamContactsResponse: TeamContactsResponse) -> Bool {
         let indexes = getDataIndexes(columns: teamContactsResponse.meta.widgetsDataSource?.params?.columns)
         var response: TeamContactsResponse = teamContactsResponse
         if let rows = response.data?.rows {
@@ -390,8 +391,13 @@ class HelpDeskDataProvider {
                 response.data?.rows?[index].indexes = indexes
             }
         }
-        teamContactsData = response.data?.rows ?? []
+        var isDataChanged: Bool = false
+        if teamContactsData != response.data?.rows ?? [] {
+            teamContactsData = response.data?.rows ?? []
+            isDataChanged = true
+        }
         teamContactsData.removeAll { $0.contactName == nil || ($0.contactName ?? "").isEmpty || $0.contactEmail == nil || ($0.contactEmail ?? "").isEmpty }
+        return isDataChanged
     }
     
     // MARK: - My Tickets related methods
@@ -577,33 +583,21 @@ class HelpDeskDataProvider {
     }
     
     func getImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
-            if let responseStr = String(data: cachedResponse, encoding: .utf8), responseStr.contains("Not Found") {
-                completion(nil, nil)
-            } else {
-                completion(cachedResponse, nil)
+        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
+            if cachedError == nil {
+                completion(cachedData, nil)
             }
-            return
-        } else {
-            apiManager.loadImageData(from: url) { (data, response, error) in
-                // checking that response status code == 200, else return no data
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                    DispatchQueue.main.async {
-                        completion(nil, error)
-                    }
-                } else {
-                    self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
-                    DispatchQueue.main.async {
+            self?.apiManager.loadImageData(from: url) { (data, response, error) in
+                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
+                DispatchQueue.main.async {
+                    if cachedData == nil ? true : cachedData != data {
+                        if cachedError == nil && error != nil { return }
                         completion(data, error)
                     }
                 }
             }
-        }
+        })
     }
-    
-//    func getServiceDeskImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-//        apiManager.loadImageData(from: url, completion: completion)
-//    }
     
     private func parseSectionReport(data: Data?) -> ReportDataResponse? {
         var reportDataResponse: ReportDataResponse?

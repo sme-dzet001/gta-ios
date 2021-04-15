@@ -49,38 +49,43 @@ class MyAppsDataProvider {
     
     func getAppImageData(from urlString: String, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
         if let url = URL(string: formImageURL(from: urlString)) {
-            if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
-                appImageData[urlString] = cachedResponse
-                completion(cachedResponse, nil)
-                return
-            } else {
-                apiManager.loadImageData(from: url) { (data, response, error) in
-                    if self.appImageData.keys.contains(urlString), error == nil {
-                        self.appImageData[urlString] = data
+            getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
+                if cachedError == nil {
+                    self?.appImageData[urlString] = cachedData
+                    completion(cachedData, nil)
+                }
+                self?.apiManager.loadImageData(from: url) { (data, response, error) in
+                    if let isContains = self?.appImageData.keys.contains(urlString), isContains, error == nil {
+                        self?.appImageData[urlString] = data
                     }
-                    self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
+                    self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
                     DispatchQueue.main.async {
-                        completion(data, error)
+                        if cachedData == nil ? true : cachedData != data {
+                            if cachedError == nil && error != nil { return }
+                            completion(data, error)
+                        }
                     }
                 }
-            }
+                
+            })
         } else {
             completion(nil, ResponseError.noDataAvailable)
         }
     }
     
     func getContactImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
-            completion(cachedResponse, nil)
-            return
-        } else {
-            apiManager.loadImageData(from: url) { (data, response, error) in
-                self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
+        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, error) in
+            if error == nil {
+                completion(cachedData, nil)
+            }
+            self?.apiManager.loadImageData(from: url) { (data, response, error) in
+                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
                 DispatchQueue.main.async {
                     completion(data, error)
                 }
             }
-        }
+            
+        })
     }
     
     func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
@@ -148,16 +153,16 @@ class MyAppsDataProvider {
 //        }
     }
     
-    func getAppContactsData(for app: String?, completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+    func getAppContactsData(for app: String?, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.processAppContactsSectionReport(app, data, code, cachedError, true, { (code, error, _) in
+            self?.processAppContactsSectionReport(app, data, code, cachedError, true, { (dataWasChanged, code, error, _) in
                 if error == nil {
-                    completion?(code, cachedError, true)
+                    completion?(dataWasChanged, code, cachedError, true)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError, false)
+                        completion?(dataWasChanged, errorCode, ResponseError.serverError, false)
                     } else {
                         self?.processAppContactsSectionReport(app, reportResponse, errorCode, error, false, completion)
                     }
@@ -493,7 +498,7 @@ class MyAppsDataProvider {
         }
     }
     
-    private func processAppContacts(appName: String, _ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+    private func processAppContacts(appName: String, _ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil {
         var appContactsData: AppContactsData?
         var retErr = error
         if let responseData = appContactsDataResponse {
@@ -510,14 +515,16 @@ class MyAppsDataProvider {
         if let contacts = appContactsData?.contactsData, contacts.isEmpty {
             retErr = ResponseError.noDataAvailable
         }
+        var dataWasChanged: Bool = false
         if appContactsData == nil && self.appContactsData[appName] != nil {
         } else if appContactsData != self.appContactsData[appName] {
             self.appContactsData[appName] = appContactsData
+        dataWasChanged = true
         }
-        completion?(errorCode, retErr, isFromCache)
+        completion?(dataWasChanged, errorCode, retErr, isFromCache)
     }
     
-    private func processAppContactsSectionReport(_ app: String?, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+    private func processAppContactsSectionReport(_ app: String?, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.appContacts.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
@@ -536,10 +543,10 @@ class MyAppsDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(generationNumber == 0 ? true : false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
                 return
             }
-            completion?(0, ResponseError.commonError, fromCache)
+            completion?(false, 0, ResponseError.commonError, fromCache)
         }
     }
     

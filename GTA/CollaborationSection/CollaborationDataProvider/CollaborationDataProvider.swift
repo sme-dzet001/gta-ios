@@ -14,10 +14,11 @@ class CollaborationDataProvider {
     
     private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     private(set) var tipsAndTricksData = [TipsAndTricksRow]()
+    private(set) var collaborationNewsData = [CollaborationNewsRow]()
     private(set) var collaborationDetails: CollaborationDetailsResponse?
     private var appSuiteImage: Data?
     weak var appSuiteIconDelegate: AppSuiteIconDelegate?
-    weak var office365AppsDelegate: AppIconLoadingDelegate?
+    weak var imageLoadingDelegate: ImageLoadingDelegate?
     private(set) var collaborationAppDetailsRows: [CollaborationAppDetailsRow]?
     private(set) var appContactsData: AppContactsData?
     
@@ -98,6 +99,91 @@ class CollaborationDataProvider {
         }
     }
     
+    // MARK: - What's new handling
+    
+    func getWhatsNewData(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (reportResponse, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleWhatsNewSectionReport(reportResponse, code, cachedError, true, { (dataWasChanged, code, error) in
+                if error == nil {
+                    completion?(dataWasChanged, code, error)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let _ = error {
+                        completion?(false, errorCode, ResponseError.serverError)
+                    } else {
+                        self?.handleWhatsNewSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    private func handleWhatsNewSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationNews.rawValue }?.generationNumber
+        if let _ = generationNumber, generationNumber != 0 {
+            if fromCache {
+                getCachedResponse(for: .getCollaborationNews) {[weak self] (data, error) in
+                    self?.processWhatsNew(reportData, data, errorCode, error, completion)
+                }
+                return
+            }
+            apiManager.getCollaborationNews(for: generationNumber!, completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getCollaborationNews)
+                self?.processWhatsNew(reportData, data, errorCode, error, completion)
+            })
+        } else {
+            if error != nil || generationNumber == 0 {
+                self.collaborationNewsData = generationNumber == 0 ? [] : collaborationNewsData
+                completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
+            completion?(false, 0, error)
+        }
+    }
+    
+    private func processWhatsNew(_ reportData: ReportDataResponse?, _ newsData: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var newsResponse: CollaborationNewsResponse?
+        var retErr = error
+        if let responseData = newsData {
+            do {
+                newsResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        } else {
+            retErr = ResponseError.commonError
+        }
+        var isDataChanged: Bool = false
+        if let response = newsResponse {
+            isDataChanged = fillNewsData(with: response)
+            if (response.data?.rows ?? []).isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
+        }
+        completion?(isDataChanged, errorCode, retErr)
+    }
+    
+    private func fillNewsData(with dataResponse: CollaborationNewsResponse) -> Bool {
+        let indexes = getDataIndexes(columns: dataResponse.meta?.widgetsDataSource?.params?.columns)
+        var response: CollaborationNewsResponse = dataResponse
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index].indexes = indexes
+            }
+        }
+        if collaborationNewsData != response.data?.rows ?? [] {
+            collaborationNewsData = response.data?.rows ?? []
+            for (index, row) in (response.data?.rows ?? []).enumerated() {
+                collaborationNewsData[index].decodeBody = formAnswerBody(from: row.body)
+            }
+            return true
+        }
+        return false
+    }
+    
     // MARK: - Tips & Tricks handling
     
     func getTipsAndTricks(appSuite: String, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
@@ -168,17 +254,17 @@ class CollaborationDataProvider {
     
     // MARK: - Team contacts handling
     
-    func getTeamContacts(appSuite: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getTeamContacts(appSuite: String, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.handleTeamContactsSectionReport(appSuite: appSuite, data, code, cachedError, true, { (code, error) in
+            self?.handleTeamContactsSectionReport(appSuite: appSuite, data, code, cachedError, true, { (dataWasChanged, code, error) in
                 if error == nil {
-                    completion?(code, error)
+                    completion?(dataWasChanged, code, error)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError)
+                        completion?(false, errorCode, ResponseError.serverError)
                     } else {
                         self?.handleTeamContactsSectionReport(appSuite: appSuite, reportResponse, errorCode, error, false, completion)
                     }
@@ -187,7 +273,7 @@ class CollaborationDataProvider {
         }
     }
     
-    private func handleTeamContactsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func handleTeamContactsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaboration.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationTeamsContacts.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
@@ -203,14 +289,14 @@ class CollaborationDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(generationNumber == 0 ? true : false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(0, error)
+            completion?(false, 0, error)
         }
     }
     
-    private func processTeamContacts(_ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processTeamContacts(_ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var appContactsData: AppContactsData?
         var retErr = error
         if let responseData = appContactsDataResponse {
@@ -228,28 +314,29 @@ class CollaborationDataProvider {
         if let contacts = appContactsData?.contactsData, contacts.isEmpty {
             retErr = ResponseError.noDataAvailable
         }
-        
+        var dataWasChanged: Bool = false
         if appContactsData == nil && self.appContactsData != nil {
         } else if appContactsData != self.appContactsData {
             self.appContactsData = appContactsData
+            dataWasChanged = true
         }
         
-        completion?(errorCode, retErr)
+        completion?(dataWasChanged, errorCode, retErr)
     }
     
     // MARK: - App details handling
     
-    func getAppDetails(appSuite: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getAppDetails(appSuite: String, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (reportResponse, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.handleAppDetailsSectionReport(appSuite: appSuite, reportResponse, code, cachedError, true, { (code, error) in
+            self?.handleAppDetailsSectionReport(appSuite: appSuite, reportResponse, code, cachedError, true, { (dataWasChanged, code, error) in
                 if error == nil {
-                    completion?(code, error)
+                    completion?(dataWasChanged, code, error)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?( errorCode, ResponseError.serverError)
+                        completion?(dataWasChanged, errorCode, ResponseError.serverError)
                     } else {
                         self?.handleAppDetailsSectionReport(appSuite: appSuite, reportResponse, errorCode, error, false, completion)
                     }
@@ -258,7 +345,7 @@ class CollaborationDataProvider {
         }
     }
     
-    private func handleAppDetailsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func handleAppDetailsSectionReport(appSuite: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaborationAppDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationAppDetails.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
@@ -274,14 +361,14 @@ class CollaborationDataProvider {
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(generationNumber == 0 ? true : false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
                 return
             }
-            completion?(0, error)
+            completion?(false, 0, error)
         }
     }
     
-    private func processAppDetails(_ appName: String, _ reportData: ReportDataResponse?, _ detailsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processAppDetails(_ appName: String, _ reportData: ReportDataResponse?, _ detailsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var detailsData: CollaborationAppDetailsResponse?
         var retErr = error
         if let responseData = detailsResponse {
@@ -301,66 +388,86 @@ class CollaborationDataProvider {
                 detailsData?.data?[appName]??.data?.rows?[index].indexes = indexes
             }
         }
+        var dataWasChanged: Bool = false
         if detailsData?.data?.first?.value?.data?.rows != self.collaborationAppDetailsRows {
             if detailsData?.data?.first?.value?.data?.rows == nil && self.collaborationAppDetailsRows != nil {
             } else {
                 self.collaborationAppDetailsRows = detailsData?.data?.first?.value?.data?.rows
+                dataWasChanged = true
             }
             
         }
         DispatchQueue.main.async {
             if let rows = detailsData?.data?[appName]??.data?.rows {
-                self.getRowsImageData(for: rows)
+                //self.getRowsImageData(for: rows)
             }
         }
-        completion?(errorCode, retErr)
+        completion?(dataWasChanged, errorCode, retErr)
     }
     
-    private func getRowsImageData(for appInfo: [CollaborationAppDetailsRow]) {
+    func getRowsImageData(for appInfo: [ImageDataProtocol]) {
         for (index, info) in appInfo.enumerated() {
-            if let url = info.icon {
+            if let url = info.imageUrl {
                 getAppImageData(from: url) { (imageData, error) in
                     if info.imageData == nil || (imageData != nil && imageData != info.imageData) {
                         self.collaborationAppDetailsRows?[index].imageData = imageData
                         self.collaborationAppDetailsRows?[index].imageStatus = error == nil ? .loaded : .failed
-                        self.office365AppsDelegate?.setImage(for: info.appNameFull ?? "")
+                        self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
                     }
                 }
             } else {
                 self.collaborationAppDetailsRows?[index].imageStatus = .failed
-                self.office365AppsDelegate?.setImage(for: info.appNameFull ?? "")
+                self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
             }
         }
     }
     
     // MARK:- Additional methods
     
-    func formContactImageURL(from imagePath: String?) -> String? {
-        guard let imagePath = imagePath, !imagePath.isEmpty else { return nil }
-        guard !imagePath.contains("https://") else  { return imagePath }
-        let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
-        return imageURL
+    func addArticle(_ article: String) {
+        if var arr = UserDefaults.standard.array(forKey: "NumberOfNews") as? [Data] {
+            guard let data = article.data(using: .utf8), !arr.contains(data) else { return }
+            arr.append(data)
+            UserDefaults.standard.setValue(arr, forKey: "NumberOfNews")
+        } else {
+            UserDefaults.standard.setValue([article.data(using: .utf8) as Any], forKey: "NumberOfNews")
+        }
+    }
+    
+    func getUnreadArticlesNumber() -> Int? {
+        var number: Int = 0
+        guard let storedArticle = UserDefaults.standard.array(forKey: "NumberOfNews") as? [Data] else { return self.collaborationNewsData.count }
+        for data in self.collaborationNewsData {
+            if let bodyData = data.body?.data(using: .utf8), !storedArticle.contains(bodyData) {
+                number += 1
+            }
+        }
+        return number != 0 ? number : nil
     }
     
     func getAppImageData(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
         if let url = URL(string: formImageURL(from: urlString?.components(separatedBy: .whitespaces).joined() ?? "")) {
-            if let cachedResponse = imageCacheManager.getCacheResponse(for: url), cachedResponse != appSuiteImage {
-                completion?(cachedResponse, nil)
-            } else {
-                apiManager.loadImageData(from: url) { (data, response, error) in
-                    self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
-                    DispatchQueue.main.async {
-                        completion?(data, error)
-                    }
-                    //completion?(data, error)
+            getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
+                if cachedError == nil {
+                    completion?(cachedData, cachedError)
                 }
-            }
+                self?.apiManager.loadImageData(from: url) { (data, response, error) in
+                    self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
+                    DispatchQueue.main.async {
+                        if cachedData == nil ? true : cachedData != data {
+                            if cachedError == nil && error != nil { return }
+                            completion?(data, error)
+                        }
+                    }
+                }
+                
+            })
         } else {
             completion?(nil, ResponseError.commonError)
         }
     }
     
-    private func formImageURL(from imagePath: String?) -> String {
+    func formImageURL(from imagePath: String?) -> String {
         guard let imagePath = imagePath else { return "" }
         guard !imagePath.contains("https://") else  { return imagePath }
         let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
@@ -419,7 +526,7 @@ class CollaborationDataProvider {
         return false
     }
     
-    func formTipsAndTricksAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
+    func formAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
         guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
         
         let res = NSMutableAttributedString(attributedString: htmlAttrString)
@@ -444,6 +551,6 @@ protocol AppSuiteIconDelegate: class {
     func appSuiteIconChanged(with data: Data?, status: LoadingStatus)
 }
 
-protocol AppIconLoadingDelegate: class {
+protocol ImageLoadingDelegate: class {
     func setImage(for app: String)
 }

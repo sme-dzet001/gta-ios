@@ -47,14 +47,14 @@ class ServiceDeskContactsViewController: UIViewController {
         if dataProvider.teamContactsDataIsEmpty {
             startAnimation()
         }
-        dataProvider.getTeamContactsData { [weak self] (errorCode, error, fromCache) in
+        dataProvider.getTeamContactsData { [weak self] (dataWasChanged, errorCode, error, fromCache) in
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
-                    self?.tableView.reloadData()
+                    if dataWasChanged { self?.tableView.reloadData() }
                 } else {
                     self?.errorLabel.isHidden = !dataProvider.teamContactsDataIsEmpty
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"

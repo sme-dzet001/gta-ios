@@ -23,7 +23,7 @@ class CollaborationViewController: UIViewController {
     private var errorLabel: UILabel = UILabel()
     
     private var dataSource: [CollaborationCellData] = []
-    
+    private weak var delegate: TicketsNumberDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,11 +39,22 @@ class CollaborationViewController: UIViewController {
         getCollaborationDetails()
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        getMyTickets()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    private func getMyTickets() {
+        dataProvider.getWhatsNewData(completion: {[weak self] (dataWasChanged, errorCode, error) in
+            DispatchQueue.main.async {
+                if dataWasChanged {
+                    self?.delegate?.ticketNumberUpdated(self?.dataProvider.getUnreadArticlesNumber())
+                }
+            }
+        })
     }
     
     private func startAnimation() {
@@ -99,13 +110,14 @@ class CollaborationViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CollaborationHeaderCell", bundle: nil), forCellReuseIdentifier: "CollaborationHeaderCell")
-        tableView.register(UINib(nibName: "HelpDeskCell", bundle: nil), forCellReuseIdentifier: "HelpDeskCell")
+        tableView.register(UINib(nibName: "CollaborationCounterCell", bundle: nil), forCellReuseIdentifier: "CollaborationCounterCell")
         tableView.register(UINib(nibName: "Office365AppCell", bundle: nil), forCellReuseIdentifier: "Office365AppCell")
     }
     
     private func setUpHardCodeData() {
         dataSource.append(CollaborationCellData(cellTitle: dataProvider.collaborationDetails?.description, updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "applications_icon", cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: nil, imageStatus: .loading))
+        dataSource.append(CollaborationCellData(imageName: "whatsNew_icon", cellTitle: "What’s New", cellSubtitle: "Learn about new features", updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "tips_n_tricks_icon", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "team_contacts_icon", cellTitle: "Team Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil))
     }
@@ -131,6 +143,13 @@ class CollaborationViewController: UIViewController {
         office365.appName = "Office365"
         office365.dataProvider = dataProvider
         navigationController?.pushViewController(office365, animated: true)
+    }
+    
+    private func showWhatsNewScreen() {
+        let whatsNew = WhatsNewViewController()
+        //office365.appName = "Office365"
+        whatsNew.dataProvider = dataProvider
+        navigationController?.pushViewController(whatsNew, animated: true)
     }
 
     private func createAttributedString(for text: String?) -> NSAttributedString? {
@@ -159,12 +178,16 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "CollaborationHeaderCell", for: indexPath) as? CollaborationHeaderCell {
-            cell.descriptionLabel.text = dataProvider.collaborationDetails?.description//createAttributedString(for: dataProvider.collaborationDetails?.description)
+            cell.descriptionLabel.text = dataProvider.collaborationDetails?.description
             return cell
         }
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "HelpDeskCell", for: indexPath) as? HelpDeskCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "CollaborationCounterCell", for: indexPath) as? CollaborationCounterCell {
             let cellData = dataSource[indexPath.row]
             cell.setUpCell(with: cellData, isActive: true, isNeedCornerRadius: true)
+            if indexPath.row == 2 {
+                delegate = cell
+                cell.ticketNumberUpdated(dataProvider.getUnreadArticlesNumber())
+            }
             return cell
         }
         return UITableViewCell()
@@ -175,8 +198,10 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
         case 1:
             showOffice365Screen()
         case 2:
-            showTipsAndTricksScreen()
+            showWhatsNewScreen()
         case 3:
+            showTipsAndTricksScreen()
+        case 4:
             showContactsScreen()
         default:
             return

@@ -106,7 +106,7 @@ struct QuickHelpResponse: Codable {
 
 // MARK: - Team Contacts Response
 
-struct TeamContactsRow: Codable {
+struct TeamContactsRow: Codable, Equatable {
     var values: [QuantumValue?]?
     var indexes: [String : Int] = [:]
     

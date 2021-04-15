@@ -50,17 +50,20 @@ class HomeDataProvider {
     }
     
     func getPosterImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        if let cachedResponse = imageCacheManager.getCacheResponse(for: url) {
-            completion(cachedResponse, nil)
-            return
-        } else {
-            apiManager.loadImageData(from: url) { (data, response, error) in
-                self.imageCacheManager.storeCacheResponse(response, data: data, url: url, error: error)
+        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, error) in
+            if error == nil {
+                completion(cachedData, nil)
+            }
+            self?.apiManager.loadImageData(from: url) { (data, response, error) in
+                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
                 DispatchQueue.main.async {
-                    completion(data, error)
+                    if cachedData == nil ? true : cachedData != data {
+                        completion(data, error)
+                    }
                 }
             }
-        }
+            
+        })
        // apiManager.loadImageData(from: url, completion: completion)
     }
     
