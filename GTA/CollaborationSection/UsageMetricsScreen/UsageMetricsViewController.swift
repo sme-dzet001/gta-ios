@@ -89,7 +89,6 @@ class UsageMetricsViewController: UIViewController {
         
         if let url = URL(string: "https://app.powerbi.com/view?r=eyJrIjoiNmVhZTljOTQtZDRhOS00M2YwLTljMDAtOTgwYTY0NTI5ZGI1IiwidCI6ImYwYWZmM2I3LTkxYTUtNGFhZS1hZjcxLWM2M2UxZGRhMjA0OSIsImMiOjh9") {
             let request = URLRequest(url: url)
-            request.timeoutInterval
             usageMetricsWebView.load(request)
         }
     }
