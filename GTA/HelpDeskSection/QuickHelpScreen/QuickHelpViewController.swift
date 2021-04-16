@@ -211,6 +211,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "QuickHelpCell", for: indexPath) as? QuickHelpCell {
             let data: [QuickHelpDataProtocol] = getHelpData()
+            guard data.count > indexPath.row else { return UITableViewCell() }
             let cellDataSource = data[indexPath.row]
             cell.delegate = self
             let answerEncoded = cellDataSource.answer
