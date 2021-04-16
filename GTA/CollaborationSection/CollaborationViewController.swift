@@ -45,9 +45,10 @@ class CollaborationViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        guard UIDevice.current.orientation != .portrait else { return }
+        //guard UIDevice.current.orientation != .portrait else { return }
         let value = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
+        UINavigationController.attemptRotationToDeviceOrientation()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -55,6 +55,7 @@ class UsageMetricsViewController: UIViewController {
         super.viewWillDisappear(animated)
         let value = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
+        UINavigationController.attemptRotationToDeviceOrientation()
         self.tabBarController?.tabBar.isHidden = false
     }
     

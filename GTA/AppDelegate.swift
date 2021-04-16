@@ -26,24 +26,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        if let visibleViewController = topViewControllerWithRootViewController(rootViewController: window?.rootViewController), visibleViewController is UsageMetricsViewController {
+        let topViewController = getTopViewController()
+        if let _ = topViewController, topViewController! is UsageMetricsViewController {
             return .landscape
         }
         return .portrait
     }
     
-    private func topViewControllerWithRootViewController(rootViewController: UIViewController!) -> UIViewController? {
-        if (rootViewController == nil) { return nil }
-        if (rootViewController.isKind(of: UITabBarController.self)) {
-          return topViewControllerWithRootViewController(rootViewController: (rootViewController as! UITabBarController).selectedViewController)
-        } else if (rootViewController.isKind(of: UINavigationController.self)) {
-          return topViewControllerWithRootViewController(rootViewController: (rootViewController as! UINavigationController).visibleViewController)
-        } else if (rootViewController.presentedViewController != nil) {
-          return topViewControllerWithRootViewController(rootViewController: rootViewController.presentedViewController)
+//    private func topViewControllerWithRootViewController(rootViewController: UIViewController!) -> UIViewController? {
+//        if (rootViewController == nil) { return nil }
+//        if (rootViewController.isKind(of: UITabBarController.self)) {
+//          return topViewControllerWithRootViewController(rootViewController: (rootViewController as! UITabBarController).selectedViewController)
+//        } else if (rootViewController.isKind(of: UINavigationController.self)) {
+//          return topViewControllerWithRootViewController(rootViewController: (rootViewController as! UINavigationController).visibleViewController)
+//        } else if (rootViewController.presentedViewController != nil) {
+//          return topViewControllerWithRootViewController(rootViewController: rootViewController.presentedViewController)
+//        }
+//        return rootViewController
+//      }
+    
+    private func topViewController(controller: UIViewController?) -> UIViewController? {
+        if let navigationController = controller as? UINavigationController {
+            return topViewController(controller: navigationController.visibleViewController)
         }
-        return rootViewController
-      }
-
+        if let tabController = controller as? UITabBarController {
+            if let selected = tabController.selectedViewController {
+                return topViewController(controller: selected)
+            }
+        }
+        if let presented = controller?.presentedViewController {
+            return topViewController(controller: presented)
+        }
+        return controller
+    }
+    
+    
+    private func getTopViewController() -> UIViewController? {
+        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        var topVC: UIViewController?
+        if var VC = keyWindow?.rootViewController {
+            while let presentedViewController = VC.presentedViewController {
+                VC = presentedViewController
+            }
+            topVC = topViewController(controller: VC)
+        }
+        return topVC
+    }
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
