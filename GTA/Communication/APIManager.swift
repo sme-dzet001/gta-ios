@@ -101,6 +101,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case collaborationTeamsContacts = "collaboration_team_contacts"
         case collaborationTipsAndTricks = "collaboration_tips_and_tricks"
         case collaborationAppDetails = "collaboration_app_details"
+        case collaborationAppDetailsV1 = "collaboration_app_details_v1"
         case collaborationNews = "collaboration_news"
     }
     
