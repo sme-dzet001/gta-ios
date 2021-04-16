@@ -42,6 +42,15 @@ class UsageMetricsViewController: UIViewController {
         loadUsageMetrics()
     }
     
+    func removeCookies() {
+        let cookieStore = usageMetricsWebView.configuration.websiteDataStore.httpCookieStore
+        cookieStore.getAllCookies { cookies in
+            for cookie in cookies {
+                cookieStore.delete(cookie)
+            }
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         let value = UIInterfaceOrientation.portrait.rawValue
@@ -67,7 +76,7 @@ class UsageMetricsViewController: UIViewController {
     }
     
     private func loadUsageMetrics() {
-        
+        removeCookies()
         ///iframe
         
         /*let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"></HEAD><BODY>"
@@ -80,18 +89,9 @@ class UsageMetricsViewController: UIViewController {
         
         if let url = URL(string: "https://app.powerbi.com/view?r=eyJrIjoiNmVhZTljOTQtZDRhOS00M2YwLTljMDAtOTgwYTY0NTI5ZGI1IiwidCI6ImYwYWZmM2I3LTkxYTUtNGFhZS1hZjcxLWM2M2UxZGRhMjA0OSIsImMiOjh9") {
             let request = URLRequest(url: url)
+            request.timeoutInterval
             usageMetricsWebView.load(request)
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
