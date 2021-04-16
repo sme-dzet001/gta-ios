@@ -17,6 +17,7 @@ class WhatsNewCell: UITableViewCell {
         
     var imageUrl: String?
     var relativePath: String?
+    var body: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()

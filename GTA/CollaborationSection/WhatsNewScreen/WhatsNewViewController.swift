@@ -93,6 +93,7 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         let cellDataSource = dataProvider?.collaborationNewsData[indexPath.row]
         cell?.titleLabel.text = cellDataSource?.headline
         cell?.subtitleLabel.text = cellDataSource?.subHeadline
+        cell?.body = cellDataSource?.body
         let text = cellDataSource?.decodeBody
         if let neededFont = UIFont(name: "SFProText-Regular", size: 16) {
             text?.setFontFace(font: neededFont)
@@ -162,7 +163,7 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         }
         var distanceToCenter: CGFloat = 0
         for cell in cells {
-            let row = dataProvider?.collaborationNewsData.firstIndex(where: {((cell.relativePath ?? "").contains($0.imageUrl ?? ""))})
+            let row = dataProvider?.collaborationNewsData.firstIndex(where: {((cell.relativePath ?? cell.body ?? "").contains($0.imageUrl ?? $0.body ?? ""))})
             guard let _ = row else { continue }
             let indexPath = IndexPath(row: row!, section: 0)
             let rect = self.tableView.rectForRow(at: indexPath)
