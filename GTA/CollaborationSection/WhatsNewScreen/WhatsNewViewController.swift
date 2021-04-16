@@ -119,15 +119,15 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
                         if let gif = try? UIImage(gifData: imageData) {
                             cell?.mainImageView.setGifImage(gif)
                         } else {
-                            cell?.mainImageView.image = nil
+                            cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
                         }
                     }
                 } else {
-                    cell?.mainImageView.image = nil// UIImage(named: "contact_default_photo")
+                    cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
                 }
             }
         } else {
-            cell?.mainImageView.image = nil// UIImage(named: "contact_default_photo")
+            cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
         }
         return cell ?? UITableViewCell()
     }

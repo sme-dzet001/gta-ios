@@ -446,7 +446,7 @@ class CollaborationDataProvider {
     }
     
     func getAppImageData(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
-        if let url = URL(string: formImageURL(from: urlString?.components(separatedBy: .whitespaces).joined() ?? "")) {
+        if let urlString = urlString, let url = URL(string: formImageURL(from: urlString.components(separatedBy: .whitespaces).joined())) {
             getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
                 if cachedError == nil {
                     completion?(cachedData, cachedError)

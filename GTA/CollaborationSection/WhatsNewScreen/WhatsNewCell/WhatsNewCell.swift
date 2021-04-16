@@ -15,7 +15,7 @@ class WhatsNewCell: UITableViewCell {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
         
-    var imageUrl: String?
+    var imageUrl: String = ""
     var relativePath: String?
     var body: String?
     
