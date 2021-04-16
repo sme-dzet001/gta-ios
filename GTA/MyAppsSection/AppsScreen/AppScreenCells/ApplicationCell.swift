@@ -22,6 +22,12 @@ class ApplicationCell: UITableViewCell {
         // Initialization code
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        appIcon.image = nil
+        activityIndicator.stopAnimating()
+    }
+    
     func setUpCell(with data: AppInfo) {
         iconLabel.isHidden = true
         if data.appImageData.imageStatus == .loading {
