@@ -246,6 +246,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     
     private func heightForQuestionAt(indexPath: IndexPath) -> CGFloat {
         let data: [QuickHelpDataProtocol] = getHelpData()
+        guard data.count > indexPath.row else { return 0 }
         guard let question = data[indexPath.row].question else { return 0 }
         guard let attributedQuestion = formAttributedQuestion(from: question) else { return 0 }
         let questionLabelLeftIndent: CGFloat = 24
@@ -262,6 +263,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     
     private func heightForAnswerAt(indexPath: IndexPath) -> CGFloat {
         let data: [QuickHelpDataProtocol] = getHelpData()
+        guard data.count > indexPath.row else { return 0 }
         guard let answerEncoded = data[indexPath.row].answer else { return 0 }
         let answer = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) ?? appsDataProvider?.formTipsAndTricksAnswerBody(from: answerEncoded) ?? collaborationDataProvider?.formAnswerBody(from: answerEncoded)
         guard let answerBody = answer else { return 0 }
