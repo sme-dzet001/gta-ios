@@ -36,6 +36,7 @@ class UsageMetricsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        removeCookies()
         let value = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         
@@ -77,7 +78,6 @@ class UsageMetricsViewController: UIViewController {
     }
     
     private func loadUsageMetrics() {
-        removeCookies()
         ///iframe
         
         /*let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"></HEAD><BODY>"
@@ -89,7 +89,7 @@ class UsageMetricsViewController: UIViewController {
         ///direct link loading
         
         if let url = URL(string: "https://app.powerbi.com/view?r=eyJrIjoiNmVhZTljOTQtZDRhOS00M2YwLTljMDAtOTgwYTY0NTI5ZGI1IiwidCI6ImYwYWZmM2I3LTkxYTUtNGFhZS1hZjcxLWM2M2UxZGRhMjA0OSIsImMiOjh9") {
-            let request = URLRequest(url: url)
+            let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
             usageMetricsWebView.load(request)
         }
     }
