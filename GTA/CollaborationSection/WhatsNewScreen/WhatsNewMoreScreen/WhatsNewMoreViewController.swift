@@ -35,7 +35,11 @@ class WhatsNewMoreViewController: UIViewController {
         addBlurToView()
         self.tabBarController?.tabBar.isHidden = true
         setLabelsText()
-        setImage()
+        if let url = dataSource?.imageUrl, !url.isEmptyOrWhitespace() {
+            setImage()
+        } else {
+            setDefaultImage()
+        }
     }
     
     private func setLabelsText() {
@@ -63,12 +67,19 @@ class WhatsNewMoreViewController: UIViewController {
                         self.headerImageView.setGifImage(gif)
                         self.headerImageView.startAnimatingGif()
                     } else {
-                        self.headerImageView.image = nil
+                        self.setDefaultImage()
                     }
                 }
+            } else {
+                self.setDefaultImage()
             }
             self.stopAnimation()
         })
+    }
+    
+    private func setDefaultImage() {
+        self.headerImageView.contentMode = .scaleToFill
+        self.headerImageView.image = UIImage(named: "whatsNewMorePlaceholder")
     }
     
     private func startAnimation() {
