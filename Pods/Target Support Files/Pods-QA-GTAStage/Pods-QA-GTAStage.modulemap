@@ -1,0 +1,6 @@
+framework module Pods_QA_GTAStage {
+  umbrella header "Pods-QA-GTAStage-umbrella.h"
+
+  export *
+  module * { export * }
+}

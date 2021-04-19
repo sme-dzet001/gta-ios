@@ -11,6 +11,7 @@ def shared_pods
   pod 'AdvancedPageControl'
   pod 'Firebase/Crashlytics'
   pod 'SwiftyGif'
+  pod 'Kingfisher'
 end
 
 target 'GTA' do
@@ -22,6 +23,10 @@ target 'GTAStage' do
 end
 
 target 'GTADev' do
+  shared_pods
+end
+
+target 'QA-GTAStage' do
   shared_pods
 end
 
