@@ -80,6 +80,7 @@ class WhatsNewMoreViewController: UIViewController {
     private func setDefaultImage() {
         self.headerImageView.contentMode = .scaleToFill
         self.headerImageView.image = UIImage(named: "whatsNewMorePlaceholder")
+        titleLabel.text = dataSource?.headline
     }
     
     private func startAnimation() {
