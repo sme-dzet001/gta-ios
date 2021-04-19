@@ -23,7 +23,8 @@ class HelpDeskViewController: UIViewController {
     private var helpDeskCellsData: [[HelpDeskCellData]] = []
     weak var ticketsNumberDelegate: TicketsNumberDelegate?
     private var numberOfTickets: Int? {
-        return dataProvider.myTickets?.count
+        let count = dataProvider.myTickets?.filter({$0.status != .closed}).count ?? 0
+        return count > 0 ? count : nil
     }
 
     override func viewDidLoad() {
