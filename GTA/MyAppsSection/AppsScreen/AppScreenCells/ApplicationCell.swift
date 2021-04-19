@@ -25,21 +25,11 @@ class ApplicationCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         appIcon.image = nil
-        activityIndicator.stopAnimating()
+        activityIndicator?.stopAnimating()
     }
     
     func setUpCell(with data: AppInfo) {
         iconLabel.isHidden = true
-        if data.appImageData.imageStatus == .loading {
-            startAnimation()
-        } else {
-            stopAnimation()
-        }
-        if let imageData = data.appImageData.imageData, let image = UIImage(data: imageData) {
-            appIcon.image = image
-        } else if data.appImageData.imageStatus == .failed {
-            showFirstCharFrom(data.app_name)
-        }
         appName.text = data.app_name
         var color: UIColor = .clear
         switch data.appStatus {
@@ -58,22 +48,22 @@ class ApplicationCell: UITableViewCell {
         }
     }
     
-    private func setUpStatusCircle(with color: UIColor) {
+    func setUpStatusCircle(with color: UIColor) {
         appStatus.backgroundColor = color
         statusParentView.backgroundColor = .white
         statusParentView.layer.cornerRadius = statusParentView.frame.size.width / 2
         appStatus.layer.cornerRadius = appStatus.frame.size.width / 2
     }
     
-    private func showFirstCharFrom(_ text: String?) {
+    func showFirstChar() {
         appIcon.isHidden = false
         appIcon.image = UIImage(named: "empty_app_icon")
-        guard let char = text?.trimmingCharacters(in: .whitespacesAndNewlines).first else { return }
+        guard let char = appName.text?.trimmingCharacters(in: .whitespacesAndNewlines).first else { return }
         iconLabel.text = char.uppercased()
         iconLabel.isHidden = false
     }
     
-    private func startAnimation() {
+    func startAnimation() {
         appIcon.isHidden = true
         self.activityIndicator.isHidden = false
         self.activityIndicator.hidesWhenStopped = true
@@ -82,7 +72,7 @@ class ApplicationCell: UITableViewCell {
         statusParentView.isHidden = true
     }
     
-    private func stopAnimation() {
+    func stopAnimation() {
         appIcon.isHidden = false
         self.activityIndicator.isHidden = true
         self.activityIndicator.stopAnimating()

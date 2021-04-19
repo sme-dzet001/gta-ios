@@ -51,9 +51,9 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     }
     
     private func getAppAboutImageData() {
-        dataProvider?.getAppImageData(from: details?.appIcon ?? "", completion: {[weak self] (imageData, error) in
-            self?.setImageData(imageData, error: error)
-        })
+//        dataProvider?.getAppImageData(from: details?.appIcon ?? "", completion: {[weak self] (imageData, error) in
+//            self?.setImageData(imageData, error: error)
+//        })
     }
     
     private func getCollaborationAboutImageData() {
