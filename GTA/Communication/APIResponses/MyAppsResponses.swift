@@ -192,6 +192,7 @@ struct AppContactsData: Codable, Equatable {
 struct AppDetailsData: Codable {
     var meta: ResponseMetaData
     var data: [String : UserData]?
+    var appFullPath: String?
     
     var indexes: [String : Int] = [:]
     

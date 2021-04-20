@@ -111,16 +111,18 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewsCollectionViewCell", for: indexPath) as? NewsCollectionViewCell {
             let cellDataSource = dataProvider.newsData[indexPath.row]
             let imageURL = dataProvider.formImageURL(from: cellDataSource.posterUrl)
-            if let url = URL(string: imageURL) {
-                cell.imageUrl = imageURL
-                dataProvider.getPosterImageData(from: url) { (data, error) in
-                    if cell.imageUrl != imageURL { return }
-                    if let imageData = data, error == nil {
-                        let image = UIImage(data: imageData)
-                        cell.imageView.image = image
+            let url = URL(string: imageURL)
+            cell.imageView.kf.indicatorType = .activity
+            cell.imageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    cell.imageView.image = resData.image
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
+                        cell.imageView.image = nil
                     }
                 }
-            }
+            })
             //cell.titleLabel.text = cellDataSource.newsTitle
             //cell.byLabel.text = cellDataSource.newsAuthor
             let newsDate = cellDataSource.newsDate

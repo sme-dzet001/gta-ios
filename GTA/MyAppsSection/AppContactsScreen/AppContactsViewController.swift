@@ -163,35 +163,18 @@ extension AppContactsViewController: UITableViewDelegate, UITableViewDataSource 
             cell.contactEmail = data[indexPath.row].contactEmail
             cell.setUpCell(with: cellDataSource)
             let imageURL = isCollaborationContacts ? collaborationDataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl) : dataProvider?.formContactImageURL(from: cellDataSource.contactPhotoUrl)
-            if let _ = imageURL, let url = URL(string: imageURL!) {
-                cell.activityIndicator.startAnimating()
-                cell.imageUrl = imageURL
-                if !isCollaborationContacts {
-                    dataProvider?.getContactImageData(from: url) { (data, error) in
-                        if cell.imageUrl != imageURL { return }
-                        cell.activityIndicator.stopAnimating()
-                        if let imageData = data, error == nil {
-                            let image = UIImage(data: imageData)
-                            cell.photoImageView.image = image
-                        } else {
-                            cell.photoImageView.image = UIImage(named: "contact_default_photo")
-                        }
-                    }
-                } else {
-                    collaborationDataProvider?.getAppImageData(from: cellDataSource.contactPhotoUrl) { (data, error) in
-                        if cell.imageUrl != imageURL { return }
-                        cell.activityIndicator.stopAnimating()
-                        if let imageData = data, error == nil {
-                            let image = UIImage(data: imageData)
-                            cell.photoImageView.image = image
-                        } else {
-                            cell.photoImageView.image = UIImage(named: "contact_default_photo")
-                        }
+            let url = URL(string: imageURL ?? "")
+            cell.photoImageView.kf.indicatorType = .activity
+            cell.photoImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    cell.photoImageView.image = resData.image
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
+                        cell.photoImageView.image = UIImage(named: "contact_default_photo")
                     }
                 }
-            } else {
-                cell.photoImageView.image = UIImage(named: "contact_default_photo")
-            }
+            })
             return cell
         }
         return UITableViewCell()

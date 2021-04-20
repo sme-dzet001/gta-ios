@@ -167,15 +167,17 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
                 cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
                 //cell.startAnimation()
-                cell.appIcon.kf.indicatorType = .activity
                 let url = URL(string: dataProvider.appsData[indexPath.section].cellData[indexPath.row].appImage ?? "")
+                cell.appIcon.kf.indicatorType = .activity
                 cell.appIcon.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
                     //cell.stopAnimation()
                     switch result {
                     case .success(let resData):
                         cell.appIcon.image = resData.image
-                    case .failure:
-                        cell.showFirstChar()
+                    case .failure(let error):
+                        if !error.isNotCurrentTask {
+                            cell.showFirstChar()
+                        }
                     }
                 })
                 cell.separator.isHidden = indexPath.row != dataProvider.appsData[indexPath.section].cellData.count - 1

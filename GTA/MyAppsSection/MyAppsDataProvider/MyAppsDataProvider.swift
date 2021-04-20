@@ -542,6 +542,8 @@ class MyAppsDataProvider {
         }
         let columns = appDetailsData?.meta.widgetsDataSource?.params?.columns
         appDetailsData?.indexes = getDataIndexes(columns: columns)
+        let url = formImageURL(from: appDetailsData?.appIcon)
+        appDetailsData?.appFullPath = url
         completion?(appDetailsData, errorCode, retErr, isFromCache)
     }
     

@@ -254,7 +254,6 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             aboutScreen.details = appDetailsData
             aboutScreen.detailsDataResponseError = detailsDataResponseError
             self.detailsDataDelegate = aboutScreen
-            aboutScreen.dataProvider = dataProvider
             aboutScreen.appTitle = appTitle
             //aboutScreen.appImageUrl = appImageUrl
             navigationController?.pushViewController(aboutScreen, animated: true)

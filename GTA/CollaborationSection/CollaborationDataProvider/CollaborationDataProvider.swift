@@ -18,7 +18,6 @@ class CollaborationDataProvider {
     private(set) var collaborationDetails: CollaborationDetailsResponse?
     private var appSuiteImage: Data?
     weak var appSuiteIconDelegate: AppSuiteIconDelegate?
-    weak var imageLoadingDelegate: ImageLoadingDelegate?
     private(set) var collaborationAppDetailsRows: [CollaborationAppDetailsRow]?
     private(set) var appContactsData: AppContactsData?
     
@@ -86,18 +85,18 @@ class CollaborationDataProvider {
         if detailsData != self.collaborationDetails {
             self.collaborationDetails = detailsData
         }
-        getAppImage(from: detailsData?.icon)
+        //getAppImage(from: detailsData?.icon)
         completion?(errorCode, retErr)
     }
     
-    private func getAppImage(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
-        getAppImageData(from: urlString) { (imageData, error) in
-            if self.appSuiteImage == nil || imageData != self.appSuiteImage {
-                self.appSuiteImage = imageData
-                self.appSuiteIconDelegate?.appSuiteIconChanged(with: imageData, status: error == nil ? .loaded : .failed)
-            }
-        }
-    }
+//    private func getAppImage(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
+//        getAppImageData(from: urlString) { (imageData, error) in
+//            if self.appSuiteImage == nil || imageData != self.appSuiteImage {
+//                self.appSuiteImage = imageData
+//                self.appSuiteIconDelegate?.appSuiteIconChanged(with: imageData, status: error == nil ? .loaded : .failed)
+//            }
+//        }
+//    }
     
     // MARK: - What's new handling
     
@@ -386,6 +385,8 @@ class CollaborationDataProvider {
             let indexes = getDataIndexes(columns: columns)
             for (index, _) in rows.enumerated() {
                 detailsData?.data?[appName]??.data?.rows?[index].indexes = indexes
+                let url = formImageURL(from: detailsData?.data?[appName]??.data?.rows?[index].imageUrl)
+                detailsData?.data?[appName]??.data?.rows?[index].fullImageUrl = url
             }
         }
         var dataWasChanged: Bool = false
@@ -397,11 +398,11 @@ class CollaborationDataProvider {
             }
             
         }
-        DispatchQueue.main.async {
-            if let rows = detailsData?.data?[appName]??.data?.rows {
-                //self.getRowsImageData(for: rows)
-            }
-        }
+//        DispatchQueue.main.async {
+//            if let rows = detailsData?.data?[appName]??.data?.rows {
+//                //self.getRowsImageData(for: rows)
+//            }
+//        }
         completion?(dataWasChanged, errorCode, retErr)
     }
     
@@ -412,12 +413,12 @@ class CollaborationDataProvider {
                     if info.imageData == nil || (imageData != nil && imageData != info.imageData) {
                         self.collaborationAppDetailsRows?[index].imageData = imageData
                         self.collaborationAppDetailsRows?[index].imageStatus = error == nil ? .loaded : .failed
-                        self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
+                        //self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
                     }
                 }
             } else {
                 self.collaborationAppDetailsRows?[index].imageStatus = .failed
-                self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
+                //self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
             }
         }
     }
@@ -549,8 +550,4 @@ class CollaborationDataProvider {
 
 protocol AppSuiteIconDelegate: class {
     func appSuiteIconChanged(with data: Data?, status: LoadingStatus)
-}
-
-protocol ImageLoadingDelegate: class {
-    func setImage(for app: String)
 }
