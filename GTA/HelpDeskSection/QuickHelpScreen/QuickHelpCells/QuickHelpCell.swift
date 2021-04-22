@@ -17,6 +17,7 @@ class QuickHelpCell: UITableViewCell {
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var expandButton: UIButton!
+    @IBOutlet weak var headerView: UIView!
     
     @IBOutlet weak var questionLabelHeight: NSLayoutConstraint!
     
@@ -27,7 +28,7 @@ class QuickHelpCell: UITableViewCell {
         super.awakeFromNib()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
-        expandButton.addGestureRecognizer(tapGesture)
+        headerView.addGestureRecognizer(tapGesture)
         self.answerLabel.isUserInteractionEnabled = true
         self.answerLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tryOpenLink(gesture:))))
     }
