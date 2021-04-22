@@ -144,7 +144,7 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 88
+        return 78
     }
     
 }
