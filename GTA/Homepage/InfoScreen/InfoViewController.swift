@@ -115,14 +115,27 @@ class InfoViewController: UIViewController {
         if let alertData = specialAlertData {
             headerImageView.image = nil
             headerImageView.contentMode = .scaleAspectFit
-            if let imageURL = dataProvider?.formImageURL(from: alertData.posterUrl), let url = URL(string: imageURL) {
-                dataProvider?.getPosterImageData(from: url) { [weak self] (data, error) in
-                    if let imageData = data, error == nil {
-                        let image = UIImage(data: imageData)
-                        self?.headerImageView.image = image
+            let imageURL = dataProvider?.formImageURL(from: alertData.posterUrl) ?? ""
+            let url = URL(string: imageURL)
+            headerImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    self.headerImageView.image = resData.image
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
+                        self.headerImageView.image = nil
                     }
                 }
-            }
+            })
+//            if let imageURL = dataProvider?.formImageURL(from: alertData.posterUrl), let url = URL(string: imageURL) {
+//
+//                dataProvider?.getPosterImageData(from: url) { [weak self] (data, error) in
+//                    if let imageData = data, error == nil {
+//                        let image = UIImage(data: imageData)
+//                        self?.headerImageView.image = image
+//                    }
+//                }
+//            }
             screenTitleLabel.text = specialAlertData?.alertTitle
         } else {
             headerImageView.image = UIImage(named: "office")

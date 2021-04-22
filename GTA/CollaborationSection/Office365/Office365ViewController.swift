@@ -121,7 +121,7 @@ extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.iconImageView.image = resData.image
                 case .failure(let error):
                     if !error.isNotCurrentTask {
-                        cell.iconImageView.image = nil
+                        cell.showFirstChar()
                     }
                 }
             })

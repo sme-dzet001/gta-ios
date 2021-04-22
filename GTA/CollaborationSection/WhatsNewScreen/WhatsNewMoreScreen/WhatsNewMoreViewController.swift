@@ -57,24 +57,41 @@ class WhatsNewMoreViewController: UIViewController {
     }
     
     private func setImage() {
-        startAnimation()
-        dataProvider?.getAppImageData(from: dataSource?.imageUrl, completion: { (data, error) in
-            if let _ = data, error == nil {
-                if !(self.dataSource?.imageUrl ?? "").contains(".gif"), let image = UIImage(data: data!) {
-                    self.headerImageView.setImage(image)
+        //startAnimation()
+        let imageURL = dataProvider?.formImageURL(from: dataSource?.imageUrl) ?? ""
+        let url = URL(string: imageURL)
+        headerImageView.kf.indicatorType = .activity
+        headerImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+            switch result {
+            case .success(let resData):
+                if !(self.dataSource?.imageUrl ?? "").contains(".gif") {
+                    self.headerImageView.setImage(resData.image)
                 } else {
-                    if let gif = try? UIImage(gifData: data!) {
-                        self.headerImageView.setGifImage(gif)
-                        self.headerImageView.startAnimatingGif()
-                    } else {
-                        self.setDefaultImage()
-                    }
+                    self.headerImageView.setGifImage(resData.image)
                 }
-            } else {
-                self.setDefaultImage()
+            case .failure(let error):
+                if !error.isNotCurrentTask {
+                    self.setDefaultImage()
+                }
             }
-            self.stopAnimation()
         })
+//        dataProvider?.getAppImageData(from: dataSource?.imageUrl, completion: { (data, error) in
+//            if let _ = data, error == nil {
+//                if !(self.dataSource?.imageUrl ?? "").contains(".gif"), let image = UIImage(data: data!) {
+//                    self.headerImageView.setImage(image)
+//                } else {
+//                    if let gif = try? UIImage(gifData: data!) {
+//                        self.headerImageView.setGifImage(gif)
+//                        self.headerImageView.startAnimatingGif()
+//                    } else {
+//                        self.setDefaultImage()
+//                    }
+//                }
+//            } else {
+//                self.setDefaultImage()
+//            }
+//            self.stopAnimation()
+//        })
     }
     
     private func setDefaultImage() {

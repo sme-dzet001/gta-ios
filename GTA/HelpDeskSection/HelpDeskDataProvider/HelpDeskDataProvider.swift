@@ -592,22 +592,22 @@ class HelpDeskDataProvider {
         return imageURL
     }
     
-    func getImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
-            if cachedError == nil {
-                completion(cachedData, nil)
-            }
-            self?.apiManager.loadImageData(from: url) { (data, response, error) in
-                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
-                DispatchQueue.main.async {
-                    if cachedData == nil ? true : cachedData != data {
-                        if cachedError == nil && error != nil { return }
-                        completion(data, error)
-                    }
-                }
-            }
-        })
-    }
+//    func getImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+//        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
+//            if cachedError == nil {
+//                completion(cachedData, nil)
+//            }
+//            self?.apiManager.loadImageData(from: url) { (data, response, error) in
+//                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
+//                DispatchQueue.main.async {
+//                    if cachedData == nil ? true : cachedData != data {
+//                        if cachedError == nil && error != nil { return }
+//                        completion(data, error)
+//                    }
+//                }
+//            }
+//        })
+//    }
     
     private func parseSectionReport(data: Data?) -> ReportDataResponse? {
         var reportDataResponse: ReportDataResponse?

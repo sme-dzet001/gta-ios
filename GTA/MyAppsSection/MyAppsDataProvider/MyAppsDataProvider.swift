@@ -58,20 +58,20 @@ class MyAppsDataProvider {
 //        }
 //    }
     
-    func getContactImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, error) in
-            if error == nil {
-                completion(cachedData, nil)
-            }
-            self?.apiManager.loadImageData(from: url) { (data, response, error) in
-                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
-                DispatchQueue.main.async {
-                    completion(data, error)
-                }
-            }
-            
-        })
-    }
+//    func getContactImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+//        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, error) in
+//            if error == nil {
+//                completion(cachedData, nil)
+//            }
+//            self?.apiManager.loadImageData(from: url) { (data, response, error) in
+//                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
+//                DispatchQueue.main.async {
+//                    completion(data, error)
+//                }
+//            }
+//            
+//        })
+//    }
     
     func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in

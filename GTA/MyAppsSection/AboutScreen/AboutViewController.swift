@@ -135,7 +135,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return detailsDataResponseError == nil ? 1 : 0
+            return detailsDataResponseError != nil && details == nil ? 0 : 1
         case 1:
             return dataSource?.supportData?.count ?? 0
         default:
