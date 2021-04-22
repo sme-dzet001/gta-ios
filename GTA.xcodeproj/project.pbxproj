@@ -497,6 +497,14 @@
 		9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
 		9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
+		9FB9C1672631C04E00BA753D /* NoCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9C1652631C04E00BA753D /* NoCommentsCell.swift */; };
+		9FB9C1682631C04E00BA753D /* NoCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9C1652631C04E00BA753D /* NoCommentsCell.swift */; };
+		9FB9C1692631C04E00BA753D /* NoCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9C1652631C04E00BA753D /* NoCommentsCell.swift */; };
+		9FB9C16A2631C04E00BA753D /* NoCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9C1652631C04E00BA753D /* NoCommentsCell.swift */; };
+		9FB9C16B2631C04E00BA753D /* NoCommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1662631C04E00BA753D /* NoCommentsCell.xib */; };
+		9FB9C16C2631C04E00BA753D /* NoCommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1662631C04E00BA753D /* NoCommentsCell.xib */; };
+		9FB9C16D2631C04E00BA753D /* NoCommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1662631C04E00BA753D /* NoCommentsCell.xib */; };
+		9FB9C16E2631C04E00BA753D /* NoCommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1662631C04E00BA753D /* NoCommentsCell.xib */; };
 		9FBAF4862577D65E00B43F96 /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
 		9FBAF4872577D65E00B43F96 /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
 		9FBAF4882577D65E00B43F96 /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
@@ -843,6 +851,8 @@
 		9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutHeaderCell.swift; sourceTree = "<group>"; };
 		9FA8E90C25B056D5007D3B9F /* AboutHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutHeaderCell.xib; sourceTree = "<group>"; };
 		9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCollectionViewLayout.swift; sourceTree = "<group>"; };
+		9FB9C1652631C04E00BA753D /* NoCommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCommentsCell.swift; sourceTree = "<group>"; };
+		9FB9C1662631C04E00BA753D /* NoCommentsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoCommentsCell.xib; sourceTree = "<group>"; };
 		9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginUSMViewController.swift; path = GTA/Login/LoginUSMViewController.swift; sourceTree = SOURCE_ROOT; };
 		9FCFA2A6259E138D00E893D2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9FE173CD25914D3F00E2C481 /* AboutSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSupportCell.swift; sourceTree = "<group>"; };
@@ -1585,6 +1595,7 @@
 				9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */,
 				9FF0545B25680ED30071E596 /* SendMessageView.swift */,
 				9F803242260A666900ED6224 /* TicketDescriptionCell.swift */,
+				9FB9C1652631C04E00BA753D /* NoCommentsCell.swift */,
 				9FF0543A2567F6E40071E596 /* xib */,
 			);
 			path = TicketDetailsCell;
@@ -1593,6 +1604,7 @@
 		9FF0543A2567F6E40071E596 /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				9FB9C1662631C04E00BA753D /* NoCommentsCell.xib */,
 				9F803243260A666900ED6224 /* TicketDescriptionCell.xib */,
 				9FF0542E2567E1D80071E596 /* TicketDetailsMessageCell.xib */,
 				9FF0545225680EC90071E596 /* SendMessageView.xib */,
@@ -2064,6 +2076,7 @@
 				9F803247260A666900ED6224 /* TicketDescriptionCell.xib in Resources */,
 				C9EC9E9C25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
 				C907E0C325D437BF00FB0B55 /* AppContactsViewController.xib in Resources */,
+				9FB9C16B2631C04E00BA753D /* NoCommentsCell.xib in Resources */,
 				9F44AE1F25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
 				6547566D25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */,
 				9F643554261B1C9F000D94A4 /* WhatsNewViewController.xib in Resources */,
@@ -2155,6 +2168,7 @@
 				9F33F6D3260A3C4000470A47 /* OfficeSelectionCell.xib in Resources */,
 				9F33F6D4260A3C4000470A47 /* GoogleService-Info.plist in Resources */,
 				9FA83E77262739DE009A0BAD /* TicketDescriptionCell.xib in Resources */,
+				9FB9C16E2631C04E00BA753D /* NoCommentsCell.xib in Resources */,
 				9F33F6D5260A3C4000470A47 /* MyTicketsViewController.xib in Resources */,
 				9F33F6D6260A3C4000470A47 /* HelpDeskContactOptionCell.xib in Resources */,
 				9F33F6D7260A3C4000470A47 /* AppTipsAndTricksViewController.xib in Resources */,
@@ -2237,6 +2251,7 @@
 				C9705B802566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
 				C9EC9E9D25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
 				9F44AE2025EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
+				9FB9C16C2631C04E00BA753D /* NoCommentsCell.xib in Resources */,
 				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				6547566E25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */,
 				9F643555261B1C9F000D94A4 /* WhatsNewViewController.xib in Resources */,
@@ -2334,6 +2349,7 @@
 				9F1620D62566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
 				C93FCF1E2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
 				C9424E19256427F0003C247E /* DeviceCell.xib in Resources */,
+				9FB9C16D2631C04E00BA753D /* NoCommentsCell.xib in Resources */,
 				9FA8E90025B054C6007D3B9F /* AboutSupportPolicyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2640,6 +2656,7 @@
 				9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE4255EB88500B62072 /* CustomTextView.swift in Sources */,
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
+				9FB9C1672631C04E00BA753D /* NoCommentsCell.swift in Sources */,
 				9F9D9CF7258A063800DC4231 /* NetworkManager.swift in Sources */,
 				C962D8442566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
 				9F803244260A666900ED6224 /* TicketDescriptionCell.swift in Sources */,
@@ -2765,6 +2782,7 @@
 				9F33F68D260A3C4000470A47 /* NetworkManager.swift in Sources */,
 				9F33F68E260A3C4000470A47 /* MainViewController.swift in Sources */,
 				9FA83E70262739DB009A0BAD /* TicketDescriptionCell.swift in Sources */,
+				9FB9C16A2631C04E00BA753D /* NoCommentsCell.swift in Sources */,
 				9F33F68F260A3C4000470A47 /* UserLocationManager.swift in Sources */,
 				9F33F690260A3C4000470A47 /* OfficeInfoCell.swift in Sources */,
 				9F33F691260A3C4000470A47 /* HelpReportScreenViewController.swift in Sources */,
@@ -2867,6 +2885,7 @@
 				9F895B29255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				9F895B35255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */,
+				9FB9C1682631C04E00BA753D /* NoCommentsCell.swift in Sources */,
 				9F9D9CF8258A063800DC4231 /* NetworkManager.swift in Sources */,
 				9F819A94255C1572007C1739 /* MainViewController.swift in Sources */,
 				9F803245260A666900ED6224 /* TicketDescriptionCell.swift in Sources */,
@@ -2972,6 +2991,7 @@
 				9F895B2A255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				9F895B36255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */,
+				9FB9C1692631C04E00BA753D /* NoCommentsCell.swift in Sources */,
 				9F9D9CF9258A063800DC4231 /* NetworkManager.swift in Sources */,
 				9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */,
 				9F803246260A666900ED6224 /* TicketDescriptionCell.swift in Sources */,
