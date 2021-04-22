@@ -45,7 +45,11 @@ class MyTicketsViewController: UIViewController {
                         self?.tableView.reloadData()
                     }
                     self?.errorLabel.isHidden = !(self?.myTicketsData?.isEmpty ?? true)
-                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                    if (error as? ResponseError) == .noDataAvailable {
+                        self?.errorLabel.text = "No tickets in the last 90 days"
+                    } else {
+                        self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                    }
                 }
             }
         })
