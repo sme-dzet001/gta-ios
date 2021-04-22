@@ -7,6 +7,7 @@
 
 import UIKit
 import PanModal
+import MessageUI
 
 class MyTicketsViewController: UIViewController {
     
@@ -159,7 +160,22 @@ extension MyTicketsViewController: CreateTicketDelegate {
 
 extension MyTicketsViewController: SendEmailDelegate {
     func sendEmail(withTitle subject: String, withText body: String, to recipient: String) {
-        
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([Constants.ticketSupportEmail])
+            mail.setSubject(subject)
+            mail.setMessageBody(body, isHTML: false)
+            present(mail, animated: true)
+        } else {
+            // TODO: Need to handle
+        }
+    }
+}
+
+extension MyTicketsViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
 }

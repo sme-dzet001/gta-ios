@@ -338,6 +338,10 @@
 		9F6FD63E25B1ABC300A32377 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
 		9F6FD63F25B1ABC300A32377 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
 		9F6FD64025B1ABC300A32377 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
+		9F7392CF2631D1BD007882EB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7392CE2631D1BD007882EB /* Constants.swift */; };
+		9F7392D02631D1BD007882EB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7392CE2631D1BD007882EB /* Constants.swift */; };
+		9F7392D12631D1BD007882EB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7392CE2631D1BD007882EB /* Constants.swift */; };
+		9F7392D22631D1BD007882EB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7392CE2631D1BD007882EB /* Constants.swift */; };
 		9F753AA2259B862000AE6EC2 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
 		9F753AA3259B862000AE6EC2 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
 		9F753AA4259B862000AE6EC2 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
@@ -805,6 +809,7 @@
 		9F6435CA261F2077000D94A4 /* CollaborationCounterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollaborationCounterCell.xib; sourceTree = "<group>"; };
 		9F6435D9261F22F5000D94A4 /* SF-Pro-Text-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.ttf"; sourceTree = "<group>"; };
 		9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		9F7392CE2631D1BD007882EB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9F753AA1259B862000AE6EC2 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
 		9F78CFE72564138800BCD38F /* NewsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1075,6 +1080,7 @@
 				65D29081256C0D8F001B658A /* Utils */,
 				65D29080256C0D7E001B658A /* Communication */,
 				659A5AF9255457B600E13B77 /* Extensions.swift */,
+				9F7392CE2631D1BD007882EB /* Constants.swift */,
 				659A5AB0255401EA00E13B77 /* AppDelegate.swift */,
 				659A5AB2255401EA00E13B77 /* SceneDelegate.swift */,
 				65D1A29225549A0600D71965 /* MainViewController.swift */,
@@ -2665,6 +2671,7 @@
 				9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE4255EB88500B62072 /* CustomTextView.swift in Sources */,
 				65D1A29325549A0600D71965 /* MainViewController.swift in Sources */,
+				9F7392CF2631D1BD007882EB /* Constants.swift in Sources */,
 				9F9D9CF7258A063800DC4231 /* NetworkManager.swift in Sources */,
 				C962D8442566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
 				9F803244260A666900ED6224 /* TicketDescriptionCell.swift in Sources */,
@@ -2802,6 +2809,7 @@
 				9F33F697260A3C4000470A47 /* PanModalNavigationController.swift in Sources */,
 				9F33F698260A3C4000470A47 /* MyDevicesViewController.swift in Sources */,
 				9F33F699260A3C4000470A47 /* GeneralViewController.swift in Sources */,
+				9F7392D22631D1BD007882EB /* Constants.swift in Sources */,
 				9F33F69A260A3C4000470A47 /* DataParser.swift in Sources */,
 				9F33F69B260A3C4000470A47 /* CollaborationViewController.swift in Sources */,
 				9F33F69C260A3C4000470A47 /* LoginResponses.swift in Sources */,
@@ -2894,6 +2902,7 @@
 				9F895B29255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				9F895B35255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */,
+				9F7392D02631D1BD007882EB /* Constants.swift in Sources */,
 				9F9D9CF8258A063800DC4231 /* NetworkManager.swift in Sources */,
 				9F819A94255C1572007C1739 /* MainViewController.swift in Sources */,
 				9F803245260A666900ED6224 /* TicketDescriptionCell.swift in Sources */,
@@ -3000,6 +3009,7 @@
 				9F895B2A255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
 				9F895B36255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
 				9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */,
+				9F7392D12631D1BD007882EB /* Constants.swift in Sources */,
 				9F9D9CF9258A063800DC4231 /* NetworkManager.swift in Sources */,
 				9F819ABE255C1646007C1739 /* MainViewController.swift in Sources */,
 				9F803246260A666900ED6224 /* TicketDescriptionCell.swift in Sources */,
