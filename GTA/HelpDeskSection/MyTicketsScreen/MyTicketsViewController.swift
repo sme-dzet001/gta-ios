@@ -112,10 +112,12 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
         return 200
     }
     
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let header = MyTicketsHeader.instanceFromNib()
-//        return header
-//    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = MyTicketsHeader.instanceFromNib()
+        header.delegate = self
+        header.setUpAction()
+        return header
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard (myTicketsData?.count ?? 0) > indexPath.row else { return }
@@ -141,9 +143,24 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
         //}
     }
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 88
-//    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 88
+    }
+    
+}
+
+extension MyTicketsViewController: CreateTicketDelegate {
+    func createTicketDidPressed() {
+        let newTicketVC = NewTicketViewController()
+        newTicketVC.delegate = self
+        self.presentPanModal(newTicketVC)
+    }
+}
+
+extension MyTicketsViewController: SendEmailDelegate {
+    func sendEmail(withTitle subject: String, withText body: String, to recipient: String) {
+        
+    }
     
 }
 
