@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class CollaborationDataProvider {
     
@@ -526,7 +527,7 @@ class CollaborationDataProvider {
         return false
     }
     
-    func formAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
+    func formAnswerBody(from base64EncodedText: String?, isTipsAndTricks: Bool = false) -> NSMutableAttributedString? {
         guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
         
         let res = NSMutableAttributedString(attributedString: htmlAttrString)
@@ -542,6 +543,15 @@ class CollaborationDataProvider {
                 res.addAttribute(.link, value: linkUrl, range: match.range)
             }
         }
+        guard isTipsAndTricks else { return res }
+        res.enumerateAttributes(in: NSRange(location: 0, length: res.length), options: .longestEffectiveRangeNotRequired, using: { (attributes, range, _) in
+            for attribute in attributes {
+                if let fnt = attribute.value as? UIFont {
+                    let font = fnt.withSize(16.0)
+                    res.addAttribute(.font, value: font, range: range)
+                }
+            }
+        })
         return res
     }
     

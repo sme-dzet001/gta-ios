@@ -215,7 +215,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
             let cellDataSource = data[indexPath.row]
             cell.delegate = self
             let answerEncoded = cellDataSource.answer
-            let answerDecoded = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) ?? appsDataProvider?.formTipsAndTricksAnswerBody(from: answerEncoded) ?? collaborationDataProvider?.formAnswerBody(from: answerEncoded)
+            let answerDecoded = dataProvider?.formQuickHelpAnswerBody(from: answerEncoded) ?? appsDataProvider?.formTipsAndTricksAnswerBody(from: answerEncoded) ?? collaborationDataProvider?.formAnswerBody(from: answerEncoded, isTipsAndTricks: true)
             if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
                 answerDecoded?.setFontFace(font: neededFont)
             }
