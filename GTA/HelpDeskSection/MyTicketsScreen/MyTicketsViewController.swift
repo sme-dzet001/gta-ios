@@ -7,6 +7,7 @@
 
 import UIKit
 import PanModal
+import MessageUI
 
 class MyTicketsViewController: UIViewController {
     
@@ -116,10 +117,12 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
         return 200
     }
     
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let header = MyTicketsHeader.instanceFromNib()
-//        return header
-//    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = MyTicketsHeader.instanceFromNib()
+        header.delegate = self
+        header.setUpAction()
+        return header
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard (myTicketsData?.count ?? 0) > indexPath.row else { return }
@@ -145,9 +148,39 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
         //}
     }
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 88
-//    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 78
+    }
+    
+}
+
+extension MyTicketsViewController: CreateTicketDelegate {
+    func createTicketDidPressed() {
+        let newTicketVC = NewTicketViewController()
+        newTicketVC.delegate = self
+        self.presentPanModal(newTicketVC)
+    }
+}
+
+extension MyTicketsViewController: SendEmailDelegate {
+    func sendEmail(withTitle subject: String, withText body: String, to recipient: String) {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([Constants.ticketSupportEmail])
+            mail.setSubject(subject)
+            mail.setMessageBody(body, isHTML: false)
+            present(mail, animated: true)
+        } else {
+            // TODO: Need to handle
+        }
+    }
+}
+
+extension MyTicketsViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
     
 }
 
