@@ -219,9 +219,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
             if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
                 answerDecoded?.setFontFace(font: neededFont)
             }
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 8
-            answerDecoded?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, answerDecoded?.length ?? 0))
+            answerDecoded?.setParagraphStyleParams(lineSpacing: 8)
             let questionFormatted = formAttributedQuestion(from: cellDataSource.question ?? "")
             cell.setUpCell(question: questionFormatted, questionLabelHeight: heightForQuestionAt(indexPath: indexPath) - 32, answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .collapse : .expand)
             return cell
@@ -270,9 +268,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
         if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
             answerBody.setFontFace(font: neededFont)
         }
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 8
-        answerBody.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, answerBody.length))
+        answerBody.setParagraphStyleParams(lineSpacing: 8)
         let textHeight = answerBody.height(containerWidth: view.frame.width - 48)
         let bottomMargin: CGFloat = 16
         return textHeight + bottomMargin
