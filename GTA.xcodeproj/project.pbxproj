@@ -480,6 +480,10 @@
 		9F9D9CF7258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
 		9F9D9CF8258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
 		9F9D9CF9258A063800DC4231 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
+		9FA17E3126340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA17E3026340E3500CC78D3 /* SF-Pro-Text-Italic.ttf */; };
+		9FA17E3226340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA17E3026340E3500CC78D3 /* SF-Pro-Text-Italic.ttf */; };
+		9FA17E3326340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA17E3026340E3500CC78D3 /* SF-Pro-Text-Italic.ttf */; };
+		9FA17E3426340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA17E3026340E3500CC78D3 /* SF-Pro-Text-Italic.ttf */; };
 		9FA2C6A32628CFC900EC5BE3 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA2C6A22628CFC900EC5BE3 /* Apps.storyboard */; };
 		9FA2C6A42628CFC900EC5BE3 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA2C6A22628CFC900EC5BE3 /* Apps.storyboard */; };
 		9FA2C6A52628CFC900EC5BE3 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA2C6A22628CFC900EC5BE3 /* Apps.storyboard */; };
@@ -858,6 +862,7 @@
 		9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionExpiredHandler.swift; sourceTree = "<group>"; };
 		9F9D9CE825891E1800DC4231 /* DataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		9F9D9CF6258A063800DC4231 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		9FA17E3026340E3500CC78D3 /* SF-Pro-Text-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Italic.ttf"; sourceTree = "<group>"; };
 		9FA2C6A22628CFC900EC5BE3 /* Apps.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Apps.storyboard; path = GTA/MyAppsSection/AppsScreen/Apps.storyboard; sourceTree = SOURCE_ROOT; };
 		9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSupportPolicyCell.swift; sourceTree = "<group>"; };
 		9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutSupportPolicyCell.xib; sourceTree = "<group>"; };
@@ -1141,6 +1146,7 @@
 				9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */,
 				659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */,
 				659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */,
+				9FA17E3026340E3500CC78D3 /* SF-Pro-Text-Italic.ttf */,
 				9F78D0942565321100BCD38F /* SF-Pro-Text-Light.ttf */,
 			);
 			path = "Supporting Files";
@@ -2080,6 +2086,7 @@
 				9F35860725FD219D0003658D /* CollaborationHeader.xib in Resources */,
 				659A5ABD255401ED00E13B77 /* LaunchScreen.storyboard in Resources */,
 				C960A0E825B08B52004A9C65 /* ServiceDeskAboutViewController.xib in Resources */,
+				9FA17E3126340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */,
 				9FE173D225914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
 				659A5AF4255404F100E13B77 /* SF-Pro-Text-Medium.otf in Resources */,
 				9F35862D25FD37BF0003658D /* Office365AppCell.xib in Resources */,
@@ -2175,6 +2182,7 @@
 				9F33F6C0260A3C4000470A47 /* MetricStatsHeader.xib in Resources */,
 				9F33F6C1260A3C4000470A47 /* CollaborationHeader.xib in Resources */,
 				9F33F6C2260A3C4000470A47 /* AboutSupportCell.xib in Resources */,
+				9FA17E3426340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */,
 				9F33F6C3260A3C4000470A47 /* HelpDeskCell.xib in Resources */,
 				9F33F6C4260A3C4000470A47 /* AppsServiceAlertCell.xib in Resources */,
 				9FA2C6A62628CFC900EC5BE3 /* Apps.storyboard in Resources */,
@@ -2257,6 +2265,7 @@
 				9F35860825FD219D0003658D /* CollaborationHeader.xib in Resources */,
 				9FE173D325914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
 				C91F708F2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
+				9FA17E3226340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */,
 				9F895AF1255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				9FA8E91125B056D5007D3B9F /* AboutHeaderCell.xib in Resources */,
 				9F35862E25FD37BF0003658D /* Office365AppCell.xib in Resources */,
@@ -2356,6 +2365,7 @@
 				C993A2CB2576686500F9146A /* QuickHelpCell.xib in Resources */,
 				9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
 				C962D8542566E21400727949 /* MyTicketsHeader.xib in Resources */,
+				9FA17E3326340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */,
 				C9424E0625642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F643568261B1E88000D94A4 /* WhatsNewCell.xib in Resources */,
 				9F895B2D255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
