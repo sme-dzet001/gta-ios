@@ -594,10 +594,6 @@ class HelpDeskDataProvider {
     
     // MARK: - Other methods
     
-    func getUserEmail() -> String? {
-        return KeychainManager.getUsername()
-    }
-    
     func formImageURL(from imagePath: String?) -> String? {
         guard let imagePath = imagePath, !imagePath.isEmpty else { return nil }
         guard !imagePath.contains("https://") else  { return imagePath }

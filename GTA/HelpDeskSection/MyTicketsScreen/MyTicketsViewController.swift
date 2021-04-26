@@ -66,9 +66,10 @@ class MyTicketsViewController: UIViewController {
     }
     
     private func stopAnimation() {
-        if !(myTicketsData ?? []).isEmpty {
-            self.tableView.alpha = 1
+        if (myTicketsData ?? []).isEmpty {
+            self.tableView.reloadData()
         }
+        self.tableView.alpha = 1
         self.activityIndicator.stopAnimating()
         self.activityIndicator.removeFromSuperview()
     }
