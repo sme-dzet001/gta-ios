@@ -140,13 +140,13 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         let articleViewController = ArticleViewController()
         articleViewController.appearanceDelegate = self
         var statusBarHeight: CGFloat = 0.0
-        if #available(iOS 13.0, *) {
+       // if #available(iOS 13.0, *) {
             statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
             statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
-        } else {
-            statusBarHeight = self.containerView.bounds.height - UIApplication.shared.statusBarFrame.height
-            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
-        }
+//        } else {
+//            statusBarHeight = self.containerView.bounds.height - UIApplication.shared.statusBarFrame.height
+//            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
+//        }
         articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
         let newsBody = dataProvider.newsData[indexPath.row].newsBody
         let htmlBody = dataProvider.formNewsBody(from: newsBody)

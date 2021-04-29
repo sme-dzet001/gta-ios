@@ -7,6 +7,7 @@
 
 import UIKit
 import PanModal
+import MessageUI
 
 class MyTicketsViewController: UIViewController {
     
@@ -45,7 +46,11 @@ class MyTicketsViewController: UIViewController {
                         self?.tableView.reloadData()
                     }
                     self?.errorLabel.isHidden = !(self?.myTicketsData?.isEmpty ?? true)
-                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                    if (error as? ResponseError) == .noDataAvailable {
+                        self?.errorLabel.text = "No tickets in the last 90 days"
+                    } else {
+                        self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                    }
                 }
             }
         })
@@ -61,9 +66,10 @@ class MyTicketsViewController: UIViewController {
     }
     
     private func stopAnimation() {
-        if !(myTicketsData ?? []).isEmpty {
-            self.tableView.alpha = 1
+        if (myTicketsData ?? []).isEmpty {
+            self.tableView.reloadData()
         }
+        self.tableView.alpha = 1
         self.activityIndicator.stopAnimating()
         self.activityIndicator.removeFromSuperview()
     }
@@ -93,6 +99,10 @@ class MyTicketsViewController: UIViewController {
 
 extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return myTicketsData?.count ?? 0
     }
@@ -112,10 +122,12 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
         return 200
     }
     
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let header = MyTicketsHeader.instanceFromNib()
-//        return header
-//    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = MyTicketsHeader.instanceFromNib()
+        header.delegate = self
+        header.setUpAction()
+        return header
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard (myTicketsData?.count ?? 0) > indexPath.row else { return }
@@ -141,9 +153,39 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
         //}
     }
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 88
-//    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 78
+    }
+    
+}
+
+extension MyTicketsViewController: CreateTicketDelegate {
+    func createTicketDidPressed() {
+        let newTicketVC = NewTicketViewController()
+        newTicketVC.delegate = self
+        self.presentPanModal(newTicketVC)
+    }
+}
+
+extension MyTicketsViewController: SendEmailDelegate {
+    func sendEmail(withTitle subject: String, withText body: String, to recipient: String) {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([Constants.ticketSupportEmail])
+            mail.setSubject(subject)
+            mail.setMessageBody(body, isHTML: false)
+            present(mail, animated: true)
+        } else {
+            // TODO: Need to handle
+        }
+    }
+}
+
+extension MyTicketsViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
     
 }
 

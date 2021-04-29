@@ -49,6 +49,10 @@
                         </constraints>
                         <state key="normal" image="disclosure_arrow_up"/>
                     </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N7f-s8-rlN">
+                        <rect key="frame" x="0.0" y="0.0" width="397" height="96"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WGP-dx-t9w">
                         <rect key="frame" x="0.0" y="299" width="397" height="1"/>
                         <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -58,16 +62,20 @@
                     </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="N7f-s8-rlN" firstAttribute="top" secondItem="4VD-Kk-p0A" secondAttribute="top" constant="-16" id="04A-GS-ZJU"/>
                     <constraint firstAttribute="trailing" secondItem="WGP-dx-t9w" secondAttribute="trailing" id="5iW-EK-dUS"/>
                     <constraint firstAttribute="trailing" secondItem="uuO-05-CaX" secondAttribute="trailing" constant="20" id="937-TT-ANV"/>
                     <constraint firstAttribute="trailing" secondItem="EaC-sN-4bg" secondAttribute="trailing" constant="24" id="Jsc-Zi-0qN"/>
                     <constraint firstItem="WGP-dx-t9w" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="LTI-b2-7IE"/>
                     <constraint firstItem="4VD-Kk-p0A" firstAttribute="centerY" secondItem="uuO-05-CaX" secondAttribute="centerY" id="Mt3-xp-QjY"/>
+                    <constraint firstAttribute="trailing" secondItem="N7f-s8-rlN" secondAttribute="trailing" id="XAe-De-Yzs"/>
                     <constraint firstItem="uuO-05-CaX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4VD-Kk-p0A" secondAttribute="trailing" constant="8" id="bLh-L6-URu"/>
                     <constraint firstItem="EaC-sN-4bg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="bjQ-iT-fln"/>
                     <constraint firstItem="4VD-Kk-p0A" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="kjU-wG-6IU"/>
+                    <constraint firstItem="N7f-s8-rlN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="lA3-zm-qOY"/>
                     <constraint firstAttribute="bottom" secondItem="WGP-dx-t9w" secondAttribute="bottom" id="qMX-RJ-4Az"/>
                     <constraint firstItem="4VD-Kk-p0A" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="rKy-Vv-tUR"/>
+                    <constraint firstItem="N7f-s8-rlN" firstAttribute="bottom" secondItem="4VD-Kk-p0A" secondAttribute="bottom" constant="16" id="vEX-aB-581"/>
                     <constraint firstItem="EaC-sN-4bg" firstAttribute="top" secondItem="4VD-Kk-p0A" secondAttribute="bottom" constant="16" id="xpk-vp-Xpr"/>
                 </constraints>
             </tableViewCellContentView>
@@ -75,6 +83,7 @@
             <connections>
                 <outlet property="answerLabel" destination="EaC-sN-4bg" id="TSo-Du-c7d"/>
                 <outlet property="expandButton" destination="uuO-05-CaX" id="Zhw-9n-aTh"/>
+                <outlet property="headerView" destination="N7f-s8-rlN" id="JXO-Oh-XDQ"/>
                 <outlet property="questionLabel" destination="4VD-Kk-p0A" id="BNI-CI-Dcv"/>
                 <outlet property="questionLabelHeight" destination="onB-vO-uBR" id="ABx-di-nNA"/>
             </connections>

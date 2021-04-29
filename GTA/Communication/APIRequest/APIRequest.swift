@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ResponseError: Error {
+public enum ResponseError: Error, Equatable {
     case commonError
     case serverError
     case parsingError

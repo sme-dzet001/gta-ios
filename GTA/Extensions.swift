@@ -494,13 +494,16 @@ extension NSMutableAttributedString {
                         range: range
                     )
                 }
+            } else if let f = value as? UIFont, f.fontName.lowercased().contains("italic") {
+                removeAttribute(.font, range: range)
+                addAttribute(.font, value: (UIFont(name: "SFProText-Regular-Italic", size: 16) as Any), range: range)
             }
         }
         endEditing()
     }
     
     // method to change attr string paragraph style without removing other paragraph attribures
-    func setParagraphStyleParams(lineSpacing: CGFloat, paragraphSpacing: CGFloat) {
+    func setParagraphStyleParams(lineSpacing: CGFloat, paragraphSpacing: CGFloat? = nil) {
         beginEditing()
         self.enumerateAttribute(
             .paragraphStyle,
@@ -509,7 +512,9 @@ extension NSMutableAttributedString {
             if let parStyle = value as? NSMutableParagraphStyle {
                 let newParStyle = parStyle
                 newParStyle.lineSpacing = lineSpacing
-                newParStyle.paragraphSpacing = paragraphSpacing
+                if let parSpacing = paragraphSpacing {
+                    newParStyle.paragraphSpacing = parSpacing
+                }
                 removeAttribute(.paragraphStyle, range: range)
                 addAttribute(.paragraphStyle, value: newParStyle, range: range)
             }
