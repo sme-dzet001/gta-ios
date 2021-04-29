@@ -11,6 +11,7 @@ import PanModal
 class NewTicketViewController: UIViewController, PanModalPresentable {
         
     @IBOutlet weak var textView: CustomTextView!
+    @IBOutlet weak var emailTextField: CustomTextField!
     @IBOutlet weak var subjectTextField: CustomTextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
@@ -52,6 +53,7 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextField.text = appSupportEmail
         setUpTextView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
@@ -97,12 +99,12 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
     
     private func setUpTextViewLayout(isNeedCompact: Bool = false, keyboardHeight: CGFloat? = nil) {
         if isNeedCompact {
-            let compactFormCoefficient: CGFloat = 260
+            let compactFormCoefficient: CGFloat = 360
             let longFormScreenHeight = view.frame.height
             let keyboardOverlayHeight = keyboardHeight ?? 0
             textViewHeight.constant = longFormScreenHeight - keyboardOverlayHeight - compactFormCoefficient > 0 ? longFormScreenHeight - keyboardOverlayHeight - compactFormCoefficient : 0
         } else {
-            let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 260 : 280
+            let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 360 : 380
             textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
         }
         self.view.layoutIfNeeded()

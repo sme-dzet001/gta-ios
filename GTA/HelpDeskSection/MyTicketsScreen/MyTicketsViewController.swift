@@ -161,8 +161,10 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension MyTicketsViewController: CreateTicketDelegate {
     func createTicketDidPressed() {
+        guard let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") else { return }
         let newTicketVC = NewTicketViewController()
         newTicketVC.delegate = self
+        newTicketVC.appSupportEmail = lastUserEmail
         self.presentPanModal(newTicketVC)
     }
 }
