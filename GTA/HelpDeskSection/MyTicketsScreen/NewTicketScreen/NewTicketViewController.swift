@@ -53,7 +53,8 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        emailTextField.text = appSupportEmail
+        emailTextField.labelPlaceholderTitle.text = appSupportEmail
+        emailTextField.trimmedPlaceholder = true
         setUpTextView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
