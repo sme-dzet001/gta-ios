@@ -100,12 +100,12 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
     
     private func setUpTextViewLayout(isNeedCompact: Bool = false, keyboardHeight: CGFloat? = nil) {
         if isNeedCompact {
-            let compactFormCoefficient: CGFloat = 360
+            let compactFormCoefficient: CGFloat = 370
             let longFormScreenHeight = view.frame.height
             let keyboardOverlayHeight = keyboardHeight ?? 0
             textViewHeight.constant = longFormScreenHeight - keyboardOverlayHeight - compactFormCoefficient > 0 ? longFormScreenHeight - keyboardOverlayHeight - compactFormCoefficient : 0
         } else {
-            let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 360 : 380
+            let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 370 : 390
             textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
         }
         self.view.layoutIfNeeded()
