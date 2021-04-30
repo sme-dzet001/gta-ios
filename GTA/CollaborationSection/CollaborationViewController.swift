@@ -30,7 +30,6 @@ class CollaborationViewController: UIViewController {
         setUpTableView()
         setUpHardCodeData()
         setUpHeaderView()
-        dataProvider.appSuiteIconDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,10 +93,26 @@ class CollaborationViewController: UIViewController {
                     self?.errorLabel.isHidden = self?.dataProvider.collaborationDetails != nil
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
+                self?.getHeaderImage()
                 self?.setHeaderData()
                 self?.stopAnimation()
             }
         }
+    }
+    
+    private func getHeaderImage() {
+        let imageURL = dataProvider.formImageURL(from: dataProvider.collaborationDetails?.icon)
+        let url = URL(string: imageURL)
+        self.headerTitleView.headerImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+            switch result {
+            case .success(let resData):
+                self.headerTitleView.headerImageView.image = resData.image
+            case .failure(let error):
+                if !error.isNotCurrentTask {
+                    self.headerTitleView.headerImageView.image = nil
+                }
+            }
+        })
     }
     
     private func setHeaderData() {

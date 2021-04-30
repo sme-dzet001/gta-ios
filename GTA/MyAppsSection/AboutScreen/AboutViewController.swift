@@ -13,13 +13,13 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     
     private var dataSource: AboutDataSource?
     var appTitle: String?
-    var dataProvider: MyAppsDataProvider?
+    //var dataProvider: MyAppsDataProvider?
     var details: AppDetailsData?
     var detailsDataResponseError: Error?
     var imageDataResponseError: Error?
     var appImageUrl: String = ""
     var isCollaborationDetails: Bool = false
-    var collaborationDataProvider: CollaborationDataProvider?
+    //var collaborationDataProvider: CollaborationDataProvider?
     var collaborationDetails: CollaborationAppDetailsRow?
     private var appImageData: Data?
     private var errorLabel: UILabel = UILabel()
@@ -41,33 +41,13 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         }
         self.errorLabel.text = (detailsDataResponseError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
         configureDataSource()
-        if isCollaborationDetails {
-            getCollaborationAboutImageData()
-        } else {
-            getAppAboutImageData()
-        }
+//        if isCollaborationDetails {
+//            getCollaborationAboutImageData()
+//        } else {
+//            getAppAboutImageData()
+//        }
         navigationController?.navigationBar.barTintColor = UIColor.white
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-    
-    private func getAppAboutImageData() {
-        dataProvider?.getAppImageData(from: details?.appIcon ?? "", completion: {[weak self] (imageData, error) in
-            self?.setImageData(imageData, error: error)
-        })
-    }
-    
-    private func getCollaborationAboutImageData() {
-        collaborationDataProvider?.getAppImageData(from: appImageUrl, completion: {[weak self] (imageData, error) in
-            self?.setImageData(imageData, error: error)
-        })
-    }
-    
-    private func setImageData(_ data: Data?, error: Error?) {
-        self.imageDataResponseError = error
-        self.appImageData = data != nil && error == nil ? data : self.appImageData
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -105,9 +85,6 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         detailsDataResponseError = error
         details = detailsData
         configureDataSource()
-        if let _ = detailsData {
-            getAppAboutImageData()
-        }
         DispatchQueue.main.async {
             if let _ = self.details {
                 self.errorLabel.isHidden = true
@@ -158,11 +135,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            if let _ = appImageData {
-                return 1
-            } else {
-                return detailsDataResponseError == nil ? 1 : 0
-            }
+            return detailsDataResponseError != nil && details == nil ? 0 : 1
         case 1:
             return dataSource?.supportData?.count ?? 0
         default:
@@ -186,15 +159,19 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AboutHeaderCell", for: indexPath) as? AboutHeaderCell {
-            if imageDataResponseError == nil, appImageData == nil {
-                cell.startAnimation()
-            } else if let _ = appImageData, let image = UIImage(data: appImageData!) {
-                cell.iconImageView.image = image
-                cell.stopAnimation()
-            } else {
-                cell.showFirstCharFrom(appTitle)
-                cell.stopAnimation()
-            }
+            let urlString = details?.appFullPath ?? appImageUrl
+            let url = URL(string: urlString)
+            cell.iconImageView.kf.indicatorType = .activity
+            cell.iconImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    cell.iconImageView.image = resData.image
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
+                        cell.showFirstCharFrom(self.appTitle)
+                    }
+                }
+            })
             cell.headerTitleLabel.text = !isCollaborationDetails ? details?.appTitle : collaborationDetails?.fullTitle
             return cell
         }

@@ -26,9 +26,6 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ZE-SM-vhB">
                         <rect key="frame" x="20" y="18" width="58" height="58"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="FAI-U9-as9">
-                                <rect key="frame" x="19" y="19" width="20" height="20"/>
-                            </activityIndicatorView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty_app_icon" translatesAutoresizingMaskIntoConstraints="NO" id="FEH-Qe-7Ys">
                                 <rect key="frame" x="5" y="5" width="48" height="48"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -74,10 +71,8 @@
                             <constraint firstItem="hBH-g6-Kh7" firstAttribute="centerX" secondItem="FEH-Qe-7Ys" secondAttribute="trailing" id="Rmg-Ib-5tX"/>
                             <constraint firstItem="XHH-Yb-Cnv" firstAttribute="centerX" secondItem="0ZE-SM-vhB" secondAttribute="centerX" id="XAO-1m-AHa"/>
                             <constraint firstItem="XHH-Yb-Cnv" firstAttribute="centerY" secondItem="0ZE-SM-vhB" secondAttribute="centerY" id="Yl7-Nl-Nzn"/>
-                            <constraint firstItem="FAI-U9-as9" firstAttribute="centerX" secondItem="FEH-Qe-7Ys" secondAttribute="centerX" id="c6i-gr-kkf"/>
                             <constraint firstItem="FEH-Qe-7Ys" firstAttribute="centerY" secondItem="0ZE-SM-vhB" secondAttribute="centerY" id="gln-0d-dh5"/>
                             <constraint firstAttribute="width" constant="58" id="o7Q-am-r06"/>
-                            <constraint firstItem="FAI-U9-as9" firstAttribute="centerY" secondItem="FEH-Qe-7Ys" secondAttribute="centerY" id="zEj-lT-W1i"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AOMA" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="idg-Oi-FFL">
@@ -112,7 +107,6 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="activityIndicator" destination="FAI-U9-as9" id="kGu-bF-XNe"/>
                 <outlet property="appIcon" destination="FEH-Qe-7Ys" id="Vt0-Hn-tE8"/>
                 <outlet property="appName" destination="idg-Oi-FFL" id="aVI-D9-RMW"/>
                 <outlet property="appStatus" destination="mq4-R7-yG1" id="THe-k3-ZKq"/>

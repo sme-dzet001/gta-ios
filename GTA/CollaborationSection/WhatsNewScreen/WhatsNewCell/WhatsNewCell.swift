@@ -15,8 +15,7 @@ class WhatsNewCell: UITableViewCell {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
         
-    var imageUrl: String = ""
-    var relativePath: String?
+    var imageUrl: String?
     var body: String?
     
     override func awakeFromNib() {
@@ -26,6 +25,7 @@ class WhatsNewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         activityIndicator.stopAnimating()
+        self.mainImageView.stopAnimatingGif()
         self.mainImageView.clear()
         self.layoutIfNeeded()
     }
