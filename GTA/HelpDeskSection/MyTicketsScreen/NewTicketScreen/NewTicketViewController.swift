@@ -11,12 +11,13 @@ import PanModal
 class NewTicketViewController: UIViewController, PanModalPresentable {
         
     @IBOutlet weak var textView: CustomTextView!
+    @IBOutlet weak var emailTextField: CustomTextField!
     @IBOutlet weak var subjectTextField: CustomTextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     
     private var heightObserver: NSKeyValueObservation?
-    var appSupportEmail: String?
+    var appUserEmail: String?
     var panScrollable: UIScrollView?
     weak var delegate: SendEmailDelegate?
     var position: CGFloat {
@@ -52,6 +53,8 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextField.labelPlaceholderTitle.text = appUserEmail
+        emailTextField.trimmedPlaceholder = true
         setUpTextView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
@@ -97,12 +100,12 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
     
     private func setUpTextViewLayout(isNeedCompact: Bool = false, keyboardHeight: CGFloat? = nil) {
         if isNeedCompact {
-            let compactFormCoefficient: CGFloat = 260
+            let compactFormCoefficient: CGFloat = 370
             let longFormScreenHeight = view.frame.height
             let keyboardOverlayHeight = keyboardHeight ?? 0
             textViewHeight.constant = longFormScreenHeight - keyboardOverlayHeight - compactFormCoefficient > 0 ? longFormScreenHeight - keyboardOverlayHeight - compactFormCoefficient : 0
         } else {
-            let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 260 : 280
+            let coefficient: CGFloat = UIDevice.current.iPhone5_se ? 370 : 390
             textViewHeight.constant = position - coefficient > 0 ? position - coefficient : 0
         }
         self.view.layoutIfNeeded()
@@ -120,7 +123,7 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
             let issueType = self?.subjectTextField.text ?? ""
             let subject = "\(issueType)"
             let body = self?.textView.text ?? ""
-            let recipient = self?.appSupportEmail ?? ""
+            let recipient = Constants.ticketSupportEmail
             self?.delegate?.sendEmail(withTitle: subject, withText: body, to: recipient)
         })
     }
