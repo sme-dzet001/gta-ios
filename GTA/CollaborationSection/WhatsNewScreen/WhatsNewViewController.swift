@@ -92,7 +92,8 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WhatsNewCell", for: indexPath) as? WhatsNewCell
         let cellDataSource = dataProvider?.collaborationNewsData[indexPath.row]
         cell?.titleLabel.text = cellDataSource?.headline
-        cell?.subtitleLabel.text = cellDataSource?.subHeadline
+        cell?.setDate(cellDataSource?.postDate)
+        //cell?.subtitleLabel.text = cellDataSource?.subHeadline
         cell?.body = cellDataSource?.body
         let text = cellDataSource?.decodeBody
         if let neededFont = UIFont(name: "SFProText-Regular", size: 16) {

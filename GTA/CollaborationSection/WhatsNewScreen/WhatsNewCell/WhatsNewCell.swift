@@ -30,4 +30,12 @@ class WhatsNewCell: UITableViewCell {
         self.layoutIfNeeded()
     }
     
+    func setDate(_ date: String?) {
+        if let date = date {
+            subtitleLabel.text = date.getFormattedDateStringForMyTickets()
+        } else {
+            subtitleLabel.text = date
+        }
+    }
+    
 }
