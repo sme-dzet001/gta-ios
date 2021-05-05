@@ -16,7 +16,12 @@ class LoginUSMViewController: UIViewController {
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var dataProvider: LoginDataProvider = LoginDataProvider()
     
+    #if GTA
+    private let shortRequestTimeoutInterval: Double = 60
+    #else
     private let shortRequestTimeoutInterval: Double = 24
+    #endif
+    //private let shortRequestTimeoutInterval: Double = 24
     
     var emailAddress = ""
     var token: String = ""
