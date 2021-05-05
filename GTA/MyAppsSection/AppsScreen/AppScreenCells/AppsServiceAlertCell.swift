@@ -25,6 +25,9 @@ class AppsServiceAlertCell: UITableViewCell {
     func setUpCell(with data: AppInfo, isNeedCornerRadius: Bool = false, isDisabled: Bool = false, error: Error? = nil) {
         descriptionLabel.text = data.app_name
         mainLabel.text = data.app_title
+        if let _ = data.imageData {
+            iconImageView.image = UIImage(data: data.imageData!)
+        }
         if isNeedCornerRadius {
             self.parentView.layer.cornerRadius = 20
             self.parentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
