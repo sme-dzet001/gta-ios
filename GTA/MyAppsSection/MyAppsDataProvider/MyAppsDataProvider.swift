@@ -305,15 +305,8 @@ class MyAppsDataProvider {
         return formattedDateString
     }
     
-    private func formImageURL(from imagePath: String?) -> String {
-        guard let imagePath = imagePath else { return "" }
-        guard !imagePath.contains("https://") else  { return imagePath }
-        let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
-        return imageURL
-    }
-    
-    func formContactImageURL(from imagePath: String?) -> String? {
-        guard let imagePath = imagePath, !imagePath.isEmpty else { return nil }
+    func formImageURL(from imagePath: String?) -> String {
+        guard let imagePath = imagePath, !imagePath.isEmptyOrWhitespace() else { return "" }
         guard !imagePath.contains("https://") else  { return imagePath }
         let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
         return imageURL

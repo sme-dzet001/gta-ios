@@ -167,7 +167,9 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
                 cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
                 //cell.startAnimation()
+                
                 let url = URL(string: dataProvider.appsData[indexPath.section].cellData[indexPath.row].appImage ?? "")
+                if let urlString = url?.absoluteString, !urlString.isEmptyOrWhitespace() {
                 cell.appIcon.kf.indicatorType = .activity
                 cell.appIcon.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
                     //cell.stopAnimation()
@@ -180,6 +182,9 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                 })
+                } else {
+                    cell.showFirstChar()
+                }
                 cell.separator.isHidden = indexPath.row != dataProvider.appsData[indexPath.section].cellData.count - 1
             } else {
                 print("!!!error my apps cell no data!!!!")

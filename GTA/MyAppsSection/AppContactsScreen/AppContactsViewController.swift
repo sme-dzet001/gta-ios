@@ -162,7 +162,7 @@ extension AppContactsViewController: UITableViewDelegate, UITableViewDataSource 
             let cellDataSource = data[indexPath.row]
             cell.contactEmail = data[indexPath.row].contactEmail
             cell.setUpCell(with: cellDataSource)
-            let imageURL = isCollaborationContacts ? collaborationDataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl) : dataProvider?.formContactImageURL(from: cellDataSource.contactPhotoUrl)
+            let imageURL = isCollaborationContacts ? collaborationDataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl) : dataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl)
             let url = URL(string: imageURL ?? "")
             cell.photoImageView.kf.indicatorType = .activity
             cell.photoImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
