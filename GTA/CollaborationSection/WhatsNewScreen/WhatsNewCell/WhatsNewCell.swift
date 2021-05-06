@@ -17,9 +17,14 @@ class WhatsNewCell: UITableViewCell {
         
     var imageUrl: String?
     var body: String?
+    weak var delegate: MoreTappedDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.descriptionLabel.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showMoreDidTapped(gesture:)))
+        tap.cancelsTouchesInView = false
+        self.descriptionLabel.addGestureRecognizer(tap)
     }
     
     override func prepareForReuse() {
@@ -31,11 +36,16 @@ class WhatsNewCell: UITableViewCell {
     }
     
     func setDate(_ date: String?) {
+        self.descriptionLabel.numberOfLines = 3
         if let date = date {
             subtitleLabel.text = date.getFormattedDateStringForMyTickets()
         } else {
             subtitleLabel.text = date
         }
+    }
+    
+    @objc private func showMoreDidTapped(gesture: UITapGestureRecognizer) {
+        delegate?.moreButtonDidTapped(in: self)
     }
     
 }

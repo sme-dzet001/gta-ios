@@ -470,7 +470,7 @@ class CollaborationDataProvider {
 //    }
     
     func formImageURL(from imagePath: String?) -> String {
-        guard let imagePath = imagePath else { return "" }
+        guard let imagePath = imagePath, !imagePath.isEmptyOrWhitespace() else { return "" }
         guard !imagePath.contains("https://") else  { return imagePath }
         let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
         return imageURL

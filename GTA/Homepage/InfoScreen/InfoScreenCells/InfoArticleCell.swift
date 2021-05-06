@@ -44,6 +44,6 @@ class InfoArticleCell: UITableViewCell {
     
 }
 
-protocol OpenLinkDelegate: class {
+protocol OpenLinkDelegate: AnyObject {
     func openUrl(_ url: URL)
 }
