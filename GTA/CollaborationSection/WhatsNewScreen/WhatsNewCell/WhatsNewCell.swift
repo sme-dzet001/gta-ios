@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import SDWebImage
 
 class WhatsNewCell: UITableViewCell {
     
-    @IBOutlet weak var mainImageView: UIImageView!
+    @IBOutlet weak var mainImageView: SDAnimatedImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
@@ -18,7 +19,7 @@ class WhatsNewCell: UITableViewCell {
     var imageUrl: String?
     var body: String?
     var collapseText: NSAttributedString?
-    weak var delegate: MoreTappedDelegate?
+    weak var delegate: TappedLabelDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,9 +32,10 @@ class WhatsNewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         activityIndicator.stopAnimating()
-        self.mainImageView.stopAnimatingGif()
-        self.mainImageView.clear()
-        //descriptionLabel.numberOfLines = 3
+        self.mainImageView.stopAnimating()
+        self.mainImageView.image = nil
+        self.mainImageView.sd_cancelCurrentImageLoad()
+        //self.mainImageView.clear()
         self.layoutIfNeeded()
     }
     
@@ -46,7 +48,47 @@ class WhatsNewCell: UITableViewCell {
     }
     
     @objc private func showMoreDidTapped(gesture: UITapGestureRecognizer) {
+        guard let text = collapseText?.string else { return }
+        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
+        var isFindURL = false
+        for match in matches {
+            if gesture.didTapAttributedTextInLabel(label: descriptionLabel, inRange: match.range) {
+                guard let range = Range(match.range, in: text), let url = getUrl(for: range, match: match) else { continue }
+                isFindURL = true
+                delegate?.openUrl(url)
+                return
+            }
+        }
+        if !isFindURL {
+            collapseText?.enumerateAttribute(.link, in: NSRange(location: 0, length: text.utf16.count), options: [], using: { (object, range, _) in
+                if gesture.didTapAttributedTextInLabel(label: descriptionLabel, inRange: range), let url = object as? URL {
+                    delegate?.openUrl(url)
+                    return
+                }
+            })
+        }
         delegate?.moreButtonDidTapped(in: self)
+    }
+    
+    private func getUrl(for range: Range<String.Index>, match: NSTextCheckingResult) -> URL? {
+        guard let text = (collapseText?.string) else { return nil }
+        if isMatchEmail(match: match), let url = URL(string: "mailto:\(text[range])") {
+            return url
+        }
+        if let url = URL(string: "\(text[range])") {
+            return url
+        }
+        return nil
+    }
+    
+    private func isMatchEmail(match: NSTextCheckingResult) -> Bool {
+        guard let text = descriptionLabel.attributedText?.string else { return false }
+        guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return false }
+        if let _ = mailRegex.firstMatch(in: text, options: .anchored, range: match.range) {
+            return true
+        }
+        return false
     }
     
     func setCollapseText() {

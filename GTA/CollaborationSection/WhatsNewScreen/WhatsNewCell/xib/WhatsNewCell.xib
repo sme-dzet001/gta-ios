@@ -28,7 +28,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="370" height="607"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lvX-Js-ZkB">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lvX-Js-ZkB" customClass="SDAnimatedImageView">
                         <rect key="frame" x="24" y="24" width="322" height="264"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="264" id="tvP-Wn-bBB"/>

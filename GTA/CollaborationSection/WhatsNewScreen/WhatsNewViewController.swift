@@ -6,7 +6,8 @@
 //
 
 import UIKit
-import SwiftyGif
+//import SwiftyGif
+import SDWebImage
 
 class WhatsNewViewController: UIViewController {
     
@@ -98,41 +99,51 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         let text = getDescriptionText(for: indexPath)
         cell?.descriptionLabel.attributedText = text
         cell?.delegate = self
-        //cell?.descriptionLabel.numberOfLines = 3
-//        if expandedRowsIndex.contains(indexPath.row) {
-//            cell?.descriptionLabel.numberOfLines = 3
-//            cell?.descriptionLabel.addReadMoreString("more")
-//        } else {
-//            cell?.descriptionLabel.numberOfLines = 0
-//        }
-        //cell?.descriptionLabel.addReadMoreString("more")
-        
         cell?.collapseText = text
         cell?.setCollapseText()
         cell?.imageUrl = cellDataSource?.imageUrl
         let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl) ?? ""
         let url = URL(string: imageURL)
         if imageURL.isEmptyOrWhitespace() {
-            cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
-//        } else if let url = url, imageURL.contains(".gif") {
-//            cell?.mainImageView.setGifFromURL(url)
-//            cell?.mainImageView.setGifImage(<#T##gifImage: UIImage##UIImage#>)
+            //cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
+            cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+        } else if let url = url, imageURL.contains(".gif") {
+            cell?.activityIndicator.startAnimating()
+            cell?.mainImageView.sd_setImage(with: url, placeholderImage: nil, options: .refreshCached, completed: { img, err, cacheType, _ in
+                if let _ = err, (err! as NSError).code != 2002 {
+                    cell?.activityIndicator.stopAnimating()
+                    cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+                } else if let _ = img {
+                    cell?.activityIndicator.stopAnimating()
+                }
+                cell?.mainImageView.autoPlayAnimatedImage = false
+            })
         } else {
             cell?.mainImageView.kf.indicatorType = .activity
             cell?.mainImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
                 switch result {
                 case .success(let resData):
                     if !imageURL.contains(".gif") {
-                        cell?.mainImageView.setImage(resData.image)
-                    } else {
-                        resData.image.pngData()
-                        let img = resData.image
-                        cell?.mainImageView.setGifImage(img)
-                        cell?.mainImageView.stopAnimatingGif()
+                       // cell?.mainImageView.setImage(resData.image)
+                        cell?.mainImageView.image = resData.image
                     }
+                    /*
+                    else {
+                        let img = resData.image
+                        SDAnimatedImage(data: resData.image.pngData()!)
+                        let animatedImage = SDAnimatedImage(data: resData.image.pngData()!)//SDAnimatedImage(cgImage: img.cgImage!)
+                        cell?.mainImageView.autoPlayAnimatedImage = false
+                        //let sdsd = SDAnimatedImagePlayer(provider: animatedImage)
+                        //sdsd?.pausePlaying()
+                        cell?.mainImageView.image = animatedImage//.setGifImage(img)
+                        
+                        //cell?.mainImageView.player player = SDAnimatedImagePlayer(provider: animatedImage)
+                        cell?.mainImageView.stopAnimating()
+                    }
+                */
                 case .failure(let error):
                     if !error.isNotCurrentTask {
-                        cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
+                        cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
                     }
                 }
             })
@@ -142,22 +153,16 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         self.expandedRowsIndex.removeAll { $0 == indexPath.row }
-        guard let cell = cell as? WhatsNewCell else {
-            return
-        }
-        //cell.descriptionLabel.numberOfLines = 3
+        guard let cell = cell as? WhatsNewCell else { return }
+        cell.mainImageView.autoPlayAnimatedImage = false
         cell.setCollapseText()
-//        cell.descriptionLabel.addReadMoreString("more")
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         self.expandedRowsIndex.removeAll { $0 == indexPath.row }
-        guard let cell = cell as? WhatsNewCell else {
-            return
-        }
+        guard let cell = cell as? WhatsNewCell else { return }
         cell.setCollapseText()
-//        cell.descriptionLabel.numberOfLines = 3
-//        cell.descriptionLabel.addReadMoreString("more")
+        cell.mainImageView.autoPlayAnimatedImage = false
     }
         
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -171,19 +176,19 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let _ = cellForAnimation, tableView.visibleCells.contains(cellForAnimation!) else { return }
-        cellForAnimation?.mainImageView.startAnimatingGif()
+        cellForAnimation?.mainImageView.startAnimating()
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard let _ = cellForAnimation, tableView.visibleCells.contains(cellForAnimation!) else { return }
-        cellForAnimation?.mainImageView.startAnimatingGif()
+        cellForAnimation?.mainImageView.startAnimating()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let cells = tableView.visibleCells as? [WhatsNewCell] else { return }
         if scrollView.contentOffset.y <= 0 {
-            cells.forEach({$0.mainImageView.stopAnimatingGif()})
-            cells.first?.mainImageView.startAnimatingGif()
+            cells.forEach({$0.mainImageView.stopAnimating()})
+            cells.first?.mainImageView.startAnimating()
             if let article = dataProvider?.collaborationNewsData.first?.body {
                 dataProvider?.addArticle(article)
             }
@@ -204,7 +209,7 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
-        cells.forEach({$0.mainImageView.stopAnimatingGif()})
+        cells.forEach({$0.mainImageView.stopAnimating()})
     }
 
     private func getDescriptionText(for indexPath: IndexPath) -> NSMutableAttributedString? {
@@ -223,7 +228,7 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension WhatsNewViewController : MoreTappedDelegate {
+extension WhatsNewViewController : TappedLabelDelegate {
     func moreButtonDidTapped(in cell: WhatsNewCell) {
         guard let cellIndex = tableView.indexPath(for: cell) else { return }
         guard (dataProvider?.collaborationNewsData.count ?? 0) > cellIndex.row else { return }
@@ -237,9 +242,19 @@ extension WhatsNewViewController : MoreTappedDelegate {
         }
         UIView.setAnimationsEnabled(true)
     }
+    
+    func openUrl(_ url: URL) {
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            displayError(errorMessage: "Something went wrong", title: nil)
+        }
+    }
+    
 }
 
 
-protocol MoreTappedDelegate: AnyObject {
+protocol TappedLabelDelegate: AnyObject {
     func moreButtonDidTapped(in cell: WhatsNewCell)
+    func openUrl(_ url: URL)
 }
