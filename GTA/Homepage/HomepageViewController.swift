@@ -129,7 +129,8 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
             //cell.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
             cell.titleLabel.attributedText = addShadow(for: cellDataSource.newsTitle)
             cell.byLabel.attributedText = addShadow(for: cellDataSource.newsAuthor)
-            cell.dateLabel.attributedText = addShadow(for: dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss"))
+            cell.dateLabel.attributedText = addShadow(for: newsDate?.getFormattedDateStringForMyTickets())
+            //cell.dateLabel.attributedText = addShadow(for: dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss"))
             cell.configurePosition()
             return cell
         } else {

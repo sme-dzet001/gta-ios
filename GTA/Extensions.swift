@@ -373,8 +373,20 @@ extension String {
         return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//"yyyy-MM-dd'T'HH:mm:ss.SSS Z"
     }
     
+    static var dateFormatWithoutTimeZone: String {
+        return "yyyy-MM-dd'T'HH:mm:ss"
+    }
+    
+    static var newsDateFormat: String {
+        return "yyyy-MM-dd"
+    }
+    
     static func getTicketDateFormat(for date: Date) -> String {
         return "E MMM d'\(date.daySuffix())', yyyy h:mm a"
+    }
+    
+    static func getTicketDateFormatWithoutTimeZone(for date: Date) -> String {
+        return "E MMM d'\(date.daySuffix())', yyyy"
     }
     
     static var ticketsSectionDateFormat: String {
@@ -420,9 +432,21 @@ extension String {
     func getFormattedDateStringForMyTickets() -> String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.ticketDateFormat
-        guard let date = dateFormatterPrint.date(from: self) else { return self }
-        dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
-        return dateFormatterPrint.string(from: date)
+        if let date = dateFormatterPrint.date(from: self) {
+            dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
+            return dateFormatterPrint.string(from: date)
+        }
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        if let date = dateFormatterPrint.date(from: self) {
+            dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
+            return dateFormatterPrint.string(from: date)
+        } else {
+            dateFormatterPrint.dateFormat = String.newsDateFormat
+            guard let date = dateFormatterPrint.date(from: self) else { return self }
+            dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
+            return dateFormatterPrint.string(from: date)
+        }
+        return self
     }
     
 }
