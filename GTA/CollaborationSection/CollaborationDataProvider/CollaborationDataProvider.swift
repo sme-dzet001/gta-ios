@@ -529,9 +529,14 @@ class CollaborationDataProvider {
     }
     
     func formAnswerBody(from base64EncodedText: String?, isTipsAndTricks: Bool = false) -> NSMutableAttributedString? {
-        guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
+        guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8) else { return nil }
         
+        var htmlAttrString = NSAttributedString(string: htmlBodyString)
+        if htmlBodyString.isHtmlString, let attrString = htmlBodyString.htmlToAttributedString {
+            htmlAttrString = attrString
+        }
         let res = NSMutableAttributedString(attributedString: htmlAttrString)
+        res.trimCharactersInSet(.whitespacesAndNewlines)
         
         guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return res }
         
@@ -558,6 +563,6 @@ class CollaborationDataProvider {
     
 }
 
-protocol AppSuiteIconDelegate: class {
+protocol AppSuiteIconDelegate: AnyObject {
     func appSuiteIconChanged(with data: Data?, status: LoadingStatus)
 }

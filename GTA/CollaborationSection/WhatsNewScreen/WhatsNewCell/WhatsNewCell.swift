@@ -17,6 +17,7 @@ class WhatsNewCell: UITableViewCell {
         
     var imageUrl: String?
     var body: String?
+    var collapseText: NSAttributedString?
     weak var delegate: MoreTappedDelegate?
     
     override func awakeFromNib() {
@@ -32,11 +33,11 @@ class WhatsNewCell: UITableViewCell {
         activityIndicator.stopAnimating()
         self.mainImageView.stopAnimatingGif()
         self.mainImageView.clear()
+        //descriptionLabel.numberOfLines = 3
         self.layoutIfNeeded()
     }
     
     func setDate(_ date: String?) {
-        self.descriptionLabel.numberOfLines = 3
         if let date = date {
             subtitleLabel.text = date.getFormattedDateStringForMyTickets()
         } else {
@@ -46,6 +47,16 @@ class WhatsNewCell: UITableViewCell {
     
     @objc private func showMoreDidTapped(gesture: UITapGestureRecognizer) {
         delegate?.moreButtonDidTapped(in: self)
+    }
+    
+    func setCollapseText() {
+        descriptionLabel.numberOfLines = 3
+        descriptionLabel.sizeToFit()
+        self.layoutIfNeeded()
+        descriptionLabel.attributedText = collapseText
+        descriptionLabel.addReadMoreString("more")
+        
+       
     }
     
 }

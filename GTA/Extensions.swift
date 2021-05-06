@@ -50,6 +50,9 @@ extension UILabel {
     }
     
     func addReadMoreString(_ readMoreText: String) {
+        if numberOfLines != 3 {
+            numberOfLines = 3
+        }
         self.font = UIFont(name: "SFProText-Regular", size: 16) ?? self.font
         guard let text = self.text, !text.isEmptyOrWhitespace() else { return }
         let readMoreAttributed = NSMutableAttributedString(string: readMoreText, attributes: [NSAttributedString.Key.font : font as Any, NSAttributedString.Key.foregroundColor: UIColor.gray])
@@ -95,7 +98,7 @@ extension UILabel {
         let attributedText = self.attributedText!// NSAttributedString(string: self.text!, attributes: attributes as? [NSAttributedString.Key : Any])
         let boundingRect: CGRect = attributedText.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
 
-        if boundingRect.size.height > labelHeight {
+        //if boundingRect.size.height > labelHeight {
             var index: Int = 0
             var prev: Int = 0
             let characterSet = CharacterSet.whitespacesAndNewlines
@@ -107,9 +110,9 @@ extension UILabel {
                     index = (self.attributedText!.string as NSString).rangeOfCharacter(from: characterSet, options: [], range: NSRange(location: index + 1, length: self.attributedText!.string.count - index - 1)).location
                 }
             } while index != NSNotFound && index < self.attributedText!.string.count && (self.attributedText!.string as NSString).substring(to: index).boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, attributes: attributes as? [NSAttributedString.Key : Any], context: nil).size.height <= labelHeight
-            return prev + Int(Double(index - prev) / 1.5)
-        }
-        return self.attributedText!.string.count
+            return prev + Int(Double(index - prev) / 1.9)
+        //}
+        //return self.attributedText!.string.count
     }
     
 }
@@ -411,6 +414,11 @@ extension String {
         }
     }
     
+    var isHtmlString: Bool {
+        guard !self.isEmptyOrWhitespace() else { return false }
+        return (self.range(of: "<(\"[^\"]*\"|'[^']*'|[^'\">])*>", options: .regularExpression) != nil)
+    }
+    
     var htmlToString: String {
         return htmlToAttributedString?.string ?? ""
     }
@@ -537,6 +545,20 @@ extension NSMutableAttributedString {
         }
         endEditing()
     }
+    
+    func trimCharactersInSet(_ charSet: CharacterSet) {
+        var range = (string as NSString).rangeOfCharacter(from: charSet as CharacterSet)
+        while range.length != 0 && range.location == 0 {
+            replaceCharacters(in: range, with: "")
+            range = (string as NSString).rangeOfCharacter(from: charSet)
+        }
+        range = (string as NSString).rangeOfCharacter(from: charSet, options: .backwards)
+        while range.length != 0 && NSMaxRange(range) == length {
+            replaceCharacters(in: range, with: "")
+            range = (string as NSString).rangeOfCharacter(from: charSet, options: .backwards)
+        }
+    }
+    
 }
 
 extension UINavigationController {

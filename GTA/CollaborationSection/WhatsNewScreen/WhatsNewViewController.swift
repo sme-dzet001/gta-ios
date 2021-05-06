@@ -16,6 +16,7 @@ class WhatsNewViewController: UIViewController {
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
     private var cellForAnimation: WhatsNewCell?
+    private var expandedRowsIndex = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,14 +99,24 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.descriptionLabel.attributedText = text
         cell?.delegate = self
         //cell?.descriptionLabel.numberOfLines = 3
-        cell?.descriptionLabel.addReadMoreString("more")
+//        if expandedRowsIndex.contains(indexPath.row) {
+//            cell?.descriptionLabel.numberOfLines = 3
+//            cell?.descriptionLabel.addReadMoreString("more")
+//        } else {
+//            cell?.descriptionLabel.numberOfLines = 0
+//        }
+        //cell?.descriptionLabel.addReadMoreString("more")
+        
+        cell?.collapseText = text
+        cell?.setCollapseText()
         cell?.imageUrl = cellDataSource?.imageUrl
         let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl) ?? ""
         let url = URL(string: imageURL)
         if imageURL.isEmptyOrWhitespace() {
             cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
-        } else if let url = url, imageURL.contains(".gif") {
-            cell?.mainImageView.setGifFromURL(url)
+//        } else if let url = url, imageURL.contains(".gif") {
+//            cell?.mainImageView.setGifFromURL(url)
+//            cell?.mainImageView.setGifImage(<#T##gifImage: UIImage##UIImage#>)
         } else {
             cell?.mainImageView.kf.indicatorType = .activity
             cell?.mainImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
@@ -114,7 +125,9 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
                     if !imageURL.contains(".gif") {
                         cell?.mainImageView.setImage(resData.image)
                     } else {
-                        cell?.mainImageView.setGifImage(resData.image)
+                        resData.image.pngData()
+                        let img = resData.image
+                        cell?.mainImageView.setGifImage(img)
                         cell?.mainImageView.stopAnimatingGif()
                     }
                 case .failure(let error):
@@ -125,6 +138,26 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
             })
         }
         return cell ?? UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        self.expandedRowsIndex.removeAll { $0 == indexPath.row }
+        guard let cell = cell as? WhatsNewCell else {
+            return
+        }
+        //cell.descriptionLabel.numberOfLines = 3
+        cell.setCollapseText()
+//        cell.descriptionLabel.addReadMoreString("more")
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        self.expandedRowsIndex.removeAll { $0 == indexPath.row }
+        guard let cell = cell as? WhatsNewCell else {
+            return
+        }
+        cell.setCollapseText()
+//        cell.descriptionLabel.numberOfLines = 3
+//        cell.descriptionLabel.addReadMoreString("more")
     }
         
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -194,36 +227,15 @@ extension WhatsNewViewController : MoreTappedDelegate {
     func moreButtonDidTapped(in cell: WhatsNewCell) {
         guard let cellIndex = tableView.indexPath(for: cell) else { return }
         guard (dataProvider?.collaborationNewsData.count ?? 0) > cellIndex.row else { return }
-        /*
-        if expandedRowsIndex.contains(cellIndex.row) {
-            // hideAnimation
-            UIView.animate(withDuration: 0.7, animations: { [weak self] in
-                guard let self = self else { return }
-                CATransaction.begin()
-                self.tableView.beginUpdates()
-                self.expandedRowsIndex.removeAll { $0 == cellIndex.row }
-                cell.descriptionLabel.numberOfLines = 3
-                cell.descriptionLabel.addReadMoreString("more")
-            }) { (_) in
-                self.tableView.endUpdates()
-                CATransaction.commit()
-            }
-        } else {
- */
-            // showAnimation
-            
-            UIView.animate(withDuration: 0.4, animations: { [weak self] in
-                guard let self = self else { return }
-                CATransaction.begin()
-                self.tableView.beginUpdates()
-                //self.expandedRowsIndex.append(cellIndex.row)
-                cell.descriptionLabel.numberOfLines = 0
-                cell.descriptionLabel.attributedText = self.getDescriptionText(for: cellIndex)
-            }) { (_) in
-                self.tableView.endUpdates()
-                CATransaction.commit()
-            }
-        //}
+        UIView.setAnimationsEnabled(false)
+        self.tableView.beginUpdates()
+        cell.descriptionLabel.attributedText = self.getDescriptionText(for: cellIndex)
+        cell.descriptionLabel.numberOfLines = 0
+        self.tableView.endUpdates()
+        if !expandedRowsIndex.contains(cellIndex.row) {
+            expandedRowsIndex.append(cellIndex.row)
+        }
+        UIView.setAnimationsEnabled(true)
     }
 }
 
