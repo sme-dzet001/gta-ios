@@ -65,9 +65,9 @@ class WhatsNewMoreViewController: UIViewController {
             switch result {
             case .success(let resData):
                 if !(self.dataSource?.imageUrl ?? "").contains(".gif") {
-                    self.headerImageView.setImage(resData.image)
+                    self.headerImageView.image = resData.image
                 } else {
-                    self.headerImageView.setGifImage(resData.image)
+                    //self.headerImageView.setGifImage(resData.image)
                 }
             case .failure(let error):
                 if !error.isNotCurrentTask {
