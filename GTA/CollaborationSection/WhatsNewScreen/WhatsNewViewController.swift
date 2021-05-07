@@ -97,15 +97,19 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         //cell?.subtitleLabel.text = cellDataSource?.subHeadline
         cell?.body = cellDataSource?.body
         let text = getDescriptionText(for: indexPath)
-        cell?.descriptionLabel.attributedText = text
         cell?.delegate = self
         cell?.collapseText = text
-        cell?.setCollapseText()
+        if !expandedRowsIndex.contains(indexPath.row) {
+            cell?.setCollapseText()
+        } else {
+            cell?.descriptionLabel.attributedText = text
+            cell?.descriptionLabel.numberOfLines = 0
+            cell?.descriptionLabel.sizeToFit()
+        }
         cell?.imageUrl = cellDataSource?.imageUrl
         let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl) ?? ""
         let url = URL(string: imageURL)
         if imageURL.isEmptyOrWhitespace() {
-            //cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
             cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
         } else if let url = url, imageURL.contains(".gif") {
             cell?.activityIndicator.startAnimating()
@@ -127,20 +131,6 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
                        // cell?.mainImageView.setImage(resData.image)
                         cell?.mainImageView.image = resData.image
                     }
-                    /*
-                    else {
-                        let img = resData.image
-                        SDAnimatedImage(data: resData.image.pngData()!)
-                        let animatedImage = SDAnimatedImage(data: resData.image.pngData()!)//SDAnimatedImage(cgImage: img.cgImage!)
-                        cell?.mainImageView.autoPlayAnimatedImage = false
-                        //let sdsd = SDAnimatedImagePlayer(provider: animatedImage)
-                        //sdsd?.pausePlaying()
-                        cell?.mainImageView.image = animatedImage//.setGifImage(img)
-                        
-                        //cell?.mainImageView.player player = SDAnimatedImagePlayer(provider: animatedImage)
-                        cell?.mainImageView.stopAnimating()
-                    }
-                */
                 case .failure(let error):
                     if !error.isNotCurrentTask {
                         cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
@@ -149,20 +139,6 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
             })
         }
         return cell ?? UITableViewCell()
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        self.expandedRowsIndex.removeAll { $0 == indexPath.row }
-        guard let cell = cell as? WhatsNewCell else { return }
-        cell.mainImageView.autoPlayAnimatedImage = false
-        cell.setCollapseText()
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        self.expandedRowsIndex.removeAll { $0 == indexPath.row }
-        guard let cell = cell as? WhatsNewCell else { return }
-        cell.setCollapseText()
-        cell.mainImageView.autoPlayAnimatedImage = false
     }
         
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -175,11 +151,14 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let _ = cellForAnimation, tableView.visibleCells.contains(cellForAnimation!) else { return }
-        cellForAnimation?.mainImageView.startAnimating()
+        startAnimationAfterScroll()
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        startAnimationAfterScroll()
+    }
+    
+    private func startAnimationAfterScroll() {
         guard let _ = cellForAnimation, tableView.visibleCells.contains(cellForAnimation!) else { return }
         cellForAnimation?.mainImageView.startAnimating()
     }

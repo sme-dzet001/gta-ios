@@ -97,8 +97,6 @@ class WhatsNewCell: UITableViewCell {
         self.layoutIfNeeded()
         descriptionLabel.attributedText = collapseText
         descriptionLabel.addReadMoreString("more")
-        
-       
     }
     
 }
