@@ -49,6 +49,7 @@ class HomepageTableViewController: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "OfficeStatusCell", bundle: nil), forCellReuseIdentifier: "OfficeStatusCell")
+        tableView.register(UINib(nibName: "GTTeamCell", bundle: nil), forCellReuseIdentifier: "GTTeamCell")
     }
     
     private func loadSpecialAlertsData() {
@@ -71,7 +72,7 @@ class HomepageTableViewController: UITableViewController {
             tableView.reloadData()
         } else {
             UIView.performWithoutAnimation {
-                tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
             }
         }
         dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error, isFromCache) in
@@ -92,7 +93,7 @@ class HomepageTableViewController: UITableViewController {
                                 self?.tableView.reloadData()
                             } else {
                                 UIView.performWithoutAnimation {
-                                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                                    self?.tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
                                 }
                             }
                             if forceOpenOfficeSelectionScreen {
@@ -104,7 +105,7 @@ class HomepageTableViewController: UITableViewController {
                                 self?.tableView.reloadData()
                             } else {
                                 UIView.performWithoutAnimation {
-                                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                                    self?.tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
                                 }
                             }
                         }
@@ -117,7 +118,7 @@ class HomepageTableViewController: UITableViewController {
                         self?.tableView.reloadData()
                     } else {
                         UIView.performWithoutAnimation {
-                            self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                            self?.tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
                         }
                     }
                 }
@@ -154,15 +155,15 @@ class HomepageTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return dataProvider?.alertsData.count ?? 0
-        } else if section == 1 {
-            return 1
+//        } else if section == 1 {
+//            return 1
         } else {
-            return dataSource.count
+            return 1//dataSource.count
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
+        if indexPath.section <= 1 {
             return 80
         }
         return UITableView.automaticDimension
@@ -184,6 +185,9 @@ class HomepageTableViewController: UITableViewController {
             }
             return cell ?? UITableViewCell()
         } else if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "GTTeamCell", for: indexPath) as? GTTeamCell
+            return cell ?? UITableViewCell()
+        } else if indexPath.section == 2 {
             let data = dataProvider?.userOffice
             if let officeData = data {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
@@ -233,23 +237,39 @@ class HomepageTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            guard let alertsData = dataProvider?.alertsData, indexPath.row < alertsData.count else { return }
-            let data = alertsData[indexPath.row]
-            let infoViewController = InfoViewController()
-            infoViewController.dataProvider = dataProvider
-            infoViewController.specialAlertData = data
-            infoViewController.infoType = .info
-            infoViewController.title = data.alertHeadline
-            self.navigationController?.pushViewController(infoViewController, animated: true)
+            openAlertScreen(for: indexPath)
         } else if indexPath.section == 1 {
-            guard let dataProvider = dataProvider, let selectedOffice = dataProvider.userOffice else { return }
-            let infoViewController = InfoViewController()
-            infoViewController.dataProvider = dataProvider
-            infoViewController.selectedOfficeData = selectedOffice
-            infoViewController.infoType = .office
-            infoViewController.title = selectedOffice.officeName
-            self.navigationController?.pushViewController(infoViewController, animated: true)
+            openGTTeamScreen()
+        } else if indexPath.section == 2 {
+            openOfficeScreen(for: indexPath)
         }
+    }
+    
+    private func openAlertScreen(for indexPath: IndexPath) {
+        guard let alertsData = dataProvider?.alertsData, indexPath.row < alertsData.count else { return }
+        let data = alertsData[indexPath.row]
+        let infoViewController = InfoViewController()
+        infoViewController.dataProvider = dataProvider
+        infoViewController.specialAlertData = data
+        infoViewController.infoType = .info
+        infoViewController.title = data.alertHeadline
+        self.navigationController?.pushViewController(infoViewController, animated: true)
+    }
+    
+    private func openOfficeScreen(for indexPath: IndexPath) {
+        guard let dataProvider = dataProvider, let selectedOffice = dataProvider.userOffice else { return }
+        let infoViewController = InfoViewController()
+        infoViewController.dataProvider = dataProvider
+        infoViewController.selectedOfficeData = selectedOffice
+        infoViewController.infoType = .office
+        infoViewController.title = selectedOffice.officeName
+        self.navigationController?.pushViewController(infoViewController, animated: true)
+    }
+    
+    private func openGTTeamScreen() {
+        let contactsViewController = GTTeamViewController()
+        contactsViewController.dataProvider = dataProvider
+        self.navigationController?.pushViewController(contactsViewController, animated: true)
     }
 
 }
