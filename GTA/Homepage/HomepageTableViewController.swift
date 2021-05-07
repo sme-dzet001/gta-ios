@@ -176,7 +176,7 @@ class HomepageTableViewController: UITableViewController {
             cell?.iconImageView.image = UIImage(named: "info_icon")
             cell?.mainLabel.text = data[indexPath.row].alertTitle
             cell?.mainLabel.textColor = .black
-            if let date = dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
+            if let date = data[indexPath.row].alertDate?.getFormattedDateStringForMyTickets() {//dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
                 cell?.descriptionLabel.text = date
             } else {
                 cell?.descriptionLabel.text = nil

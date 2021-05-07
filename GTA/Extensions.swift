@@ -373,6 +373,10 @@ extension String {
         return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//"yyyy-MM-dd'T'HH:mm:ss.SSS Z"
     }
     
+    static var statusDateFormat: String {
+        return "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    }
+    
     static var dateFormatWithoutTimeZone: String {
         return "yyyy-MM-dd'T'HH:mm:ss"
     }
@@ -436,6 +440,11 @@ extension String {
             dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
             return dateFormatterPrint.string(from: date)
         }
+        dateFormatterPrint.dateFormat = String.statusDateFormat
+        if let date = dateFormatterPrint.date(from: self) {
+            dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
+            return dateFormatterPrint.string(from: date)
+        }
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
         if let date = dateFormatterPrint.date(from: self) {
             dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
@@ -446,7 +455,7 @@ extension String {
             dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
             return dateFormatterPrint.string(from: date)
         }
-        return self
+       // return self
     }
     
 }
