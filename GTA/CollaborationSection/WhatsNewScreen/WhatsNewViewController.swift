@@ -104,30 +104,28 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         text?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, text?.length ?? 0))
         cell?.descriptionLabel.attributedText = text//cellDataSource?.decodeBody
         cell?.descriptionLabel.addReadMoreString("more")
-        cell?.relativePath = cellDataSource?.imageUrl
-        if let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl), let _ = URL(string: imageURL) {
-            cell?.activityIndicator.startAnimating()
-            cell?.imageUrl = imageURL
-            dataProvider?.getAppImageData(from: cellDataSource?.imageUrl) { (data, error) in
-                if cell?.imageUrl != imageURL { return }
-                cell?.activityIndicator.stopAnimating()
-                if let imageData = data, error == nil {
-                    let image = UIImage(data: imageData)
-                    if !imageURL.contains(".gif"), let _ = image {
-                        cell?.mainImageView.setImage(image!)
-                    } else {
-                        if let gif = try? UIImage(gifData: imageData) {
-                            cell?.mainImageView.setGifImage(gif)
-                        } else {
-                            cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
-                        }
-                    }
-                } else {
-                    cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
-                }
-            }
+        cell?.imageUrl = cellDataSource?.imageUrl
+        let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl) ?? ""
+        let url = URL(string: imageURL)
+        if let url = url {
+            cell?.mainImageView.setGifFromURL(url)
         } else {
-            cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
+            cell?.mainImageView.kf.indicatorType = .activity
+            cell?.mainImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    if !imageURL.contains(".gif") {
+                        cell?.mainImageView.setImage(resData.image)
+                    } else {
+                        cell?.mainImageView.setGifImage(resData.image)
+                        cell?.mainImageView.stopAnimatingGif()
+                    }
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
+                        cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
+                    }
+                }
+            })
         }
         return cell ?? UITableViewCell()
     }
@@ -163,7 +161,7 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         }
         var distanceToCenter: CGFloat = 0
         for cell in cells {
-            let row = dataProvider?.collaborationNewsData.firstIndex(where: {((cell.relativePath ?? cell.body ?? "").contains($0.imageUrl ?? $0.body ?? ""))})
+            let row = dataProvider?.collaborationNewsData.firstIndex(where: {((cell.imageUrl ?? cell.body ?? "").contains($0.imageUrl ?? $0.body ?? ""))})
             guard let _ = row else { continue }
             let indexPath = IndexPath(row: row!, section: 0)
             let rect = self.tableView.rectForRow(at: indexPath)

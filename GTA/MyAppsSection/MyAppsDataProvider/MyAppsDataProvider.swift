@@ -13,9 +13,8 @@ class MyAppsDataProvider {
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
     private var imageCacheManager: ImageCacheManager = ImageCacheManager()
-    weak var appImageDelegate: AppImageDelegate?
     var appsData: [AppsDataSource] = []
-    private var appImageData: [String : Data?] = [:]
+    //private var appImageData: [String : Data?] = [:]
     var allAppsData: AllAppsResponse? {
         didSet {
             appsData = self.crateGeneralResponse() ?? []
@@ -34,60 +33,46 @@ class MyAppsDataProvider {
         
     // MARK: - Calling methods
     
-    func getImageData(for appInfo: [AppInfo]) {
-        for info in appInfo {
-            if let url = info.appImageData.app_icon {
-                getAppImageData(from: url) { (imageData, error) in
-                    if info.appImageData.imageData == nil || (imageData != nil && imageData != info.appImageData.imageData) {
-                        self.appImageDelegate?.setImage(with: imageData, for: info.app_name, error: error)
-                    }
-                }
-            } else {
-                self.appImageDelegate?.setImage(with: nil, for: info.app_name, error: ResponseError.noDataAvailable)
-            }
-        }
-    }
+//    func getAppImageData(from urlString: String, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+//        if let url = URL(string: formImageURL(from: urlString)) {
+//            getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
+//                if cachedError == nil {
+//                    self?.appImageData[urlString] = cachedData
+//                    completion(cachedData, nil)
+//                }
+//                self?.apiManager.loadImageData(from: url) { (data, response, error) in
+//                    if let isContains = self?.appImageData.keys.contains(urlString), isContains, error == nil {
+//                        self?.appImageData[urlString] = data
+//                    }
+//                    self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
+//                    DispatchQueue.main.async {
+//                        if cachedData == nil ? true : cachedData != data {
+//                            if cachedError == nil && error != nil { return }
+//                            completion(data, error)
+//                        }
+//                    }
+//                }
+//                
+//            })
+//        } else {
+//            completion(nil, ResponseError.noDataAvailable)
+//        }
+//    }
     
-    func getAppImageData(from urlString: String, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        if let url = URL(string: formImageURL(from: urlString)) {
-            getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
-                if cachedError == nil {
-                    self?.appImageData[urlString] = cachedData
-                    completion(cachedData, nil)
-                }
-                self?.apiManager.loadImageData(from: url) { (data, response, error) in
-                    if let isContains = self?.appImageData.keys.contains(urlString), isContains, error == nil {
-                        self?.appImageData[urlString] = data
-                    }
-                    self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
-                    DispatchQueue.main.async {
-                        if cachedData == nil ? true : cachedData != data {
-                            if cachedError == nil && error != nil { return }
-                            completion(data, error)
-                        }
-                    }
-                }
-                
-            })
-        } else {
-            completion(nil, ResponseError.noDataAvailable)
-        }
-    }
-    
-    func getContactImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, error) in
-            if error == nil {
-                completion(cachedData, nil)
-            }
-            self?.apiManager.loadImageData(from: url) { (data, response, error) in
-                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
-                DispatchQueue.main.async {
-                    completion(data, error)
-                }
-            }
-            
-        })
-    }
+//    func getContactImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+//        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, error) in
+//            if error == nil {
+//                completion(cachedData, nil)
+//            }
+//            self?.apiManager.loadImageData(from: url) { (data, response, error) in
+//                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
+//                DispatchQueue.main.async {
+//                    completion(data, error)
+//                }
+//            }
+//            
+//        })
+//    }
     
     func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
@@ -320,15 +305,8 @@ class MyAppsDataProvider {
         return formattedDateString
     }
     
-    private func formImageURL(from imagePath: String?) -> String {
-        guard let imagePath = imagePath else { return "" }
-        guard !imagePath.contains("https://") else  { return imagePath }
-        let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
-        return imageURL
-    }
-    
-    func formContactImageURL(from imagePath: String?) -> String? {
-        guard let imagePath = imagePath, !imagePath.isEmpty else { return nil }
+    func formImageURL(from imagePath: String?) -> String {
+        guard let imagePath = imagePath, !imagePath.isEmptyOrWhitespace() else { return "" }
         guard !imagePath.contains("https://") else  { return imagePath }
         let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
         return imageURL
@@ -353,11 +331,8 @@ class MyAppsDataProvider {
         var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
         for (index, info) in allAppsData!.myAppsStatus.enumerated() {
             let appNameIndex = myAppsStatusData?.indexes["app name"] ?? 0
+            response[index].appImage = formImageURL(from: response[index].appImage)
             let isMyApp = myAppsStatusData?.values?.first(where: {$0.values?[appNameIndex]?.stringValue == info.app_name}) != nil
-            if appImageData.keys.contains(response[index].appImageData.app_icon ?? ""), let data =  appImageData[response[index].appImageData.app_icon ?? ""] {
-                response[index].appImageData.imageData = data
-                response[index].appImageData.imageStatus = .loaded
-            }
             if isMyApp {
                 myAppsSection.cellData.append(response[index])
             } else {
@@ -367,11 +342,6 @@ class MyAppsDataProvider {
         var result = [AppsDataSource]()
         result.append(myAppsSection)
         result.append(otherAppsSection)
-        DispatchQueue.main.async {
-            let appInfo = result.map({$0.cellData}).reduce([], {$0 + $1})
-            self.getImageData(for: appInfo)
-        }
-        
         return result
     }
     
@@ -566,6 +536,8 @@ class MyAppsDataProvider {
         }
         let columns = appDetailsData?.meta.widgetsDataSource?.params?.columns
         appDetailsData?.indexes = getDataIndexes(columns: columns)
+        let url = formImageURL(from: appDetailsData?.appIcon)
+        appDetailsData?.appFullPath = url
         completion?(appDetailsData, errorCode, retErr, isFromCache)
     }
     
@@ -662,6 +634,6 @@ class MyAppsDataProvider {
     
 }
 
-protocol AppImageDelegate: class {
-    func setImage(with data: Data?, for appName: String?, error: Error?)
-}
+//protocol AppImageDelegate: class {
+//    func setImage(with data: Data?, for appName: String?, error: Error?)
+//}

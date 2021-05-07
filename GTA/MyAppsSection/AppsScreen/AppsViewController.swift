@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class AppsViewController: UIViewController {
 
@@ -24,7 +25,7 @@ class AppsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
-        self.dataProvider.appImageDelegate = self
+        //self.dataProvider.appImageDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -153,9 +154,6 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         if allAppsLoadingError != nil && dataProvider.appsData.isEmpty {
             return tableView.frame.height
         }
-//        if indexPath.section == 0 {
-//            return 80
-//        }
         return UITableView.automaticDimension
     }
     
@@ -163,14 +161,30 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         if let error = allAppsLoadingError as? ResponseError, dataProvider.appsData.isEmpty {
             return createErrorCell(with: error.localizedDescription)
         }
-        /*if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
-            cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
-            return cell
-         } else*/ if indexPath.section == 0, let error = myAppsLoadingError as? ResponseError, let isEmpty = dataProvider.myAppsStatusData?.data?.isEmpty, isEmpty {
+        if indexPath.section == 0, let error = myAppsLoadingError as? ResponseError, let isEmpty = dataProvider.myAppsStatusData?.data?.isEmpty, isEmpty {
             return createErrorCell(with: error.localizedDescription)
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicationCell", for: indexPath) as? ApplicationCell {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
                 cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
+                //cell.startAnimation()
+                
+                let url = URL(string: dataProvider.appsData[indexPath.section].cellData[indexPath.row].appImage ?? "")
+                if let urlString = url?.absoluteString, !urlString.isEmptyOrWhitespace() {
+                cell.appIcon.kf.indicatorType = .activity
+                cell.appIcon.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                    //cell.stopAnimation()
+                    switch result {
+                    case .success(let resData):
+                        cell.appIcon.image = resData.image
+                    case .failure(let error):
+                        if !error.isNotCurrentTask {
+                            cell.showFirstChar()
+                        }
+                    }
+                })
+                } else {
+                    cell.showFirstChar()
+                }
                 cell.separator.isHidden = indexPath.row != dataProvider.appsData[indexPath.section].cellData.count - 1
             } else {
                 print("!!!error my apps cell no data!!!!")
@@ -212,7 +226,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         let appVC = ApplicationStatusViewController()
         appVC.appName = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_name
         appVC.appTitle = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_title
-        appVC.appImageUrl = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appImageData.app_icon ?? ""
+        appVC.appImageUrl = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appImage ?? ""
         appVC.appLastUpdateDate = dataProvider.appsData[indexPath.section].cellData[indexPath.row].lastUpdateDate
         appVC.systemStatus = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appStatus
         appVC.dataProvider = dataProvider
@@ -220,32 +234,32 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
 }
-
-extension AppsViewController: AppImageDelegate {
-    
-    func setImage(with data: Data?, for appName: String?, error: Error?) {
-        DispatchQueue.main.async {
-            let sectionIndex = self.dataProvider.appsData.firstIndex(where: {$0.cellData.contains(where: {$0.app_name == appName})})
-            if let _ = sectionIndex {
-                let rowIndex = self.dataProvider.appsData[sectionIndex!].cellData.firstIndex(where: {$0.app_name == appName})
-                guard let _ = rowIndex else { return }
-                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageData = data
-                var isFailed: Bool = false
-                if let _ = data, let _ = UIImage(data: data!) {
-                    isFailed = false
-                } else {
-                    isFailed = true
-                }
-                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageStatus = isFailed ? .failed : .loaded
-                self.setCellImageView(for: IndexPath(row: rowIndex!, section: sectionIndex!))
-            }
-        }
-    }
-    
-    private func setCellImageView(for indexPath: IndexPath) {
-        if let cell = self.tableView.cellForRow(at: indexPath) as? ApplicationCell {
-            cell.setUpCell(with: self.dataProvider.appsData[indexPath.section].cellData[indexPath.row])
-        }
-    }
-    
-}
+//
+//extension AppsViewController: AppImageDelegate {
+//
+//    func setImage(with data: Data?, for appName: String?, error: Error?) {
+//        DispatchQueue.main.async {
+//            let sectionIndex = self.dataProvider.appsData.firstIndex(where: {$0.cellData.contains(where: {$0.app_name == appName})})
+//            if let _ = sectionIndex {
+//                let rowIndex = self.dataProvider.appsData[sectionIndex!].cellData.firstIndex(where: {$0.app_name == appName})
+//                guard let _ = rowIndex else { return }
+//                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageData = data
+//                var isFailed: Bool = false
+//                if let _ = data, let _ = UIImage(data: data!) {
+//                    isFailed = false
+//                } else {
+//                    isFailed = true
+//                }
+//                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageStatus = isFailed ? .failed : .loaded
+//                self.setCellImageView(for: IndexPath(row: rowIndex!, section: sectionIndex!))
+//            }
+//        }
+//    }
+//
+//    private func setCellImageView(for indexPath: IndexPath) {
+//        if let cell = self.tableView.cellForRow(at: indexPath) as? ApplicationCell {
+//            cell.setUpCell(with: self.dataProvider.appsData[indexPath.section].cellData[indexPath.row])
+//        }
+//    }
+//
+//}

@@ -49,23 +49,23 @@ class HomeDataProvider {
         return imageURL
     }
     
-    func getPosterImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, error) in
-            if error == nil {
-                completion(cachedData, nil)
-            }
-            self?.apiManager.loadImageData(from: url) { (data, response, error) in
-                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
-                DispatchQueue.main.async {
-                    if cachedData == nil ? true : cachedData != data {
-                        completion(data, error)
-                    }
-                }
-            }
-            
-        })
-       // apiManager.loadImageData(from: url, completion: completion)
-    }
+//    func getPosterImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
+//        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, error) in
+//            if error == nil {
+//                completion(cachedData, nil)
+//            }
+//            self?.apiManager.loadImageData(from: url) { (data, response, error) in
+//                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
+//                DispatchQueue.main.async {
+//                    if cachedData == nil ? true : cachedData != data {
+//                        completion(data, error)
+//                    }
+//                }
+//            }
+//            
+//        })
+//       // apiManager.loadImageData(from: url, completion: completion)
+//    }
     
     func formNewsBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
         guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }

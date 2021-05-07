@@ -14,6 +14,7 @@ class Office365AppCell: UITableViewCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var iconImageViewWidth: NSLayoutConstraint?
+    @IBOutlet weak var iconLabel: UILabel!
     
     var imageUrl: String?
     
@@ -37,31 +38,39 @@ class Office365AppCell: UITableViewCell {
         descriptionLabel.text = data.title
     }
     
-    func setImage(with data: Data?, status: LoadingStatus) {
-        if status == .loading {
-            startAnimation()
-        } else {
-            stopAnimation()
-        }
-        if let imageData = data, let image = UIImage(data: imageData) {
-            iconImageView.image = image
-        } else if status == .failed {
-            iconImageView.image = nil
-            //showFirstCharFrom(data.app_name)
-        }
-    }
-    
-    private func startAnimation() {
-        iconImageView.isHidden = true
-        self.activityIndicator.isHidden = false
-        self.activityIndicator.hidesWhenStopped = true
-        self.activityIndicator.startAnimating()
-    }
-    
-    private func stopAnimation() {
+    func showFirstChar() {
         iconImageView.isHidden = false
-        self.activityIndicator.isHidden = true
-        self.activityIndicator.stopAnimating()
+        iconImageView.image = UIImage(named: "empty_app_icon")
+        guard let char = appTitleLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines).first else { return }
+        iconLabel.text = char.uppercased()
+        iconLabel.isHidden = false
     }
+    
+//    func setImage(with data: Data?, status: LoadingStatus) {
+//        if status == .loading {
+//            startAnimation()
+//        } else {
+//            stopAnimation()
+//        }
+//        if let imageData = data, let image = UIImage(data: imageData) {
+//            iconImageView.image = image
+//        } else if status == .failed {
+//            iconImageView.image = nil
+//            //showFirstCharFrom(data.app_name)
+//        }
+//    }
+//
+//    private func startAnimation() {
+//        iconImageView.isHidden = true
+//        self.activityIndicator.isHidden = false
+//        self.activityIndicator.hidesWhenStopped = true
+//        self.activityIndicator.startAnimating()
+//    }
+//
+//    private func stopAnimation() {
+//        iconImageView.isHidden = false
+//        self.activityIndicator.isHidden = true
+//        self.activityIndicator.stopAnimating()
+//    }
     
 }

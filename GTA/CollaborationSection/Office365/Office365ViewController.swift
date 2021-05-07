@@ -28,7 +28,7 @@ class Office365ViewController: UIViewController {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel)
         getAppSuiteDetails()
-        dataProvider?.imageLoadingDelegate = self
+        //dataProvider?.imageLoadingDelegate = self
     }
     
     private func setUpNavigationItem() {
@@ -88,9 +88,8 @@ class Office365ViewController: UIViewController {
         let aboutScreen = AboutViewController()
         aboutScreen.isCollaborationDetails = true
         aboutScreen.collaborationDetails = details
-        aboutScreen.collaborationDataProvider = dataProvider
         aboutScreen.appTitle = details.fullTitle
-        aboutScreen.appImageUrl = details.imageUrl ?? ""
+        aboutScreen.appImageUrl = details.fullImageUrl ?? ""
         navigationController?.pushViewController(aboutScreen, animated: true)
     }
     
@@ -113,22 +112,19 @@ extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "Office365AppCell", for: indexPath) as? Office365AppCell {
             guard let cellData = dataProvider?.collaborationAppDetailsRows else { return cell }
             cell.setUpCell(with: cellData[indexPath.row], isAppsScreen: true)
-            if let imageURL = dataProvider?.formImageURL(from: cellData[indexPath.row].imageUrl), let _ = URL(string: imageURL) {
-                cell.activityIndicator.startAnimating()
-                cell.imageUrl = imageURL
-                dataProvider?.getAppImageData(from: cellData[indexPath.row].imageUrl) { (data, error) in
-                    if cell.imageUrl != imageURL { return }
-                    cell.activityIndicator.stopAnimating()
-                    if let imageData = data, error == nil {
-                        let image = UIImage(data: imageData)
-                        cell.iconImageView.image = image
-                    } else {
-                        cell.iconImageView.image = nil// UIImage(named: "contact_default_photo")
+            let imageURL = dataProvider?.formImageURL(from: cellData[indexPath.row].imageUrl)
+            let url = URL(string: imageURL ?? "")
+            cell.iconImageView.kf.indicatorType = .activity
+            cell.iconImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    cell.iconImageView.image = resData.image
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
+                        cell.showFirstChar()
                     }
                 }
-            } else {
-                cell.iconImageView.image = nil// UIImage(named: "contact_default_photo")
-            }
+            })
             return cell
         }
         return UITableViewCell()
@@ -139,17 +135,3 @@ extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
         showAppDetailsScreen(with: detailsRows[indexPath.row])
     }
 }
-
-extension Office365ViewController: ImageLoadingDelegate {
-
-    func setImage(for app: String) {
-        DispatchQueue.main.async {
-            let rowIndex = self.dataProvider?.collaborationAppDetailsRows?.firstIndex(where: {$0.fullTitle == app})
-            guard let _ = rowIndex else { return }
-            if let cell = self.tableView.cellForRow(at: IndexPath(row: rowIndex!, section: 0)) as? Office365AppCell, let cellData = self.dataProvider?.collaborationAppDetailsRows?[rowIndex!] {
-                cell.setUpCell(with: cellData)
-            }
-        }
-    }
-}
-

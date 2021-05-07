@@ -22,9 +22,9 @@ struct AllAppsResponse: Codable, Equatable {
                 let appIcon = valuesArray.count > iconIndex ? valuesArray[iconIndex]?.stringValue : ""
                 let appStatusString = valuesArray.count > statusIndex ? valuesArray[statusIndex]?.stringValue : ""
                 let appLastUpdate = valuesArray.count > lastUpdateIndex ? valuesArray[lastUpdateIndex]?.stringValue : ""
-                let appImageData = AppsImageData(app_icon: appIcon, imageData: nil, imageStatus: .loading)
+                //let appImageData = AppsImageData(app_icon: appIcon, imageData: nil, imageStatus: .loading)
                 let appStatus: SystemStatus = isStatusExpired ? .expired : SystemStatus(status: appStatusString)
-                let appInfo = AppInfo(app_name: appName, app_title: appTitle, appImageData: appImageData, appStatus: appStatus, app_is_active: true, lastUpdateDate: appLastUpdate)
+                let appInfo = AppInfo(app_name: appName, app_title: appTitle, appImage: appIcon, appStatus: appStatus, app_is_active: true, lastUpdateDate: appLastUpdate)
                 status.append(appInfo)
             }
         })
@@ -54,21 +54,11 @@ struct AllAppsValues: Codable {
 struct AppInfo: Equatable {
     var app_name: String?
     var app_title: String?
-    var appImageData: AppsImageData
+    var appImage: String?
+    var imageData: Data?
     var appStatus: SystemStatus
     var app_is_active: Bool
     var lastUpdateDate: String?
-}
-
-struct AppsImageData: Equatable {
-    var app_icon: String?
-    var imageData: Data?
-    var imageStatus: LoadingStatus = .loading
-    
-    
-    static func == (lhs: AppsImageData, rhs: AppsImageData) -> Bool {
-        return lhs.imageData == rhs.imageData && lhs.app_icon == rhs.app_icon
-    }
 }
 
 enum LoadingStatus {
@@ -202,6 +192,7 @@ struct AppContactsData: Codable, Equatable {
 struct AppDetailsData: Codable {
     var meta: ResponseMetaData
     var data: [String : UserData]?
+    var appFullPath: String?
     
     var indexes: [String : Int] = [:]
     

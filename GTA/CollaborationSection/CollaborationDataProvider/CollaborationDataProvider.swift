@@ -19,7 +19,6 @@ class CollaborationDataProvider {
     private(set) var collaborationDetails: CollaborationDetailsResponse?
     private var appSuiteImage: Data?
     weak var appSuiteIconDelegate: AppSuiteIconDelegate?
-    weak var imageLoadingDelegate: ImageLoadingDelegate?
     private(set) var collaborationAppDetailsRows: [CollaborationAppDetailsRow]?
     private(set) var appContactsData: AppContactsData?
     
@@ -87,18 +86,18 @@ class CollaborationDataProvider {
         if detailsData != self.collaborationDetails {
             self.collaborationDetails = detailsData
         }
-        getAppImage(from: detailsData?.icon)
+        //getAppImage(from: detailsData?.icon)
         completion?(errorCode, retErr)
     }
     
-    private func getAppImage(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
-        getAppImageData(from: urlString) { (imageData, error) in
-            if self.appSuiteImage == nil || imageData != self.appSuiteImage {
-                self.appSuiteImage = imageData
-                self.appSuiteIconDelegate?.appSuiteIconChanged(with: imageData, status: error == nil ? .loaded : .failed)
-            }
-        }
-    }
+//    private func getAppImage(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
+//        getAppImageData(from: urlString) { (imageData, error) in
+//            if self.appSuiteImage == nil || imageData != self.appSuiteImage {
+//                self.appSuiteImage = imageData
+//                self.appSuiteIconDelegate?.appSuiteIconChanged(with: imageData, status: error == nil ? .loaded : .failed)
+//            }
+//        }
+//    }
     
     // MARK: - What's new handling
     
@@ -387,6 +386,8 @@ class CollaborationDataProvider {
             let indexes = getDataIndexes(columns: columns)
             for (index, _) in rows.enumerated() {
                 detailsData?.data?[appName]??.data?.rows?[index].indexes = indexes
+                let url = formImageURL(from: detailsData?.data?[appName]??.data?.rows?[index].imageUrl)
+                detailsData?.data?[appName]??.data?.rows?[index].fullImageUrl = url
             }
         }
         var dataWasChanged: Bool = false
@@ -398,30 +399,30 @@ class CollaborationDataProvider {
             }
             
         }
-        DispatchQueue.main.async {
-            if let rows = detailsData?.data?[appName]??.data?.rows {
-                //self.getRowsImageData(for: rows)
-            }
-        }
+//        DispatchQueue.main.async {
+//            if let rows = detailsData?.data?[appName]??.data?.rows {
+//                //self.getRowsImageData(for: rows)
+//            }
+//        }
         completion?(dataWasChanged, errorCode, retErr)
     }
     
-    func getRowsImageData(for appInfo: [ImageDataProtocol]) {
-        for (index, info) in appInfo.enumerated() {
-            if let url = info.imageUrl {
-                getAppImageData(from: url) { (imageData, error) in
-                    if info.imageData == nil || (imageData != nil && imageData != info.imageData) {
-                        self.collaborationAppDetailsRows?[index].imageData = imageData
-                        self.collaborationAppDetailsRows?[index].imageStatus = error == nil ? .loaded : .failed
-                        self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
-                    }
-                }
-            } else {
-                self.collaborationAppDetailsRows?[index].imageStatus = .failed
-                self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
-            }
-        }
-    }
+//    func getRowsImageData(for appInfo: [ImageDataProtocol]) {
+//        for (index, info) in appInfo.enumerated() {
+//            if let url = info.imageUrl {
+//                getAppImageData(from: url) { (imageData, error) in
+//                    if info.imageData == nil || (imageData != nil && imageData != info.imageData) {
+//                        self.collaborationAppDetailsRows?[index].imageData = imageData
+//                        self.collaborationAppDetailsRows?[index].imageStatus = error == nil ? .loaded : .failed
+//                        //self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
+//                    }
+//                }
+//            } else {
+//                self.collaborationAppDetailsRows?[index].imageStatus = .failed
+//                //self.imageLoadingDelegate?.setImage(for: info.imageUrl ?? "")
+//            }
+//        }
+//    }
     
     // MARK:- Additional methods
     
@@ -446,27 +447,27 @@ class CollaborationDataProvider {
         return number != 0 ? number : nil
     }
     
-    func getAppImageData(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
-        if let urlString = urlString, let url = URL(string: formImageURL(from: urlString.components(separatedBy: .whitespaces).joined())) {
-            getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
-                if cachedError == nil {
-                    completion?(cachedData, cachedError)
-                }
-                self?.apiManager.loadImageData(from: url) { (data, response, error) in
-                    self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
-                    DispatchQueue.main.async {
-                        if cachedData == nil ? true : cachedData != data {
-                            if cachedError == nil && error != nil { return }
-                            completion?(data, error)
-                        }
-                    }
-                }
-                
-            })
-        } else {
-            completion?(nil, ResponseError.commonError)
-        }
-    }
+//    func getAppImageData(from urlString: String?, completion: ((_ imageData: Data?, _ error: Error?) -> Void)? = nil) {
+//        if let urlString = urlString, let url = URL(string: formImageURL(from: urlString.components(separatedBy: .whitespaces).joined())) {
+//            getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
+//                if cachedError == nil {
+//                    completion?(cachedData, cachedError)
+//                }
+//                self?.apiManager.loadImageData(from: url) { (data, response, error) in
+//                    self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
+//                    DispatchQueue.main.async {
+//                        if cachedData == nil ? true : cachedData != data {
+//                            if cachedError == nil && error != nil { return }
+//                            completion?(data, error)
+//                        }
+//                    }
+//                }
+//                
+//            })
+//        } else {
+//            completion?(nil, ResponseError.commonError)
+//        }
+//    }
     
     func formImageURL(from imagePath: String?) -> String {
         guard let imagePath = imagePath else { return "" }
@@ -559,8 +560,4 @@ class CollaborationDataProvider {
 
 protocol AppSuiteIconDelegate: class {
     func appSuiteIconChanged(with data: Data?, status: LoadingStatus)
-}
-
-protocol ImageLoadingDelegate: class {
-    func setImage(for app: String)
 }

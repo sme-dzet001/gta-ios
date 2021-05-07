@@ -33,6 +33,15 @@
                                     <constraint firstAttribute="width" secondItem="cJl-Z9-s9z" secondAttribute="height" multiplier="1:1" id="us7-rV-g3S"/>
                                 </constraints>
                             </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XpO-vV-gS0">
+                                <rect key="frame" x="17" y="47.5" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="Qce-ye-3Pc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="20"/>
+                                <color key="textColor" red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="8WK-zr-fen">
                                 <rect key="frame" x="19" y="49.5" width="20" height="20"/>
                             </activityIndicatorView>
@@ -70,12 +79,15 @@
                             <constraint firstItem="rBT-P6-bFq" firstAttribute="leading" secondItem="cJl-Z9-s9z" secondAttribute="trailing" constant="16" id="4lJ-r0-Jef"/>
                             <constraint firstItem="1dw-gg-sTb" firstAttribute="leading" secondItem="rBT-P6-bFq" secondAttribute="trailing" constant="15" id="6tj-K1-11V"/>
                             <constraint firstItem="6S3-M0-ma0" firstAttribute="bottom" secondItem="had-KW-S4i" secondAttribute="centerY" id="8ad-Wd-uQz"/>
+                            <constraint firstItem="XpO-vV-gS0" firstAttribute="centerX" secondItem="cJl-Z9-s9z" secondAttribute="centerX" id="Gd8-eS-qhW"/>
                             <constraint firstItem="cJl-Z9-s9z" firstAttribute="leading" secondItem="had-KW-S4i" secondAttribute="leading" constant="20" id="IzT-im-bn9"/>
                             <constraint firstAttribute="trailing" secondItem="1dw-gg-sTb" secondAttribute="trailing" constant="20" id="Qq5-Uh-s5W"/>
                             <constraint firstItem="2vo-QD-Vek" firstAttribute="leading" secondItem="had-KW-S4i" secondAttribute="leading" id="VOL-ea-OY1"/>
+                            <constraint firstItem="XpO-vV-gS0" firstAttribute="width" secondItem="XpO-vV-gS0" secondAttribute="height" multiplier="1:1" id="Y8I-Lu-e6o"/>
                             <constraint firstItem="rBT-P6-bFq" firstAttribute="top" secondItem="had-KW-S4i" secondAttribute="centerY" constant="4" id="fsl-iX-w0L"/>
                             <constraint firstItem="6S3-M0-ma0" firstAttribute="trailing" secondItem="rBT-P6-bFq" secondAttribute="trailing" id="mhT-bT-3Lm"/>
                             <constraint firstItem="6S3-M0-ma0" firstAttribute="leading" secondItem="cJl-Z9-s9z" secondAttribute="trailing" constant="16" id="nxE-qp-gPH"/>
+                            <constraint firstItem="XpO-vV-gS0" firstAttribute="centerY" secondItem="cJl-Z9-s9z" secondAttribute="centerY" id="qKC-P0-Vkn"/>
                             <constraint firstAttribute="bottom" secondItem="2vo-QD-Vek" secondAttribute="bottom" id="uj3-vG-lPL"/>
                             <constraint firstItem="1dw-gg-sTb" firstAttribute="centerY" secondItem="had-KW-S4i" secondAttribute="centerY" id="w7x-6L-JaC"/>
                             <constraint firstItem="cJl-Z9-s9z" firstAttribute="centerY" secondItem="had-KW-S4i" secondAttribute="centerY" id="wOq-RP-B4C"/>
@@ -97,6 +109,7 @@
                 <outlet property="descriptionLabel" destination="rBT-P6-bFq" id="G9n-t2-1LV"/>
                 <outlet property="iconImageView" destination="cJl-Z9-s9z" id="i6G-Hk-iBI"/>
                 <outlet property="iconImageViewWidth" destination="uNI-Db-h47" id="p4r-nk-IXA"/>
+                <outlet property="iconLabel" destination="XpO-vV-gS0" id="g67-Xj-Tcp"/>
             </connections>
             <point key="canvasLocation" x="128.98550724637681" y="38.504464285714285"/>
         </tableViewCell>

@@ -161,8 +161,10 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension MyTicketsViewController: CreateTicketDelegate {
     func createTicketDidPressed() {
+        guard let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") else { return }
         let newTicketVC = NewTicketViewController()
         newTicketVC.delegate = self
+        newTicketVC.appUserEmail = lastUserEmail
         self.presentPanModal(newTicketVC)
     }
 }
@@ -172,12 +174,15 @@ extension MyTicketsViewController: SendEmailDelegate {
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
+            if let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") {
+                mail.setPreferredSendingEmailAddress(lastUserEmail)
+            }
             mail.setToRecipients([Constants.ticketSupportEmail])
             mail.setSubject(subject)
             mail.setMessageBody(body, isHTML: false)
             present(mail, animated: true)
         } else {
-            // TODO: Need to handle
+            displayError(errorMessage: "Configure your mail in iOS mail app to use this feature", title: nil)
         }
     }
 }
