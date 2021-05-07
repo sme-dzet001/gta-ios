@@ -8,7 +8,11 @@
 import Foundation
 
 struct USMSettings {
+    #if GTA
+    static let usmBasicURL = "https://usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
+    #else
     static let usmBasicURL = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
+    #endif
     #if GTADev
     static let usmRedirectURL = "https://gtadev.smedsp.com:8888/validate"
     static let usmClientID = "bkYjQ2hKUFJkejY/YytrY3RLUlA"
