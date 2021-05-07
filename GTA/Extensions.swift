@@ -443,6 +443,7 @@ extension String {
         dateFormatterPrint.dateFormat = String.statusDateFormat
         if let date = dateFormatterPrint.date(from: self) {
             dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
+            dateFormatterPrint.timeZone = .current
             return dateFormatterPrint.string(from: date)
         }
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
