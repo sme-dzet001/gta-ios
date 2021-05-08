@@ -18,7 +18,7 @@ class WhatsNewCell: UITableViewCell {
         
     var imageUrl: String?
     var body: String?
-    var collapseText: NSAttributedString?
+    var fullText: NSAttributedString?
     weak var delegate: TappedLabelDelegate?
     
     override func awakeFromNib() {
@@ -48,7 +48,7 @@ class WhatsNewCell: UITableViewCell {
     }
     
     @objc private func showMoreDidTapped(gesture: UITapGestureRecognizer) {
-        guard let text = collapseText?.string else { return }
+        guard let text = fullText?.string else { return }
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
         let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
         var isFindURL = false
@@ -61,7 +61,7 @@ class WhatsNewCell: UITableViewCell {
             }
         }
         if !isFindURL {
-            collapseText?.enumerateAttribute(.link, in: NSRange(location: 0, length: text.utf16.count), options: [], using: { (object, range, _) in
+            fullText?.enumerateAttribute(.link, in: NSRange(location: 0, length: text.utf16.count), options: [], using: { (object, range, _) in
                 if gesture.didTapAttributedTextInLabel(label: descriptionLabel, inRange: range), let url = object as? URL {
                     delegate?.openUrl(url)
                     return
@@ -72,7 +72,7 @@ class WhatsNewCell: UITableViewCell {
     }
     
     private func getUrl(for range: Range<String.Index>, match: NSTextCheckingResult) -> URL? {
-        guard let text = (collapseText?.string) else { return nil }
+        guard let text = (fullText?.string) else { return nil }
         if isMatchEmail(match: match), let url = URL(string: "mailto:\(text[range])") {
             return url
         }
@@ -91,11 +91,11 @@ class WhatsNewCell: UITableViewCell {
         return false
     }
     
-    func setCollapseText() {
+    func setCollapse() {
         descriptionLabel.numberOfLines = 3
         descriptionLabel.sizeToFit()
         self.layoutIfNeeded()
-        descriptionLabel.attributedText = collapseText
+        descriptionLabel.attributedText = fullText
         descriptionLabel.addReadMoreString("more")
     }
     

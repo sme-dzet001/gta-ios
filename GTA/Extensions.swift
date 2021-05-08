@@ -110,7 +110,9 @@ extension UILabel {
                     index = (self.attributedText!.string as NSString).rangeOfCharacter(from: characterSet, options: [], range: NSRange(location: index + 1, length: self.attributedText!.string.count - index - 1)).location
                 }
             } while index != NSNotFound && index < self.attributedText!.string.count && (self.attributedText!.string as NSString).substring(to: index).boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, attributes: attributes as? [NSAttributedString.Key : Any], context: nil).size.height <= labelHeight
-            return prev + Int(Double(index - prev) / 1.9)
+        let isNeedCoef = !UIDevice.current.name.lowercased().contains("pro max")
+        let coefficient = isNeedCoef ? Int(Double(index - prev) / 1.9) : 0
+            return prev + coefficient
         //}
         //return self.attributedText!.string.count
     }

@@ -98,9 +98,9 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.body = cellDataSource?.body
         let text = getDescriptionText(for: indexPath)
         cell?.delegate = self
-        cell?.collapseText = text
+        cell?.fullText = text
         if !expandedRowsIndex.contains(indexPath.row) {
-            cell?.setCollapseText()
+            cell?.setCollapse()
         } else {
             cell?.descriptionLabel.attributedText = text
             cell?.descriptionLabel.numberOfLines = 0
