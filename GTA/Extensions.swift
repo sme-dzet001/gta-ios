@@ -496,7 +496,9 @@ extension NSMutableAttributedString {
                 }
             } else if let f = value as? UIFont, f.fontName.lowercased().contains("italic") {
                 removeAttribute(.font, range: range)
-                addAttribute(.font, value: (UIFont(name: "SFProText-Regular-Italic", size: 16) as Any), range: range)
+                if let font = UIFont(name: "SF Pro Text Italic", size: 16) {
+                    addAttribute(.font, value: (font as Any), range: range)
+                }
             }
         }
         endEditing()

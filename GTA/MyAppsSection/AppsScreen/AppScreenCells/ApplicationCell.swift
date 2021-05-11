@@ -56,28 +56,12 @@ class ApplicationCell: UITableViewCell {
     }
     
     func showFirstChar() {
+        appIcon.image = nil
         appIcon.isHidden = false
         appIcon.image = UIImage(named: "empty_app_icon")
         guard let char = appName.text?.trimmingCharacters(in: .whitespacesAndNewlines).first else { return }
         iconLabel.text = char.uppercased()
         iconLabel.isHidden = false
     }
-    
-    func startAnimation() {
-        appIcon.isHidden = true
-        self.activityIndicator.isHidden = false
-        self.activityIndicator.hidesWhenStopped = true
-        self.activityIndicator.startAnimating()
-        appStatus.isHidden = true
-        statusParentView.isHidden = true
-    }
-    
-    func stopAnimation() {
-        appIcon.isHidden = false
-        self.activityIndicator.isHidden = true
-        self.activityIndicator.stopAnimating()
-        appStatus.isHidden = false
-        statusParentView.isHidden = false
-    }
-    
+
 }
