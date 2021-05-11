@@ -100,6 +100,9 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         panGesture.cancelsTouchesInView = false
         presentationView?.addGestureRecognizer(panGesture)
         configureBlurViewPosition(isInitial: true)
+        if view.window?.safeAreaInsets.top ?? 0 <= 24 {
+            articleTextViewBottom?.constant = 15
+        }
     }
     
     override func viewDidLayoutSubviews() {
