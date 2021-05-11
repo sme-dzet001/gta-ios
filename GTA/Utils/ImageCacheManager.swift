@@ -13,20 +13,21 @@ class ImageCacheManager {
        label: "image-urlCache-sync-access"
     )
     
-    func getCacheResponse(for url: URL) -> Data? {
-        return ImageCacheManager.syncQueue.sync {
-            return URLCache.shared.cachedResponse(for: URLRequest(url: url))?.data
-        }
-    }
-    
-    func storeCacheResponse(_ response: URLResponse?, data: Data?, url: URL, error: Error?) {
-        guard error == nil, let _ = response, let _ = data else { return }
-        guard let resp = response as? HTTPURLResponse, resp.statusCode >= 200, resp.statusCode < 300 else { return }
-        let cachedResponse = CachedURLResponse(response: response!, data: data!)
-        ImageCacheManager.syncQueue.sync {
-            URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: url))
-        }
-    }
+//    func getCacheResponse(for url: URL) -> Data? {
+//        return ImageCacheManager.syncQueue.sync {
+//            let request = URLRequest(url: url)
+//            return URLCache.shared.cachedResponse(for: request)?.data
+//        }
+//    }
+//    
+//    func storeCacheResponse(_ response: URLResponse?, data: Data?, url: URL, error: Error?) {
+//        guard error == nil, let _ = response, let _ = data else { return }
+//        guard let resp = response as? HTTPURLResponse, resp.statusCode >= 200, resp.statusCode < 300 else { return }
+//        let cachedResponse = CachedURLResponse(response: response!, data: data!)
+//        ImageCacheManager.syncQueue.sync {
+//            URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: url))
+//        }
+//    }
     
     func removeCachedData() {
         URLCache.shared.removeAllCachedResponses()

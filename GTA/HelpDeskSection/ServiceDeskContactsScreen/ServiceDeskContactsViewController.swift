@@ -47,14 +47,14 @@ class ServiceDeskContactsViewController: UIViewController {
         if dataProvider.teamContactsDataIsEmpty {
             startAnimation()
         }
-        dataProvider.getTeamContactsData { [weak self] (errorCode, error) in
+        dataProvider.getTeamContactsData { [weak self] (dataWasChanged, errorCode, error, fromCache) in
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.tableView.isHidden = false
-                    self?.tableView.reloadData()
+                    if dataWasChanged { self?.tableView.reloadData() }
                 } else {
                     self?.errorLabel.isHidden = !dataProvider.teamContactsDataIsEmpty
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
@@ -93,22 +93,19 @@ extension ServiceDeskContactsViewController: UITableViewDelegate, UITableViewDat
             let cellDataSource = data[indexPath.row]
             cell.contactEmail = data[indexPath.row].contactEmail
             cell.setUpCell(with: cellDataSource)
-            if let imageURL = dataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl), let url = URL(string: imageURL) {
-                cell.activityIndicator.startAnimating()
-                cell.imageUrl = imageURL
-                dataProvider?.getImageData(from: url) { (data, error) in
-                    if cell.imageUrl != imageURL { return }
-                    cell.activityIndicator.stopAnimating()
-                    if let imageData = data, error == nil {
-                        let image = UIImage(data: imageData)
-                        cell.photoImageView.image = image
-                    } else {
+            let imageURL = dataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl) ?? ""
+            let url = URL(string: imageURL)
+            cell.photoImageView.kf.indicatorType = .activity
+            cell.photoImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    cell.photoImageView.image = resData.image
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
                         cell.photoImageView.image = UIImage(named: "contact_default_photo")
                     }
                 }
-            } else {
-                cell.photoImageView.image = UIImage(named: "contact_default_photo")
-            }
+            })
             return cell
         }
         return UITableViewCell()

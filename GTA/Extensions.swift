@@ -48,6 +48,70 @@ extension UILabel {
             text = ""
         }
     }
+    
+    func addReadMoreString(_ readMoreText: String) {
+        self.font = UIFont(name: "SFProText-Regular", size: 16) ?? self.font
+        guard let text = self.text, !text.isEmptyOrWhitespace() else { return }
+        let readMoreAttributed = NSMutableAttributedString(string: readMoreText, attributes: [NSAttributedString.Key.font : font as Any, NSAttributedString.Key.foregroundColor: UIColor.gray])
+        let lengthForVisibleString = vissibleTextLength
+        if vissibleTextLength >= self.text!.count, let _ = self.attributedText {
+            self.text = text
+            let mutAttr = NSMutableAttributedString(attributedString: self.attributedText!)
+            mutAttr.mutableString.append("... ")
+            mutAttr.append(readMoreAttributed)
+            self.attributedText = mutAttr
+            return
+        }
+        let mutableString = NSMutableString(string: self.attributedText?.string ?? "")
+        var trimmedString = (mutableString as NSString).replacingCharacters(in: NSMakeRange(lengthForVisibleString, ((self.text ?? "").count - lengthForVisibleString)), with: "")
+        if trimmedString.last == "." || trimmedString.last == " " {
+            trimmedString.removeLast()
+        }
+        repeat {
+            let lastSpaceIndex = trimmedString.lastIndex(of: " ")
+            if let _ = lastSpaceIndex {
+                trimmedString.removeSubrange(lastSpaceIndex!..<trimmedString.endIndex)
+            } else {
+                break
+            }
+        } while ("... " + readMoreText).count + trimmedString.count > lengthForVisibleString - 3
+        trimmedString.append("... ")
+        let attrTrimm = NSMutableAttributedString(string: trimmedString)
+        self.attributedText?.enumerateAttributes(in: NSRange(location: 0, length: attrTrimm.length), options: .longestEffectiveRangeNotRequired, using: { (attributes, range, _) in
+            attrTrimm.addAttributes(attributes, range: range)
+        })
+        attrTrimm.append(readMoreAttributed)
+        self.attributedText = attrTrimm
+    }
+
+    var vissibleTextLength: Int {
+        let font: UIFont = UIFont(name: "SFProText-Regular", size: 16) ?? self.font
+        let mode: NSLineBreakMode = self.lineBreakMode
+        let labelWidth: CGFloat = self.frame.size.width
+        let labelHeight: CGFloat = self.frame.size.height
+        let sizeConstraint = CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude)
+
+        let attributes: [AnyHashable: Any] = [NSAttributedString.Key.font: font]
+        let attributedText = self.attributedText!// NSAttributedString(string: self.text!, attributes: attributes as? [NSAttributedString.Key : Any])
+        let boundingRect: CGRect = attributedText.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
+
+        if boundingRect.size.height > labelHeight {
+            var index: Int = 0
+            var prev: Int = 0
+            let characterSet = CharacterSet.whitespacesAndNewlines
+            repeat {
+                prev = index
+                if mode == NSLineBreakMode.byCharWrapping {
+                    index += 1
+                } else {
+                    index = (self.attributedText!.string as NSString).rangeOfCharacter(from: characterSet, options: [], range: NSRange(location: index + 1, length: self.attributedText!.string.count - index - 1)).location
+                }
+            } while index != NSNotFound && index < self.attributedText!.string.count && (self.attributedText!.string as NSString).substring(to: index).boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, attributes: attributes as? [NSAttributedString.Key : Any], context: nil).size.height <= labelHeight
+            return prev + Int(Double(index - prev) / 1.5)
+        }
+        return self.attributedText!.string.count
+    }
+    
 }
 
 extension UIButton {
@@ -147,7 +211,7 @@ extension UITableView {
 }
 
 extension UIViewController {
-    func displayError(errorMessage: String, title: String? = "Error", onClose: @escaping ((UIAlertAction) -> Void) = { _ in }) {
+    func displayError(errorMessage: String, title: String? = "Error", onClose: ((UIAlertAction?) -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: errorMessage, preferredStyle: .alert)
         let closeAction = UIAlertAction(title: "OK", style: .default, handler: onClose)
         alertController.addAction(closeAction)
@@ -306,7 +370,7 @@ extension String {
     }
     
     static var ticketDateFormat: String {
-        return "yyyy-MM-dd'T'HH:mm:ss"
+        return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//"yyyy-MM-dd'T'HH:mm:ss.SSS Z"
     }
     
     static func getTicketDateFormat(for date: Date) -> String {
@@ -430,13 +494,16 @@ extension NSMutableAttributedString {
                         range: range
                     )
                 }
+            } else if let f = value as? UIFont, f.fontName.lowercased().contains("italic") {
+                removeAttribute(.font, range: range)
+                addAttribute(.font, value: (UIFont(name: "SFProText-Regular-Italic", size: 16) as Any), range: range)
             }
         }
         endEditing()
     }
     
     // method to change attr string paragraph style without removing other paragraph attribures
-    func setParagraphStyleParams(lineSpacing: CGFloat, paragraphSpacing: CGFloat) {
+    func setParagraphStyleParams(lineSpacing: CGFloat, paragraphSpacing: CGFloat? = nil) {
         beginEditing()
         self.enumerateAttribute(
             .paragraphStyle,
@@ -445,7 +512,9 @@ extension NSMutableAttributedString {
             if let parStyle = value as? NSMutableParagraphStyle {
                 let newParStyle = parStyle
                 newParStyle.lineSpacing = lineSpacing
-                newParStyle.paragraphSpacing = paragraphSpacing
+                if let parSpacing = paragraphSpacing {
+                    newParStyle.paragraphSpacing = parSpacing
+                }
                 removeAttribute(.paragraphStyle, range: range)
                 addAttribute(.paragraphStyle, value: newParStyle, range: range)
             }

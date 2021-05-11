@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -38,8 +39,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BhD-Ax-asv">
+                                <rect key="frame" x="0.0" y="88" width="414" height="77"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9fu-wP-oAY">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="165" width="414" height="731"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -51,8 +56,12 @@
                         <viewLayoutGuide key="safeArea" id="1Zt-Gm-Q9M"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="9fu-wP-oAY" firstAttribute="top" secondItem="1Zt-Gm-Q9M" secondAttribute="top" id="7kf-Yr-cK8"/>
+                            <constraint firstItem="BhD-Ax-asv" firstAttribute="top" secondItem="1Zt-Gm-Q9M" secondAttribute="top" id="GJo-gL-vx9"/>
+                            <constraint firstItem="1Zt-Gm-Q9M" firstAttribute="trailing" secondItem="BhD-Ax-asv" secondAttribute="trailing" id="QrI-0t-doc"/>
+                            <constraint firstItem="BhD-Ax-asv" firstAttribute="height" secondItem="ELd-7O-Vps" secondAttribute="height" multiplier="67/780" id="VsD-r8-T9v"/>
                             <constraint firstItem="1Zt-Gm-Q9M" firstAttribute="trailing" secondItem="9fu-wP-oAY" secondAttribute="trailing" id="XSO-S1-aJb"/>
+                            <constraint firstItem="9fu-wP-oAY" firstAttribute="top" secondItem="BhD-Ax-asv" secondAttribute="bottom" id="eOI-3s-cqw"/>
+                            <constraint firstItem="BhD-Ax-asv" firstAttribute="leading" secondItem="1Zt-Gm-Q9M" secondAttribute="leading" id="mqB-j8-hJf"/>
                             <constraint firstItem="9fu-wP-oAY" firstAttribute="leading" secondItem="1Zt-Gm-Q9M" secondAttribute="leading" id="r1e-4A-7y3"/>
                             <constraint firstAttribute="bottom" secondItem="9fu-wP-oAY" secondAttribute="bottom" id="vd8-aJ-Cl5"/>
                         </constraints>
@@ -60,6 +69,7 @@
                     <tabBarItem key="tabBarItem" title="Collaboration" image="collaboration_tab_icon" id="DqQ-pY-Obc"/>
                     <navigationItem key="navigationItem" id="oo7-Ol-aOq"/>
                     <connections>
+                        <outlet property="headerView" destination="BhD-Ax-asv" id="Awu-cQ-kRb"/>
                         <outlet property="tableView" destination="9fu-wP-oAY" id="dQw-3z-Ojz"/>
                     </connections>
                 </viewController>
@@ -70,5 +80,8 @@
     </scenes>
     <resources>
         <image name="collaboration_tab_icon" width="24" height="24"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

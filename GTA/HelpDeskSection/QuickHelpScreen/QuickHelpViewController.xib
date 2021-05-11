@@ -8,10 +8,18 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Medium.otf">
+            <string>SFProDisplay-Medium</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QuickHelpViewController" customModule="GTA" customModuleProvider="target">
             <connections>
+                <outlet property="navBarView" destination="quI-Kl-4cw" id="f5T-gQ-NSt"/>
+                <outlet property="subTitleLabel" destination="3ql-zW-eTR" id="90G-hT-xxH"/>
                 <outlet property="tableView" destination="tl9-Gb-GML" id="HFb-N7-Zvf"/>
+                <outlet property="titleLabel" destination="LEw-xm-B2Z" id="Wc4-eY-JJm"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,28 +28,99 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tl9-Gb-GML">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <color key="separatorColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="3XR-TO-Aj9"/>
-                        <outlet property="delegate" destination="-1" id="yTV-DL-aoV"/>
-                    </connections>
-                </tableView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="XtX-dn-Ydi">
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                    <subviews>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="quI-Kl-4cw">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="84.5"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QSx-uc-XIZ">
+                                    <rect key="frame" x="14" y="30.5" width="24" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="QSx-uc-XIZ" secondAttribute="height" multiplier="1:1" id="V4h-3Q-63u"/>
+                                        <constraint firstAttribute="width" constant="24" id="qhZ-Rv-8Ir"/>
+                                    </constraints>
+                                    <state key="normal" backgroundImage="back_arrow"/>
+                                    <connections>
+                                        <action selector="backNavButtonPressed:" destination="-1" eventType="touchUpInside" id="iVV-JE-mJp"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbF-tC-Ylv">
+                                    <rect key="frame" x="0.0" y="83.5" width="414" height="1"/>
+                                    <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="0.60367215733949831" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="m5a-Y2-9PL"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-8" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PPv-Tq-71a">
+                                    <rect key="frame" x="48" y="0.0" width="318" height="84.5"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LEw-xm-B2Z">
+                                            <rect key="frame" x="0.0" y="0.0" width="318" height="58.5"/>
+                                            <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ql-zW-eTR">
+                                            <rect key="frame" x="0.0" y="26.5" width="318" height="58"/>
+                                            <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="3ql-zW-eTR" firstAttribute="leading" secondItem="PPv-Tq-71a" secondAttribute="leading" id="51f-1a-Jpz"/>
+                                        <constraint firstItem="LEw-xm-B2Z" firstAttribute="leading" secondItem="PPv-Tq-71a" secondAttribute="leading" id="Igu-eV-sLE"/>
+                                        <constraint firstAttribute="trailing" secondItem="3ql-zW-eTR" secondAttribute="trailing" id="SXR-2U-hdl"/>
+                                        <constraint firstAttribute="trailing" secondItem="LEw-xm-B2Z" secondAttribute="trailing" id="gM2-rh-LXE"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="PPv-Tq-71a" firstAttribute="top" secondItem="quI-Kl-4cw" secondAttribute="top" id="HYu-AV-6XU"/>
+                                <constraint firstItem="PPv-Tq-71a" firstAttribute="leading" secondItem="QSx-uc-XIZ" secondAttribute="trailing" constant="10" id="K7l-S2-h3o"/>
+                                <constraint firstItem="QSx-uc-XIZ" firstAttribute="leading" secondItem="quI-Kl-4cw" secondAttribute="leading" constant="14" id="L71-ae-OvT"/>
+                                <constraint firstItem="QSx-uc-XIZ" firstAttribute="centerY" secondItem="quI-Kl-4cw" secondAttribute="centerY" id="MUU-Xx-SKp"/>
+                                <constraint firstAttribute="bottom" secondItem="PPv-Tq-71a" secondAttribute="bottom" id="T3O-K6-Obi"/>
+                                <constraint firstAttribute="leading" secondItem="pbF-tC-Ylv" secondAttribute="leading" id="Z8E-8o-YHe"/>
+                                <constraint firstAttribute="trailing" secondItem="pbF-tC-Ylv" secondAttribute="trailing" id="bvd-KG-8Qe"/>
+                                <constraint firstAttribute="bottom" secondItem="pbF-tC-Ylv" secondAttribute="bottom" id="fFU-vR-98y"/>
+                                <constraint firstAttribute="trailing" secondItem="PPv-Tq-71a" secondAttribute="trailing" constant="48" id="jGL-tU-Tko"/>
+                                <constraint firstItem="PPv-Tq-71a" firstAttribute="centerY" secondItem="quI-Kl-4cw" secondAttribute="centerY" id="v5o-ai-6xs"/>
+                            </constraints>
+                        </view>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tl9-Gb-GML">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="852"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="separatorColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="3XR-TO-Aj9"/>
+                                <outlet property="delegate" destination="-1" id="yTV-DL-aoV"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="quI-Kl-4cw" firstAttribute="height" secondItem="XtX-dn-Ydi" secondAttribute="height" multiplier="67/700" constant="2.9564102564102512" id="KPF-Bh-9bQ"/>
+                    </constraints>
+                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="tl9-Gb-GML" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="0dQ-nN-ueG"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tl9-Gb-GML" secondAttribute="trailing" id="L6T-Xo-ewy"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="tl9-Gb-GML" secondAttribute="bottom" id="j4q-y3-7za"/>
-                <constraint firstItem="tl9-Gb-GML" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="xVt-cn-Ccu"/>
+                <constraint firstAttribute="bottom" secondItem="XtX-dn-Ydi" secondAttribute="bottom" id="1mH-dP-MZt"/>
+                <constraint firstItem="XtX-dn-Ydi" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="fGu-bO-Fq9"/>
+                <constraint firstItem="XtX-dn-Ydi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="pPm-lJ-Kmb"/>
+                <constraint firstItem="XtX-dn-Ydi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="sHh-HJ-nyf"/>
             </constraints>
-            <point key="canvasLocation" x="139" y="91"/>
+            <point key="canvasLocation" x="137.68115942028987" y="90.401785714285708"/>
         </view>
     </objects>
     <resources>
+        <image name="back_arrow" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

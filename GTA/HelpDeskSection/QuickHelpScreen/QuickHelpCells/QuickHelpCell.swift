@@ -17,6 +17,9 @@ class QuickHelpCell: UITableViewCell {
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var expandButton: UIButton!
+    @IBOutlet weak var headerView: UIView!
+    
+    @IBOutlet weak var questionLabelHeight: NSLayoutConstraint!
     
     private let animationPeriod = 0.4
     weak var delegate: QuickHelpCellDelegate?
@@ -25,7 +28,7 @@ class QuickHelpCell: UITableViewCell {
         super.awakeFromNib()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
-        expandButton.addGestureRecognizer(tapGesture)
+        headerView.addGestureRecognizer(tapGesture)
         self.answerLabel.isUserInteractionEnabled = true
         self.answerLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tryOpenLink(gesture:))))
     }
@@ -37,7 +40,7 @@ class QuickHelpCell: UITableViewCell {
         var isFindURL = false
         for match in matches {
             if gesture.didTapAttributedTextInLabel(label: answerLabel, inRange: match.range) {
-                guard let range = Range(match.range, in: text), let url = URL(string: "\(text[range])")  else { continue }
+                guard let range = Range(match.range, in: text), let url = getUrl(for: range, match: match) else { continue }
                 isFindURL = true
                 delegate?.openUrl(url)
             }
@@ -51,18 +54,35 @@ class QuickHelpCell: UITableViewCell {
         }
     }
     
-    func setUpCell(question: String?, answer: NSAttributedString?, expandBtnType: ExpandButtonType) {
-        var question = question
-        if question?.first == " " {
-            question?.removeFirst()
+    private func getUrl(for range: Range<String.Index>, match: NSTextCheckingResult) -> URL? {
+        let text = (answerLabel.attributedText?.string)!
+        if isMatchEmail(match: match), let url = URL(string: "mailto:\(text[range])") {
+            return url
         }
-        questionLabel.text = question
+        if let url = URL(string: "\(text[range])") {
+            return url
+        }
+        return nil
+    }
+    
+    private func isMatchEmail(match: NSTextCheckingResult) -> Bool {
+        guard let text = answerLabel.attributedText?.string else { return false }
+        guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return false }
+        if let _ = mailRegex.firstMatch(in: text, options: .anchored, range: match.range) {
+            return true
+        }
+        return false
+    }
+    
+    func setUpCell(question: NSAttributedString?, questionLabelHeight: CGFloat, answer: NSAttributedString?, expandBtnType: ExpandButtonType) {
+        questionLabel.attributedText = question
+        self.questionLabelHeight.constant = questionLabelHeight
         answerLabel.attributedText = answer
         switch expandBtnType {
-        case .plus:
-            expandButton.setImage(UIImage(named: "plus_icon"), for: .normal)
-        case .minus:
-            expandButton.setImage(UIImage(named: "minus_icon"), for: .normal)
+        case .expand:
+            expandButton.setImage(UIImage(named: "disclosure_arrow_down"), for: .normal)
+        case .collapse:
+            expandButton.setImage(UIImage(named: "disclosure_arrow_up"), for: .normal)
         }
     }
 

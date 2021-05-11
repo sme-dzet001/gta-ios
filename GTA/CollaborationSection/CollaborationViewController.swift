@@ -23,21 +23,46 @@ class CollaborationViewController: UIViewController {
     private var errorLabel: UILabel = UILabel()
     
     private var dataSource: [CollaborationCellData] = []
-    
+    private weak var delegate: TicketsNumberDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
         setUpHardCodeData()
-        self.navigationItem.titleView = headerTitleView
-        dataProvider.appSuiteIconDelegate = self
+        setUpHeaderView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
         addErrorLabel(errorLabel)
         getCollaborationDetails()
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        getMyTickets()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //guard UIDevice.current.orientation != .portrait else { return }
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+        UINavigationController.attemptRotationToDeviceOrientation()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    private func getMyTickets() {
+        dataProvider.getWhatsNewData(completion: {[weak self] (dataWasChanged, errorCode, error) in
+            DispatchQueue.main.async {
+                if dataWasChanged {
+                    self?.delegate?.ticketNumberUpdated(self?.dataProvider.getUnreadArticlesNumber())
+                }
+            }
+        })
     }
     
     private func startAnimation() {
@@ -68,31 +93,58 @@ class CollaborationViewController: UIViewController {
                     self?.errorLabel.isHidden = self?.dataProvider.collaborationDetails != nil
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
+                self?.getHeaderImage()
                 self?.setHeaderData()
                 self?.stopAnimation()
             }
         }
     }
     
+    private func getHeaderImage() {
+        let imageURL = dataProvider.formImageURL(from: dataProvider.collaborationDetails?.icon)
+        let url = URL(string: imageURL)
+        self.headerTitleView.headerImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+            switch result {
+            case .success(let resData):
+                self.headerTitleView.headerImageView.image = resData.image
+            case .failure(let error):
+                if !error.isNotCurrentTask {
+                    self.headerTitleView.headerImageView.image = nil
+                }
+            }
+        })
+    }
+    
     private func setHeaderData() {
         let data = self.dataProvider.collaborationDetails
         headerTitleView.headerTitle.text = data?.groupName
+        headerTitleView.headerSubtitle.text = data?.type
         headerTitleView.showViews()
+    }
+    
+    private func setUpHeaderView() {
+        DispatchQueue.main.async {
+            let header = self.headerTitleView
+            self.headerView.addSubview(header)
+            header.pinEdges(to: self.headerView)
+        }
     }
     
     private func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "AboutInfoCell", bundle: nil), forCellReuseIdentifier: "AboutInfoCell")
-        tableView.register(UINib(nibName: "HelpDeskCell", bundle: nil), forCellReuseIdentifier: "HelpDeskCell")
+        tableView.register(UINib(nibName: "CollaborationHeaderCell", bundle: nil), forCellReuseIdentifier: "CollaborationHeaderCell")
+        tableView.register(UINib(nibName: "CollaborationCounterCell", bundle: nil), forCellReuseIdentifier: "CollaborationCounterCell")
         tableView.register(UINib(nibName: "Office365AppCell", bundle: nil), forCellReuseIdentifier: "Office365AppCell")
     }
     
     private func setUpHardCodeData() {
         dataSource.append(CollaborationCellData(cellTitle: dataProvider.collaborationDetails?.description, updatesNumber: nil))
-        dataSource.append(CollaborationCellData(imageName: nil, cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: nil, imageStatus: .loading))
-        dataSource.append(CollaborationCellData(imageName: "quick_help_icon", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
-        dataSource.append(CollaborationCellData(imageName: "contacts_icon", cellTitle: "Team Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil))
+        dataSource.append(CollaborationCellData(imageName: "applications_icon", cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: nil, imageStatus: .loading))
+        dataSource.append(CollaborationCellData(imageName: "whatsNew_icon", cellTitle: "What’s New", cellSubtitle: "Learn about new features", updatesNumber: nil))
+        dataSource.append(CollaborationCellData(imageName: "usage_metrics_icon", cellTitle: "Usage Metrics", cellSubtitle: "Collaboration Analytics", updatesNumber: nil))
+        dataSource.append(CollaborationCellData(imageName: "tips_n_tricks_icon", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
+        dataSource.append(CollaborationCellData(imageName: "team_contacts_icon", cellTitle: "Team Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil))
     }
     
     private func showContactsScreen() {
@@ -111,11 +163,25 @@ class CollaborationViewController: UIViewController {
         navigationController?.pushViewController(quickHelpVC, animated: true)
     }
     
+    private func showUsageMetricsScreen() {
+        let usageMetricsVC = UsageMetricsViewController()
+        //usageMetricsVC.hidesBottomBarWhenPushed = true
+        self.tabBarController?.tabBar.isHidden = true
+        navigationController?.pushViewController(usageMetricsVC, animated: true)
+    }
+    
     private func showOffice365Screen() {
         let office365 = Office365ViewController()
         office365.appName = "Office365"
         office365.dataProvider = dataProvider
         navigationController?.pushViewController(office365, animated: true)
+    }
+    
+    private func showWhatsNewScreen() {
+        let whatsNew = WhatsNewViewController()
+        //office365.appName = "Office365"
+        whatsNew.dataProvider = dataProvider
+        navigationController?.pushViewController(whatsNew, animated: true)
     }
 
     private func createAttributedString(for text: String?) -> NSAttributedString? {
@@ -143,19 +209,17 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AboutInfoCell", for: indexPath) as? AboutInfoCell {
-            cell.descriptionLabel.text = dataProvider.collaborationDetails?.description//createAttributedString(for: dataProvider.collaborationDetails?.description)
+        if indexPath.row == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "CollaborationHeaderCell", for: indexPath) as? CollaborationHeaderCell {
+            cell.descriptionLabel.text = dataProvider.collaborationDetails?.description
             return cell
         }
-        if indexPath.row == 1, let cell = tableView.dequeueReusableCell(withIdentifier: "Office365AppCell", for: indexPath) as? Office365AppCell {
-            cell.appTitleLabel.text = dataSource[indexPath.row].cellTitle
-            cell.descriptionLabel.text = dataSource[indexPath.row].cellSubtitle
-            cell.setImage(with: dataSource[indexPath.row].imageData, status: dataSource[indexPath.row].imageStatus)
-            return cell
-        }
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "HelpDeskCell", for: indexPath) as? HelpDeskCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "CollaborationCounterCell", for: indexPath) as? CollaborationCounterCell {
             let cellData = dataSource[indexPath.row]
             cell.setUpCell(with: cellData, isActive: true, isNeedCornerRadius: true)
+            if indexPath.row == 2 {
+                delegate = cell
+                cell.ticketNumberUpdated(dataProvider.getUnreadArticlesNumber())
+            }
             return cell
         }
         return UITableViewCell()
@@ -166,8 +230,12 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
         case 1:
             showOffice365Screen()
         case 2:
-            showTipsAndTricksScreen()
+            showWhatsNewScreen()
         case 3:
+            showUsageMetricsScreen()
+        case 4:
+            showTipsAndTricksScreen()
+        case 5:
             showContactsScreen()
         default:
             return
@@ -180,12 +248,6 @@ extension CollaborationViewController: AppSuiteIconDelegate {
         DispatchQueue.main.async {
             if let _ = data {
                 self.headerTitleView.headerImageView.image = UIImage(data: data!)
-            }
-            guard self.dataSource.count > 1 else { return }
-            if let cell = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? Office365AppCell {
-                self.dataSource[1].imageData = data
-                self.dataSource[1].imageStatus = status
-                cell.setImage(with: data, status: status)
             }
         }
     }

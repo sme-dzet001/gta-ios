@@ -45,8 +45,10 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     
     var shortFormHeight: PanModalHeight {
         guard !UIDevice.current.iPhone5_se else { return .maxHeight }
-        let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
-        return PanModalHeight.contentHeight(self.view.frame.height / coefficient)
+        let coefficient = (UIScreen.main.bounds.width * 0.8)
+        var statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 10 : statusBarHeight - 20
+        return PanModalHeight.contentHeight(UIScreen.main.bounds.height - (coefficient + statusBarHeight))
     }
     
     var allowsExtendedPanScrolling: Bool {
@@ -63,7 +65,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         return 20
     }
     
-    var dataSource: GSDMyTicketsRow?
+    var dataSource: GSDTickets?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,29 +86,29 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
             self?.configureBlurViewPosition()
             self?.configurePosition()
         })
-        loadComments()
+        //loadComments()
     }
     
-    private func loadComments() {
-        startAnimation()
-        dataProvider?.getTicketComments(ticketNumber: dataSource?.ticketNumber ?? "", completion: {[weak self] (errorCode, error, dataWasChanged) in
-            DispatchQueue.main.async {
-                self?.commentsLoadingError = error
-                self?.stopAnimation()
-                if error == nil && errorCode == 200 {
-                    if let index = self?.dataProvider?.myTickets?.firstIndex(where: {$0.ticketNumber == self?.dataSource?.ticketNumber}) {
-                        self?.dataSource?.comments = self?.dataProvider?.myTickets?[index].comments?.compactMap({$0}) ?? []
-                    }
-                    //self?.tableView.isHidden = false
-                    if dataWasChanged { self?.tableView.reloadData() }
-                } else {
-                    if self?.dataSource?.comments == nil || (self?.dataSource?.comments ?? []).isEmpty {
-                        self?.tableView.reloadData()
-                    }
-                }
-            }
-        })
-    }
+//    private func loadComments() {
+//        startAnimation()
+//        dataProvider?.getTicketComments(ticketNumber: dataSource?.ticketNumber ?? "", completion: {[weak self] (errorCode, error, dataWasChanged) in
+//            DispatchQueue.main.async {
+//                self?.commentsLoadingError = error
+//                self?.stopAnimation()
+//                if error == nil && errorCode == 200 {
+//                    if let index = self?.dataProvider?.myTickets?.firstIndex(where: {$0.ticketNumber == self?.dataSource?.ticketNumber}) {
+//                        self?.dataSource?.comments = self?.dataProvider?.myTickets?[index].comments?.compactMap({$0}) ?? []
+//                    }
+//                    //self?.tableView.isHidden = false
+//                    if dataWasChanged { self?.tableView.reloadData() }
+//                } else {
+//                    if self?.dataSource?.comments == nil || (self?.dataSource?.comments ?? []).isEmpty {
+//                        self?.tableView.reloadData()
+//                    }
+//                }
+//            }
+//        })
+//    }
     
     private func startAnimation() {
         self.commentsLoadingError = nil
@@ -151,7 +153,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     private func setUpTextViewIfNeeded() {
-        guard dataSource?.status == .new else { return }
+        //guard dataSource?.status == .new else { return }
 //        textView.setUpTextView()
 //        var coefficient: CGFloat = 0
 //        if #available(iOS 13.0, *) {
@@ -167,7 +169,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
     }
     
     private func configurePosition() {
-        guard dataSource?.status == .new else { return }
+        //guard dataSource?.status == .new else { return }
 //        let coefficient: CGFloat = UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se ? 10 : 0
 //        textView.frame.origin.y = position - textView.frame.height - (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) - coefficient
 //        let subtract = self.view.frame.height - position + 66 + (UIWindow.key?.safeAreaInsets.bottom ?? 0.0) + coefficient
@@ -180,6 +182,7 @@ class TicketDetailsViewController: UIViewController, PanModalPresentable {
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "TicketDetailsMessageCell", bundle: nil), forCellReuseIdentifier: "TicketDetailsMessageCell")
         tableView.register(UINib(nibName: "TicketDescriptionCell", bundle: nil), forCellReuseIdentifier: "TicketDescriptionCell")
+        tableView.register(UINib(nibName: "NoCommentsCell", bundle: nil), forCellReuseIdentifier: "NoCommentsCell")
     }
 
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
@@ -236,9 +239,17 @@ extension TicketDetailsViewController: UITableViewDataSource, UITableViewDelegat
         return 2
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard indexPath.section == 1, (dataSource?.comments ?? []).isEmpty else { return UITableView.automaticDimension }
+        return 160
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard section > 0 else { return 1 }
         if let _ = commentsLoadingError, (dataSource?.comments ?? []).isEmpty {
+            return 1
+        }
+        if (dataSource?.comments ?? []).isEmpty {
             return 1
         }
         return dataSource?.comments?.count ?? 0
@@ -250,8 +261,12 @@ extension TicketDetailsViewController: UITableViewDataSource, UITableViewDelegat
             cell?.setUpCell(with: dataSource)
             return cell ?? UITableViewCell()
         }
-        if let _ = commentsLoadingError {
+        if let _ = commentsLoadingError, (dataSource?.comments ?? []).isEmpty {
             return createErrorCell(with: (commentsLoadingError as? ResponseError)?.localizedDescription)
+        }
+        if (dataSource?.comments ?? []).isEmpty {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NoCommentsCell", for: indexPath) as? NoCommentsCell
+            return cell ?? UITableViewCell()
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "TicketDetailsMessageCell", for: indexPath) as? TicketDetailsMessageCell
         cell?.fillCell(with: dataSource?.comments?[indexPath.row])

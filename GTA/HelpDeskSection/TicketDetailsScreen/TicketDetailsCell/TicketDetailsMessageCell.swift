@@ -18,7 +18,7 @@ class TicketDetailsMessageCell: UITableViewCell {
         // Initialization code
     }
     
-    func fillCell(with data: GSDTicketCommentsRow?) {
+    func fillCell(with data: GSDTicketComment?) {
         nameLabel.text = data?.createdBy
         dateLabel.text = data?.createdDate?.getFormattedDateStringForMyTickets()
         messageLabel.text = data?.body

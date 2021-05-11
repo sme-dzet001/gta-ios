@@ -12,6 +12,7 @@ open class CustomTextField: UITextField {
    private var labelPlaceholderTitleTop: NSLayoutConstraint!
    private var labelPlaceholderTitleCenterY: NSLayoutConstraint!
    private var labelPlaceholderTitleLeft: NSLayoutConstraint!
+    private var labelPlaceholderTitleRight: NSLayoutConstraint!
     
     weak var backwardDelegate: BackwardDelegate?
     @IBInspectable var allowToShrinkPlaceholderSizeOnEditing = true
@@ -156,7 +157,8 @@ open class CustomTextField: UITextField {
         addSubview(labelPlaceholderTitle)
         labelPlaceholderTitleLeft = labelPlaceholderTitle.leftAnchor.constraint(equalTo: leftAnchor, constant: leftPadding)
         labelPlaceholderTitleLeft.isActive = true
-        labelPlaceholderTitle.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+        labelPlaceholderTitleRight = labelPlaceholderTitle.rightAnchor.constraint(equalTo: rightAnchor, constant: 0)
+        labelPlaceholderTitleRight.isActive = true
         labelPlaceholderTitleTop = labelPlaceholderTitle.topAnchor.constraint(equalTo: topAnchor, constant: 0)
         labelPlaceholderTitleTop.isActive = false
         
@@ -240,7 +242,16 @@ open class CustomTextField: UITextField {
     }
     
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        return canPerformAction//inputView != nil ? false : super.canPerformAction(action, withSender: sender)
+        return canPerformAction ? super.canPerformAction(action, withSender: sender) : false//inputView != nil ? false : super.canPerformAction(action, withSender: sender)
+    }
+    
+    var trimmedPlaceholder: Bool = false {
+        didSet {
+            labelPlaceholderTitle.minimumScaleFactor = trimmedPlaceholder ? 1 : 0.5
+            labelPlaceholderTitle.numberOfLines = trimmedPlaceholder ? 1 : 0
+            labelPlaceholderTitle.lineBreakMode = trimmedPlaceholder ? .byWordWrapping : .byClipping
+            labelPlaceholderTitleRight.constant = trimmedPlaceholder ? -labelPlaceholderTitleLeft.constant : 0
+        }
     }
     
 }

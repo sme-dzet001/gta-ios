@@ -33,6 +33,7 @@ PODS:
     - GoogleUtilities/Environment
   - GoogleUtilities/UserDefaults (7.2.2):
     - GoogleUtilities/Logger
+  - Kingfisher (6.2.1)
   - nanopb (2.30907.0):
     - nanopb/decode (= 2.30907.0)
     - nanopb/encode (= 2.30907.0)
@@ -41,12 +42,15 @@ PODS:
   - PanModal (1.2.7)
   - PromisesObjC (1.2.12)
   - RNCryptor (5.1.0)
+  - SwiftyGif (5.4.0)
 
 DEPENDENCIES:
   - AdvancedPageControl
   - Firebase/Crashlytics
+  - Kingfisher
   - PanModal
   - RNCryptor
+  - SwiftyGif
 
 SPEC REPOS:
   trunk:
@@ -58,10 +62,12 @@ SPEC REPOS:
     - FirebaseInstallations
     - GoogleDataTransport
     - GoogleUtilities
+    - Kingfisher
     - nanopb
     - PanModal
     - PromisesObjC
     - RNCryptor
+    - SwiftyGif
 
 SPEC CHECKSUMS:
   AdvancedPageControl: df5912b03c7b78a7719d4f479b79f7eb3a2966bb
@@ -72,11 +78,13 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 42c86e7b02ff75b7f27f85833bf5dcb5f38a9774
   GoogleDataTransport: 1024b1a4dfbd7a0e92cb20d7e0a6f1fb66b449a4
   GoogleUtilities: 31c5b01f978a70c6cff2afc6272b3f1921614b43
+  Kingfisher: e71c6fac2aebb1262888cabc2cb13d313362a48f
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
+  SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
 
-PODFILE CHECKSUM: 6e405aba4104dd743f6de6e150c360ce70f46041
+PODFILE CHECKSUM: 2b29982669e6c2e9042eece9b8c8f93c401b850a
 
 COCOAPODS: 1.10.1

@@ -59,7 +59,7 @@ class SecondTicketDetailsViewController: UIViewController, PanModalPresentable {
         return 20
     }
     
-    var dataSource: GSDMyTicketsRow?
+    var dataSource: GSDTickets?
     
     override func viewDidLoad() {
         super.viewDidLoad()

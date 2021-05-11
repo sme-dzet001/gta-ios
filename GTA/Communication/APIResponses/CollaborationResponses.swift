@@ -123,18 +123,20 @@ struct CollaborationAppDetailsRows: Codable, Equatable {
     
 }
 
-struct CollaborationAppDetailsRow: Codable, Equatable {
+struct CollaborationAppDetailsRow: Codable, Equatable, ImageDataProtocol {
     var values: [QuantumValue?]?
     
     var indexes: [String : Int] = [:]
     var imageData: Data?
     var imageStatus: LoadingStatus = .loading
+    var fullImageUrl: String?
+    
     enum CodingKeys: String, CodingKey {
         case values
     }
     
-    var appSupportEmail: String? {
-        guard let valuesArr = values, let index = indexes["app support email"], valuesArr.count > index else { return nil }
+    var openAppUrl: String? {
+        guard let valuesArr = values, let index = indexes["open app url"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
     }
     
@@ -148,12 +150,12 @@ struct CollaborationAppDetailsRow: Codable, Equatable {
         return valuesArr[index]?.stringValue
     }
     
-    var appWikiUrl: String? {
-        guard let valuesArr = values, let index = indexes["app wiki url"], valuesArr.count > index else { return nil }
+    var productPageUrl: String? {
+        guard let valuesArr = values, let index = indexes["product page url"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
     }
     
-    var icon: String? {
+    var imageUrl: String? {
         guard let valuesArr = values, let index = indexes["icon"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
     }
@@ -183,13 +185,77 @@ struct CollaborationAppDetailsRow: Codable, Equatable {
         return valuesArr[index]?.stringValue
     }
     
-    var appNameFull: String? {
+    var fullTitle: String? {
         guard let valuesArr = values, let index = indexes["app name full"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
     }
     
     static func ==(lhs: CollaborationAppDetailsRow, rhs: CollaborationAppDetailsRow) -> Bool {
-        return lhs.description == rhs.description && lhs.title == rhs.title && lhs.appSupportUrl == rhs.appSupportUrl && lhs.appSupportPolicy == rhs.appSupportPolicy && lhs.appWikiUrl == rhs.appWikiUrl
+        return lhs.description == rhs.description && lhs.title == rhs.title && lhs.appSupportUrl == rhs.appSupportUrl && lhs.appSupportPolicy == rhs.appSupportPolicy && lhs.productPageUrl == rhs.productPageUrl && lhs.openAppUrl == rhs.openAppUrl
     }
     
+}
+
+struct CollaborationNewsResponse: Codable {
+    var meta: ResponseMetaData?
+    var data: CollaborationNewsRows?
+}
+
+struct CollaborationNewsRows: Codable, Equatable {
+    var rows: [CollaborationNewsRow]?
+}
+
+struct CollaborationNewsRow: Codable, Equatable, ImageDataProtocol {
+    var values: [QuantumValue?]?
+    var indexes: [String : Int] = [:]
+    var imageData: Data?
+    var imageStatus: LoadingStatus = .loading
+    
+    var decodeBody: NSMutableAttributedString?
+    
+    enum CodingKeys: String, CodingKey {
+        case values
+    }
+    
+    var headline: String? {
+        guard let valuesArr = values, let index = indexes["headline"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var subHeadline: String? {
+        guard let valuesArr = values, let index = indexes["sub headline"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var imageUrl: String? {
+        guard let valuesArr = values, let index = indexes["banner"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var postDate: String? {
+        guard let valuesArr = values, let index = indexes["post date"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var body: String? {
+        guard let valuesArr = values, let index = indexes["body"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var byLine: String? {
+        guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    static func ==(lhs: CollaborationNewsRow, rhs: CollaborationNewsRow) -> Bool {
+        return lhs.body == rhs.body && lhs.headline == rhs.headline && lhs.subHeadline == rhs.subHeadline && lhs.imageUrl == rhs.imageUrl && lhs.byLine == rhs.byLine
+    }
+    
+}
+    
+protocol ImageDataProtocol {
+    //var fullTitle: String? { get }
+    var imageData: Data? { get set }
+    var imageStatus: LoadingStatus { get set }
+    var imageUrl: String? { get }
 }

@@ -23,7 +23,8 @@ class HelpDeskViewController: UIViewController {
     private var helpDeskCellsData: [[HelpDeskCellData]] = []
     weak var ticketsNumberDelegate: TicketsNumberDelegate?
     private var numberOfTickets: Int? {
-        return dataProvider.myTickets?.count
+        let count = dataProvider.myTickets?.filter({$0.status != .closed}).count ?? 0
+        return count > 0 ? count : nil
     }
 
     override func viewDidLoad() {
@@ -49,7 +50,8 @@ class HelpDeskViewController: UIViewController {
     private func getMyTickets() {
         dataProvider.getMyTickets {[weak self] (_, _, dataWasChanged) in
             DispatchQueue.main.async {
-                if dataWasChanged { self?.ticketsNumberDelegate?.ticketNumberUpdated(self?.numberOfTickets) }
+                self?.ticketsNumberDelegate?.ticketNumberUpdated(self?.numberOfTickets)
+                //if dataWasChanged { self?.ticketsNumberDelegate?.ticketNumberUpdated(self?.numberOfTickets) }
             }
         }
     }
@@ -140,7 +142,7 @@ class HelpDeskViewController: UIViewController {
              HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: emailCellSubtitle, updatesNumber: nil),
              HelpDeskCellData(imageName: "teams_chat_icon", cellTitle: "Teams Chat", cellSubtitle: teamsChatCellSubtitle, updatesNumber: nil)],
             [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, etc.", updatesNumber: nil),
-            HelpDeskCellData(imageName: "about_red_icon", cellTitle: "About", cellSubtitle: aboutCellSubtitle, updatesNumber: nil),
+            HelpDeskCellData(imageName: "info_icon", cellTitle: "About", cellSubtitle: aboutCellSubtitle, updatesNumber: nil),
             HelpDeskCellData(imageName: "contacts_icon", cellTitle: "Service Desk Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil),
             HelpDeskCellData(imageName: "my_tickets_icon", cellTitle: "My Tickets", cellSubtitle: "Help Desk Ticket History", updatesNumber: numberOfTickets)]
             //HelpDeskCellData(imageName: "my_devices_icon", cellTitle: "My Devices", cellSubtitle: "Manage Devices, Request Upgrades, etc.", updatesNumber: 5)]

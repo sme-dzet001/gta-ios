@@ -28,7 +28,7 @@ class Office365ViewController: UIViewController {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel)
         getAppSuiteDetails()
-        dataProvider?.office365AppsDelegate = self
+        //dataProvider?.imageLoadingDelegate = self
     }
     
     private func setUpNavigationItem() {
@@ -57,7 +57,6 @@ class Office365ViewController: UIViewController {
             errorLabel.isHidden = true
             self.tableView.alpha = 1
         }
-        self.tableView.reloadData()
         activityIndicator.stopAnimating()
         activityIndicator.removeFromSuperview()
     }
@@ -66,12 +65,13 @@ class Office365ViewController: UIViewController {
         if dataProvider?.collaborationAppDetailsRows == nil {
             startAnimation()
         }
-        dataProvider?.getAppDetails(appSuite: appName) {[weak self] (errorCode, error) in
+        dataProvider?.getAppDetails(appSuite: appName) {[weak self] (dataWasChanged, errorCode, error) in
             DispatchQueue.main.async {
                 if error != nil || errorCode != 200 {
                     self?.errorLabel.isHidden = self?.dataProvider?.collaborationAppDetailsRows != nil
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
+                if dataWasChanged { self?.tableView.reloadData() }
                 self?.stopAnimation()
             }
         }
@@ -88,9 +88,8 @@ class Office365ViewController: UIViewController {
         let aboutScreen = AboutViewController()
         aboutScreen.isCollaborationDetails = true
         aboutScreen.collaborationDetails = details
-        aboutScreen.collaborationDataProvider = dataProvider
-        aboutScreen.appTitle = details.appNameFull
-        aboutScreen.appImageUrl = details.icon ?? ""
+        aboutScreen.appTitle = details.fullTitle
+        aboutScreen.appImageUrl = details.fullImageUrl ?? ""
         navigationController?.pushViewController(aboutScreen, animated: true)
     }
     
@@ -113,6 +112,19 @@ extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "Office365AppCell", for: indexPath) as? Office365AppCell {
             guard let cellData = dataProvider?.collaborationAppDetailsRows else { return cell }
             cell.setUpCell(with: cellData[indexPath.row], isAppsScreen: true)
+            let imageURL = dataProvider?.formImageURL(from: cellData[indexPath.row].imageUrl)
+            let url = URL(string: imageURL ?? "")
+            cell.iconImageView.kf.indicatorType = .activity
+            cell.iconImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    cell.iconImageView.image = resData.image
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
+                        cell.showFirstChar()
+                    }
+                }
+            })
             return cell
         }
         return UITableViewCell()
@@ -123,17 +135,3 @@ extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
         showAppDetailsScreen(with: detailsRows[indexPath.row])
     }
 }
-
-extension Office365ViewController: AppIconLoadingDelegate {
-
-    func setImage(for app: String) {
-        DispatchQueue.main.async {
-            let rowIndex = self.dataProvider?.collaborationAppDetailsRows?.firstIndex(where: {$0.appNameFull == app})
-            guard let _ = rowIndex else { return }
-            if let cell = self.tableView.cellForRow(at: IndexPath(row: rowIndex!, section: 0)) as? Office365AppCell, let cellData = self.dataProvider?.collaborationAppDetailsRows?[rowIndex!] {
-                cell.setUpCell(with: cellData)
-            }
-        }
-    }
-}
-

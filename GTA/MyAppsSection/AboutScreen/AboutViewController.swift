@@ -13,13 +13,13 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     
     private var dataSource: AboutDataSource?
     var appTitle: String?
-    var dataProvider: MyAppsDataProvider?
+    //var dataProvider: MyAppsDataProvider?
     var details: AppDetailsData?
     var detailsDataResponseError: Error?
     var imageDataResponseError: Error?
     var appImageUrl: String = ""
     var isCollaborationDetails: Bool = false
-    var collaborationDataProvider: CollaborationDataProvider?
+    //var collaborationDataProvider: CollaborationDataProvider?
     var collaborationDetails: CollaborationAppDetailsRow?
     private var appImageData: Data?
     private var errorLabel: UILabel = UILabel()
@@ -33,36 +33,21 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel)
-        self.errorLabel.isHidden = detailsDataResponseError == nil
+        //self.errorLabel.isHidden = detailsDataResponseError == nil
+        if let _ = self.details {
+            self.errorLabel.isHidden = true
+        } else {
+            self.errorLabel.isHidden = detailsDataResponseError == nil
+        }
         self.errorLabel.text = (detailsDataResponseError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
         configureDataSource()
-        if isCollaborationDetails {
-            getCollaborationAboutImageData()
-        } else {
-            getAppAboutImageData()
-        }
+//        if isCollaborationDetails {
+//            getCollaborationAboutImageData()
+//        } else {
+//            getAppAboutImageData()
+//        }
         navigationController?.navigationBar.barTintColor = UIColor.white
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-    
-    private func getAppAboutImageData() {
-        dataProvider?.getAppImageData(from: details?.appIcon ?? "", completion: { (imageData, error) in
-            self.imageDataResponseError = error
-            self.appImageData = imageData
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        })
-    }
-    
-    private func getCollaborationAboutImageData() {
-        collaborationDataProvider?.getAppImageData(from: appImageUrl, completion: { (imageData, error) in
-            self.imageDataResponseError = error
-            self.appImageData = imageData
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -100,11 +85,13 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         detailsDataResponseError = error
         details = detailsData
         configureDataSource()
-        if let _ = detailsData {
-            getAppAboutImageData()
-        }
         DispatchQueue.main.async {
-            self.errorLabel.isHidden = error == nil
+            if let _ = self.details {
+                self.errorLabel.isHidden = true
+            } else {
+                self.errorLabel.isHidden = error == nil
+            }
+            //self.errorLabel.isHidden = error == nil && self.details != nil
             self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
             self.tableView.reloadData()
         }
@@ -118,10 +105,16 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         if let decription = !isCollaborationDetails ? details?.appDescription : collaborationDetails?.description {
             supportData.append(SupportData(title: decription, value: decription))
         }
-        if let wikiUrlString = !isCollaborationDetails ? details?.appWikiUrl : collaborationDetails?.appWikiUrl, let _ = URL(string: wikiUrlString) {
+        if let openAppUrl = collaborationDetails?.openAppUrl, let _ = URL(string: openAppUrl) {
+            supportData.append(SupportData(title: "Open App", value: openAppUrl))
+        }
+        if let productPage = collaborationDetails?.productPageUrl, let _ = URL(string: productPage) {
+            supportData.append(SupportData(title: "Product Page", value: productPage))
+        }
+        if let wikiUrlString = details?.appWikiUrl, let _ = URL(string: wikiUrlString) {
             supportData.append(SupportData(title: "Wiki URL", value: wikiUrlString))
         }
-        if let supportUrlString = !isCollaborationDetails ? details?.appJiraSupportUrl : collaborationDetails?.appSupportUrl, let _ = URL(string: supportUrlString) {
+        if let supportUrlString = details?.appJiraSupportUrl, let _ = URL(string: supportUrlString) {
             supportData.append(SupportData(title: "Support URL", value: supportUrlString))
         }
         return supportData
@@ -142,7 +135,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return detailsDataResponseError == nil ? 1 : 0
+            return detailsDataResponseError != nil && details == nil ? 0 : 1
         case 1:
             return dataSource?.supportData?.count ?? 0
         default:
@@ -166,16 +159,20 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AboutHeaderCell", for: indexPath) as? AboutHeaderCell {
-            if imageDataResponseError == nil, appImageData == nil {
-                cell.startAnimation()
-            } else if let _ = appImageData, let image = UIImage(data: appImageData!) {
-                cell.iconImageView.image = image
-                cell.stopAnimation()
-            } else {
-                cell.showFirstCharFrom(appTitle)
-                cell.stopAnimation()
-            }
-            cell.headerTitleLabel.text = !isCollaborationDetails ? details?.appTitle : collaborationDetails?.appNameFull
+            let urlString = details?.appFullPath ?? appImageUrl
+            let url = URL(string: urlString)
+            cell.iconImageView.kf.indicatorType = .activity
+            cell.iconImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    cell.iconImageView.image = resData.image
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
+                        cell.showFirstCharFrom(self.appTitle)
+                    }
+                }
+            })
+            cell.headerTitleLabel.text = !isCollaborationDetails ? details?.appTitle : collaborationDetails?.fullTitle
             return cell
         }
         let isDetailsNull = !isCollaborationDetails ? self.details == nil : collaborationDetails == nil
@@ -213,12 +210,19 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1, let supData = dataSource?.supportData, indexPath.row < supData.count, let stringUrl = supData[indexPath.row].value, let url = URL(string: stringUrl) {
-            UIApplication.shared.open(url, options: [:]) { (isSuccess) in
+        if indexPath.section == 1, let supData = dataSource?.supportData, indexPath.row < supData.count, let stringUrl = supData[indexPath.row].value {
+            openUrl(stringUrl) {[weak self] (isSuccess) in
                 if !isSuccess {
-                    self.displayError(errorMessage: "", title: "Invalid link")
+                    self?.openUrl(self?.collaborationDetails?.productPageUrl ?? "")
                 }
             }
+        }
+    }
+    
+    private func openUrl(_ url: String, completion: ((Bool) -> Void)? = nil) {
+        guard let url = URL(string: url) else { return }
+        UIApplication.shared.open(url, options: [:]) { (isSuccess) in
+            completion?(isSuccess)
         }
     }
     

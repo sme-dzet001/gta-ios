@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Medium.otf">
+            <string>SFProDisplay-Medium</string>
+        </array>
+        <array key="SF-Pro-Text-Light.ttf">
+            <string>SFProText-Light</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="WhatsNewCell" rowHeight="607" id="KGk-i7-Jjw" customClass="WhatsNewCell" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="370" height="607"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="370" height="607"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lvX-Js-ZkB">
+                        <rect key="frame" x="24" y="24" width="322" height="264"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="264" id="tvP-Wn-bBB"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="16"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile experience enhancements" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMV-IB-s0Y">
+                        <rect key="frame" x="24" y="304" width="322" height="24"/>
+                        <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r4p-Fw-lT9">
+                        <rect key="frame" x="24" y="393.5" width="322" height="57.5"/>
+                        <string key="text">On 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases reported on 11 September 2020.</string>
+                        <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fp-XI-G3p">
+                        <rect key="frame" x="0.0" y="599" width="370" height="8"/>
+                        <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="v5B-xA-BNv"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forbes Content Studio Forbes Staff Forbes Content Merketing" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktq-Fa-LuE">
+                        <rect key="frame" x="24" y="336" width="322" height="33.5"/>
+                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                        <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="9Nt-K4-dKv">
+                        <rect key="frame" x="175" y="146" width="20" height="20"/>
+                    </activityIndicatorView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="dMV-IB-s0Y" firstAttribute="top" secondItem="lvX-Js-ZkB" secondAttribute="bottom" constant="16" id="0uB-Cy-CAI"/>
+                    <constraint firstItem="r4p-Fw-lT9" firstAttribute="trailing" secondItem="dMV-IB-s0Y" secondAttribute="trailing" id="3vB-1u-FkV"/>
+                    <constraint firstItem="lvX-Js-ZkB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="3vM-M0-S3O"/>
+                    <constraint firstItem="lvX-Js-ZkB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="8Bf-sh-cRJ"/>
+                    <constraint firstAttribute="trailing" secondItem="lvX-Js-ZkB" secondAttribute="trailing" constant="24" id="DFI-YF-vQa"/>
+                    <constraint firstItem="9fp-XI-G3p" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ElD-FP-tjz"/>
+                    <constraint firstItem="9fp-XI-G3p" firstAttribute="top" relation="greaterThanOrEqual" secondItem="r4p-Fw-lT9" secondAttribute="bottom" constant="24" id="Kc6-EC-pzz"/>
+                    <constraint firstItem="ktq-Fa-LuE" firstAttribute="leading" secondItem="dMV-IB-s0Y" secondAttribute="leading" id="NIj-aO-2op"/>
+                    <constraint firstItem="r4p-Fw-lT9" firstAttribute="top" secondItem="ktq-Fa-LuE" secondAttribute="bottom" constant="24" id="SZ2-pM-waR"/>
+                    <constraint firstItem="ktq-Fa-LuE" firstAttribute="top" secondItem="dMV-IB-s0Y" secondAttribute="bottom" constant="8" id="Vl7-ms-aYX"/>
+                    <constraint firstItem="ktq-Fa-LuE" firstAttribute="trailing" secondItem="dMV-IB-s0Y" secondAttribute="trailing" id="d3C-rt-7RU"/>
+                    <constraint firstAttribute="bottom" secondItem="9fp-XI-G3p" secondAttribute="bottom" id="edq-qj-kir"/>
+                    <constraint firstItem="r4p-Fw-lT9" firstAttribute="leading" secondItem="dMV-IB-s0Y" secondAttribute="leading" id="fSr-nW-Xm6"/>
+                    <constraint firstAttribute="trailing" secondItem="dMV-IB-s0Y" secondAttribute="trailing" constant="24" id="gFi-X6-k43"/>
+                    <constraint firstItem="9Nt-K4-dKv" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="hAv-TZ-zPY"/>
+                    <constraint firstAttribute="trailing" secondItem="9fp-XI-G3p" secondAttribute="trailing" id="vJg-dl-sHi"/>
+                    <constraint firstItem="9Nt-K4-dKv" firstAttribute="centerY" secondItem="lvX-Js-ZkB" secondAttribute="centerY" id="wQL-C3-Ycp"/>
+                    <constraint firstItem="dMV-IB-s0Y" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="wqU-x1-V0R"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="activityIndicator" destination="9Nt-K4-dKv" id="dde-Qs-l83"/>
+                <outlet property="descriptionLabel" destination="r4p-Fw-lT9" id="cOt-nr-Auv"/>
+                <outlet property="mainImageView" destination="lvX-Js-ZkB" id="JQn-kU-9gy"/>
+                <outlet property="subtitleLabel" destination="ktq-Fa-LuE" id="bdY-M4-ubw"/>
+                <outlet property="titleLabel" destination="dMV-IB-s0Y" id="xwQ-Fo-Bu8"/>
+            </connections>
+            <point key="canvasLocation" x="-92.753623188405811" y="294.30803571428572"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -28,6 +28,9 @@ class InfoViewController: UIViewController {
     var selectedOfficeData: OfficeRow?
     var officeDataSoure: [Hardcode] = []
     var specialAlertData: SpecialAlertRow?
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +40,6 @@ class InfoViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
@@ -115,14 +115,27 @@ class InfoViewController: UIViewController {
         if let alertData = specialAlertData {
             headerImageView.image = nil
             headerImageView.contentMode = .scaleAspectFit
-            if let imageURL = dataProvider?.formImageURL(from: alertData.posterUrl), let url = URL(string: imageURL) {
-                dataProvider?.getPosterImageData(from: url) { [weak self] (data, error) in
-                    if let imageData = data, error == nil {
-                        let image = UIImage(data: imageData)
-                        self?.headerImageView.image = image
+            let imageURL = dataProvider?.formImageURL(from: alertData.posterUrl) ?? ""
+            let url = URL(string: imageURL)
+            headerImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    self.headerImageView.image = resData.image
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
+                        self.headerImageView.image = nil
                     }
                 }
-            }
+            })
+//            if let imageURL = dataProvider?.formImageURL(from: alertData.posterUrl), let url = URL(string: imageURL) {
+//
+//                dataProvider?.getPosterImageData(from: url) { [weak self] (data, error) in
+//                    if let imageData = data, error == nil {
+//                        let image = UIImage(data: imageData)
+//                        self?.headerImageView.image = image
+//                    }
+//                }
+//            }
             screenTitleLabel.text = specialAlertData?.alertTitle
         } else {
             headerImageView.image = UIImage(named: "office")
@@ -232,20 +245,17 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         guard infoType == .office else { return }
         if indexPath.row == officeDataSoure.count - 1 {
             let officeLocation = OfficeLocationViewController()
-            var statusBarHeight: CGFloat = 0.0
-            if #available(iOS 13.0, *) {
-                statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-                statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
-            } else {
-                statusBarHeight = self.view.bounds.height - UIApplication.shared.statusBarFrame.height
-                statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
-            }
+//            var statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+//            statusBarHeight = view.window?.safeAreaInsets.bottom ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 20
             officeLocation.title = "Select Sony Music Office Region"
             officeLocation.dataProvider = dataProvider
             //officeLocation.officeSelectionDelegate = self
             let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
             panModalNavigationController.setNavigationBarHidden(true, animated: true)
-            panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight
+            let coefficient = (UIScreen.main.bounds.width * 0.8)
+            var statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 10 : statusBarHeight - 20
+            panModalNavigationController.initialHeight = UIScreen.main.bounds.height - (coefficient + statusBarHeight)//self.tableView.bounds.height - statusBarHeight
             
             presentPanModal(panModalNavigationController)
         } else {

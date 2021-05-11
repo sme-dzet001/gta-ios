@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell tag="-1" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CollaborationHeaderCell" rowHeight="120" id="dkQ-kb-usY" customClass="CollaborationHeaderCell" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="438" height="120"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dkQ-kb-usY" id="odm-Qr-s41">
+                <rect key="frame" x="0.0" y="0.0" width="438" height="120"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40x-WX-5Xf">
+                        <rect key="frame" x="24" y="18" width="390" height="83"/>
+                        <attributedString key="attributedText">
+                            <fragment>
+                                <string key="content">On 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases reported on 11 September 2020.</string>
+                                <attributes>
+                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <font key="NSFont" metaFont="system" size="16"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5" lineHeightMultiple="1" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9M8-6X-EvS">
+                        <rect key="frame" x="0.0" y="119" width="438" height="1"/>
+                        <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="bNV-T9-ugz"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="9M8-6X-EvS" firstAttribute="leading" secondItem="odm-Qr-s41" secondAttribute="leading" id="Lbn-a2-5eh"/>
+                    <constraint firstAttribute="trailing" secondItem="40x-WX-5Xf" secondAttribute="trailing" constant="24" id="Mou-xj-Fko"/>
+                    <constraint firstAttribute="bottom" secondItem="9M8-6X-EvS" secondAttribute="bottom" id="XWW-hg-5sY"/>
+                    <constraint firstItem="40x-WX-5Xf" firstAttribute="top" secondItem="odm-Qr-s41" secondAttribute="top" constant="18" id="a1V-La-NDS"/>
+                    <constraint firstItem="40x-WX-5Xf" firstAttribute="leading" secondItem="odm-Qr-s41" secondAttribute="leading" constant="24" id="ig8-tg-VOI"/>
+                    <constraint firstItem="9M8-6X-EvS" firstAttribute="top" secondItem="40x-WX-5Xf" secondAttribute="bottom" constant="18" id="jMS-Wd-Gje"/>
+                    <constraint firstAttribute="trailing" secondItem="9M8-6X-EvS" secondAttribute="trailing" id="mNG-7Q-gqK"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="b0h-FA-g4N"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="40x-WX-5Xf" id="ajW-9t-Ja9"/>
+            </connections>
+            <point key="canvasLocation" x="218.84057971014494" y="115.84821428571428"/>
+        </tableViewCell>
+    </objects>
+</document>

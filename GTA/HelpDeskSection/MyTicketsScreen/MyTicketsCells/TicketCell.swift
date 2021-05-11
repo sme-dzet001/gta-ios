@@ -24,7 +24,7 @@ class TicketCell: UITableViewCell {
         // Initialization code
     }
 
-    func setUpCell(with data: GSDMyTicketsRow?, hideSeparator: Bool = false) {
+    func setUpCell(with data: GSDTickets?, hideSeparator: Bool = false) {
         ticketSubject.text = data?.subject
         separatorUnderStatusDate.isHidden = data?.closeDate == nil ? true : false
         switch data?.status {

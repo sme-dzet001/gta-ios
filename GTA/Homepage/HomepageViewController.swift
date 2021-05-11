@@ -45,11 +45,11 @@ class HomepageViewController: UIViewController {
             errorLabel.isHidden = true
             pageControl.isHidden = true
         }
-        dataProvider.getGlobalNewsData { [weak self] (errorCode, error) in
+        dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = Date().addingTimeInterval(60)
+                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
@@ -111,16 +111,18 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewsCollectionViewCell", for: indexPath) as? NewsCollectionViewCell {
             let cellDataSource = dataProvider.newsData[indexPath.row]
             let imageURL = dataProvider.formImageURL(from: cellDataSource.posterUrl)
-            if let url = URL(string: imageURL) {
-                cell.imageUrl = imageURL
-                dataProvider.getPosterImageData(from: url) { (data, error) in
-                    if cell.imageUrl != imageURL { return }
-                    if let imageData = data, error == nil {
-                        let image = UIImage(data: imageData)
-                        cell.imageView.image = image
+            let url = URL(string: imageURL)
+            cell.imageView.kf.indicatorType = .activity
+            cell.imageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    cell.imageView.image = resData.image
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
+                        cell.imageView.image = nil
                     }
                 }
-            }
+            })
             //cell.titleLabel.text = cellDataSource.newsTitle
             //cell.byLabel.text = cellDataSource.newsAuthor
             let newsDate = cellDataSource.newsDate
@@ -140,13 +142,13 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         let articleViewController = ArticleViewController()
         articleViewController.appearanceDelegate = self
         var statusBarHeight: CGFloat = 0.0
-        if #available(iOS 13.0, *) {
+       // if #available(iOS 13.0, *) {
             statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
             statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
-        } else {
-            statusBarHeight = self.containerView.bounds.height - UIApplication.shared.statusBarFrame.height
-            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
-        }
+//        } else {
+//            statusBarHeight = self.containerView.bounds.height - UIApplication.shared.statusBarFrame.height
+//            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
+//        }
         articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
         let newsBody = dataProvider.newsData[indexPath.row].newsBody
         let htmlBody = dataProvider.formNewsBody(from: newsBody)

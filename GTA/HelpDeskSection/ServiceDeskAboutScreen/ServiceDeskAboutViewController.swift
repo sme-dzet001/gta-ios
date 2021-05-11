@@ -20,12 +20,12 @@ class ServiceDeskAboutViewController: UIViewController {
         super.viewDidLoad()
         setUpNavigationItem()
         setUpTableView()
-        setUpScreenLook()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel, isGSD: true)
+        setUpScreenLook()
     }
     
     private func setUpNavigationItem() {
@@ -78,22 +78,21 @@ extension ServiceDeskAboutViewController: UITableViewDataSource, UITableViewDele
             descDecoded?.setParagraphStyleParams(lineSpacing: 8, paragraphSpacing: 16)
             cell.descLabel.attributedText = descDecoded
             
-            if let imagePath = aboutData?.imageUrl, let imageURL = dataProvider?.formImageURL(from: imagePath), let url = URL(string: imageURL) {
-                cell.activityIndicator.startAnimating()
-                dataProvider?.getImageData(from: url) { (data, error) in
-                    cell.activityIndicator.stopAnimating()
-                    if let imageData = data, error == nil {
-                        let image = UIImage(data: imageData)
-                        cell.serviceDeskIcon.image = image
-                        cell.iconContainerView.isHidden = false
-                    } else {
+            let imagePath = aboutData?.imageUrl
+            let imageURL = dataProvider?.formImageURL(from: imagePath) ?? ""
+            let url = URL(string: imageURL)
+            cell.serviceDeskIcon.kf.indicatorType = .activity
+            cell.serviceDeskIcon.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    cell.serviceDeskIcon.image = resData.image
+                    cell.iconContainerView.isHidden = false
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
                         cell.iconContainerView.isHidden = true
                     }
                 }
-            } else {
-                cell.iconContainerView.isHidden = true
-            }
-            
+            })
             return cell
         }
         return UITableViewCell()

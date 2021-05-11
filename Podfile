@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+# platform :ios, '13.0'
 
   use_frameworks!
 
@@ -10,6 +10,8 @@ def shared_pods
   pod 'PanModal'
   pod 'AdvancedPageControl'
   pod 'Firebase/Crashlytics'
+  pod 'SwiftyGif'
+  pod 'Kingfisher'
 end
 
 target 'GTA' do
@@ -21,6 +23,10 @@ target 'GTAStage' do
 end
 
 target 'GTADev' do
+  shared_pods
+end
+
+target 'QA-GTAStage' do
   shared_pods
 end
 
