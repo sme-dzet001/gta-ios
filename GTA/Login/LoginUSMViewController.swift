@@ -17,6 +17,7 @@ class LoginUSMViewController: UIViewController {
     private var dataProvider: LoginDataProvider = LoginDataProvider()
     
     private let shortRequestTimeoutInterval: Double = 24
+    weak var showErrorAlertDelegate: ShowErrorAlertDelegate?
     
     var emailAddress = ""
     var token: String = ""
@@ -201,6 +202,10 @@ extension LoginUSMViewController: WKNavigationDelegate {
         usmWebView.alpha = 0
         activityIndicator.stopAnimating()
         self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
-        displayError(errorMessage: message, title: title, onClose: nil)
+        showErrorAlertDelegate?.showAlert(title: title, message: message)
     }
+}
+
+protocol ShowErrorAlertDelegate: AnyObject {
+    func showAlert(title: String?, message: String?)
 }
