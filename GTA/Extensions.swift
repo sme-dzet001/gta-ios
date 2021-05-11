@@ -441,6 +441,7 @@ extension String {
             return dateFormatterPrint.string(from: date)
         }
         dateFormatterPrint.dateFormat = String.statusDateFormat
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
         if let date = dateFormatterPrint.date(from: self) {
             dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
             dateFormatterPrint.timeZone = .current
