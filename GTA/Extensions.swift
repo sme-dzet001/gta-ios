@@ -618,34 +618,27 @@ extension NSLayoutConstraint {
 extension UITapGestureRecognizer {
 
     func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
-        // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
-        let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: CGSize.zero)
-        let textStorage = NSTextStorage(attributedString: label.attributedText!)
-
-        // Configure layoutManager and textStorage
-        layoutManager.addTextContainer(textContainer)
-        textStorage.addLayoutManager(layoutManager)
-
-        // Configure textContainer
+        let thisLabelSize = label.bounds.size
+        let textContainer = NSTextContainer(size: thisLabelSize)
         textContainer.lineFragmentPadding = 0.0
         textContainer.lineBreakMode = label.lineBreakMode
         textContainer.maximumNumberOfLines = label.numberOfLines
-        let labelSize = label.bounds.size
-        textContainer.size = labelSize
-
-        // Find the tapped character location and compare it to the specified range
-        let locationOfTouchInLabel = self.location(in: label)
-        let textBoundingBox = layoutManager.usedRect(for: textContainer)
-        //let textContainerOffset = CGPointMake((labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
-                                              //(labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y);
-        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x, y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
-
-        //let locationOfTouchInTextContainer = CGPointMake(locationOfTouchInLabel.x - textContainerOffset.x,
-                                                        // locationOfTouchInLabel.y - textContainerOffset.y);
-        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y)
-        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        return NSLocationInRange(indexOfCharacter, targetRange)
+                    
+        let layoutManager = NSLayoutManager()
+        layoutManager.addTextContainer(textContainer)
+        let textStorage = NSTextStorage(attributedString: label.attributedText!)
+        textStorage.addLayoutManager(layoutManager)
+        let touchLocation = self.location(in: label)
+        let textBoundingRect = layoutManager.usedRect(for: textContainer)
+        let textContainerOffset = CGPoint(x: (thisLabelSize.width - textBoundingRect.size.width) * 0.5 - textBoundingRect.origin.x,
+                                                      y: (thisLabelSize.height - textBoundingRect.size.height) * 0.5 - textBoundingRect.origin.y)
+        let touchLocationInTextContainer = CGPoint(x: touchLocation.x - textContainerOffset.x, y: touchLocation.y - textContainerOffset.y)
+        let characterIndex = layoutManager.characterIndex(for: touchLocationInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        let attributes = label.attributedText?.attributes(at: characterIndex - 1, effectiveRange: nil)
+        if let _ = attributes?.first(where: {$0.key == .link})?.value as? URL {
+            return true
+        }
+        return false
     }
 
 }
