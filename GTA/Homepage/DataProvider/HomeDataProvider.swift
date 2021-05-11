@@ -72,7 +72,7 @@ class HomeDataProvider {
         guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
         
         let res = NSMutableAttributedString(attributedString: htmlAttrString)
-        
+        res.trimCharactersInSet(.whitespacesAndNewlines)
         guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return res }
         
         let wholeRange = NSRange(res.string.startIndex..., in: res.string)
