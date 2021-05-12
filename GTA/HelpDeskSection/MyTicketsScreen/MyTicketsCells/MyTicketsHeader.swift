@@ -31,6 +31,6 @@ class MyTicketsHeader: UIView {
 
 }
 
-protocol CreateTicketDelegate: class {
+protocol CreateTicketDelegate: AnyObject {
     func createTicketDidPressed()
 }

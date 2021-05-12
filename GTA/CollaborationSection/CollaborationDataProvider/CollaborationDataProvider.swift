@@ -558,6 +558,6 @@ class CollaborationDataProvider {
     
 }
 
-protocol AppSuiteIconDelegate: class {
+protocol AppSuiteIconDelegate: AnyObject {
     func appSuiteIconChanged(with data: Data?, status: LoadingStatus)
 }

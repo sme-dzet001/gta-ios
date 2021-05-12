@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-protocol UserLocationManagerDelegate: class {
+protocol UserLocationManagerDelegate: AnyObject {
     func closestOfficeWasRetreived(officeCoord: (lat: Float, long: Float)?)
     func userDeniedToGetHisLocation()
     func locationManagerFailed(with error: Error)

@@ -311,10 +311,10 @@ extension ApplicationStatusViewController: MFMailComposeViewControllerDelegate {
     }
 }
 
-protocol SendEmailDelegate: class {
+protocol SendEmailDelegate: AnyObject {
     func sendEmail(withTitle subject: String, withText body: String, to recipient: String)
 }
 
-protocol DetailsDataDelegate: class {
+protocol DetailsDataDelegate: AnyObject {
     func detailsDataUpdated(detailsData: AppDetailsData?, error: Error?)
 }

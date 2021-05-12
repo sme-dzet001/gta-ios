@@ -202,7 +202,7 @@ extension HomepageViewController: PanModalAppearanceDelegate {
     }
 }
 
-protocol PanModalAppearanceDelegate: class {
+protocol PanModalAppearanceDelegate: AnyObject {
     func needScrollToDirection(_ direction: UICollectionView.ScrollPosition)
     func panModalDidDissmiss()
 }

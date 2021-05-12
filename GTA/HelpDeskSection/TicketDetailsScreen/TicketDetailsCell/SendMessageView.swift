@@ -32,6 +32,6 @@ class SendMessageView: UIView {
     
 }
 
-protocol SendButtonPressedDelegate: class {
+protocol SendButtonPressedDelegate: AnyObject {
     func sendButtonDidPressed()
 }
