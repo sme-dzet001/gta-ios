@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol QuickHelpCellDelegate: class {
+protocol QuickHelpCellDelegate: AnyObject {
     func quickHelpCellTapped(_ cell: QuickHelpCell, animationDuration: Double)
     func openUrl(_ url: URL)
 }

@@ -50,6 +50,9 @@ extension UILabel {
     }
     
     func addReadMoreString(_ readMoreText: String) {
+        if numberOfLines != 3 {
+            numberOfLines = 3
+        }
         self.font = UIFont(name: "SFProText-Regular", size: 16) ?? self.font
         guard let text = self.text, !text.isEmptyOrWhitespace() else { return }
         let readMoreAttributed = NSMutableAttributedString(string: readMoreText, attributes: [NSAttributedString.Key.font : font as Any, NSAttributedString.Key.foregroundColor: UIColor.gray])
@@ -95,7 +98,7 @@ extension UILabel {
         let attributedText = self.attributedText!// NSAttributedString(string: self.text!, attributes: attributes as? [NSAttributedString.Key : Any])
         let boundingRect: CGRect = attributedText.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
 
-        if boundingRect.size.height > labelHeight {
+        //if boundingRect.size.height > labelHeight {
             var index: Int = 0
             var prev: Int = 0
             let characterSet = CharacterSet.whitespacesAndNewlines
@@ -107,9 +110,11 @@ extension UILabel {
                     index = (self.attributedText!.string as NSString).rangeOfCharacter(from: characterSet, options: [], range: NSRange(location: index + 1, length: self.attributedText!.string.count - index - 1)).location
                 }
             } while index != NSNotFound && index < self.attributedText!.string.count && (self.attributedText!.string as NSString).substring(to: index).boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, attributes: attributes as? [NSAttributedString.Key : Any], context: nil).size.height <= labelHeight
-            return prev + Int(Double(index - prev) / 1.5)
-        }
-        return self.attributedText!.string.count
+        let isNeedCoef = !UIDevice.current.name.lowercased().contains("pro max")
+        let coefficient = isNeedCoef ? Int(Double(index - prev) / 1.9) : 0
+            return prev + coefficient
+        //}
+        //return self.attributedText!.string.count
     }
     
 }
@@ -373,8 +378,16 @@ extension String {
         return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//"yyyy-MM-dd'T'HH:mm:ss.SSS Z"
     }
     
+    static var dateFormatWithoutTimeZone: String {
+        return "yyyy-MM-dd'T'HH:mm:ss"
+    }
+    
     static func getTicketDateFormat(for date: Date) -> String {
         return "E MMM d'\(date.daySuffix())', yyyy h:mm a"
+    }
+    
+    static func getTicketDateFormatWithoutTimeZone(for date: Date) -> String {
+        return "E MMM d'\(date.daySuffix())', yyyy"
     }
     
     static var ticketsSectionDateFormat: String {
@@ -403,6 +416,11 @@ extension String {
         }
     }
     
+    var isHtmlString: Bool {
+        guard !self.isEmptyOrWhitespace() else { return false }
+        return (self.range(of: "<(\"[^\"]*\"|'[^']*'|[^'\">])*>", options: .regularExpression) != nil)
+    }
+    
     var htmlToString: String {
         return htmlToAttributedString?.string ?? ""
     }
@@ -420,9 +438,17 @@ extension String {
     func getFormattedDateStringForMyTickets() -> String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.ticketDateFormat
-        guard let date = dateFormatterPrint.date(from: self) else { return self }
-        dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
-        return dateFormatterPrint.string(from: date)
+        if let date = dateFormatterPrint.date(from: self) {
+            dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
+            return dateFormatterPrint.string(from: date)
+        }
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        if let date = dateFormatterPrint.date(from: self) {
+            dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
+            return dateFormatterPrint.string(from: date)
+        } else {
+            return self
+        }
     }
     
 }
@@ -524,7 +550,7 @@ extension NSMutableAttributedString {
         endEditing()
     }
     
-    public func trimCharactersInSet(_ charSet: CharacterSet) {
+    func trimCharactersInSet(_ charSet: CharacterSet) {
         var range = (string as NSString).rangeOfCharacter(from: charSet as CharacterSet)
         while range.length != 0 && range.location == 0 {
             replaceCharacters(in: range, with: "")
@@ -593,34 +619,27 @@ extension NSLayoutConstraint {
 extension UITapGestureRecognizer {
 
     func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
-        // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
-        let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: CGSize.zero)
-        let textStorage = NSTextStorage(attributedString: label.attributedText!)
-
-        // Configure layoutManager and textStorage
-        layoutManager.addTextContainer(textContainer)
-        textStorage.addLayoutManager(layoutManager)
-
-        // Configure textContainer
+        let thisLabelSize = label.bounds.size
+        let textContainer = NSTextContainer(size: thisLabelSize)
         textContainer.lineFragmentPadding = 0.0
         textContainer.lineBreakMode = label.lineBreakMode
         textContainer.maximumNumberOfLines = label.numberOfLines
-        let labelSize = label.bounds.size
-        textContainer.size = labelSize
-
-        // Find the tapped character location and compare it to the specified range
-        let locationOfTouchInLabel = self.location(in: label)
-        let textBoundingBox = layoutManager.usedRect(for: textContainer)
-        //let textContainerOffset = CGPointMake((labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
-                                              //(labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y);
-        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x, y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
-
-        //let locationOfTouchInTextContainer = CGPointMake(locationOfTouchInLabel.x - textContainerOffset.x,
-                                                        // locationOfTouchInLabel.y - textContainerOffset.y);
-        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y)
-        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        return NSLocationInRange(indexOfCharacter, targetRange)
+                    
+        let layoutManager = NSLayoutManager()
+        layoutManager.addTextContainer(textContainer)
+        let textStorage = NSTextStorage(attributedString: label.attributedText!)
+        textStorage.addLayoutManager(layoutManager)
+        let touchLocation = self.location(in: label)
+        let textBoundingRect = layoutManager.usedRect(for: textContainer)
+        let textContainerOffset = CGPoint(x: (thisLabelSize.width - textBoundingRect.size.width) * 0.5 - textBoundingRect.origin.x,
+                                                      y: (thisLabelSize.height - textBoundingRect.size.height) * 0.5 - textBoundingRect.origin.y)
+        let touchLocationInTextContainer = CGPoint(x: touchLocation.x - textContainerOffset.x, y: touchLocation.y - textContainerOffset.y)
+        let characterIndex = layoutManager.characterIndex(for: touchLocationInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        let attributes = label.attributedText?.attributes(at: characterIndex - 1, effectiveRange: nil)
+        if let _ = attributes?.first(where: {$0.key == .link})?.value as? URL {
+            return true
+        }
+        return false
     }
 
 }
