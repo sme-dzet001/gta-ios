@@ -378,8 +378,16 @@ extension String {
         return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//"yyyy-MM-dd'T'HH:mm:ss.SSS Z"
     }
     
+    static var statusDateFormat: String {
+        return "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    }
+    
     static var dateFormatWithoutTimeZone: String {
         return "yyyy-MM-dd'T'HH:mm:ss"
+    }
+    
+    static var newsDateFormat: String {
+        return "yyyy-MM-dd"
     }
     
     static func getTicketDateFormat(for date: Date) -> String {
@@ -442,13 +450,24 @@ extension String {
             dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
             return dateFormatterPrint.string(from: date)
         }
+        dateFormatterPrint.dateFormat = String.statusDateFormat
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        if let date = dateFormatterPrint.date(from: self) {
+            dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
+            dateFormatterPrint.timeZone = .current
+            return dateFormatterPrint.string(from: date)
+        }
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
         if let date = dateFormatterPrint.date(from: self) {
             dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
             return dateFormatterPrint.string(from: date)
         } else {
-            return self
+            dateFormatterPrint.dateFormat = String.newsDateFormat
+            guard let date = dateFormatterPrint.date(from: self) else { return self }
+            dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
+            return dateFormatterPrint.string(from: date)
         }
+       // return self
     }
     
 }
