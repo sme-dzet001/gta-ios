@@ -83,8 +83,10 @@ class HomepageTableViewController: UITableViewController {
                             self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                             if self?.dataProvider?.allOfficesDataIsEmpty == true {
                                 self?.officeLoadingError = "No data available"
+                                self?.lastUpdateDate = nil
                             } else if self?.dataProvider?.userOffice == nil {
                                 self?.officeLoadingError = "Not Selected"
+                                self?.lastUpdateDate = nil
                                 forceOpenOfficeSelectionScreen = true
                             } else {
                                 self?.officeLoadingError = nil
