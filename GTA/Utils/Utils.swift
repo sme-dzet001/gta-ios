@@ -22,7 +22,7 @@ struct USMSettings {
     static let usmRedirectURL = "https://gtaapi.smedsp.com:8888/validate"
     static let usmClientID = "MmRCOFFZcT9nKlpxeFNnRjY9MnI"
     static let usmInternalRedirectURL = "https://gta.smedsp.com/charts-ui2/#/auth/processor"
-    static let usmLogoutURL = " https://gtaapi.smedsp.com:8888/logout/oauth2/back"
+    static let usmLogoutURL = "https://gtaapi.smedsp.com:8888/logout/oauth2"
     #else
     static let usmRedirectURL = "https://gtastageapi.smedsp.com:8888/validate"
     static let usmClientID = "NVdmOTlSc2txN3ByUmozbVNQSGs"
