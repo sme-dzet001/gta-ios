@@ -342,7 +342,7 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
     
 }
 
-protocol AuthentificationPassed: class {
+protocol AuthentificationPassed: AnyObject {
     var isAuthentificationPassed: Bool? {get set}
     var isAuthentificationScreenShown: Bool? {get set}
 }

@@ -8,7 +8,7 @@
 import UIKit
 import PanModal
 
-protocol OfficeSelectionDelegate: class {
+protocol OfficeSelectionDelegate: AnyObject {
     func officeWasSelected()
 }
 

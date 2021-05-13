@@ -257,6 +257,6 @@ open class CustomTextField: UITextField {
 }
 
 
-protocol BackwardDelegate: class {
+protocol BackwardDelegate: AnyObject {
     func textFieldDidSelectDeleteButton(_ textField: UITextField)
 }

@@ -45,6 +45,6 @@ struct SessionExpired: Codable {
     }
 }
 
-protocol ExpiredSessionDelegate: class {
+protocol ExpiredSessionDelegate: AnyObject {
     func handleExpiredSessionIfNeeded(for data: Data?)
 }

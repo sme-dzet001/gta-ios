@@ -23,7 +23,7 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var byLineHeight: NSLayoutConstraint?
     
     var dataProvider: HomeDataProvider?
-    
+    weak var selectedOfficeUIUpdateDelegate: SelectedOfficeUIUpdateDelegate?
     var infoType: infoType = .info
     var selectedOfficeData: OfficeRow?
     var officeDataSoure: [Hardcode] = []
@@ -304,6 +304,7 @@ extension InfoViewController: OpenLinkDelegate {
 
 extension InfoViewController: OfficeSelectionDelegate {
     func officeWasSelected() {
+        self.selectedOfficeUIUpdateDelegate?.updateUIWithNewSelectedOffice()
         updateUIWithSelectedOffice()
         dataProvider?.getCurrentOffice()
     }

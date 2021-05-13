@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol DeviceCellDelegate: class {
+protocol DeviceCellDelegate: AnyObject {
     func deviceCellSwitchStateWasChanged(_ cell: DeviceCell, to active: Bool)
 }
 

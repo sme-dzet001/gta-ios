@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MetricStatsHeaderDelegate: class {
+protocol MetricStatsHeaderDelegate: AnyObject {
     func periodWasChanged(_ header: MetricStatsHeader, to period: MetricsPeriod)
 }
 

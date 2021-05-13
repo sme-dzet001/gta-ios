@@ -83,8 +83,10 @@ class HomepageTableViewController: UITableViewController {
                             self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                             if self?.dataProvider?.allOfficesDataIsEmpty == true {
                                 self?.officeLoadingError = "No data available"
+                                self?.lastUpdateDate = nil
                             } else if self?.dataProvider?.userOffice == nil {
                                 self?.officeLoadingError = "Not Selected"
+                                self?.lastUpdateDate = nil
                                 forceOpenOfficeSelectionScreen = true
                             } else {
                                 self?.officeLoadingError = nil
@@ -262,6 +264,7 @@ class HomepageTableViewController: UITableViewController {
         infoViewController.dataProvider = dataProvider
         infoViewController.selectedOfficeData = selectedOffice
         infoViewController.infoType = .office
+        infoViewController.selectedOfficeUIUpdateDelegate = self
         infoViewController.title = selectedOffice.officeName
         self.navigationController?.pushViewController(infoViewController, animated: true)
     }
@@ -274,13 +277,20 @@ class HomepageTableViewController: UITableViewController {
 
 }
 
-extension HomepageTableViewController: OfficeSelectionDelegate {
+extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDelegate {
     func officeWasSelected() {
         officeLoadingIsEnabled = false
         updateUIWithSelectedOffice()
         dataProvider?.getCurrentOffice(completion: { [weak self] (_, _, _) in
             self?.officeLoadingIsEnabled = true
         })
+    }
+    
+    func updateUIWithNewSelectedOffice() {
+        DispatchQueue.main.async {
+            self.officeLoadingIsEnabled = true
+            self.loadOfficesData()
+        }
     }
     
     private func updateUIWithSelectedOffice() {
@@ -313,4 +323,8 @@ enum infoType {
     case info
     case deskFinder
     case returnToWork
+}
+
+protocol SelectedOfficeUIUpdateDelegate: AnyObject {
+    func updateUIWithNewSelectedOffice()
 }

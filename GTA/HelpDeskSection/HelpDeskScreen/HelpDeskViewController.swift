@@ -299,7 +299,7 @@ protocol ContactsCellDataProtocol {
     var updatesNumber: Int? {get set}
 }
 
-protocol TicketsNumberDelegate: class {
+protocol TicketsNumberDelegate: AnyObject {
     func ticketNumberUpdated(_ number: Int?)
 }
 
