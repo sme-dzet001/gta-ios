@@ -311,6 +311,30 @@
 		9F3AC939264D371A004074C8 /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */; };
 		9F3AC93A264D371A004074C8 /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */; };
 		9F3AC93B264D371A004074C8 /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */; };
+		9F3AC93F264D3E3D004074C8 /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC93D264D3E3D004074C8 /* GeneralCell.swift */; };
+		9F3AC940264D3E3D004074C8 /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC93D264D3E3D004074C8 /* GeneralCell.swift */; };
+		9F3AC941264D3E3D004074C8 /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC93D264D3E3D004074C8 /* GeneralCell.swift */; };
+		9F3AC942264D3E3D004074C8 /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC93D264D3E3D004074C8 /* GeneralCell.swift */; };
+		9F3AC943264D3E3D004074C8 /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC93E264D3E3D004074C8 /* GeneralCell.xib */; };
+		9F3AC944264D3E3D004074C8 /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC93E264D3E3D004074C8 /* GeneralCell.xib */; };
+		9F3AC945264D3E3D004074C8 /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC93E264D3E3D004074C8 /* GeneralCell.xib */; };
+		9F3AC946264D3E3D004074C8 /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC93E264D3E3D004074C8 /* GeneralCell.xib */; };
+		9F3AC949264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC947264D44E7004074C8 /* NotificationSettingsViewController.swift */; };
+		9F3AC94A264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC947264D44E7004074C8 /* NotificationSettingsViewController.swift */; };
+		9F3AC94B264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC947264D44E7004074C8 /* NotificationSettingsViewController.swift */; };
+		9F3AC94C264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC947264D44E7004074C8 /* NotificationSettingsViewController.swift */; };
+		9F3AC94D264D44E7004074C8 /* NotificationSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC948264D44E7004074C8 /* NotificationSettingsViewController.xib */; };
+		9F3AC94E264D44E7004074C8 /* NotificationSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC948264D44E7004074C8 /* NotificationSettingsViewController.xib */; };
+		9F3AC94F264D44E7004074C8 /* NotificationSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC948264D44E7004074C8 /* NotificationSettingsViewController.xib */; };
+		9F3AC950264D44E7004074C8 /* NotificationSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC948264D44E7004074C8 /* NotificationSettingsViewController.xib */; };
+		9F3AC956264D4790004074C8 /* SwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC954264D4790004074C8 /* SwitcherCell.swift */; };
+		9F3AC957264D4790004074C8 /* SwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC954264D4790004074C8 /* SwitcherCell.swift */; };
+		9F3AC958264D4790004074C8 /* SwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC954264D4790004074C8 /* SwitcherCell.swift */; };
+		9F3AC959264D4790004074C8 /* SwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC954264D4790004074C8 /* SwitcherCell.swift */; };
+		9F3AC95A264D4790004074C8 /* SwitcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC955264D4790004074C8 /* SwitcherCell.xib */; };
+		9F3AC95B264D4790004074C8 /* SwitcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC955264D4790004074C8 /* SwitcherCell.xib */; };
+		9F3AC95C264D4790004074C8 /* SwitcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC955264D4790004074C8 /* SwitcherCell.xib */; };
+		9F3AC95D264D4790004074C8 /* SwitcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC955264D4790004074C8 /* SwitcherCell.xib */; };
 		9F44AE1C25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
 		9F44AE1D25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
 		9F44AE1E25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
@@ -843,6 +867,12 @@
 		9F3AC9062645B17A004074C8 /* GTTeamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTTeamCell.swift; sourceTree = "<group>"; };
 		9F3AC9072645B17A004074C8 /* GTTeamCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GTTeamCell.xib; sourceTree = "<group>"; };
 		9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GeneralScreen.storyboard; sourceTree = "<group>"; };
+		9F3AC93D264D3E3D004074C8 /* GeneralCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCell.swift; sourceTree = "<group>"; };
+		9F3AC93E264D3E3D004074C8 /* GeneralCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralCell.xib; sourceTree = "<group>"; };
+		9F3AC947264D44E7004074C8 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
+		9F3AC948264D44E7004074C8 /* NotificationSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationSettingsViewController.xib; sourceTree = "<group>"; };
+		9F3AC954264D4790004074C8 /* SwitcherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitcherCell.swift; sourceTree = "<group>"; };
+		9F3AC955264D4790004074C8 /* SwitcherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwitcherCell.xib; sourceTree = "<group>"; };
 		9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTipsAndTricksViewController.swift; sourceTree = "<group>"; };
 		9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTipsAndTricksViewController.xib; sourceTree = "<group>"; };
 		9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsViewController.swift; sourceTree = "<group>"; };
@@ -1192,9 +1222,8 @@
 		65D14CB7256DA832004DFA70 /* GeneralSection */ = {
 			isa = PBXGroup;
 			children = (
-				9F3AC93C264D3CC0004074C8 /* New Group */,
-				65D14CB8256DA877004DFA70 /* GeneralViewController.swift */,
-				9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */,
+				9F3AC952264D4663004074C8 /* NotificationSettingsVC */,
+				9F3AC951264D4650004074C8 /* GeneralScreen */,
 			);
 			path = GeneralSection;
 			sourceTree = "<group>";
@@ -1347,11 +1376,42 @@
 			path = xib;
 			sourceTree = "<group>";
 		};
-		9F3AC93C264D3CC0004074C8 /* New Group */ = {
+		9F3AC93C264D3CC0004074C8 /* cells */ = {
 			isa = PBXGroup;
 			children = (
+				9F3AC93D264D3E3D004074C8 /* GeneralCell.swift */,
+				9F3AC93E264D3E3D004074C8 /* GeneralCell.xib */,
 			);
-			path = "New Group";
+			path = cells;
+			sourceTree = "<group>";
+		};
+		9F3AC951264D4650004074C8 /* GeneralScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9F3AC93C264D3CC0004074C8 /* cells */,
+				65D14CB8256DA877004DFA70 /* GeneralViewController.swift */,
+				9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */,
+			);
+			path = GeneralScreen;
+			sourceTree = "<group>";
+		};
+		9F3AC952264D4663004074C8 /* NotificationSettingsVC */ = {
+			isa = PBXGroup;
+			children = (
+				9F3AC953264D4770004074C8 /* cells */,
+				9F3AC947264D44E7004074C8 /* NotificationSettingsViewController.swift */,
+				9F3AC948264D44E7004074C8 /* NotificationSettingsViewController.xib */,
+			);
+			path = NotificationSettingsVC;
+			sourceTree = "<group>";
+		};
+		9F3AC953264D4770004074C8 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				9F3AC954264D4790004074C8 /* SwitcherCell.swift */,
+				9F3AC955264D4790004074C8 /* SwitcherCell.xib */,
+			);
+			path = cells;
 			sourceTree = "<group>";
 		};
 		9F44AE2725EFDCBB00A0EDA4 /* AppTipsAndTricksScreen */ = {
@@ -2148,6 +2208,7 @@
 				9F36D43C2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F1620D42566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
 				C9EC9EB425756C1400315AAE /* HelpDeskHeader.xib in Resources */,
+				9F3AC94D264D44E7004074C8 /* NotificationSettingsViewController.xib in Resources */,
 				9F895AEA255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F3AC90C2645B17A004074C8 /* GTTeamCell.xib in Resources */,
 				C9705B7F2566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
@@ -2173,6 +2234,7 @@
 				659A5ABA255401ED00E13B77 /* Assets.xcassets in Resources */,
 				9FA2C6A32628CFC900EC5BE3 /* Apps.storyboard in Resources */,
 				9F5B10602567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */,
+				9F3AC95A264D4790004074C8 /* SwitcherCell.xib in Resources */,
 				659A5AF5255404F200E13B77 /* SF-Pro-Text-Regular.otf in Resources */,
 				9F643566261B1E88000D94A4 /* WhatsNewCell.xib in Resources */,
 				C993A2B12576664300F9146A /* QuickHelpViewController.xib in Resources */,
@@ -2197,6 +2259,7 @@
 				C9424E0425642632003C247E /* MyDevicesViewController.xib in Resources */,
 				C907E0DB25D4382500FB0B55 /* AppContactCell.xib in Resources */,
 				9F6435DA261F22F5000D94A4 /* SF-Pro-Text-Bold.ttf in Resources */,
+				9F3AC943264D3E3D004074C8 /* GeneralCell.xib in Resources */,
 				9F895B2B255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F895AED255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F78D07E256530CD00BCD38F /* ArticleViewController.xib in Resources */,
@@ -2279,11 +2342,13 @@
 				9F33F6CB260A3C4000470A47 /* InfoViewController.xib in Resources */,
 				9F33F6CC260A3C4000470A47 /* ServiceDeskContactCell.xib in Resources */,
 				9F33F6CD260A3C4000470A47 /* QuickHelpCell.xib in Resources */,
+				9F3AC946264D3E3D004074C8 /* GeneralCell.xib in Resources */,
 				9F33F6CF260A3C4000470A47 /* OfficeLocationViewController.xib in Resources */,
 				9F33F6D0260A3C4000470A47 /* MyTicketsHeader.xib in Resources */,
 				9F33F6D1260A3C4000470A47 /* MyDevicesViewController.xib in Resources */,
 				9F33F6D2260A3C4000470A47 /* SystemUpdatesCell.xib in Resources */,
 				9F33F6D3260A3C4000470A47 /* OfficeSelectionCell.xib in Resources */,
+				9F3AC95D264D4790004074C8 /* SwitcherCell.xib in Resources */,
 				9F33F6D4260A3C4000470A47 /* GoogleService-Info.plist in Resources */,
 				9FA83E77262739DE009A0BAD /* TicketDescriptionCell.xib in Resources */,
 				9FB9C16E2631C04E00BA753D /* NoCommentsCell.xib in Resources */,
@@ -2293,6 +2358,7 @@
 				9F33F6D8260A3C4000470A47 /* AppsTableViewHeader.xib in Resources */,
 				9F33F6D9260A3C4000470A47 /* Collaboration.storyboard in Resources */,
 				9F643557261B1C9F000D94A4 /* WhatsNewViewController.xib in Resources */,
+				9F3AC950264D44E7004074C8 /* NotificationSettingsViewController.xib in Resources */,
 				9F33F6DA260A3C4000470A47 /* SecondTicketDetailsViewController.xib in Resources */,
 				9F33F6DB260A3C4000470A47 /* TicketDetailsViewController.xib in Resources */,
 				9F6435DD261F22F6000D94A4 /* SF-Pro-Text-Bold.ttf in Resources */,
@@ -2333,6 +2399,7 @@
 				C9EC9EB525756C1400315AAE /* HelpDeskHeader.xib in Resources */,
 				C960A10125B08CAC004A9C65 /* ServiceDeskAboutCell.xib in Resources */,
 				9F819A99255C1572007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
+				9F3AC94E264D44E7004074C8 /* NotificationSettingsViewController.xib in Resources */,
 				9F895B3E255C3383004489C6 /* SystemStatusHeader.xib in Resources */,
 				9F3AC90D2645B17A004074C8 /* GTTeamCell.xib in Resources */,
 				9FA8E8FF25B054C6007D3B9F /* AboutSupportPolicyCell.xib in Resources */,
@@ -2358,6 +2425,7 @@
 				9F819AA0255C1572007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
 				9FA2C6A42628CFC900EC5BE3 /* Apps.storyboard in Resources */,
 				9F895B6E255D3D27004489C6 /* HelpReportScreenViewController.xib in Resources */,
+				9F3AC95B264D4790004074C8 /* SwitcherCell.xib in Resources */,
 				C993A2B22576664300F9146A /* QuickHelpViewController.xib in Resources */,
 				9F643567261B1E88000D94A4 /* WhatsNewCell.xib in Resources */,
 				9F78D0E2256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
@@ -2382,6 +2450,7 @@
 				9FF0546A25681F4A0071E596 /* SecondTicketDetailsViewController.xib in Resources */,
 				9F5B10612567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */,
 				9F6435DB261F22F6000D94A4 /* SF-Pro-Text-Bold.ttf in Resources */,
+				9F3AC944264D3E3D004074C8 /* GeneralCell.xib in Resources */,
 				C907E0C425D437BF00FB0B55 /* AppContactsViewController.xib in Resources */,
 				9F78D07F256530CD00BCD38F /* ArticleViewController.xib in Resources */,
 				9F819AA2255C1572007C1739 /* Main.storyboard in Resources */,
@@ -2408,6 +2477,7 @@
 				9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
 				9F44AE2125EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
 				9F1620D92566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
+				9F3AC94F264D44E7004074C8 /* NotificationSettingsViewController.xib in Resources */,
 				C9EFDA3425A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */,
 				9F643556261B1C9F000D94A4 /* WhatsNewViewController.xib in Resources */,
 				9FF0548325681FCD0071E596 /* SecondSendMessageView.xib in Resources */,
@@ -2429,6 +2499,7 @@
 				9FA8E91225B056D5007D3B9F /* AboutHeaderCell.xib in Resources */,
 				9FF0545525680EC90071E596 /* SendMessageView.xib in Resources */,
 				9F819AC6255C1646007C1739 /* LaunchScreen.storyboard in Resources */,
+				9F3AC95C264D4790004074C8 /* SwitcherCell.xib in Resources */,
 				9F3AC90E2645B17A004074C8 /* GTTeamCell.xib in Resources */,
 				9FA2C6A52628CFC900EC5BE3 /* Apps.storyboard in Resources */,
 				9F819AC7255C1646007C1739 /* SF-Pro-Text-Medium.otf in Resources */,
@@ -2446,6 +2517,7 @@
 				9F819ACA255C1646007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F895B6F255D3D27004489C6 /* HelpReportScreenViewController.xib in Resources */,
 				C993A2B32576664300F9146A /* QuickHelpViewController.xib in Resources */,
+				9F3AC945264D3E3D004074C8 /* GeneralCell.xib in Resources */,
 				9FB9C1572631A46900BA753D /* NewTicketViewController.xib in Resources */,
 				9F78D0E3256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */,
@@ -2801,8 +2873,10 @@
 				9F8164B8257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				65398BCC256D4C5F0039C24E /* Utils.swift in Sources */,
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				9F3AC93F264D3E3D004074C8 /* GeneralCell.swift in Sources */,
 				9F0D269F2577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9FBAF4862577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
+				9F3AC956264D4790004074C8 /* SwitcherCell.swift in Sources */,
 				9F6435CB261F2077000D94A4 /* CollaborationCounterCell.swift in Sources */,
 				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9F643562261B1E88000D94A4 /* WhatsNewCell.swift in Sources */,
@@ -2812,6 +2886,7 @@
 				9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035DE2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
+				9F3AC949264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */,
 				C9D035962578095A0068441F /* CommonResponses.swift in Sources */,
 				9F35862A25FD37BF0003658D /* Office365AppCell.swift in Sources */,
 				9FA8E90D25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
@@ -2881,6 +2956,7 @@
 				653E78EC261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */,
 				9F33F647260A3C4000470A47 /* CollaborationDataProvider.swift in Sources */,
 				9F33F648260A3C4000470A47 /* AppContactCell.swift in Sources */,
+				9F3AC94C264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */,
 				9F33F649260A3C4000470A47 /* HelpDeskDataProvider.swift in Sources */,
 				9F33F64A260A3C4000470A47 /* SessionExpiredHandler.swift in Sources */,
 				9F33F64B260A3C4000470A47 /* AppContactsViewController.swift in Sources */,
@@ -2907,6 +2983,7 @@
 				9F33F65F260A3C4000470A47 /* QuickHelpCell.swift in Sources */,
 				9F33F660260A3C4000470A47 /* HomepageTableViewController.swift in Sources */,
 				9F33F661260A3C4000470A47 /* AuthViewController.swift in Sources */,
+				9F3AC959264D4790004074C8 /* SwitcherCell.swift in Sources */,
 				9F33F662260A3C4000470A47 /* TicketDetailsMessageCell.swift in Sources */,
 				9F33F663260A3C4000470A47 /* ChartLayoutHelper.swift in Sources */,
 				9F33F664260A3C4000470A47 /* CollaborationHeaderCell.swift in Sources */,
@@ -2940,6 +3017,7 @@
 				9F33F67E260A3C4000470A47 /* HomepageViewController.swift in Sources */,
 				9F33F67F260A3C4000470A47 /* CommonResponses.swift in Sources */,
 				9F33F680260A3C4000470A47 /* Office365AppCell.swift in Sources */,
+				9F3AC942264D3E3D004074C8 /* GeneralCell.swift in Sources */,
 				9F643576261B5D40000D94A4 /* WhatsNewMoreViewController.swift in Sources */,
 				9F33F681260A3C4000470A47 /* AboutHeaderCell.swift in Sources */,
 				9F33F682260A3C4000470A47 /* (null) in Sources */,
@@ -3040,8 +3118,10 @@
 				C91F708C2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F8164B9257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
+				9F3AC940264D3E3D004074C8 /* GeneralCell.swift in Sources */,
 				C9D859392567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F0D26A02577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
+				9F3AC957264D4790004074C8 /* SwitcherCell.swift in Sources */,
 				9F6435CC261F2077000D94A4 /* CollaborationCounterCell.swift in Sources */,
 				9FBAF4872577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				9F643563261B1E88000D94A4 /* WhatsNewCell.swift in Sources */,
@@ -3051,6 +3131,7 @@
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035DF2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
+				9F3AC94A264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */,
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035972578095A0068441F /* CommonResponses.swift in Sources */,
 				9F35862B25FD37BF0003658D /* Office365AppCell.swift in Sources */,
@@ -3151,8 +3232,10 @@
 				C91F708D2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F8164BA257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
+				9F3AC941264D3E3D004074C8 /* GeneralCell.swift in Sources */,
 				C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F0D26A12577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
+				9F3AC958264D4790004074C8 /* SwitcherCell.swift in Sources */,
 				9F6435CD261F2077000D94A4 /* CollaborationCounterCell.swift in Sources */,
 				9FBAF4882577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				9F643564261B1E88000D94A4 /* WhatsNewCell.swift in Sources */,
@@ -3162,6 +3245,7 @@
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035E02579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
+				9F3AC94B264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */,
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035982578095A0068441F /* CommonResponses.swift in Sources */,
 				9F35862C25FD37BF0003658D /* Office365AppCell.swift in Sources */,
