@@ -307,6 +307,10 @@
 		9F3AC90D2645B17A004074C8 /* GTTeamCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC9072645B17A004074C8 /* GTTeamCell.xib */; };
 		9F3AC90E2645B17A004074C8 /* GTTeamCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC9072645B17A004074C8 /* GTTeamCell.xib */; };
 		9F3AC90F2645B17A004074C8 /* GTTeamCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC9072645B17A004074C8 /* GTTeamCell.xib */; };
+		9F3AC938264D371A004074C8 /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */; };
+		9F3AC939264D371A004074C8 /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */; };
+		9F3AC93A264D371A004074C8 /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */; };
+		9F3AC93B264D371A004074C8 /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */; };
 		9F44AE1C25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
 		9F44AE1D25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
 		9F44AE1E25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
@@ -838,6 +842,7 @@
 		9F3AC8FB2645A30B004074C8 /* GTTeamViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GTTeamViewController.xib; sourceTree = "<group>"; };
 		9F3AC9062645B17A004074C8 /* GTTeamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTTeamCell.swift; sourceTree = "<group>"; };
 		9F3AC9072645B17A004074C8 /* GTTeamCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GTTeamCell.xib; sourceTree = "<group>"; };
+		9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GeneralScreen.storyboard; sourceTree = "<group>"; };
 		9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTipsAndTricksViewController.swift; sourceTree = "<group>"; };
 		9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTipsAndTricksViewController.xib; sourceTree = "<group>"; };
 		9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailsViewController.swift; sourceTree = "<group>"; };
@@ -1187,7 +1192,9 @@
 		65D14CB7256DA832004DFA70 /* GeneralSection */ = {
 			isa = PBXGroup;
 			children = (
+				9F3AC93C264D3CC0004074C8 /* New Group */,
 				65D14CB8256DA877004DFA70 /* GeneralViewController.swift */,
+				9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */,
 			);
 			path = GeneralSection;
 			sourceTree = "<group>";
@@ -1338,6 +1345,13 @@
 				9F3AC9072645B17A004074C8 /* GTTeamCell.xib */,
 			);
 			path = xib;
+			sourceTree = "<group>";
+		};
+		9F3AC93C264D3CC0004074C8 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		9F44AE2725EFDCBB00A0EDA4 /* AppTipsAndTricksScreen */ = {
@@ -2189,6 +2203,7 @@
 				659A5AB8255401EA00E13B77 /* Main.storyboard in Resources */,
 				9F78CFE82564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
 				C962D82B2566D21100727949 /* TicketCell.xib in Resources */,
+				9F3AC938264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
 				9F825FF525ED5612002A4560 /* GoogleService-Info.plist in Resources */,
 				C9DFD47F2565721F00BF1740 /* MetricStatsCell.xib in Resources */,
 				C93FCF0925648FA0001E86F6 /* AboutViewController.xib in Resources */,
@@ -2256,6 +2271,7 @@
 				9F33F6C6260A3C4000470A47 /* Office365AppCell.xib in Resources */,
 				9F3AC9032645A30B004074C8 /* GTTeamViewController.xib in Resources */,
 				9F33F6C7260A3C4000470A47 /* SF-Pro-Display-Regular.otf in Resources */,
+				9F3AC93B264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
 				9F33F6C8260A3C4000470A47 /* HelpReportScreenViewController.xib in Resources */,
 				9F643569261B1E88000D94A4 /* WhatsNewCell.xib in Resources */,
 				9F33F6C9260A3C4000470A47 /* QuickHelpViewController.xib in Resources */,
@@ -2372,6 +2388,7 @@
 				9F78CFE92564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
 				C960A0E925B08B52004A9C65 /* ServiceDeskAboutViewController.xib in Resources */,
 				C9DFD4802565721F00BF1740 /* MetricStatsCell.xib in Resources */,
+				9F3AC939264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
 				C962D82C2566D21100727949 /* TicketCell.xib in Resources */,
 				C93FCF0A25648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				9F1620D52566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
@@ -2462,6 +2479,7 @@
 				C93FCF1E2564901E001E86F6 /* AboutInfoCell.xib in Resources */,
 				C9424E19256427F0003C247E /* DeviceCell.xib in Resources */,
 				9FB9C16D2631C04E00BA753D /* NoCommentsCell.xib in Resources */,
+				9F3AC93A264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
 				9FA8E90025B054C6007D3B9F /* AboutSupportPolicyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

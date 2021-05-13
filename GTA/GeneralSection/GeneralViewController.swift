@@ -12,10 +12,12 @@ class GeneralViewController: UIViewController {
     
     private var usmLogoutWebView: WKWebView!
     @IBOutlet weak var softwareVersionLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setUpNavigationBar()
+        setUpTableView()
         // Do any additional setup after loading the view.
         usmLogoutWebView = WKWebView(frame: CGRect.zero)
         view.addSubview(usmLogoutWebView)
@@ -26,6 +28,19 @@ class GeneralViewController: UIViewController {
         let version = dictionary["CFBundleShortVersionString"] as! String
         let build = dictionary["CFBundleVersion"] as! String
         softwareVersionLabel.text = String(format: "Version \(version) (\(build))")
+    }
+    
+    private func setUpNavigationBar() {
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
+        self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+    }
+    
+    private func setUpTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: "CollaborationHeaderCell", bundle: nil), forCellReuseIdentifier: "CollaborationHeaderCell")
+        tableView.register(UINib(nibName: "CollaborationCounterCell", bundle: nil), forCellReuseIdentifier: "CollaborationCounterCell")
+        tableView.register(UINib(nibName: "Office365AppCell", bundle: nil), forCellReuseIdentifier: "Office365AppCell")
     }
     
     @IBAction func onLogoutButtonTap(sender: UIButton) {
@@ -84,4 +99,17 @@ extension GeneralViewController: WKNavigationDelegate {
             }
         }
     }
+}
+
+extension GeneralViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Office365AppCell", for: indexPath) as? Office365AppCell
+        cell.
+    }
+    
 }
