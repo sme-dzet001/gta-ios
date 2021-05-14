@@ -105,12 +105,12 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         if let decription = !isCollaborationDetails ? details?.appDescription : collaborationDetails?.description {
             supportData.append(SupportData(title: decription, value: decription))
         }
-        if let openAppUrl = collaborationDetails?.openAppUrl, let _ = URL(string: openAppUrl) {
-            supportData.append(SupportData(title: "Open App", value: openAppUrl))
-        }
-        if let productPage = collaborationDetails?.productPageUrl, let _ = URL(string: productPage) {
-            supportData.append(SupportData(title: "Product Page", value: productPage))
-        }
+//        if let openAppUrl = collaborationDetails?.openAppUrl, let _ = URL(string: openAppUrl) {
+//            supportData.append(SupportData(title: "Open App", value: openAppUrl))
+//        }
+//        if let productPage = collaborationDetails?.productPageUrl, let _ = URL(string: productPage) {
+//            supportData.append(SupportData(title: "Product Page", value: productPage))
+//        }
         if let wikiUrlString = details?.appWikiUrl, let _ = URL(string: wikiUrlString) {
             supportData.append(SupportData(title: "Wiki URL", value: wikiUrlString))
         }
