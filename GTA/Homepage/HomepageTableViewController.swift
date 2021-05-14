@@ -145,9 +145,11 @@ class HomepageTableViewController: UITableViewController {
                     if let data = self?.dataProvider?.globalAlertsData?.first {
                         switch data.status {
                         case .open:
-                            self?.tabBarController?.tabBar.items?[0].badgeValue = "!"
+                            //self?.tabBarController?.tabBar.items?[0].badgeValue = "!"
+                            self?.tabBarController?.tabBar.addAlertItemBadge(atIndex: 0)
                         default:
-                            self?.tabBarController?.tabBar.items?[0].badgeValue = nil
+                            self?.tabBarController?.tabBar.removeItemBadge(atIndex: 0)
+                            //self?.tabBarController?.tabBar.items?[0].badgeValue = nil
                         }
                     }
                 } else {
