@@ -224,8 +224,23 @@ struct GlobalAlertRow: Codable, Equatable {
         return valuesArr[index]?.stringValue
     }
     
-    var status: String? {
+    var alertStatus: String? {
         guard let valuesArr = values, let index = indexes["status"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
     }
+    
+    var status: TicketStatus {
+        guard let _ = alertStatus else { return .none }
+        switch alertStatus!.lowercased() {
+        case "new":
+            return .new
+        case "closed":
+            return .closed
+        case "open":
+            return .open
+        default:
+            return .none
+        }
+    }
+    
 }

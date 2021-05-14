@@ -17,6 +17,7 @@ class HomepageTableViewController: UITableViewController {
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
         
+    weak var showModalDelegate: ShowArticleModalDelegate?
     var dataSource: [HomepageCellData] = []
     private var lastUpdateDate: Date?
     
@@ -134,8 +135,20 @@ class HomepageTableViewController: UITableViewController {
         dataProvider?.getGlobalAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
                 if error == nil && errorCode == 200 {
-                    UIView.performWithoutAnimation {
-                        self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
+                    if self?.tableView.dataHasChanged == true {
+                        self?.tableView.reloadData()
+                    } else {
+                        UIView.performWithoutAnimation {
+                            self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
+                        }
+                    }
+                    if let data = self?.dataProvider?.globalAlertsData?.first {
+                        switch data.status {
+                        case .open:
+                            self?.tabBarController?.tabBar.items?[0].badgeValue = "!"
+                        default:
+                            self?.tabBarController?.tabBar.items?[0].badgeValue = nil
+                        }
                     }
                 } else {
                     //self?.displayError(errorMessage: "Error was happened!")
@@ -181,21 +194,26 @@ class HomepageTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section <= 2 {
+        switch indexPath.section {
+        case 0:
+            return dataProvider?.globalAlertsData == nil ? 0 : 80
+        case 1, 2:
             return 80
+        default:
+            return UITableView.automaticDimension
         }
-        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            //let data = dataProvider?.globalAlertsData
             let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertCell", for: indexPath) as? GlobalAlertCell
-            guard let data = dataProvider?.globalAlertsData else { return createLoadingCell() }
-            if data.isEmpty {
-                cell?.setAlertOff()
-            } else {
+            guard let data = dataProvider?.globalAlertsData, data.count > indexPath.row else { return UITableViewCell() }
+            let alert = data[indexPath.row]
+            cell?.alertLabel.text = alert.summary
+            if alert.status == .open {
                 cell?.setAlertOn()
+            } else {
+                cell?.setAlertOff()
             }
             return cell ?? UITableViewCell()
         } else if indexPath.section == 1 {
@@ -264,13 +282,25 @@ class HomepageTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        switch indexPath.section {
+        case 0:
+            guard (dataProvider?.globalAlertsData ?? []).count > indexPath.row else { return }
+            let text = dataProvider?.globalAlertsData?[indexPath.row].description
+            showModalDelegate?.showArticleModal(with: text, isNeedDelegate: false)
+        case 1:
             openAlertScreen(for: indexPath)
-        } else if indexPath.section == 2 {
+        case 2:
             openGTTeamScreen()
-        } else if indexPath.section == 3 {
+        default:
             openOfficeScreen(for: indexPath)
         }
+//        if indexPath.section == 1 {
+//            openAlertScreen(for: indexPath)
+//        } else if indexPath.section == 2 {
+//            openGTTeamScreen()
+//        } else if indexPath.section == 3 {
+//            openOfficeScreen(for: indexPath)
+//        }
     }
     
     private func openAlertScreen(for indexPath: IndexPath) {

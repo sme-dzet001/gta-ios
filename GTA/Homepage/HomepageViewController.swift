@@ -92,6 +92,7 @@ class HomepageViewController: UIViewController {
         if segue.identifier == "embedTable" {
             homepageTableVC = segue.destination as? HomepageTableViewController
             homepageTableVC?.dataProvider = dataProvider
+            homepageTableVC?.showModalDelegate = self
         }
     }
     
@@ -140,26 +141,13 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard dataProvider.newsData.count > indexPath.row else { return }
-        let articleViewController = ArticleViewController()
-        articleViewController.appearanceDelegate = self
-        var statusBarHeight: CGFloat = 0.0
-       // if #available(iOS 13.0, *) {
-            statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
-//        } else {
-//            statusBarHeight = self.containerView.bounds.height - UIApplication.shared.statusBarFrame.height
-//            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
-//        }
-        articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
         let newsBody = dataProvider.newsData[indexPath.row].newsBody
-        let htmlBody = dataProvider.formNewsBody(from: newsBody)
-        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
-            htmlBody?.setFontFace(font: neededFont)
-        }
-        articleViewController.articleText = htmlBody
+        showArticleViewController(with: newsBody)
         selectedIndexPath.row = indexPath.row
-        presentedVC = articleViewController
-        presentPanModal(articleViewController)
+    }
+    
+    private func showArticleViewController(with text: String?) {
+        showArticleModal(with: text, isNeedDelegate: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -195,7 +183,7 @@ extension HomepageViewController: PanModalAppearanceDelegate {
         if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
             htmlBody?.setFontFace(font: neededFont)
         }
-        self.presentedVC?.articleText = htmlBody
+        self.presentedVC?.attributedArticleText = htmlBody
     }
     
     func panModalDidDissmiss() {
@@ -203,7 +191,36 @@ extension HomepageViewController: PanModalAppearanceDelegate {
     }
 }
 
+extension HomepageViewController: ShowArticleModalDelegate {
+    func showArticleModal(with text: String?, isNeedDelegate: Bool) {
+        let articleViewController = ArticleViewController()
+        if isNeedDelegate {
+            presentedVC = articleViewController
+            articleViewController.appearanceDelegate = self
+        }
+        var statusBarHeight: CGFloat = 0.0
+        statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
+        articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
+        
+        let htmlBody = dataProvider.formNewsBody(from: text)
+        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+            htmlBody?.setFontFace(font: neededFont)
+        }
+        if let _ = htmlBody {
+            articleViewController.attributedArticleText = htmlBody
+        } else {
+            articleViewController.articleText = text
+        }
+        presentPanModal(articleViewController)
+    }
+}
+
 protocol PanModalAppearanceDelegate: AnyObject {
     func needScrollToDirection(_ direction: UICollectionView.ScrollPosition)
     func panModalDidDissmiss()
+}
+
+protocol ShowArticleModalDelegate: AnyObject {
+    func showArticleModal(with text: String?, isNeedDelegate: Bool)
 }
