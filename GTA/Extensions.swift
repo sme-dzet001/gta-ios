@@ -654,7 +654,7 @@ extension UITapGestureRecognizer {
                                                       y: (thisLabelSize.height - textBoundingRect.size.height) * 0.5 - textBoundingRect.origin.y)
         let touchLocationInTextContainer = CGPoint(x: touchLocation.x - textContainerOffset.x, y: touchLocation.y - textContainerOffset.y)
         let characterIndex = layoutManager.characterIndex(for: touchLocationInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        let attributes = label.attributedText?.attributes(at: characterIndex - 1, effectiveRange: nil)
+        let attributes = label.attributedText?.attributes(at: characterIndex == 0 ? 0 : characterIndex - 1, effectiveRange: nil)
         if let _ = attributes?.first(where: {$0.key == .link})?.value as? URL {
             return true
         }
