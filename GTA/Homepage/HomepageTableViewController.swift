@@ -27,7 +27,7 @@ class HomepageTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        dataProvider?.getGlobalAlerts()
+        getGlobalAlerts()
         dataProvider?.officeSelectionDelegate = self
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadSpecialAlertsData()
@@ -39,7 +39,7 @@ class HomepageTableViewController: UITableViewController {
                     tableView.reloadData()
                 } else {
                     UIView.performWithoutAnimation {
-                        tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                        tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
                     }
                 }
             }
@@ -51,6 +51,7 @@ class HomepageTableViewController: UITableViewController {
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "OfficeStatusCell", bundle: nil), forCellReuseIdentifier: "OfficeStatusCell")
         tableView.register(UINib(nibName: "GTTeamCell", bundle: nil), forCellReuseIdentifier: "GTTeamCell")
+        tableView.register(UINib(nibName: "GlobalAlertCell", bundle: nil), forCellReuseIdentifier: "GlobalAlertCell")
     }
     
     private func loadSpecialAlertsData() {
@@ -58,7 +59,7 @@ class HomepageTableViewController: UITableViewController {
             DispatchQueue.main.async {
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                    self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
+                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
                 } else {
                     //self?.displayError(errorMessage: "Error was happened!")
                 }
@@ -73,7 +74,7 @@ class HomepageTableViewController: UITableViewController {
             tableView.reloadData()
         } else {
             UIView.performWithoutAnimation {
-                tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
+                tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
             }
         }
         dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error, isFromCache) in
@@ -96,7 +97,7 @@ class HomepageTableViewController: UITableViewController {
                                 self?.tableView.reloadData()
                             } else {
                                 UIView.performWithoutAnimation {
-                                    self?.tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
+                                    self?.tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
                                 }
                             }
                             if forceOpenOfficeSelectionScreen {
@@ -108,7 +109,7 @@ class HomepageTableViewController: UITableViewController {
                                 self?.tableView.reloadData()
                             } else {
                                 UIView.performWithoutAnimation {
-                                    self?.tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
+                                    self?.tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
                                 }
                             }
                         }
@@ -121,9 +122,23 @@ class HomepageTableViewController: UITableViewController {
                         self?.tableView.reloadData()
                     } else {
                         UIView.performWithoutAnimation {
-                            self?.tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
+                            self?.tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
                         }
                     }
+                }
+            }
+        })
+    }
+    
+    private func getGlobalAlerts() {
+        dataProvider?.getGlobalAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
+            DispatchQueue.main.async {
+                if error == nil && errorCode == 200 {
+                    UIView.performWithoutAnimation {
+                        self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
+                    }
+                } else {
+                    //self?.displayError(errorMessage: "Error was happened!")
                 }
             }
         })
@@ -152,11 +167,11 @@ class HomepageTableViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        if section == 1 {
             return dataProvider?.alertsData.count ?? 0
 //        } else if section == 1 {
 //            return 1
@@ -166,7 +181,7 @@ class HomepageTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section <= 1 {
+        if indexPath.section <= 2 {
             return 80
         }
         return UITableView.automaticDimension
@@ -174,6 +189,16 @@ class HomepageTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
+            //let data = dataProvider?.globalAlertsData
+            let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertCell", for: indexPath) as? GlobalAlertCell
+            guard let data = dataProvider?.globalAlertsData else { return createLoadingCell() }
+            if data.isEmpty {
+                cell?.setAlertOff()
+            } else {
+                cell?.setAlertOn()
+            }
+            return cell ?? UITableViewCell()
+        } else if indexPath.section == 1 {
             let data = dataProvider?.alertsData ?? []
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
             cell?.separator.isHidden = false
@@ -187,10 +212,10 @@ class HomepageTableViewController: UITableViewController {
                 cell?.setMainLabelAtCenter()
             }
             return cell ?? UITableViewCell()
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GTTeamCell", for: indexPath) as? GTTeamCell
             return cell ?? UITableViewCell()
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 3 {
             let data = dataProvider?.userOffice
             if let officeData = data {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
@@ -239,11 +264,11 @@ class HomepageTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             openAlertScreen(for: indexPath)
-        } else if indexPath.section == 1 {
-            openGTTeamScreen()
         } else if indexPath.section == 2 {
+            openGTTeamScreen()
+        } else if indexPath.section == 3 {
             openOfficeScreen(for: indexPath)
         }
     }
@@ -301,7 +326,7 @@ extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUI
                 self.tableView.reloadData()
             } else {
                 UIView.performWithoutAnimation {
-                    self.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                    self.tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
                 }
             }
         }

@@ -18,7 +18,7 @@ class HomeDataProvider {
     private(set) var alertsData = [SpecialAlertRow]()
     private(set) var allOfficesData = [OfficeRow]()
     private(set) var GTTeamContactsData: GTTeamResponse?
-    private(set) var globalAlertsData: [GlobalAlertRow] = []
+    private(set) var globalAlertsData: [GlobalAlertRow]?
     private var selectedOfficeId: Int?
     
     weak var officeSelectionDelegate: OfficeSelectionDelegate?
@@ -410,6 +410,8 @@ class HomeDataProvider {
         }
     }
     
+    // MARK: - Global Alerts related methods
+    
     func getGlobalAlerts(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
@@ -480,8 +482,7 @@ class HomeDataProvider {
         
         let rows = response.data?.rows?.compactMap({$0}) ?? []
         let dataWasChanged: Bool = globalAlertsData != rows
-        //response.data?.rows?.removeAll { ($0?.officeName?.isEmpty ?? true) || ($0?.officeName?.isEmpty ?? true) }
-        globalAlertsData = response.data?.rows?.compactMap({$0}) ?? []
+        globalAlertsData = response.data?.rows?.compactMap({$0})
         return dataWasChanged
     }
     
