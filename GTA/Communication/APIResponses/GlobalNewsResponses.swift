@@ -184,3 +184,48 @@ enum QuantumValue: Codable, Equatable {
         }
     }
 }
+
+// MARK: - Global Alerts Response
+
+struct GlobalAlertsResponse: Codable {
+    var meta: ResponseMetaData?
+    var data: GlobalAlertsData?
+}
+
+struct GlobalAlertsData: Codable, Equatable {
+    var rows: [GlobalAlertRow?]?
+}
+
+struct GlobalAlertRow: Codable, Equatable {
+    var values: [QuantumValue?]?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case values
+    }
+    
+    var ticketNumber: String? {
+        guard let valuesArr = values, let index = indexes["ticket_number"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var summary: String? {
+        guard let valuesArr = values, let index = indexes["summary"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var description: String? {
+        guard let valuesArr = values, let index = indexes["description"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var sendPushFlag: String? {
+        guard let valuesArr = values, let index = indexes["send_push_flag"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var status: String? {
+        guard let valuesArr = values, let index = indexes["status"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+}

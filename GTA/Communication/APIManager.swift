@@ -48,6 +48,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getGSDTickets//(generationNumber: Int)
         case getGSDTicketComments(generationNumber: Int)
         case getGTTeam(generationNumber: Int)
+        case getGlobalOutage(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -75,6 +76,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getGSDTickets: return "/v3/salesforce/tickets/"
                 case .getGSDTicketComments(let generationNumber): return "/v3/widgets/gsd_ticket_comments/data/\(generationNumber)/detailed"
                 case .getGTTeam(let generationNumber): return "/v3/widgets/management_team/data/\(generationNumber)/detailed"
+                case .getGlobalOutage(let generationNumber): return "/v3/widgets/global_alerts/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -106,6 +108,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case collaborationAppDetailsV1 = "collaboration_app_details_v1"
         case collaborationNews = "collaboration_news"
         case gTTeam = "management_team"
+        case globalAlerts = "global_alerts"
     }
     
     init(accessToken: String?) {
@@ -123,6 +126,11 @@ class APIManager: NSObject, URLSessionDelegate {
     func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+    }
+    
+    func getGlobalAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getGlobalOutage(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
     func getAllOffices(generationNumber: Int, completion: ((_ allOfficesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
