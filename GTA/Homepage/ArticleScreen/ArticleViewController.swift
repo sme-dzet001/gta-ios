@@ -81,6 +81,8 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         return .lightContent
     }
     
+    var isGestureBegan: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
@@ -113,7 +115,8 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         let velocity = gesture.velocity(in: presentationView)
         if gesture.state == .began {
             gestureStartPoint = velocity
-        } else if gesture.state == .ended {
+        } else if gesture.state == .changed, !isGestureBegan {
+            isGestureBegan = true
             let xValue = gestureStartPoint.x > velocity.x ?  gestureStartPoint.x - velocity.x : gestureStartPoint.x + velocity.x
             let yValue = gestureStartPoint.y > velocity.y ?  gestureStartPoint.y - velocity.y : gestureStartPoint.y + velocity.y
             let direction: UICollectionView.ScrollPosition = gestureStartPoint.x > velocity.x ? .left : .right
@@ -121,6 +124,8 @@ class ArticleViewController: UIViewController, PanModalPresentable {
                 appearanceDelegate?.needScrollToDirection(direction)
                 articleTextView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
             }
+        } else if gesture.state == .ended {
+            isGestureBegan = false
         }
     }
     
