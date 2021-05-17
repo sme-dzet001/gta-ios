@@ -229,18 +229,25 @@ struct GlobalAlertRow: Codable, Equatable {
         return valuesArr[index]?.stringValue
     }
     
-    var status: TicketStatus {
-        guard let _ = alertStatus else { return .none }
+    var status: GlobalAlertStatus {
+        guard let _ = alertStatus else { return .closed }
         switch alertStatus!.lowercased() {
-        case "new":
-            return .new
-        case "closed":
-            return .closed
         case "open":
             return .open
+        case "closed":
+            return .closed
+        case "inprogress":
+            return .inProgress
         default:
-            return .none
+            return .closed
         }
     }
     
 }
+
+enum GlobalAlertStatus {
+    case open
+    case inProgress
+    case closed
+}
+
