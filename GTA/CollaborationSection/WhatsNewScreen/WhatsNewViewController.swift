@@ -6,7 +6,8 @@
 //
 
 import UIKit
-import SwiftyGif
+//import SwiftyGif
+import SDWebImage
 
 class WhatsNewViewController: UIViewController {
     
@@ -15,8 +16,8 @@ class WhatsNewViewController: UIViewController {
     var dataProvider: CollaborationDataProvider?
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
-    
     private var cellForAnimation: WhatsNewCell?
+    private var expandedRowsIndex = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,37 +93,47 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WhatsNewCell", for: indexPath) as? WhatsNewCell
         let cellDataSource = dataProvider?.collaborationNewsData[indexPath.row]
         cell?.titleLabel.text = cellDataSource?.headline
-        cell?.subtitleLabel.text = cellDataSource?.subHeadline
+        cell?.setDate(cellDataSource?.postDate)
+        //cell?.subtitleLabel.text = cellDataSource?.subHeadline
         cell?.body = cellDataSource?.body
-        let text = cellDataSource?.decodeBody
-        if let neededFont = UIFont(name: "SFProText-Regular", size: 16) {
-            text?.setFontFace(font: neededFont)
+        let text = getDescriptionText(for: indexPath)
+        cell?.delegate = self
+        cell?.fullText = text
+        if !expandedRowsIndex.contains(indexPath.row) {
+            cell?.setCollapse()
+        } else {
+            cell?.descriptionLabel.attributedText = text
+            cell?.descriptionLabel.numberOfLines = 0
+            cell?.descriptionLabel.sizeToFit()
         }
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 8
-        paragraphStyle.paragraphSpacing = 22
-        text?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, text?.length ?? 0))
-        cell?.descriptionLabel.attributedText = text//cellDataSource?.decodeBody
-        cell?.descriptionLabel.addReadMoreString("more")
         cell?.imageUrl = cellDataSource?.imageUrl
         let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl) ?? ""
         let url = URL(string: imageURL)
-        if let url = url {
-            cell?.mainImageView.setGifFromURL(url)
+        if imageURL.isEmptyOrWhitespace() {
+            cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+        } else if let url = url, imageURL.contains(".gif") {
+            cell?.activityIndicator.startAnimating()
+            cell?.mainImageView.sd_setImage(with: url, placeholderImage: nil, options: .refreshCached, completed: { img, err, cacheType, _ in
+                if let _ = err, (err! as NSError).code != 2002 {
+                    cell?.activityIndicator.stopAnimating()
+                    cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+                } else if let _ = img {
+                    cell?.activityIndicator.stopAnimating()
+                }
+                cell?.mainImageView.autoPlayAnimatedImage = false
+            })
         } else {
             cell?.mainImageView.kf.indicatorType = .activity
             cell?.mainImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
                 switch result {
                 case .success(let resData):
                     if !imageURL.contains(".gif") {
-                        cell?.mainImageView.setImage(resData.image)
-                    } else {
-                        cell?.mainImageView.setGifImage(resData.image)
-                        cell?.mainImageView.stopAnimatingGif()
+                       // cell?.mainImageView.setImage(resData.image)
+                        cell?.mainImageView.image = resData.image
                     }
                 case .failure(let error):
                     if !error.isNotCurrentTask {
-                        cell?.mainImageView.setImage(UIImage(named: "whatsNewPlaceholder")!)
+                        cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
                     }
                 }
             })
@@ -132,28 +143,31 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard (dataProvider?.collaborationNewsData.count ?? 0) > indexPath.row else { return }
-        let whatsNewMoreScreen = WhatsNewMoreViewController()
-        let cellDataSource = dataProvider?.collaborationNewsData[indexPath.row]
-        whatsNewMoreScreen.dataProvider = dataProvider
-        whatsNewMoreScreen.dataSource = cellDataSource
-        self.navigationController?.pushViewController(whatsNewMoreScreen, animated: true)
+//        let whatsNewMoreScreen = WhatsNewMoreViewController()
+//        let cellDataSource = dataProvider?.collaborationNewsData[indexPath.row]
+//        whatsNewMoreScreen.dataProvider = dataProvider
+//        whatsNewMoreScreen.dataSource = cellDataSource
+//        self.navigationController?.pushViewController(whatsNewMoreScreen, animated: true)
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let _ = cellForAnimation, tableView.visibleCells.contains(cellForAnimation!) else { return }
-        cellForAnimation?.mainImageView.startAnimatingGif()
+        startAnimationAfterScroll()
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        startAnimationAfterScroll()
+    }
+    
+    private func startAnimationAfterScroll() {
         guard let _ = cellForAnimation, tableView.visibleCells.contains(cellForAnimation!) else { return }
-        cellForAnimation?.mainImageView.startAnimatingGif()
+        cellForAnimation?.mainImageView.startAnimating()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let cells = tableView.visibleCells as? [WhatsNewCell] else { return }
         if scrollView.contentOffset.y <= 0 {
-            cells.forEach({$0.mainImageView.stopAnimatingGif()})
-            cells.first?.mainImageView.startAnimatingGif()
+            cells.forEach({$0.mainImageView.stopAnimating()})
+            cells.first?.mainImageView.startAnimating()
             if let article = dataProvider?.collaborationNewsData.first?.body {
                 dataProvider?.addArticle(article)
             }
@@ -174,8 +188,52 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
-        cells.forEach({$0.mainImageView.stopAnimatingGif()})
+        cells.forEach({$0.mainImageView.stopAnimating()})
     }
 
+    private func getDescriptionText(for indexPath: IndexPath) -> NSMutableAttributedString? {
+        guard (dataProvider?.collaborationNewsData.count ?? 0) > indexPath.row else { return nil }
+        let cellDataSource = dataProvider?.collaborationNewsData[indexPath.row]
+        let text = cellDataSource?.decodeBody
+        if let neededFont = UIFont(name: "SFProText-Regular", size: 16) {
+            text?.setFontFace(font: neededFont)
+        }
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        paragraphStyle.paragraphSpacing = 22
+        text?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, text?.length ?? 0))
+        return text
+    }
     
+}
+
+extension WhatsNewViewController : TappedLabelDelegate {
+    func moreButtonDidTapped(in cell: WhatsNewCell) {
+        guard let cellIndex = tableView.indexPath(for: cell) else { return }
+        guard (dataProvider?.collaborationNewsData.count ?? 0) > cellIndex.row else { return }
+        UIView.setAnimationsEnabled(false)
+        self.tableView.beginUpdates()
+        cell.descriptionLabel.attributedText = self.getDescriptionText(for: cellIndex)
+        cell.descriptionLabel.numberOfLines = 0
+        self.tableView.endUpdates()
+        if !expandedRowsIndex.contains(cellIndex.row) {
+            expandedRowsIndex.append(cellIndex.row)
+        }
+        UIView.setAnimationsEnabled(true)
+    }
+    
+    func openUrl(_ url: URL) {
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            displayError(errorMessage: "Something went wrong", title: nil)
+        }
+    }
+    
+}
+
+
+protocol TappedLabelDelegate: AnyObject {
+    func moreButtonDidTapped(in cell: WhatsNewCell)
+    func openUrl(_ url: URL)
 }

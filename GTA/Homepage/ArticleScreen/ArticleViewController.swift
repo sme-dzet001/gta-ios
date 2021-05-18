@@ -84,6 +84,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
+        articleTextView.delegate = self
         articleTextView.attributedText = articleText
         articleTextView.textContainerInset = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
     }
@@ -99,6 +100,9 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         panGesture.cancelsTouchesInView = false
         presentationView?.addGestureRecognizer(panGesture)
         configureBlurViewPosition(isInitial: true)
+        if view.window?.safeAreaInsets.top ?? 0 <= 24 {
+            articleTextViewBottom?.constant = 15
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -145,4 +149,23 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     deinit {
         heightObserver?.invalidate()
     }
+}
+
+extension ArticleViewController: UITextViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        handleBlurShowing(animated: true)
+    }
+    
+    private func handleBlurShowing(animated: Bool) {
+        let isReachedBottom = articleTextView.contentOffset.y >= (articleTextView.contentSize.height - articleTextView.frame.size.height).rounded(.towardZero)
+        if animated {
+            UIView.animate(withDuration: 0.2) {
+                self.blurView.alpha = isReachedBottom ? 0 : 1
+            }
+        } else {
+            blurView.alpha = isReachedBottom ? 0 : 1
+        }
+    }
+    
 }

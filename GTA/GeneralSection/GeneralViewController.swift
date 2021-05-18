@@ -27,17 +27,17 @@ class GeneralViewController: UIViewController {
         let build = dictionary["CFBundleVersion"] as! String
         softwareVersionLabel.text = String(format: "Version \(version) (\(build))")
     }
-    
     @IBAction func onLogoutButtonTap(sender: UIButton) {
         let alert = UIAlertController(title: "Confirm Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (_) in
-            guard let accessToken = KeychainManager.getToken() else { return }
-            let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
-            let logoutURLStr = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/logout?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))"
-            if let logoutURL = URL(string: logoutURLStr) {
-                let logoutRequest = URLRequest(url: logoutURL)
-                self?.usmLogoutWebView.load(logoutRequest)
-            }
+//            guard let accessToken = KeychainManager.getToken() else { return }
+//            let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
+//            let logoutURLStr = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/logout?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))"
+//            if let logoutURL = URL(string: logoutURLStr) {
+//                let logoutRequest = URLRequest(url: logoutURL)
+//                self?.usmLogoutWebView.load(logoutRequest)
+//            }
+            self?.sendLogoutRequest()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(okAction)
@@ -45,22 +45,20 @@ class GeneralViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func sendLogoutRequest() {
+        guard let accessToken = KeychainManager.getToken() else { return }
+        let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
+        guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
+        let logoutRequest = URLRequest(url: logoutURL)
+        usmLogoutWebView.load(logoutRequest)
     }
-    */
 
 }
 
 extension GeneralViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        logout()
+        //logout()
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {

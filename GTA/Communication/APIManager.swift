@@ -16,7 +16,7 @@ class APIManager: NSObject, URLSessionDelegate {
     #if GTADev
     let baseUrl = "https://gtadev.smedsp.com:8888"
     #elseif GTA
-    let baseUrl = "https://gtainternal.smedsp.com:8888"
+    let baseUrl = "https://gtaapi.smedsp.com:8888"
     #else
     let baseUrl = "https://gtastageapi.smedsp.com:8888"
     #endif
@@ -47,6 +47,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getCollaborationAppDetails(generationNumber: Int)
         case getGSDTickets//(generationNumber: Int)
         case getGSDTicketComments(generationNumber: Int)
+        case getGTTeam(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -73,6 +74,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 //case .getGSDTickets(let generationNumber): return "/v3/widgets/gsd_my_tickets/data/\(generationNumber)/detailed"
                 case .getGSDTickets: return "/v3/salesforce/tickets/"
                 case .getGSDTicketComments(let generationNumber): return "/v3/widgets/gsd_ticket_comments/data/\(generationNumber)/detailed"
+                case .getGTTeam(let generationNumber): return "/v3/widgets/management_team/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -103,6 +105,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case collaborationAppDetails = "collaboration_app_details"
         case collaborationAppDetailsV1 = "collaboration_app_details_v1"
         case collaborationNews = "collaboration_news"
+        case gTTeam = "management_team"
     }
     
     init(accessToken: String?) {
@@ -152,6 +155,11 @@ class APIManager: NSObject, URLSessionDelegate {
 //            //}
 //        }
 //        dataTask.resume()
+    }
+    
+    func getGTTeamData(generationNumber: Int, completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getGTTeam(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
     //MARK: - Service Desk methods

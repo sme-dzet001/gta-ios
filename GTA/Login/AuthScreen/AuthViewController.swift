@@ -117,11 +117,9 @@ class AuthViewController: UIViewController {
         guard let accessToken = KeychainManager.getToken() else { return }
         addWebViewIfNeeded()
         let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
-        let logoutURLStr = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/logout?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))"
-        if let logoutURL = URL(string: logoutURLStr) {
-            let logoutRequest = URLRequest(url: logoutURL)
-            self.usmLogoutWebView.load(logoutRequest)
-        }
+        guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
+        let logoutRequest = URLRequest(url: logoutURL)
+        usmLogoutWebView.load(logoutRequest)
     }
     
     func authenticateUser() {
@@ -344,7 +342,7 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
     
 }
 
-protocol AuthentificationPassed: class {
+protocol AuthentificationPassed: AnyObject {
     var isAuthentificationPassed: Bool? {get set}
     var isAuthentificationScreenShown: Bool? {get set}
 }

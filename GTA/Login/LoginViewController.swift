@@ -66,9 +66,7 @@ class LoginViewController: UIViewController {
     @IBAction func onLoginButtonTap(sender: UIButton) {
         let emailText = String(emailTextField.text?.split(separator: " ").first ?? "")
         guard emailText.isValidEmail else {
-            let alert = UIAlertController(title: "Enter a valid email address", message: "", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(alert, animated: true)
+            showAlert(title: "Enter a valid email address", message: "")
             return
         }
         UserDefaults.standard.setValue(emailText, forKey: "lastUserEmail")
@@ -79,6 +77,7 @@ class LoginViewController: UIViewController {
             let token = String(emailTextField.text?.split(separator: " ").last ?? "")
             usmLoginScreen.token = token != emailText ? token : ""
             #endif
+            usmLoginScreen.showErrorAlertDelegate = self
             self.navigationController?.pushViewController(usmLoginScreen, animated: true)
         }
     }
@@ -137,3 +136,10 @@ class LoginViewController: UIViewController {
 
 }
 
+extension LoginViewController: ShowErrorAlertDelegate {
+    func showAlert(title: String?, message: String?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
+}

@@ -17,6 +17,7 @@ class HomeDataProvider {
     private(set) var newsData = [GlobalNewsRow]()
     private(set) var alertsData = [SpecialAlertRow]()
     private(set) var allOfficesData = [OfficeRow]()
+    private(set) var GTTeamContactsData: GTTeamResponse?
     private var selectedOfficeId: Int?
     
     weak var officeSelectionDelegate: OfficeSelectionDelegate?
@@ -71,7 +72,7 @@ class HomeDataProvider {
         guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
         
         let res = NSMutableAttributedString(attributedString: htmlAttrString)
-        
+        res.trimCharactersInSet(.whitespacesAndNewlines)
         guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return res }
         
         let wholeRange = NSRange(res.string.startIndex..., in: res.string)
@@ -407,6 +408,81 @@ class HomeDataProvider {
             completion?(errorCode, error)
         }
     }
+    
+    // MARK: - Global Technology Team related methods
+    
+    func getGTTeamData(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.processGTTeamSectionReport(data, code, cachedError, true, { (dataWasChanged, code, error) in
+                if error == nil {
+                    completion?(dataWasChanged, code, cachedError)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let _ = error {
+                        completion?(false, errorCode, ResponseError.serverError)
+                    } else {
+                        self?.processGTTeamSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    private func processGTTeamSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gTTeam.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gTTeam.rawValue }?.generationNumber
+        if let generationNumber = generationNumber, generationNumber != 0 {
+            if isFromCache {
+                getCachedResponse(for: .getGTTeamData) {[weak self] (data, error) in
+                    self?.processGTTeam(reportData, data, 200, error, completion)
+                }
+                return
+            }
+            apiManager.getGTTeamData(generationNumber: generationNumber) { [weak self] (response, errorCode, error) in
+                self?.cacheData(response, path: .getGTTeamData)
+                self?.processGTTeam(reportData, response, errorCode, error, completion)
+            }
+        } else {
+            if error != nil || generationNumber == 0 {
+                completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
+            completion?(false, 0, error)
+        }
+    }
+    
+    private func processGTTeam(_ reportData: ReportDataResponse?, _ response: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool,  _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var teamResponse: GTTeamResponse?
+        var retErr = error
+        if let responseData = response {
+            do {
+                teamResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        }
+        let dataWasChanged = fillGTTeamData(teamResponse)
+        completion?(dataWasChanged, errorCode, retErr)
+    }
+    
+    private func fillGTTeamData(_ data: GTTeamResponse?) -> Bool {
+        let indexes = getDataIndexes(columns: data?.meta?.widgetsDataSource?.params?.columns)
+        var response: GTTeamResponse? = data
+        if let rows = response?.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response?.data?.rows?[index]?.indexes = indexes
+            }
+        }
+        if response == nil && self.GTTeamContactsData != nil {
+        } else if response != self.GTTeamContactsData {
+            self.GTTeamContactsData = response
+            return true
+        }
+        return false
+    }
+    
     
     // MARK: - Common methods
     

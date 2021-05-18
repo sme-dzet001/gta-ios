@@ -178,7 +178,8 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         if section == 0 {
             let statusHeader = SystemStatusHeader.instanceFromNib()
             statusHeader.systemStatus = systemStatus
-            statusHeader.dateLabel.text = dataProvider?.formatDateString(dateString: appLastUpdateDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS")
+            statusHeader.dateLabel.text =  appLastUpdateDate?.getFormattedDateStringForMyTickets()
+            //dataProvider?.formatDateString(dateString: appLastUpdateDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS")
             return statusHeader
         } else if let metricsData = dataSource[section].metricsData {
             let metricStatsHeader = MetricStatsHeader.instanceFromNib()
@@ -311,10 +312,10 @@ extension ApplicationStatusViewController: MFMailComposeViewControllerDelegate {
     }
 }
 
-protocol SendEmailDelegate: class {
+protocol SendEmailDelegate: AnyObject {
     func sendEmail(withTitle subject: String, withText body: String, to recipient: String)
 }
 
-protocol DetailsDataDelegate: class {
+protocol DetailsDataDelegate: AnyObject {
     func detailsDataUpdated(detailsData: AppDetailsData?, error: Error?)
 }
