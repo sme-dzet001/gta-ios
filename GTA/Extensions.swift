@@ -246,7 +246,6 @@ extension UITabBar {
         addSubview(badgeView)
     }
 
-    //return true if removed success.
     @discardableResult
     public func removeItemBadge(atIndex index: Int) -> Bool {
         for subView in self.subviews {

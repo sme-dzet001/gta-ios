@@ -18,7 +18,7 @@ class HomeDataProvider {
     private(set) var alertsData = [SpecialAlertRow]()
     private(set) var allOfficesData = [OfficeRow]()
     private(set) var GTTeamContactsData: GTTeamResponse?
-    private(set) var globalAlertsData: [GlobalAlertRow]?
+    private(set) var globalAlertsData: GlobalAlertRow?
     private var selectedOfficeId: Int?
     
     weak var officeSelectionDelegate: OfficeSelectionDelegate?
@@ -481,8 +481,8 @@ class HomeDataProvider {
         }
         
         let rows = response.data?.rows?.compactMap({$0}) ?? []
-        let dataWasChanged: Bool = globalAlertsData != rows
-        globalAlertsData = response.data?.rows?.compactMap({$0})
+        let dataWasChanged: Bool = globalAlertsData != rows.first
+        globalAlertsData = response.data?.rows?.compactMap({$0}).first
         return dataWasChanged
     }
     

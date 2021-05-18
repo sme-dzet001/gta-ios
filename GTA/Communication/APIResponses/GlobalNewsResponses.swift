@@ -224,6 +224,19 @@ struct GlobalAlertRow: Codable, Equatable {
         return valuesArr[index]?.stringValue
     }
     
+    var lastUpdate: Date {
+        guard let valuesArr = values, let index = indexes["last update"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatterPrint.date(from: dateString) ?? Date()
+    }
+    
+    var isExpired: Bool {
+        let isDateExpired = (Date().timeIntervalSince1970 - lastUpdate.timeIntervalSince1970) >= 3600
+        return status == .closed && isDateExpired
+    }
+    
     var alertStatus: String? {
         guard let valuesArr = values, let index = indexes["status"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
