@@ -12,10 +12,12 @@ class GeneralViewController: UIViewController {
     
     private var usmLogoutWebView: WKWebView!
     @IBOutlet weak var softwareVersionLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setUpNavigationBar()
+        setUpTableView()
         // Do any additional setup after loading the view.
         usmLogoutWebView = WKWebView(frame: CGRect.zero)
         view.addSubview(usmLogoutWebView)
@@ -27,6 +29,19 @@ class GeneralViewController: UIViewController {
         let build = dictionary["CFBundleVersion"] as! String
         softwareVersionLabel.text = String(format: "Version \(version) (\(build))")
     }
+    
+    private func setUpNavigationBar() {
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
+        self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+    }
+    
+    private func setUpTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = 80
+        tableView.register(UINib(nibName: "GeneralCell", bundle: nil), forCellReuseIdentifier: "GeneralCell")
+    }
+    
     @IBAction func onLogoutButtonTap(sender: UIButton) {
         let alert = UIAlertController(title: "Confirm Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (_) in
@@ -82,4 +97,22 @@ extension GeneralViewController: WKNavigationDelegate {
             }
         }
     }
+}
+
+extension GeneralViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GeneralCell", for: indexPath) as? GeneralCell
+        return cell ?? UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let notificationVC = NotificationSettingsViewController()
+        self.navigationController?.pushViewController(notificationVC, animated: true)
+    }
+    
 }
