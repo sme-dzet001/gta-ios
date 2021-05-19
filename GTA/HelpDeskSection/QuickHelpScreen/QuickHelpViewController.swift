@@ -258,19 +258,20 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
             answerBody.setFontFace(font: neededFont)
         }
         answerBody.setParagraphStyleParams(lineSpacing: 8)
-        let textHeight = answerBody.height(containerWidth: view.frame.width - 36)
-        let bottomMargin: CGFloat = 8
+        let textHeight = answerBody.height(containerWidth: view.frame.width - 48)
+        let bottomMargin: CGFloat = 32
         return textHeight + bottomMargin
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        if expandedRowsIndex.contains(indexPath.row) {
-            return heightForQuestionAt(indexPath: indexPath) + heightForAnswerAt(indexPath: indexPath)
-        }
-        return heightForQuestionAt(indexPath: indexPath)
+        return getCellHeight(for: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return getCellHeight(for: indexPath)
+    }
+    
+    private func getCellHeight(for indexPath: IndexPath) -> CGFloat {
         if expandedRowsIndex.contains(indexPath.row) {
             return heightForQuestionAt(indexPath: indexPath) + heightForAnswerAt(indexPath: indexPath)
         }

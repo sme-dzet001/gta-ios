@@ -623,6 +623,10 @@ class MyAppsDataProvider {
                     }
                 }
             })
+            let range = (res.string as NSString).range(of: "\n", options: .backwards)
+            if range.length > 0, res.string.count - range.location <= 1 {
+                res.deleteCharacters(in: range)
+            }
             return res
         } else {
             if base64EncodedText != nil, Data(base64Encoded: base64EncodedText!) == nil {
