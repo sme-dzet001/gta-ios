@@ -72,6 +72,7 @@ class CacheManager {
         case getGSDTickets(userEmail: String)
         case getGSDTicketComments(userEmail: String, ticketNumber: String)
         case getGTTeamData
+        case getGlobalOutage
         //case getImageDataFor(detailsPath: String)
         
         var endpoint: String {
@@ -99,6 +100,7 @@ class CacheManager {
             case .getGSDTickets(let userEmail): return "/v3/widgets/gsd_my_tickets/\(userEmail)/data/"
             case .getGSDTicketComments(let userEmail, let ticketNumber): return "/v3/widgets/gsd_my_ticket_comments/\(userEmail)/\(ticketNumber)/data/"
             case .getGTTeamData: return "/v3/widgets/management_team/data/"
+            case .getGlobalOutage: return "/v3/widgets/global_alerts/data/detailed"
             //case .getImageDataFor(let detailsPath): return "/images/\(detailsPath)/"
             }
         }

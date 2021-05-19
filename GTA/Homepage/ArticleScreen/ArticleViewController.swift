@@ -19,7 +19,8 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
     }
-    var articleText: NSMutableAttributedString? {
+    var articleText: String?
+    var attributedArticleText: NSMutableAttributedString? {
         didSet {
             let animation = CATransition()
             animation.type = .fade
@@ -29,8 +30,8 @@ class ArticleViewController: UIViewController, PanModalPresentable {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 8
             paragraphStyle.paragraphSpacing = 22
-            articleText?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, articleText?.length ?? 0))
-            articleTextView?.attributedText = articleText
+            attributedArticleText?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedArticleText?.length ?? 0))
+            articleTextView?.attributedText = attributedArticleText
         }
     }
     
@@ -85,7 +86,11 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
         articleTextView.delegate = self
-        articleTextView.attributedText = articleText
+        if let _ = attributedArticleText {
+            articleTextView.attributedText = attributedArticleText
+        } else {
+            articleTextView.text = articleText
+        }
         articleTextView.textContainerInset = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
     }
     

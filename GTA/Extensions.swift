@@ -215,6 +215,49 @@ extension UITableView {
     }
 }
 
+fileprivate let tabBarItemTag: Int = 10090
+extension UITabBar {
+    public func addAlertItemBadge(atIndex index: Int) {
+        guard let itemCount = self.items?.count, itemCount > 0 else {
+            return
+        }
+        guard index < itemCount else {
+            return
+        }
+        removeItemBadge(atIndex: index)
+
+        let badgeView = UIView()
+        let imageView = UIImageView(image: UIImage(named: "global_alert_badge"))
+        badgeView.addSubview(imageView)
+        NSLayoutConstraint.activate([
+        imageView.topAnchor.constraint(equalTo: badgeView.topAnchor),
+        imageView.bottomAnchor.constraint(equalTo: badgeView.bottomAnchor),
+        imageView.leadingAnchor.constraint(equalTo: badgeView.leadingAnchor),
+        imageView.trailingAnchor.constraint(equalTo: badgeView.trailingAnchor)
+        ])
+        badgeView.tag = tabBarItemTag + Int(index)
+        badgeView.layer.cornerRadius = 5
+
+        let tabFrame = self.frame
+        let percentX = (CGFloat(index) + 0.5) / CGFloat(itemCount)
+        let x = (percentX * tabFrame.size.width).rounded(.up)
+        let y = (CGFloat(0.03) * tabFrame.size.height).rounded(.up)
+        badgeView.frame = CGRect(x: x, y: y, width: 40, height: 40)
+        addSubview(badgeView)
+    }
+
+    @discardableResult
+    public func removeItemBadge(atIndex index: Int) -> Bool {
+        for subView in self.subviews {
+            if subView.tag == (tabBarItemTag + index) {
+                subView.removeFromSuperview()
+                return true
+            }
+        }
+        return false
+    }
+}
+
 extension UIViewController {
     func displayError(errorMessage: String, title: String? = "Error", onClose: ((UIAlertAction?) -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: errorMessage, preferredStyle: .alert)

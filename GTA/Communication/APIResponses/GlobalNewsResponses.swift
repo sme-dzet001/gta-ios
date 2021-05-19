@@ -184,3 +184,83 @@ enum QuantumValue: Codable, Equatable {
         }
     }
 }
+
+// MARK: - Global Alerts Response
+
+struct GlobalAlertsResponse: Codable {
+    var meta: ResponseMetaData?
+    var data: GlobalAlertsData?
+}
+
+struct GlobalAlertsData: Codable, Equatable {
+    var rows: [GlobalAlertRow?]?
+}
+
+struct GlobalAlertRow: Codable, Equatable {
+    var values: [QuantumValue?]?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case values
+    }
+    
+    var ticketNumber: String? {
+        guard let valuesArr = values, let index = indexes["ticket_number"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var summary: String? {
+        guard let valuesArr = values, let index = indexes["summary"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var description: String? {
+        guard let valuesArr = values, let index = indexes["description"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var sendPushFlag: String? {
+        guard let valuesArr = values, let index = indexes["send_push_flag"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var lastUpdate: Date {
+        guard let valuesArr = values, let index = indexes["last update"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatterPrint.date(from: dateString) ?? Date()
+    }
+    
+    var isExpired: Bool {
+        let isDateExpired = (Date().timeIntervalSince1970 - lastUpdate.timeIntervalSince1970) >= 3600
+        return status == .closed && isDateExpired
+    }
+    
+    var alertStatus: String? {
+        guard let valuesArr = values, let index = indexes["status"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var status: GlobalAlertStatus {
+        guard let _ = alertStatus else { return .closed }
+        switch alertStatus!.lowercased() {
+        case "open":
+            return .open
+        case "closed":
+            return .closed
+        case "in progress":
+            return .inProgress
+        default:
+            return .closed
+        }
+    }
+    
+}
+
+enum GlobalAlertStatus {
+    case open
+    case inProgress
+    case closed
+}
+
