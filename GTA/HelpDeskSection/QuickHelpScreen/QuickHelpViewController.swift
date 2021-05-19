@@ -194,18 +194,7 @@ class QuickHelpViewController: UIViewController {
 extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        switch screenType {
-//        case .appTipsAndTricks:
-//            return appsDataProvider?.tipsAndTricksData.count ?? 0
-//        case .collaborationTipsAndTricks:
-//            return collaborationDataProvider?.tipsAndTricksData.count ?? 0
-//        default:
-        return getHelpData().count// dataProvider?.quickHelpData.count ?? 0
-        //}
-//        if isTipsAndTricks {
-//            return collaborationDataProvider.tipsAndTricksData.count
-//        }
-//        return dataProvider?.quickHelpData.count ?? 0
+        return getHelpData().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -254,7 +243,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
         let questionLabelAdditionalSpace = questionLabelLeftIndent + expandBtnRightIndent + expandBtnWidth + expandBtnSpace
         let textHeight = attributedQuestion.height(containerWidth: view.frame.width - questionLabelAdditionalSpace)
         let topMargin: CGFloat = 16
-        let bottomMargin: CGFloat = 16
+        let bottomMargin: CGFloat = 32
         let res = textHeight + topMargin + bottomMargin
         return (res > 64) ? res : 64
     }
@@ -270,18 +259,19 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
         }
         answerBody.setParagraphStyleParams(lineSpacing: 8)
         let textHeight = answerBody.height(containerWidth: view.frame.width - 48)
-        let bottomMargin: CGFloat = 16
+        let bottomMargin: CGFloat = 32
         return textHeight + bottomMargin
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        if expandedRowsIndex.contains(indexPath.row) {
-            return heightForQuestionAt(indexPath: indexPath) + heightForAnswerAt(indexPath: indexPath)
-        }
-        return heightForQuestionAt(indexPath: indexPath)
+        return getCellHeight(for: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return getCellHeight(for: indexPath)
+    }
+    
+    private func getCellHeight(for indexPath: IndexPath) -> CGFloat {
         if expandedRowsIndex.contains(indexPath.row) {
             return heightForQuestionAt(indexPath: indexPath) + heightForAnswerAt(indexPath: indexPath)
         }
@@ -291,11 +281,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension QuickHelpViewController: QuickHelpCellDelegate {
-    
-    func openUrl(_ url: URL) {
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-    }
-    
+
     func quickHelpCellTapped(_ cell: QuickHelpCell, animationDuration: Double) {
         guard let cellIndex = tableView.indexPath(for: cell)?.row else { return }
         guard getHelpData().count > cellIndex else { return }
