@@ -59,6 +59,7 @@ extension NotificationSettingsViewController: UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SwitcherCell", for: indexPath) as? SwitcherCell
+        cell?.notificationSwitch.isOn = Preferences.allowEmergencyOutageNotifications
         cell?.switchStateChangedDelegate = self
         delegate = cell
         return cell ?? UITableViewCell()
