@@ -32,6 +32,9 @@ class ArticleViewController: UIViewController, PanModalPresentable {
             paragraphStyle.paragraphSpacing = 22
             attributedArticleText?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedArticleText?.length ?? 0))
             articleTextView?.attributedText = attributedArticleText
+            if let _ = articleTextView {
+                panModalSetNeedsLayoutUpdate()
+            }
         }
     }
     
@@ -149,6 +152,17 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     
     func panModalWillDismiss() {
         appearanceDelegate?.panModalDidDissmiss()
+    }
+    
+    func willTransition(to state: PanModalPresentationController.PresentationState) {
+        switch state {
+        case .shortForm:
+            UIView.animate(withDuration: 0.2) {
+                self.blurView.alpha = 1
+            }
+        default:
+            return
+        }
     }
     
     deinit {
