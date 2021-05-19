@@ -34,6 +34,9 @@
                             <constraint firstAttribute="width" constant="49" id="Zob-DL-FDL"/>
                         </constraints>
                         <color key="onTintColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                        <connections>
+                            <action selector="notificationSwitchDidChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="YtL-3h-efq"/>
+                        </connections>
                     </switch>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vSA-yK-f0i">
                         <rect key="frame" x="0.0" y="150" width="355" height="1"/>
@@ -59,6 +62,9 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="notificationSwitch" destination="TrG-r5-kvu" id="UI2-p2-OqR"/>
+            </connections>
             <point key="canvasLocation" x="154.34782608695653" y="116.18303571428571"/>
         </tableViewCell>
     </objects>

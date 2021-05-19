@@ -14,6 +14,8 @@ class GeneralViewController: UIViewController {
     @IBOutlet weak var softwareVersionLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    var dataProvider: GeneralDataProvider = GeneralDataProvider()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationBar()
@@ -28,6 +30,11 @@ class GeneralViewController: UIViewController {
         let version = dictionary["CFBundleShortVersionString"] as! String
         let build = dictionary["CFBundleVersion"] as! String
         softwareVersionLabel.text = String(format: "Version \(version) (\(build))")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        dataProvider.getCurrentPreferences()
     }
     
     private func setUpNavigationBar() {
@@ -113,6 +120,7 @@ extension GeneralViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let notificationVC = NotificationSettingsViewController()
+        notificationVC.dataProvider = dataProvider
         self.navigationController?.pushViewController(notificationVC, animated: true)
     }
     

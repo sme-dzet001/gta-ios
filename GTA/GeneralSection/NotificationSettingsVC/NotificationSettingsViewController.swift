@@ -11,10 +11,24 @@ class NotificationSettingsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var dataProvider: GeneralDataProvider?
+    weak var delegate: NotificationStateUpdatedDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
         setUpNavigationItem()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        dataProvider?.getCurrentPreferences(completion: {[weak self] code, error in
+            if error == nil && code == 200 {
+                DispatchQueue.main.async {
+                    self?.delegate?.notificationStateUpdatedDelegate(state: self?.dataProvider?.allowEmergencyOutageNotifications ?? true)
+                }
+            }
+        })
     }
 
     private func setUpTableView() {
@@ -45,7 +59,19 @@ extension NotificationSettingsViewController: UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SwitcherCell", for: indexPath) as? SwitcherCell
+        cell?.switchStateChangedDelegate = self
+        delegate = cell
         return cell ?? UITableViewCell()
     }
     
+}
+
+extension NotificationSettingsViewController: SwitchStateChangedDelegate {
+    func notificationSwitchDidChanged(isOn: Bool) {
+        dataProvider?.setCurrentPreferences(nottificationsState: isOn)
+    }
+}
+
+protocol NotificationStateUpdatedDelegate: AnyObject {
+    func notificationStateUpdatedDelegate(state: Bool)
 }
