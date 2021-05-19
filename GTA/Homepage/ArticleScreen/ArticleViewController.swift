@@ -84,7 +84,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
@@ -121,7 +121,8 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         let velocity = gesture.velocity(in: presentationView)
         if gesture.state == .began {
             gestureStartPoint = velocity
-        } else if gesture.state == .ended {
+        } else if gesture.state == .changed {
+            gesture.state = .ended
             let xValue = gestureStartPoint.x > velocity.x ?  gestureStartPoint.x - velocity.x : gestureStartPoint.x + velocity.x
             let yValue = gestureStartPoint.y > velocity.y ?  gestureStartPoint.y - velocity.y : gestureStartPoint.y + velocity.y
             let direction: UICollectionView.ScrollPosition = gestureStartPoint.x > velocity.x ? .left : .right
