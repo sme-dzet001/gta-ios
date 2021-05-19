@@ -249,7 +249,7 @@ struct GlobalAlertRow: Codable, Equatable {
             return .open
         case "closed":
             return .closed
-        case "inprogress":
+        case "in progress":
             return .inProgress
         default:
             return .closed
