@@ -366,16 +366,16 @@ class HomeDataProvider {
     }
     
     func getCurrentOffice(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        getCachedResponse(for: .getCurrentOffice) {[weak self] (data, cacheError) in
+        getCachedResponse(for: .getCurrentPreferences) {[weak self] (data, cacheError) in
             self?.processGetCurrentOffice(data, cacheError == nil ? 200 : 0, cacheError, true, { (code, error, _) in
                 if error == nil {
                     completion?(code, error, true)
                 }
-                self?.apiManager.getCurrentOffice { [weak self] (response, errorCode, error) in
+                self?.apiManager.getCurrentPreferences { [weak self] (response, errorCode, error) in
 //                    if let _ = error, response == nil, let _ = data, cacheError == nil {
 //                        return
 //                    }
-                    self?.cacheData(response, path: .getCurrentOffice)
+                    self?.cacheData(response, path: .getCurrentPreferences)
                     self?.processGetCurrentOffice(response, errorCode, error, false, completion)
                 }
             })
@@ -395,16 +395,20 @@ class HomeDataProvider {
         if let userPreferencesResponse = userPreferencesResponse {
             if !fromCache || selectedOfficeId == nil {
                 selectedOfficeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
+                Preferences.officeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
+                Preferences.allowEmergencyOutageNotifications = userPreferencesResponse.data.preferences?.allowEmergencyOutageNotifications ?? true
             }
         }
         completion?(errorCode, retErr, fromCache)
     }
     
     func setCurrentOffice(officeId: Int, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.setCurrentOffice(officeId: officeId) { [weak self] (response, errorCode, error) in
+        let preferences = "{\"office_id\":\"\(officeId)\", \"allow_notifications_emergency_outage\": \(Preferences.allowEmergencyOutageNotifications)}"
+        apiManager.setCurrentPreferences(preferences: preferences) { [weak self] (response, errorCode, error) in
             if let _ = response, errorCode == 200, error == nil {
                 self?.officeSelectionDelegate?.officeWasSelected()
                 self?.selectedOfficeId = officeId
+                Preferences.officeId = officeId
             }
             completion?(errorCode, error)
         }

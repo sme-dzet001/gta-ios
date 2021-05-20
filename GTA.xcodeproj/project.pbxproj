@@ -99,6 +99,14 @@
 		9F2C82042653E720004407B4 /* GlobalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C81F62653E720004407B4 /* GlobalAlertViewController.xib */; };
 		9F2C82052653E720004407B4 /* GlobalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C81F62653E720004407B4 /* GlobalAlertViewController.xib */; };
 		9F2C82062653E720004407B4 /* GlobalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C81F62653E720004407B4 /* GlobalAlertViewController.xib */; };
+		9F2C823C26552A29004407B4 /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
+		9F2C823D26552A29004407B4 /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
+		9F2C823E26552A29004407B4 /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
+		9F2C823F26552A29004407B4 /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
+		9F2C8241265534A5004407B4 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
+		9F2C8242265534A5004407B4 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
+		9F2C8243265534A5004407B4 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
+		9F2C8244265534A5004407B4 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
 		9F2F982E25F90D0600BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
 		9F2F982F25F90D0600BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
 		9F2F983025F90D0600BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
@@ -864,6 +872,8 @@
 		9F2C81F42653E720004407B4 /* GlobalAlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalAlertCell.xib; sourceTree = "<group>"; };
 		9F2C81F52653E720004407B4 /* GlobalAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalAlertViewController.swift; sourceTree = "<group>"; };
 		9F2C81F62653E720004407B4 /* GlobalAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalAlertViewController.xib; sourceTree = "<group>"; };
+		9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDataProvider.swift; sourceTree = "<group>"; };
+		9F2C8240265534A5004407B4 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationResponses.swift; sourceTree = "<group>"; };
 		9F33F6EF260A3C4000470A47 /* QA-GTAStage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QA-GTAStage.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F33F6F0260A3C4000470A47 /* QA-GTAStage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QA-GTAStage-Info.plist"; path = "/Users/kostiantyndzetsiuk/Documents/gta-ios/QA-GTAStage-Info.plist"; sourceTree = "<absolute>"; };
@@ -1243,6 +1253,7 @@
 		65D14CB7256DA832004DFA70 /* GeneralSection */ = {
 			isa = PBXGroup;
 			children = (
+				9F2C823A26552A0A004407B4 /* DataProvider */,
 				9F3AC952264D4663004074C8 /* NotificationSettingsVC */,
 				9F3AC951264D4650004074C8 /* GeneralScreen */,
 			);
@@ -1282,6 +1293,7 @@
 				C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */,
 				9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */,
 				9F35867625FFBAC40003658D /* ErrorHandler.swift */,
+				9F2C8240265534A5004407B4 /* Preferences.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1358,6 +1370,14 @@
 				9F2C81F42653E720004407B4 /* GlobalAlertCell.xib */,
 			);
 			path = cells;
+            sourceTree = "<group>";
+        };
+		9F2C823A26552A0A004407B4 /* DataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */,
+			);
+			path = DataProvider;
 			sourceTree = "<group>";
 		};
 		9F3585FF25FD219C0003658D /* CollaborationCustomHeader */ = {
@@ -2873,6 +2893,7 @@
 			files = (
 				653E78E9261FC58700CABB4C /* UsageMetricsViewController.swift in Sources */,
 				6547567325FA4AE6002C45C4 /* CollaborationDataProvider.swift in Sources */,
+				9F2C8241265534A5004407B4 /* Preferences.swift in Sources */,
 				C907E0D825D4382500FB0B55 /* AppContactCell.swift in Sources */,
 				9F83A8EB2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
 				9F9D9CDB2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */,
@@ -2935,6 +2956,7 @@
 				9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035DE2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
+				9F2C823C26552A29004407B4 /* GeneralDataProvider.swift in Sources */,
 				9F3AC949264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */,
 				C9D035962578095A0068441F /* CommonResponses.swift in Sources */,
 				9F35862A25FD37BF0003658D /* Office365AppCell.swift in Sources */,
@@ -3051,6 +3073,7 @@
 				9F33F670260A3C4000470A47 /* ServiceDeskAboutViewController.swift in Sources */,
 				9F33F671260A3C4000470A47 /* ServiceDeskContactsViewController.swift in Sources */,
 				9F33F672260A3C4000470A47 /* HelpDeskCell.swift in Sources */,
+				9F2C823F26552A29004407B4 /* GeneralDataProvider.swift in Sources */,
 				9F33F673260A3C4000470A47 /* MyAppsDataProvider.swift in Sources */,
 				9F2C81FA2653E720004407B4 /* GlobalAlertCell.swift in Sources */,
 				9F33F674260A3C4000470A47 /* SceneDelegate.swift in Sources */,
@@ -3065,6 +3088,7 @@
 				9F33F67B260A3C4000470A47 /* AppsViewController.swift in Sources */,
 				9F33F67C260A3C4000470A47 /* AnimatedCollectionViewLayout.swift in Sources */,
 				9F33F67D260A3C4000470A47 /* ServiceDeskContactCell.swift in Sources */,
+				9F2C8244265534A5004407B4 /* Preferences.swift in Sources */,
 				9F33F67E260A3C4000470A47 /* HomepageViewController.swift in Sources */,
 				9F33F67F260A3C4000470A47 /* CommonResponses.swift in Sources */,
 				9F33F680260A3C4000470A47 /* Office365AppCell.swift in Sources */,
@@ -3122,6 +3146,7 @@
 			files = (
 				653E78EA261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */,
 				6547567425FA4AE6002C45C4 /* CollaborationDataProvider.swift in Sources */,
+				9F2C8242265534A5004407B4 /* Preferences.swift in Sources */,
 				C907E0D925D4382500FB0B55 /* AppContactCell.swift in Sources */,
 				9F83A8EC2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
 				9F9D9CDC2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */,
@@ -3184,6 +3209,7 @@
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035DF2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
+				9F2C823D26552A29004407B4 /* GeneralDataProvider.swift in Sources */,
 				9F3AC94A264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */,
 				9F36D4692562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035972578095A0068441F /* CommonResponses.swift in Sources */,
@@ -3238,6 +3264,7 @@
 			files = (
 				653E78EB261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */,
 				6547567525FA4AE6002C45C4 /* CollaborationDataProvider.swift in Sources */,
+				9F2C8243265534A5004407B4 /* Preferences.swift in Sources */,
 				C907E0DA25D4382500FB0B55 /* AppContactCell.swift in Sources */,
 				9F83A8ED2578FF2100F9CFF0 /* HelpDeskDataProvider.swift in Sources */,
 				9F9D9CDD2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */,
@@ -3300,6 +3327,7 @@
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035E02579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
+				9F2C823E26552A29004407B4 /* GeneralDataProvider.swift in Sources */,
 				9F3AC94B264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */,
 				9F36D46A2562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				C9D035982578095A0068441F /* CommonResponses.swift in Sources */,

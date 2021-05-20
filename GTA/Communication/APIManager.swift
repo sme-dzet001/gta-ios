@@ -28,8 +28,8 @@ class APIManager: NSObject, URLSessionDelegate {
         case getGlobalNews(generationNumber: Int)
         case getSpecialAlerts(generationNumber: Int)
         case getAllOffices(generationNumber: Int)
-        case getCurrentOffice
-        case setCurrentOffice
+        case getCurrentPreferences
+        case setCurrentPreferences
         case getHelpDeskData(generationNumber: Int)
         case getQuickHelpData(generationNumber: Int)
         case getTeamContactsData(generationNumber: Int)
@@ -52,7 +52,7 @@ class APIManager: NSObject, URLSessionDelegate {
         
         var endpoint: String {
             switch self {
-                case .validateToken, .getCurrentOffice, .setCurrentOffice: return "/v1/me"
+                case .validateToken, .getCurrentPreferences, .setCurrentPreferences: return "/v1/me"
                 case .getSectionReport: return "/v3/reports/"
                 case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)/detailed"
                 case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)/detailed"
@@ -138,15 +138,15 @@ class APIManager: NSObject, URLSessionDelegate {
         makeRequest(endpoint: .getAllOffices(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
-    func getCurrentOffice(completion: ((_ preferencesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getCurrentPreferences(completion: ((_ preferencesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getCurrentOffice, method: "GET", headers: requestHeaders, completion: completion)
+        makeRequest(endpoint: .getCurrentPreferences, method: "GET", headers: requestHeaders, completion: completion)
     }
     
-    func setCurrentOffice(officeId: Int, completion: ((_ preferencesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func setCurrentPreferences(preferences: String, completion: ((_ preferencesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Content-Type": "application/x-www-form-urlencoded"]
-        let bodyParams = ["preferences": "{\"office_id\":\"\(officeId)\"}", "token": (accessToken ?? "")]
-        makeRequest(endpoint: .setCurrentOffice, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
+        let bodyParams = ["preferences": preferences, "token": (accessToken ?? "")]
+        makeRequest(endpoint: .setCurrentPreferences, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
     }
     
     func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ response: URLResponse?, _ error: Error?) -> Void)) {
