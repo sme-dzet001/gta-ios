@@ -147,7 +147,24 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     private func showArticleViewController(with text: String?) {
-        showArticleModal(with: text, isNeedDelegate: true)
+        let articleViewController = ArticleViewController()
+        presentedVC = articleViewController
+        articleViewController.appearanceDelegate = self
+        var statusBarHeight: CGFloat = 0.0
+        statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
+        articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
+        
+        let htmlBody = dataProvider.formNewsBody(from: text)
+        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+            htmlBody?.setFontFace(font: neededFont)
+        }
+        if let _ = htmlBody {
+            articleViewController.attributedArticleText = htmlBody
+        } else {
+            articleViewController.articleText = text
+        }
+        presentPanModal(articleViewController)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -191,28 +208,12 @@ extension HomepageViewController: PanModalAppearanceDelegate {
     }
 }
 
-extension HomepageViewController: ShowArticleModalDelegate {
-    func showArticleModal(with text: String?, isNeedDelegate: Bool) {
-        let articleViewController = ArticleViewController()
-        if isNeedDelegate {
-            presentedVC = articleViewController
-            articleViewController.appearanceDelegate = self
-        }
-        var statusBarHeight: CGFloat = 0.0
-        statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
-        articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
+extension HomepageViewController: ShowGlobalAlertModalDelegate {
+    func showGlobalAlertModal() {
+        let globalAlertViewController = GlobalAlertViewController()
+        globalAlertViewController.dataProvider = dataProvider
+        presentPanModal(globalAlertViewController)
         
-        let htmlBody = dataProvider.formNewsBody(from: text)
-        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
-            htmlBody?.setFontFace(font: neededFont)
-        }
-        if let _ = htmlBody {
-            articleViewController.attributedArticleText = htmlBody
-        } else {
-            articleViewController.articleText = text
-        }
-        presentPanModal(articleViewController)
     }
 }
 
@@ -221,6 +222,6 @@ protocol PanModalAppearanceDelegate: AnyObject {
     func panModalDidDissmiss()
 }
 
-protocol ShowArticleModalDelegate: AnyObject {
-    func showArticleModal(with text: String?, isNeedDelegate: Bool)
+protocol ShowGlobalAlertModalDelegate: AnyObject {
+    func showGlobalAlertModal()
 }

@@ -17,7 +17,7 @@ class HomepageTableViewController: UITableViewController {
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
         
-    weak var showModalDelegate: ShowArticleModalDelegate?
+    weak var showModalDelegate: ShowGlobalAlertModalDelegate?
     var dataSource: [HomepageCellData] = []
     private var lastUpdateDate: Date?
     
@@ -189,7 +189,7 @@ class HomepageTableViewController: UITableViewController {
         switch section {
         case 0:
             let alert = dataProvider?.globalAlertsData
-            if alert == nil || (alert?.isExpired ?? true) {
+            if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
                 return 0
             }
             return 1
@@ -214,7 +214,7 @@ class HomepageTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertCell", for: indexPath) as? GlobalAlertCell
             guard let alert = dataProvider?.globalAlertsData else { return UITableViewCell() }
             guard !alert.isExpired else { return UITableViewCell() }
-            cell?.alertLabel.text = alert.summary ?? "Global Emergency Outage"
+            cell?.alertLabel.text = alert.alertTitle ?? "Global Emergency Outage"
             if alert.status == .closed {
                 cell?.setAlertOff()
             } else {
@@ -289,8 +289,7 @@ class HomepageTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            let text = dataProvider?.globalAlertsData?.description
-            showModalDelegate?.showArticleModal(with: text, isNeedDelegate: false)
+            showModalDelegate?.showGlobalAlertModal()
         case 1:
             openAlertScreen(for: indexPath)
         case 2:
