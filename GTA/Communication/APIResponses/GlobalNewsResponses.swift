@@ -225,12 +225,12 @@ struct GlobalAlertRow: Codable, Equatable {
     }
     
     var endDate : String? {
-        guard let valuesArr = values, let index = indexes["close_date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return nil }
+        guard let valuesArr = values, let index = indexes["close date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return nil }
         return dateString.getFormattedDateStringForMyTickets()
     }
     
     var estimatedDuration : String? {
-        guard let valuesArr = values, let index = indexes["estimated_duration"], valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["estimated duration"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
     }
     
@@ -240,17 +240,17 @@ struct GlobalAlertRow: Codable, Equatable {
     }
     
     var closeComment : String? {
-        guard let valuesArr = values, let index = indexes["close_description"], valuesArr.count > index else { return nil }
+        guard let valuesArr = values, let index = indexes["close description"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
     }
     
     var notificationDate : String? {
-        guard let valuesArr = values, let index = indexes["last update"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return nil }
+        guard let valuesArr = values, let index = indexes["start date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return nil }
         return dateString.getFormattedDateStringForMyTickets()
     }
     
     var lastUpdate: Date {
-        guard let valuesArr = values, let index = indexes["last update"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
+        guard let valuesArr = values, let index = indexes["close date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
         dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
