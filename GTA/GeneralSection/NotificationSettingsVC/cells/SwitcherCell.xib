@@ -23,7 +23,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emergency Outage Notifications" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tjc-fZ-E7j">
-                        <rect key="frame" x="31" y="24" width="241" height="104"/>
+                        <rect key="frame" x="31" y="24" width="246" height="104"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -39,10 +39,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3A-T2-IAH">
-                        <rect key="frame" x="282" y="63.5" width="49" height="24"/>
+                        <rect key="frame" x="287" y="63.5" width="44" height="24"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="49" id="8Yx-wp-B1G"/>
+                            <constraint firstAttribute="width" constant="44" id="8Yx-wp-B1G"/>
                             <constraint firstAttribute="height" constant="24" id="pXU-51-n51"/>
                         </constraints>
                     </view>

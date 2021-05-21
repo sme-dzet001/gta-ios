@@ -99,7 +99,7 @@ class Switch: UIControl {
     }
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: 52, height: 31)
+        return CGSize(width: 44, height: 24)
     }
 
     let trackLayer = CALayer()
@@ -294,7 +294,7 @@ class Switch: UIControl {
     final func getThumbOrigin(for width: CGFloat) -> CGPoint {
         let inset = borderWidt + thumbRadiusPadding
         let x = isOn ? bounds.width - width - inset : inset
-        return CGPoint(x: x, y: 7)
+        return CGPoint(x: x, y: 4)
     }
 
     final func getContentLayerSize(for layer: CALayer?) -> CGSize {
