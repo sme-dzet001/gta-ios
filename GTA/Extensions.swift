@@ -502,7 +502,7 @@ extension String {
         }
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
         if let date = dateFormatterPrint.date(from: self) {
-            dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
+            dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
             return dateFormatterPrint.string(from: date)
         } else {
             dateFormatterPrint.dateFormat = String.newsDateFormat
