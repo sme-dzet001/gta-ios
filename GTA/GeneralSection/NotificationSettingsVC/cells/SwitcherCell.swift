@@ -9,27 +9,25 @@ import UIKit
 
 class SwitcherCell: UITableViewCell {
 
-    @IBOutlet weak var notificationSwitch: UISwitch!
+    @IBOutlet weak var switchView: UIView!
     
-    weak var switchStateChangedDelegate: SwitchStateChangedDelegate?
+    var switchControl = Switch()
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-    
-    @IBAction func notificationSwitchDidChanged(_ sender: UISwitch) {
-        switchStateChangedDelegate?.notificationSwitchDidChanged(isOn: sender.isOn)
+        switchView.addSubview(switchControl)
+        switchControl.topAnchor.constraint(equalTo: switchView.topAnchor).isActive = true
+        switchControl.bottomAnchor.constraint(equalTo: switchView.bottomAnchor).isActive = true
+        switchControl.leadingAnchor.constraint(equalTo: switchView.leadingAnchor).isActive = true
+        switchControl.trailingAnchor.constraint(equalTo: switchView.trailingAnchor).isActive = true
     }
     
 }
 
 extension SwitcherCell: NotificationStateUpdatedDelegate {
     func notificationStateUpdatedDelegate(state: Bool) {
-        notificationSwitch.isOn = state
+        switchControl.isOn = state
     }
-}
-
-protocol SwitchStateChangedDelegate: AnyObject {
-    func notificationSwitchDidChanged(isOn: Bool)
 }

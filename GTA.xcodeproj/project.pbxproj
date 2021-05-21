@@ -107,6 +107,10 @@
 		9F2C8242265534A5004407B4 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
 		9F2C8243265534A5004407B4 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
 		9F2C8244265534A5004407B4 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
+		9F2C82712657F1E1004407B4 /* CustomUISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82702657F1E1004407B4 /* CustomUISwitch.swift */; };
+		9F2C82722657F1E1004407B4 /* CustomUISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82702657F1E1004407B4 /* CustomUISwitch.swift */; };
+		9F2C82732657F1E1004407B4 /* CustomUISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82702657F1E1004407B4 /* CustomUISwitch.swift */; };
+		9F2C82742657F1E1004407B4 /* CustomUISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82702657F1E1004407B4 /* CustomUISwitch.swift */; };
 		9F2F982E25F90D0600BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
 		9F2F982F25F90D0600BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
 		9F2F983025F90D0600BCC37F /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
@@ -874,6 +878,7 @@
 		9F2C81F62653E720004407B4 /* GlobalAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalAlertViewController.xib; sourceTree = "<group>"; };
 		9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDataProvider.swift; sourceTree = "<group>"; };
 		9F2C8240265534A5004407B4 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		9F2C82702657F1E1004407B4 /* CustomUISwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUISwitch.swift; sourceTree = "<group>"; };
 		9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationResponses.swift; sourceTree = "<group>"; };
 		9F33F6EF260A3C4000470A47 /* QA-GTAStage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QA-GTAStage.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F33F6F0260A3C4000470A47 /* QA-GTAStage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QA-GTAStage-Info.plist"; path = "/Users/kostiantyndzetsiuk/Documents/gta-ios/QA-GTAStage-Info.plist"; sourceTree = "<absolute>"; };
@@ -1370,8 +1375,8 @@
 				9F2C81F42653E720004407B4 /* GlobalAlertCell.xib */,
 			);
 			path = cells;
-            sourceTree = "<group>";
-        };
+			sourceTree = "<group>";
+		};
 		9F2C823A26552A0A004407B4 /* DataProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -1746,6 +1751,7 @@
 		9F8AEAE2255EB86000B62072 /* CustomUIElements */ = {
 			isa = PBXGroup;
 			children = (
+				9F2C82702657F1E1004407B4 /* CustomUISwitch.swift */,
 				9F895B7A255D8810004489C6 /* CustomTextField.swift */,
 				9F8AEAE3255EB88500B62072 /* CustomTextView.swift */,
 				C9DFD4C825659DB400BF1740 /* BarChart */,
@@ -2997,6 +3003,7 @@
 				C9D0359C2578095A0068441F /* LoginResponses.swift in Sources */,
 				65D2909B256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E0125642632003C247E /* MyDevicesViewController.swift in Sources */,
+				9F2C82712657F1E1004407B4 /* CustomUISwitch.swift in Sources */,
 				C9424E14256427F0003C247E /* DeviceCell.swift in Sources */,
 				659C595B25924106007953A7 /* CacheManager.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
@@ -3104,6 +3111,7 @@
 				9F33F688260A3C4000470A47 /* HomeDataProvider.swift in Sources */,
 				9F33F689260A3C4000470A47 /* Extensions.swift in Sources */,
 				9F33F68A260A3C4000470A47 /* SystemUpdatesCell.swift in Sources */,
+				9F2C82742657F1E1004407B4 /* CustomUISwitch.swift in Sources */,
 				9F33F68B260A3C4000470A47 /* SystemStatusHeader.swift in Sources */,
 				9F33F68C260A3C4000470A47 /* CustomTextView.swift in Sources */,
 				9F33F68D260A3C4000470A47 /* NetworkManager.swift in Sources */,
@@ -3250,6 +3258,7 @@
 				C9D0359D2578095A0068441F /* LoginResponses.swift in Sources */,
 				65D2909C256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E15256427F0003C247E /* DeviceCell.swift in Sources */,
+				9F2C82722657F1E1004407B4 /* CustomUISwitch.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				659C595C25924106007953A7 /* CacheManager.swift in Sources */,
 				C962D8452566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
@@ -3368,6 +3377,7 @@
 				C9D0359E2578095A0068441F /* LoginResponses.swift in Sources */,
 				65D2909D256C0DDD001B658A /* KeychainManager.swift in Sources */,
 				C9424E16256427F0003C247E /* DeviceCell.swift in Sources */,
+				9F2C82732657F1E1004407B4 /* CustomUISwitch.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				659C595D25924106007953A7 /* CacheManager.swift in Sources */,
 				C962D8462566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
