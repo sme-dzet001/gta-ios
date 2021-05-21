@@ -83,7 +83,6 @@
 		9F1620DD2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
 		9F1620DE2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
 		9F1620DF2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
-		9F2C82062653E720004407B4 /* GlobalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C81F62653E720004407B4 /* GlobalAlertViewController.xib */; };
 		9F2C823C26552A29004407B4 /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
 		9F2C823D26552A29004407B4 /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
 		9F2C823E26552A29004407B4 /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
@@ -885,7 +884,6 @@
 		9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeInfoCell.xib; sourceTree = "<group>"; };
 		9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoArticleCell.swift; sourceTree = "<group>"; };
 		9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficeInfoCell.swift; sourceTree = "<group>"; };
-		9F2C81F62653E720004407B4 /* GlobalAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalAlertViewController.xib; sourceTree = "<group>"; };
 		9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDataProvider.swift; sourceTree = "<group>"; };
 		9F2C8240265534A5004407B4 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalAlertCell.swift; sourceTree = "<group>"; };
@@ -1816,7 +1814,6 @@
 		9FBAF4632577D55B00B43F96 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				9F2C81F62653E720004407B4 /* GlobalAlertViewController.xib */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -2435,7 +2432,6 @@
 				9F3AC9032645A30B004074C8 /* GTTeamViewController.xib in Resources */,
 				9F33F6C7260A3C4000470A47 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F3AC93B264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
-				9F2C82062653E720004407B4 /* GlobalAlertViewController.xib in Resources */,
 				9F33F6C8260A3C4000470A47 /* HelpReportScreenViewController.xib in Resources */,
 				9F643569261B1E88000D94A4 /* WhatsNewCell.xib in Resources */,
 				9F33F6C9260A3C4000470A47 /* QuickHelpViewController.xib in Resources */,
@@ -3589,7 +3585,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = H9636WUCU4;
 				INFOPLIST_FILE = GTA/Plists/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3721,6 +3717,7 @@
 				CODE_SIGN_ENTITLEMENTS = GTAStage.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H9636WUCU4;
 				INFOPLIST_FILE = "QA-GTAStage-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3743,6 +3740,7 @@
 				CODE_SIGN_ENTITLEMENTS = GTAStage.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H9636WUCU4;
 				INFOPLIST_FILE = "QA-GTAStage-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3765,6 +3763,7 @@
 				CODE_SIGN_ENTITLEMENTS = GTAStage.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H9636WUCU4;
 				INFOPLIST_FILE = "GTA/Plists/GTAStage-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3787,6 +3786,7 @@
 				CODE_SIGN_ENTITLEMENTS = GTAStage.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H9636WUCU4;
 				INFOPLIST_FILE = "GTA/Plists/GTAStage-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
