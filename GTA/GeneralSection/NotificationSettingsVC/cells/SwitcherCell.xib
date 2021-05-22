@@ -23,21 +23,11 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emergency Outage Notifications" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tjc-fZ-E7j">
-                        <rect key="frame" x="31" y="24" width="241" height="104"/>
+                        <rect key="frame" x="31" y="24" width="246" height="104"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TrG-r5-kvu">
-                        <rect key="frame" x="282" y="60" width="51" height="31"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="49" id="Zob-DL-FDL"/>
-                        </constraints>
-                        <color key="onTintColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
-                        <connections>
-                            <action selector="notificationSwitchDidChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="YtL-3h-efq"/>
-                        </connections>
-                    </switch>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vSA-yK-f0i">
                         <rect key="frame" x="0.0" y="150" width="355" height="1"/>
                         <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
@@ -48,22 +38,30 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3A-T2-IAH">
+                        <rect key="frame" x="287" y="63.5" width="44" height="24"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="44" id="8Yx-wp-B1G"/>
+                            <constraint firstAttribute="height" constant="24" id="pXU-51-n51"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="m3A-T2-IAH" firstAttribute="leading" secondItem="Tjc-fZ-E7j" secondAttribute="trailing" constant="10" id="6Ah-kh-euO"/>
+                    <constraint firstItem="m3A-T2-IAH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="6GV-nK-ay0"/>
                     <constraint firstItem="Tjc-fZ-E7j" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="8Jt-yP-CxV"/>
                     <constraint firstAttribute="trailing" secondItem="vSA-yK-f0i" secondAttribute="trailing" id="F9D-xK-1uR"/>
-                    <constraint firstAttribute="trailing" secondItem="TrG-r5-kvu" secondAttribute="trailing" constant="24" id="Huq-T0-Byb"/>
+                    <constraint firstAttribute="trailing" secondItem="m3A-T2-IAH" secondAttribute="trailing" constant="24" id="G7M-V2-GkU"/>
                     <constraint firstAttribute="bottom" secondItem="vSA-yK-f0i" secondAttribute="bottom" id="Ooc-2g-psq"/>
                     <constraint firstItem="vSA-yK-f0i" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="RCN-qU-lQo"/>
-                    <constraint firstItem="TrG-r5-kvu" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ui8-cF-qnQ"/>
-                    <constraint firstItem="TrG-r5-kvu" firstAttribute="leading" secondItem="Tjc-fZ-E7j" secondAttribute="trailing" constant="10" id="Zo9-vO-1uD"/>
                     <constraint firstItem="Tjc-fZ-E7j" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="31" id="dGY-Ng-cjj"/>
                     <constraint firstAttribute="bottom" secondItem="Tjc-fZ-E7j" secondAttribute="bottom" constant="23" id="lFT-eZ-p0h"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="notificationSwitch" destination="TrG-r5-kvu" id="UI2-p2-OqR"/>
+                <outlet property="switchView" destination="m3A-T2-IAH" id="K8Z-UX-YCe"/>
             </connections>
             <point key="canvasLocation" x="154.34782608695653" y="116.18303571428571"/>
         </tableViewCell>
