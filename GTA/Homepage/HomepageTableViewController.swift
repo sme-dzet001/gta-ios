@@ -148,12 +148,10 @@ class HomepageTableViewController: UITableViewController {
                     }
                     if let data = self?.dataProvider?.globalAlertsData {
                         switch data.status {
-                        case .closed:
-                            self?.tabBarController?.tabBar.removeItemBadge(atIndex: 0)
-                            //self?.tabBarController?.tabBar.items?[0].badgeValue = "!"
+                        case .inProgress:
+                            self?.tabBarController?.addAlertItemBadge(atIndex: 0)
                         default:
-                            self?.tabBarController?.tabBar.addAlertItemBadge(atIndex: 0)
-                            //self?.tabBarController?.tabBar.items?[0].badgeValue = nil
+                            self?.tabBarController?.removeItemBadge(atIndex: 0)
                         }
                     }
                 } else {
