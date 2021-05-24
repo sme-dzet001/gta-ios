@@ -40,7 +40,7 @@ class HomepageTableViewController: UITableViewController {
                     tableView.reloadData()
                 } else {
                     UIView.performWithoutAnimation {
-                        tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
+                        tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
                     }
                 }
             }
@@ -60,7 +60,11 @@ class HomepageTableViewController: UITableViewController {
             DispatchQueue.main.async {
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                    self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                    if let dataHasChanged = self?.tableView.dataHasChanged, dataHasChanged {
+                        self?.tableView.reloadData()
+                    } else {
+                        self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                    }
                 } else {
                     //self?.displayError(errorMessage: "Error was happened!")
                 }
