@@ -33,15 +33,15 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="85"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zY6-gS-Bxl">
-                            <rect key="frame" x="69" y="35" width="266" height="24"/>
+                            <rect key="frame" x="69" y="35" width="283" height="23.5"/>
                             <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zdt-sX-cKW">
-                            <rect key="frame" x="355" y="29.5" width="35" height="35"/>
+                            <rect key="frame" x="352" y="22" width="50" height="50"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="35" id="io5-DV-Vw4"/>
+                                <constraint firstAttribute="width" constant="50" id="io5-DV-Vw4"/>
                                 <constraint firstAttribute="width" secondItem="Zdt-sX-cKW" secondAttribute="height" multiplier="1:1" id="qdU-VO-uRY"/>
                             </constraints>
                             <state key="normal" image="close_icon"/>
@@ -68,9 +68,9 @@
                         <constraint firstAttribute="height" constant="85" id="1rM-WK-F2P"/>
                         <constraint firstItem="zY6-gS-Bxl" firstAttribute="centerY" secondItem="MyK-1K-l7Q" secondAttribute="centerY" multiplier="1.1" id="8yO-Dm-bKa"/>
                         <constraint firstItem="Zdt-sX-cKW" firstAttribute="centerY" secondItem="zY6-gS-Bxl" secondAttribute="centerY" id="DH4-tD-ZBd"/>
-                        <constraint firstAttribute="trailing" secondItem="Zdt-sX-cKW" secondAttribute="trailing" constant="24" id="Fln-3k-mgk"/>
+                        <constraint firstAttribute="trailing" secondItem="Zdt-sX-cKW" secondAttribute="trailing" constant="12" id="Fln-3k-mgk"/>
                         <constraint firstItem="J5e-A0-ln2" firstAttribute="top" secondItem="MyK-1K-l7Q" secondAttribute="top" constant="10" id="Jv6-RO-rwC"/>
-                        <constraint firstItem="Zdt-sX-cKW" firstAttribute="leading" secondItem="zY6-gS-Bxl" secondAttribute="trailing" constant="20" id="QZc-CQ-F8t"/>
+                        <constraint firstItem="Zdt-sX-cKW" firstAttribute="leading" secondItem="zY6-gS-Bxl" secondAttribute="trailing" id="QZc-CQ-F8t"/>
                         <constraint firstItem="J5e-A0-ln2" firstAttribute="centerX" secondItem="MyK-1K-l7Q" secondAttribute="centerX" id="Te9-4e-Mto"/>
                         <constraint firstItem="zY6-gS-Bxl" firstAttribute="leading" secondItem="MyK-1K-l7Q" secondAttribute="leading" constant="69" id="t1g-bC-ctH"/>
                     </constraints>
