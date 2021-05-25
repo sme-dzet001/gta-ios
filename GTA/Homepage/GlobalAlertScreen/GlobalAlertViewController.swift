@@ -116,6 +116,14 @@ extension GlobalAlertViewController: PanModalPresentable {
         return .clear
     }
     
+    var topOffset: CGFloat {
+        if let keyWindow = UIWindow.key {
+            return keyWindow.safeAreaInsets.top
+        } else {
+            return 0
+        }
+    }
+    
     var shortFormHeight: PanModalHeight {
         guard !UIDevice.current.iPhone5_se else { return .maxHeight }
         let coefficient = (UIScreen.main.bounds.width * 0.8)
