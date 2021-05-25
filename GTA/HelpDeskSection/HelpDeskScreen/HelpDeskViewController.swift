@@ -175,8 +175,11 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
                     ticketsNumberDelegate = cell
                     cellData.updatesNumber = numberOfTickets
                 }
-                let cellIsActive = cellData.cellSubtitle != "Oops, something went wrong"
+                let cellIsActive = cellData.cellSubtitle != "Oops, something went wrong" || cellData.cellSubtitle != "No data available"
                 cell.setUpCell(with: cellData, isActive: cellIsActive)
+                if cellData.cellSubtitle == "No data available" {
+                    cell.setTitleAtCenter()
+                }
                 return cell
             }
         }
@@ -216,7 +219,9 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
             quickHelpVC.dataProvider = dataProvider
             navigationController?.pushViewController(quickHelpVC, animated: true)
         } else if indexPath.row == 1 {
-            guard let cellSubtitle = helpDeskCellsData[indexPath.section][indexPath.row].cellSubtitle, cellSubtitle != "Oops, something went wrong" else { return }
+            let cellData = helpDeskCellsData[indexPath.section][indexPath.row]
+            let cellIsActive = cellData.cellSubtitle != "Oops, something went wrong" || cellData.cellSubtitle != "No data available"
+            guard let _ = cellData.cellSubtitle, cellIsActive else { return }
             let aboutVC = ServiceDeskAboutViewController()
             let aboutData = (imageUrl: dataResponse?.serviceDeskIcon, desc: dataResponse?.serviceDeskDesc)
             aboutVC.aboutData = aboutData
