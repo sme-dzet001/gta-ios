@@ -59,6 +59,10 @@
 		65D2909B256C0DDD001B658A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2909A256C0DDD001B658A /* KeychainManager.swift */; };
 		65D2909C256C0DDD001B658A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2909A256C0DDD001B658A /* KeychainManager.swift */; };
 		65D2909D256C0DDD001B658A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2909A256C0DDD001B658A /* KeychainManager.swift */; };
+		65FADE5A26546D1200B7A969 /* PushNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */; };
+		65FADE5B26546D1200B7A969 /* PushNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */; };
+		65FADE5C26546D1200B7A969 /* PushNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */; };
+		65FADE5D26546D1200B7A969 /* PushNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */; };
 		9F0CA54D2566875F00275B25 /* OfficeLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */; };
 		9F0CA54E2566875F00275B25 /* OfficeLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */; };
 		9F0CA54F2566875F00275B25 /* OfficeLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */; };
@@ -876,6 +880,7 @@
 		65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelpDesk.storyboard; sourceTree = "<group>"; };
 		65D29082256C0DA6001B658A /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		65D2909A256C0DDD001B658A /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsManager.swift; sourceTree = "<group>"; };
 		711206694A10F0701C6DAF95 /* Pods_GTAUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTAUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7684C58C0D8D159DE2D8E4F1 /* Pods-GTAStage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.debug.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.debug.xcconfig"; sourceTree = "<group>"; };
 		791710547768B4DBE8B60339 /* Pods-GTA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.release.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.release.xcconfig"; sourceTree = "<group>"; };
@@ -1299,6 +1304,7 @@
 		65D29080256C0D7E001B658A /* Communication */ = {
 			isa = PBXGroup;
 			children = (
+				65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */,
 				9F9D9CF6258A063800DC4231 /* NetworkManager.swift */,
 				65D29082256C0DA6001B658A /* APIManager.swift */,
 				9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */,
@@ -3015,6 +3021,7 @@
 				9F3AC8F52645981B004074C8 /* GTTeamResponses.swift in Sources */,
 				9FF0547325681FC60071E596 /* SecondSendMessageView.swift in Sources */,
 				C960A0FD25B08CAC004A9C65 /* ServiceDeskAboutCell.swift in Sources */,
+				65FADE5A26546D1200B7A969 /* PushNotificationsManager.swift in Sources */,
 				659A5AFA255457B600E13B77 /* Extensions.swift in Sources */,
 				9FB9C1512631A46900BA753D /* NewTicketViewController.swift in Sources */,
 				C9D035A52578100D0068441F /* HomeDataProvider.swift in Sources */,
@@ -3126,6 +3133,7 @@
 				9F33F673260A3C4000470A47 /* MyAppsDataProvider.swift in Sources */,
 				9F2C82532657CE02004407B4 /* GlobalAlertCell.swift in Sources */,
 				9F33F674260A3C4000470A47 /* SceneDelegate.swift in Sources */,
+				65FADE5D26546D1200B7A969 /* PushNotificationsManager.swift in Sources */,
 				9F33F675260A3C4000470A47 /* InfoViewController.swift in Sources */,
 				9F33F676260A3C4000470A47 /* LoginDataProvider.swift in Sources */,
 				9F6435CE261F2077000D94A4 /* CollaborationCounterCell.swift in Sources */,
@@ -3274,6 +3282,7 @@
 				9F3AC8F62645981B004074C8 /* GTTeamResponses.swift in Sources */,
 				C93FCF1A2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C960A0FE25B08CAC004A9C65 /* ServiceDeskAboutCell.swift in Sources */,
+				65FADE5B26546D1200B7A969 /* PushNotificationsManager.swift in Sources */,
 				C9DFD4B825659C1100BF1740 /* StatsBarView.swift in Sources */,
 				9FB9C1522631A46900BA753D /* NewTicketViewController.swift in Sources */,
 				C9D035A62578100D0068441F /* HomeDataProvider.swift in Sources */,
@@ -3395,6 +3404,7 @@
 				9F3AC8F72645981B004074C8 /* GTTeamResponses.swift in Sources */,
 				C93FCF1B2564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				C960A0FF25B08CAC004A9C65 /* ServiceDeskAboutCell.swift in Sources */,
+				65FADE5C26546D1200B7A969 /* PushNotificationsManager.swift in Sources */,
 				C9DFD4B925659C1100BF1740 /* StatsBarView.swift in Sources */,
 				9FB9C1532631A46900BA753D /* NewTicketViewController.swift in Sources */,
 				C9D035A72578100D0068441F /* HomeDataProvider.swift in Sources */,
@@ -3817,7 +3827,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = GTADev.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sergiy Savchenko (SL99M4JWZR)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = H9636WUCU4;
 				INFOPLIST_FILE = "GTA/Plists/GTADev-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3826,6 +3837,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtadev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "GTA Dev Development Profile";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = GTADev;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -3839,7 +3851,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = GTADev.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sergiy Savchenko (SL99M4JWZR)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = H9636WUCU4;
 				INFOPLIST_FILE = "GTA/Plists/GTADev-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3848,6 +3861,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtadev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "GTA Dev Development Profile";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = GTADev;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

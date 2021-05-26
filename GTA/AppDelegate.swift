@@ -8,9 +8,10 @@
 import UIKit
 import CoreData
 import Firebase
+import UserNotifications
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -22,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #else
         FirebaseApp.configure()
         #endif
+        registerForPushNotifications()
         return true
     }
     
@@ -31,6 +33,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return .landscape
         }
         return .portrait
+    }
+    
+    func registerForPushNotifications() {
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .badge, .sound]) { [weak self] granted, _ in
+                guard granted else { return }
+                self?.getNotificationSettings()
+        }
+        UNUserNotificationCenter.current().delegate = self
+    }
+    
+    func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            guard settings.authorizationStatus == .authorized else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+    }
+    
+    func application(
+      _ application: UIApplication,
+      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        
+        if KeychainManager.getPushNotificationToken() != token {
+            KeychainManager.deletePushNotificationTokenSent()
+        }
+        
+        _ = KeychainManager.savePushNotificationToken(pushNotificationToken: token)
+        
+        PushNotificationsManager().sendPushNotificationTokenIfNeeded()
+    }
+    
+    func application(
+      _ application: UIApplication,
+      didFailToRegisterForRemoteNotificationsWithError error: Error
+    ) {
+        //TODO: process error
+    }
+    
+    func application(
+      _ application: UIApplication,
+      didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+      fetchCompletionHandler completionHandler:
+      @escaping (UIBackgroundFetchResult) -> Void
+    ) {
+        //TODO: process notification
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound, .badge])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        /*let userInfo = response.notification.request.content.userInfo as? NSDictionary
+        print("\(userInfo)")*/
     }
     
 //    private func topViewControllerWithRootViewController(rootViewController: UIViewController!) -> UIViewController? {
