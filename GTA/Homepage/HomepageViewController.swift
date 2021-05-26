@@ -30,6 +30,8 @@ class HomepageViewController: UIViewController {
         setUpCollectionView()
         setUpPageControl()
         setNeedsStatusBarAppearanceUpdate()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +39,10 @@ class HomepageViewController: UIViewController {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadNewsData()
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
     }
     
     private func loadNewsData() {
@@ -97,6 +103,16 @@ class HomepageViewController: UIViewController {
     }
     
     @IBAction func unwindToHomePage(segue: UIStoryboardSegue) {
+    }
+    
+    @objc func emergencyOutageNotificationReceived() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.dismissPanModalIfPresented { [weak self] in
+            self?.tabBarController?.selectedIndex = 0
+            if let alert = self?.dataProvider.globalAlertsData, !alert.isExpired {
+                self?.showGlobalAlertModal()
+            }
+        }
     }
     
 }

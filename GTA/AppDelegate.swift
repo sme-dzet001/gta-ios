@@ -9,6 +9,7 @@ import UIKit
 import CoreData
 import Firebase
 import UserNotifications
+import PanModal
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -90,8 +91,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        /*let userInfo = response.notification.request.content.userInfo as? NSDictionary
-        print("\(userInfo)")*/
+        let userInfo = response.notification.request.content.userInfo
+        if let payload = userInfo["payload"] as? String, let payloadData = Data(base64Encoded: payload), let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject], let pushType = payloadDict["push_type"] as? String, pushType == "Emergency Outage Global" {
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        }
     }
     
 //    private func topViewControllerWithRootViewController(rootViewController: UIViewController!) -> UIViewController? {
@@ -121,6 +124,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return controller
     }
     
+    func dismissPanModalIfPresented(completion: @escaping (() -> Void)) {
+        if let panModal = getTopViewController() as? PanModalPresentable {
+            (panModal as? UIViewController)?.dismiss(animated: true, completion: completion)
+        } else {
+            completion()
+        }
+    }
     
     private func getTopViewController() -> UIViewController? {
         let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
