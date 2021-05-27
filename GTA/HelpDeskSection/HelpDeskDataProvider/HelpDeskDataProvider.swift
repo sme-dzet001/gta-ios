@@ -175,8 +175,6 @@ class HelpDeskDataProvider {
             if !missingHelpDeskFields.isEmpty {
                 retErr = ResponseError.missingFieldError(missingFields: missingHelpDeskFields)
             }
-        } else if retErr == nil {
-            retErr = ResponseError.noDataAvailable
         }
         completion?(helpDeskResponse, errorCode, retErr, isFromCache)
     }
