@@ -176,12 +176,16 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
                     cellData.updatesNumber = numberOfTickets
                 }
                 var cellIsNotActive = cellData.cellSubtitle == "Oops, something went wrong"
+                var isAboutCellNoData = false
                 if indexPath.row == 1, let rows = dataResponse?.data?.rows {
                     cellIsNotActive = dataResponse?.serviceDeskDesc == nil || rows.isEmpty
-                    cellData.cellSubtitle = "No data available"
+                    isAboutCellNoData = cellIsNotActive
+                } else if indexPath.row == 1, dataResponse?.serviceDeskDesc == nil, !cellIsNotActive {
+                    cellIsNotActive = true
+                    isAboutCellNoData = true
                 }
                 cell.setUpCell(with: cellData, isActive: !cellIsNotActive)
-                if cellIsNotActive && cellData.cellSubtitle == "No data available" {
+                if cellIsNotActive && isAboutCellNoData {
                     cell.setTitleAtCenter()
                 }
                 return cell
