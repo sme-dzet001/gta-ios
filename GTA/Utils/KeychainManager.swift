@@ -26,6 +26,8 @@ public class KeychainManager: NSObject {
     static let tokenKey = "tokenKey"
     static let tokenExpirationDateKey = "tokenExpirationDateKey"
     static let cachePasswordKey = "CachePasswordKey"
+    static let pushNotificationTokenKey = "PushNotificationTokenKey"
+    static let pushNotificationTokenSentKey = "PushNotificationTokenSentKey"
     
     class func getUsername() -> String? {
         let query = [
@@ -285,6 +287,88 @@ public class KeychainManager: NSObject {
         let query = [
             kSecClass as String       : kSecClassGenericPassword as String,
             kSecAttrAccount as String : cachePasswordKey ] as [String : Any]
+        SecItemDelete(query as CFDictionary)
+    }
+    
+    class func getPushNotificationToken() -> String? {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword,
+            kSecAttrAccount as String : pushNotificationTokenKey,
+            kSecReturnData as String  : kCFBooleanTrue!,
+            kSecMatchLimit as String  : kSecMatchLimitOne ] as [String : Any]
+        
+        var dataTypeRef :AnyObject?
+        let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
+        
+        if status == errSecSuccess {
+            if let retrievedData = dataTypeRef as? Data {
+                guard let decodedToken = String(data: retrievedData, encoding: .utf8) else { return nil }
+                return decodedToken
+            }
+        } else {
+            return nil
+        }
+        return nil
+    }
+    
+    class func savePushNotificationToken(pushNotificationToken: String) -> OSStatus? {
+        deletePushNotificationToken()
+        guard let dataToStore = pushNotificationToken.data(using: .utf8) else { return nil }
+        let query = [
+            kSecClass as String             : kSecClassGenericPassword as String,
+            kSecAttrAccessible as String    : kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+            kSecAttrAccount as String       : pushNotificationTokenKey,
+            kSecValueData as String         : dataToStore ] as [String : Any]
+        
+        return SecItemAdd(query as CFDictionary, nil)
+    }
+    
+    class func isPushNotificationTokenSent() -> Bool {
+        guard let _ = getPushNotificationToken() else { return false }
+        
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword,
+            kSecAttrAccount as String : pushNotificationTokenSentKey,
+            kSecReturnData as String  : kCFBooleanTrue!,
+            kSecMatchLimit as String  : kSecMatchLimitOne ] as [String : Any]
+        
+        var dataTypeRef :AnyObject?
+        let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
+        
+        if status == errSecSuccess {
+            if let retrievedData = dataTypeRef as? Data {
+                guard let decodedTokenSentFlag = try? JSONDecoder().decode(Bool.self, from: retrievedData) else { return false }
+                return decodedTokenSentFlag
+            }
+        } else {
+            return false
+        }
+        return false
+    }
+    
+    class func savePushNotificationTokenSent() -> OSStatus? {
+        deletePushNotificationTokenSent()
+        guard let dataToStore = try? JSONEncoder().encode(true) else { return nil }
+        let query = [
+            kSecClass as String             : kSecClassGenericPassword as String,
+            kSecAttrAccessible as String    : kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+            kSecAttrAccount as String       : pushNotificationTokenSentKey,
+            kSecValueData as String         : dataToStore ] as [String : Any]
+        
+        return SecItemAdd(query as CFDictionary, nil)
+    }
+    
+    class func deletePushNotificationToken() {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword as String,
+            kSecAttrAccount as String : pushNotificationTokenKey ] as [String : Any]
+        SecItemDelete(query as CFDictionary)
+    }
+    
+    class func deletePushNotificationTokenSent() {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword as String,
+            kSecAttrAccount as String : pushNotificationTokenSentKey ] as [String : Any]
         SecItemDelete(query as CFDictionary)
     }
 }

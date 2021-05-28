@@ -49,6 +49,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getGSDTicketComments(generationNumber: Int)
         case getGTTeam(generationNumber: Int)
         case getGlobalOutage(generationNumber: Int)
+        case sendPushNotificationsToken
         
         var endpoint: String {
             switch self {
@@ -77,6 +78,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getGSDTicketComments(let generationNumber): return "/v3/widgets/gsd_ticket_comments/data/\(generationNumber)/detailed"
                 case .getGTTeam(let generationNumber): return "/v3/widgets/management_team/data/\(generationNumber)/detailed"
                 case .getGlobalOutage(let generationNumber): return "/v3/widgets/global_alerts/data/\(generationNumber)/detailed"
+                case .sendPushNotificationsToken: return "/v1/me/push_token/"
             }
         }
     }
@@ -291,6 +293,14 @@ class APIManager: NSObject, URLSessionDelegate {
     func getCollaborationNews(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         self.makeRequest(endpoint: .getCollaborationNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders,  completion: completion)
+    }
+    
+    //MARK: - Push notifications
+    
+    func sendPushNotificationsToken(completion: ((_ tokenData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? "", "Content-Type": "application/x-www-form-urlencoded"]
+        let bodyParams = ["device_token_type": "apn", "device_token": KeychainManager.getPushNotificationToken() ?? ""]
+        makeRequest(endpoint: .sendPushNotificationsToken, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
     }
     
     //MARK: - Common methods

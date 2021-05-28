@@ -54,6 +54,7 @@ class LoginUSMViewController: UIViewController {
             DispatchQueue.main.async {
                 if error == nil && errorCode == 200 {
                     UserDefaults.standard.set(true, forKey: "userLoggedIn")
+                    PushNotificationsManager().sendPushNotificationTokenIfNeeded()
                     let authVC = AuthViewController()
                     authVC.isSignUp = true
                     if let sceneDelegate = self?.view.window?.windowScene?.delegate as? SceneDelegate {

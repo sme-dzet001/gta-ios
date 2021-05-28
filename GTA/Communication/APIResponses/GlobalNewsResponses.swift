@@ -249,7 +249,15 @@ struct GlobalAlertRow: Codable, Equatable {
         return dateString.getFormattedDateStringForMyTickets()
     }
     
-    var lastUpdate: Date {
+    var startDate: Date {
+        guard let valuesArr = values, let index = indexes["start date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatterPrint.date(from: dateString) ?? Date()
+    }
+    
+    var closeDate: Date {
         guard let valuesArr = values, let index = indexes["close date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
@@ -258,7 +266,7 @@ struct GlobalAlertRow: Codable, Equatable {
     }
     
     var isExpired: Bool {
-        let isDateExpired = (Date().timeIntervalSince1970 - lastUpdate.timeIntervalSince1970) >= 3600
+        let isDateExpired = (Date().timeIntervalSince1970 - closeDate.timeIntervalSince1970) >= 3600
         return status == .closed && isDateExpired
     }
     

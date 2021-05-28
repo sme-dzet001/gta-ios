@@ -485,8 +485,16 @@ class HomeDataProvider {
         }
         
         let rows = response.data?.rows?.compactMap({$0}) ?? []
-        let dataWasChanged: Bool = globalAlertsData != rows.first
-        globalAlertsData = response.data?.rows?.compactMap({$0}).first
+        var alert = rows.last
+        let inProgressAlerts = rows.filter({$0.status == .inProgress})
+        let closedAlerts = rows.filter({$0.status == .closed})
+        if inProgressAlerts.count >= 1 {
+            alert = inProgressAlerts.sorted(by: {$0.startDate.timeIntervalSince1970 > $1.startDate.timeIntervalSince1970}).first
+        } else if closedAlerts.count >= 1 {
+            alert = closedAlerts.sorted(by: {$0.closeDate.timeIntervalSince1970 > $1.closeDate.timeIntervalSince1970}).first
+        }
+        let dataWasChanged: Bool = globalAlertsData != alert
+        globalAlertsData = alert
         return dataWasChanged
     }
     
