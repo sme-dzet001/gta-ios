@@ -109,7 +109,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-        if let payload = userInfo["payload"] as? String, let payloadData = Data(base64Encoded: payload), let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject], let pushType = payloadDict["push_type"] as? String, pushType == "Emergency Outage Global" {
+        if let payload = userInfo["payload"] as? String, let payloadData = Data(base64Encoded: payload), let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject], let pushType = payloadDict["push_type"] as? String, pushType == "Emergency Outage" {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
         }
     }
