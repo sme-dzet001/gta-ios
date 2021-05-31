@@ -17,6 +17,608 @@
 		653E78EA261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
 		653E78EB261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
 		653E78EC261FC58800CABB4C /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
+		65437C3B2665387600B2F38A /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
+		65437C3C2665387600B2F38A /* CollaborationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547566C25FA4AE6002C45C4 /* CollaborationDataProvider.swift */; };
+		65437C3D2665387600B2F38A /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
+		65437C3E2665387600B2F38A /* AppContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0D625D4382500FB0B55 /* AppContactCell.swift */; };
+		65437C3F2665387600B2F38A /* HelpDeskDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */; };
+		65437C402665387600B2F38A /* SessionExpiredHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */; };
+		65437C412665387600B2F38A /* AppContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */; };
+		65437C422665387600B2F38A /* MetricStatsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD48C25657B0800BF1740 /* MetricStatsHeader.swift */; };
+		65437C432665387600B2F38A /* ApplicationStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B0D255C244D004489C6 /* ApplicationStatusViewController.swift */; };
+		65437C442665387600B2F38A /* HelpDeskHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9EA525756C0300315AAE /* HelpDeskHeader.swift */; };
+		65437C452665387600B2F38A /* HelpDeskResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */; };
+		65437C462665387600B2F38A /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
+		65437C472665387600B2F38A /* MyTicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9705B7A2566CE4E007A7F68 /* MyTicketsViewController.swift */; };
+		65437C482665387600B2F38A /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
+		65437C492665387600B2F38A /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
+		65437C4A2665387600B2F38A /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */; };
+		65437C4B2665387600B2F38A /* GlobalAlertDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C824D2657CE02004407B4 /* GlobalAlertDetailsCell.swift */; };
+		65437C4C2665387600B2F38A /* CollaborationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860325FD219C0003658D /* CollaborationHeader.swift */; };
+		65437C4D2665387600B2F38A /* QuickHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C993A2AC2576664300F9146A /* QuickHelpViewController.swift */; };
+		65437C4E2665387600B2F38A /* TicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */; };
+		65437C4F2665387600B2F38A /* MyAppsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164AE257FA7D9001507BF /* MyAppsResponses.swift */; };
+		65437C502665387600B2F38A /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */; };
+		65437C512665387600B2F38A /* GTTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC8FA2645A30B004074C8 /* GTTeamViewController.swift */; };
+		65437C522665387600B2F38A /* SendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0545B25680ED30071E596 /* SendMessageView.swift */; };
+		65437C532665387600B2F38A /* OfficeLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */; };
+		65437C542665387600B2F38A /* TicketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C962D8262566D21100727949 /* TicketCell.swift */; };
+		65437C552665387600B2F38A /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF0425648FA0001E86F6 /* AboutViewController.swift */; };
+		65437C562665387600B2F38A /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F64354E261B1C9F000D94A4 /* WhatsNewViewController.swift */; };
+		65437C572665387600B2F38A /* GlobalNewsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035942578095A0068441F /* GlobalNewsResponses.swift */; };
+		65437C582665387600B2F38A /* QuickHelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C993A2C42576686500F9146A /* QuickHelpCell.swift */; };
+		65437C592665387600B2F38A /* HomepageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */; };
+		65437C5A2665387600B2F38A /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB32588C59600DC4231 /* AuthViewController.swift */; };
+		65437C5B2665387600B2F38A /* TicketDetailsMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */; };
+		65437C5C2665387600B2F38A /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
+		65437C5D2665387600B2F38A /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
+		65437C5E2665387600B2F38A /* AppsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */; };
+		65437C5F2665387600B2F38A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
+		65437C602665387600B2F38A /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35867625FFBAC40003658D /* ErrorHandler.swift */; };
+		65437C612665387600B2F38A /* HelpDeskContactOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9E9725756BA400315AAE /* HelpDeskContactOptionCell.swift */; };
+		65437C622665387600B2F38A /* SecondTicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0546425681F4A0071E596 /* SecondTicketDetailsViewController.swift */; };
+		65437C632665387600B2F38A /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78D079256530CD00BCD38F /* ArticleViewController.swift */; };
+		65437C642665387600B2F38A /* StatsBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4AD25659BE400BF1740 /* StatsBarChart.swift */; };
+		65437C652665387600B2F38A /* OfficesResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99AEEB8259A3CAB005BD447 /* OfficesResponses.swift */; };
+		65437C662665387600B2F38A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
+		65437C672665387600B2F38A /* MetricStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */; };
+		65437C682665387600B2F38A /* GTA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */; };
+		65437C692665387600B2F38A /* ServiceDeskAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C960A0E325B08B52004A9C65 /* ServiceDeskAboutViewController.swift */; };
+		65437C6A2665387600B2F38A /* GTTeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC9062645B17A004074C8 /* GTTeamCell.swift */; };
+		65437C6B2665387600B2F38A /* ServiceDeskContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9766FAA2576394500E9E697 /* ServiceDeskContactsViewController.swift */; };
+		65437C6C2665387600B2F38A /* HelpDeskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91F70892562FEC5002F17B1 /* HelpDeskCell.swift */; };
+		65437C6D2665387600B2F38A /* MyAppsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164B7257FA817001507BF /* MyAppsDataProvider.swift */; };
+		65437C6E2665387600B2F38A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
+		65437C6F2665387600B2F38A /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC93D264D3E3D004074C8 /* GeneralCell.swift */; };
+		65437C702665387600B2F38A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
+		65437C712665387600B2F38A /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D269E2577AF74002CC2C2 /* LoginDataProvider.swift */; };
+		65437C722665387600B2F38A /* SwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC954264D4790004074C8 /* SwitcherCell.swift */; };
+		65437C732665387600B2F38A /* CollaborationCounterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6435C9261F2077000D94A4 /* CollaborationCounterCell.swift */; };
+		65437C742665387600B2F38A /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
+		65437C752665387600B2F38A /* WhatsNewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F643560261B1E88000D94A4 /* WhatsNewCell.swift */; };
+		65437C762665387600B2F38A /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
+		65437C772665387600B2F38A /* ApplicationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADB255C22D6004489C6 /* ApplicationCell.swift */; };
+		65437C782665387600B2F38A /* Office365ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35861B25FD23FF0003658D /* Office365ViewController.swift */; };
+		65437C792665387600B2F38A /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AE0255C22D6004489C6 /* AppsViewController.swift */; };
+		65437C7A2665387600B2F38A /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
+		65437C7B2665387600B2F38A /* ServiceDeskContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035DC2579B68D0068441F /* ServiceDeskContactCell.swift */; };
+		65437C7C2665387600B2F38A /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
+		65437C7D2665387600B2F38A /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC947264D44E7004074C8 /* NotificationSettingsViewController.swift */; };
+		65437C7E2665387600B2F38A /* GlobalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C824E2657CE02004407B4 /* GlobalAlertViewController.swift */; };
+		65437C7F2665387600B2F38A /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4642562C286000EE0F1 /* HomepageViewController.swift */; };
+		65437C802665387600B2F38A /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035932578095A0068441F /* CommonResponses.swift */; };
+		65437C812665387600B2F38A /* Office365AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35862825FD37BF0003658D /* Office365AppCell.swift */; };
+		65437C822665387600B2F38A /* WhatsNewMoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F643571261B5D3F000D94A4 /* WhatsNewMoreViewController.swift */; };
+		65437C832665387600B2F38A /* AboutHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */; };
+		65437C842665387600B2F38A /* OfficeSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFDA2D25A5E2E200F57817 /* OfficeSelectionCell.swift */; };
+		65437C852665387600B2F38A /* SecondSendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0547225681FC60071E596 /* SecondSendMessageView.swift */; };
+		65437C862665387600B2F38A /* GTTeamResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC8F42645981A004074C8 /* GTTeamResponses.swift */; };
+		65437C872665387600B2F38A /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF172564901E001E86F6 /* AboutInfoCell.swift */; };
+		65437C882665387600B2F38A /* ServiceDeskAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C960A0FB25B08CAC004A9C65 /* ServiceDeskAboutCell.swift */; };
+		65437C892665387600B2F38A /* PushNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */; };
+		65437C8A2665387600B2F38A /* StatsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4B625659C1100BF1740 /* StatsBarView.swift */; };
+		65437C8B2665387600B2F38A /* NewTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9C14F2631A46900BA753D /* NewTicketViewController.swift */; };
+		65437C8C2665387600B2F38A /* HomeDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035A42578100D0068441F /* HomeDataProvider.swift */; };
+		65437C8D2665387600B2F38A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AF9255457B600E13B77 /* Extensions.swift */; };
+		65437C8E2665387600B2F38A /* GlobalAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */; };
+		65437C8F2665387600B2F38A /* SystemUpdatesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B26255C2E38004489C6 /* SystemUpdatesCell.swift */; };
+		65437C902665387600B2F38A /* SystemStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B33255C337B004489C6 /* SystemStatusHeader.swift */; };
+		65437C912665387600B2F38A /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
+		65437C922665387600B2F38A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7392CE2631D1BD007882EB /* Constants.swift */; };
+		65437C932665387600B2F38A /* NoCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9C1652631C04E00BA753D /* NoCommentsCell.swift */; };
+		65437C942665387600B2F38A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
+		65437C952665387600B2F38A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1A29225549A0600D71965 /* MainViewController.swift */; };
+		65437C962665387600B2F38A /* TicketDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F803242260A666900ED6224 /* TicketDescriptionCell.swift */; };
+		65437C972665387600B2F38A /* UserLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */; };
+		65437C982665387600B2F38A /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
+		65437C992665387600B2F38A /* HelpReportScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B68255D3D27004489C6 /* HelpReportScreenViewController.swift */; };
+		65437C9A2665387600B2F38A /* AboutSupportPolicyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */; };
+		65437C9B2665387600B2F38A /* AboutSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE173CD25914D3F00E2C481 /* AboutSupportCell.swift */; };
+		65437C9C2665387600B2F38A /* HelpDeskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91F707B2562FE98002F17B1 /* HelpDeskViewController.swift */; };
+		65437C9D2665387600B2F38A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D29082256C0DA6001B658A /* APIManager.swift */; };
+		65437C9E2665387600B2F38A /* OfficeStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78D0DC256557EE00BCD38F /* OfficeStatusCell.swift */; };
+		65437C9F2665387600B2F38A /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
+		65437CA02665387600B2F38A /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424DFF25642632003C247E /* MyDevicesViewController.swift */; };
+		65437CA12665387600B2F38A /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
+		65437CA22665387600B2F38A /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CE825891E1800DC4231 /* DataParser.swift */; };
+		65437CA32665387600B2F38A /* CollaborationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547566A25FA4AE6002C45C4 /* CollaborationViewController.swift */; };
+		65437CA42665387600B2F38A /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035952578095A0068441F /* LoginResponses.swift */; };
+		65437CA52665387600B2F38A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2909A256C0DDD001B658A /* KeychainManager.swift */; };
+		65437CA62665387600B2F38A /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424E12256427F0003C247E /* DeviceCell.swift */; };
+		65437CA72665387600B2F38A /* CustomUISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82702657F1E1004407B4 /* CustomUISwitch.swift */; };
+		65437CA82665387600B2F38A /* AppsServiceAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */; };
+		65437CA92665387600B2F38A /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
+		65437CAA2665387600B2F38A /* MyTicketsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C962D8432566E1FA00727949 /* MyTicketsHeader.swift */; };
+		65437CAB2665387600B2F38A /* GlobalAlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */; };
+		65437CAC2665387600B2F38A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
+		65437CAD2665387600B2F38A /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
+		65437CAF2665387600B2F38A /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */; };
+		65437CB12665387600B2F38A /* ServiceDeskAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0FC25B08CAC004A9C65 /* ServiceDeskAboutCell.xib */; };
+		65437CB22665387600B2F38A /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEB255404F100E13B77 /* SF-Pro-Display-Thin.otf */; };
+		65437CB32665387600B2F38A /* AppTipsAndTricksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */; };
+		65437CB42665387600B2F38A /* GlobalAlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */; };
+		65437CB52665387600B2F38A /* OfficeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */; };
+		65437CB62665387600B2F38A /* NotificationSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC948264D44E7004074C8 /* NotificationSettingsViewController.xib */; };
+		65437CB72665387600B2F38A /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
+		65437CB82665387600B2F38A /* WhatsNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F64354F261B1C9F000D94A4 /* WhatsNewViewController.xib */; };
+		65437CB92665387600B2F38A /* SecondSendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */; };
+		65437CBA2665387600B2F38A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2A02554BE3700D71965 /* Home.storyboard */; };
+		65437CBB2665387600B2F38A /* AuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB42588C59600DC4231 /* AuthViewController.xib */; };
+		65437CBC2665387600B2F38A /* ApplicationStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B0E255C244D004489C6 /* ApplicationStatusViewController.xib */; };
+		65437CBD2665387600B2F38A /* SF-Pro-Text-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F6435D9261F22F5000D94A4 /* SF-Pro-Text-Bold.ttf */; };
+		65437CBE2665387600B2F38A /* Office365ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35861C25FD23FF0003658D /* Office365ViewController.xib */; };
+		65437CBF2665387600B2F38A /* SF-Pro-Display-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */; };
+		65437CC02665387600B2F38A /* ApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADD255C22D6004489C6 /* ApplicationCell.xib */; };
+		65437CC12665387600B2F38A /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
+		65437CC22665387600B2F38A /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
+		65437CC32665387600B2F38A /* WhatsNewMoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F643572261B5D3F000D94A4 /* WhatsNewMoreViewController.xib */; };
+		65437CC42665387600B2F38A /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEA255404F100E13B77 /* SF-Pro-Display-Medium.otf */; };
+		65437CC52665387600B2F38A /* SystemStatusHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */; };
+		65437CC62665387600B2F38A /* HelpDesk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */; };
+		65437CC72665387600B2F38A /* SF-Pro-Text-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0942565321100BCD38F /* SF-Pro-Text-Light.ttf */; };
+		65437CC82665387600B2F38A /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEC255404F100E13B77 /* SF-Pro-Display-Bold.otf */; };
+		65437CC92665387600B2F38A /* AboutHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E90C25B056D5007D3B9F /* AboutHeaderCell.xib */; };
+		65437CCA2665387600B2F38A /* SendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0545225680EC90071E596 /* SendMessageView.xib */; };
+		65437CCB2665387600B2F38A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5ABB255401ED00E13B77 /* LaunchScreen.storyboard */; };
+		65437CCC2665387600B2F38A /* SwitcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC955264D4790004074C8 /* SwitcherCell.xib */; };
+		65437CCD2665387600B2F38A /* GTTeamCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC9072645B17A004074C8 /* GTTeamCell.xib */; };
+		65437CCE2665387600B2F38A /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA2C6A22628CFC900EC5BE3 /* Apps.storyboard */; };
+		65437CCF2665387600B2F38A /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */; };
+		65437CD02665387600B2F38A /* Collaboration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6547566925FA4AE6002C45C4 /* Collaboration.storyboard */; };
+		65437CD12665387600B2F38A /* TicketDetailsMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0542E2567E1D80071E596 /* TicketDetailsMessageCell.xib */; };
+		65437CD22665387600B2F38A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB9255401ED00E13B77 /* Assets.xcassets */; };
+		65437CD32665387600B2F38A /* ServiceDeskContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9766FAB2576394500E9E697 /* ServiceDeskContactsViewController.xib */; };
+		65437CD42665387600B2F38A /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */; };
+		65437CD52665387600B2F38A /* MetricStatsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DFD49A25657B7600BF1740 /* MetricStatsHeader.xib */; };
+		65437CD62665387600B2F38A /* ServiceDeskAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0E425B08B52004A9C65 /* ServiceDeskAboutViewController.xib */; };
+		65437CD72665387600B2F38A /* GlobalAlertDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824B2657CE02004407B4 /* GlobalAlertDetailsCell.xib */; };
+		65437CD82665387600B2F38A /* CollaborationHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860225FD219C0003658D /* CollaborationHeaderCell.xib */; };
+		65437CD92665387600B2F38A /* GlobalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824F2657CE02004407B4 /* GlobalAlertViewController.xib */; };
+		65437CDA2665387600B2F38A /* AboutSupportCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE173CE25914D3F00E2C481 /* AboutSupportCell.xib */; };
+		65437CDB2665387600B2F38A /* HelpDeskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */; };
+		65437CDC2665387600B2F38A /* AppsServiceAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADF255C22D6004489C6 /* AppsServiceAlertCell.xib */; };
+		65437CDD2665387600B2F38A /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */; };
+		65437CDE2665387600B2F38A /* HelpReportScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B69255D3D27004489C6 /* HelpReportScreenViewController.xib */; };
+		65437CDF2665387600B2F38A /* QuickHelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2AD2576664300F9146A /* QuickHelpViewController.xib */; };
+		65437CE02665387600B2F38A /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC93E264D3E3D004074C8 /* GeneralCell.xib */; };
+		65437CE12665387600B2F38A /* NewTicketViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1502631A46900BA753D /* NewTicketViewController.xib */; };
+		65437CE22665387600B2F38A /* OfficeStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0DD256557EE00BCD38F /* OfficeStatusCell.xib */; };
+		65437CE32665387600B2F38A /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
+		65437CE42665387600B2F38A /* GlobalAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824C2657CE02004407B4 /* GlobalAlertCell.xib */; };
+		65437CE52665387600B2F38A /* ServiceDeskContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9D035DD2579B68D0068441F /* ServiceDeskContactCell.xib */; };
+		65437CE62665387600B2F38A /* QuickHelpCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2C52576686500F9146A /* QuickHelpCell.xib */; };
+		65437CE72665387600B2F38A /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
+		65437CE82665387600B2F38A /* MyTicketsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8512566E21400727949 /* MyTicketsHeader.xib */; };
+		65437CE92665387600B2F38A /* SF-Pro-Text-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA17E3026340E3500CC78D3 /* SF-Pro-Text-Italic.ttf */; };
+		65437CEA2665387600B2F38A /* MyDevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E0025642632003C247E /* MyDevicesViewController.xib */; };
+		65437CEB2665387600B2F38A /* WhatsNewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F643561261B1E88000D94A4 /* WhatsNewCell.xib */; };
+		65437CEC2665387600B2F38A /* SystemUpdatesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B27255C2E38004489C6 /* SystemUpdatesCell.xib */; };
+		65437CED2665387600B2F38A /* MyTicketsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */; };
+		65437CEE2665387600B2F38A /* GTTeamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC8FB2645A30B004074C8 /* GTTeamViewController.xib */; };
+		65437CEF2665387600B2F38A /* HelpDeskContactOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9E9825756BA400315AAE /* HelpDeskContactOptionCell.xib */; };
+		65437CF02665387600B2F38A /* AppContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C907E0BF25D437BF00FB0B55 /* AppContactsViewController.xib */; };
+		65437CF12665387600B2F38A /* AppsTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADE255C22D6004489C6 /* AppsTableViewHeader.xib */; };
+		65437CF22665387600B2F38A /* SecondTicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0546525681F4A0071E596 /* SecondTicketDetailsViewController.xib */; };
+		65437CF32665387600B2F38A /* AppContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C907E0D725D4382500FB0B55 /* AppContactCell.xib */; };
+		65437CF42665387600B2F38A /* TicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */; };
+		65437CF52665387600B2F38A /* ArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D07A256530CD00BCD38F /* ArticleViewController.xib */; };
+		65437CF62665387600B2F38A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB6255401EA00E13B77 /* Main.storyboard */; };
+		65437CF72665387600B2F38A /* Office365AppCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35862925FD37BF0003658D /* Office365AppCell.xib */; };
+		65437CF82665387600B2F38A /* NewsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78CFE72564138800BCD38F /* NewsCollectionViewCell.xib */; };
+		65437CF92665387600B2F38A /* MetricStatsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DFD47B2565721F00BF1740 /* MetricStatsCell.xib */; };
+		65437CFA2665387600B2F38A /* TicketDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F803243260A666900ED6224 /* TicketDescriptionCell.xib */; };
+		65437CFB2665387600B2F38A /* TicketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8272566D21100727949 /* TicketCell.xib */; };
+		65437CFC2665387600B2F38A /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF0525648FA0001E86F6 /* AboutViewController.xib */; };
+		65437CFD2665387600B2F38A /* CollaborationCounterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F6435CA261F2077000D94A4 /* CollaborationCounterCell.xib */; };
+		65437CFE2665387600B2F38A /* CollaborationHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860125FD219C0003658D /* CollaborationHeader.xib */; };
+		65437CFF2665387600B2F38A /* InfoArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */; };
+		65437D002665387600B2F38A /* AboutInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF182564901E001E86F6 /* AboutInfoCell.xib */; };
+		65437D012665387600B2F38A /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E13256427F0003C247E /* DeviceCell.xib */; };
+		65437D022665387600B2F38A /* NoCommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1662631C04E00BA753D /* NoCommentsCell.xib */; };
+		65437D032665387600B2F38A /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */; };
+		65437D042665387600B2F38A /* AboutSupportPolicyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */; };
+		65437D1C2665398300B2F38A /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
+		65437D1D2665398300B2F38A /* CollaborationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547566C25FA4AE6002C45C4 /* CollaborationDataProvider.swift */; };
+		65437D1E2665398300B2F38A /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
+		65437D1F2665398300B2F38A /* AppContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0D625D4382500FB0B55 /* AppContactCell.swift */; };
+		65437D202665398300B2F38A /* HelpDeskDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */; };
+		65437D212665398300B2F38A /* SessionExpiredHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */; };
+		65437D222665398300B2F38A /* AppContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */; };
+		65437D232665398300B2F38A /* MetricStatsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD48C25657B0800BF1740 /* MetricStatsHeader.swift */; };
+		65437D242665398300B2F38A /* ApplicationStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B0D255C244D004489C6 /* ApplicationStatusViewController.swift */; };
+		65437D252665398300B2F38A /* HelpDeskHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9EA525756C0300315AAE /* HelpDeskHeader.swift */; };
+		65437D262665398300B2F38A /* HelpDeskResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */; };
+		65437D272665398300B2F38A /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
+		65437D282665398300B2F38A /* MyTicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9705B7A2566CE4E007A7F68 /* MyTicketsViewController.swift */; };
+		65437D292665398300B2F38A /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
+		65437D2A2665398300B2F38A /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
+		65437D2B2665398300B2F38A /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */; };
+		65437D2C2665398300B2F38A /* GlobalAlertDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C824D2657CE02004407B4 /* GlobalAlertDetailsCell.swift */; };
+		65437D2D2665398300B2F38A /* CollaborationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860325FD219C0003658D /* CollaborationHeader.swift */; };
+		65437D2E2665398300B2F38A /* QuickHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C993A2AC2576664300F9146A /* QuickHelpViewController.swift */; };
+		65437D2F2665398300B2F38A /* TicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */; };
+		65437D302665398300B2F38A /* MyAppsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164AE257FA7D9001507BF /* MyAppsResponses.swift */; };
+		65437D312665398300B2F38A /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */; };
+		65437D322665398300B2F38A /* GTTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC8FA2645A30B004074C8 /* GTTeamViewController.swift */; };
+		65437D332665398300B2F38A /* SendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0545B25680ED30071E596 /* SendMessageView.swift */; };
+		65437D342665398300B2F38A /* OfficeLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */; };
+		65437D352665398300B2F38A /* TicketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C962D8262566D21100727949 /* TicketCell.swift */; };
+		65437D362665398300B2F38A /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF0425648FA0001E86F6 /* AboutViewController.swift */; };
+		65437D372665398300B2F38A /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F64354E261B1C9F000D94A4 /* WhatsNewViewController.swift */; };
+		65437D382665398300B2F38A /* GlobalNewsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035942578095A0068441F /* GlobalNewsResponses.swift */; };
+		65437D392665398300B2F38A /* QuickHelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C993A2C42576686500F9146A /* QuickHelpCell.swift */; };
+		65437D3A2665398300B2F38A /* HomepageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */; };
+		65437D3B2665398300B2F38A /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB32588C59600DC4231 /* AuthViewController.swift */; };
+		65437D3C2665398300B2F38A /* TicketDetailsMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */; };
+		65437D3D2665398300B2F38A /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
+		65437D3E2665398300B2F38A /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
+		65437D3F2665398300B2F38A /* AppsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */; };
+		65437D402665398300B2F38A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
+		65437D412665398300B2F38A /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35867625FFBAC40003658D /* ErrorHandler.swift */; };
+		65437D422665398300B2F38A /* HelpDeskContactOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9E9725756BA400315AAE /* HelpDeskContactOptionCell.swift */; };
+		65437D432665398300B2F38A /* SecondTicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0546425681F4A0071E596 /* SecondTicketDetailsViewController.swift */; };
+		65437D442665398300B2F38A /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78D079256530CD00BCD38F /* ArticleViewController.swift */; };
+		65437D452665398300B2F38A /* StatsBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4AD25659BE400BF1740 /* StatsBarChart.swift */; };
+		65437D462665398300B2F38A /* OfficesResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99AEEB8259A3CAB005BD447 /* OfficesResponses.swift */; };
+		65437D472665398300B2F38A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
+		65437D482665398300B2F38A /* MetricStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */; };
+		65437D492665398300B2F38A /* GTA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */; };
+		65437D4A2665398300B2F38A /* ServiceDeskAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C960A0E325B08B52004A9C65 /* ServiceDeskAboutViewController.swift */; };
+		65437D4B2665398300B2F38A /* GTTeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC9062645B17A004074C8 /* GTTeamCell.swift */; };
+		65437D4C2665398300B2F38A /* ServiceDeskContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9766FAA2576394500E9E697 /* ServiceDeskContactsViewController.swift */; };
+		65437D4D2665398300B2F38A /* HelpDeskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91F70892562FEC5002F17B1 /* HelpDeskCell.swift */; };
+		65437D4E2665398300B2F38A /* MyAppsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164B7257FA817001507BF /* MyAppsDataProvider.swift */; };
+		65437D4F2665398300B2F38A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
+		65437D502665398300B2F38A /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC93D264D3E3D004074C8 /* GeneralCell.swift */; };
+		65437D512665398300B2F38A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
+		65437D522665398300B2F38A /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D269E2577AF74002CC2C2 /* LoginDataProvider.swift */; };
+		65437D532665398300B2F38A /* SwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC954264D4790004074C8 /* SwitcherCell.swift */; };
+		65437D542665398300B2F38A /* CollaborationCounterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6435C9261F2077000D94A4 /* CollaborationCounterCell.swift */; };
+		65437D552665398300B2F38A /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
+		65437D562665398300B2F38A /* WhatsNewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F643560261B1E88000D94A4 /* WhatsNewCell.swift */; };
+		65437D572665398300B2F38A /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
+		65437D582665398300B2F38A /* ApplicationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADB255C22D6004489C6 /* ApplicationCell.swift */; };
+		65437D592665398300B2F38A /* Office365ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35861B25FD23FF0003658D /* Office365ViewController.swift */; };
+		65437D5A2665398300B2F38A /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AE0255C22D6004489C6 /* AppsViewController.swift */; };
+		65437D5B2665398300B2F38A /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
+		65437D5C2665398300B2F38A /* ServiceDeskContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035DC2579B68D0068441F /* ServiceDeskContactCell.swift */; };
+		65437D5D2665398300B2F38A /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
+		65437D5E2665398300B2F38A /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC947264D44E7004074C8 /* NotificationSettingsViewController.swift */; };
+		65437D5F2665398300B2F38A /* GlobalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C824E2657CE02004407B4 /* GlobalAlertViewController.swift */; };
+		65437D602665398300B2F38A /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4642562C286000EE0F1 /* HomepageViewController.swift */; };
+		65437D612665398300B2F38A /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035932578095A0068441F /* CommonResponses.swift */; };
+		65437D622665398300B2F38A /* Office365AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35862825FD37BF0003658D /* Office365AppCell.swift */; };
+		65437D632665398300B2F38A /* WhatsNewMoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F643571261B5D3F000D94A4 /* WhatsNewMoreViewController.swift */; };
+		65437D642665398300B2F38A /* AboutHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */; };
+		65437D652665398300B2F38A /* OfficeSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFDA2D25A5E2E200F57817 /* OfficeSelectionCell.swift */; };
+		65437D662665398300B2F38A /* SecondSendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0547225681FC60071E596 /* SecondSendMessageView.swift */; };
+		65437D672665398300B2F38A /* GTTeamResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC8F42645981A004074C8 /* GTTeamResponses.swift */; };
+		65437D682665398300B2F38A /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF172564901E001E86F6 /* AboutInfoCell.swift */; };
+		65437D692665398300B2F38A /* ServiceDeskAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C960A0FB25B08CAC004A9C65 /* ServiceDeskAboutCell.swift */; };
+		65437D6A2665398300B2F38A /* PushNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */; };
+		65437D6B2665398300B2F38A /* StatsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4B625659C1100BF1740 /* StatsBarView.swift */; };
+		65437D6C2665398300B2F38A /* NewTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9C14F2631A46900BA753D /* NewTicketViewController.swift */; };
+		65437D6D2665398300B2F38A /* HomeDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035A42578100D0068441F /* HomeDataProvider.swift */; };
+		65437D6E2665398300B2F38A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AF9255457B600E13B77 /* Extensions.swift */; };
+		65437D6F2665398300B2F38A /* GlobalAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */; };
+		65437D702665398300B2F38A /* SystemUpdatesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B26255C2E38004489C6 /* SystemUpdatesCell.swift */; };
+		65437D712665398300B2F38A /* SystemStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B33255C337B004489C6 /* SystemStatusHeader.swift */; };
+		65437D722665398300B2F38A /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
+		65437D732665398300B2F38A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7392CE2631D1BD007882EB /* Constants.swift */; };
+		65437D742665398300B2F38A /* NoCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9C1652631C04E00BA753D /* NoCommentsCell.swift */; };
+		65437D752665398300B2F38A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
+		65437D762665398300B2F38A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1A29225549A0600D71965 /* MainViewController.swift */; };
+		65437D772665398300B2F38A /* TicketDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F803242260A666900ED6224 /* TicketDescriptionCell.swift */; };
+		65437D782665398300B2F38A /* UserLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */; };
+		65437D792665398300B2F38A /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
+		65437D7A2665398300B2F38A /* HelpReportScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B68255D3D27004489C6 /* HelpReportScreenViewController.swift */; };
+		65437D7B2665398300B2F38A /* AboutSupportPolicyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */; };
+		65437D7C2665398300B2F38A /* AboutSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE173CD25914D3F00E2C481 /* AboutSupportCell.swift */; };
+		65437D7D2665398300B2F38A /* HelpDeskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91F707B2562FE98002F17B1 /* HelpDeskViewController.swift */; };
+		65437D7E2665398300B2F38A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D29082256C0DA6001B658A /* APIManager.swift */; };
+		65437D7F2665398300B2F38A /* OfficeStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78D0DC256557EE00BCD38F /* OfficeStatusCell.swift */; };
+		65437D802665398300B2F38A /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
+		65437D812665398300B2F38A /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424DFF25642632003C247E /* MyDevicesViewController.swift */; };
+		65437D822665398300B2F38A /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
+		65437D832665398300B2F38A /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CE825891E1800DC4231 /* DataParser.swift */; };
+		65437D842665398300B2F38A /* CollaborationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547566A25FA4AE6002C45C4 /* CollaborationViewController.swift */; };
+		65437D852665398300B2F38A /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035952578095A0068441F /* LoginResponses.swift */; };
+		65437D862665398300B2F38A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2909A256C0DDD001B658A /* KeychainManager.swift */; };
+		65437D872665398300B2F38A /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424E12256427F0003C247E /* DeviceCell.swift */; };
+		65437D882665398300B2F38A /* CustomUISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82702657F1E1004407B4 /* CustomUISwitch.swift */; };
+		65437D892665398300B2F38A /* AppsServiceAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */; };
+		65437D8A2665398300B2F38A /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
+		65437D8B2665398300B2F38A /* MyTicketsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C962D8432566E1FA00727949 /* MyTicketsHeader.swift */; };
+		65437D8C2665398300B2F38A /* GlobalAlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */; };
+		65437D8D2665398300B2F38A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
+		65437D8E2665398300B2F38A /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
+		65437D902665398300B2F38A /* Pods_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB6219B91F984FFA0A2D3BC /* Pods_GTAStage.framework */; };
+		65437D922665398300B2F38A /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEB255404F100E13B77 /* SF-Pro-Display-Thin.otf */; };
+		65437D932665398300B2F38A /* OfficeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */; };
+		65437D942665398300B2F38A /* GTTeamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC8FB2645A30B004074C8 /* GTTeamViewController.xib */; };
+		65437D952665398300B2F38A /* SecondSendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */; };
+		65437D962665398300B2F38A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2A02554BE3700D71965 /* Home.storyboard */; };
+		65437D972665398300B2F38A /* AuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB42588C59600DC4231 /* AuthViewController.xib */; };
+		65437D982665398300B2F38A /* ApplicationStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B0E255C244D004489C6 /* ApplicationStatusViewController.xib */; };
+		65437D992665398300B2F38A /* SF-Pro-Display-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */; };
+		65437D9A2665398300B2F38A /* ApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADD255C22D6004489C6 /* ApplicationCell.xib */; };
+		65437D9B2665398300B2F38A /* CollaborationCounterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F6435CA261F2077000D94A4 /* CollaborationCounterCell.xib */; };
+		65437D9C2665398300B2F38A /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
+		65437D9D2665398300B2F38A /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
+		65437D9E2665398300B2F38A /* ServiceDeskAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0FC25B08CAC004A9C65 /* ServiceDeskAboutCell.xib */; };
+		65437D9F2665398300B2F38A /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEA255404F100E13B77 /* SF-Pro-Display-Medium.otf */; };
+		65437DA02665398300B2F38A /* NotificationSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC948264D44E7004074C8 /* NotificationSettingsViewController.xib */; };
+		65437DA12665398300B2F38A /* SystemStatusHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */; };
+		65437DA22665398300B2F38A /* GTTeamCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC9072645B17A004074C8 /* GTTeamCell.xib */; };
+		65437DA32665398300B2F38A /* AboutSupportPolicyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */; };
+		65437DA42665398300B2F38A /* HelpDesk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */; };
+		65437DA52665398300B2F38A /* SF-Pro-Text-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0942565321100BCD38F /* SF-Pro-Text-Light.ttf */; };
+		65437DA62665398300B2F38A /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEC255404F100E13B77 /* SF-Pro-Display-Bold.otf */; };
+		65437DA72665398300B2F38A /* SendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0545225680EC90071E596 /* SendMessageView.xib */; };
+		65437DA82665398300B2F38A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5ABB255401ED00E13B77 /* LaunchScreen.storyboard */; };
+		65437DA92665398300B2F38A /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */; };
+		65437DAA2665398300B2F38A /* TicketDetailsMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0542E2567E1D80071E596 /* TicketDetailsMessageCell.xib */; };
+		65437DAB2665398300B2F38A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB9255401ED00E13B77 /* Assets.xcassets */; };
+		65437DAC2665398300B2F38A /* ServiceDeskContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9766FAB2576394500E9E697 /* ServiceDeskContactsViewController.xib */; };
+		65437DAD2665398300B2F38A /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */; };
+		65437DAE2665398300B2F38A /* WhatsNewMoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F643572261B5D3F000D94A4 /* WhatsNewMoreViewController.xib */; };
+		65437DAF2665398300B2F38A /* MetricStatsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DFD49A25657B7600BF1740 /* MetricStatsHeader.xib */; };
+		65437DB02665398300B2F38A /* CollaborationHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860125FD219C0003658D /* CollaborationHeader.xib */; };
+		65437DB12665398300B2F38A /* AboutSupportCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE173CE25914D3F00E2C481 /* AboutSupportCell.xib */; };
+		65437DB22665398300B2F38A /* HelpDeskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */; };
+		65437DB32665398300B2F38A /* SF-Pro-Text-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA17E3026340E3500CC78D3 /* SF-Pro-Text-Italic.ttf */; };
+		65437DB42665398300B2F38A /* AppsServiceAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADF255C22D6004489C6 /* AppsServiceAlertCell.xib */; };
+		65437DB52665398300B2F38A /* AboutHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E90C25B056D5007D3B9F /* AboutHeaderCell.xib */; };
+		65437DB62665398300B2F38A /* Office365AppCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35862925FD37BF0003658D /* Office365AppCell.xib */; };
+		65437DB72665398300B2F38A /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */; };
+		65437DB82665398300B2F38A /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA2C6A22628CFC900EC5BE3 /* Apps.storyboard */; };
+		65437DB92665398300B2F38A /* HelpReportScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B69255D3D27004489C6 /* HelpReportScreenViewController.xib */; };
+		65437DBA2665398300B2F38A /* SwitcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC955264D4790004074C8 /* SwitcherCell.xib */; };
+		65437DBB2665398300B2F38A /* QuickHelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2AD2576664300F9146A /* QuickHelpViewController.xib */; };
+		65437DBC2665398300B2F38A /* WhatsNewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F643561261B1E88000D94A4 /* WhatsNewCell.xib */; };
+		65437DBD2665398300B2F38A /* OfficeStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0DD256557EE00BCD38F /* OfficeStatusCell.xib */; };
+		65437DBE2665398300B2F38A /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
+		65437DBF2665398300B2F38A /* ServiceDeskContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9D035DD2579B68D0068441F /* ServiceDeskContactCell.xib */; };
+		65437DC02665398300B2F38A /* QuickHelpCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2C52576686500F9146A /* QuickHelpCell.xib */; };
+		65437DC12665398300B2F38A /* NewTicketViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1502631A46900BA753D /* NewTicketViewController.xib */; };
+		65437DC22665398300B2F38A /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
+		65437DC32665398300B2F38A /* GlobalAlertDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824B2657CE02004407B4 /* GlobalAlertDetailsCell.xib */; };
+		65437DC42665398300B2F38A /* MyTicketsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8512566E21400727949 /* MyTicketsHeader.xib */; };
+		65437DC52665398300B2F38A /* MyDevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E0025642632003C247E /* MyDevicesViewController.xib */; };
+		65437DC62665398300B2F38A /* GlobalAlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */; };
+		65437DC72665398300B2F38A /* SystemUpdatesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B27255C2E38004489C6 /* SystemUpdatesCell.xib */; };
+		65437DC82665398300B2F38A /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
+		65437DC92665398300B2F38A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FCFA2A6259E138D00E893D2 /* GoogleService-Info.plist */; };
+		65437DCA2665398300B2F38A /* TicketDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F803243260A666900ED6224 /* TicketDescriptionCell.xib */; };
+		65437DCB2665398300B2F38A /* MyTicketsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */; };
+		65437DCC2665398300B2F38A /* HelpDeskContactOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9E9825756BA400315AAE /* HelpDeskContactOptionCell.xib */; };
+		65437DCD2665398300B2F38A /* AppTipsAndTricksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */; };
+		65437DCE2665398300B2F38A /* NoCommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1662631C04E00BA753D /* NoCommentsCell.xib */; };
+		65437DCF2665398300B2F38A /* AppsTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADE255C22D6004489C6 /* AppsTableViewHeader.xib */; };
+		65437DD02665398300B2F38A /* Collaboration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6547566925FA4AE6002C45C4 /* Collaboration.storyboard */; };
+		65437DD12665398300B2F38A /* WhatsNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F64354F261B1C9F000D94A4 /* WhatsNewViewController.xib */; };
+		65437DD22665398300B2F38A /* SecondTicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0546525681F4A0071E596 /* SecondTicketDetailsViewController.xib */; };
+		65437DD32665398300B2F38A /* TicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */; };
+		65437DD42665398300B2F38A /* SF-Pro-Text-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F6435D9261F22F5000D94A4 /* SF-Pro-Text-Bold.ttf */; };
+		65437DD52665398300B2F38A /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC93E264D3E3D004074C8 /* GeneralCell.xib */; };
+		65437DD62665398300B2F38A /* AppContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C907E0BF25D437BF00FB0B55 /* AppContactsViewController.xib */; };
+		65437DD72665398300B2F38A /* ArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D07A256530CD00BCD38F /* ArticleViewController.xib */; };
+		65437DD82665398300B2F38A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB6255401EA00E13B77 /* Main.storyboard */; };
+		65437DD92665398300B2F38A /* NewsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78CFE72564138800BCD38F /* NewsCollectionViewCell.xib */; };
+		65437DDA2665398300B2F38A /* ServiceDeskAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0E425B08B52004A9C65 /* ServiceDeskAboutViewController.xib */; };
+		65437DDB2665398300B2F38A /* MetricStatsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DFD47B2565721F00BF1740 /* MetricStatsCell.xib */; };
+		65437DDC2665398300B2F38A /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */; };
+		65437DDD2665398300B2F38A /* TicketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8272566D21100727949 /* TicketCell.xib */; };
+		65437DDE2665398300B2F38A /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF0525648FA0001E86F6 /* AboutViewController.xib */; };
+		65437DDF2665398300B2F38A /* InfoArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */; };
+		65437DE02665398300B2F38A /* AboutInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF182564901E001E86F6 /* AboutInfoCell.xib */; };
+		65437DE12665398300B2F38A /* CollaborationHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860225FD219C0003658D /* CollaborationHeaderCell.xib */; };
+		65437DE22665398300B2F38A /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E13256427F0003C247E /* DeviceCell.xib */; };
+		65437DE32665398300B2F38A /* GlobalAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824C2657CE02004407B4 /* GlobalAlertCell.xib */; };
+		65437DE42665398300B2F38A /* GlobalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824F2657CE02004407B4 /* GlobalAlertViewController.xib */; };
+		65437DE52665398300B2F38A /* AppContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C907E0D725D4382500FB0B55 /* AppContactCell.xib */; };
+		65437DE62665398300B2F38A /* Office365ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35861C25FD23FF0003658D /* Office365ViewController.xib */; };
+		65437E09266539BF00B2F38A /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
+		65437E0A266539BF00B2F38A /* CollaborationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547566C25FA4AE6002C45C4 /* CollaborationDataProvider.swift */; };
+		65437E0B266539BF00B2F38A /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
+		65437E0C266539BF00B2F38A /* AppContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0D625D4382500FB0B55 /* AppContactCell.swift */; };
+		65437E0D266539BF00B2F38A /* HelpDeskDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F83A8EA2578FF2100F9CFF0 /* HelpDeskDataProvider.swift */; };
+		65437E0E266539BF00B2F38A /* SessionExpiredHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */; };
+		65437E0F266539BF00B2F38A /* AppContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */; };
+		65437E10266539BF00B2F38A /* MetricStatsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD48C25657B0800BF1740 /* MetricStatsHeader.swift */; };
+		65437E11266539BF00B2F38A /* ApplicationStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B0D255C244D004489C6 /* ApplicationStatusViewController.swift */; };
+		65437E12266539BF00B2F38A /* HelpDeskHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9EA525756C0300315AAE /* HelpDeskHeader.swift */; };
+		65437E13266539BF00B2F38A /* HelpDeskResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37C96E257929C0002284B6 /* HelpDeskResponses.swift */; };
+		65437E14266539BF00B2F38A /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
+		65437E15266539BF00B2F38A /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */; };
+		65437E16266539BF00B2F38A /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
+		65437E17266539BF00B2F38A /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
+		65437E18266539BF00B2F38A /* CollaborationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860325FD219C0003658D /* CollaborationHeader.swift */; };
+		65437E19266539BF00B2F38A /* GlobalAlertDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C824D2657CE02004407B4 /* GlobalAlertDetailsCell.swift */; };
+		65437E1A266539BF00B2F38A /* QuickHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C993A2AC2576664300F9146A /* QuickHelpViewController.swift */; };
+		65437E1B266539BF00B2F38A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
+		65437E1C266539BF00B2F38A /* MyAppsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164AE257FA7D9001507BF /* MyAppsResponses.swift */; };
+		65437E1D266539BF00B2F38A /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF0425648FA0001E86F6 /* AboutViewController.swift */; };
+		65437E1E266539BF00B2F38A /* HomepageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */; };
+		65437E1F266539BF00B2F38A /* GTTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC8FA2645A30B004074C8 /* GTTeamViewController.swift */; };
+		65437E20266539BF00B2F38A /* ChartLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4BF25659DAB00BF1740 /* ChartLayoutHelper.swift */; };
+		65437E21266539BF00B2F38A /* TicketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C962D8262566D21100727949 /* TicketCell.swift */; };
+		65437E22266539BF00B2F38A /* SecondTicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0546425681F4A0071E596 /* SecondTicketDetailsViewController.swift */; };
+		65437E23266539BF00B2F38A /* GlobalNewsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035942578095A0068441F /* GlobalNewsResponses.swift */; };
+		65437E24266539BF00B2F38A /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F64354E261B1C9F000D94A4 /* WhatsNewViewController.swift */; };
+		65437E25266539BF00B2F38A /* QuickHelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C993A2C42576686500F9146A /* QuickHelpCell.swift */; };
+		65437E26266539BF00B2F38A /* AppsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AD9255C22D6004489C6 /* AppsTableViewHeader.swift */; };
+		65437E27266539BF00B2F38A /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB32588C59600DC4231 /* AuthViewController.swift */; };
+		65437E28266539BF00B2F38A /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */; };
+		65437E29266539BF00B2F38A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
+		65437E2A266539BF00B2F38A /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
+		65437E2B266539BF00B2F38A /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78D079256530CD00BCD38F /* ArticleViewController.swift */; };
+		65437E2C266539BF00B2F38A /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
+		65437E2D266539BF00B2F38A /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35867625FFBAC40003658D /* ErrorHandler.swift */; };
+		65437E2E266539BF00B2F38A /* HelpDeskContactOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EC9E9725756BA400315AAE /* HelpDeskContactOptionCell.swift */; };
+		65437E2F266539BF00B2F38A /* StatsBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4AD25659BE400BF1740 /* StatsBarChart.swift */; };
+		65437E30266539BF00B2F38A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
+		65437E31266539BF00B2F38A /* MetricStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */; };
+		65437E32266539BF00B2F38A /* OfficesResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99AEEB8259A3CAB005BD447 /* OfficesResponses.swift */; };
+		65437E33266539BF00B2F38A /* HelpDeskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91F70892562FEC5002F17B1 /* HelpDeskCell.swift */; };
+		65437E34266539BF00B2F38A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
+		65437E35266539BF00B2F38A /* GTA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */; };
+		65437E36266539BF00B2F38A /* ServiceDeskAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C960A0E325B08B52004A9C65 /* ServiceDeskAboutViewController.swift */; };
+		65437E37266539BF00B2F38A /* ServiceDeskContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9766FAA2576394500E9E697 /* ServiceDeskContactsViewController.swift */; };
+		65437E38266539BF00B2F38A /* GTTeamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC9062645B17A004074C8 /* GTTeamCell.swift */; };
+		65437E39266539BF00B2F38A /* ApplicationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADB255C22D6004489C6 /* ApplicationCell.swift */; };
+		65437E3A266539BF00B2F38A /* MyAppsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164B7257FA817001507BF /* MyAppsDataProvider.swift */; };
+		65437E3B266539BF00B2F38A /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
+		65437E3C266539BF00B2F38A /* AppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895AE0255C22D6004489C6 /* AppsViewController.swift */; };
+		65437E3D266539BF00B2F38A /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC93D264D3E3D004074C8 /* GeneralCell.swift */; };
+		65437E3E266539BF00B2F38A /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D269E2577AF74002CC2C2 /* LoginDataProvider.swift */; };
+		65437E3F266539BF00B2F38A /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
+		65437E40266539BF00B2F38A /* SwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC954264D4790004074C8 /* SwitcherCell.swift */; };
+		65437E41266539BF00B2F38A /* CollaborationCounterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6435C9261F2077000D94A4 /* CollaborationCounterCell.swift */; };
+		65437E42266539BF00B2F38A /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4642562C286000EE0F1 /* HomepageViewController.swift */; };
+		65437E43266539BF00B2F38A /* WhatsNewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F643560261B1E88000D94A4 /* WhatsNewCell.swift */; };
+		65437E44266539BF00B2F38A /* TicketDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5B105B2567BE48000A3CFD /* TicketDetailsViewController.swift */; };
+		65437E45266539BF00B2F38A /* Office365ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35861B25FD23FF0003658D /* Office365ViewController.swift */; };
+		65437E46266539BF00B2F38A /* TicketDetailsMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0542D2567E1D80071E596 /* TicketDetailsMessageCell.swift */; };
+		65437E47266539BF00B2F38A /* AnimatedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB59F842576825D00E14D7E /* AnimatedCollectionViewLayout.swift */; };
+		65437E48266539BF00B2F38A /* ServiceDeskContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035DC2579B68D0068441F /* ServiceDeskContactCell.swift */; };
+		65437E49266539BF00B2F38A /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF172564901E001E86F6 /* AboutInfoCell.swift */; };
+		65437E4A266539BF00B2F38A /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
+		65437E4B266539BF00B2F38A /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC947264D44E7004074C8 /* NotificationSettingsViewController.swift */; };
+		65437E4C266539BF00B2F38A /* GlobalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C824E2657CE02004407B4 /* GlobalAlertViewController.swift */; };
+		65437E4D266539BF00B2F38A /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035932578095A0068441F /* CommonResponses.swift */; };
+		65437E4E266539BF00B2F38A /* Office365AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35862825FD37BF0003658D /* Office365AppCell.swift */; };
+		65437E4F266539BF00B2F38A /* AboutHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */; };
+		65437E50266539BF00B2F38A /* WhatsNewMoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F643571261B5D3F000D94A4 /* WhatsNewMoreViewController.swift */; };
+		65437E51266539BF00B2F38A /* SendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0545B25680ED30071E596 /* SendMessageView.swift */; };
+		65437E52266539BF00B2F38A /* OfficeSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFDA2D25A5E2E200F57817 /* OfficeSelectionCell.swift */; };
+		65437E53266539BF00B2F38A /* StatsBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD4B625659C1100BF1740 /* StatsBarView.swift */; };
+		65437E54266539BF00B2F38A /* GTTeamResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC8F42645981A004074C8 /* GTTeamResponses.swift */; };
+		65437E55266539BF00B2F38A /* SecondSendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0547225681FC60071E596 /* SecondSendMessageView.swift */; };
+		65437E56266539BF00B2F38A /* ServiceDeskAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C960A0FB25B08CAC004A9C65 /* ServiceDeskAboutCell.swift */; };
+		65437E57266539BF00B2F38A /* PushNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */; };
+		65437E58266539BF00B2F38A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AF9255457B600E13B77 /* Extensions.swift */; };
+		65437E59266539BF00B2F38A /* NewTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9C14F2631A46900BA753D /* NewTicketViewController.swift */; };
+		65437E5A266539BF00B2F38A /* HomeDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035A42578100D0068441F /* HomeDataProvider.swift */; };
+		65437E5B266539BF00B2F38A /* SystemUpdatesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B26255C2E38004489C6 /* SystemUpdatesCell.swift */; };
+		65437E5C266539BF00B2F38A /* GlobalAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */; };
+		65437E5D266539BF00B2F38A /* SystemStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B33255C337B004489C6 /* SystemStatusHeader.swift */; };
+		65437E5E266539BF00B2F38A /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
+		65437E5F266539BF00B2F38A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1A29225549A0600D71965 /* MainViewController.swift */; };
+		65437E60266539BF00B2F38A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7392CE2631D1BD007882EB /* Constants.swift */; };
+		65437E61266539BF00B2F38A /* NoCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB9C1652631C04E00BA753D /* NoCommentsCell.swift */; };
+		65437E62266539BF00B2F38A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CF6258A063800DC4231 /* NetworkManager.swift */; };
+		65437E63266539BF00B2F38A /* MyTicketsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C962D8432566E1FA00727949 /* MyTicketsHeader.swift */; };
+		65437E64266539BF00B2F38A /* TicketDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F803242260A666900ED6224 /* TicketDescriptionCell.swift */; };
+		65437E65266539BF00B2F38A /* UserLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */; };
+		65437E66266539BF00B2F38A /* HelpReportScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B68255D3D27004489C6 /* HelpReportScreenViewController.swift */; };
+		65437E67266539BF00B2F38A /* MyTicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9705B7A2566CE4E007A7F68 /* MyTicketsViewController.swift */; };
+		65437E68266539BF00B2F38A /* AboutSupportPolicyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */; };
+		65437E69266539BF00B2F38A /* OfficeLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */; };
+		65437E6A266539BF00B2F38A /* AboutSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE173CD25914D3F00E2C481 /* AboutSupportCell.swift */; };
+		65437E6B266539BF00B2F38A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D29082256C0DA6001B658A /* APIManager.swift */; };
+		65437E6C266539BF00B2F38A /* HelpDeskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91F707B2562FE98002F17B1 /* HelpDeskViewController.swift */; };
+		65437E6D266539BF00B2F38A /* OfficeStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78D0DC256557EE00BCD38F /* OfficeStatusCell.swift */; };
+		65437E6E266539BF00B2F38A /* PanModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */; };
+		65437E6F266539BF00B2F38A /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
+		65437E70266539BF00B2F38A /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D9CE825891E1800DC4231 /* DataParser.swift */; };
+		65437E71266539BF00B2F38A /* CollaborationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547566A25FA4AE6002C45C4 /* CollaborationViewController.swift */; };
+		65437E72266539BF00B2F38A /* LoginResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035952578095A0068441F /* LoginResponses.swift */; };
+		65437E73266539BF00B2F38A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D2909A256C0DDD001B658A /* KeychainManager.swift */; };
+		65437E74266539BF00B2F38A /* MyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424DFF25642632003C247E /* MyDevicesViewController.swift */; };
+		65437E75266539BF00B2F38A /* CustomUISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82702657F1E1004407B4 /* CustomUISwitch.swift */; };
+		65437E76266539BF00B2F38A /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424E12256427F0003C247E /* DeviceCell.swift */; };
+		65437E77266539BF00B2F38A /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
+		65437E78266539BF00B2F38A /* AppsServiceAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */; };
+		65437E79266539BF00B2F38A /* GlobalAlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */; };
+		65437E7A266539BF00B2F38A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
+		65437E7B266539BF00B2F38A /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
+		65437E7D266539BF00B2F38A /* Pods_GTA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA50956AA53DEAF0E40A50B2 /* Pods_GTA.framework */; };
+		65437E7F266539BF00B2F38A /* ServiceDeskAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0FC25B08CAC004A9C65 /* ServiceDeskAboutCell.xib */; };
+		65437E80266539BF00B2F38A /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEB255404F100E13B77 /* SF-Pro-Display-Thin.otf */; };
+		65437E81266539BF00B2F38A /* GTTeamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC8FB2645A30B004074C8 /* GTTeamViewController.xib */; };
+		65437E82266539BF00B2F38A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2A02554BE3700D71965 /* Home.storyboard */; };
+		65437E83266539BF00B2F38A /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
+		65437E84266539BF00B2F38A /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
+		65437E85266539BF00B2F38A /* OfficeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */; };
+		65437E86266539BF00B2F38A /* AuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F9D9CB42588C59600DC4231 /* AuthViewController.xib */; };
+		65437E87266539BF00B2F38A /* ApplicationStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B0E255C244D004489C6 /* ApplicationStatusViewController.xib */; };
+		65437E88266539BF00B2F38A /* CollaborationCounterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F6435CA261F2077000D94A4 /* CollaborationCounterCell.xib */; };
+		65437E89266539BF00B2F38A /* TicketDetailsMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0542E2567E1D80071E596 /* TicketDetailsMessageCell.xib */; };
+		65437E8A266539BF00B2F38A /* SF-Pro-Display-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D43B2562A938000EE0F1 /* SF-Pro-Display-Light.ttf */; };
+		65437E8B266539BF00B2F38A /* InfoArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D02566BB32003AFE68 /* InfoArticleCell.xib */; };
+		65437E8C266539BF00B2F38A /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
+		65437E8D266539BF00B2F38A /* NotificationSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC948264D44E7004074C8 /* NotificationSettingsViewController.xib */; };
+		65437E8E266539BF00B2F38A /* ApplicationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADD255C22D6004489C6 /* ApplicationCell.xib */; };
+		65437E8F266539BF00B2F38A /* GTTeamCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC9072645B17A004074C8 /* GTTeamCell.xib */; };
+		65437E90266539BF00B2F38A /* MyTicketsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */; };
+		65437E91266539BF00B2F38A /* SecondSendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */; };
+		65437E92266539BF00B2F38A /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
+		65437E93266539BF00B2F38A /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
+		65437E94266539BF00B2F38A /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEA255404F100E13B77 /* SF-Pro-Display-Medium.otf */; };
+		65437E95266539BF00B2F38A /* AboutHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E90C25B056D5007D3B9F /* AboutHeaderCell.xib */; };
+		65437E96266539BF00B2F38A /* SystemStatusHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */; };
+		65437E97266539BF00B2F38A /* SecondTicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0546525681F4A0071E596 /* SecondTicketDetailsViewController.xib */; };
+		65437E98266539BF00B2F38A /* HelpDesk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65D1A2AB2554CE5E00D71965 /* HelpDesk.storyboard */; };
+		65437E99266539BF00B2F38A /* SF-Pro-Text-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0942565321100BCD38F /* SF-Pro-Text-Light.ttf */; };
+		65437E9A266539BF00B2F38A /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEC255404F100E13B77 /* SF-Pro-Display-Bold.otf */; };
+		65437E9B266539BF00B2F38A /* WhatsNewMoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F643572261B5D3F000D94A4 /* WhatsNewMoreViewController.xib */; };
+		65437E9C266539BF00B2F38A /* ServiceDeskContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9766FAB2576394500E9E697 /* ServiceDeskContactsViewController.xib */; };
+		65437E9D266539BF00B2F38A /* CollaborationHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860125FD219C0003658D /* CollaborationHeader.xib */; };
+		65437E9E266539BF00B2F38A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5ABB255401ED00E13B77 /* LaunchScreen.storyboard */; };
+		65437E9F266539BF00B2F38A /* ServiceDeskAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0E425B08B52004A9C65 /* ServiceDeskAboutViewController.xib */; };
+		65437EA0266539BF00B2F38A /* SF-Pro-Text-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA17E3026340E3500CC78D3 /* SF-Pro-Text-Italic.ttf */; };
+		65437EA1266539BF00B2F38A /* AboutSupportCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE173CE25914D3F00E2C481 /* AboutSupportCell.xib */; };
+		65437EA2266539BF00B2F38A /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */; };
+		65437EA3266539BF00B2F38A /* Office365AppCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35862925FD37BF0003658D /* Office365AppCell.xib */; };
+		65437EA4266539BF00B2F38A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB9255401ED00E13B77 /* Assets.xcassets */; };
+		65437EA5266539BF00B2F38A /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA2C6A22628CFC900EC5BE3 /* Apps.storyboard */; };
+		65437EA6266539BF00B2F38A /* TicketDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F5B105C2567BE48000A3CFD /* TicketDetailsViewController.xib */; };
+		65437EA7266539BF00B2F38A /* SwitcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC955264D4790004074C8 /* SwitcherCell.xib */; };
+		65437EA8266539BF00B2F38A /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */; };
+		65437EA9266539BF00B2F38A /* WhatsNewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F643561261B1E88000D94A4 /* WhatsNewCell.xib */; };
+		65437EAA266539BF00B2F38A /* QuickHelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2AD2576664300F9146A /* QuickHelpViewController.xib */; };
+		65437EAB266539BF00B2F38A /* MetricStatsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DFD49A25657B7600BF1740 /* MetricStatsHeader.xib */; };
+		65437EAC266539BF00B2F38A /* MyTicketsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8512566E21400727949 /* MyTicketsHeader.xib */; };
+		65437EAD266539BF00B2F38A /* ServiceDeskContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9D035DD2579B68D0068441F /* ServiceDeskContactCell.xib */; };
+		65437EAE266539BF00B2F38A /* NewTicketViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1502631A46900BA753D /* NewTicketViewController.xib */; };
+		65437EAF266539BF00B2F38A /* QuickHelpCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2C52576686500F9146A /* QuickHelpCell.xib */; };
+		65437EB0266539BF00B2F38A /* GlobalAlertDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824B2657CE02004407B4 /* GlobalAlertDetailsCell.xib */; };
+		65437EB1266539BF00B2F38A /* SendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0545225680EC90071E596 /* SendMessageView.xib */; };
+		65437EB2266539BF00B2F38A /* HelpDeskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */; };
+		65437EB3266539BF00B2F38A /* GlobalAlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */; };
+		65437EB4266539BF00B2F38A /* AppsServiceAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADF255C22D6004489C6 /* AppsServiceAlertCell.xib */; };
+		65437EB5266539BF00B2F38A /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */; };
+		65437EB6266539BF00B2F38A /* HelpReportScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B69255D3D27004489C6 /* HelpReportScreenViewController.xib */; };
+		65437EB7266539BF00B2F38A /* OfficeStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0DD256557EE00BCD38F /* OfficeStatusCell.xib */; };
+		65437EB8266539BF00B2F38A /* TicketDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F803243260A666900ED6224 /* TicketDescriptionCell.xib */; };
+		65437EB9266539BF00B2F38A /* HelpDeskContactOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9E9825756BA400315AAE /* HelpDeskContactOptionCell.xib */; };
+		65437EBA266539BF00B2F38A /* AppContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C907E0BF25D437BF00FB0B55 /* AppContactsViewController.xib */; };
+		65437EBB266539BF00B2F38A /* NoCommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1662631C04E00BA753D /* NoCommentsCell.xib */; };
+		65437EBC266539BF00B2F38A /* AppTipsAndTricksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */; };
+		65437EBD266539BF00B2F38A /* Collaboration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6547566925FA4AE6002C45C4 /* Collaboration.storyboard */; };
+		65437EBE266539BF00B2F38A /* WhatsNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F64354F261B1C9F000D94A4 /* WhatsNewViewController.xib */; };
+		65437EBF266539BF00B2F38A /* MyDevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E0025642632003C247E /* MyDevicesViewController.xib */; };
+		65437EC0266539BF00B2F38A /* AppContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C907E0D725D4382500FB0B55 /* AppContactCell.xib */; };
+		65437EC1266539BF00B2F38A /* SF-Pro-Text-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F6435D9261F22F5000D94A4 /* SF-Pro-Text-Bold.ttf */; };
+		65437EC2266539BF00B2F38A /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC93E264D3E3D004074C8 /* GeneralCell.xib */; };
+		65437EC3266539BF00B2F38A /* SystemUpdatesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B27255C2E38004489C6 /* SystemUpdatesCell.xib */; };
+		65437EC4266539BF00B2F38A /* AppsTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADE255C22D6004489C6 /* AppsTableViewHeader.xib */; };
+		65437EC5266539BF00B2F38A /* ArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D07A256530CD00BCD38F /* ArticleViewController.xib */; };
+		65437EC6266539BF00B2F38A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AB6255401EA00E13B77 /* Main.storyboard */; };
+		65437EC7266539BF00B2F38A /* NewsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78CFE72564138800BCD38F /* NewsCollectionViewCell.xib */; };
+		65437EC8266539BF00B2F38A /* TicketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8272566D21100727949 /* TicketCell.xib */; };
+		65437EC9266539BF00B2F38A /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */; };
+		65437ECA266539BF00B2F38A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F825FCF25ED4DE5002A4560 /* GoogleService-Info.plist */; };
+		65437ECB266539BF00B2F38A /* MetricStatsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DFD47B2565721F00BF1740 /* MetricStatsCell.xib */; };
+		65437ECC266539BF00B2F38A /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF0525648FA0001E86F6 /* AboutViewController.xib */; };
+		65437ECD266539BF00B2F38A /* AboutInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93FCF182564901E001E86F6 /* AboutInfoCell.xib */; };
+		65437ECE266539BF00B2F38A /* CollaborationHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35860225FD219C0003658D /* CollaborationHeaderCell.xib */; };
+		65437ECF266539BF00B2F38A /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E13256427F0003C247E /* DeviceCell.xib */; };
+		65437ED0266539BF00B2F38A /* GlobalAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824C2657CE02004407B4 /* GlobalAlertCell.xib */; };
+		65437ED1266539BF00B2F38A /* GlobalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824F2657CE02004407B4 /* GlobalAlertViewController.xib */; };
+		65437ED2266539BF00B2F38A /* AboutSupportPolicyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */; };
+		65437ED3266539BF00B2F38A /* Office365ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35861C25FD23FF0003658D /* Office365ViewController.xib */; };
 		6547566D25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6547566925FA4AE6002C45C4 /* Collaboration.storyboard */; };
 		6547566E25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6547566925FA4AE6002C45C4 /* Collaboration.storyboard */; };
 		6547566F25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6547566925FA4AE6002C45C4 /* Collaboration.storyboard */; };
@@ -848,6 +1450,12 @@
 		5F85A9BFD7B4F3349DA0E61A /* Pods_GTATests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTATests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65398BCB256D4C5E0039C24E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageMetricsViewController.swift; sourceTree = "<group>"; };
+		65437D092665387600B2F38A /* GTADev-pushTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GTADev-pushTest.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65437D0A2665387700B2F38A /* GTADev copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GTADev copy-Info.plist"; path = "/Users/margaritanbock/gta-ios/GTADev copy-Info.plist"; sourceTree = "<absolute>"; };
+		65437DEC2665398300B2F38A /* GTAStage-pushTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GTAStage-pushTest.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65437DED2665398400B2F38A /* GTAStage copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GTAStage copy-Info.plist"; path = "/Users/margaritanbock/gta-ios/GTAStage copy-Info.plist"; sourceTree = "<absolute>"; };
+		65437ED9266539BF00B2F38A /* GTA-pushTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GTA-pushTest.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65437EDA266539BF00B2F38A /* GTA copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GTA copy-Info.plist"; path = "/Users/margaritanbock/gta-ios/GTA copy-Info.plist"; sourceTree = "<absolute>"; };
 		6547566925FA4AE6002C45C4 /* Collaboration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Collaboration.storyboard; sourceTree = "<group>"; };
 		6547566A25FA4AE6002C45C4 /* CollaborationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationViewController.swift; sourceTree = "<group>"; };
 		6547566C25FA4AE6002C45C4 /* CollaborationDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationDataProvider.swift; sourceTree = "<group>"; };
@@ -1075,6 +1683,30 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		65437CAE2665387600B2F38A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65437CAF2665387600B2F38A /* Pods_GTADev.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65437D8F2665398300B2F38A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65437D902665398300B2F38A /* Pods_GTAStage.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65437E7C266539BF00B2F38A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65437E7D266539BF00B2F38A /* Pods_GTA.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		659A5AAA255401EA00E13B77 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1201,6 +1833,9 @@
 				859404A3899213CC1A467C10 /* Pods */,
 				9FBAF4632577D55B00B43F96 /* Recovered References */,
 				368057D1B992C5F0637D2162 /* Frameworks */,
+				65437D0A2665387700B2F38A /* GTADev copy-Info.plist */,
+				65437DED2665398400B2F38A /* GTAStage copy-Info.plist */,
+				65437EDA266539BF00B2F38A /* GTA copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1213,6 +1848,9 @@
 				9F819AA6255C1572007C1739 /* GTAStage.app */,
 				9F819AD0255C1646007C1739 /* GTADev.app */,
 				9F33F6EF260A3C4000470A47 /* QA-GTAStage.app */,
+				65437D092665387600B2F38A /* GTADev-pushTest.app */,
+				65437DEC2665398300B2F38A /* GTAStage-pushTest.app */,
+				65437ED9266539BF00B2F38A /* GTA-pushTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2131,6 +2769,65 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		65437C382665387600B2F38A /* GTADev-pushTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65437D062665387600B2F38A /* Build configuration list for PBXNativeTarget "GTADev-pushTest" */;
+			buildPhases = (
+				65437C392665387600B2F38A /* [CP] Check Pods Manifest.lock */,
+				65437C3A2665387600B2F38A /* Sources */,
+				65437CAE2665387600B2F38A /* Frameworks */,
+				65437CB02665387600B2F38A /* Resources */,
+				65437D052665387600B2F38A /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GTADev-pushTest";
+			productName = GTA;
+			productReference = 65437D092665387600B2F38A /* GTADev-pushTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		65437D192665398300B2F38A /* GTAStage-pushTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65437DE92665398300B2F38A /* Build configuration list for PBXNativeTarget "GTAStage-pushTest" */;
+			buildPhases = (
+				65437D1A2665398300B2F38A /* [CP] Check Pods Manifest.lock */,
+				65437D1B2665398300B2F38A /* Sources */,
+				65437D8F2665398300B2F38A /* Frameworks */,
+				65437D912665398300B2F38A /* Resources */,
+				65437DE72665398300B2F38A /* ShellScript */,
+				65437DE82665398300B2F38A /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GTAStage-pushTest";
+			productName = GTA;
+			productReference = 65437DEC2665398300B2F38A /* GTAStage-pushTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		65437E06266539BF00B2F38A /* GTA-pushTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65437ED6266539BF00B2F38A /* Build configuration list for PBXNativeTarget "GTA-pushTest" */;
+			buildPhases = (
+				65437E07266539BF00B2F38A /* [CP] Check Pods Manifest.lock */,
+				65437E08266539BF00B2F38A /* Sources */,
+				65437E7C266539BF00B2F38A /* Frameworks */,
+				65437E7E266539BF00B2F38A /* Resources */,
+				65437ED4266539BF00B2F38A /* ShellScript */,
+				65437ED5266539BF00B2F38A /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GTA-pushTest";
+			productName = GTA;
+			productReference = 65437ED9266539BF00B2F38A /* GTA-pushTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		659A5AAC255401EA00E13B77 /* GTA */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 659A5AD7255401EE00E13B77 /* Build configuration list for PBXNativeTarget "GTA" */;
@@ -2287,6 +2984,9 @@
 				9F819A8E255C1572007C1739 /* GTAStage */,
 				9F819AB8255C1646007C1739 /* GTADev */,
 				9F33F644260A3C4000470A47 /* QA-GTAStage */,
+				65437E06266539BF00B2F38A /* GTA-pushTest */,
+				65437D192665398300B2F38A /* GTAStage-pushTest */,
+				65437C382665387600B2F38A /* GTADev-pushTest */,
 				659A5AC2255401EE00E13B77 /* GTATests */,
 				659A5ACD255401EE00E13B77 /* GTAUITests */,
 			);
@@ -2294,6 +2994,281 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		65437CB02665387600B2F38A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65437CB12665387600B2F38A /* ServiceDeskAboutCell.xib in Resources */,
+				65437CB22665387600B2F38A /* SF-Pro-Display-Thin.otf in Resources */,
+				65437CB32665387600B2F38A /* AppTipsAndTricksViewController.xib in Resources */,
+				65437CB42665387600B2F38A /* GlobalAlertDetailsHeader.xib in Resources */,
+				65437CB52665387600B2F38A /* OfficeInfoCell.xib in Resources */,
+				65437CB62665387600B2F38A /* NotificationSettingsViewController.xib in Resources */,
+				65437CB72665387600B2F38A /* OfficeSelectionCell.xib in Resources */,
+				65437CB82665387600B2F38A /* WhatsNewViewController.xib in Resources */,
+				65437CB92665387600B2F38A /* SecondSendMessageView.xib in Resources */,
+				65437CBA2665387600B2F38A /* Home.storyboard in Resources */,
+				65437CBB2665387600B2F38A /* AuthViewController.xib in Resources */,
+				65437CBC2665387600B2F38A /* ApplicationStatusViewController.xib in Resources */,
+				65437CBD2665387600B2F38A /* SF-Pro-Text-Bold.ttf in Resources */,
+				65437CBE2665387600B2F38A /* Office365ViewController.xib in Resources */,
+				65437CBF2665387600B2F38A /* SF-Pro-Display-Light.ttf in Resources */,
+				65437CC02665387600B2F38A /* ApplicationCell.xib in Resources */,
+				65437CC12665387600B2F38A /* SF-Pro-Text-Semibold.ttf in Resources */,
+				65437CC22665387600B2F38A /* HelpDeskHeader.xib in Resources */,
+				65437CC32665387600B2F38A /* WhatsNewMoreViewController.xib in Resources */,
+				65437CC42665387600B2F38A /* SF-Pro-Display-Medium.otf in Resources */,
+				65437CC52665387600B2F38A /* SystemStatusHeader.xib in Resources */,
+				65437CC62665387600B2F38A /* HelpDesk.storyboard in Resources */,
+				65437CC72665387600B2F38A /* SF-Pro-Text-Light.ttf in Resources */,
+				65437CC82665387600B2F38A /* SF-Pro-Display-Bold.otf in Resources */,
+				65437CC92665387600B2F38A /* AboutHeaderCell.xib in Resources */,
+				65437CCA2665387600B2F38A /* SendMessageView.xib in Resources */,
+				65437CCB2665387600B2F38A /* LaunchScreen.storyboard in Resources */,
+				65437CCC2665387600B2F38A /* SwitcherCell.xib in Resources */,
+				65437CCD2665387600B2F38A /* GTTeamCell.xib in Resources */,
+				65437CCE2665387600B2F38A /* Apps.storyboard in Resources */,
+				65437CCF2665387600B2F38A /* SF-Pro-Text-Medium.otf in Resources */,
+				65437CD02665387600B2F38A /* Collaboration.storyboard in Resources */,
+				65437CD12665387600B2F38A /* TicketDetailsMessageCell.xib in Resources */,
+				65437CD22665387600B2F38A /* Assets.xcassets in Resources */,
+				65437CD32665387600B2F38A /* ServiceDeskContactsViewController.xib in Resources */,
+				65437CD42665387600B2F38A /* SF-Pro-Text-Regular.otf in Resources */,
+				65437CD52665387600B2F38A /* MetricStatsHeader.xib in Resources */,
+				65437CD62665387600B2F38A /* ServiceDeskAboutViewController.xib in Resources */,
+				65437CD72665387600B2F38A /* GlobalAlertDetailsCell.xib in Resources */,
+				65437CD82665387600B2F38A /* CollaborationHeaderCell.xib in Resources */,
+				65437CD92665387600B2F38A /* GlobalAlertViewController.xib in Resources */,
+				65437CDA2665387600B2F38A /* AboutSupportCell.xib in Resources */,
+				65437CDB2665387600B2F38A /* HelpDeskCell.xib in Resources */,
+				65437CDC2665387600B2F38A /* AppsServiceAlertCell.xib in Resources */,
+				65437CDD2665387600B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
+				65437CDE2665387600B2F38A /* HelpReportScreenViewController.xib in Resources */,
+				65437CDF2665387600B2F38A /* QuickHelpViewController.xib in Resources */,
+				65437CE02665387600B2F38A /* GeneralCell.xib in Resources */,
+				65437CE12665387600B2F38A /* NewTicketViewController.xib in Resources */,
+				65437CE22665387600B2F38A /* OfficeStatusCell.xib in Resources */,
+				65437CE32665387600B2F38A /* InfoViewController.xib in Resources */,
+				65437CE42665387600B2F38A /* GlobalAlertCell.xib in Resources */,
+				65437CE52665387600B2F38A /* ServiceDeskContactCell.xib in Resources */,
+				65437CE62665387600B2F38A /* QuickHelpCell.xib in Resources */,
+				65437CE72665387600B2F38A /* OfficeLocationViewController.xib in Resources */,
+				65437CE82665387600B2F38A /* MyTicketsHeader.xib in Resources */,
+				65437CE92665387600B2F38A /* SF-Pro-Text-Italic.ttf in Resources */,
+				65437CEA2665387600B2F38A /* MyDevicesViewController.xib in Resources */,
+				65437CEB2665387600B2F38A /* WhatsNewCell.xib in Resources */,
+				65437CEC2665387600B2F38A /* SystemUpdatesCell.xib in Resources */,
+				65437CED2665387600B2F38A /* MyTicketsViewController.xib in Resources */,
+				65437CEE2665387600B2F38A /* GTTeamViewController.xib in Resources */,
+				65437CEF2665387600B2F38A /* HelpDeskContactOptionCell.xib in Resources */,
+				65437CF02665387600B2F38A /* AppContactsViewController.xib in Resources */,
+				65437CF12665387600B2F38A /* AppsTableViewHeader.xib in Resources */,
+				65437CF22665387600B2F38A /* SecondTicketDetailsViewController.xib in Resources */,
+				65437CF32665387600B2F38A /* AppContactCell.xib in Resources */,
+				65437CF42665387600B2F38A /* TicketDetailsViewController.xib in Resources */,
+				65437CF52665387600B2F38A /* ArticleViewController.xib in Resources */,
+				65437CF62665387600B2F38A /* Main.storyboard in Resources */,
+				65437CF72665387600B2F38A /* Office365AppCell.xib in Resources */,
+				65437CF82665387600B2F38A /* NewsCollectionViewCell.xib in Resources */,
+				65437CF92665387600B2F38A /* MetricStatsCell.xib in Resources */,
+				65437CFA2665387600B2F38A /* TicketDescriptionCell.xib in Resources */,
+				65437CFB2665387600B2F38A /* TicketCell.xib in Resources */,
+				65437CFC2665387600B2F38A /* AboutViewController.xib in Resources */,
+				65437CFD2665387600B2F38A /* CollaborationCounterCell.xib in Resources */,
+				65437CFE2665387600B2F38A /* CollaborationHeader.xib in Resources */,
+				65437CFF2665387600B2F38A /* InfoArticleCell.xib in Resources */,
+				65437D002665387600B2F38A /* AboutInfoCell.xib in Resources */,
+				65437D012665387600B2F38A /* DeviceCell.xib in Resources */,
+				65437D022665387600B2F38A /* NoCommentsCell.xib in Resources */,
+				65437D032665387600B2F38A /* GeneralScreen.storyboard in Resources */,
+				65437D042665387600B2F38A /* AboutSupportPolicyCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65437D912665398300B2F38A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65437D922665398300B2F38A /* SF-Pro-Display-Thin.otf in Resources */,
+				65437D932665398300B2F38A /* OfficeInfoCell.xib in Resources */,
+				65437D942665398300B2F38A /* GTTeamViewController.xib in Resources */,
+				65437D952665398300B2F38A /* SecondSendMessageView.xib in Resources */,
+				65437D962665398300B2F38A /* Home.storyboard in Resources */,
+				65437D972665398300B2F38A /* AuthViewController.xib in Resources */,
+				65437D982665398300B2F38A /* ApplicationStatusViewController.xib in Resources */,
+				65437D992665398300B2F38A /* SF-Pro-Display-Light.ttf in Resources */,
+				65437D9A2665398300B2F38A /* ApplicationCell.xib in Resources */,
+				65437D9B2665398300B2F38A /* CollaborationCounterCell.xib in Resources */,
+				65437D9C2665398300B2F38A /* SF-Pro-Text-Semibold.ttf in Resources */,
+				65437D9D2665398300B2F38A /* HelpDeskHeader.xib in Resources */,
+				65437D9E2665398300B2F38A /* ServiceDeskAboutCell.xib in Resources */,
+				65437D9F2665398300B2F38A /* SF-Pro-Display-Medium.otf in Resources */,
+				65437DA02665398300B2F38A /* NotificationSettingsViewController.xib in Resources */,
+				65437DA12665398300B2F38A /* SystemStatusHeader.xib in Resources */,
+				65437DA22665398300B2F38A /* GTTeamCell.xib in Resources */,
+				65437DA32665398300B2F38A /* AboutSupportPolicyCell.xib in Resources */,
+				65437DA42665398300B2F38A /* HelpDesk.storyboard in Resources */,
+				65437DA52665398300B2F38A /* SF-Pro-Text-Light.ttf in Resources */,
+				65437DA62665398300B2F38A /* SF-Pro-Display-Bold.otf in Resources */,
+				65437DA72665398300B2F38A /* SendMessageView.xib in Resources */,
+				65437DA82665398300B2F38A /* LaunchScreen.storyboard in Resources */,
+				65437DA92665398300B2F38A /* SF-Pro-Text-Medium.otf in Resources */,
+				65437DAA2665398300B2F38A /* TicketDetailsMessageCell.xib in Resources */,
+				65437DAB2665398300B2F38A /* Assets.xcassets in Resources */,
+				65437DAC2665398300B2F38A /* ServiceDeskContactsViewController.xib in Resources */,
+				65437DAD2665398300B2F38A /* SF-Pro-Text-Regular.otf in Resources */,
+				65437DAE2665398300B2F38A /* WhatsNewMoreViewController.xib in Resources */,
+				65437DAF2665398300B2F38A /* MetricStatsHeader.xib in Resources */,
+				65437DB02665398300B2F38A /* CollaborationHeader.xib in Resources */,
+				65437DB12665398300B2F38A /* AboutSupportCell.xib in Resources */,
+				65437DB22665398300B2F38A /* HelpDeskCell.xib in Resources */,
+				65437DB32665398300B2F38A /* SF-Pro-Text-Italic.ttf in Resources */,
+				65437DB42665398300B2F38A /* AppsServiceAlertCell.xib in Resources */,
+				65437DB52665398300B2F38A /* AboutHeaderCell.xib in Resources */,
+				65437DB62665398300B2F38A /* Office365AppCell.xib in Resources */,
+				65437DB72665398300B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
+				65437DB82665398300B2F38A /* Apps.storyboard in Resources */,
+				65437DB92665398300B2F38A /* HelpReportScreenViewController.xib in Resources */,
+				65437DBA2665398300B2F38A /* SwitcherCell.xib in Resources */,
+				65437DBB2665398300B2F38A /* QuickHelpViewController.xib in Resources */,
+				65437DBC2665398300B2F38A /* WhatsNewCell.xib in Resources */,
+				65437DBD2665398300B2F38A /* OfficeStatusCell.xib in Resources */,
+				65437DBE2665398300B2F38A /* InfoViewController.xib in Resources */,
+				65437DBF2665398300B2F38A /* ServiceDeskContactCell.xib in Resources */,
+				65437DC02665398300B2F38A /* QuickHelpCell.xib in Resources */,
+				65437DC12665398300B2F38A /* NewTicketViewController.xib in Resources */,
+				65437DC22665398300B2F38A /* OfficeLocationViewController.xib in Resources */,
+				65437DC32665398300B2F38A /* GlobalAlertDetailsCell.xib in Resources */,
+				65437DC42665398300B2F38A /* MyTicketsHeader.xib in Resources */,
+				65437DC52665398300B2F38A /* MyDevicesViewController.xib in Resources */,
+				65437DC62665398300B2F38A /* GlobalAlertDetailsHeader.xib in Resources */,
+				65437DC72665398300B2F38A /* SystemUpdatesCell.xib in Resources */,
+				65437DC82665398300B2F38A /* OfficeSelectionCell.xib in Resources */,
+				65437DC92665398300B2F38A /* GoogleService-Info.plist in Resources */,
+				65437DCA2665398300B2F38A /* TicketDescriptionCell.xib in Resources */,
+				65437DCB2665398300B2F38A /* MyTicketsViewController.xib in Resources */,
+				65437DCC2665398300B2F38A /* HelpDeskContactOptionCell.xib in Resources */,
+				65437DCD2665398300B2F38A /* AppTipsAndTricksViewController.xib in Resources */,
+				65437DCE2665398300B2F38A /* NoCommentsCell.xib in Resources */,
+				65437DCF2665398300B2F38A /* AppsTableViewHeader.xib in Resources */,
+				65437DD02665398300B2F38A /* Collaboration.storyboard in Resources */,
+				65437DD12665398300B2F38A /* WhatsNewViewController.xib in Resources */,
+				65437DD22665398300B2F38A /* SecondTicketDetailsViewController.xib in Resources */,
+				65437DD32665398300B2F38A /* TicketDetailsViewController.xib in Resources */,
+				65437DD42665398300B2F38A /* SF-Pro-Text-Bold.ttf in Resources */,
+				65437DD52665398300B2F38A /* GeneralCell.xib in Resources */,
+				65437DD62665398300B2F38A /* AppContactsViewController.xib in Resources */,
+				65437DD72665398300B2F38A /* ArticleViewController.xib in Resources */,
+				65437DD82665398300B2F38A /* Main.storyboard in Resources */,
+				65437DD92665398300B2F38A /* NewsCollectionViewCell.xib in Resources */,
+				65437DDA2665398300B2F38A /* ServiceDeskAboutViewController.xib in Resources */,
+				65437DDB2665398300B2F38A /* MetricStatsCell.xib in Resources */,
+				65437DDC2665398300B2F38A /* GeneralScreen.storyboard in Resources */,
+				65437DDD2665398300B2F38A /* TicketCell.xib in Resources */,
+				65437DDE2665398300B2F38A /* AboutViewController.xib in Resources */,
+				65437DDF2665398300B2F38A /* InfoArticleCell.xib in Resources */,
+				65437DE02665398300B2F38A /* AboutInfoCell.xib in Resources */,
+				65437DE12665398300B2F38A /* CollaborationHeaderCell.xib in Resources */,
+				65437DE22665398300B2F38A /* DeviceCell.xib in Resources */,
+				65437DE32665398300B2F38A /* GlobalAlertCell.xib in Resources */,
+				65437DE42665398300B2F38A /* GlobalAlertViewController.xib in Resources */,
+				65437DE52665398300B2F38A /* AppContactCell.xib in Resources */,
+				65437DE62665398300B2F38A /* Office365ViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65437E7E266539BF00B2F38A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65437E7F266539BF00B2F38A /* ServiceDeskAboutCell.xib in Resources */,
+				65437E80266539BF00B2F38A /* SF-Pro-Display-Thin.otf in Resources */,
+				65437E81266539BF00B2F38A /* GTTeamViewController.xib in Resources */,
+				65437E82266539BF00B2F38A /* Home.storyboard in Resources */,
+				65437E83266539BF00B2F38A /* OfficeSelectionCell.xib in Resources */,
+				65437E84266539BF00B2F38A /* OfficeLocationViewController.xib in Resources */,
+				65437E85266539BF00B2F38A /* OfficeInfoCell.xib in Resources */,
+				65437E86266539BF00B2F38A /* AuthViewController.xib in Resources */,
+				65437E87266539BF00B2F38A /* ApplicationStatusViewController.xib in Resources */,
+				65437E88266539BF00B2F38A /* CollaborationCounterCell.xib in Resources */,
+				65437E89266539BF00B2F38A /* TicketDetailsMessageCell.xib in Resources */,
+				65437E8A266539BF00B2F38A /* SF-Pro-Display-Light.ttf in Resources */,
+				65437E8B266539BF00B2F38A /* InfoArticleCell.xib in Resources */,
+				65437E8C266539BF00B2F38A /* HelpDeskHeader.xib in Resources */,
+				65437E8D266539BF00B2F38A /* NotificationSettingsViewController.xib in Resources */,
+				65437E8E266539BF00B2F38A /* ApplicationCell.xib in Resources */,
+				65437E8F266539BF00B2F38A /* GTTeamCell.xib in Resources */,
+				65437E90266539BF00B2F38A /* MyTicketsViewController.xib in Resources */,
+				65437E91266539BF00B2F38A /* SecondSendMessageView.xib in Resources */,
+				65437E92266539BF00B2F38A /* SF-Pro-Text-Semibold.ttf in Resources */,
+				65437E93266539BF00B2F38A /* InfoViewController.xib in Resources */,
+				65437E94266539BF00B2F38A /* SF-Pro-Display-Medium.otf in Resources */,
+				65437E95266539BF00B2F38A /* AboutHeaderCell.xib in Resources */,
+				65437E96266539BF00B2F38A /* SystemStatusHeader.xib in Resources */,
+				65437E97266539BF00B2F38A /* SecondTicketDetailsViewController.xib in Resources */,
+				65437E98266539BF00B2F38A /* HelpDesk.storyboard in Resources */,
+				65437E99266539BF00B2F38A /* SF-Pro-Text-Light.ttf in Resources */,
+				65437E9A266539BF00B2F38A /* SF-Pro-Display-Bold.otf in Resources */,
+				65437E9B266539BF00B2F38A /* WhatsNewMoreViewController.xib in Resources */,
+				65437E9C266539BF00B2F38A /* ServiceDeskContactsViewController.xib in Resources */,
+				65437E9D266539BF00B2F38A /* CollaborationHeader.xib in Resources */,
+				65437E9E266539BF00B2F38A /* LaunchScreen.storyboard in Resources */,
+				65437E9F266539BF00B2F38A /* ServiceDeskAboutViewController.xib in Resources */,
+				65437EA0266539BF00B2F38A /* SF-Pro-Text-Italic.ttf in Resources */,
+				65437EA1266539BF00B2F38A /* AboutSupportCell.xib in Resources */,
+				65437EA2266539BF00B2F38A /* SF-Pro-Text-Medium.otf in Resources */,
+				65437EA3266539BF00B2F38A /* Office365AppCell.xib in Resources */,
+				65437EA4266539BF00B2F38A /* Assets.xcassets in Resources */,
+				65437EA5266539BF00B2F38A /* Apps.storyboard in Resources */,
+				65437EA6266539BF00B2F38A /* TicketDetailsViewController.xib in Resources */,
+				65437EA7266539BF00B2F38A /* SwitcherCell.xib in Resources */,
+				65437EA8266539BF00B2F38A /* SF-Pro-Text-Regular.otf in Resources */,
+				65437EA9266539BF00B2F38A /* WhatsNewCell.xib in Resources */,
+				65437EAA266539BF00B2F38A /* QuickHelpViewController.xib in Resources */,
+				65437EAB266539BF00B2F38A /* MetricStatsHeader.xib in Resources */,
+				65437EAC266539BF00B2F38A /* MyTicketsHeader.xib in Resources */,
+				65437EAD266539BF00B2F38A /* ServiceDeskContactCell.xib in Resources */,
+				65437EAE266539BF00B2F38A /* NewTicketViewController.xib in Resources */,
+				65437EAF266539BF00B2F38A /* QuickHelpCell.xib in Resources */,
+				65437EB0266539BF00B2F38A /* GlobalAlertDetailsCell.xib in Resources */,
+				65437EB1266539BF00B2F38A /* SendMessageView.xib in Resources */,
+				65437EB2266539BF00B2F38A /* HelpDeskCell.xib in Resources */,
+				65437EB3266539BF00B2F38A /* GlobalAlertDetailsHeader.xib in Resources */,
+				65437EB4266539BF00B2F38A /* AppsServiceAlertCell.xib in Resources */,
+				65437EB5266539BF00B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
+				65437EB6266539BF00B2F38A /* HelpReportScreenViewController.xib in Resources */,
+				65437EB7266539BF00B2F38A /* OfficeStatusCell.xib in Resources */,
+				65437EB8266539BF00B2F38A /* TicketDescriptionCell.xib in Resources */,
+				65437EB9266539BF00B2F38A /* HelpDeskContactOptionCell.xib in Resources */,
+				65437EBA266539BF00B2F38A /* AppContactsViewController.xib in Resources */,
+				65437EBB266539BF00B2F38A /* NoCommentsCell.xib in Resources */,
+				65437EBC266539BF00B2F38A /* AppTipsAndTricksViewController.xib in Resources */,
+				65437EBD266539BF00B2F38A /* Collaboration.storyboard in Resources */,
+				65437EBE266539BF00B2F38A /* WhatsNewViewController.xib in Resources */,
+				65437EBF266539BF00B2F38A /* MyDevicesViewController.xib in Resources */,
+				65437EC0266539BF00B2F38A /* AppContactCell.xib in Resources */,
+				65437EC1266539BF00B2F38A /* SF-Pro-Text-Bold.ttf in Resources */,
+				65437EC2266539BF00B2F38A /* GeneralCell.xib in Resources */,
+				65437EC3266539BF00B2F38A /* SystemUpdatesCell.xib in Resources */,
+				65437EC4266539BF00B2F38A /* AppsTableViewHeader.xib in Resources */,
+				65437EC5266539BF00B2F38A /* ArticleViewController.xib in Resources */,
+				65437EC6266539BF00B2F38A /* Main.storyboard in Resources */,
+				65437EC7266539BF00B2F38A /* NewsCollectionViewCell.xib in Resources */,
+				65437EC8266539BF00B2F38A /* TicketCell.xib in Resources */,
+				65437EC9266539BF00B2F38A /* GeneralScreen.storyboard in Resources */,
+				65437ECA266539BF00B2F38A /* GoogleService-Info.plist in Resources */,
+				65437ECB266539BF00B2F38A /* MetricStatsCell.xib in Resources */,
+				65437ECC266539BF00B2F38A /* AboutViewController.xib in Resources */,
+				65437ECD266539BF00B2F38A /* AboutInfoCell.xib in Resources */,
+				65437ECE266539BF00B2F38A /* CollaborationHeaderCell.xib in Resources */,
+				65437ECF266539BF00B2F38A /* DeviceCell.xib in Resources */,
+				65437ED0266539BF00B2F38A /* GlobalAlertCell.xib in Resources */,
+				65437ED1266539BF00B2F38A /* GlobalAlertViewController.xib in Resources */,
+				65437ED2266539BF00B2F38A /* AboutSupportPolicyCell.xib in Resources */,
+				65437ED3266539BF00B2F38A /* Office365ViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		659A5AAB255401EA00E13B77 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2779,6 +3754,161 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GTAStage/Pods-GTAStage-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		65437C392665387600B2F38A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GTADev-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65437D052665387600B2F38A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GTADev/Pods-GTADev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GTADev/Pods-GTADev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GTADev/Pods-GTADev-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65437D1A2665398300B2F38A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GTAStage-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65437DE72665398300B2F38A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/FirebaseCrashlytics/run\n${PODS_ROOT}/FirebaseCrashlytics/upload-symbols -gsp ${PROJECT_DIR}/GTA/Plists/GooglePlists/GTAStage/GoogleService-Info.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\n";
+		};
+		65437DE82665398300B2F38A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GTAStage/Pods-GTAStage-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GTAStage/Pods-GTAStage-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GTAStage/Pods-GTAStage-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65437E07266539BF00B2F38A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GTA-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65437ED4266539BF00B2F38A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/FirebaseCrashlytics/run\n${DWARF_DSYM_FOLDER_PATH} -name \"*.dSYM\" | xargs -I \\{\\} $PODS_ROOT/FirebaseCrashlytics/upload-symbols -gsp ${PROJECT_DIR}/GTA/Plists/GooglePlists/GTA/GoogleService-Info.plist -p ios\n";
+		};
+		65437ED5266539BF00B2F38A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GTA/Pods-GTA-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GTA/Pods-GTA-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GTA/Pods-GTA-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		72A0DA116C1F91AA8E5C799D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2939,6 +4069,372 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		65437C3A2665387600B2F38A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65437C3B2665387600B2F38A /* UsageMetricsViewController.swift in Sources */,
+				65437C3C2665387600B2F38A /* CollaborationDataProvider.swift in Sources */,
+				65437C3D2665387600B2F38A /* Preferences.swift in Sources */,
+				65437C3E2665387600B2F38A /* AppContactCell.swift in Sources */,
+				65437C3F2665387600B2F38A /* HelpDeskDataProvider.swift in Sources */,
+				65437C402665387600B2F38A /* SessionExpiredHandler.swift in Sources */,
+				65437C412665387600B2F38A /* AppContactsViewController.swift in Sources */,
+				65437C422665387600B2F38A /* MetricStatsHeader.swift in Sources */,
+				65437C432665387600B2F38A /* ApplicationStatusViewController.swift in Sources */,
+				65437C442665387600B2F38A /* HelpDeskHeader.swift in Sources */,
+				65437C452665387600B2F38A /* HelpDeskResponses.swift in Sources */,
+				65437C462665387600B2F38A /* APIRequest.swift in Sources */,
+				65437C472665387600B2F38A /* MyTicketsViewController.swift in Sources */,
+				65437C482665387600B2F38A /* CollaborationResponses.swift in Sources */,
+				65437C492665387600B2F38A /* ImageCacheManager.swift in Sources */,
+				65437C4A2665387600B2F38A /* InfoArticleCell.swift in Sources */,
+				65437C4B2665387600B2F38A /* GlobalAlertDetailsCell.swift in Sources */,
+				65437C4C2665387600B2F38A /* CollaborationHeader.swift in Sources */,
+				65437C4D2665387600B2F38A /* QuickHelpViewController.swift in Sources */,
+				65437C4E2665387600B2F38A /* TicketDetailsViewController.swift in Sources */,
+				65437C4F2665387600B2F38A /* MyAppsResponses.swift in Sources */,
+				65437C502665387600B2F38A /* NewsCollectionViewCell.swift in Sources */,
+				65437C512665387600B2F38A /* GTTeamViewController.swift in Sources */,
+				65437C522665387600B2F38A /* SendMessageView.swift in Sources */,
+				65437C532665387600B2F38A /* OfficeLocationViewController.swift in Sources */,
+				65437C542665387600B2F38A /* TicketCell.swift in Sources */,
+				65437C552665387600B2F38A /* AboutViewController.swift in Sources */,
+				65437C562665387600B2F38A /* WhatsNewViewController.swift in Sources */,
+				65437C572665387600B2F38A /* GlobalNewsResponses.swift in Sources */,
+				65437C582665387600B2F38A /* QuickHelpCell.swift in Sources */,
+				65437C592665387600B2F38A /* HomepageTableViewController.swift in Sources */,
+				65437C5A2665387600B2F38A /* AuthViewController.swift in Sources */,
+				65437C5B2665387600B2F38A /* TicketDetailsMessageCell.swift in Sources */,
+				65437C5C2665387600B2F38A /* ChartLayoutHelper.swift in Sources */,
+				65437C5D2665387600B2F38A /* CollaborationHeaderCell.swift in Sources */,
+				65437C5E2665387600B2F38A /* AppsTableViewHeader.swift in Sources */,
+				65437C5F2665387600B2F38A /* LoginViewController.swift in Sources */,
+				65437C602665387600B2F38A /* ErrorHandler.swift in Sources */,
+				65437C612665387600B2F38A /* HelpDeskContactOptionCell.swift in Sources */,
+				65437C622665387600B2F38A /* SecondTicketDetailsViewController.swift in Sources */,
+				65437C632665387600B2F38A /* ArticleViewController.swift in Sources */,
+				65437C642665387600B2F38A /* StatsBarChart.swift in Sources */,
+				65437C652665387600B2F38A /* OfficesResponses.swift in Sources */,
+				65437C662665387600B2F38A /* AppDelegate.swift in Sources */,
+				65437C672665387600B2F38A /* MetricStatsCell.swift in Sources */,
+				65437C682665387600B2F38A /* GTA.xcdatamodeld in Sources */,
+				65437C692665387600B2F38A /* ServiceDeskAboutViewController.swift in Sources */,
+				65437C6A2665387600B2F38A /* GTTeamCell.swift in Sources */,
+				65437C6B2665387600B2F38A /* ServiceDeskContactsViewController.swift in Sources */,
+				65437C6C2665387600B2F38A /* HelpDeskCell.swift in Sources */,
+				65437C6D2665387600B2F38A /* MyAppsDataProvider.swift in Sources */,
+				65437C6E2665387600B2F38A /* SceneDelegate.swift in Sources */,
+				65437C6F2665387600B2F38A /* GeneralCell.swift in Sources */,
+				65437C702665387600B2F38A /* InfoViewController.swift in Sources */,
+				65437C712665387600B2F38A /* LoginDataProvider.swift in Sources */,
+				65437C722665387600B2F38A /* SwitcherCell.swift in Sources */,
+				65437C732665387600B2F38A /* CollaborationCounterCell.swift in Sources */,
+				65437C742665387600B2F38A /* LoginUSMViewController.swift in Sources */,
+				65437C752665387600B2F38A /* WhatsNewCell.swift in Sources */,
+				65437C762665387600B2F38A /* Utils.swift in Sources */,
+				65437C772665387600B2F38A /* ApplicationCell.swift in Sources */,
+				65437C782665387600B2F38A /* Office365ViewController.swift in Sources */,
+				65437C792665387600B2F38A /* AppsViewController.swift in Sources */,
+				65437C7A2665387600B2F38A /* AnimatedCollectionViewLayout.swift in Sources */,
+				65437C7B2665387600B2F38A /* ServiceDeskContactCell.swift in Sources */,
+				65437C7C2665387600B2F38A /* GeneralDataProvider.swift in Sources */,
+				65437C7D2665387600B2F38A /* NotificationSettingsViewController.swift in Sources */,
+				65437C7E2665387600B2F38A /* GlobalAlertViewController.swift in Sources */,
+				65437C7F2665387600B2F38A /* HomepageViewController.swift in Sources */,
+				65437C802665387600B2F38A /* CommonResponses.swift in Sources */,
+				65437C812665387600B2F38A /* Office365AppCell.swift in Sources */,
+				65437C822665387600B2F38A /* WhatsNewMoreViewController.swift in Sources */,
+				65437C832665387600B2F38A /* AboutHeaderCell.swift in Sources */,
+				65437C842665387600B2F38A /* OfficeSelectionCell.swift in Sources */,
+				65437C852665387600B2F38A /* SecondSendMessageView.swift in Sources */,
+				65437C862665387600B2F38A /* GTTeamResponses.swift in Sources */,
+				65437C872665387600B2F38A /* AboutInfoCell.swift in Sources */,
+				65437C882665387600B2F38A /* ServiceDeskAboutCell.swift in Sources */,
+				65437C892665387600B2F38A /* PushNotificationsManager.swift in Sources */,
+				65437C8A2665387600B2F38A /* StatsBarView.swift in Sources */,
+				65437C8B2665387600B2F38A /* NewTicketViewController.swift in Sources */,
+				65437C8C2665387600B2F38A /* HomeDataProvider.swift in Sources */,
+				65437C8D2665387600B2F38A /* Extensions.swift in Sources */,
+				65437C8E2665387600B2F38A /* GlobalAlertCell.swift in Sources */,
+				65437C8F2665387600B2F38A /* SystemUpdatesCell.swift in Sources */,
+				65437C902665387600B2F38A /* SystemStatusHeader.swift in Sources */,
+				65437C912665387600B2F38A /* CustomTextView.swift in Sources */,
+				65437C922665387600B2F38A /* Constants.swift in Sources */,
+				65437C932665387600B2F38A /* NoCommentsCell.swift in Sources */,
+				65437C942665387600B2F38A /* NetworkManager.swift in Sources */,
+				65437C952665387600B2F38A /* MainViewController.swift in Sources */,
+				65437C962665387600B2F38A /* TicketDescriptionCell.swift in Sources */,
+				65437C972665387600B2F38A /* UserLocationManager.swift in Sources */,
+				65437C982665387600B2F38A /* OfficeInfoCell.swift in Sources */,
+				65437C992665387600B2F38A /* HelpReportScreenViewController.swift in Sources */,
+				65437C9A2665387600B2F38A /* AboutSupportPolicyCell.swift in Sources */,
+				65437C9B2665387600B2F38A /* AboutSupportCell.swift in Sources */,
+				65437C9C2665387600B2F38A /* HelpDeskViewController.swift in Sources */,
+				65437C9D2665387600B2F38A /* APIManager.swift in Sources */,
+				65437C9E2665387600B2F38A /* OfficeStatusCell.swift in Sources */,
+				65437C9F2665387600B2F38A /* PanModalNavigationController.swift in Sources */,
+				65437CA02665387600B2F38A /* MyDevicesViewController.swift in Sources */,
+				65437CA12665387600B2F38A /* GeneralViewController.swift in Sources */,
+				65437CA22665387600B2F38A /* DataParser.swift in Sources */,
+				65437CA32665387600B2F38A /* CollaborationViewController.swift in Sources */,
+				65437CA42665387600B2F38A /* LoginResponses.swift in Sources */,
+				65437CA52665387600B2F38A /* KeychainManager.swift in Sources */,
+				65437CA62665387600B2F38A /* DeviceCell.swift in Sources */,
+				65437CA72665387600B2F38A /* CustomUISwitch.swift in Sources */,
+				65437CA82665387600B2F38A /* AppsServiceAlertCell.swift in Sources */,
+				65437CA92665387600B2F38A /* CacheManager.swift in Sources */,
+				65437CAA2665387600B2F38A /* MyTicketsHeader.swift in Sources */,
+				65437CAB2665387600B2F38A /* GlobalAlertDetailsHeader.swift in Sources */,
+				65437CAC2665387600B2F38A /* CustomTextField.swift in Sources */,
+				65437CAD2665387600B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65437D1B2665398300B2F38A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65437D1C2665398300B2F38A /* UsageMetricsViewController.swift in Sources */,
+				65437D1D2665398300B2F38A /* CollaborationDataProvider.swift in Sources */,
+				65437D1E2665398300B2F38A /* Preferences.swift in Sources */,
+				65437D1F2665398300B2F38A /* AppContactCell.swift in Sources */,
+				65437D202665398300B2F38A /* HelpDeskDataProvider.swift in Sources */,
+				65437D212665398300B2F38A /* SessionExpiredHandler.swift in Sources */,
+				65437D222665398300B2F38A /* AppContactsViewController.swift in Sources */,
+				65437D232665398300B2F38A /* MetricStatsHeader.swift in Sources */,
+				65437D242665398300B2F38A /* ApplicationStatusViewController.swift in Sources */,
+				65437D252665398300B2F38A /* HelpDeskHeader.swift in Sources */,
+				65437D262665398300B2F38A /* HelpDeskResponses.swift in Sources */,
+				65437D272665398300B2F38A /* APIRequest.swift in Sources */,
+				65437D282665398300B2F38A /* MyTicketsViewController.swift in Sources */,
+				65437D292665398300B2F38A /* CollaborationResponses.swift in Sources */,
+				65437D2A2665398300B2F38A /* ImageCacheManager.swift in Sources */,
+				65437D2B2665398300B2F38A /* InfoArticleCell.swift in Sources */,
+				65437D2C2665398300B2F38A /* GlobalAlertDetailsCell.swift in Sources */,
+				65437D2D2665398300B2F38A /* CollaborationHeader.swift in Sources */,
+				65437D2E2665398300B2F38A /* QuickHelpViewController.swift in Sources */,
+				65437D2F2665398300B2F38A /* TicketDetailsViewController.swift in Sources */,
+				65437D302665398300B2F38A /* MyAppsResponses.swift in Sources */,
+				65437D312665398300B2F38A /* NewsCollectionViewCell.swift in Sources */,
+				65437D322665398300B2F38A /* GTTeamViewController.swift in Sources */,
+				65437D332665398300B2F38A /* SendMessageView.swift in Sources */,
+				65437D342665398300B2F38A /* OfficeLocationViewController.swift in Sources */,
+				65437D352665398300B2F38A /* TicketCell.swift in Sources */,
+				65437D362665398300B2F38A /* AboutViewController.swift in Sources */,
+				65437D372665398300B2F38A /* WhatsNewViewController.swift in Sources */,
+				65437D382665398300B2F38A /* GlobalNewsResponses.swift in Sources */,
+				65437D392665398300B2F38A /* QuickHelpCell.swift in Sources */,
+				65437D3A2665398300B2F38A /* HomepageTableViewController.swift in Sources */,
+				65437D3B2665398300B2F38A /* AuthViewController.swift in Sources */,
+				65437D3C2665398300B2F38A /* TicketDetailsMessageCell.swift in Sources */,
+				65437D3D2665398300B2F38A /* ChartLayoutHelper.swift in Sources */,
+				65437D3E2665398300B2F38A /* CollaborationHeaderCell.swift in Sources */,
+				65437D3F2665398300B2F38A /* AppsTableViewHeader.swift in Sources */,
+				65437D402665398300B2F38A /* LoginViewController.swift in Sources */,
+				65437D412665398300B2F38A /* ErrorHandler.swift in Sources */,
+				65437D422665398300B2F38A /* HelpDeskContactOptionCell.swift in Sources */,
+				65437D432665398300B2F38A /* SecondTicketDetailsViewController.swift in Sources */,
+				65437D442665398300B2F38A /* ArticleViewController.swift in Sources */,
+				65437D452665398300B2F38A /* StatsBarChart.swift in Sources */,
+				65437D462665398300B2F38A /* OfficesResponses.swift in Sources */,
+				65437D472665398300B2F38A /* AppDelegate.swift in Sources */,
+				65437D482665398300B2F38A /* MetricStatsCell.swift in Sources */,
+				65437D492665398300B2F38A /* GTA.xcdatamodeld in Sources */,
+				65437D4A2665398300B2F38A /* ServiceDeskAboutViewController.swift in Sources */,
+				65437D4B2665398300B2F38A /* GTTeamCell.swift in Sources */,
+				65437D4C2665398300B2F38A /* ServiceDeskContactsViewController.swift in Sources */,
+				65437D4D2665398300B2F38A /* HelpDeskCell.swift in Sources */,
+				65437D4E2665398300B2F38A /* MyAppsDataProvider.swift in Sources */,
+				65437D4F2665398300B2F38A /* SceneDelegate.swift in Sources */,
+				65437D502665398300B2F38A /* GeneralCell.swift in Sources */,
+				65437D512665398300B2F38A /* InfoViewController.swift in Sources */,
+				65437D522665398300B2F38A /* LoginDataProvider.swift in Sources */,
+				65437D532665398300B2F38A /* SwitcherCell.swift in Sources */,
+				65437D542665398300B2F38A /* CollaborationCounterCell.swift in Sources */,
+				65437D552665398300B2F38A /* LoginUSMViewController.swift in Sources */,
+				65437D562665398300B2F38A /* WhatsNewCell.swift in Sources */,
+				65437D572665398300B2F38A /* Utils.swift in Sources */,
+				65437D582665398300B2F38A /* ApplicationCell.swift in Sources */,
+				65437D592665398300B2F38A /* Office365ViewController.swift in Sources */,
+				65437D5A2665398300B2F38A /* AppsViewController.swift in Sources */,
+				65437D5B2665398300B2F38A /* AnimatedCollectionViewLayout.swift in Sources */,
+				65437D5C2665398300B2F38A /* ServiceDeskContactCell.swift in Sources */,
+				65437D5D2665398300B2F38A /* GeneralDataProvider.swift in Sources */,
+				65437D5E2665398300B2F38A /* NotificationSettingsViewController.swift in Sources */,
+				65437D5F2665398300B2F38A /* GlobalAlertViewController.swift in Sources */,
+				65437D602665398300B2F38A /* HomepageViewController.swift in Sources */,
+				65437D612665398300B2F38A /* CommonResponses.swift in Sources */,
+				65437D622665398300B2F38A /* Office365AppCell.swift in Sources */,
+				65437D632665398300B2F38A /* WhatsNewMoreViewController.swift in Sources */,
+				65437D642665398300B2F38A /* AboutHeaderCell.swift in Sources */,
+				65437D652665398300B2F38A /* OfficeSelectionCell.swift in Sources */,
+				65437D662665398300B2F38A /* SecondSendMessageView.swift in Sources */,
+				65437D672665398300B2F38A /* GTTeamResponses.swift in Sources */,
+				65437D682665398300B2F38A /* AboutInfoCell.swift in Sources */,
+				65437D692665398300B2F38A /* ServiceDeskAboutCell.swift in Sources */,
+				65437D6A2665398300B2F38A /* PushNotificationsManager.swift in Sources */,
+				65437D6B2665398300B2F38A /* StatsBarView.swift in Sources */,
+				65437D6C2665398300B2F38A /* NewTicketViewController.swift in Sources */,
+				65437D6D2665398300B2F38A /* HomeDataProvider.swift in Sources */,
+				65437D6E2665398300B2F38A /* Extensions.swift in Sources */,
+				65437D6F2665398300B2F38A /* GlobalAlertCell.swift in Sources */,
+				65437D702665398300B2F38A /* SystemUpdatesCell.swift in Sources */,
+				65437D712665398300B2F38A /* SystemStatusHeader.swift in Sources */,
+				65437D722665398300B2F38A /* CustomTextView.swift in Sources */,
+				65437D732665398300B2F38A /* Constants.swift in Sources */,
+				65437D742665398300B2F38A /* NoCommentsCell.swift in Sources */,
+				65437D752665398300B2F38A /* NetworkManager.swift in Sources */,
+				65437D762665398300B2F38A /* MainViewController.swift in Sources */,
+				65437D772665398300B2F38A /* TicketDescriptionCell.swift in Sources */,
+				65437D782665398300B2F38A /* UserLocationManager.swift in Sources */,
+				65437D792665398300B2F38A /* OfficeInfoCell.swift in Sources */,
+				65437D7A2665398300B2F38A /* HelpReportScreenViewController.swift in Sources */,
+				65437D7B2665398300B2F38A /* AboutSupportPolicyCell.swift in Sources */,
+				65437D7C2665398300B2F38A /* AboutSupportCell.swift in Sources */,
+				65437D7D2665398300B2F38A /* HelpDeskViewController.swift in Sources */,
+				65437D7E2665398300B2F38A /* APIManager.swift in Sources */,
+				65437D7F2665398300B2F38A /* OfficeStatusCell.swift in Sources */,
+				65437D802665398300B2F38A /* PanModalNavigationController.swift in Sources */,
+				65437D812665398300B2F38A /* MyDevicesViewController.swift in Sources */,
+				65437D822665398300B2F38A /* GeneralViewController.swift in Sources */,
+				65437D832665398300B2F38A /* DataParser.swift in Sources */,
+				65437D842665398300B2F38A /* CollaborationViewController.swift in Sources */,
+				65437D852665398300B2F38A /* LoginResponses.swift in Sources */,
+				65437D862665398300B2F38A /* KeychainManager.swift in Sources */,
+				65437D872665398300B2F38A /* DeviceCell.swift in Sources */,
+				65437D882665398300B2F38A /* CustomUISwitch.swift in Sources */,
+				65437D892665398300B2F38A /* AppsServiceAlertCell.swift in Sources */,
+				65437D8A2665398300B2F38A /* CacheManager.swift in Sources */,
+				65437D8B2665398300B2F38A /* MyTicketsHeader.swift in Sources */,
+				65437D8C2665398300B2F38A /* GlobalAlertDetailsHeader.swift in Sources */,
+				65437D8D2665398300B2F38A /* CustomTextField.swift in Sources */,
+				65437D8E2665398300B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65437E08266539BF00B2F38A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65437E09266539BF00B2F38A /* UsageMetricsViewController.swift in Sources */,
+				65437E0A266539BF00B2F38A /* CollaborationDataProvider.swift in Sources */,
+				65437E0B266539BF00B2F38A /* Preferences.swift in Sources */,
+				65437E0C266539BF00B2F38A /* AppContactCell.swift in Sources */,
+				65437E0D266539BF00B2F38A /* HelpDeskDataProvider.swift in Sources */,
+				65437E0E266539BF00B2F38A /* SessionExpiredHandler.swift in Sources */,
+				65437E0F266539BF00B2F38A /* AppContactsViewController.swift in Sources */,
+				65437E10266539BF00B2F38A /* MetricStatsHeader.swift in Sources */,
+				65437E11266539BF00B2F38A /* ApplicationStatusViewController.swift in Sources */,
+				65437E12266539BF00B2F38A /* HelpDeskHeader.swift in Sources */,
+				65437E13266539BF00B2F38A /* HelpDeskResponses.swift in Sources */,
+				65437E14266539BF00B2F38A /* APIRequest.swift in Sources */,
+				65437E15266539BF00B2F38A /* NewsCollectionViewCell.swift in Sources */,
+				65437E16266539BF00B2F38A /* CollaborationResponses.swift in Sources */,
+				65437E17266539BF00B2F38A /* ImageCacheManager.swift in Sources */,
+				65437E18266539BF00B2F38A /* CollaborationHeader.swift in Sources */,
+				65437E19266539BF00B2F38A /* GlobalAlertDetailsCell.swift in Sources */,
+				65437E1A266539BF00B2F38A /* QuickHelpViewController.swift in Sources */,
+				65437E1B266539BF00B2F38A /* InfoViewController.swift in Sources */,
+				65437E1C266539BF00B2F38A /* MyAppsResponses.swift in Sources */,
+				65437E1D266539BF00B2F38A /* AboutViewController.swift in Sources */,
+				65437E1E266539BF00B2F38A /* HomepageTableViewController.swift in Sources */,
+				65437E1F266539BF00B2F38A /* GTTeamViewController.swift in Sources */,
+				65437E20266539BF00B2F38A /* ChartLayoutHelper.swift in Sources */,
+				65437E21266539BF00B2F38A /* TicketCell.swift in Sources */,
+				65437E22266539BF00B2F38A /* SecondTicketDetailsViewController.swift in Sources */,
+				65437E23266539BF00B2F38A /* GlobalNewsResponses.swift in Sources */,
+				65437E24266539BF00B2F38A /* WhatsNewViewController.swift in Sources */,
+				65437E25266539BF00B2F38A /* QuickHelpCell.swift in Sources */,
+				65437E26266539BF00B2F38A /* AppsTableViewHeader.swift in Sources */,
+				65437E27266539BF00B2F38A /* AuthViewController.swift in Sources */,
+				65437E28266539BF00B2F38A /* InfoArticleCell.swift in Sources */,
+				65437E29266539BF00B2F38A /* LoginViewController.swift in Sources */,
+				65437E2A266539BF00B2F38A /* CollaborationHeaderCell.swift in Sources */,
+				65437E2B266539BF00B2F38A /* ArticleViewController.swift in Sources */,
+				65437E2C266539BF00B2F38A /* OfficeInfoCell.swift in Sources */,
+				65437E2D266539BF00B2F38A /* ErrorHandler.swift in Sources */,
+				65437E2E266539BF00B2F38A /* HelpDeskContactOptionCell.swift in Sources */,
+				65437E2F266539BF00B2F38A /* StatsBarChart.swift in Sources */,
+				65437E30266539BF00B2F38A /* AppDelegate.swift in Sources */,
+				65437E31266539BF00B2F38A /* MetricStatsCell.swift in Sources */,
+				65437E32266539BF00B2F38A /* OfficesResponses.swift in Sources */,
+				65437E33266539BF00B2F38A /* HelpDeskCell.swift in Sources */,
+				65437E34266539BF00B2F38A /* SceneDelegate.swift in Sources */,
+				65437E35266539BF00B2F38A /* GTA.xcdatamodeld in Sources */,
+				65437E36266539BF00B2F38A /* ServiceDeskAboutViewController.swift in Sources */,
+				65437E37266539BF00B2F38A /* ServiceDeskContactsViewController.swift in Sources */,
+				65437E38266539BF00B2F38A /* GTTeamCell.swift in Sources */,
+				65437E39266539BF00B2F38A /* ApplicationCell.swift in Sources */,
+				65437E3A266539BF00B2F38A /* MyAppsDataProvider.swift in Sources */,
+				65437E3B266539BF00B2F38A /* Utils.swift in Sources */,
+				65437E3C266539BF00B2F38A /* AppsViewController.swift in Sources */,
+				65437E3D266539BF00B2F38A /* GeneralCell.swift in Sources */,
+				65437E3E266539BF00B2F38A /* LoginDataProvider.swift in Sources */,
+				65437E3F266539BF00B2F38A /* LoginUSMViewController.swift in Sources */,
+				65437E40266539BF00B2F38A /* SwitcherCell.swift in Sources */,
+				65437E41266539BF00B2F38A /* CollaborationCounterCell.swift in Sources */,
+				65437E42266539BF00B2F38A /* HomepageViewController.swift in Sources */,
+				65437E43266539BF00B2F38A /* WhatsNewCell.swift in Sources */,
+				65437E44266539BF00B2F38A /* TicketDetailsViewController.swift in Sources */,
+				65437E45266539BF00B2F38A /* Office365ViewController.swift in Sources */,
+				65437E46266539BF00B2F38A /* TicketDetailsMessageCell.swift in Sources */,
+				65437E47266539BF00B2F38A /* AnimatedCollectionViewLayout.swift in Sources */,
+				65437E48266539BF00B2F38A /* ServiceDeskContactCell.swift in Sources */,
+				65437E49266539BF00B2F38A /* AboutInfoCell.swift in Sources */,
+				65437E4A266539BF00B2F38A /* GeneralDataProvider.swift in Sources */,
+				65437E4B266539BF00B2F38A /* NotificationSettingsViewController.swift in Sources */,
+				65437E4C266539BF00B2F38A /* GlobalAlertViewController.swift in Sources */,
+				65437E4D266539BF00B2F38A /* CommonResponses.swift in Sources */,
+				65437E4E266539BF00B2F38A /* Office365AppCell.swift in Sources */,
+				65437E4F266539BF00B2F38A /* AboutHeaderCell.swift in Sources */,
+				65437E50266539BF00B2F38A /* WhatsNewMoreViewController.swift in Sources */,
+				65437E51266539BF00B2F38A /* SendMessageView.swift in Sources */,
+				65437E52266539BF00B2F38A /* OfficeSelectionCell.swift in Sources */,
+				65437E53266539BF00B2F38A /* StatsBarView.swift in Sources */,
+				65437E54266539BF00B2F38A /* GTTeamResponses.swift in Sources */,
+				65437E55266539BF00B2F38A /* SecondSendMessageView.swift in Sources */,
+				65437E56266539BF00B2F38A /* ServiceDeskAboutCell.swift in Sources */,
+				65437E57266539BF00B2F38A /* PushNotificationsManager.swift in Sources */,
+				65437E58266539BF00B2F38A /* Extensions.swift in Sources */,
+				65437E59266539BF00B2F38A /* NewTicketViewController.swift in Sources */,
+				65437E5A266539BF00B2F38A /* HomeDataProvider.swift in Sources */,
+				65437E5B266539BF00B2F38A /* SystemUpdatesCell.swift in Sources */,
+				65437E5C266539BF00B2F38A /* GlobalAlertCell.swift in Sources */,
+				65437E5D266539BF00B2F38A /* SystemStatusHeader.swift in Sources */,
+				65437E5E266539BF00B2F38A /* CustomTextView.swift in Sources */,
+				65437E5F266539BF00B2F38A /* MainViewController.swift in Sources */,
+				65437E60266539BF00B2F38A /* Constants.swift in Sources */,
+				65437E61266539BF00B2F38A /* NoCommentsCell.swift in Sources */,
+				65437E62266539BF00B2F38A /* NetworkManager.swift in Sources */,
+				65437E63266539BF00B2F38A /* MyTicketsHeader.swift in Sources */,
+				65437E64266539BF00B2F38A /* TicketDescriptionCell.swift in Sources */,
+				65437E65266539BF00B2F38A /* UserLocationManager.swift in Sources */,
+				65437E66266539BF00B2F38A /* HelpReportScreenViewController.swift in Sources */,
+				65437E67266539BF00B2F38A /* MyTicketsViewController.swift in Sources */,
+				65437E68266539BF00B2F38A /* AboutSupportPolicyCell.swift in Sources */,
+				65437E69266539BF00B2F38A /* OfficeLocationViewController.swift in Sources */,
+				65437E6A266539BF00B2F38A /* AboutSupportCell.swift in Sources */,
+				65437E6B266539BF00B2F38A /* APIManager.swift in Sources */,
+				65437E6C266539BF00B2F38A /* HelpDeskViewController.swift in Sources */,
+				65437E6D266539BF00B2F38A /* OfficeStatusCell.swift in Sources */,
+				65437E6E266539BF00B2F38A /* PanModalNavigationController.swift in Sources */,
+				65437E6F266539BF00B2F38A /* GeneralViewController.swift in Sources */,
+				65437E70266539BF00B2F38A /* DataParser.swift in Sources */,
+				65437E71266539BF00B2F38A /* CollaborationViewController.swift in Sources */,
+				65437E72266539BF00B2F38A /* LoginResponses.swift in Sources */,
+				65437E73266539BF00B2F38A /* KeychainManager.swift in Sources */,
+				65437E74266539BF00B2F38A /* MyDevicesViewController.swift in Sources */,
+				65437E75266539BF00B2F38A /* CustomUISwitch.swift in Sources */,
+				65437E76266539BF00B2F38A /* DeviceCell.swift in Sources */,
+				65437E77266539BF00B2F38A /* CacheManager.swift in Sources */,
+				65437E78266539BF00B2F38A /* AppsServiceAlertCell.swift in Sources */,
+				65437E79266539BF00B2F38A /* GlobalAlertDetailsHeader.swift in Sources */,
+				65437E7A266539BF00B2F38A /* CustomTextField.swift in Sources */,
+				65437E7B266539BF00B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		659A5AA9255401EA00E13B77 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3479,6 +4975,149 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		65437D072665387600B2F38A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C62324FACAA4F8AE15B4ECA /* Pods-GTADev.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTADev.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sergiy Savchenko (SL99M4JWZR)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = H9636WUCU4;
+				INFOPLIST_FILE = "GTADev copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtadev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "GTA Dev Development Profile";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "GTADev TEST_PUSH_TOKEN";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		65437D082665387600B2F38A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43E62144876B40ED6DD138BF /* Pods-GTADev.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTADev.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sergiy Savchenko (SL99M4JWZR)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = H9636WUCU4;
+				INFOPLIST_FILE = "GTADev copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtadev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "GTA Dev Development Profile";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "GTADev TEST_PUSH_TOKEN";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		65437DEA2665398300B2F38A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7684C58C0D8D159DE2D8E4F1 /* Pods-GTAStage.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTAStage.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H9636WUCU4;
+				INFOPLIST_FILE = "GTAStage copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtastage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "GTAStage TEST_PUSH_TOKEN";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		65437DEB2665398300B2F38A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F17817328889F6FE03FC0C0 /* Pods-GTAStage.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTAStage.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H9636WUCU4;
+				INFOPLIST_FILE = "GTAStage copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtastage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "GTAStage TEST_PUSH_TOKEN";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		65437ED7266539BF00B2F38A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54F47DB5F580B842726A02CE /* Pods-GTA.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTA.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H9636WUCU4;
+				INFOPLIST_FILE = "GTA copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gta;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "GTA TEST_PUSH_TOKEN";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		65437ED8266539BF00B2F38A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 791710547768B4DBE8B60339 /* Pods-GTA.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GTA.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 44443HH46G;
+				INFOPLIST_FILE = "GTA copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gta;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "GTA TEST_PUSH_TOKEN";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		659A5AD5255401EE00E13B77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3871,6 +5510,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		65437D062665387600B2F38A /* Build configuration list for PBXNativeTarget "GTADev-pushTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65437D072665387600B2F38A /* Debug */,
+				65437D082665387600B2F38A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65437DE92665398300B2F38A /* Build configuration list for PBXNativeTarget "GTAStage-pushTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65437DEA2665398300B2F38A /* Debug */,
+				65437DEB2665398300B2F38A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65437ED6266539BF00B2F38A /* Build configuration list for PBXNativeTarget "GTA-pushTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65437ED7266539BF00B2F38A /* Debug */,
+				65437ED8266539BF00B2F38A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		659A5AA8255401EA00E13B77 /* Build configuration list for PBXProject "GTA" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
