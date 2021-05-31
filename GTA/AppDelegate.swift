@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #else
         FirebaseApp.configure()
         #endif
+        if let notification = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? UNNotification, notification.isEmergencyOutage {
+            UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
+        }
         registerForPushNotifications()
         return true
     }
@@ -108,10 +111,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let userInfo = response.notification.request.content.userInfo
-        if let payload = userInfo[Constants.payloadKey] as? String, let payloadData = Data(base64Encoded: payload), let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject], let pushType = payloadDict[Constants.pushTypeKey] as? String, pushType == Constants.pushType {
+        if response.notification.isEmergencyOutage {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
         }
+        completionHandler()
     }
 }
 

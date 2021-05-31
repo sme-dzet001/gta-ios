@@ -60,6 +60,10 @@ class HomepageViewController: UIViewController {
                     self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
                     self?.collectionView.reloadData()
+                    if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+                        UserDefaults.standard.removeObject(forKey: "emergencyOutageNotificationReceived")
+                        self?.emergencyOutageNotificationReceived()
+                    }
                 } else {
                     let isNoData = (self?.dataProvider.newsDataIsEmpty ?? true)
                     if isNoData {
@@ -108,9 +112,12 @@ class HomepageViewController: UIViewController {
     @objc func emergencyOutageNotificationReceived() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.dismissPanModalIfPresented { [weak self] in
-            self?.tabBarController?.selectedIndex = 0
-            if let alert = self?.dataProvider.globalAlertsData, !alert.isExpired {
-                self?.showGlobalAlertModal()
+            guard let self = self else { return }
+            let embeddedController = self.navigationController ?? self
+            guard let homepageTabIdx = self.tabBarController?.viewControllers?.firstIndex(of: embeddedController) else { return }
+            self.tabBarController?.selectedIndex = homepageTabIdx
+            if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
+                self.showGlobalAlertModal()
             }
         }
     }
