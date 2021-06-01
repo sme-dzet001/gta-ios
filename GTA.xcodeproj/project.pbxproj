@@ -129,14 +129,14 @@
 		65437CA82665387600B2F38A /* AppsServiceAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */; };
 		65437CA92665387600B2F38A /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
 		65437CAA2665387600B2F38A /* MyTicketsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C962D8432566E1FA00727949 /* MyTicketsHeader.swift */; };
-		65437CAB2665387600B2F38A /* GlobalAlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */; };
+		65437CAB2665387600B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */; };
 		65437CAC2665387600B2F38A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
 		65437CAD2665387600B2F38A /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
 		65437CAF2665387600B2F38A /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */; };
 		65437CB12665387600B2F38A /* ServiceDeskAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0FC25B08CAC004A9C65 /* ServiceDeskAboutCell.xib */; };
 		65437CB22665387600B2F38A /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEB255404F100E13B77 /* SF-Pro-Display-Thin.otf */; };
 		65437CB32665387600B2F38A /* AppTipsAndTricksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */; };
-		65437CB42665387600B2F38A /* GlobalAlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */; };
+		65437CB42665387600B2F38A /* GlobalAlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib */; };
 		65437CB52665387600B2F38A /* OfficeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */; };
 		65437CB62665387600B2F38A /* NotificationSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC948264D44E7004074C8 /* NotificationSettingsViewController.xib */; };
 		65437CB72665387600B2F38A /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
@@ -329,7 +329,7 @@
 		65437E76266539BF00B2F38A /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9424E12256427F0003C247E /* DeviceCell.swift */; };
 		65437E77266539BF00B2F38A /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
 		65437E78266539BF00B2F38A /* AppsServiceAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */; };
-		65437E79266539BF00B2F38A /* GlobalAlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */; };
+		65437E79266539BF00B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */; };
 		65437E7A266539BF00B2F38A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
 		65437E7B266539BF00B2F38A /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
 		65437E7D266539BF00B2F38A /* Pods_GTA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA50956AA53DEAF0E40A50B2 /* Pods_GTA.framework */; };
@@ -385,7 +385,7 @@
 		65437EB0266539BF00B2F38A /* GlobalAlertDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824B2657CE02004407B4 /* GlobalAlertDetailsCell.xib */; };
 		65437EB1266539BF00B2F38A /* SendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0545225680EC90071E596 /* SendMessageView.xib */; };
 		65437EB2266539BF00B2F38A /* HelpDeskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */; };
-		65437EB3266539BF00B2F38A /* GlobalAlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */; };
+		65437EB3266539BF00B2F38A /* GlobalAlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib */; };
 		65437EB4266539BF00B2F38A /* AppsServiceAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895ADF255C22D6004489C6 /* AppsServiceAlertCell.xib */; };
 		65437EB5266539BF00B2F38A /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */; };
 		65437EB6266539BF00B2F38A /* HelpReportScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B69255D3D27004489C6 /* HelpReportScreenViewController.xib */; };
@@ -530,7 +530,7 @@
 		65437FE32665568000B2F38A /* AppsServiceAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895ADA255C22D6004489C6 /* AppsServiceAlertCell.swift */; };
 		65437FE42665568000B2F38A /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
 		65437FE52665568000B2F38A /* MyTicketsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C962D8432566E1FA00727949 /* MyTicketsHeader.swift */; };
-		65437FE62665568000B2F38A /* GlobalAlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */; };
+		65437FE62665568000B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */; };
 		65437FE72665568000B2F38A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
 		65437FE82665568000B2F38A /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
 		65437FEA2665568000B2F38A /* Pods_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB6219B91F984FFA0A2D3BC /* Pods_GTAStage.framework */; };
@@ -586,7 +586,7 @@
 		6543801D2665568000B2F38A /* GlobalAlertDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824B2657CE02004407B4 /* GlobalAlertDetailsCell.xib */; };
 		6543801E2665568000B2F38A /* MyTicketsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C962D8512566E21400727949 /* MyTicketsHeader.xib */; };
 		6543801F2665568000B2F38A /* MyDevicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E0025642632003C247E /* MyDevicesViewController.xib */; };
-		654380202665568000B2F38A /* GlobalAlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */; };
+		654380202665568000B2F38A /* GlobalAlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib */; };
 		654380212665568000B2F38A /* SystemUpdatesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B27255C2E38004489C6 /* SystemUpdatesCell.xib */; };
 		654380222665568000B2F38A /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
 		654380232665568000B2F38A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FCFA2A6259E138D00E893D2 /* GoogleService-Info.plist */; };
@@ -701,14 +701,14 @@
 		9F2C82512657CE02004407B4 /* GlobalAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */; };
 		9F2C82522657CE02004407B4 /* GlobalAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */; };
 		9F2C82532657CE02004407B4 /* GlobalAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */; };
-		9F2C82542657CE02004407B4 /* GlobalAlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */; };
-		9F2C82552657CE02004407B4 /* GlobalAlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */; };
-		9F2C82562657CE02004407B4 /* GlobalAlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */; };
-		9F2C82572657CE02004407B4 /* GlobalAlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */; };
-		9F2C82582657CE02004407B4 /* GlobalAlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */; };
-		9F2C82592657CE02004407B4 /* GlobalAlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */; };
-		9F2C825A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */; };
-		9F2C825B2657CE02004407B4 /* GlobalAlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */; };
+		9F2C82542657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */; };
+		9F2C82552657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */; };
+		9F2C82562657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */; };
+		9F2C82572657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */; };
+		9F2C82582657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib */; };
+		9F2C82592657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib */; };
+		9F2C825A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib */; };
+		9F2C825B2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib */; };
 		9F2C825C2657CE02004407B4 /* GlobalAlertDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824B2657CE02004407B4 /* GlobalAlertDetailsCell.xib */; };
 		9F2C825D2657CE02004407B4 /* GlobalAlertDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824B2657CE02004407B4 /* GlobalAlertDetailsCell.xib */; };
 		9F2C825E2657CE02004407B4 /* GlobalAlertDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824B2657CE02004407B4 /* GlobalAlertDetailsCell.xib */; };
@@ -1505,8 +1505,8 @@
 		9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDataProvider.swift; sourceTree = "<group>"; };
 		9F2C8240265534A5004407B4 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalAlertCell.swift; sourceTree = "<group>"; };
-		9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalAlertDetailsHeader.swift; sourceTree = "<group>"; };
-		9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalAlertDetailsHeader.xib; sourceTree = "<group>"; };
+		9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalAlertDetailsHeaderCell.swift; sourceTree = "<group>"; };
+		9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalAlertDetailsHeaderCell.xib; sourceTree = "<group>"; };
 		9F2C824B2657CE02004407B4 /* GlobalAlertDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalAlertDetailsCell.xib; sourceTree = "<group>"; };
 		9F2C824C2657CE02004407B4 /* GlobalAlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalAlertCell.xib; sourceTree = "<group>"; };
 		9F2C824D2657CE02004407B4 /* GlobalAlertDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalAlertDetailsCell.swift; sourceTree = "<group>"; };
@@ -2046,7 +2046,7 @@
 			isa = PBXGroup;
 			children = (
 				9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */,
-				9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeader.swift */,
+				9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */,
 				9F2C82492657CE02004407B4 /* xib */,
 				9F2C824D2657CE02004407B4 /* GlobalAlertDetailsCell.swift */,
 			);
@@ -2056,7 +2056,7 @@
 		9F2C82492657CE02004407B4 /* xib */ = {
 			isa = PBXGroup;
 			children = (
-				9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib */,
+				9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib */,
 				9F2C824B2657CE02004407B4 /* GlobalAlertDetailsCell.xib */,
 				9F2C824C2657CE02004407B4 /* GlobalAlertCell.xib */,
 			);
@@ -3003,7 +3003,7 @@
 				65437CB12665387600B2F38A /* ServiceDeskAboutCell.xib in Resources */,
 				65437CB22665387600B2F38A /* SF-Pro-Display-Thin.otf in Resources */,
 				65437CB32665387600B2F38A /* AppTipsAndTricksViewController.xib in Resources */,
-				65437CB42665387600B2F38A /* GlobalAlertDetailsHeader.xib in Resources */,
+				65437CB42665387600B2F38A /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				65437CB52665387600B2F38A /* OfficeInfoCell.xib in Resources */,
 				65437CB62665387600B2F38A /* NotificationSettingsViewController.xib in Resources */,
 				65437CB72665387600B2F38A /* OfficeSelectionCell.xib in Resources */,
@@ -3143,7 +3143,7 @@
 				65437EB0266539BF00B2F38A /* GlobalAlertDetailsCell.xib in Resources */,
 				65437EB1266539BF00B2F38A /* SendMessageView.xib in Resources */,
 				65437EB2266539BF00B2F38A /* HelpDeskCell.xib in Resources */,
-				65437EB3266539BF00B2F38A /* GlobalAlertDetailsHeader.xib in Resources */,
+				65437EB3266539BF00B2F38A /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				65437EB4266539BF00B2F38A /* AppsServiceAlertCell.xib in Resources */,
 				65437EB5266539BF00B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
 				65437EB6266539BF00B2F38A /* HelpReportScreenViewController.xib in Resources */,
@@ -3235,7 +3235,7 @@
 				6543801D2665568000B2F38A /* GlobalAlertDetailsCell.xib in Resources */,
 				6543801E2665568000B2F38A /* MyTicketsHeader.xib in Resources */,
 				6543801F2665568000B2F38A /* MyDevicesViewController.xib in Resources */,
-				654380202665568000B2F38A /* GlobalAlertDetailsHeader.xib in Resources */,
+				654380202665568000B2F38A /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				654380212665568000B2F38A /* SystemUpdatesCell.xib in Resources */,
 				654380222665568000B2F38A /* OfficeSelectionCell.xib in Resources */,
 				654380232665568000B2F38A /* GoogleService-Info.plist in Resources */,
@@ -3327,7 +3327,7 @@
 				9F2C825C2657CE02004407B4 /* GlobalAlertDetailsCell.xib in Resources */,
 				9FF0545325680EC90071E596 /* SendMessageView.xib in Resources */,
 				C91F708E2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
-				9F2C82582657CE02004407B4 /* GlobalAlertDetailsHeader.xib in Resources */,
+				9F2C82582657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				9F895AF0255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				659A5AF3255404F100E13B77 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F895B6D255D3D27004489C6 /* HelpReportScreenViewController.xib in Resources */,
@@ -3401,7 +3401,7 @@
 				9F33F6B7260A3C4000470A47 /* SF-Pro-Text-Light.ttf in Resources */,
 				9F33F6B8260A3C4000470A47 /* SF-Pro-Display-Bold.otf in Resources */,
 				9F33F6B9260A3C4000470A47 /* SendMessageView.xib in Resources */,
-				9F2C825B2657CE02004407B4 /* GlobalAlertDetailsHeader.xib in Resources */,
+				9F2C825B2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				9F33F6BA260A3C4000470A47 /* LaunchScreen.storyboard in Resources */,
 				9F33F6BB260A3C4000470A47 /* SF-Pro-Text-Medium.otf in Resources */,
 				9F33F6BC260A3C4000470A47 /* TicketDetailsMessageCell.xib in Resources */,
@@ -3526,7 +3526,7 @@
 				9F2C825D2657CE02004407B4 /* GlobalAlertDetailsCell.xib in Resources */,
 				C962D8532566E21400727949 /* MyTicketsHeader.xib in Resources */,
 				C9424E0525642632003C247E /* MyDevicesViewController.xib in Resources */,
-				9F2C82592657CE02004407B4 /* GlobalAlertDetailsHeader.xib in Resources */,
+				9F2C82592657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				C9EFDA3325A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */,
 				9FCFA2A7259E138D00E893D2 /* GoogleService-Info.plist in Resources */,
@@ -3569,7 +3569,7 @@
 				C960A10225B08CAC004A9C65 /* ServiceDeskAboutCell.xib in Resources */,
 				9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
 				9F44AE2125EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
-				9F2C825A2657CE02004407B4 /* GlobalAlertDetailsHeader.xib in Resources */,
+				9F2C825A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				9F1620D92566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
 				9F3AC94F264D44E7004074C8 /* NotificationSettingsViewController.xib in Resources */,
 				C9EFDA3425A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */,
@@ -4187,7 +4187,7 @@
 				65437CA82665387600B2F38A /* AppsServiceAlertCell.swift in Sources */,
 				65437CA92665387600B2F38A /* CacheManager.swift in Sources */,
 				65437CAA2665387600B2F38A /* MyTicketsHeader.swift in Sources */,
-				65437CAB2665387600B2F38A /* GlobalAlertDetailsHeader.swift in Sources */,
+				65437CAB2665387600B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437CAC2665387600B2F38A /* CustomTextField.swift in Sources */,
 				65437CAD2665387600B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
 			);
@@ -4309,7 +4309,7 @@
 				65437E76266539BF00B2F38A /* DeviceCell.swift in Sources */,
 				65437E77266539BF00B2F38A /* CacheManager.swift in Sources */,
 				65437E78266539BF00B2F38A /* AppsServiceAlertCell.swift in Sources */,
-				65437E79266539BF00B2F38A /* GlobalAlertDetailsHeader.swift in Sources */,
+				65437E79266539BF00B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437E7A266539BF00B2F38A /* CustomTextField.swift in Sources */,
 				65437E7B266539BF00B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
 			);
@@ -4431,7 +4431,7 @@
 				65437FE32665568000B2F38A /* AppsServiceAlertCell.swift in Sources */,
 				65437FE42665568000B2F38A /* CacheManager.swift in Sources */,
 				65437FE52665568000B2F38A /* MyTicketsHeader.swift in Sources */,
-				65437FE62665568000B2F38A /* GlobalAlertDetailsHeader.swift in Sources */,
+				65437FE62665568000B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437FE72665568000B2F38A /* CustomTextField.swift in Sources */,
 				65437FE82665568000B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
 			);
@@ -4553,7 +4553,7 @@
 				C9424E14256427F0003C247E /* DeviceCell.swift in Sources */,
 				659C595B25924106007953A7 /* CacheManager.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
-				9F2C82542657CE02004407B4 /* GlobalAlertDetailsHeader.swift in Sources */,
+				9F2C82542657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
 				9F44AE1C25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,
 			);
@@ -4687,7 +4687,7 @@
 				9F33F69B260A3C4000470A47 /* CollaborationViewController.swift in Sources */,
 				9F33F69C260A3C4000470A47 /* LoginResponses.swift in Sources */,
 				9F33F69D260A3C4000470A47 /* KeychainManager.swift in Sources */,
-				9F2C82572657CE02004407B4 /* GlobalAlertDetailsHeader.swift in Sources */,
+				9F2C82572657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				9F33F69E260A3C4000470A47 /* DeviceCell.swift in Sources */,
 				9F3AC90B2645B17A004074C8 /* GTTeamCell.swift in Sources */,
 				9F33F69F260A3C4000470A47 /* AppsServiceAlertCell.swift in Sources */,
@@ -4814,7 +4814,7 @@
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				659C595C25924106007953A7 /* CacheManager.swift in Sources */,
 				C962D8452566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
-				9F2C82552657CE02004407B4 /* GlobalAlertDetailsHeader.swift in Sources */,
+				9F2C82552657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
 				9F44AE1D25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,
 			);
@@ -4936,7 +4936,7 @@
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				659C595D25924106007953A7 /* CacheManager.swift in Sources */,
 				C962D8462566E1FA00727949 /* MyTicketsHeader.swift in Sources */,
-				9F2C82562657CE02004407B4 /* GlobalAlertDetailsHeader.swift in Sources */,
+				9F2C82562657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
 				9F44AE1E25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,
 			);
