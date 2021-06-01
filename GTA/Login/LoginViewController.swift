@@ -27,6 +27,7 @@ class LoginViewController: UIViewController {
             emailTextField.text = lastUserEmail
             emailTextField.textFieldDidChange(makePlaceHolderSmall: true, animate: false)
         }
+        setAccessibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,6 +59,11 @@ class LoginViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        emailTextField.accessibilityIdentifier = "LoginScreenLoginTextField"
+        loginButton.accessibilityIdentifier = "LoginScreenLoginButton"
     }
     
     @IBAction func unwindToLogin(segue:UIStoryboardSegue) {
