@@ -26,6 +26,8 @@ class AppsViewController: UIViewController {
         super.viewDidLoad()
         setUpTableView()
         //self.dataProvider.appImageDelegate = self
+        setUpNavigationItem()
+        setAccessibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,10 +45,22 @@ class AppsViewController: UIViewController {
         activateStatusRefresh()
     }
     
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         dataProvider.invalidateStatusRefresh()
+    }
+    
+    private func setUpNavigationItem() {
+        let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+        tlabel.text = "My Apps"
+        tlabel.textColor = UIColor.black
+        tlabel.textAlignment = .center
+        tlabel.font = UIFont(name: "SFProDisplay-Medium", size: 20.0)
+        tlabel.backgroundColor = UIColor.clear
+        tlabel.minimumScaleFactor = 0.6
+        tlabel.numberOfLines = 2
+        tlabel.adjustsFontSizeToFitWidth = true
+        self.navigationItem.titleView = tlabel
     }
     
     private func activateStatusRefresh() {
@@ -54,6 +68,11 @@ class AppsViewController: UIViewController {
             guard isNeedToRefresh else { return }
             self?.getAllApps()
         }
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        tableView.accessibilityIdentifier = "AppsScreenTableView"
+        self.navigationItem.titleView?.accessibilityIdentifier = "AppsScreenTitleView"
     }
     
     private func getMyApps() {
@@ -157,6 +176,18 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if !dataProvider.appsData.isEmpty {
+            let header = AppsTableViewHeader.instanceFromNib()
+            header.descriptionLabel.text = dataProvider.appsData[section].description
+            header.headerTitleLabel.text = dataProvider.appsData[section].sectionName
+            header.headerTitleLabel.accessibilityIdentifier = "AppsScreenHeaderTitleLabel"
+            header.descriptionLabel.accessibilityIdentifier = "AppsScreenHeaderDescriptionLabel"
+            return header
+        }
+        return nil
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let error = allAppsLoadingError as? ResponseError, dataProvider.appsData.isEmpty {
             return createErrorCell(with: error.localizedDescription)
@@ -167,7 +198,9 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
                 cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
                 //cell.startAnimation()
-                
+                cell.appIcon.accessibilityIdentifier = "AppsScreenCellIcon"
+                cell.appStatus.accessibilityIdentifier = "AppsScreenAppStatus"
+                cell.appName.accessibilityIdentifier = "AppsScreenAppNameTitleLabel"
                 let url = URL(string: dataProvider.appsData[indexPath.section].cellData[indexPath.row].appImage ?? "")
                 if let urlString = url?.absoluteString, !urlString.isEmptyOrWhitespace() {
                 cell.appIcon.kf.indicatorType = .activity
@@ -193,16 +226,6 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         return UITableViewCell()
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if !dataProvider.appsData.isEmpty {
-            let header = AppsTableViewHeader.instanceFromNib()
-            header.descriptionLabel.text = dataProvider.appsData[section].description
-            header.headerTitleLabel.text = dataProvider.appsData[section].sectionName
-            return header
-        }
-        return nil
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

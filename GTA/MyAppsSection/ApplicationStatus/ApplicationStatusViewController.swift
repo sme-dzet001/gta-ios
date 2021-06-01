@@ -39,6 +39,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.accessibilityIdentifier = "AppsStatusTableView"
         setHardCodeData()
         setUpTableView()
         setUpNavigationItem()
@@ -93,7 +94,9 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         tlabel.numberOfLines = 2
         tlabel.adjustsFontSizeToFitWidth = true
         self.navigationItem.titleView = tlabel
+        self.navigationItem.titleView?.accessibilityIdentifier = "AppsStatusTitleLabel"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
+        self.navigationItem.leftBarButtonItem?.accessibilityIdentifier = "AppsStatusBackButton"
     }
 
     private func setUpTableView() {
@@ -179,6 +182,9 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             let statusHeader = SystemStatusHeader.instanceFromNib()
             statusHeader.systemStatus = systemStatus
             statusHeader.dateLabel.text =  appLastUpdateDate?.getFormattedDateStringForMyTickets()
+            statusHeader.systemStatusHeader.accessibilityIdentifier = "AppsStatusLabel"
+            statusHeader.dateLabel.accessibilityIdentifier = "AppsStatusDateLabel"
+            statusHeader.appStatusDescription.accessibilityIdentifier = "AppsStatusDescription"
             //dataProvider?.formatDateString(dateString: appLastUpdateDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS")
             return statusHeader
         } else if let metricsData = dataSource[section].metricsData {
@@ -219,6 +225,10 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             cell.separator.isHidden = false//indexPath.row == dataArray.count - 1
             let isDisabled = indexPath.row < 2 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty)
             cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, error: indexPath.row == 3 ? nil : detailsDataResponseError)
+            cell.iconImageView.accessibilityIdentifier = "AppsStatusDescription"
+            cell.descriptionLabel.accessibilityIdentifier = "AppsStatusSubtitleLabel"
+            cell.mainLabel.accessibilityIdentifier = "AppsStatusTitleLabel"
+            cell.arrowIcon.accessibilityIdentifier = "AppsStatusArrowImage"
             return cell
         }
         if let metricsData = dataSource[indexPath.section].metricsData, let cell = tableView.dequeueReusableCell(withIdentifier: "MetricStatsCell", for: indexPath) as? MetricStatsCell {

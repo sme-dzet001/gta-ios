@@ -95,6 +95,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
             articleTextView.text = articleText
         }
         articleTextView.textContainerInset = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
+        setAccessibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,6 +116,11 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     
     override func viewDidLayoutSubviews() {
         configureBlurViewPosition()
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        closeButton.accessibilityIdentifier = "ArticleCloseButton"
+        articleTextView.accessibilityIdentifier = "ArticleTextView"
     }
     
     @objc func newsDidScroll(gesture: UIPanGestureRecognizer) {

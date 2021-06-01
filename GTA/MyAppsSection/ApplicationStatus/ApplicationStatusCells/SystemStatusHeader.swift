@@ -9,6 +9,7 @@ import UIKit
 
 class SystemStatusHeader: UIView {
     
+    @IBOutlet weak var systemStatusHeader: UILabel!
     @IBOutlet weak var appStatusDescription: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var statusParentView: UIView!

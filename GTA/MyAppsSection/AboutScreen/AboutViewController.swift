@@ -26,6 +26,7 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.accessibilityIdentifier = "AppAboutTableView"
         setUpNavigationItem()
         setUpTableView()
     }
@@ -63,6 +64,7 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     private func setUpNavigationItem() {
         navigationItem.title = "About"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
+        navigationItem.leftBarButtonItem?.accessibilityIdentifier = "AppAboutBackButton"
     }
     
     private func setUpTableView() {
@@ -173,6 +175,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             })
             cell.headerTitleLabel.text = !isCollaborationDetails ? details?.appTitle : collaborationDetails?.fullTitle
+            cell.headerTitleLabel.accessibilityIdentifier = "AppAboutAppTitle"
             return cell
         }
         let isDetailsNull = !isCollaborationDetails ? self.details == nil : collaborationDetails == nil
@@ -187,6 +190,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
             case 0:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "AboutSupportPolicyCell", for: indexPath) as? AboutSupportPolicyCell
                 cell?.policyLabel.text = dataSource?.supportData?[indexPath.row].title
+                cell?.policyLabel.accessibilityIdentifier = "AppAboutSupportPolicyLabel"
                 return cell ?? UITableViewCell()
             case 1:
                 let isDescriptionNull = !isCollaborationDetails ? details?.appDescription == nil : collaborationDetails?.description == nil
@@ -195,6 +199,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 let cell = tableView.dequeueReusableCell(withIdentifier: "AboutInfoCell", for: indexPath) as? AboutInfoCell
                 cell?.descriptionLabel.text = dataSource?.supportData?[indexPath.row].title
+                cell?.descriptionLabel.accessibilityIdentifier = "AppAboutDescriptionLabel"
                 return cell ?? UITableViewCell()
             default:
                 return createSupportCell(for: indexPath)
@@ -206,6 +211,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     private func createSupportCell(for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AboutSupportCell", for: indexPath) as? AboutSupportCell
         cell?.supportNameLabel.text = dataSource?.supportData?[indexPath.row].title
+        cell?.supportNameLabel.accessibilityIdentifier = "AppAboutSupportNameLabel\(indexPath.row)"
         return cell ?? UITableViewCell()
     }
     

@@ -87,6 +87,7 @@
                     <tabBarItem key="tabBarItem" title="General" image="general_tab_icon" id="Qxm-Lv-eWB"/>
                     <navigationItem key="navigationItem" title="General" id="fBw-xW-eUd"/>
                     <connections>
+                        <outlet property="logoutButton" destination="zcj-j2-0i6" id="j4x-KS-FJQ"/>
                         <outlet property="softwareVersionLabel" destination="z2n-JI-FYY" id="kij-dP-n04"/>
                         <outlet property="tableView" destination="PXs-FG-dLY" id="AzL-E5-9Zs"/>
                     </connections>

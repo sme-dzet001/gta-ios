@@ -31,6 +31,7 @@ class AppContactsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.accessibilityIdentifier = "AppContactsTableView"
         setUpNavigationItem()
         setUpTableView()
     }
@@ -61,6 +62,8 @@ class AppContactsViewController: UIViewController {
         if !isCollaborationContacts {
             titleLabel.text = appName
             subtitleLabel.text = "Contacts"
+            titleLabel.accessibilityIdentifier = "AppContactsMainTitle"
+            subtitleLabel.accessibilityIdentifier = "AppContactsSubTitle"
             return
         }
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
@@ -74,7 +77,9 @@ class AppContactsViewController: UIViewController {
         tlabel.numberOfLines = 2
         tlabel.adjustsFontSizeToFitWidth = true
         self.navigationItem.titleView = tlabel
+        self.navigationItem.titleView?.accessibilityIdentifier = "AppContactsTitle"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
+        self.navigationItem.leftBarButtonItem?.accessibilityIdentifier = "AppContactsBackButton"
     }
     
     private func setUpTableView() {
@@ -162,6 +167,7 @@ extension AppContactsViewController: UITableViewDelegate, UITableViewDataSource 
             let cellDataSource = data[indexPath.row]
             cell.contactEmail = data[indexPath.row].contactEmail
             cell.setUpCell(with: cellDataSource)
+            setAccessibilityIdentifiers(for: cell)
             let imageURL = isCollaborationContacts ? collaborationDataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl) : dataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl)
             let url = URL(string: imageURL ?? "")
             cell.photoImageView.kf.indicatorType = .activity
@@ -178,6 +184,16 @@ extension AppContactsViewController: UITableViewDelegate, UITableViewDataSource 
             return cell
         }
         return UITableViewCell()
+    }
+    
+    private func setAccessibilityIdentifiers(for cell: AppContactCell) {
+        cell.positionLabel.accessibilityIdentifier = "AppContactDescriptionLabel"
+        cell.descriptionLabel.accessibilityIdentifier = "AppContactPhotoImageView"
+        cell.contactNameLabel.accessibilityIdentifier = "AppContactTitleLabel"
+        cell.emailLabel.accessibilityIdentifier = "AppContactEmailLabel"
+        cell.photoImageView.accessibilityIdentifier = "AppContactPhotoImageView"
+        cell.locationLabel.accessibilityIdentifier = "AppContactLocationLabel"
+        cell.funFactLabel.accessibilityIdentifier = "AppContactFunFactLabel"
     }
     
 }

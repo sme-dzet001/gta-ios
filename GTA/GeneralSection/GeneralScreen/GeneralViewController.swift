@@ -13,6 +13,7 @@ class GeneralViewController: UIViewController {
     private var usmLogoutWebView: WKWebView!
     @IBOutlet weak var softwareVersionLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var logoutButton: UIButton!
     
     var dataProvider: GeneralDataProvider = GeneralDataProvider()
     
@@ -30,6 +31,7 @@ class GeneralViewController: UIViewController {
         let version = dictionary["CFBundleShortVersionString"] as! String
         let build = dictionary["CFBundleVersion"] as! String
         softwareVersionLabel.text = String(format: "Version \(version) (\(build))")
+        setAccessibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +42,11 @@ class GeneralViewController: UIViewController {
     private func setUpNavigationBar() {
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        logoutButton.accessibilityIdentifier = "GeneralScreenLogoutButton"
+        softwareVersionLabel.accessibilityIdentifier = "GeneralScreenVersionLabel"
     }
     
     private func setUpTableView() {
@@ -61,7 +68,9 @@ class GeneralViewController: UIViewController {
 //            }
             self?.sendLogoutRequest()
         }
+        okAction.accessibilityIdentifier = "GeneralScreenAlertOKButton"
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        cancelAction.accessibilityIdentifier = "GeneralScreenAlertCancelButton"
         alert.addAction(okAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true)
