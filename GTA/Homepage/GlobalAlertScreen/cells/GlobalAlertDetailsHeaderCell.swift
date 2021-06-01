@@ -1,5 +1,5 @@
 //
-//  GlobalAlertDetailsHeader.swift
+//  GlobalAlertDetailsHeaderCell.swift
 //  GTA
 //
 //  Created by Kostiantyn Dzetsiuk on 18.05.2021.
@@ -7,17 +7,11 @@
 
 import UIKit
 
-class GlobalAlertDetailsHeader: UIView {
+class GlobalAlertDetailsHeaderCell: UITableViewCell {
     
     @IBOutlet weak var alertTitleLabel: UILabel!
     @IBOutlet weak var alertNumberLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
-    
-
-    class func instanceFromNib() -> GlobalAlertDetailsHeader {
-        let header = UINib(nibName: "GlobalAlertDetailsHeader", bundle: nil).instantiate(withOwner: self, options: nil).first as! GlobalAlertDetailsHeader
-        return header
-    }
 
     func setStatus(_ status: GlobalAlertStatus?) {
         switch status {

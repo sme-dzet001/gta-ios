@@ -34,6 +34,7 @@ class GlobalAlertViewController: UIViewController {
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "GlobalAlertDetailsCell", bundle: nil), forCellReuseIdentifier: "GlobalAlertDetailsCell")
+        tableView.register(UINib(nibName: "GlobalAlertDetailsHeaderCell", bundle: nil), forCellReuseIdentifier: "GlobalAlertDetailsHeaderCell")
     }
     
     private func setUpDataSource() {
@@ -65,23 +66,40 @@ class GlobalAlertViewController: UIViewController {
 
 extension GlobalAlertViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = GlobalAlertDetailsHeader.instanceFromNib()
-        headerView.alertNumberLabel.text = alertData?.ticketNumber
-        headerView.alertTitleLabel.text = alertData?.alertTitle
-        headerView.setStatus(alertData?.status)
-        return headerView
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 1
+        default:
+            return dataSource.count
+        }
+        //return dataSource.count
     }
+    
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let headerView = GlobalAlertDetailsHeader.instanceFromNib()
+//        headerView.alertNumberLabel.text = alertData?.ticketNumber
+//        headerView.alertTitleLabel.text = alertData?.alertTitle
+//        headerView.setStatus(alertData?.status)
+//        return headerView
+//    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 70
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertDetailsHeaderCell", for: indexPath) as? GlobalAlertDetailsHeaderCell
+            cell?.alertNumberLabel.text = alertData?.ticketNumber
+            cell?.alertTitleLabel.text = alertData?.alertTitle
+            cell?.setStatus(alertData?.status)
+            return cell ?? UITableViewCell()
+        }
         guard dataSource.count > indexPath.row, let key = dataSource[indexPath.row].keys.first else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertDetailsCell", for: indexPath) as? GlobalAlertDetailsCell
         cell?.titleLabel.text = key
