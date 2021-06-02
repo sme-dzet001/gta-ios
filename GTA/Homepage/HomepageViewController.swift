@@ -109,7 +109,7 @@ class HomepageViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.dismissPanModalIfPresented { [weak self] in
             self?.tabBarController?.selectedIndex = 0
-            self?.dataProvider.getGlobalAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
+            self?.dataProvider.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
                 DispatchQueue.main.async {
                     if let alert = self?.dataProvider.globalAlertsData, !alert.isExpired {
                         self?.showGlobalAlertModal()

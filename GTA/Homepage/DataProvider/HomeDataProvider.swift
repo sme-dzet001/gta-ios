@@ -435,6 +435,17 @@ class HomeDataProvider {
         }
     }
     
+    func getGlobalAlertsIgnoringCache(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
+            if let _ = error {
+                completion?(false, errorCode, ResponseError.serverError)
+            } else {
+                self?.processGlobalAlertsSectionReport(reportResponse, errorCode, error, false, completion)
+            }
+        })
+    }
+    
     private func processGlobalAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalAlerts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalAlerts.rawValue }?.generationNumber
