@@ -38,7 +38,7 @@ class HelpDeskDataProvider {
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(nil, errorCode, ResponseError.serverError, false)
+                        completion?(nil, errorCode, ResponseError.generate(error: error), false)
                     } else {
                         self?.handleGSDStatusSectionReport(reportData: reportResponse, isFromCache: false, errorCode: code, error: error, completion: completion)
                     }
@@ -62,11 +62,15 @@ class HelpDeskDataProvider {
             self.apiManager.getGSDStatus(generationNumber: generationNumber!, completion: {[weak self] (data, errorCode, error) in
                 let dataWithStatus = self?.addStatusRequest(to: data)
                 self?.cacheData(dataWithStatus, path: .getGSDStatus)
-                self?.processGSDStatus(data: dataWithStatus, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+                if let _ = error {
+                    completion?(nil, 0, ResponseError.generate(error: error), false)
+                } else {
+                    self?.processGSDStatus(data: dataWithStatus, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+                }
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(nil, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
+                completion?(nil, 0, generationNumber == 0 ? ResponseError.noDataAvailable : ResponseError.generate(error: error), isFromCache)
                 return
             }
             completion?(nil, 0, error, false)
@@ -83,7 +87,7 @@ class HelpDeskDataProvider {
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(nil, errorCode, ResponseError.serverError, false)
+                        completion?(nil, errorCode, ResponseError.generate(error: error), false)
                     } else {
                         self?.handleHelpDeskSectionReport(reportResponse, errorCode, error, false, completion: completion)
                     }
@@ -106,11 +110,15 @@ class HelpDeskDataProvider {
             }
             self.apiManager.getHelpDeskData(for: generationNumber!) {[weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getHelpDeskData)
-                self?.processHelpDeskData(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+                if let _ = error {
+                    completion?(nil, errorCode, ResponseError.generate(error: error), false)
+                } else {
+                    self?.processHelpDeskData(data: data, reportDataResponse: reportData, isFromCache, error: error, errorCode: errorCode, completion: completion)
+                }
             }
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(nil, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
+                completion?(nil, 0, generationNumber == 0 ? ResponseError.noDataAvailable : ResponseError.generate(error: error), isFromCache)
                 return
             }
             let retError = ResponseError.serverError
@@ -295,12 +303,16 @@ class HelpDeskDataProvider {
             }
             apiManager.getQuickHelp(generationNumber: generationNumber, completion: { [weak self] (quickHelpResponse, errorCode, error) in
                 self?.cacheData(quickHelpResponse, path: .getQuickHelpData)
-                self?.processQuickHelp(reportData, false, quickHelpResponse, errorCode, error, completion)
+                if let _ = error {
+                    completion?(true, 0, ResponseError.generate(error: error), false)
+                } else {
+                    self?.processQuickHelp(reportData, false, quickHelpResponse, errorCode, error, completion)
+                }
             })
         } else {
             if error != nil || generationNumber == 0 {
                 self.quickHelpData = generationNumber == 0 ? [] : quickHelpData
-                completion?(true, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(true, 0, generationNumber == 0 ? ResponseError.noDataAvailable : ResponseError.generate(error: error), fromCache)
                 return
             }
             let retError = ResponseError.serverError
@@ -317,7 +329,11 @@ class HelpDeskDataProvider {
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
-                    self?.processQuickHelpSectionReport(reportResponse, errorCode, error, false, completion)
+                    if let _ = error {
+                        completion?(true, errorCode, ResponseError.generate(error: error), false)
+                    } else {
+                        self?.processQuickHelpSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
                 })
             })
         }
@@ -366,11 +382,15 @@ class HelpDeskDataProvider {
             }
             apiManager.getTeamContacts(generationNumber: generationNumber, completion: { [weak self] (teamContactsResponse, errorCode, error) in
                 self?.cacheData(teamContactsResponse, path: .getTeamContactsData)
-                self?.processTeamContacts(reportData, teamContactsResponse, fromCache, errorCode, error, completion)
+                if let _ = error {
+                    completion?(true, errorCode, ResponseError.generate(error: error), false)
+                } else {
+                    self?.processTeamContacts(reportData, teamContactsResponse, fromCache, errorCode, error, completion)
+                }
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(false, 0, generationNumber == 0 ? ResponseError.noDataAvailable : ResponseError.generate(error: error), fromCache)
                 return
             }
             let retError = ResponseError.serverError
@@ -386,7 +406,11 @@ class HelpDeskDataProvider {
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
-                    self?.processTeamContactsSectionReport(reportResponse, false, errorCode, error, completion)
+                    if let _ = error {
+                        completion?(true, errorCode, ResponseError.generate(error: error), false)
+                    } else {
+                        self?.processTeamContactsSectionReport(reportResponse, false, errorCode, error, completion)
+                    }
                 })
             })
         }
@@ -467,7 +491,11 @@ class HelpDeskDataProvider {
             }
             self?.apiManager.getGSDTickets(completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getGSDTickets(userEmail: userEmail))
-                self?.processMyTickets(data, errorCode, error, completion)
+                if let _ = error {
+                    completion?(errorCode, ResponseError.generate(error: error), true)
+                } else {
+                    self?.processMyTickets(data, errorCode, error, completion)
+                }
             })
         }
     }
@@ -513,7 +541,7 @@ class HelpDeskDataProvider {
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError, false)
+                        completion?(errorCode, ResponseError.generate(error: error), false)
                     } else {
                         self?.handleTicketCommentsSectionReport(ticketNumber: ticketNumber, reportResponse, errorCode, error, false, completion)
                     }
@@ -536,12 +564,16 @@ class HelpDeskDataProvider {
             }
             apiManager.getGSDTicketComments(generationNumber: generationNumber!, userEmail: userEmail, ticketNumber: ticketNumber, completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getGSDTicketComments(userEmail: userEmail, ticketNumber: ticketNumber))
-                self?.processTicketComments(data, userEmail, errorCode, error, false, completion)
+                if let _ = error {
+                    completion?(errorCode, ResponseError.generate(error: error), false)
+                } else {
+                    self?.processTicketComments(data, userEmail, errorCode, error, false, completion)
+                }
             })
         } else {
             if error != nil || generationNumber == 0 {
                 myTickets = []
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(errorCode, generationNumber == 0 ? ResponseError.noDataAvailable : ResponseError.generate(error: error), fromCache)
                 return
             }
             completion?(errorCode, ResponseError.commonError, fromCache)

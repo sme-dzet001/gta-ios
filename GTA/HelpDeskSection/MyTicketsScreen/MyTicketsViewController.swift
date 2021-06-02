@@ -189,6 +189,10 @@ extension MyTicketsViewController: SendEmailDelegate {
 
 extension MyTicketsViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        let err = error as NSError?
+        if err?.code == -1009 {
+            displayError(errorMessage: "Please verify your network connection and try again. If the error persists please try again later", title: nil, onClose: nil)
+        }
         controller.dismiss(animated: true, completion: nil)
     }
     
