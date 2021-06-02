@@ -108,10 +108,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let userInfo = response.notification.request.content.userInfo
-        if let payload = userInfo[Constants.payloadKey] as? String, let payloadData = Data(base64Encoded: payload), let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject], let pushType = payloadDict[Constants.pushTypeKey] as? String, pushType == Constants.pushType {
+        let topViewController = getTopViewController()
+        if topViewController == nil || topViewController is LoginViewController || topViewController is AuthViewController {
+            UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
+            return
+        }
+        if response.notification.isEmergencyOutage {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
         }
+        completionHandler()
     }
 }
 

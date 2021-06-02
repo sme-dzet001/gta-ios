@@ -60,6 +60,9 @@ class HomepageViewController: UIViewController {
                     self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
                     self?.collectionView.reloadData()
+                    if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+                        self?.emergencyOutageNotificationReceived()
+                    }
                 } else {
                     let isNoData = (self?.dataProvider.newsDataIsEmpty ?? true)
                     if isNoData {
@@ -108,14 +111,24 @@ class HomepageViewController: UIViewController {
     @objc func emergencyOutageNotificationReceived() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.dismissPanModalIfPresented { [weak self] in
-            self?.tabBarController?.selectedIndex = 0
-            self?.dataProvider.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
-                DispatchQueue.main.async {
-                    if let alert = self?.dataProvider.globalAlertsData, !alert.isExpired {
-                        self?.showGlobalAlertModal()
-                    }
+            guard let self = self else { return }
+            let embeddedController = self.navigationController ?? self
+            guard let homepageTabIdx = self.tabBarController?.viewControllers?.firstIndex(of: embeddedController) else { return }
+            self.tabBarController?.selectedIndex = homepageTabIdx
+            if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+                UserDefaults.standard.removeObject(forKey: "emergencyOutageNotificationReceived")
+                if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
+                    self.showGlobalAlertModal()
                 }
-            })
+            } else {
+                self.dataProvider.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
+                    DispatchQueue.main.async {
+                        if let alert = self?.dataProvider.globalAlertsData, !alert.isExpired {
+                            self?.showGlobalAlertModal()
+                        }
+                    }
+                })
+            }
         }
     }
     
