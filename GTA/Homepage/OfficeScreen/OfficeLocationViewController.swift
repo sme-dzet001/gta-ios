@@ -186,7 +186,7 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeInfoCell", for: indexPath) as? OfficeInfoCell
         cell?.iconImageView.image = UIImage(named: "region_icon")
         cell?.infoLabel?.text = regionDataSource[indexPath.row].text
-        cell?.descriptionLabel.accessibilityIdentifier = "OfficeSelectionScreenOfficeRegionTitleLabel"
+        cell?.infoLabel?.accessibilityIdentifier = "OfficeSelectionScreenOfficeRegionTitleLabel"
         return cell ?? UITableViewCell()
     }
     
