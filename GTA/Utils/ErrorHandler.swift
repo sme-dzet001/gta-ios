@@ -17,7 +17,7 @@ class ErrorHandler {
         case -1001:
             return "The request timed out."
         default:
-            return "Oops, something went wrong"
+            return "An unexpected error occurred. Please try logging in again."
         }
     }
     
