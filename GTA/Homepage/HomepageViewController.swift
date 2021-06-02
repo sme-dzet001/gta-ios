@@ -61,7 +61,6 @@ class HomepageViewController: UIViewController {
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
                     self?.collectionView.reloadData()
                     if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
-                        UserDefaults.standard.removeObject(forKey: "emergencyOutageNotificationReceived")
                         self?.emergencyOutageNotificationReceived()
                     }
                 } else {
@@ -116,8 +115,19 @@ class HomepageViewController: UIViewController {
             let embeddedController = self.navigationController ?? self
             guard let homepageTabIdx = self.tabBarController?.viewControllers?.firstIndex(of: embeddedController) else { return }
             self.tabBarController?.selectedIndex = homepageTabIdx
-            if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
-                self.showGlobalAlertModal()
+            if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+                UserDefaults.standard.removeObject(forKey: "emergencyOutageNotificationReceived")
+                if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
+                    self.showGlobalAlertModal()
+                }
+            } else {
+                self.dataProvider.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
+                    DispatchQueue.main.async {
+                        if let alert = self?.dataProvider.globalAlertsData, !alert.isExpired {
+                            self?.showGlobalAlertModal()
+                        }
+                    }
+                })
             }
         }
     }
