@@ -131,7 +131,7 @@ extension AppDelegate {
         UNUserNotificationCenter.current().delegate = self
     }
     
-    private func getNotificationSettings() {
+    func getNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             guard settings.authorizationStatus == .authorized else { return }
             DispatchQueue.main.async {
