@@ -187,8 +187,8 @@ extension AppContactsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     private func setAccessibilityIdentifiers(for cell: AppContactCell) {
-        cell.positionLabel.accessibilityIdentifier = "AppContactDescriptionLabel"
-        cell.descriptionLabel.accessibilityIdentifier = "AppContactPhotoImageView"
+        cell.positionLabel.accessibilityIdentifier = "AppContactPositionLabel"
+        cell.descriptionLabel.accessibilityIdentifier = "AppContactDescriptionLabel"
         cell.contactNameLabel.accessibilityIdentifier = "AppContactTitleLabel"
         cell.emailLabel.accessibilityIdentifier = "AppContactEmailLabel"
         cell.photoImageView.accessibilityIdentifier = "AppContactPhotoImageView"
