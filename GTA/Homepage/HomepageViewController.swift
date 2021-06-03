@@ -112,9 +112,10 @@ class HomepageViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.dismissPanModalIfPresented { [weak self] in
             guard let self = self else { return }
-            let embeddedController = self.navigationController ?? self
+            guard let embeddedController = self.navigationController else { return }
             guard let homepageTabIdx = self.tabBarController?.viewControllers?.firstIndex(of: embeddedController) else { return }
             self.tabBarController?.selectedIndex = homepageTabIdx
+            embeddedController.popToRootViewController(animated: false)
             if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
                 UserDefaults.standard.removeObject(forKey: "emergencyOutageNotificationReceived")
                 if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
@@ -124,6 +125,8 @@ class HomepageViewController: UIViewController {
                 self.dataProvider.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
                     DispatchQueue.main.async {
                         if let alert = self?.dataProvider.globalAlertsData, !alert.isExpired {
+                            self?.tabBarController?.selectedIndex = homepageTabIdx
+                            embeddedController.popToRootViewController(animated: false)
                             self?.showGlobalAlertModal()
                         }
                     }
