@@ -172,6 +172,10 @@ extension MyTicketsViewController: CreateTicketDelegate {
 extension MyTicketsViewController: SendEmailDelegate {
     func sendEmail(withTitle subject: String, withText body: String, to recipient: String) {
         if MFMailComposeViewController.canSendMail() {
+            if !Reachability.isConnectedToNetwork() {
+                displayError(errorMessage: "Please verify your network connection and try again. If the error persists please try again later", title: nil, onClose: nil)
+                return
+            }
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             if let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") {
@@ -189,10 +193,6 @@ extension MyTicketsViewController: SendEmailDelegate {
 
 extension MyTicketsViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        let err = error as NSError?
-        if err?.code == -1009 {
-            displayError(errorMessage: "Please verify your network connection and try again. If the error persists please try again later", title: nil, onClose: nil)
-        }
         controller.dismiss(animated: true, completion: nil)
     }
     
