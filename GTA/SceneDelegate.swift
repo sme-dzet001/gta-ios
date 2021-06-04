@@ -40,6 +40,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         } completion: { (_) in
             self.appSwitcherView?.removeFromSuperview()
         }
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.getNotificationSettings()
+        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
