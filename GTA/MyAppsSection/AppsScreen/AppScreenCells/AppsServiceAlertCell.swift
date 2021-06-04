@@ -43,6 +43,7 @@ class AppsServiceAlertCell: UITableViewCell {
     }
     
     func setMainLabelAtCenter() {
+        descriptionLabel.text = nil
         let newConstraint = mainLabelCenterY.constraintWithMultiplier(1.0)
         contentView.removeConstraint(mainLabelCenterY)
         contentView.addConstraint(newConstraint)
