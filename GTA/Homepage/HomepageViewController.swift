@@ -30,6 +30,8 @@ class HomepageViewController: UIViewController {
         setUpCollectionView()
         setUpPageControl()
         setNeedsStatusBarAppearanceUpdate()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +39,10 @@ class HomepageViewController: UIViewController {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadNewsData()
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
     }
     
     private func loadNewsData() {
@@ -54,6 +60,9 @@ class HomepageViewController: UIViewController {
                     self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
                     self?.collectionView.reloadData()
+                    if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+                        self?.emergencyOutageNotificationReceived()
+                    }
                 } else {
                     let isNoData = (self?.dataProvider.newsDataIsEmpty ?? true)
                     if isNoData {
@@ -92,10 +101,38 @@ class HomepageViewController: UIViewController {
         if segue.identifier == "embedTable" {
             homepageTableVC = segue.destination as? HomepageTableViewController
             homepageTableVC?.dataProvider = dataProvider
+            homepageTableVC?.showModalDelegate = self
         }
     }
     
     @IBAction func unwindToHomePage(segue: UIStoryboardSegue) {
+    }
+    
+    @objc func emergencyOutageNotificationReceived() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.dismissPanModalIfPresented { [weak self] in
+            guard let self = self else { return }
+            guard let embeddedController = self.navigationController else { return }
+            guard let homepageTabIdx = self.tabBarController?.viewControllers?.firstIndex(of: embeddedController) else { return }
+            self.tabBarController?.selectedIndex = homepageTabIdx
+            embeddedController.popToRootViewController(animated: false)
+            if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+                UserDefaults.standard.removeObject(forKey: "emergencyOutageNotificationReceived")
+                if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
+                    self.showGlobalAlertModal()
+                }
+            } else {
+                self.dataProvider.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
+                    DispatchQueue.main.async {
+                        if let alert = self?.dataProvider.globalAlertsData, !alert.isExpired {
+                            self?.tabBarController?.selectedIndex = homepageTabIdx
+                            embeddedController.popToRootViewController(animated: false)
+                            self?.showGlobalAlertModal()
+                        }
+                    }
+                })
+            }
+        }
     }
     
 }
@@ -140,25 +177,29 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard dataProvider.newsData.count > indexPath.row else { return }
+        let newsBody = dataProvider.newsData[indexPath.row].newsBody
+        showArticleViewController(with: newsBody)
+        selectedIndexPath.row = indexPath.row
+    }
+    
+    private func showArticleViewController(with text: String?) {
         let articleViewController = ArticleViewController()
+        presentedVC = articleViewController
         articleViewController.appearanceDelegate = self
         var statusBarHeight: CGFloat = 0.0
-       // if #available(iOS 13.0, *) {
-            statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
-//        } else {
-//            statusBarHeight = self.containerView.bounds.height - UIApplication.shared.statusBarFrame.height
-//            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
-//        }
+        statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
         articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
-        let newsBody = dataProvider.newsData[indexPath.row].newsBody
-        let htmlBody = dataProvider.formNewsBody(from: newsBody)
+        
+        let htmlBody = dataProvider.formNewsBody(from: text)
         if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
             htmlBody?.setFontFace(font: neededFont)
         }
-        articleViewController.articleText = htmlBody
-        selectedIndexPath.row = indexPath.row
-        presentedVC = articleViewController
+        if let _ = htmlBody {
+            articleViewController.attributedArticleText = htmlBody
+        } else {
+            articleViewController.articleText = text
+        }
         presentPanModal(articleViewController)
     }
     
@@ -195,7 +236,7 @@ extension HomepageViewController: PanModalAppearanceDelegate {
         if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
             htmlBody?.setFontFace(font: neededFont)
         }
-        self.presentedVC?.articleText = htmlBody
+        self.presentedVC?.attributedArticleText = htmlBody
     }
     
     func panModalDidDissmiss() {
@@ -203,7 +244,20 @@ extension HomepageViewController: PanModalAppearanceDelegate {
     }
 }
 
+extension HomepageViewController: ShowGlobalAlertModalDelegate {
+    func showGlobalAlertModal() {
+        let globalAlertViewController = GlobalAlertViewController()
+        globalAlertViewController.dataProvider = dataProvider
+        presentPanModal(globalAlertViewController)
+        
+    }
+}
+
 protocol PanModalAppearanceDelegate: AnyObject {
     func needScrollToDirection(_ direction: UICollectionView.ScrollPosition)
     func panModalDidDissmiss()
+}
+
+protocol ShowGlobalAlertModalDelegate: AnyObject {
+    func showGlobalAlertModal()
 }

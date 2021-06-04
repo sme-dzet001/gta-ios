@@ -115,7 +115,7 @@ class InfoViewController: UIViewController {
     private func setupHeaderImageView() {
         if let alertData = specialAlertData {
             headerImageView.image = nil
-            headerImageView.contentMode = .scaleAspectFit
+            headerImageView.contentMode = .scaleAspectFill
             let imageURL = dataProvider?.formImageURL(from: alertData.posterUrl) ?? ""
             let url = URL(string: imageURL)
             headerImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in

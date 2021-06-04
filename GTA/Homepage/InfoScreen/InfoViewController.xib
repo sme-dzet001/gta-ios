@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -42,15 +42,15 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="covid" translatesAutoresizingMaskIntoConstraints="NO" id="8OW-0v-f8F">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="331"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="covid" translatesAutoresizingMaskIntoConstraints="NO" id="8OW-0v-f8F">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="339.5"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8kg-sc-VAm">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="331"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="339.5"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                 </view>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CLOSED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vRF-Yl-tE0">
-                    <rect key="frame" x="30" y="134" width="50" height="16"/>
+                    <rect key="frame" x="30" y="139" width="50" height="16"/>
                     <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="0RY-qK-sWa"/>
@@ -61,7 +61,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simpson, Rohan, Sony Music Associate Director, Infrastructure" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NE2-l9-kOX">
-                    <rect key="frame" x="30" y="237.5" width="354" height="33.5"/>
+                    <rect key="frame" x="30" y="242.5" width="354" height="33.5"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="zLW-SW-cuG"/>
                     </constraints>
@@ -70,7 +70,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QLI-2z-WNx">
-                    <rect key="frame" x="30" y="170" width="354" height="57.5"/>
+                    <rect key="frame" x="30" y="175" width="354" height="57.5"/>
                     <string key="text">What is the current
 situation?</string>
                     <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="24"/>
@@ -78,7 +78,7 @@ situation?</string>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updates 10:30 +5 GTM Wed 15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCL-lV-oEM">
-                    <rect key="frame" x="30" y="277" width="210" height="17"/>
+                    <rect key="frame" x="30" y="282" width="210" height="17"/>
                     <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="14"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -95,7 +95,7 @@ situation?</string>
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dj3-g3-kNV">
-                    <rect key="frame" x="0.0" y="331" width="414" height="565"/>
+                    <rect key="frame" x="0.0" y="329.5" width="414" height="566.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZTg-WM-pUj">
@@ -134,14 +134,14 @@ situation?</string>
                 <constraint firstItem="8kg-sc-VAm" firstAttribute="top" secondItem="8OW-0v-f8F" secondAttribute="top" id="a9G-rC-YtT"/>
                 <constraint firstItem="QLI-2z-WNx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="avj-yG-FwU"/>
                 <constraint firstItem="8kg-sc-VAm" firstAttribute="bottom" secondItem="8OW-0v-f8F" secondAttribute="bottom" id="dp4-Ux-P5O"/>
-                <constraint firstItem="Dj3-g3-kNV" firstAttribute="top" secondItem="8OW-0v-f8F" secondAttribute="bottom" id="f8L-jV-0SC"/>
+                <constraint firstItem="Dj3-g3-kNV" firstAttribute="top" secondItem="8OW-0v-f8F" secondAttribute="bottom" constant="-10" id="f8L-jV-0SC"/>
                 <constraint firstItem="cCL-lV-oEM" firstAttribute="top" secondItem="QLI-2z-WNx" secondAttribute="bottom" constant="20" id="fyy-iH-Ogj"/>
                 <constraint firstItem="NE2-l9-kOX" firstAttribute="trailing" secondItem="QLI-2z-WNx" secondAttribute="trailing" id="jiR-vi-sLp"/>
                 <constraint firstItem="XXY-vF-2Iu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="nz5-ed-uVs"/>
                 <constraint firstItem="8OW-0v-f8F" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ogE-Id-9vb"/>
                 <constraint firstItem="yWB-SD-fxK" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="puA-mT-cgH"/>
                 <constraint firstItem="NE2-l9-kOX" firstAttribute="top" secondItem="QLI-2z-WNx" secondAttribute="bottom" constant="10" id="r5d-3K-JlB"/>
-                <constraint firstItem="8OW-0v-f8F" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="width" multiplier="0.8" id="rb8-ys-GZk"/>
+                <constraint firstItem="8OW-0v-f8F" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="width" multiplier="0.82" id="rb8-ys-GZk"/>
                 <constraint firstItem="vRF-Yl-tE0" firstAttribute="leading" secondItem="QLI-2z-WNx" secondAttribute="leading" id="sf7-KE-bg9"/>
                 <constraint firstItem="8OW-0v-f8F" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tLK-px-JgA"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Dj3-g3-kNV" secondAttribute="trailing" id="x1o-Dt-t2J"/>

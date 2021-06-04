@@ -19,7 +19,8 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
     }
-    var articleText: NSMutableAttributedString? {
+    var articleText: String?
+    var attributedArticleText: NSMutableAttributedString? {
         didSet {
             let animation = CATransition()
             animation.type = .fade
@@ -29,8 +30,11 @@ class ArticleViewController: UIViewController, PanModalPresentable {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 8
             paragraphStyle.paragraphSpacing = 22
-            articleText?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, articleText?.length ?? 0))
-            articleTextView?.attributedText = articleText
+            attributedArticleText?.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedArticleText?.length ?? 0))
+            articleTextView?.attributedText = attributedArticleText
+            if let _ = articleTextView {
+                panModalSetNeedsLayoutUpdate()
+            }
         }
     }
     
@@ -80,12 +84,16 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
         articleTextView.delegate = self
-        articleTextView.attributedText = articleText
+        if let _ = attributedArticleText {
+            articleTextView.attributedText = attributedArticleText
+        } else {
+            articleTextView.text = articleText
+        }
         articleTextView.textContainerInset = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
     }
     
@@ -113,7 +121,8 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         let velocity = gesture.velocity(in: presentationView)
         if gesture.state == .began {
             gestureStartPoint = velocity
-        } else if gesture.state == .ended {
+        } else if gesture.state == .changed {
+            gesture.state = .ended
             let xValue = gestureStartPoint.x > velocity.x ?  gestureStartPoint.x - velocity.x : gestureStartPoint.x + velocity.x
             let yValue = gestureStartPoint.y > velocity.y ?  gestureStartPoint.y - velocity.y : gestureStartPoint.y + velocity.y
             let direction: UICollectionView.ScrollPosition = gestureStartPoint.x > velocity.x ? .left : .right
@@ -144,6 +153,17 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     
     func panModalWillDismiss() {
         appearanceDelegate?.panModalDidDissmiss()
+    }
+    
+    func willTransition(to state: PanModalPresentationController.PresentationState) {
+        switch state {
+        case .shortForm:
+            UIView.animate(withDuration: 0.2) {
+                self.blurView.alpha = 1
+            }
+        default:
+            return
+        }
     }
     
     deinit {

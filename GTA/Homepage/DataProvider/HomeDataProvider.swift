@@ -18,6 +18,7 @@ class HomeDataProvider {
     private(set) var alertsData = [SpecialAlertRow]()
     private(set) var allOfficesData = [OfficeRow]()
     private(set) var GTTeamContactsData: GTTeamResponse?
+    private(set) var globalAlertsData: GlobalAlertRow?
     private var selectedOfficeId: Int?
     
     weak var officeSelectionDelegate: OfficeSelectionDelegate?
@@ -365,16 +366,16 @@ class HomeDataProvider {
     }
     
     func getCurrentOffice(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        getCachedResponse(for: .getCurrentOffice) {[weak self] (data, cacheError) in
+        getCachedResponse(for: .getCurrentPreferences) {[weak self] (data, cacheError) in
             self?.processGetCurrentOffice(data, cacheError == nil ? 200 : 0, cacheError, true, { (code, error, _) in
                 if error == nil {
                     completion?(code, error, true)
                 }
-                self?.apiManager.getCurrentOffice { [weak self] (response, errorCode, error) in
+                self?.apiManager.getCurrentPreferences { [weak self] (response, errorCode, error) in
 //                    if let _ = error, response == nil, let _ = data, cacheError == nil {
 //                        return
 //                    }
-                    self?.cacheData(response, path: .getCurrentOffice)
+                    self?.cacheData(response, path: .getCurrentPreferences)
                     self?.processGetCurrentOffice(response, errorCode, error, false, completion)
                 }
             })
@@ -394,19 +395,118 @@ class HomeDataProvider {
         if let userPreferencesResponse = userPreferencesResponse {
             if !fromCache || selectedOfficeId == nil {
                 selectedOfficeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
+                Preferences.officeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
+                Preferences.allowEmergencyOutageNotifications = userPreferencesResponse.data.preferences?.allowEmergencyOutageNotifications ?? true
             }
         }
         completion?(errorCode, retErr, fromCache)
     }
     
     func setCurrentOffice(officeId: Int, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        apiManager.setCurrentOffice(officeId: officeId) { [weak self] (response, errorCode, error) in
+        let preferences = "{\"office_id\":\"\(officeId)\", \"allow_notifications_emergency_outage\": \(Preferences.allowEmergencyOutageNotifications)}"
+        apiManager.setCurrentPreferences(preferences: preferences) { [weak self] (response, errorCode, error) in
             if let _ = response, errorCode == 200, error == nil {
                 self?.officeSelectionDelegate?.officeWasSelected()
                 self?.selectedOfficeId = officeId
+                Preferences.officeId = officeId
             }
             completion?(errorCode, error)
         }
+    }
+    
+    // MARK: - Global Alerts related methods
+    
+    func getGlobalAlerts(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.processGlobalAlertsSectionReport(data, code, cachedError, true, { (dataWasChanged, code, error) in
+                if error == nil {
+                    completion?(dataWasChanged, code, cachedError)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let _ = error {
+                        completion?(false, errorCode, ResponseError.serverError)
+                    } else {
+                        self?.processGlobalAlertsSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    func getGlobalAlertsIgnoringCache(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
+            if let _ = error {
+                completion?(false, errorCode, ResponseError.serverError)
+            } else {
+                self?.processGlobalAlertsSectionReport(reportResponse, errorCode, error, false, completion)
+            }
+        })
+    }
+    
+    private func processGlobalAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalAlerts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalAlerts.rawValue }?.generationNumber
+        if let generationNumber = generationNumber, generationNumber != 0 {
+            if isFromCache {
+                getCachedResponse(for: .getGlobalOutage) {[weak self] (data, error) in
+                    self?.processGlobalAlerts(reportData, data, 200, error, completion)
+                }
+                return
+            }
+            apiManager.getGlobalAlerts(generationNumber: generationNumber) { [weak self] (response, errorCode, error) in
+                self?.cacheData(response, path: .getGlobalOutage)
+                self?.processGlobalAlerts(reportData, response, errorCode, error, completion)
+            }
+        } else {
+            if error != nil || generationNumber == 0 {
+                completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
+            completion?(false, 0, error)
+        }
+    }
+    
+    private func processGlobalAlerts(_ reportData: ReportDataResponse?, _ response: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var alertsResponse: GlobalAlertsResponse?
+        var retErr = error
+        if let responseData = response {
+            do {
+                alertsResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        }
+        var dataWasChanged: Bool = false
+        if let _ = alertsResponse {
+            dataWasChanged = fillGlobalAlertsData(with: alertsResponse!)
+        }
+        completion?(dataWasChanged, errorCode, retErr)
+    }
+    
+    private func fillGlobalAlertsData(with response: GlobalAlertsResponse) -> Bool {
+        let indexes = getDataIndexes(columns: response.meta?.widgetsDataSource?.params?.columns)
+        var response: GlobalAlertsResponse = response
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index]?.indexes = indexes
+            }
+        }
+        
+        let rows = response.data?.rows?.compactMap({$0}) ?? []
+        var alert = rows.last
+        let inProgressAlerts = rows.filter({$0.status == .inProgress})
+        let closedAlerts = rows.filter({$0.status == .closed})
+        if inProgressAlerts.count >= 1 {
+            alert = inProgressAlerts.sorted(by: {$0.startDate.timeIntervalSince1970 > $1.startDate.timeIntervalSince1970}).first
+        } else if closedAlerts.count >= 1 {
+            alert = closedAlerts.sorted(by: {$0.closeDate.timeIntervalSince1970 > $1.closeDate.timeIntervalSince1970}).first
+        }
+        let dataWasChanged: Bool = globalAlertsData != alert
+        globalAlertsData = alert
+        return dataWasChanged
     }
     
     // MARK: - Global Technology Team related methods

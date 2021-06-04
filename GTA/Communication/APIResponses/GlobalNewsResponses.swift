@@ -184,3 +184,116 @@ enum QuantumValue: Codable, Equatable {
         }
     }
 }
+
+// MARK: - Global Alerts Response
+
+struct GlobalAlertsResponse: Codable {
+    var meta: ResponseMetaData?
+    var data: GlobalAlertsData?
+}
+
+struct GlobalAlertsData: Codable, Equatable {
+    var rows: [GlobalAlertRow?]?
+}
+
+struct GlobalAlertRow: Codable, Equatable {
+    var values: [QuantumValue?]?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case values
+    }
+    
+    var ticketNumber: String? {
+        guard let valuesArr = values, let index = indexes["ticket_number"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var alertTitle: String? {
+        guard let valuesArr = values, let index = indexes["summary"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var description: String? {
+        guard let valuesArr = values, let index = indexes["description"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var sendPushFlag: String? {
+        guard let valuesArr = values, let index = indexes["send_push_flag"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var endDate : String? {
+        guard let valuesArr = values, let index = indexes["close date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return nil }
+        return dateString.getFormattedDateStringForMyTickets()
+    }
+    
+    var estimatedDuration : String? {
+        guard let valuesArr = values, let index = indexes["estimated duration"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var jiraIssue : String? {
+        guard let valuesArr = values, let index = indexes["source jira issue"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var closeComment : String? {
+        guard let valuesArr = values, let index = indexes["close description"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var notificationDate : String? {
+        guard let valuesArr = values, let index = indexes["start date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return nil }
+        return dateString.getFormattedDateStringForMyTickets()
+    }
+    
+    var startDate: Date {
+        guard let valuesArr = values, let index = indexes["start date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatterPrint.date(from: dateString) ?? Date()
+    }
+    
+    var closeDate: Date {
+        guard let valuesArr = values, let index = indexes["close date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatterPrint.date(from: dateString) ?? Date()
+    }
+    
+    var isExpired: Bool {
+        let isDateExpired = (Date().timeIntervalSince1970 - closeDate.timeIntervalSince1970) >= 3600
+        return status == .closed && isDateExpired
+    }
+    
+    var alertStatus: String? {
+        guard let valuesArr = values, let index = indexes["status"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var status: GlobalAlertStatus {
+        guard let _ = alertStatus else { return .closed }
+        switch alertStatus!.lowercased() {
+        case "open":
+            return .open
+        case "closed":
+            return .closed
+        case "in progress":
+            return .inProgress
+        default:
+            return .closed
+        }
+    }
+    
+}
+
+enum GlobalAlertStatus {
+    case open
+    case inProgress
+    case closed
+}
+

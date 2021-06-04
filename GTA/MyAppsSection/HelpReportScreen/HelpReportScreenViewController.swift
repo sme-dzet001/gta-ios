@@ -82,7 +82,6 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
@@ -104,6 +103,8 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         
     @objc private func doneAction() {
         self.typeTextField.text = !selectedText.isEmpty ? selectedText : pickerDataSource.first
+        self.view.frame.origin.y = 0
+        setUpTextViewLayout()
         self.view.endEditing(true)
     }
     
@@ -111,6 +112,8 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         let index = pickerDataSource.firstIndex(of: self.typeTextField.text ?? "") ?? 0
         pickerView.selectRow(index, inComponent: 0, animated: false)
         selectedText = pickerDataSource[index]
+        self.view.frame.origin.y = 0
+        setUpTextViewLayout()
         self.view.endEditing(true)
     }
     
@@ -181,28 +184,22 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     @objc func keyboardWillShow(notification: NSNotification) {
         panModalTransition(to: .longForm)
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
-            if textView.isFirstResponder {
-                setUpTextViewLayout(isNeedCompact: true, keyboardHeight: keyboardSize.height)
-            }
+            setUpTextViewLayout(isNeedCompact: true, keyboardHeight: keyboardSize.height)
         }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        self.view.frame.origin.y = 0
-        setUpTextViewLayout()
     }
     
     @objc func hideKeyboard() {
         let index = pickerDataSource.firstIndex(of: self.typeTextField.text ?? "") ?? 0
         pickerView.selectRow(index, inComponent: 0, animated: false)
         selectedText = pickerDataSource[index]
+        self.view.frame.origin.y = 0
+        setUpTextViewLayout()
         view.endEditing(true)
     }
     
     deinit {
         heightObserver?.invalidate()
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
 }

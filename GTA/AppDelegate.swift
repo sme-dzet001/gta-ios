@@ -8,6 +8,8 @@
 import UIKit
 import CoreData
 import Firebase
+import UserNotifications
+import PanModal
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #else
         FirebaseApp.configure()
         #endif
+        registerForPushNotifications()
         return true
     }
     
@@ -32,18 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return .portrait
     }
-    
-//    private func topViewControllerWithRootViewController(rootViewController: UIViewController!) -> UIViewController? {
-//        if (rootViewController == nil) { return nil }
-//        if (rootViewController.isKind(of: UITabBarController.self)) {
-//          return topViewControllerWithRootViewController(rootViewController: (rootViewController as! UITabBarController).selectedViewController)
-//        } else if (rootViewController.isKind(of: UINavigationController.self)) {
-//          return topViewControllerWithRootViewController(rootViewController: (rootViewController as! UINavigationController).visibleViewController)
-//        } else if (rootViewController.presentedViewController != nil) {
-//          return topViewControllerWithRootViewController(rootViewController: rootViewController.presentedViewController)
-//        }
-//        return rootViewController
-//      }
     
     private func topViewController(controller: UIViewController?) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {
@@ -60,6 +51,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return controller
     }
     
+    func dismissPanModalIfPresented(completion: @escaping (() -> Void)) {
+        if let panModal = getTopViewController() as? PanModalPresentable {
+            (panModal as? UIViewController)?.dismiss(animated: true, completion: completion)
+        } else {
+            completion()
+        }
+    }
     
     private func getTopViewController() -> UIViewController? {
         let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
@@ -72,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return topVC
     }
-    // MARK: UISceneSession Lifecycle
+    // MARK: - UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
@@ -102,3 +100,75 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 }
 
+// MARK: - UNUserNotificationCenterDelegate (Push Notification)
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound, .badge])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let topViewController = getTopViewController()
+        if topViewController == nil || topViewController is LoginViewController || topViewController is AuthViewController {
+            UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
+            return
+        }
+        if response.notification.isEmergencyOutage {
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        }
+        completionHandler()
+    }
+}
+
+extension AppDelegate {
+    
+    private func registerForPushNotifications() {
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .badge, .sound]) { [weak self] granted, _ in
+                guard granted else { return }
+                self?.getNotificationSettings()
+        }
+        UNUserNotificationCenter.current().delegate = self
+    }
+    
+    private func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            guard settings.authorizationStatus == .authorized else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+    }
+    
+    func application(
+      _ application: UIApplication,
+      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        
+        if KeychainManager.getPushNotificationToken() != token {
+            KeychainManager.deletePushNotificationTokenSent()
+        }
+        
+        _ = KeychainManager.savePushNotificationToken(pushNotificationToken: token)
+        
+        PushNotificationsManager().sendPushNotificationTokenIfNeeded()
+    }
+    
+    func application(
+      _ application: UIApplication,
+      didFailToRegisterForRemoteNotificationsWithError error: Error
+    ) {
+        //TODO: process error
+    }
+    
+    func application(
+      _ application: UIApplication,
+      didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+      fetchCompletionHandler completionHandler:
+      @escaping (UIBackgroundFetchResult) -> Void
+    ) {
+        //TODO: process notification
+    }
+}

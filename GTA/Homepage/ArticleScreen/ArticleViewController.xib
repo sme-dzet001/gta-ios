@@ -36,13 +36,13 @@
                     <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="16"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qZB-c8-5HW">
-                    <rect key="frame" x="365" y="22" width="25" height="25"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qZB-c8-5HW">
+                    <rect key="frame" x="349" y="10" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="qZB-c8-5HW" secondAttribute="height" multiplier="1:1" id="UoK-G0-wvE"/>
-                        <constraint firstAttribute="width" constant="25" id="rUK-Ws-2Ce"/>
+                        <constraint firstAttribute="width" constant="50" id="rUK-Ws-2Ce"/>
                     </constraints>
-                    <state key="normal" backgroundImage="close_icon"/>
+                    <state key="normal" image="close_icon"/>
                     <connections>
                         <action selector="closeButtonDidPressed:" destination="-1" eventType="touchUpInside" id="iHK-Ok-qFp"/>
                     </connections>
@@ -73,9 +73,9 @@
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="4Vb-08-FAd" secondAttribute="bottom" id="7Y4-rJ-iko"/>
                 <constraint firstItem="hqn-HG-Ows" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="62" id="8n8-Rd-qdT"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qZB-c8-5HW" secondAttribute="trailing" constant="24" id="8vD-1m-lCs"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qZB-c8-5HW" secondAttribute="trailing" constant="15" id="8vD-1m-lCs"/>
                 <constraint firstItem="E0k-G8-Efq" firstAttribute="centerX" secondItem="hqn-HG-Ows" secondAttribute="centerX" id="C1d-AS-iD5"/>
-                <constraint firstItem="hqn-HG-Ows" firstAttribute="top" secondItem="qZB-c8-5HW" secondAttribute="bottom" constant="15" id="Kuh-WL-MjD"/>
+                <constraint firstItem="hqn-HG-Ows" firstAttribute="top" secondItem="qZB-c8-5HW" secondAttribute="bottom" constant="2" id="Kuh-WL-MjD"/>
                 <constraint firstItem="4Vb-08-FAd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="XDx-0G-y2r"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hqn-HG-Ows" secondAttribute="trailing" id="YVI-Lx-I0V"/>
                 <constraint firstAttribute="bottom" secondItem="hqn-HG-Ows" secondAttribute="bottom" id="dBx-Zo-1Rb"/>

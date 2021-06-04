@@ -28,8 +28,8 @@ class APIManager: NSObject, URLSessionDelegate {
         case getGlobalNews(generationNumber: Int)
         case getSpecialAlerts(generationNumber: Int)
         case getAllOffices(generationNumber: Int)
-        case getCurrentOffice
-        case setCurrentOffice
+        case getCurrentPreferences
+        case setCurrentPreferences
         case getHelpDeskData(generationNumber: Int)
         case getQuickHelpData(generationNumber: Int)
         case getTeamContactsData(generationNumber: Int)
@@ -48,10 +48,12 @@ class APIManager: NSObject, URLSessionDelegate {
         case getGSDTickets//(generationNumber: Int)
         case getGSDTicketComments(generationNumber: Int)
         case getGTTeam(generationNumber: Int)
+        case getGlobalOutage(generationNumber: Int)
+        case sendPushNotificationsToken
         
         var endpoint: String {
             switch self {
-                case .validateToken, .getCurrentOffice, .setCurrentOffice: return "/v1/me"
+                case .validateToken, .getCurrentPreferences, .setCurrentPreferences: return "/v1/me"
                 case .getSectionReport: return "/v3/reports/"
                 case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)/detailed"
                 case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)/detailed"
@@ -75,6 +77,8 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getGSDTickets: return "/v3/salesforce/tickets/"
                 case .getGSDTicketComments(let generationNumber): return "/v3/widgets/gsd_ticket_comments/data/\(generationNumber)/detailed"
                 case .getGTTeam(let generationNumber): return "/v3/widgets/management_team/data/\(generationNumber)/detailed"
+                case .getGlobalOutage(let generationNumber): return "/v3/widgets/global_alerts/data/\(generationNumber)/detailed"
+                case .sendPushNotificationsToken: return "/v1/me/push_token/"
             }
         }
     }
@@ -106,6 +110,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case collaborationAppDetailsV1 = "collaboration_app_details_v1"
         case collaborationNews = "collaboration_news"
         case gTTeam = "management_team"
+        case globalAlerts = "global_alerts"
     }
     
     init(accessToken: String?) {
@@ -125,20 +130,25 @@ class APIManager: NSObject, URLSessionDelegate {
         makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
+    func getGlobalAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getGlobalOutage(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+    }
+    
     func getAllOffices(generationNumber: Int, completion: ((_ allOfficesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         makeRequest(endpoint: .getAllOffices(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
-    func getCurrentOffice(completion: ((_ preferencesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getCurrentPreferences(completion: ((_ preferencesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getCurrentOffice, method: "GET", headers: requestHeaders, completion: completion)
+        makeRequest(endpoint: .getCurrentPreferences, method: "GET", headers: requestHeaders, completion: completion)
     }
     
-    func setCurrentOffice(officeId: Int, completion: ((_ preferencesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func setCurrentPreferences(preferences: String, completion: ((_ preferencesData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Content-Type": "application/x-www-form-urlencoded"]
-        let bodyParams = ["preferences": "{\"office_id\":\"\(officeId)\"}", "token": (accessToken ?? "")]
-        makeRequest(endpoint: .setCurrentOffice, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
+        let bodyParams = ["preferences": preferences, "token": (accessToken ?? "")]
+        makeRequest(endpoint: .setCurrentPreferences, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
     }
     
     func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ response: URLResponse?, _ error: Error?) -> Void)) {
@@ -283,6 +293,14 @@ class APIManager: NSObject, URLSessionDelegate {
     func getCollaborationNews(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         self.makeRequest(endpoint: .getCollaborationNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders,  completion: completion)
+    }
+    
+    //MARK: - Push notifications
+    
+    func sendPushNotificationsToken(completion: ((_ tokenData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? "", "Content-Type": "application/x-www-form-urlencoded"]
+        let bodyParams = ["device_token_type": "apns", "device_token": KeychainManager.getPushNotificationToken() ?? ""]
+        makeRequest(endpoint: .sendPushNotificationsToken, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
     }
     
     //MARK: - Common methods

@@ -215,6 +215,56 @@ extension UITableView {
     }
 }
 
+fileprivate let tabBarItemTag: Int = 10090
+extension UITabBarController {
+    
+    public func addAlertItemBadge(atIndex index: Int) {
+        guard let itemCount = self.tabBar.items?.count, itemCount > 0 else { return }
+        guard index < itemCount else { return }
+        removeItemBadge(atIndex: index)
+
+        let badgeView = UIView()
+        let imageView = UIImageView(image: UIImage(named: "global_alert_badge"))
+        badgeView.addSubview(imageView)
+        NSLayoutConstraint.activate([
+        imageView.topAnchor.constraint(equalTo: badgeView.topAnchor),
+        imageView.bottomAnchor.constraint(equalTo: badgeView.bottomAnchor),
+        imageView.leadingAnchor.constraint(equalTo: badgeView.leadingAnchor),
+        imageView.trailingAnchor.constraint(equalTo: badgeView.trailingAnchor)
+        ])
+        badgeView.tag = tabBarItemTag + Int(index)
+        badgeView.layer.cornerRadius = 5
+
+        let tabFrame = self.tabBar.frame
+        let percentX = (CGFloat(index) + 0.5) / CGFloat(itemCount)
+        let x = (percentX * tabFrame.size.width).rounded(.up)
+        let y = (CGFloat(0.03) * tabFrame.size.height).rounded(.up)
+        badgeView.frame = CGRect(x: x, y: y, width: 40, height: 40)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(selectTab(tap:)))
+        tap.cancelsTouchesInView = false
+        badgeView.addGestureRecognizer(tap)
+        self.tabBar.addSubview(badgeView)
+    }
+    
+    @objc private func selectTab(tap: UITapGestureRecognizer) {
+        let index = (tap.view?.tag ?? 0) - tabBarItemTag
+        guard let itemCount = self.tabBar.items?.count, itemCount > 0 else { return }
+        guard index >= 0, index < itemCount else { return }
+        self.selectedIndex = index
+    }
+
+    @discardableResult
+    public func removeItemBadge(atIndex index: Int) -> Bool {
+        for subView in self.tabBar.subviews {
+            if subView.tag == (tabBarItemTag + index) {
+                subView.removeFromSuperview()
+                return true
+            }
+        }
+        return false
+    }
+}
+
 extension UIViewController {
     func displayError(errorMessage: String, title: String? = "Error", onClose: ((UIAlertAction?) -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: errorMessage, preferredStyle: .alert)
@@ -459,7 +509,7 @@ extension String {
         }
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
         if let date = dateFormatterPrint.date(from: self) {
-            dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
+            dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
             return dateFormatterPrint.string(from: date)
         } else {
             dateFormatterPrint.dateFormat = String.newsDateFormat
@@ -661,4 +711,17 @@ extension UITapGestureRecognizer {
         return false
     }
 
+}
+
+extension UNNotification {
+    var isEmergencyOutage: Bool {
+        get {
+            let userInfo = request.content.userInfo
+            guard let payload = userInfo[Constants.payloadKey] as? String else { return false }
+            guard let payloadData = Data(base64Encoded: payload) else { return false }
+            guard let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject] else { return false }
+            guard let pushType = payloadDict[Constants.pushTypeKey] as? String else { return false }
+            return pushType == Constants.pushType
+        }
+    }
 }
