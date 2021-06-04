@@ -23,7 +23,11 @@ class GeneralDataProvider {
                 }
                 self?.apiManager.getCurrentPreferences { [weak self] (response, errorCode, error) in
                     self?.cacheData(response, path: .getCurrentPreferences)
-                    self?.processGetCurrentPreferences(response, errorCode, error, completion)
+                    if let _ = error {
+                        completion?(0, ResponseError.generate(error: error))
+                    } else {
+                        self?.processGetCurrentPreferences(response, errorCode, error, completion)
+                    }
                 }
             })
         }
@@ -55,6 +59,9 @@ class GeneralDataProvider {
                 //self?.officeSelectionDelegate?.officeWasSelected()
                 self?.allowEmergencyOutageNotifications = nottificationsState
                 Preferences.allowEmergencyOutageNotifications = nottificationsState
+            } else {
+                completion?(errorCode, ResponseError.generate(error: error))
+                return
             }
             completion?(errorCode, error)
         }

@@ -118,7 +118,7 @@ class HomeDataProvider {
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError, false)
+                        completion?(errorCode, ResponseError.generate(error: error), false)
                     } else {
                         self?.processGlobalNewsSectionReport(reportResponse, errorCode, error, false, completion)
                     }
@@ -143,13 +143,17 @@ class HomeDataProvider {
                 return
             }
             apiManager.getGlobalNews(generationNumber: generationNumber) { [weak self] (newsResponse, errorCode, error) in
+                if let _ = error {
+                    completion?(0, ResponseError.generate(error: error), false)
+                    return
+                }
                 self?.cacheData(newsResponse, path: .getGlobalNews)
                 self?.processGlobalNews(newsResponse: newsResponse, reportDataResponse: reportData, isFromCache: false, error: error, errorCode: errorCode, completion: completion)
             }
         } else {
             if error != nil || generationNumber == 0 {
                 newsData = generationNumber == 0 ? [] : newsData
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
+                completion?(0, generationNumber == 0 ? ResponseError.noDataAvailable : ResponseError.generate(error: error), isFromCache)
                 return
             }
             let retError = ResponseError.serverError
@@ -219,12 +223,16 @@ class HomeDataProvider {
                 return
             }
             apiManager.getSpecialAlerts(generationNumber: generationNumber, completion: { [weak self] (alertsResponse, errorCode, error) in
+                if let _ = error {
+                    completion?(0, ResponseError.generate(error: error), false)
+                    return
+                }
                 self?.cacheData(alertsResponse, path: .getSpecialAlerts)
                 self?.processSpecialAlerts(reportData, alertsResponse, false, errorCode, error, completion)
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, isFromCache)
+                completion?(0, generationNumber == 0 ? ResponseError.noDataAvailable: ResponseError.generate(error: error), isFromCache)
                 return
             }
             let retError = ResponseError.serverError
@@ -242,7 +250,7 @@ class HomeDataProvider {
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError, false)
+                        completion?(errorCode, ResponseError.generate(error: error), false)
                     } else {
                         self?.processSpecialAlertsSectionReport(reportResponse, errorCode, error, false, completion)
                     }
@@ -278,7 +286,7 @@ class HomeDataProvider {
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError)
+                        completion?(errorCode, ResponseError.generate(error: error))
                     } else {
                         self?.processAllOfficesSectionReport(reportResponse, errorCode, error, false, completion)
                     }
@@ -298,12 +306,16 @@ class HomeDataProvider {
                 return
             }
             apiManager.getAllOffices(generationNumber: generationNumber) { [weak self] (officesResponse, errorCode, error) in
+                if let _ = error {
+                    completion?(0, ResponseError.generate(error: error))
+                    return
+                }
                 self?.cacheData(officesResponse, path: .getAllOffices)
                 self?.processAllOffices(reportData, officesResponse, errorCode, error, completion)
             }
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(0, generationNumber == 0 ? ResponseError.noDataAvailable: ResponseError.generate(error: error))
                 return
             }
             completion?(0, error)
@@ -372,9 +384,10 @@ class HomeDataProvider {
                     completion?(code, error, true)
                 }
                 self?.apiManager.getCurrentPreferences { [weak self] (response, errorCode, error) in
-//                    if let _ = error, response == nil, let _ = data, cacheError == nil {
-//                        return
-//                    }
+                    if let _ = error {
+                        completion?(code, ResponseError.generate(error: error), false)
+                        return
+                    }
                     self?.cacheData(response, path: .getCurrentPreferences)
                     self?.processGetCurrentOffice(response, errorCode, error, false, completion)
                 }
@@ -426,7 +439,7 @@ class HomeDataProvider {
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(false, errorCode, ResponseError.serverError)
+                        completion?(false, errorCode, ResponseError.generate(error: error))
                     } else {
                         self?.processGlobalAlertsSectionReport(reportResponse, errorCode, error, false, completion)
                     }
@@ -457,12 +470,16 @@ class HomeDataProvider {
                 return
             }
             apiManager.getGlobalAlerts(generationNumber: generationNumber) { [weak self] (response, errorCode, error) in
+                if let _ = error {
+                    completion?(true, 0, ResponseError.generate(error: error))
+                    return
+                }
                 self?.cacheData(response, path: .getGlobalOutage)
                 self?.processGlobalAlerts(reportData, response, errorCode, error, completion)
             }
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(false, 0, generationNumber == 0 ? ResponseError.noDataAvailable: ResponseError.generate(error: error))
                 return
             }
             completion?(false, 0, error)
@@ -521,7 +538,7 @@ class HomeDataProvider {
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(false, errorCode, ResponseError.serverError)
+                        completion?(false, errorCode, ResponseError.generate(error: error))
                     } else {
                         self?.processGTTeamSectionReport(reportResponse, errorCode, error, false, completion)
                     }
@@ -541,12 +558,16 @@ class HomeDataProvider {
                 return
             }
             apiManager.getGTTeamData(generationNumber: generationNumber) { [weak self] (response, errorCode, error) in
+                if let _ = error {
+                    completion?(true, 0, ResponseError.generate(error: error))
+                    return
+                }
                 self?.cacheData(response, path: .getGTTeamData)
                 self?.processGTTeam(reportData, response, errorCode, error, completion)
             }
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                completion?(false, 0, generationNumber == 0 ? ResponseError.noDataAvailable: ResponseError.generate(error: error))
                 return
             }
             completion?(false, 0, error)

@@ -33,47 +33,6 @@ class MyAppsDataProvider {
         
     // MARK: - Calling methods
     
-//    func getAppImageData(from urlString: String, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-//        if let url = URL(string: formImageURL(from: urlString)) {
-//            getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, cachedError) in
-//                if cachedError == nil {
-//                    self?.appImageData[urlString] = cachedData
-//                    completion(cachedData, nil)
-//                }
-//                self?.apiManager.loadImageData(from: url) { (data, response, error) in
-//                    if let isContains = self?.appImageData.keys.contains(urlString), isContains, error == nil {
-//                        self?.appImageData[urlString] = data
-//                    }
-//                    self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
-//                    DispatchQueue.main.async {
-//                        if cachedData == nil ? true : cachedData != data {
-//                            if cachedError == nil && error != nil { return }
-//                            completion(data, error)
-//                        }
-//                    }
-//                }
-//                
-//            })
-//        } else {
-//            completion(nil, ResponseError.noDataAvailable)
-//        }
-//    }
-    
-//    func getContactImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ error: Error?) -> Void)) {
-//        getCachedResponse(for: .getImageDataFor(detailsPath: url.absoluteString), completion: {[weak self] (cachedData, error) in
-//            if error == nil {
-//                completion(cachedData, nil)
-//            }
-//            self?.apiManager.loadImageData(from: url) { (data, response, error) in
-//                self?.cacheData(data, path: .getImageDataFor(detailsPath: url.absoluteString))
-//                DispatchQueue.main.async {
-//                    completion(data, error)
-//                }
-//            }
-//            
-//        })
-//    }
-    
     func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
@@ -84,7 +43,7 @@ class MyAppsDataProvider {
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError, false)
+                        completion?(errorCode, ResponseError.generate(error: error), false)
                     } else {
                         self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, false, completion)
                     }
@@ -108,7 +67,7 @@ class MyAppsDataProvider {
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(errorCode, ResponseError.serverError, false)
+                        completion?(errorCode, ResponseError.generate(error: error), false)
                     } else {
                         self?.processAllAppsSectionReport(reportResponse, errorCode, error, false, completion)
                     }
@@ -126,7 +85,7 @@ class MyAppsDataProvider {
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     if let _ = error {
-                        completion?(nil, errorCode, ResponseError.serverError, false)
+                        completion?(nil, errorCode, ResponseError.generate(error: error), false)
                     } else {
                         self?.processAppDetailsSectionReport(app, reportResponse, errorCode, error, false, completion)
                     }
@@ -148,7 +107,7 @@ class MyAppsDataProvider {
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     if let _ = error {
-                        completion?(dataWasChanged, errorCode, ResponseError.serverError, false)
+                        completion?(dataWasChanged, errorCode, ResponseError.generate(error: error), false)
                     } else {
                         self?.processAppContactsSectionReport(app, reportResponse, errorCode, error, false, completion)
                     }
@@ -170,7 +129,7 @@ class MyAppsDataProvider {
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(false, errorCode, ResponseError.serverError, false)
+                        completion?(false, errorCode, ResponseError.generate(error: error), false)
                     } else {
                         self?.handleAppTipsAndTricksSectionReport(app, reportResponse, errorCode, error, false, completion)
                     }
@@ -196,14 +155,18 @@ class MyAppsDataProvider {
             }
             apiManager.getAppTipsAndTricks(for: generationNumber!, appName: detailsPath, completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAppTipsAndTricks(detailsPath: detailsPath))
-                self?.handleAppTipsAndTricks(appName: detailsPath, reportData, false, data, errorCode, error, completion: completion)
+                if let _ = error {
+                    completion?(true, 0, ResponseError.generate(error: error), false)
+                } else {
+                    self?.handleAppTipsAndTricks(appName: detailsPath, reportData, false, data, errorCode, error, completion: completion)
+                }
             })
         } else {
             if error != nil || generationNumber == 0 {
                 if generationNumber == 0 {
                     tipsAndTricksData[appName ?? ""]?.removeAll()
                 }
-                completion?(false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(false, 0, generationNumber == 0 ? ResponseError.noDataAvailable : ResponseError.generate(error: error), fromCache)
                 return
             }
             completion?(false, 0, ResponseError.commonError, fromCache)
@@ -232,23 +195,6 @@ class MyAppsDataProvider {
         completion?(dataChanged, errorCode, retErr, fromCache)
     }
         
-//    private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
-//        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
-//            if let _ = data, cachedError == nil {
-//                self?.cachedReportData = data
-//                completion?(data, 200, cachedError, true)
-//            }
-//            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-//                self?.cacheData(reportResponse, path: .getSectionReport)
-//                var newError = error
-//                if let _ = error {
-//                    newError = ResponseError.commonError
-//                }
-//                completion?(reportResponse, errorCode, newError, false)
-//            })
-//        }
-//    }
-    
     func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
@@ -268,7 +214,7 @@ class MyAppsDataProvider {
             self.cacheData(pdfData, path: .getAppTipsAndTricksPDF(detailsPath: appName))
             let code = response as? HTTPURLResponse
             if let _ = error {
-                completion(pdfData, code?.statusCode, ResponseError.serverError)
+                completion(pdfData, code?.statusCode, ResponseError.generate(error: error))
             } else {
                 completion(pdfData, 200, nil)
             }
@@ -381,9 +327,12 @@ class MyAppsDataProvider {
                 return
             }
             apiManager.getMyAppsData(for: generationNumber!, username: (KeychainManager.getUsername() ?? ""), completion: { [weak self] (data, errorCode, error) in
-                //let dataWithStatus = self?.addStatusRequest(to: data)
                 self?.cacheData(data, path: .getMyAppsData)
-                self?.processMyApps(isFromCache: false, reportData, data, errorCode, error, completion)
+                if let _ = error {
+                    completion?(0, ResponseError.generate(error: error), false)
+                } else {
+                    self?.processMyApps(isFromCache: false, reportData, data, errorCode, error, completion)
+                }
             })
         } else {
             let err = error == nil ? ResponseError.commonError : error
@@ -457,13 +406,21 @@ class MyAppsDataProvider {
                 return
             }
             apiManager.getAllApps(for: generationNumber!, completion: { [weak self] (data, errorCode, error) in
+                if let _ = error {
+                    completion?(0, ResponseError.generate(error: error), false)
+                    return
+                }
                 let dataWithStatus = self?.addStatusRequest(to: data)
                 self?.cacheData(dataWithStatus, path: .getAllAppsData)
-                self?.processAllApps(reportData, false, dataWithStatus, errorCode, error, completion)
+                if let _ = error {
+                    completion?(0, ResponseError.generate(error: error), false)
+                } else {
+                    self?.processAllApps(reportData, false, dataWithStatus, errorCode, error, completion)
+                }
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(0, generationNumber == 0 ? ResponseError.noDataAvailable : ResponseError.generate(error: error), fromCache)
                 return
             }
             completion?(0, ResponseError.commonError, fromCache)
@@ -511,11 +468,15 @@ class MyAppsDataProvider {
             }
             apiManager.getAppContactsData(for: generationNumber!, appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAppContacts(contactsPath: contactsPath))
-                self?.processAppContacts(appName: contactsPath, reportData, data, false, errorCode, error, completion)
+                if let _ = error {
+                    completion?(false, 0, ResponseError.generate(error: error), false)
+                } else {
+                    self?.processAppContacts(appName: contactsPath, reportData, data, false, errorCode, error, completion)
+                }
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(generationNumber == 0 ? true : false, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(generationNumber == 0 ? true : false, 0, generationNumber == 0 ? ResponseError.noDataAvailable : ResponseError.generate(error: error), fromCache)
                 return
             }
             completion?(false, 0, ResponseError.commonError, fromCache)
@@ -554,11 +515,15 @@ class MyAppsDataProvider {
             }
             apiManager.getAppDetailsData(for: generationNumber!, appName: (app ?? ""),  completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAppDetails(detailsPath: detailsPath))
-                self?.processAppDetails(reportData, data, false, errorCode, error, completion)
+                if let _ = error {
+                    completion?(nil, 0, ResponseError.generate(error: error), false)
+                } else {
+                    self?.processAppDetails(reportData, data, false, errorCode, error, completion)
+                }
             })
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(nil, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
+                completion?(nil, 0, generationNumber == 0 ? ResponseError.noDataAvailable : ResponseError.generate(error: error), fromCache)
                 return
             }
             completion?(nil, 0, ResponseError.commonError,fromCache)
