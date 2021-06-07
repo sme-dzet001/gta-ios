@@ -62,6 +62,7 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
         view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name:UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: UIApplication.willResignActiveNotification, object:nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissModal), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -77,6 +78,10 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
             self?.setUpTextViewLayout()
         })
         setUpTextField()
+    }
+    
+    @objc private func dismissModal() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func setUpTextView() {
@@ -156,6 +161,7 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
     deinit {
         heightObserver?.invalidate()
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
 }

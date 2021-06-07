@@ -95,6 +95,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
             articleTextView.text = articleText
         }
         articleTextView.textContainerInset = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissModal), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -148,11 +149,15 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     }
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
+        dismissModal()
+    }
+    
+    @objc private func dismissModal() {
         self.dismiss(animated: true, completion: nil)
     }
     
     func panModalWillDismiss() {
-        appearanceDelegate?.panModalDidDissmiss()
+        appearanceDelegate?.panModalDidDismiss()
     }
     
     func willTransition(to state: PanModalPresentationController.PresentationState) {
@@ -168,6 +173,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     
     deinit {
         heightObserver?.invalidate()
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
 }
 
