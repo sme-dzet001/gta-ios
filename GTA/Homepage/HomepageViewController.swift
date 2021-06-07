@@ -122,15 +122,10 @@ class HomepageViewController: UIViewController {
                     self.showGlobalAlertModal()
                 }
             } else {
-                self.dataProvider.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
-                    DispatchQueue.main.async {
-                        if let alert = self?.dataProvider.globalAlertsData, !alert.isExpired {
-                            self?.tabBarController?.selectedIndex = homepageTabIdx
-                            embeddedController.popToRootViewController(animated: false)
-                            self?.showGlobalAlertModal()
-                        }
-                    }
-                })
+                self.tabBarController?.selectedIndex = homepageTabIdx
+                embeddedController.popToRootViewController(animated: false)
+                self.dataProvider.forceUpdateAlertDetails = true
+                self.showGlobalAlertModal()
             }
         }
     }

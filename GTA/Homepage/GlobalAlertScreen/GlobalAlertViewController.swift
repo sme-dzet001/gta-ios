@@ -26,7 +26,22 @@ class GlobalAlertViewController: UIViewController {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
         setUpTableView()
-        setUpDataSource()
+        loadGlobalAlertsData()
+    }
+    
+    private func loadGlobalAlertsData() {
+        if let forceUpdateAlertDetails = dataProvider?.forceUpdateAlertDetails, forceUpdateAlertDetails {
+            dataProvider?.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
+                DispatchQueue.main.async {
+                    self?.dataProvider?.forceUpdateAlertDetails = false
+                    if let alert = self?.dataProvider?.globalAlertsData, !alert.isExpired {
+                        self?.setUpDataSource()
+                    }
+                }
+            })
+        } else {
+            setUpDataSource()
+        }
     }
     
     private func setUpTableView() {

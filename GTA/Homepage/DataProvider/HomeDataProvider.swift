@@ -21,6 +21,8 @@ class HomeDataProvider {
     private(set) var globalAlertsData: GlobalAlertRow?
     private var selectedOfficeId: Int?
     
+    var forceUpdateAlertDetails: Bool = false
+    
     weak var officeSelectionDelegate: OfficeSelectionDelegate?
     
     var newsDataIsEmpty: Bool {
