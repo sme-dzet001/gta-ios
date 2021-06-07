@@ -118,7 +118,7 @@ extension GlobalAlertViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             if loadGlobalAlertsInProgress {
-                return createLoadingCell(withBottomSeparator: true)
+                return createLoadingCell(withBottomSeparator: false)
             }
             if dataSource.count == 0 {
                 return createErrorCell(with: "No data available")
