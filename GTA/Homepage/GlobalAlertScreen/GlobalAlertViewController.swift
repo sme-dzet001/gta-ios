@@ -41,10 +41,10 @@ class GlobalAlertViewController: UIViewController {
             dataProvider?.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
                 DispatchQueue.main.async {
                     self?.dataProvider?.forceUpdateAlertDetails = false
-                    self?.loadGlobalAlertsInProgress = false
                     if let alert = self?.dataProvider?.globalAlertsData, !alert.isExpired {
                         self?.setUpDataSource()
                     }
+                    self?.loadGlobalAlertsInProgress = false
                 }
             })
         } else {
