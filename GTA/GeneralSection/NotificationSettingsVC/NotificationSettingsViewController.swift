@@ -14,21 +14,49 @@ class NotificationSettingsViewController: UIViewController {
     var dataProvider: GeneralDataProvider?
     weak var delegate: NotificationStateUpdatedDelegate?
     
+    private var isNotificationAuthorized: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
         setUpNavigationItem()
+        getNotificationPermision()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(getNotificationPermision), name: UIApplication.willEnterForegroundNotification, object: nil)
+        getCurrentPreferences()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    private func getCurrentPreferences() {
         dataProvider?.getCurrentPreferences(completion: {[weak self] code, error in
             if error == nil && code == 200 {
                 DispatchQueue.main.async {
-                    self?.delegate?.notificationStateUpdatedDelegate(state: self?.dataProvider?.allowEmergencyOutageNotifications ?? true)
+                    let isOn = (self?.dataProvider?.allowEmergencyOutageNotifications ?? true) && (self?.isNotificationAuthorized ?? true)
+                    self?.delegate?.notificationStateUpdatedDelegate(state: isOn)
                 }
             }
         })
+    }
+    
+    @objc private func getNotificationPermision() {
+        UNUserNotificationCenter.current().getNotificationSettings {[weak self] permisson in
+            switch permisson.authorizationStatus {
+            case .denied:
+                self?.isNotificationAuthorized = false
+                DispatchQueue.main.async {
+                    self?.delegate?.notificationStateUpdatedDelegate(state: false)
+                }
+            default:
+                self?.isNotificationAuthorized = true
+            }
+        }
     }
 
     private func setUpTableView() {
@@ -59,9 +87,7 @@ extension NotificationSettingsViewController: UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SwitcherCell", for: indexPath) as? SwitcherCell
-        //cell?.notificationSwitch?.isOn = Preferences.allowEmergencyOutageNotifications
-        //cell?.switchStateChangedDelegate = self
-        cell?.switchControl.isOn = Preferences.allowEmergencyOutageNotifications
+        cell?.switchControl.isOn = isNotificationAuthorized ? Preferences.allowEmergencyOutageNotifications : false
         cell?.switchControl.switchStateChangedDelegate = self
         delegate = cell
         return cell ?? UITableViewCell()
@@ -70,9 +96,26 @@ extension NotificationSettingsViewController: UITableViewDelegate, UITableViewDa
 }
 
 extension NotificationSettingsViewController: SwitchStateChangedDelegate {
-    func notificationSwitchDidChanged(isOn: Bool) {
-        dataProvider?.setCurrentPreferences(nottificationsState: isOn)
+    func notificationSwitchDidChanged(isOn: Bool, switchControl: Switch) {
+        if isNotificationAuthorized {
+            dataProvider?.setCurrentPreferences(nottificationsState: isOn)
+        } else {
+            switchControl.setOn(false, animated: true)
+            showNotificationNeededAlert()
+        }
     }
+    
+    private func showNotificationNeededAlert() {
+        let alert = UIAlertController(title: nil, message: "Enable Notifications setting to receive push notifications", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
+            if let settingsUrl = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 protocol NotificationStateUpdatedDelegate: AnyObject {
