@@ -15,18 +15,21 @@ class NotificationSettingsViewController: UIViewController {
     weak var delegate: NotificationStateUpdatedDelegate?
     
     private var isNotificationAuthorized: Bool = false
+    private var isSwitchOn: Bool {
+        return (self.dataProvider?.allowEmergencyOutageNotifications ?? true) && isNotificationAuthorized
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
         setUpNavigationItem()
         getNotificationPermision()
+        getCurrentPreferences()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(getNotificationPermision), name: UIApplication.willEnterForegroundNotification, object: nil)
-        getCurrentPreferences()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -38,8 +41,7 @@ class NotificationSettingsViewController: UIViewController {
         dataProvider?.getCurrentPreferences(completion: {[weak self] code, error in
             if error == nil && code == 200 {
                 DispatchQueue.main.async {
-                    let isOn = (self?.dataProvider?.allowEmergencyOutageNotifications ?? true) && (self?.isNotificationAuthorized ?? true)
-                    self?.delegate?.notificationStateUpdatedDelegate(state: isOn)
+                    self?.delegate?.notificationStateUpdatedDelegate(state: self?.isSwitchOn ?? false)
                 }
             }
         })
@@ -53,9 +55,8 @@ class NotificationSettingsViewController: UIViewController {
             default:
                 self?.isNotificationAuthorized = true
             }
-            let isOn = (self?.dataProvider?.allowEmergencyOutageNotifications ?? true) && (self?.isNotificationAuthorized ?? true)
             DispatchQueue.main.async {
-                self?.delegate?.notificationStateUpdatedDelegate(state: isOn)
+                self?.delegate?.notificationStateUpdatedDelegate(state: self?.isSwitchOn ?? false)
             }
         }
     }
