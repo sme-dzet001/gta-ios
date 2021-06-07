@@ -29,11 +29,19 @@ class GlobalAlertViewController: UIViewController {
         loadGlobalAlertsData()
     }
     
+    private var loadGlobalAlertsInProgress = false {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     private func loadGlobalAlertsData() {
         if let forceUpdateAlertDetails = dataProvider?.forceUpdateAlertDetails, forceUpdateAlertDetails {
+            loadGlobalAlertsInProgress = true
             dataProvider?.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
                 DispatchQueue.main.async {
                     self?.dataProvider?.forceUpdateAlertDetails = false
+                    self?.loadGlobalAlertsInProgress = false
                     if let alert = self?.dataProvider?.globalAlertsData, !alert.isExpired {
                         self?.setUpDataSource()
                     }
@@ -109,6 +117,12 @@ extension GlobalAlertViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
+            if loadGlobalAlertsInProgress {
+                return createLoadingCell(withBottomSeparator: true)
+            }
+            if dataSource.count == 0 {
+                return createErrorCell(with: "No data available")
+            }
             let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertDetailsHeaderCell", for: indexPath) as? GlobalAlertDetailsHeaderCell
             cell?.alertNumberLabel.text = alertData?.ticketNumber
             cell?.alertTitleLabel.text = alertData?.alertTitle
