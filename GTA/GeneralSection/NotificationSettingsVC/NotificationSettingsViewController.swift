@@ -100,7 +100,10 @@ extension NotificationSettingsViewController: SwitchStateChangedDelegate {
         if isNotificationAuthorized {
             dataProvider?.setCurrentPreferences(nottificationsState: isOn, completion: {[weak self] code, error in
                 if let err = error {
-                    self?.displayError(errorMessage: err.localizedDescription, title: nil, onClose: nil)
+                    DispatchQueue.main.async {
+                        switchControl.setOn(false, animated: true)
+                        self?.displayError(errorMessage: err.localizedDescription, title: nil, onClose: nil)
+                    }
                 }
             })
         } else {
