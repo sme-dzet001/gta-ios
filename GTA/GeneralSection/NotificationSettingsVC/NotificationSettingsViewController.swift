@@ -101,7 +101,7 @@ extension NotificationSettingsViewController: SwitchStateChangedDelegate {
             dataProvider?.setCurrentPreferences(nottificationsState: isOn, completion: {[weak self] code, error in
                 if let err = error {
                     DispatchQueue.main.async {
-                        switchControl.setOn(false, animated: true)
+                        switchControl.setOn(!isOn, animated: true)
                         self?.displayError(errorMessage: err.localizedDescription, title: nil, onClose: nil)
                     }
                 }
