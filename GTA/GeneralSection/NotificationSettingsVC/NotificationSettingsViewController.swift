@@ -16,7 +16,7 @@ class NotificationSettingsViewController: UIViewController {
     
     private var isNotificationAuthorized: Bool = false
     private var isSwitchOn: Bool {
-        return (self.dataProvider?.allowEmergencyOutageNotifications ?? true) && isNotificationAuthorized
+        return Preferences.allowEmergencyOutageNotifications && isNotificationAuthorized
     }
     
     override func viewDidLoad() {
@@ -29,12 +29,12 @@ class NotificationSettingsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(getNotificationPermision), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getNotificationPermision), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     private func getCurrentPreferences() {
