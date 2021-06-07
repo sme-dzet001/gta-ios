@@ -50,11 +50,12 @@ class NotificationSettingsViewController: UIViewController {
             switch permisson.authorizationStatus {
             case .denied:
                 self?.isNotificationAuthorized = false
-                DispatchQueue.main.async {
-                    self?.delegate?.notificationStateUpdatedDelegate(state: false)
-                }
             default:
                 self?.isNotificationAuthorized = true
+            }
+            let isOn = (self?.dataProvider?.allowEmergencyOutageNotifications ?? true) && (self?.isNotificationAuthorized ?? true)
+            DispatchQueue.main.async {
+                self?.delegate?.notificationStateUpdatedDelegate(state: isOn)
             }
         }
     }
