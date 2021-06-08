@@ -42,9 +42,13 @@ class PanModalNavigationController: UINavigationController, PanModalPresentable 
         return !forceOfficeSelection
     }
     
-    override class func awakeFromNib() {
-        super.awakeFromNib()
+    override init(rootViewController: UIViewController) {
+        super.init(rootViewController: rootViewController)
         NotificationCenter.default.addObserver(self, selector: #selector(dismissModal), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     @objc private func dismissModal() {
