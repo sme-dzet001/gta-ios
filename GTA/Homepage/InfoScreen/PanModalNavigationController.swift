@@ -15,7 +15,9 @@ class PanModalNavigationController: UINavigationController, PanModalPresentable 
     var panScrollable: UIScrollView?
     
     var shortFormHeight: PanModalHeight {
-        return .contentHeight(initialHeight)
+        guard !UIDevice.current.iPhone5_se else { return .maxHeight }
+        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
+        return PanModalHeight.contentHeight(coefficient - (view.window?.safeAreaInsets.bottom ?? 0))
     }
     
     var topOffset: CGFloat {

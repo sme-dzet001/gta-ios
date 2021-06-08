@@ -246,18 +246,10 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         guard infoType == .office else { return }
         if indexPath.row == officeDataSoure.count - 1 {
             let officeLocation = OfficeLocationViewController()
-//            var statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-//            statusBarHeight = view.window?.safeAreaInsets.bottom ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 20
             officeLocation.title = "Select Sony Music Office Region"
             officeLocation.dataProvider = dataProvider
-            //officeLocation.officeSelectionDelegate = self
             let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
             panModalNavigationController.setNavigationBarHidden(true, animated: true)
-            let coefficient = (UIScreen.main.bounds.width * 0.8)
-            var statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 10 : statusBarHeight - 20
-            panModalNavigationController.initialHeight = UIScreen.main.bounds.height - (coefficient + statusBarHeight)//self.tableView.bounds.height - statusBarHeight
-            
             presentPanModal(panModalNavigationController)
         } else {
             if officeDataSoure[indexPath.row].infoType == "phone" {
