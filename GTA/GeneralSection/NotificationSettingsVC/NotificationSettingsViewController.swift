@@ -16,6 +16,7 @@ class NotificationSettingsViewController: UIViewController {
     
     private var isNotificationAuthorized: Bool = false
     private var isSwitchOn: Bool {
+        print("sddsdsdsdsdskjdskjdsjkdskjdsjkdskjdsjkds \n \(Preferences.allowEmergencyOutageNotifications)")
         return Preferences.allowEmergencyOutageNotifications && isNotificationAuthorized
     }
     
