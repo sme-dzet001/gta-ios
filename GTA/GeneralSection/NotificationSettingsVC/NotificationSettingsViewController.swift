@@ -25,16 +25,7 @@ class NotificationSettingsViewController: UIViewController {
         setUpNavigationItem()
         getNotificationPermision()
         getCurrentPreferences()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(getNotificationPermision), name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     private func getCurrentPreferences() {
@@ -77,6 +68,10 @@ class NotificationSettingsViewController: UIViewController {
     
     @objc private func backPressed() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
 }
