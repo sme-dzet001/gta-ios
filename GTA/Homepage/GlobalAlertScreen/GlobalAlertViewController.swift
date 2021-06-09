@@ -26,7 +26,30 @@ class GlobalAlertViewController: UIViewController {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
         setUpTableView()
-        setUpDataSource()
+        loadGlobalAlertsData()
+    }
+    
+    private var loadGlobalAlertsInProgress = false {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    private func loadGlobalAlertsData() {
+        if let forceUpdateAlertDetails = dataProvider?.forceUpdateAlertDetails, forceUpdateAlertDetails {
+            loadGlobalAlertsInProgress = true
+            dataProvider?.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
+                DispatchQueue.main.async {
+                    self?.dataProvider?.forceUpdateAlertDetails = false
+                    if let alert = self?.dataProvider?.globalAlertsData, !alert.isExpired {
+                        self?.setUpDataSource()
+                    }
+                    self?.loadGlobalAlertsInProgress = false
+                }
+            })
+        } else {
+            setUpDataSource()
+        }
     }
     
     private func setUpTableView() {
@@ -94,6 +117,12 @@ extension GlobalAlertViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
+            if loadGlobalAlertsInProgress {
+                return createLoadingCell(withBottomSeparator: false)
+            }
+            if dataSource.count == 0 {
+                return createErrorCell(with: "No data available")
+            }
             let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertDetailsHeaderCell", for: indexPath) as? GlobalAlertDetailsHeaderCell
             cell?.alertNumberLabel.text = alertData?.ticketNumber
             cell?.alertTitleLabel.text = alertData?.alertTitle
@@ -145,8 +174,9 @@ extension GlobalAlertViewController: PanModalPresentable {
     var shortFormHeight: PanModalHeight {
         guard !UIDevice.current.iPhone5_se else { return .maxHeight }
         let coefficient = (UIScreen.main.bounds.width * 0.8)
+        let appearanceCorrection: CGFloat = 8
         var statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 10 : statusBarHeight - 20
-        return PanModalHeight.contentHeight(UIScreen.main.bounds.height - (coefficient + statusBarHeight))
+        return PanModalHeight.contentHeight(UIScreen.main.bounds.height - (coefficient + statusBarHeight) + appearanceCorrection)
     }
 }

@@ -113,6 +113,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
             return
         }
+        if topViewController is UsageMetricsViewController {
+            topViewController?.navigationController?.popToRootViewController(animated: false)
+            let value = UIInterfaceOrientation.portrait.rawValue
+            UIDevice.current.setValue(value, forKey: "orientation")
+            UINavigationController.attemptRotationToDeviceOrientation()
+        }
         if response.notification.isEmergencyOutage {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
         }
