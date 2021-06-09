@@ -44,6 +44,23 @@ class PanModalNavigationController: UINavigationController, PanModalPresentable 
         return !forceOfficeSelection
     }
     
+    override init(rootViewController: UIViewController) {
+        super.init(rootViewController: rootViewController)
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissModal), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    @objc private func dismissModal() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+    }
+    
 }
 
 extension UINavigationController {

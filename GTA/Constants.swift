@@ -18,4 +18,5 @@ class Constants {
 
 class NotificationsNames {
     static let emergencyOutageNotificationReceived = "emergencyOutageNotificationReceived"
+    static let globalAlertWillShow = "globalAlertWillShow"
 }

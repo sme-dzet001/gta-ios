@@ -119,9 +119,11 @@ class HomepageViewController: UIViewController {
             if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
                 UserDefaults.standard.removeObject(forKey: "emergencyOutageNotificationReceived")
                 if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
+                    NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
                     self.showGlobalAlertModal()
                 }
             } else {
+                NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
                 self.tabBarController?.selectedIndex = homepageTabIdx
                 embeddedController.popToRootViewController(animated: false)
                 self.dataProvider.forceUpdateAlertDetails = true
@@ -229,7 +231,7 @@ extension HomepageViewController: PanModalAppearanceDelegate {
         self.presentedVC?.attributedArticleText = htmlBody
     }
     
-    func panModalDidDissmiss() {
+    func panModalDidDismiss() {
         //pageControl.isHidden = false
     }
 }
@@ -245,7 +247,7 @@ extension HomepageViewController: ShowGlobalAlertModalDelegate {
 
 protocol PanModalAppearanceDelegate: AnyObject {
     func needScrollToDirection(_ direction: UICollectionView.ScrollPosition)
-    func panModalDidDissmiss()
+    func panModalDidDismiss()
 }
 
 protocol ShowGlobalAlertModalDelegate: AnyObject {
