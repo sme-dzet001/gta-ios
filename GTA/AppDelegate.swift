@@ -104,6 +104,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if notification.isEmergencyOutage {
+            completionHandler([.alert, .sound])
+            return
+        }
         completionHandler([.alert, .sound, .badge])
     }
     
