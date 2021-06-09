@@ -60,7 +60,7 @@ class HomepageViewController: UIViewController {
                     self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
                     self?.collectionView.reloadData()
-                    if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+                    if !isFromCache && UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
                         self?.emergencyOutageNotificationReceived()
                     }
                 } else {
