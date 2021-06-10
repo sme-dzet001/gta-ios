@@ -16,12 +16,15 @@ class MyTicketsViewController: UIViewController {
     
     private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    private var myTicketsData: [GSDTickets]? {
-        return dataProvider?.myTickets
-    }
     var dataProvider: HelpDeskDataProvider?
     weak var sortFilterDelegate: SortFilterDelegate?
-
+    private var filterType: FilterType = .all
+    private var sortingType: SortType?
+    
+    private var myTicketsData: [GSDTickets]? {
+        return generateDataSource()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationItem()
@@ -119,6 +122,32 @@ class MyTicketsViewController: UIViewController {
     @objc private func filterDidPressed() {
         sortFilterDelegate?.filterDidPressed()
     }
+    
+    private func generateDataSource() -> [GSDTickets]? {
+        var dataSource = dataProvider?.myTickets
+        if let sorting = sortingType {
+            switch sorting {
+            case .newToOld:
+                dataSource = dataSource?.sorted(by: {$0.openDateTimeInterval > $1.openDateTimeInterval})
+            case .oldToNew:
+                dataSource = dataSource?.sorted(by: {$0.openDateTimeInterval < $1.openDateTimeInterval})
+            }
+        }
+        switch filterType {
+        case .closed:
+            dataSource = dataSource?.filter({$0.status == .closed})
+        case .new:
+            dataSource = dataSource?.filter({$0.status == .new})
+        default:
+            return dataSource
+        }
+        return dataSource
+    }
+    
+    @objc private func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
 }
 
 extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -132,6 +161,7 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard (myTicketsData?.count ?? 0) > indexPath.row else { return UITableViewCell() }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TicketCell", for: indexPath) as? TicketCell {
             cell.setUpCell(with: myTicketsData?[indexPath.row], hideSeparator: indexPath.row == (myTicketsData?.count ?? 0) - 1)
             return cell
@@ -151,6 +181,8 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
         header.filterView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(filterDidPressed)))
         header.sortView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(sortDidPressed)))
         sortFilterDelegate = header
+        header.setUpTextFields()
+        header.selectionDelegate = self
         return header
     }
     
@@ -195,6 +227,18 @@ extension MyTicketsViewController: MFMailComposeViewControllerDelegate {
         controller.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension MyTicketsViewController: FilterSortingSelectionDelegate {
+    func filterTypeDidSelect(_ selectedType: FilterType) {
+        filterType = selectedType
+        tableView.reloadData()
+    }
+    
+    func sortingTypeDidSelect(_ selectedType: SortType) {
+        sortingType = selectedType
+        tableView.reloadData()
+    }
 }
 
 enum TicketStatus {

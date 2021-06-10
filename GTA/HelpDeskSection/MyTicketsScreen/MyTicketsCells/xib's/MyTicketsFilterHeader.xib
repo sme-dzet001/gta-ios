@@ -33,8 +33,8 @@
                                         <constraint firstAttribute="width" secondItem="PiH-sO-al5" secondAttribute="height" multiplier="1:1" id="Wio-Gf-xte"/>
                                     </constraints>
                                 </imageView>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Sort" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PtS-AP-6lI">
-                                    <rect key="frame" x="16" y="16.5" width="30" height="18.5"/>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Sort" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PtS-AP-6lI" customClass="CustomTextField" customModule="GTA" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="175" height="51"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -42,15 +42,21 @@
                                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                             <real key="value" value="0.0"/>
                                         </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                            <real key="value" value="16"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="canPerformAction" value="NO"/>
                                     </userDefinedRuntimeAttributes>
                                 </textField>
                             </subviews>
                             <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="PiH-sO-al5" firstAttribute="centerY" secondItem="qzO-un-BXD" secondAttribute="centerY" id="5N1-QC-Llq"/>
+                                <constraint firstAttribute="bottom" secondItem="PtS-AP-6lI" secondAttribute="bottom" id="7Ji-RR-Tvk"/>
                                 <constraint firstAttribute="trailing" secondItem="PiH-sO-al5" secondAttribute="trailing" constant="16" id="8jV-nO-ceh"/>
-                                <constraint firstItem="PtS-AP-6lI" firstAttribute="leading" secondItem="qzO-un-BXD" secondAttribute="leading" constant="16" id="MP9-r9-1Ee"/>
-                                <constraint firstItem="PtS-AP-6lI" firstAttribute="centerY" secondItem="qzO-un-BXD" secondAttribute="centerY" id="qMB-bW-ZxO"/>
+                                <constraint firstItem="PtS-AP-6lI" firstAttribute="leading" secondItem="qzO-un-BXD" secondAttribute="leading" id="MP9-r9-1Ee"/>
+                                <constraint firstAttribute="trailing" secondItem="PtS-AP-6lI" secondAttribute="trailing" id="bez-A7-KPr"/>
+                                <constraint firstItem="PtS-AP-6lI" firstAttribute="top" secondItem="qzO-un-BXD" secondAttribute="top" id="pHX-Fl-GFp"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -64,8 +70,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6uW-JF-EEP">
                             <rect key="frame" x="191" y="0.0" width="175" height="51"/>
                             <subviews>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Filter" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6x6-sM-aQa">
-                                    <rect key="frame" x="16" y="16.5" width="36" height="18.5"/>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Filter" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6x6-sM-aQa" customClass="CustomTextField" customModule="GTA" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="175" height="51"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -73,6 +79,10 @@
                                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                             <real key="value" value="0.0"/>
                                         </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                            <real key="value" value="16"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="canPerformAction" value="NO"/>
                                     </userDefinedRuntimeAttributes>
                                 </textField>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filter_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ffa-eB-F7m">
@@ -84,9 +94,11 @@
                             </subviews>
                             <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstItem="6x6-sM-aQa" firstAttribute="leading" secondItem="6uW-JF-EEP" secondAttribute="leading" constant="16" id="5dn-2V-YAb"/>
-                                <constraint firstItem="6x6-sM-aQa" firstAttribute="centerY" secondItem="6uW-JF-EEP" secondAttribute="centerY" id="7sQ-Jw-Ebb"/>
+                                <constraint firstItem="6x6-sM-aQa" firstAttribute="leading" secondItem="6uW-JF-EEP" secondAttribute="leading" id="5dn-2V-YAb"/>
                                 <constraint firstItem="ffa-eB-F7m" firstAttribute="centerY" secondItem="6uW-JF-EEP" secondAttribute="centerY" id="Dhc-vI-Kec"/>
+                                <constraint firstAttribute="bottom" secondItem="6x6-sM-aQa" secondAttribute="bottom" id="HJX-zo-3Pb"/>
+                                <constraint firstAttribute="trailing" secondItem="6x6-sM-aQa" secondAttribute="trailing" id="Osh-iY-n4Y"/>
+                                <constraint firstItem="6x6-sM-aQa" firstAttribute="top" secondItem="6uW-JF-EEP" secondAttribute="top" id="Qxz-tI-7C8"/>
                                 <constraint firstAttribute="trailing" secondItem="ffa-eB-F7m" secondAttribute="trailing" constant="16" id="bri-eu-TdD"/>
                                 <constraint firstItem="ffa-eB-F7m" firstAttribute="width" secondItem="ffa-eB-F7m" secondAttribute="height" multiplier="1:1" id="qEz-ma-QZL"/>
                             </constraints>
@@ -113,12 +125,22 @@
             <nil key="simulatedTopBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="filterField" destination="6x6-sM-aQa" id="UQj-po-bRW"/>
                 <outlet property="filterView" destination="6uW-JF-EEP" id="wfj-qg-ygD"/>
+                <outlet property="sortField" destination="PtS-AP-6lI" id="EHX-R8-mR3"/>
                 <outlet property="sortView" destination="qzO-un-BXD" id="b3Z-eq-dd6"/>
             </connections>
             <point key="canvasLocation" x="181.15942028985509" y="342.52232142857139"/>
         </view>
     </objects>
+    <designables>
+        <designable name="6x6-sM-aQa">
+            <size key="intrinsicContentSize" width="36" height="18.5"/>
+        </designable>
+        <designable name="PtS-AP-6lI">
+            <size key="intrinsicContentSize" width="30" height="18.5"/>
+        </designable>
+    </designables>
     <resources>
         <image name="filter_icon" width="24" height="24"/>
         <image name="sort_icon" width="24" height="24"/>
