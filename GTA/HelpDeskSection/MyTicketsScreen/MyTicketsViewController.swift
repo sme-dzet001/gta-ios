@@ -12,6 +12,7 @@ import MessageUI
 class MyTicketsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var createTicketView: UIView!
     
     private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -19,11 +20,13 @@ class MyTicketsViewController: UIViewController {
         return dataProvider?.myTickets
     }
     var dataProvider: HelpDeskDataProvider?
+    weak var sortFilterDelegate: SortFilterDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationItem()
         setUpTableView()
+        setUpCreateTicketAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -95,6 +98,27 @@ class MyTicketsViewController: UIViewController {
         // not implemented yet
     }
     
+    private func setUpCreateTicketAction() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(createTicketDidPressed))
+        tap.cancelsTouchesInView = false
+        self.createTicketView?.addGestureRecognizer(tap)
+    }
+    
+    @objc private func createTicketDidPressed() {
+        guard let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") else { return }
+        let newTicketVC = NewTicketViewController()
+        newTicketVC.delegate = self
+        newTicketVC.appUserEmail = lastUserEmail
+        self.presentPanModal(newTicketVC)
+    }
+    
+    @objc private func sortDidPressed() {
+        sortFilterDelegate?.sortDidPressed()
+    }
+    
+    @objc private func filterDidPressed() {
+        sortFilterDelegate?.filterDidPressed()
+    }
 }
 
 extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -123,50 +147,25 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = MyTicketsHeader.instanceFromNib()
-        header.delegate = self
-        header.setUpAction()
+        let header = MyTicketsFilterHeader.instanceFromNib()
+        header.filterView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(filterDidPressed)))
+        header.sortView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(sortDidPressed)))
+        sortFilterDelegate = header
         return header
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard (myTicketsData?.count ?? 0) > indexPath.row else { return }
-//        switch indexPath.row {
-//        case 2, 5:
-//            let ticketDetailsVC = SecondTicketDetailsViewController()
-//            ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
-//            if !UIDevice.current.iPhone5_se {
-//                let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
-//                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / coefficient)
-//            }
-//            presentPanModal(ticketDetailsVC)
-//        default:
-            let ticketDetailsVC = TicketDetailsViewController()
+        let ticketDetailsVC = TicketDetailsViewController()
         ticketDetailsVC.dataSource = myTicketsData?[indexPath.row]
         ticketDetailsVC.dataProvider = dataProvider
-            //ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
-//            if !UIDevice.current.iPhone5_se {
-//                //let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
-//                ticketDetailsVC.initialHeight = .maxHeight// PanModalHeight.contentHeight(self.view.frame.height / coefficient)
-//            }
-            presentPanModal(ticketDetailsVC)
-        //}
+        presentPanModal(ticketDetailsVC)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 78
+        return 75
     }
     
-}
-
-extension MyTicketsViewController: CreateTicketDelegate {
-    func createTicketDidPressed() {
-        guard let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") else { return }
-        let newTicketVC = NewTicketViewController()
-        newTicketVC.delegate = self
-        newTicketVC.appUserEmail = lastUserEmail
-        self.presentPanModal(newTicketVC)
-    }
 }
 
 extension MyTicketsViewController: SendEmailDelegate {
@@ -203,4 +202,9 @@ enum TicketStatus {
     case open
     case closed
     case none
+}
+
+protocol SortFilterDelegate: AnyObject {
+    func sortDidPressed()
+    func filterDidPressed()
 }
