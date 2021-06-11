@@ -271,7 +271,7 @@ class Switch: UIControl {
     private func touchUp() {
         isOn.toggle()
         touchEnded()
-        switchStateChangedDelegate?.notificationSwitchDidChanged(isOn: isOn)
+        switchStateChangedDelegate?.notificationSwitchDidChanged(isOn: isOn, switchControl: self)
     }
 
     @objc
@@ -361,5 +361,5 @@ class Switch: UIControl {
 }
 
 protocol SwitchStateChangedDelegate: AnyObject {
-    func notificationSwitchDidChanged(isOn: Bool)
+    func notificationSwitchDidChanged(isOn: Bool, switchControl: Switch)
 }

@@ -15,7 +15,9 @@ class PanModalNavigationController: UINavigationController, PanModalPresentable 
     var panScrollable: UIScrollView?
     
     var shortFormHeight: PanModalHeight {
-        return .contentHeight(initialHeight)
+        guard !UIDevice.current.iPhone5_se else { return .maxHeight }
+        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
+        return PanModalHeight.contentHeight(coefficient - (view.window?.safeAreaInsets.bottom ?? 0))
     }
     
     var topOffset: CGFloat {
@@ -40,6 +42,23 @@ class PanModalNavigationController: UINavigationController, PanModalPresentable 
     
     var allowsDragToDismiss: Bool {
         return !forceOfficeSelection
+    }
+    
+    override init(rootViewController: UIViewController) {
+        super.init(rootViewController: rootViewController)
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissModal), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    @objc private func dismissModal() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
 }

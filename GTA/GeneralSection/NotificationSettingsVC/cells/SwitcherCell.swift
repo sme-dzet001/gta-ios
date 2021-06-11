@@ -28,6 +28,6 @@ class SwitcherCell: UITableViewCell {
 
 extension SwitcherCell: NotificationStateUpdatedDelegate {
     func notificationStateUpdatedDelegate(state: Bool) {
-        switchControl.isOn = state
+        switchControl.setOn(state, animated: true)
     }
 }

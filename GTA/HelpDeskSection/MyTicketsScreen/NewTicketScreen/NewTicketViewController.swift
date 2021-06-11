@@ -38,10 +38,8 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
     
     var shortFormHeight: PanModalHeight {
         guard !UIDevice.current.iPhone5_se else { return .maxHeight }
-        let coefficient = (UIScreen.main.bounds.width * 0.8)
-        var statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 10 : statusBarHeight - 20
-        return PanModalHeight.contentHeight(UIScreen.main.bounds.height - (coefficient + statusBarHeight))
+        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
+        return PanModalHeight.contentHeight(coefficient - (view.window?.safeAreaInsets.bottom ?? 0))
     }
         
     var longFormHeight: PanModalHeight {
@@ -62,6 +60,7 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
         view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name:UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: UIApplication.willResignActiveNotification, object:nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissModal), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -77,6 +76,10 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
             self?.setUpTextViewLayout()
         })
         setUpTextField()
+    }
+    
+    @objc private func dismissModal() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func setUpTextView() {
@@ -156,6 +159,7 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
     deinit {
         heightObserver?.invalidate()
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
 }

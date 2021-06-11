@@ -104,6 +104,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if notification.isEmergencyOutage {
+            completionHandler([.alert, .sound])
+            return
+        }
         completionHandler([.alert, .sound, .badge])
     }
     
@@ -112,6 +116,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if topViewController == nil || topViewController is LoginViewController || topViewController is AuthViewController {
             UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
             return
+        }
+        if topViewController is UsageMetricsViewController {
+            topViewController?.navigationController?.popToRootViewController(animated: false)
+            let value = UIInterfaceOrientation.portrait.rawValue
+            UIDevice.current.setValue(value, forKey: "orientation")
+            UINavigationController.attemptRotationToDeviceOrientation()
         }
         if response.notification.isEmergencyOutage {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
@@ -131,7 +141,7 @@ extension AppDelegate {
         UNUserNotificationCenter.current().delegate = self
     }
     
-    private func getNotificationSettings() {
+    func getNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             guard settings.authorizationStatus == .authorized else { return }
             DispatchQueue.main.async {

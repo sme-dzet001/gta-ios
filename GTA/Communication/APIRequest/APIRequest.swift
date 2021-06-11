@@ -13,6 +13,7 @@ public enum ResponseError: Error, Equatable {
     case parsingError
     case noDataAvailable
     case missingFieldError(missingFields: [String])
+    case generate(error: Error?)
 
     var localizedDescription: String {
         switch self {
@@ -22,8 +23,23 @@ public enum ResponseError: Error, Equatable {
             return "No data available"
         case .missingFieldError(let missingFields):
             return "\(missingFields) fields are missing"
+        case .generate(let error):
+            let err = error as NSError?
+            switch err?.code {
+            case -1009:
+                return "Please verify your network connection and try again."
+            case -1001:
+                return "The request timed out."
+            default:
+                return "Oops, something went wrong"
+            }
         }
     }
+    
+    public static func == (lhs: ResponseError, rhs: ResponseError) -> Bool {
+        return lhs.localizedDescription == rhs.localizedDescription
+    }
+    
 }
 
 struct APIRequest {
