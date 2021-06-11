@@ -19,7 +19,7 @@ class MyTicketsViewController: UIViewController {
     var dataProvider: HelpDeskDataProvider?
     weak var sortFilterDelegate: SortFilterDelegate?
     private var filterType: FilterType = .all
-    private var sortingType: SortType?
+    private var sortingType: SortType = .newToOld
     
     private var myTicketsData: [GSDTickets]? {
         return generateDataSource()
@@ -125,13 +125,11 @@ class MyTicketsViewController: UIViewController {
     
     private func generateDataSource() -> [GSDTickets]? {
         var dataSource = dataProvider?.myTickets
-        if let sorting = sortingType {
-            switch sorting {
-            case .newToOld:
-                dataSource = dataSource?.sorted(by: {$0.openDateTimeInterval > $1.openDateTimeInterval})
-            case .oldToNew:
-                dataSource = dataSource?.sorted(by: {$0.openDateTimeInterval < $1.openDateTimeInterval})
-            }
+        switch sortingType {
+        case .newToOld:
+            dataSource = dataSource?.sorted(by: {$0.openDateTimeInterval > $1.openDateTimeInterval})
+        case .oldToNew:
+            dataSource = dataSource?.sorted(by: {$0.openDateTimeInterval < $1.openDateTimeInterval})
         }
         switch filterType {
         case .closed:
@@ -231,11 +229,13 @@ extension MyTicketsViewController: MFMailComposeViewControllerDelegate {
 
 extension MyTicketsViewController: FilterSortingSelectionDelegate {
     func filterTypeDidSelect(_ selectedType: FilterType) {
+        guard filterType != selectedType else { return }
         filterType = selectedType
         tableView.reloadData()
     }
     
     func sortingTypeDidSelect(_ selectedType: SortType) {
+        guard sortingType != selectedType else { return }
         sortingType = selectedType
         tableView.reloadData()
     }
