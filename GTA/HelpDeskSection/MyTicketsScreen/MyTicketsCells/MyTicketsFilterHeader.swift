@@ -19,8 +19,6 @@ class MyTicketsFilterHeader: UIView {
     private var pickerView: UIPickerView = UIPickerView()
     private let filterDataSource: [FilterType] = [.all, .closed, .new]
     private let sortingDataSource: [SortType] = [.newToOld, .oldToNew]
-    private var selctedFilterRow: Int?
-    private var selctedSortingRow: Int?
     
     class func instanceFromNib() -> MyTicketsFilterHeader {
         let header = UINib(nibName: "MyTicketsFilterHeader", bundle: nil).instantiate(withOwner: self, options: nil).first as! MyTicketsFilterHeader
@@ -63,9 +61,11 @@ class MyTicketsFilterHeader: UIView {
             }
         } completion: { _ in
             if selectedView == self.sortView {
-                self.pickerView.selectRow(self.selctedSortingRow ?? 0, inComponent: 0, animated: false)
+                let row = self.sortingDataSource.firstIndex(of: Preferences.ticketsSortingType) ?? 0
+                self.pickerView.selectRow(row, inComponent: 0, animated: false)
             } else {
-                self.pickerView.selectRow(self.selctedFilterRow ?? 0, inComponent: 0, animated: false)
+                let row = self.filterDataSource.firstIndex(of: Preferences.ticketsFilterType) ?? 0
+                self.pickerView.selectRow(row, inComponent: 0, animated: false)
             }
         }
     }
@@ -119,12 +119,10 @@ extension MyTicketsFilterHeader: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if sortField.isFirstResponder {
             guard sortingDataSource.count > row else { return }
-            selctedSortingRow = row
             selectionDelegate?.sortingTypeDidSelect(sortingDataSource[row])
             return
         }
         guard filterDataSource.count > row else { return }
-        selctedFilterRow = row
         selectionDelegate?.filterTypeDidSelect(filterDataSource[row])
     }
     

@@ -17,8 +17,6 @@ class MyTicketsViewController: UIViewController {
     private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: HelpDeskDataProvider?
-    private var filterType: FilterType = .all
-    private var sortingType: SortType = .newToOld
     private var isKeyboardShow: Bool = false
     
     private var myTicketsData: [GSDTickets]? {
@@ -120,13 +118,13 @@ class MyTicketsViewController: UIViewController {
     
     private func generateDataSource() -> [GSDTickets]? {
         var dataSource = dataProvider?.myTickets
-        switch sortingType {
+        switch Preferences.ticketsSortingType {
         case .newToOld:
             dataSource = dataSource?.sorted(by: {$0.openDateTimeInterval > $1.openDateTimeInterval})
         case .oldToNew:
             dataSource = dataSource?.sorted(by: {$0.openDateTimeInterval < $1.openDateTimeInterval})
         }
-        switch filterType {
+        switch Preferences.ticketsFilterType {
         case .closed:
             dataSource = dataSource?.filter({$0.status == .closed})
         case .new:
@@ -239,14 +237,14 @@ extension MyTicketsViewController: MFMailComposeViewControllerDelegate {
 
 extension MyTicketsViewController: FilterSortingSelectionDelegate {
     func filterTypeDidSelect(_ selectedType: FilterType) {
-        guard filterType != selectedType else { return }
-        filterType = selectedType
+        guard Preferences.ticketsFilterType != selectedType else { return }
+        Preferences.ticketsFilterType = selectedType
         tableView.reloadData()
     }
     
     func sortingTypeDidSelect(_ selectedType: SortType) {
-        guard sortingType != selectedType else { return }
-        sortingType = selectedType
+        guard Preferences.ticketsSortingType != selectedType else { return }
+        Preferences.ticketsSortingType = selectedType
         tableView.reloadData()
     }
 }
