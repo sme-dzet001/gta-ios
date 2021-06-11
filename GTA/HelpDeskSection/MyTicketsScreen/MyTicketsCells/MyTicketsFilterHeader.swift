@@ -45,8 +45,11 @@ class MyTicketsFilterHeader: UIView {
         toolbar.setItems([flexible, doneButton], animated: true)
         sortField.inputAccessoryView = toolbar
         filterField.inputAccessoryView = toolbar
-        sortField.setIconForPicker(for: self.frame.width)
-        filterField.setIconForPicker(for: self.frame.width)
+    }
+    
+    func setUpObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissPicker), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissPicker), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     private func selectView(_ selectedView: UIView) {
@@ -71,6 +74,11 @@ class MyTicketsFilterHeader: UIView {
         self.filterView.layer.borderWidth = 0
         self.sortView.layer.borderWidth = 0
         endEditing(true)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
 }

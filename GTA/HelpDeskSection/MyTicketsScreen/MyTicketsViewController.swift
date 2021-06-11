@@ -19,6 +19,7 @@ class MyTicketsViewController: UIViewController {
     var dataProvider: HelpDeskDataProvider?
     private var filterType: FilterType = .all
     private var sortingType: SortType = .newToOld
+    private var isKeyboardShow: Bool = false
     
     private var myTicketsData: [GSDTickets]? {
         return generateDataSource()
@@ -29,6 +30,8 @@ class MyTicketsViewController: UIViewController {
         setUpNavigationItem()
         setUpTableView()
         setUpCreateTicketAction()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,6 +110,7 @@ class MyTicketsViewController: UIViewController {
     }
     
     @objc private func createTicketDidPressed() {
+        hideKeyboard()
         guard let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") else { return }
         let newTicketVC = NewTicketViewController()
         newTicketVC.delegate = self
@@ -135,6 +139,19 @@ class MyTicketsViewController: UIViewController {
     
     @objc private func hideKeyboard() {
         view.endEditing(true)
+    }
+    
+    @objc private func keyboardWillShow() {
+        isKeyboardShow = true
+    }
+    
+    @objc private func keyboardWillHide() {
+        isKeyboardShow = false
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
 }
@@ -167,12 +184,17 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = MyTicketsFilterHeader.instanceFromNib()
+        header.setUpObservers()
         header.setUpTextFields()
         header.selectionDelegate = self
         return header
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isKeyboardShow {
+            hideKeyboard()
+            return
+        }
         guard (myTicketsData?.count ?? 0) > indexPath.row else { return }
         let ticketDetailsVC = TicketDetailsViewController()
         ticketDetailsVC.dataSource = myTicketsData?[indexPath.row]
