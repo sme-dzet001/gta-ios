@@ -26,6 +26,9 @@ class MyTicketsFilterHeader: UIView {
     }
     
     func setUpTextFields() {
+        let cancelTap = UITapGestureRecognizer(target: self, action: #selector(dismissPicker))
+        cancelTap.cancelsTouchesInView = false
+        addGestureRecognizer(cancelTap)
         pickerView.delegate = self
         pickerView.dataSource = self
         filterField.inputView = pickerView
