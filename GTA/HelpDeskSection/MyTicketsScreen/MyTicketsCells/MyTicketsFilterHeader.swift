@@ -19,6 +19,8 @@ class MyTicketsFilterHeader: UIView {
     private var pickerView: UIPickerView = UIPickerView()
     private let filterDataSource: [FilterType] = [.all, .closed, .new]
     private let sortingDataSource: [SortType] = [.newToOld, .oldToNew]
+    private var selctedFilterRow: Int?
+    private var selctedSortingRow: Int?
     
     class func instanceFromNib() -> MyTicketsFilterHeader {
         let header = UINib(nibName: "MyTicketsFilterHeader", bundle: nil).instantiate(withOwner: self, options: nil).first as! MyTicketsFilterHeader
@@ -30,13 +32,16 @@ class MyTicketsFilterHeader: UIView {
         pickerView.dataSource = self
         filterField.inputView = pickerView
         sortField.inputView = pickerView
+        filterField.selectionDelegate = self
+        sortField.selectionDelegate = self
+        filterField.setUpTouch()
+        sortField.setUpTouch()
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 44))
         toolbar.barStyle = .default
         toolbar.backgroundColor = .white
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissPicker))
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
         toolbar.setItems([flexible, doneButton], animated: true)
         sortField.inputAccessoryView = toolbar
         filterField.inputAccessoryView = toolbar
@@ -53,22 +58,31 @@ class MyTicketsFilterHeader: UIView {
             } else {
                 self.sortView.layer.borderWidth = 0
             }
+        } completion: { _ in
+            if selectedView == self.sortView {
+                self.pickerView.selectRow(self.selctedSortingRow ?? 0, inComponent: 0, animated: false)
+            } else {
+                self.pickerView.selectRow(self.selctedFilterRow ?? 0, inComponent: 0, animated: false)
+            }
         }
     }
     
     @objc private func dismissPicker() {
+        self.filterView.layer.borderWidth = 0
+        self.sortView.layer.borderWidth = 0
         endEditing(true)
     }
 
 }
 
-extension MyTicketsFilterHeader: SortFilterDelegate {
-    func sortDidPressed() {
-        selectView(sortView)
-    }
-    
-    func filterDidPressed() {
-        selectView(filterView)
+extension MyTicketsFilterHeader: SelectionDelegateDelegate {
+    func textFieldWillSelect(_ textField: UITextField) {
+        dismissPicker()
+        if textField == sortField {
+            selectView(sortView)
+        } else {
+            selectView(filterView)
+        }
     }
     
 }
@@ -97,10 +111,12 @@ extension MyTicketsFilterHeader: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if sortField.isFirstResponder {
             guard sortingDataSource.count > row else { return }
+            selctedSortingRow = row
             selectionDelegate?.sortingTypeDidSelect(sortingDataSource[row])
             return
         }
         guard filterDataSource.count > row else { return }
+        selctedFilterRow = row
         selectionDelegate?.filterTypeDidSelect(filterDataSource[row])
     }
     

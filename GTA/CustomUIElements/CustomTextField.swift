@@ -15,6 +15,7 @@ open class CustomTextField: UITextField {
     private var labelPlaceholderTitleRight: NSLayoutConstraint!
     
     weak var backwardDelegate: BackwardDelegate?
+    weak var selectionDelegate: SelectionDelegateDelegate?
     @IBInspectable var allowToShrinkPlaceholderSizeOnEditing = true
     @IBInspectable var shrinkSizeOfPlaceholder: CGFloat = 0
     @IBInspectable var canPerformAction: Bool = false
@@ -122,6 +123,19 @@ open class CustomTextField: UITextField {
     
     open override func awakeFromNib() {
         self.labelError.isHidden = true
+    }
+    
+    // For filter/sorting on the MyTicketsVC
+    func setUpTouch() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(switchBetweenPickers))
+        tap.cancelsTouchesInView = false
+        self.addGestureRecognizer(tap)
+    }
+    
+    // For filter/sorting on the MyTicketsVC
+    @objc private func switchBetweenPickers() {
+        selectionDelegate?.textFieldWillSelect(self)
+        let _ = becomeFirstResponder()
     }
     
     func setIconForPicker(for width: CGFloat) {
@@ -259,4 +273,8 @@ open class CustomTextField: UITextField {
 
 protocol BackwardDelegate: AnyObject {
     func textFieldDidSelectDeleteButton(_ textField: UITextField)
+}
+
+protocol SelectionDelegateDelegate: AnyObject {
+    func textFieldWillSelect(_ textField: UITextField)
 }

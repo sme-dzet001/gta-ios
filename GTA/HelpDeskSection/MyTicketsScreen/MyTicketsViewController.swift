@@ -17,7 +17,6 @@ class MyTicketsViewController: UIViewController {
     private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: HelpDeskDataProvider?
-    weak var sortFilterDelegate: SortFilterDelegate?
     private var filterType: FilterType = .all
     private var sortingType: SortType = .newToOld
     
@@ -115,14 +114,6 @@ class MyTicketsViewController: UIViewController {
         self.presentPanModal(newTicketVC)
     }
     
-    @objc private func sortDidPressed() {
-        sortFilterDelegate?.sortDidPressed()
-    }
-    
-    @objc private func filterDidPressed() {
-        sortFilterDelegate?.filterDidPressed()
-    }
-    
     private func generateDataSource() -> [GSDTickets]? {
         var dataSource = dataProvider?.myTickets
         switch sortingType {
@@ -176,9 +167,6 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = MyTicketsFilterHeader.instanceFromNib()
-        header.filterView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(filterDidPressed)))
-        header.sortView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(sortDidPressed)))
-        sortFilterDelegate = header
         header.setUpTextFields()
         header.selectionDelegate = self
         return header
@@ -246,9 +234,4 @@ enum TicketStatus {
     case open
     case closed
     case none
-}
-
-protocol SortFilterDelegate: AnyObject {
-    func sortDidPressed()
-    func filterDidPressed()
 }
