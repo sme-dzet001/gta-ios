@@ -29,13 +29,20 @@ class MyTicketsViewController: UIViewController {
         setUpTableView()
         setUpCreateTicketAction()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: UIResponder.keyboardDidHideNotification, object: nil)
+        setUpHideTouch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel, isGSD: true)
         getMyTickets()
+    }
+    
+    private func setUpHideTouch() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
     }
     
     private func getMyTickets() {
@@ -108,7 +115,10 @@ class MyTicketsViewController: UIViewController {
     }
     
     @objc private func createTicketDidPressed() {
-        hideKeyboard()
+        if isKeyboardShow {
+            hideKeyboard()
+            return
+        }
         guard let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") else { return }
         let newTicketVC = NewTicketViewController()
         newTicketVC.delegate = self
@@ -143,7 +153,7 @@ class MyTicketsViewController: UIViewController {
         isKeyboardShow = true
     }
     
-    @objc private func keyboardWillHide() {
+    @objc private func keyboardDidHide() {
         isKeyboardShow = false
     }
     

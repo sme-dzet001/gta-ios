@@ -16,7 +16,8 @@ class MyTicketsFilterHeader: UIView {
     
     weak var selectionDelegate: FilterSortingSelectionDelegate?
     
-    private var pickerView: UIPickerView = UIPickerView()
+    private var sortingPickerView: UIPickerView = UIPickerView()
+    private var filterPickerView: UIPickerView = UIPickerView()
     private let filterDataSource: [FilterType] = [.all, .closed, .new]
     private let sortingDataSource: [SortType] = [.newToOld, .oldToNew]
     
@@ -29,10 +30,12 @@ class MyTicketsFilterHeader: UIView {
         let cancelTap = UITapGestureRecognizer(target: self, action: #selector(dismissPicker))
         cancelTap.cancelsTouchesInView = false
         addGestureRecognizer(cancelTap)
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        filterField.inputView = pickerView
-        sortField.inputView = pickerView
+        sortingPickerView.delegate = self
+        sortingPickerView.dataSource = self
+        filterPickerView.delegate = self
+        filterPickerView.dataSource = self
+        filterField.inputView = filterPickerView
+        sortField.inputView = sortingPickerView
         filterField.selectionDelegate = self
         sortField.selectionDelegate = self
         filterField.setUpTouch()
@@ -41,7 +44,7 @@ class MyTicketsFilterHeader: UIView {
         toolbar.barStyle = .default
         toolbar.backgroundColor = .white
         toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissPicker))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonDidPressed))
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.setItems([flexible, doneButton], animated: true)
         sortField.inputAccessoryView = toolbar
@@ -65,12 +68,25 @@ class MyTicketsFilterHeader: UIView {
         } completion: { _ in
             if selectedView == self.sortView {
                 let row = self.sortingDataSource.firstIndex(of: Preferences.ticketsSortingType) ?? 0
-                self.pickerView.selectRow(row, inComponent: 0, animated: false)
+                self.sortingPickerView.selectRow(row, inComponent: 0, animated: false)
             } else {
                 let row = self.filterDataSource.firstIndex(of: Preferences.ticketsFilterType) ?? 0
-                self.pickerView.selectRow(row, inComponent: 0, animated: false)
+                self.filterPickerView.selectRow(row, inComponent: 0, animated: false)
             }
         }
+    }
+    
+    @objc private func doneButtonDidPressed() {
+        if sortField.isFirstResponder {
+            let selectedSortingIndex = sortingPickerView.selectedRow(inComponent: 0)
+            let sortingType = sortingDataSource[selectedSortingIndex]
+            selectionDelegate?.sortingTypeDidSelect(sortingType)
+        } else {
+            let selectedFilterIndex = filterPickerView.selectedRow(inComponent: 0)
+            let filterType = filterDataSource[selectedFilterIndex]
+            selectionDelegate?.filterTypeDidSelect(filterType)
+        }
+        endEditing(true)
     }
     
     @objc private func dismissPicker() {
@@ -120,13 +136,13 @@ extension MyTicketsFilterHeader: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if sortField.isFirstResponder {
-            guard sortingDataSource.count > row else { return }
-            selectionDelegate?.sortingTypeDidSelect(sortingDataSource[row])
-            return
-        }
-        guard filterDataSource.count > row else { return }
-        selectionDelegate?.filterTypeDidSelect(filterDataSource[row])
+//        if sortField.isFirstResponder {
+//            guard sortingDataSource.count > row else { return }
+//            selectionDelegate?.sortingTypeDidSelect(sortingDataSource[row])
+//            return
+//        }
+//        guard filterDataSource.count > row else { return }
+//        selectionDelegate?.filterTypeDidSelect(filterDataSource[row])
     }
     
 }
