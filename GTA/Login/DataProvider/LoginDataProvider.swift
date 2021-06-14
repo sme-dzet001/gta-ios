@@ -22,10 +22,10 @@ class LoginDataProvider {
                     retErr = ResponseError.parsingError
                 }
             }
-            if let validationResponse = tokenValidationResponse {
+            if let validationResponse = tokenValidationResponse, let lifetime = validationResponse.data.lifetime.intValue {
                 _ = KeychainManager.saveUsername(username: userEmail.lowercased())
                 _ = KeychainManager.saveToken(token: validationResponse.data.token)
-                let tokenExpirationDate = Date().addingTimeInterval(TimeInterval(validationResponse.data.lifetime))
+                let tokenExpirationDate = Date().addingTimeInterval(TimeInterval(lifetime))
                 _ = KeychainManager.saveTokenExpirationDate(tokenExpirationDate: tokenExpirationDate)
             }
             completion?(errorCode, retErr)
