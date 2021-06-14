@@ -113,7 +113,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let topViewController = getTopViewController()
-        if topViewController == nil || topViewController is LoginViewController || topViewController is AuthViewController {
+        var lastActivityDate = Date.distantPast
+        if let aDate = UserDefaults.standard.value(forKey: "lastActivityDate") as? Date {
+            lastActivityDate = aDate
+        }
+        if topViewController == nil || topViewController is LoginViewController || topViewController is AuthViewController || lastActivityDate.addingTimeInterval(1200) < Date() {
             UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
             return
         }
