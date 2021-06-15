@@ -25,7 +25,7 @@ class LoginDataProvider {
             if let validationResponse = tokenValidationResponse {
                 _ = KeychainManager.saveUsername(username: userEmail.lowercased())
                 _ = KeychainManager.saveToken(token: validationResponse.data.token)
-                let tokenExpirationDate = Date().addingTimeInterval(TimeInterval(validationResponse.data.expireAfter))
+                let tokenExpirationDate = Date().addingTimeInterval(TimeInterval(validationResponse.data.lifetime))
                 _ = KeychainManager.saveTokenExpirationDate(tokenExpirationDate: tokenExpirationDate)
             }
             completion?(errorCode, retErr)
@@ -43,7 +43,7 @@ class LoginDataProvider {
                 }
             }
             if let validationResponse = tokenValidationResponse {
-                let tokenExpirationDate = Date().addingTimeInterval(TimeInterval(validationResponse.data.expireAfter))
+                let tokenExpirationDate = Date().addingTimeInterval(TimeInterval(validationResponse.data.lifetime))
                 _ = KeychainManager.saveTokenExpirationDate(tokenExpirationDate: tokenExpirationDate)
             }
         }

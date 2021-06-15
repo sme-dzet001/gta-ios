@@ -313,8 +313,9 @@ class APIManager: NSObject, URLSessionDelegate {
     }
     
     func prolongSession(completion: ((_ tokenData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .prolongSession, method: "GET", headers: requestHeaders, completion: completion)
+        let requestHeaders = ["Content-Type": "application/x-www-form-urlencoded"]
+        let bodyParams = ["token": (accessToken ?? "")]
+        makeRequest(endpoint: .prolongSession, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
     }
     
     func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
