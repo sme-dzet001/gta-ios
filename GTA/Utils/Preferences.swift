@@ -11,4 +11,6 @@ class Preferences {
     
     static var officeId: Int?
     static var allowEmergencyOutageNotifications: Bool = true
+    static var ticketsSortingType: SortType = .newToOld
+    static var ticketsFilterType: FilterType = .all
 }

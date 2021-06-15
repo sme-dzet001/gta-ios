@@ -284,6 +284,14 @@ struct GSDTickets: Codable, Equatable {
     var referenceNumber: String?
     var comments: [GSDTicketComment?]?
     
+    var openDateTimeInterval: TimeInterval {
+        guard let dateString = openDate else { return 0 }
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.ticketDateFormat
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        return (dateFormatterPrint.date(from: dateString) ?? Date()).timeIntervalSince1970
+    }
+    
     var status: TicketStatus {
         guard let _ = ticketStatus else { return .none }
         switch ticketStatus!.lowercased() {
