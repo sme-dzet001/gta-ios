@@ -24,6 +24,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     private enum requestEndpoint {
         case validateToken
+        case prolongSession
         case getSectionReport
         case getGlobalNews(generationNumber: Int)
         case getSpecialAlerts(generationNumber: Int)
@@ -53,7 +54,7 @@ class APIManager: NSObject, URLSessionDelegate {
         
         var endpoint: String {
             switch self {
-                case .validateToken, .getCurrentPreferences, .setCurrentPreferences: return "/v1/me"
+                case .validateToken, .prolongSession, .getCurrentPreferences, .setCurrentPreferences: return "/v1/me"
                 case .getSectionReport: return "/v3/reports/"
                 case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)/detailed"
                 case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)/detailed"
@@ -309,6 +310,11 @@ class APIManager: NSObject, URLSessionDelegate {
     func validateToken(token: String, completion: ((_ tokenData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": token]
         makeRequest(endpoint: .validateToken, method: "GET", headers: requestHeaders, completion: completion)
+    }
+    
+    func prolongSession(completion: ((_ tokenData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .prolongSession, method: "GET", headers: requestHeaders, completion: completion)
     }
     
     func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
