@@ -22,6 +22,8 @@ class SessionExpiredHandler: ExpiredSessionDelegate {
         KeychainManager.deleteTokenExpirationDate()
         KeychainManager.deletePinData()
         ImageCacheManager().removeCachedData()
+        UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
+        UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
         DispatchQueue.main.async {
             CacheManager().clearCache()
             if let delegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {

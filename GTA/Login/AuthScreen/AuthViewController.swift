@@ -263,6 +263,8 @@ extension AuthViewController: WKNavigationDelegate {
         CacheManager().clearCache()
         KeychainManager.deletePinData()
         ImageCacheManager().removeCachedData()
+        UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
+        UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
         if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
             sceneDelegate.startLoginFlow()
         }

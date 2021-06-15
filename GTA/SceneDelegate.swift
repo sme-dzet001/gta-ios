@@ -131,6 +131,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         UserDefaults.standard.set(false, forKey: "userLoggedIn")
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let loginViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
+        UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
         loginViewController.sessionExpired = sessionExpired
         let navController = UINavigationController(rootViewController: loginViewController as UIViewController)
         navController.isNavigationBarHidden = true

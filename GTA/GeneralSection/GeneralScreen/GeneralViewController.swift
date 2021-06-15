@@ -106,6 +106,8 @@ extension GeneralViewController: WKNavigationDelegate {
     
     private func logout() {
         DispatchQueue.main.async {
+            UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
+            UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
             KeychainManager.deleteUsername()
             KeychainManager.deleteToken()
             KeychainManager.deleteTokenExpirationDate()
