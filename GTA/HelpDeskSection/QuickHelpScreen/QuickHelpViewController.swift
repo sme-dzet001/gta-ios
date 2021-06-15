@@ -9,6 +9,7 @@ import UIKit
 
 class QuickHelpViewController: UIViewController {
     
+    @IBOutlet weak var titleStackView: UIStackView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navBarView: UIView!
     @IBOutlet weak var subTitleLabel: UILabel!
@@ -141,6 +142,10 @@ class QuickHelpViewController: UIViewController {
         if screenType == .appTipsAndTricks {
             titleLabel.text = appName ?? ""
             subTitleLabel.text = "Tips & Tricks"
+            if UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se {
+                titleStackView.spacing = 5
+                self.view.layoutIfNeeded()
+            }
             return
         }
         var title = ""
