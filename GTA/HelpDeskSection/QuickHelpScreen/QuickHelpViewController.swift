@@ -264,7 +264,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
         }
         answerBody.setParagraphStyleParams(lineSpacing: 8)
         let textHeight = answerBody.height(containerWidth: view.frame.width - 48)
-        let bottomMargin: CGFloat = 32
+        let bottomMargin: CGFloat = textHeight == 128 ? 17 : 32
         return textHeight + bottomMargin
     }
     
