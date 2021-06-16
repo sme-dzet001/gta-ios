@@ -290,6 +290,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             reportScreen.delegate = self
             reportScreen.screenTitle = dataSource[indexPath.section].cellData[indexPath.row].app_title
             reportScreen.appSupportEmail = appDetailsData?.appSupportEmail
+            reportScreen.appName = appName ?? ""
             let reportIssueTypes = ["Navigation issues", "Slow app work", "No connection", "Missing data", "App crash", "App freeze", "Other"]
             let loginIssueTypes = ["Invalid credentials error", "Forgot password", "2FA issue", "Other"]
             reportScreen.pickerDataSource = indexPath.row == 0 ? reportIssueTypes : loginIssueTypes

@@ -25,6 +25,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     private let pickerView = UIPickerView()
     var screenTitle: String?
     var selectedText: String = ""
+    var appName: String = ""
     var isShortFormEnabled = true
     var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
@@ -162,7 +163,8 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         self.dismiss(animated: true, completion: { [weak self] in
             let screenTitle = self?.screenTitle ?? ""
             let issueType = self?.typeTextField.text ?? ""
-            let subject = "\(screenTitle): \(issueType)"
+            let appName = self?.appName ?? ""
+            let subject = "\(appName) \(screenTitle): \(issueType)"
             let body = self?.textView.text ?? ""
             let recipient = self?.appSupportEmail ?? ""
             self?.delegate?.sendEmail(withTitle: subject, withText: body, to: recipient)
