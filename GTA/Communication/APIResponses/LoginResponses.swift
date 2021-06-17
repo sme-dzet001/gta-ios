@@ -11,7 +11,6 @@ struct AccessTokenValidationResponseData: Codable {
     var username: String
     var token: String
     var lifetime: Int
-    var expireAfter: Int
     var actions: [String]
     var stickers: [String]
     
@@ -19,7 +18,6 @@ struct AccessTokenValidationResponseData: Codable {
         case username = "name"
         case token = "token"
         case lifetime = "lifetime"
-        case expireAfter = "expire_after"
         case actions = "actions"
         case stickers = "stickers"
     }
