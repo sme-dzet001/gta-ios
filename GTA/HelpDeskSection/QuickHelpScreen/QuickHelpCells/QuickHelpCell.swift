@@ -25,9 +25,14 @@ class QuickHelpCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
         headerView.addGestureRecognizer(tapGesture)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        //answerTextView.sizeToFit()
+        //answerTextView.translatesAutoresizingMaskIntoConstraints = true
     }
     
     func setUpCell(question: NSAttributedString?, questionLabelHeight: CGFloat, answer: NSAttributedString?, expandBtnType: ExpandButtonType) {
