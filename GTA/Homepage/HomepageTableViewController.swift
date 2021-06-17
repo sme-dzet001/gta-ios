@@ -138,8 +138,8 @@ class HomepageTableViewController: UITableViewController {
     
     @objc private func getGlobalAlerts() {
         dataProvider?.getGlobalAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
-            UIApplication.shared.applicationIconBadgeNumber = 0
             DispatchQueue.main.async {
+                UIApplication.shared.applicationIconBadgeNumber = 0
                 if error == nil && errorCode == 200 {
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()

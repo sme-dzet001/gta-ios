@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//import SwiftyGif
 import SDWebImage
 
 class WhatsNewViewController: UIViewController {
