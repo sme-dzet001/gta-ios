@@ -12,24 +12,37 @@ import MessageUI
 class MyTicketsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var createTicketView: UIView!
     
     private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    private var myTicketsData: [GSDTickets]? {
-        return dataProvider?.myTickets
-    }
     var dataProvider: HelpDeskDataProvider?
-
+    private var isKeyboardShow: Bool = false
+    
+    private var myTicketsData: [GSDTickets]? {
+        return generateDataSource()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationItem()
         setUpTableView()
+        setUpCreateTicketAction()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: UIResponder.keyboardDidHideNotification, object: nil)
+        setUpHideTouch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel, isGSD: true)
         getMyTickets()
+    }
+    
+    private func setUpHideTouch() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
     }
     
     private func getMyTickets() {
@@ -95,6 +108,60 @@ class MyTicketsViewController: UIViewController {
         // not implemented yet
     }
     
+    private func setUpCreateTicketAction() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(createTicketDidPressed))
+        tap.cancelsTouchesInView = false
+        self.createTicketView?.addGestureRecognizer(tap)
+    }
+    
+    @objc private func createTicketDidPressed() {
+        if isKeyboardShow {
+            hideKeyboard()
+            return
+        }
+        guard let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") else { return }
+        let newTicketVC = NewTicketViewController()
+        newTicketVC.delegate = self
+        newTicketVC.appUserEmail = lastUserEmail
+        self.presentPanModal(newTicketVC)
+    }
+    
+    private func generateDataSource() -> [GSDTickets]? {
+        var dataSource = dataProvider?.myTickets
+        switch Preferences.ticketsSortingType {
+        case .newToOld:
+            dataSource = dataSource?.sorted(by: {$0.openDateTimeInterval > $1.openDateTimeInterval})
+        case .oldToNew:
+            dataSource = dataSource?.sorted(by: {$0.openDateTimeInterval < $1.openDateTimeInterval})
+        }
+        switch Preferences.ticketsFilterType {
+        case .closed:
+            dataSource = dataSource?.filter({$0.status == .closed})
+        case .new:
+            dataSource = dataSource?.filter({$0.status == .new})
+        default:
+            return dataSource
+        }
+        return dataSource
+    }
+    
+    @objc private func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
+    @objc private func keyboardWillShow() {
+        isKeyboardShow = true
+    }
+    
+    @objc private func keyboardDidHide() {
+        isKeyboardShow = false
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
 }
 
 extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -108,6 +175,7 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard (myTicketsData?.count ?? 0) > indexPath.row else { return UITableViewCell() }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TicketCell", for: indexPath) as? TicketCell {
             cell.setUpCell(with: myTicketsData?[indexPath.row], hideSeparator: indexPath.row == (myTicketsData?.count ?? 0) - 1)
             return cell
@@ -123,55 +191,38 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = MyTicketsHeader.instanceFromNib()
-        header.delegate = self
-        header.setUpAction()
+        let header = MyTicketsFilterHeader.instanceFromNib()
+        header.setUpObservers()
+        header.setUpTextFields()
+        header.selectionDelegate = self
         return header
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isKeyboardShow {
+            hideKeyboard()
+            return
+        }
         guard (myTicketsData?.count ?? 0) > indexPath.row else { return }
-//        switch indexPath.row {
-//        case 2, 5:
-//            let ticketDetailsVC = SecondTicketDetailsViewController()
-//            ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
-//            if !UIDevice.current.iPhone5_se {
-//                let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
-//                ticketDetailsVC.initialHeight = PanModalHeight.contentHeight(self.view.frame.height / coefficient)
-//            }
-//            presentPanModal(ticketDetailsVC)
-//        default:
-            let ticketDetailsVC = TicketDetailsViewController()
+        let ticketDetailsVC = TicketDetailsViewController()
         ticketDetailsVC.dataSource = myTicketsData?[indexPath.row]
         ticketDetailsVC.dataProvider = dataProvider
-            //ticketDetailsVC.dataSource = myTicketsData[indexPath.row]
-//            if !UIDevice.current.iPhone5_se {
-//                //let coefficient: CGFloat = UIDevice.current.iPhone7_8 ? 1.3 : 1.5
-//                ticketDetailsVC.initialHeight = .maxHeight// PanModalHeight.contentHeight(self.view.frame.height / coefficient)
-//            }
-            presentPanModal(ticketDetailsVC)
-        //}
+        presentPanModal(ticketDetailsVC)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 78
+        return 75
     }
     
-}
-
-extension MyTicketsViewController: CreateTicketDelegate {
-    func createTicketDidPressed() {
-        guard let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") else { return }
-        let newTicketVC = NewTicketViewController()
-        newTicketVC.delegate = self
-        newTicketVC.appUserEmail = lastUserEmail
-        self.presentPanModal(newTicketVC)
-    }
 }
 
 extension MyTicketsViewController: SendEmailDelegate {
     func sendEmail(withTitle subject: String, withText body: String, to recipient: String) {
         if MFMailComposeViewController.canSendMail() {
+            if !Reachability.isConnectedToNetwork() {
+                displayError(errorMessage: "Please verify your network connection and try again. If the error persists please try again later", title: nil, onClose: nil)
+                return
+            }
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             if let lastUserEmail = UserDefaults.standard.string(forKey: "lastUserEmail") {
@@ -192,6 +243,20 @@ extension MyTicketsViewController: MFMailComposeViewControllerDelegate {
         controller.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension MyTicketsViewController: FilterSortingSelectionDelegate {
+    func filterTypeDidSelect(_ selectedType: FilterType) {
+        guard Preferences.ticketsFilterType != selectedType else { return }
+        Preferences.ticketsFilterType = selectedType
+        tableView.reloadData()
+    }
+    
+    func sortingTypeDidSelect(_ selectedType: SortType) {
+        guard Preferences.ticketsSortingType != selectedType else { return }
+        Preferences.ticketsSortingType = selectedType
+        tableView.reloadData()
+    }
 }
 
 enum TicketStatus {

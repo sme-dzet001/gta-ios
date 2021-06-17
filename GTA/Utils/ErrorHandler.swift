@@ -9,15 +9,15 @@ import Foundation
 
 class ErrorHandler {
     
-    static func getErrorMessage(for error: Error) -> String {
+    static func getErrorMessage(for error: Error, fromUSM: Bool = false) -> String {
         let err = error as NSError
         switch err.code {
         case -1009:
-            return "No network connection."
+            return "Please verify your network connection and try again."
         case -1001:
             return "The request timed out."
         default:
-            return "Oops, something went wrong"
+            return fromUSM ? "An unexpected error occurred. Please try logging in again." : "Oops, something went wrong"
         }
     }
     

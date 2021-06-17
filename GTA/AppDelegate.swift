@@ -104,14 +104,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if notification.isEmergencyOutage {
+            completionHandler([.alert, .sound])
+            return
+        }
         completionHandler([.alert, .sound, .badge])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let userInfo = response.notification.request.content.userInfo
-        if let payload = userInfo["payload"] as? String, let payloadData = Data(base64Encoded: payload), let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject], let pushType = payloadDict["push_type"] as? String, pushType == "Emergency Outage Global" {
+        let topViewController = getTopViewController()
+        var lastActivityDate = Date.distantPast
+        if let aDate = UserDefaults.standard.value(forKey: "lastActivityDate") as? Date {
+            lastActivityDate = aDate
+        }
+        if topViewController == nil || topViewController is LoginViewController || topViewController is AuthViewController || lastActivityDate.addingTimeInterval(1200) < Date() {
+            UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
+            return
+        }
+        if topViewController is UsageMetricsViewController {
+            topViewController?.navigationController?.popToRootViewController(animated: false)
+            let value = UIInterfaceOrientation.portrait.rawValue
+            UIDevice.current.setValue(value, forKey: "orientation")
+            UINavigationController.attemptRotationToDeviceOrientation()
+        }
+        if response.notification.isEmergencyOutage {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
         }
+        completionHandler()
     }
 }
 
@@ -126,7 +145,7 @@ extension AppDelegate {
         UNUserNotificationCenter.current().delegate = self
     }
     
-    private func getNotificationSettings() {
+    func getNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             guard settings.authorizationStatus == .authorized else { return }
             DispatchQueue.main.async {

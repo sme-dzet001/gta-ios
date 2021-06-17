@@ -241,7 +241,7 @@ class HomepageTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertCell", for: indexPath) as? GlobalAlertCell
             guard let alert = dataProvider?.globalAlertsData else { return UITableViewCell() }
             guard !alert.isExpired else { return UITableViewCell() }
-            cell?.alertLabel.text = alert.alertTitle ?? "Global Emergency Outage"
+            cell?.alertLabel.text = alert.alertTitle ?? "Emergency Outage"
             if alert.status == .closed {
                 cell?.setAlertOff()
             } else {

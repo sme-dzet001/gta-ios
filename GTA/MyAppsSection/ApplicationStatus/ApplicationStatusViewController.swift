@@ -223,12 +223,16 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         let dataArray = dataSource[indexPath.section].cellData
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.separator.isHidden = false//indexPath.row == dataArray.count - 1
-            let isDisabled = indexPath.row < 2 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty)
+            let isDisabled = indexPath.row < 3 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty || appDetailsData == nil)
             cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, error: indexPath.row == 3 ? nil : detailsDataResponseError)
             cell.iconImageView.accessibilityIdentifier = "AppsStatusDescription"
             cell.descriptionLabel.accessibilityIdentifier = "AppsStatusSubtitleLabel"
             cell.mainLabel.accessibilityIdentifier = "AppsStatusTitleLabel"
             cell.arrowIcon.accessibilityIdentifier = "AppsStatusArrowImage"
+            let values = appDetailsData?.values.compactMap({$0}) ?? []
+            if let error = detailsDataResponseError as? ResponseError, error == .noDataAvailable, values.isEmpty {
+                cell.setMainLabelAtCenter()
+            }
             return cell
         }
         if let metricsData = dataSource[indexPath.section].metricsData, let cell = tableView.dequeueReusableCell(withIdentifier: "MetricStatsCell", for: indexPath) as? MetricStatsCell {
@@ -260,7 +264,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
-        if indexPath.row == 2 {
+        if indexPath.row == 2, (appDetailsData != nil) {
             let aboutScreen = AboutViewController()
             aboutScreen.details = appDetailsData
             aboutScreen.detailsDataResponseError = detailsDataResponseError
@@ -296,6 +300,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             reportScreen.delegate = self
             reportScreen.screenTitle = dataSource[indexPath.section].cellData[indexPath.row].app_title
             reportScreen.appSupportEmail = appDetailsData?.appSupportEmail
+            reportScreen.appName = appName ?? ""
             let reportIssueTypes = ["Navigation issues", "Slow app work", "No connection", "Missing data", "App crash", "App freeze", "Other"]
             let loginIssueTypes = ["Invalid credentials error", "Forgot password", "2FA issue", "Other"]
             reportScreen.pickerDataSource = indexPath.row == 0 ? reportIssueTypes : loginIssueTypes

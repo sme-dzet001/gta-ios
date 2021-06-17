@@ -62,6 +62,7 @@ class OfficeLocationViewController: UIViewController {
         closeButton.isHidden = forceOfficeSelection
         setNeedsStatusBarAppearanceUpdate()
         setAccessibilityIdentifiers()
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissVC), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -107,8 +108,11 @@ class OfficeLocationViewController: UIViewController {
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
         guard !forceOfficeSelection else { return }
+        dismissVC()
+    }
+    
+    @objc private func dismissVC() {
         self.dismiss(animated: true, completion: nil)
-        
     }
     
     @IBAction func backButtonDidPressed(_ sender: UIButton) {
@@ -137,6 +141,7 @@ class OfficeLocationViewController: UIViewController {
     
     deinit {
         heightObserver?.invalidate()
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
 }

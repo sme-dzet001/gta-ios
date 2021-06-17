@@ -182,8 +182,19 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
                     ticketsNumberDelegate = cell
                     cellData.updatesNumber = numberOfTickets
                 }
-                let cellIsActive = cellData.cellSubtitle != "Oops, something went wrong"
-                cell.setUpCell(with: cellData, isActive: cellIsActive)
+                var cellIsNotActive = cellData.cellSubtitle == "Oops, something went wrong"
+                var isAboutCellNoData = false
+                if indexPath.row == 1, let rows = dataResponse?.data?.rows {
+                    cellIsNotActive = dataResponse?.serviceDeskDesc == nil || rows.isEmpty
+                    isAboutCellNoData = cellIsNotActive
+                } else if indexPath.row == 1, dataResponse?.serviceDeskDesc == nil, !cellIsNotActive {
+                    cellIsNotActive = true
+                    isAboutCellNoData = true
+                }
+                cell.setUpCell(with: cellData, isActive: !cellIsNotActive)
+                if cellIsNotActive && isAboutCellNoData {
+                    cell.setTitleAtCenter()
+                }
                 cell.cellTitle.accessibilityIdentifier = "ServiceDeskCellTitleLabel"
                 cell.cellSubtitle.accessibilityIdentifier = "ServiceDeskCellSubtitleLabel"
                 return cell
@@ -225,7 +236,9 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
             quickHelpVC.dataProvider = dataProvider
             navigationController?.pushViewController(quickHelpVC, animated: true)
         } else if indexPath.row == 1 {
-            guard let cellSubtitle = helpDeskCellsData[indexPath.section][indexPath.row].cellSubtitle, cellSubtitle != "Oops, something went wrong" else { return }
+            let cellData = helpDeskCellsData[indexPath.section][indexPath.row]
+            let cellIsNotActive = cellData.cellSubtitle == "Oops, something went wrong" || dataResponse?.serviceDeskDesc == nil
+            guard let _ = cellData.cellSubtitle, !cellIsNotActive else { return }
             let aboutVC = ServiceDeskAboutViewController()
             let aboutData = (imageUrl: dataResponse?.serviceDeskIcon, desc: dataResponse?.serviceDeskDesc)
             aboutVC.aboutData = aboutData

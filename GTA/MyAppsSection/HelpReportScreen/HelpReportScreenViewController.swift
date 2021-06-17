@@ -26,6 +26,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     private let pickerView = UIPickerView()
     var screenTitle: String?
     var selectedText: String = ""
+    var appName: String = ""
     var isShortFormEnabled = true
     var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
@@ -85,6 +86,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideKeyboard), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissModal), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -171,7 +173,8 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         self.dismiss(animated: true, completion: { [weak self] in
             let screenTitle = self?.screenTitle ?? ""
             let issueType = self?.typeTextField.text ?? ""
-            let subject = "\(screenTitle): \(issueType)"
+            let appName = self?.appName ?? ""
+            let subject = "\(appName) \(screenTitle): \(issueType)"
             let body = self?.textView.text ?? ""
             let recipient = self?.appSupportEmail ?? ""
             self?.delegate?.sendEmail(withTitle: subject, withText: body, to: recipient)
@@ -179,6 +182,10 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
+        dismissModal()
+    }
+    
+    @objc private func dismissModal() {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -210,6 +217,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     deinit {
         heightObserver?.invalidate()
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
 }

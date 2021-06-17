@@ -61,6 +61,9 @@ class HomepageViewController: UIViewController {
                     self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
                     self?.collectionView.reloadData()
+                    if !isFromCache && UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+                        self?.emergencyOutageNotificationReceived()
+                    }
                 } else {
                     let isNoData = (self?.dataProvider.newsDataIsEmpty ?? true)
                     if isNoData {
@@ -109,9 +112,23 @@ class HomepageViewController: UIViewController {
     @objc func emergencyOutageNotificationReceived() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.dismissPanModalIfPresented { [weak self] in
-            self?.tabBarController?.selectedIndex = 0
-            if let alert = self?.dataProvider.globalAlertsData, !alert.isExpired {
-                self?.showGlobalAlertModal()
+            guard let self = self else { return }
+            guard let embeddedController = self.navigationController else { return }
+            guard let homepageTabIdx = self.tabBarController?.viewControllers?.firstIndex(of: embeddedController) else { return }
+            self.tabBarController?.selectedIndex = homepageTabIdx
+            embeddedController.popToRootViewController(animated: false)
+            if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+                UserDefaults.standard.removeObject(forKey: "emergencyOutageNotificationReceived")
+                if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
+                    NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+                    self.showGlobalAlertModal()
+                }
+            } else {
+                NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+                self.tabBarController?.selectedIndex = homepageTabIdx
+                embeddedController.popToRootViewController(animated: false)
+                self.dataProvider.forceUpdateAlertDetails = true
+                self.showGlobalAlertModal()
             }
         }
     }
@@ -171,11 +188,6 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         let articleViewController = ArticleViewController()
         presentedVC = articleViewController
         articleViewController.appearanceDelegate = self
-        var statusBarHeight: CGFloat = 0.0
-        statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight : statusBarHeight - 10
-        articleViewController.initialHeight = self.containerView.bounds.height - statusBarHeight
-        
         let htmlBody = dataProvider.formNewsBody(from: text)
         if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
             htmlBody?.setFontFace(font: neededFont)
@@ -224,7 +236,7 @@ extension HomepageViewController: PanModalAppearanceDelegate {
         self.presentedVC?.attributedArticleText = htmlBody
     }
     
-    func panModalDidDissmiss() {
+    func panModalDidDismiss() {
         //pageControl.isHidden = false
     }
 }
@@ -240,7 +252,7 @@ extension HomepageViewController: ShowGlobalAlertModalDelegate {
 
 protocol PanModalAppearanceDelegate: AnyObject {
     func needScrollToDirection(_ direction: UICollectionView.ScrollPosition)
-    func panModalDidDissmiss()
+    func panModalDidDismiss()
 }
 
 protocol ShowGlobalAlertModalDelegate: AnyObject {

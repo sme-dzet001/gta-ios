@@ -14,6 +14,8 @@ class HelpDeskCell: UITableViewCell {
     @IBOutlet weak var cellSubtitle: UILabel!
     @IBOutlet weak var updatesNumberLabel: UILabel!
     @IBOutlet weak var parentView: UIView!
+    @IBOutlet weak var titleBottom: NSLayoutConstraint!
+    @IBOutlet weak var titleCenterY: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,7 +38,17 @@ class HelpDeskCell: UITableViewCell {
             self.parentView.layer.cornerRadius = 20
             self.parentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         }
+        titleCenterY?.isActive = false
+        titleBottom?.isActive = true
+       
     }
+    
+    func setTitleAtCenter() {
+        titleBottom?.isActive = false
+        titleCenterY?.isActive = true
+        cellSubtitle?.text = nil
+    }
+    
 }
 
 extension HelpDeskCell: TicketsNumberDelegate {

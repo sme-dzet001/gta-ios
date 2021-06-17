@@ -19,18 +19,7 @@ class UsageMetricsViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = .white
         
         setUpNavigationItem()
-
-        usageMetricsWebView = WKWebView(frame: CGRect.zero)
-        usageMetricsWebView.translatesAutoresizingMaskIntoConstraints = false
-        usageMetricsWebView.scrollView.showsVerticalScrollIndicator = false
-        usageMetricsWebView.scrollView.showsHorizontalScrollIndicator = false
-        view.addSubview(usageMetricsWebView)
-        NSLayoutConstraint.activate([
-            usageMetricsWebView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            usageMetricsWebView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            usageMetricsWebView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            usageMetricsWebView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
-        ])
+        setUpWebView()
         //loadUsageMetrics()
     }
     
@@ -73,6 +62,21 @@ class UsageMetricsViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
     }
     
+    private func setUpWebView() {
+        usageMetricsWebView = WKWebView(frame: CGRect.zero)
+        usageMetricsWebView.translatesAutoresizingMaskIntoConstraints = false
+        usageMetricsWebView.scrollView.showsVerticalScrollIndicator = false
+        usageMetricsWebView.scrollView.showsHorizontalScrollIndicator = false
+        view.addSubview(usageMetricsWebView)
+        NSLayoutConstraint.activate([
+            usageMetricsWebView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            usageMetricsWebView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            usageMetricsWebView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            usageMetricsWebView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+        ])
+        usageMetricsWebView.navigationDelegate = self
+    }
+    
     @objc private func backPressed() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -94,4 +98,28 @@ class UsageMetricsViewController: UIViewController {
         }
     }
 
+}
+
+extension UsageMetricsViewController : WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        let err = error as NSError
+        let message: String
+        switch err.code {
+        case -1009:
+            message = "Please verify your network connection and try again. If the error persists please try again later"
+        case -1001:
+            message = "The request timed out. Try again later"
+        default:
+            message = "Oops, something went wrong"
+        }
+        displayError(errorMessage: message, title: nil) {[weak self] _ in
+            self?.backPressed()
+        }
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+        decisionHandler(.allow)
+    }
+    
 }

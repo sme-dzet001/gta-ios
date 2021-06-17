@@ -58,7 +58,9 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     }
     
     var shortFormHeight: PanModalHeight {
-        return .contentHeight(initialHeight + 10)
+        guard !UIDevice.current.iPhone5_se else { return .maxHeight }
+        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
+        return PanModalHeight.contentHeight(coefficient - (view.window?.safeAreaInsets.bottom ?? 0))
     }
     
     var topOffset: CGFloat {
@@ -96,6 +98,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         }
         articleTextView.textContainerInset = UIEdgeInsets(top: 10, left: 24, bottom: 10, right: 24)
         setAccessibilityIdentifiers()
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissModal), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -154,11 +157,15 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     }
     
     @IBAction func closeButtonDidPressed(_ sender: UIButton) {
+        dismissModal()
+    }
+    
+    @objc private func dismissModal() {
         self.dismiss(animated: true, completion: nil)
     }
     
     func panModalWillDismiss() {
-        appearanceDelegate?.panModalDidDissmiss()
+        appearanceDelegate?.panModalDidDismiss()
     }
     
     func willTransition(to state: PanModalPresentationController.PresentationState) {
@@ -174,6 +181,7 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     
     deinit {
         heightObserver?.invalidate()
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
 }
 

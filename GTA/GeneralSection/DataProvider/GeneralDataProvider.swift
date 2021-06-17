@@ -23,7 +23,11 @@ class GeneralDataProvider {
                 }
                 self?.apiManager.getCurrentPreferences { [weak self] (response, errorCode, error) in
                     self?.cacheData(response, path: .getCurrentPreferences)
-                    self?.processGetCurrentPreferences(response, errorCode, error, completion)
+                    if let _ = error {
+                        completion?(0, ResponseError.generate(error: error))
+                    } else {
+                        self?.processGetCurrentPreferences(response, errorCode, error, completion)
+                    }
                 }
             })
         }
@@ -42,7 +46,7 @@ class GeneralDataProvider {
         if let userPreferencesResponse = userPreferencesResponse {
             selectedOfficeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
             allowEmergencyOutageNotifications = userPreferencesResponse.data.preferences?.allowEmergencyOutageNotifications ?? true
-            Preferences.allowEmergencyOutageNotifications = userPreferencesResponse.data.preferences?.allowEmergencyOutageNotifications ?? true
+            //Preferences.allowEmergencyOutageNotifications = userPreferencesResponse.data.preferences?.allowEmergencyOutageNotifications ?? true
         }
         completion?(errorCode, retErr)
     }
@@ -50,11 +54,15 @@ class GeneralDataProvider {
     func setCurrentPreferences(nottificationsState: Bool, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let officeId = Preferences.officeId ?? selectedOfficeId ?? 0
         let preferences = "{\"office_id\":\"\(officeId)\", \"allow_notifications_emergency_outage\": \(nottificationsState)}"
+        Preferences.allowEmergencyOutageNotifications = nottificationsState
         apiManager.setCurrentPreferences(preferences: preferences) { [weak self] (response, errorCode, error) in
             if let _ = response, errorCode == 200, error == nil {
-                //self?.officeSelectionDelegate?.officeWasSelected()
                 self?.allowEmergencyOutageNotifications = nottificationsState
-                Preferences.allowEmergencyOutageNotifications = nottificationsState
+                //Preferences.allowEmergencyOutageNotifications = nottificationsState
+            } else {
+                Preferences.allowEmergencyOutageNotifications = !nottificationsState
+                completion?(errorCode, ResponseError.generate(error: error))
+                return
             }
             completion?(errorCode, error)
         }

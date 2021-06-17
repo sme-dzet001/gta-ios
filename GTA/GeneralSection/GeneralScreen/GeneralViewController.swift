@@ -39,6 +39,19 @@ class GeneralViewController: UIViewController {
         dataProvider.getCurrentPreferences()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        #if TEST_PUSH_TOKEN
+        if let pushNotificationsToken = KeychainManager.getPushNotificationToken() {
+            let alert = UIAlertController(title: "Device Token", message: pushNotificationsToken, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Copy to clipboard", style: .default, handler: { (_) in
+                UIPasteboard.general.string = pushNotificationsToken
+            }))
+            present(alert, animated: true)
+        }
+        #endif
+    }
+    
     private func setUpNavigationBar() {
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
@@ -102,6 +115,8 @@ extension GeneralViewController: WKNavigationDelegate {
     
     private func logout() {
         DispatchQueue.main.async {
+            UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
+            UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
             KeychainManager.deleteUsername()
             KeychainManager.deleteToken()
             KeychainManager.deleteTokenExpirationDate()

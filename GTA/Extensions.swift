@@ -371,13 +371,13 @@ extension UIViewController {
     }
     
     func addErrorLabel(_ errorLabel: UILabel, isGSD: Bool = false) {
-        errorLabel.numberOfLines = 1
+        errorLabel.numberOfLines = 0
         errorLabel.font = UIFont(name: "SFProText-Regular", size: 16)!
         errorLabel.textAlignment = .center
         errorLabel.textColor = .black
         errorLabel.adjustsFontSizeToFitWidth = true
         errorLabel.minimumScaleFactor = 0.7
-        errorLabel.frame.size.height = 20
+        errorLabel.frame.size.height = 40
         errorLabel.frame.size.width = self.view.frame.width - 40
         errorLabel.isHidden = true
         self.view.addSubview(errorLabel)
@@ -711,4 +711,17 @@ extension UITapGestureRecognizer {
         return false
     }
 
+}
+
+extension UNNotification {
+    var isEmergencyOutage: Bool {
+        get {
+            let userInfo = request.content.userInfo
+            guard let payload = userInfo[Constants.payloadKey] as? String else { return false }
+            guard let payloadData = Data(base64Encoded: payload) else { return false }
+            guard let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject] else { return false }
+            guard let pushType = payloadDict[Constants.pushTypeKey] as? String else { return false }
+            return pushType == Constants.pushType
+        }
+    }
 }
