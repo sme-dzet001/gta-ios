@@ -24,6 +24,7 @@ class HomepageTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
+        NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,8 +136,9 @@ class HomepageTableViewController: UITableViewController {
         })
     }
     
-    private func getGlobalAlerts() {
+    @objc private func getGlobalAlerts() {
         dataProvider?.getGlobalAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
+            UIApplication.shared.applicationIconBadgeNumber = 0
             DispatchQueue.main.async {
                 if error == nil && errorCode == 200 {
                     if self?.tableView.dataHasChanged == true {
@@ -327,6 +329,10 @@ class HomepageTableViewController: UITableViewController {
         let contactsViewController = GTTeamViewController()
         contactsViewController.dataProvider = dataProvider
         self.navigationController?.pushViewController(contactsViewController, animated: true)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
 }
