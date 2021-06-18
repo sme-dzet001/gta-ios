@@ -22,6 +22,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HelpReportScreenViewController">
             <connections>
+                <outlet property="closeButton" destination="6ll-s8-ANI" id="lhk-Lf-7aQ"/>
                 <outlet property="submitButton" destination="080-tf-hpZ" id="Lcx-5T-SV4"/>
                 <outlet property="textView" destination="a3a-bX-rOP" id="oak-me-oYW"/>
                 <outlet property="textViewHeight" destination="mf9-YM-fJW" id="eNJ-rV-jAM"/>

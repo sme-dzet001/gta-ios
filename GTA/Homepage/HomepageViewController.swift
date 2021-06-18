@@ -32,6 +32,7 @@ class HomepageViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
         
         NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        collectionView.accessibilityIdentifier = "HomeScreenCollectionView"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -145,6 +146,7 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewsCollectionViewCell", for: indexPath) as? NewsCollectionViewCell {
             let cellDataSource = dataProvider.newsData[indexPath.row]
             let imageURL = dataProvider.formImageURL(from: cellDataSource.posterUrl)
+            cell.imageView.accessibilityIdentifier = "HomeScreenCollectionImageView"
             let url = URL(string: imageURL)
             cell.imageView.kf.indicatorType = .activity
             cell.imageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
@@ -162,8 +164,11 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
             let newsDate = cellDataSource.newsDate
             //cell.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
             cell.titleLabel.attributedText = addShadow(for: cellDataSource.newsTitle)
+            cell.titleLabel.accessibilityIdentifier = "HomeScreenCollectionTitleLabel"
             cell.byLabel.attributedText = addShadow(for: cellDataSource.newsAuthor)
+            cell.byLabel.accessibilityIdentifier = "HomeScreenCollectionByLabel"
             cell.dateLabel.attributedText = addShadow(for: newsDate?.getFormattedDateStringForMyTickets())
+            cell.dateLabel.accessibilityIdentifier = "HomeScreenCollectionDateLabel"
             //cell.dateLabel.attributedText = addShadow(for: dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss"))
             cell.configurePosition()
             return cell

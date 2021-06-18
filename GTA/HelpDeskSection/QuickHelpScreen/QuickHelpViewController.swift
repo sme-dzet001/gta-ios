@@ -25,6 +25,7 @@ class QuickHelpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.accessibilityIdentifier = "QuickHelpTableView"
         setUpNavigationItem()
         setUpTableView()
     }
@@ -141,6 +142,8 @@ class QuickHelpViewController: UIViewController {
         if screenType == .appTipsAndTricks {
             titleLabel.text = appName ?? ""
             subTitleLabel.text = "Tips & Tricks"
+            titleLabel.accessibilityIdentifier = "QuickHelpAppsTitle"
+            subTitleLabel.accessibilityIdentifier = "QuickHelpAppsSubtitle"
             return
         }
         var title = ""
@@ -162,8 +165,10 @@ class QuickHelpViewController: UIViewController {
         tlabel.numberOfLines = 2
         tlabel.adjustsFontSizeToFitWidth = true
         self.navigationItem.titleView = tlabel
+        self.navigationItem.titleView?.accessibilityIdentifier = "QuickHelpTitle"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
         navigationItem.leftBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        navigationItem.leftBarButtonItem?.accessibilityIdentifier = "QuickHelpBackButton"
     }
     
     private func setUpTableView() {
@@ -211,6 +216,8 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
             answerDecoded?.setParagraphStyleParams(lineSpacing: 8)
             let questionFormatted = formAttributedQuestion(from: cellDataSource.question ?? "")
             cell.setUpCell(question: questionFormatted, questionLabelHeight: heightForQuestionAt(indexPath: indexPath) - 32, answer: answerDecoded, expandBtnType: expandedRowsIndex.contains(indexPath.row) ? .collapse : .expand)
+            cell.questionLabel.accessibilityIdentifier = "QuickHelpQuestionLabel"
+            cell.expandButton.accessibilityIdentifier = "QuickHelpExpandButton"
             return cell
         }
         return UITableViewCell()

@@ -36,11 +36,13 @@ class AuthViewController: UIViewController {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
-        pinCodeBoxes.forEach { (box) in
+        pinCodeBoxes.enumerated().forEach { (index, box) in
             box.delegate = self
             box.textContentType = .username
             box.backwardDelegate = self
+            box.accessibilityIdentifier = "PinCodeScreenPinBox\(index)"
         }
+        setAccessibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +68,11 @@ class AuthViewController: UIViewController {
         } else {
             hideKeyboard()
         }
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        backButton.accessibilityIdentifier = "PinCodeScreenBackButton"
+        continueButton.accessibilityIdentifier = "LoginScreenContinueButton"
     }
     
     private func setUpScreen() {

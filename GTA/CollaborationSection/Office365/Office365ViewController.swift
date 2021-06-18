@@ -22,6 +22,7 @@ class Office365ViewController: UIViewController {
         super.viewDidLoad()
         setUpTableView()
         setUpNavigationItem()
+        setAccessibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +44,12 @@ class Office365ViewController: UIViewController {
         self.navigationItem.titleView = tlabel
         self.navigationItem.title = appName
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        tableView.accessibilityIdentifier = "Office365ScreenTableView"
+        self.navigationItem.titleView?.accessibilityIdentifier = "Office365ScreenTitleView"
+        self.navigationItem.leftBarButtonItem?.accessibilityIdentifier = "Office365ScreenBackButton"
     }
     
     private func startAnimation() {
@@ -114,6 +121,8 @@ extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.setUpCell(with: cellData[indexPath.row], isAppsScreen: true)
             let imageURL = dataProvider?.formImageURL(from: cellData[indexPath.row].imageUrl)
             let url = URL(string: imageURL ?? "")
+            cell.appTitleLabel.accessibilityIdentifier = "Office365ScreenTitleLabel"
+            cell.descriptionLabel.accessibilityIdentifier = "Office365ScreenDescriptionLabel"
             cell.iconImageView.kf.indicatorType = .activity
             cell.iconImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
                 switch result {

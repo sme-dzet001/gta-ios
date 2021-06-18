@@ -112,6 +112,10 @@ class HelpDeskViewController: UIViewController {
     private func setUpHeaderView() {
         DispatchQueue.main.async {
             let header = HelpDeskHeader.instanceFromNib()
+            header.accessibilityIdentifier = "ServiceDeskHeaderView"
+            header.titleLabel.accessibilityIdentifier = "ServiceDeskHeaderViewTitleLabel"
+            header.hoursOfOperationLabel.accessibilityIdentifier = "ServiceDeskHeaderHoursOfOperationLabel"
+            header.statusLabel.accessibilityIdentifier = "ServiceDeskHeaderStatusLabel"
             self.headerView.addSubview(header)
             header.pinEdges(to: self.headerView)
             header.setStatus(statusData: self.statusResponse)
@@ -122,6 +126,7 @@ class HelpDeskViewController: UIViewController {
         tableView.rowHeight = 80
         tableView.register(UINib(nibName: "HelpDeskCell", bundle: nil), forCellReuseIdentifier: "HelpDeskCell")
         tableView.register(UINib(nibName: "HelpDeskContactOptionCell", bundle: nil), forCellReuseIdentifier: "HelpDeskContactOptionCell")
+        tableView.accessibilityIdentifier = "ServiceDeskTableView"
     }
     
     private func setHelpDeskCellsData() {
@@ -166,6 +171,8 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
                 let cellData = helpDeskCellsData[indexPath.section][indexPath.row]
                 let cellIsActive = cellData.cellSubtitle != nil && cellData.cellSubtitle != "Oops, something went wrong" && cellData.cellSubtitle != "no phone number" && cellData.cellSubtitle != "no email" && cellData.cellSubtitle != "no teams chat link"
                 cell.setUpCell(with: cellData, isActive: cellIsActive)
+                cell.cellTitle.accessibilityIdentifier = "ServiceDeskContactCellTitleLabel"
+                cell.cellSubtitle.accessibilityIdentifier = "ServiceDeskContactCellSubtitleLabel"
                 return cell
             }
         } else {
@@ -188,6 +195,8 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
                 if cellIsNotActive && isAboutCellNoData {
                     cell.setTitleAtCenter()
                 }
+                cell.cellTitle.accessibilityIdentifier = "ServiceDeskCellTitleLabel"
+                cell.cellSubtitle.accessibilityIdentifier = "ServiceDeskCellSubtitleLabel"
                 return cell
             }
         }
@@ -279,12 +288,16 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func needMSTeamsAppAlert() {
         let alert = UIAlertController(title: "Teams App Required", message: "Teams mobile app is required", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Open App Store", style: .default, handler: { (_) in
+        let openAction = UIAlertAction(title: "Open App Store", style: .default, handler: { (_) in
             if let url = URL(string: "itms-apps://apps.apple.com/ua/app/microsoft-teams/id1113153706") {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        })
+        openAction.accessibilityIdentifier = "ServiceDeskAlertOpenButton"
+        alert.addAction(openAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        cancelAction.accessibilityIdentifier = "ServiceDeskAlertCancelButton"
+        alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
     }
     

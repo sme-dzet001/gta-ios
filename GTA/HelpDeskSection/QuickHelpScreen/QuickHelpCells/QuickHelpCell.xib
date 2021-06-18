@@ -85,7 +85,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="answerTextView" destination="8Gq-tc-UBm" id="Dgq-13-MDq"/>
-                <outlet property="expandButton" destination="uuO-05-CaX" id="Zhw-9n-aTh"/>
+                <outlet property="expandButton" destination="uuO-05-CaX" id="8qq-Og-xsh"/>
                 <outlet property="headerView" destination="N7f-s8-rlN" id="JXO-Oh-XDQ"/>
                 <outlet property="questionLabel" destination="4VD-Kk-p0A" id="BNI-CI-Dcv"/>
                 <outlet property="questionLabelHeight" destination="onB-vO-uBR" id="ABx-di-nNA"/>

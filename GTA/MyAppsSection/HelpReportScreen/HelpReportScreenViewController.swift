@@ -10,6 +10,7 @@ import PanModal
 
 class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var mainLabel: UILabel!
     @IBOutlet weak var textView: CustomTextView!
@@ -75,6 +76,7 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        addAccessibilityIdentifiers()
         titleLabel.text = screenTitle
         //setUpTextField()
         setUpTextView()
@@ -103,6 +105,14 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
         setUpTextField()
     }
         
+    private func addAccessibilityIdentifiers() {
+        titleLabel.accessibilityIdentifier = "HelpReportIssueTitleLabel"
+        textView.accessibilityIdentifier = "HelpReportIssueCommentsTextView"
+        typeTextField.accessibilityIdentifier = "HelpReportIssueSelectTypeTextField"
+        submitButton.accessibilityIdentifier = "HelpReportIssueSubmitButton"
+        closeButton.accessibilityIdentifier = "HelpReportIssueCloseButton"
+    }
+    
     @objc private func doneAction() {
         self.typeTextField.text = !selectedText.isEmpty ? selectedText : pickerDataSource.first
         self.view.frame.origin.y = 0

@@ -9,6 +9,7 @@ import UIKit
 
 class HelpDeskHeader: UIView {
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var hoursOfOperationLabel: UILabel!
