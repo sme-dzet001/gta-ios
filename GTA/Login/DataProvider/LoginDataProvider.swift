@@ -42,8 +42,8 @@ class LoginDataProvider {
                     print("Function: \(#function), line: \(#line), message: \(error.localizedDescription)")
                 }
             }
-            if let validationResponse = tokenValidationResponse {
-                let tokenExpirationDate = Date().addingTimeInterval(TimeInterval(validationResponse.data.lifetime))
+            if let validationResponse = tokenValidationResponse, let lifetime = validationResponse.data.lifetime.intValue {
+                let tokenExpirationDate = Date().addingTimeInterval(TimeInterval(lifetime))
                 _ = KeychainManager.saveTokenExpirationDate(tokenExpirationDate: tokenExpirationDate)
             }
         }
