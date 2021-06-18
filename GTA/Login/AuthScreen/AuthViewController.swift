@@ -28,6 +28,7 @@ class AuthViewController: UIViewController {
     private var usmLogoutWebView: WKWebView!
     private var continueButtonY: CGFloat?
     weak var delegate: AuthentificationPassed?
+    private var dataProvider: LoginDataProvider = LoginDataProvider()
     
     var isSignUp: Bool = KeychainManager.getPin() == nil
     
@@ -143,6 +144,8 @@ class AuthViewController: UIViewController {
                 self.showAuthenticationFailedAlert()
             }
         }
+        guard isSuccess else { return }
+        dataProvider.prolongSessionLength()
     }
     
     private func showAuthenticationFailedAlert() {
@@ -154,6 +157,7 @@ class AuthViewController: UIViewController {
     func startAuthenticationWithPin() {
         if KeychainManager.isPinValid(pin: getCodeFromBoxes()) {
             authentificatePassed()
+            dataProvider.prolongSessionLength()
         } else {
             let ac = UIAlertController(title: "Wrong PIN", message: "Entered pin code is incorrect", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in

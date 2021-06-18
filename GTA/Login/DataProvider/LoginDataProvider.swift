@@ -31,4 +31,22 @@ class LoginDataProvider {
             completion?(errorCode, retErr)
         }
     }
+    
+    func prolongSessionLength() {
+        apiManager.prolongSession() { (data, errorCode, error) in
+            var tokenValidationResponse: AccessTokenValidationResponse?
+            if let responseData = data {
+                do {
+                    tokenValidationResponse = try DataParser.parse(data: responseData)
+                } catch {
+                    print("Function: \(#function), line: \(#line), message: \(error.localizedDescription)")
+                }
+            }
+            if let validationResponse = tokenValidationResponse {
+                let tokenExpirationDate = Date().addingTimeInterval(TimeInterval(validationResponse.data.lifetime))
+                _ = KeychainManager.saveTokenExpirationDate(tokenExpirationDate: tokenExpirationDate)
+            }
+        }
+    }
+    
 }
