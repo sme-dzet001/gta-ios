@@ -23,8 +23,6 @@ class QuickHelpViewController: UIViewController {
     var appName: String?
     var appsDataProvider: MyAppsDataProvider?
     var collaborationDataProvider: CollaborationDataProvider?
-    var expandedCellHeight = [IndexPath : CGFloat]()
-    var sdsdsdsd = [IndexPath: QuickHelpCell]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -208,9 +206,6 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "QuickHelpCell", for: indexPath) as? QuickHelpCell {
             let data: [QuickHelpDataProtocol] = getHelpData()
             guard data.count > indexPath.row else { return UITableViewCell() }
-            if let sds = sdsdsdsd.keys.first(where: {$0.row == indexPath.row}), let exCell = sdsdsdsd[sds] {
-                return exCell
-            }
             let cellDataSource = data[indexPath.row]
             cell.delegate = self
             let answerEncoded = cellDataSource.answer
@@ -225,20 +220,6 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return UITableViewCell()
     }
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        guard let cell = cell as? QuickHelpCell else { return }
-//        if expandedRowsIndex.contains(indexPath.row) {
-//            //cell.answerTextView.translatesAutoresizingMaskIntoConstraints = true
-////
-//            //cell.answerTextView.sizeToFit()
-//            //cell.layoutIfNeeded()
-//        } else {
-//            cell.answerTextView.translatesAutoresizingMaskIntoConstraints = false
-//            cell.layoutIfNeeded()
-//        }
-//        //cell.answerTextView.translatesAutoresizingMaskIntoConstraints = true
-//    }
     
     func formAttributedQuestion(from question: String) -> NSMutableAttributedString? {
         guard let neededFont = UIFont(name: "SFProText-Semibold", size: 16) else { return nil }
@@ -297,7 +278,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     
     private func getCellHeight(for indexPath: IndexPath) -> CGFloat {
         if expandedRowsIndex.contains(indexPath.row) {
-            return expandedCellHeight[indexPath] ?? heightForQuestionAt(indexPath: indexPath) + heightForAnswerAt(indexPath: indexPath)
+            return UITableView.automaticDimension// expandedCellHeight[indexPath] ?? heightForQuestionAt(indexPath: indexPath) + heightForAnswerAt(indexPath: indexPath)
         }
         return heightForQuestionAt(indexPath: indexPath)
     }
@@ -312,8 +293,6 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
         guard getHelpData().count > cellIndex else { return }
         if expandedRowsIndex.contains(cellIndex) {
             // hideAnimation
-            expandedCellHeight[indexPath] = nil
-            sdsdsdsd[indexPath] = nil
             cell.expandButton.setImage(UIImage(named: "disclosure_arrow_down"), for: .normal)
             UIView.animate(withDuration: animationDuration, animations: { [weak self] in
                 guard let self = self else { return }
@@ -327,9 +306,6 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
         } else {
             // showAnimation
             cell.expandButton.setImage(UIImage(named: "disclosure_arrow_up"), for: .normal)
-            cell.answerTextView.translatesAutoresizingMaskIntoConstraints = true
-            cell.answerTextView.sizeToFit()
-            expandedCellHeight[indexPath] = cell.answerTextView.frame.height + cell.frame.height
             UIView.animate(withDuration: animationDuration, animations: { [weak self] in
                 guard let self = self else { return }
                 CATransaction.begin()
@@ -341,7 +317,6 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
                 if let cellIndexPath = self.tableView.indexPath(for: cell) {
                     self.tableView.scrollToRow(at: cellIndexPath, at: .none, animated: true)
                 }
-                self.sdsdsdsd[indexPath] = cell
             }
         }
     }
