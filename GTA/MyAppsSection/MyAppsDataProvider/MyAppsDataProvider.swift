@@ -239,6 +239,75 @@ class MyAppsDataProvider {
         cacheManager.getCachedResponse(requestURI: path.endpoint, completion: completion)
     }
     
+    // MARK: - Production alerts related methods
+    
+    func getProductionAlerts(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleProductionAlertsSectionReport(data, code, cachedError, true, { (code, error) in
+                if error == nil {
+                    completion?(code, cachedError)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let _ = error {
+                        completion?(errorCode, ResponseError.serverError)
+                    } else {
+                        self?.handleProductionAlertsSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    private func handleProductionAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.productionAlerts.rawValue }?.generationNumber
+        if let _ = generationNumber, generationNumber != 0 {
+            if fromCache {
+                getCachedResponse(for: .getAppsAlert(appName: "")) {[weak self] (data, error) in
+                    self?.processProductionAlerts(reportData, data, errorCode, error, completion)
+                }
+                return
+            }
+            apiManager.getAppsServiceAlert(for: generationNumber!, appName: "", completion: { [weak self] (data, errorCode, error) in
+                //let dataWithStatus = self?.addStatusRequest(to: data)
+                self?.cacheData(data, path: .getMyAppsData)
+                self?.processProductionAlerts(reportData, data, errorCode, error, completion)
+            })
+        } else {
+            let err = error == nil ? ResponseError.commonError : error
+            if error != nil || generationNumber == 0 {
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
+            completion?(0, err)
+        }
+    }
+    
+    private func processProductionAlerts(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var myAppsResponse: MyAppsResponse?
+        var retErr = error
+        if let responseData = myAppsDataResponse {
+            do {
+                myAppsResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        } else {
+            retErr = ResponseError.commonError
+        }
+        let columns = myAppsResponse?.meta?.widgetsDataSource?.params?.columns
+        myAppsResponse?.indexes = getDataIndexes(columns: columns)
+        if let myAppsResponse = myAppsResponse, self.myAppsStatusData != myAppsResponse {
+            self.myAppsStatusData = myAppsResponse
+        }
+        if (myAppsResponse?.values ?? []).isEmpty {
+            retErr = ResponseError.noDataAvailable
+        }
+        completion?(errorCode, retErr)
+    }
+    
     // MARK: - Handling methods
     
     func formatDateString(dateString: String?, initialDateFormat: String) -> String? {

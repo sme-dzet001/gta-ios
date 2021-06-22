@@ -24,10 +24,16 @@ class CollaborationViewController: UIViewController {
     
     private var dataSource: [CollaborationCellData] = []
     private weak var delegate: TicketsNumberDelegate?
+    private var alertsData: ProductionAlertsResponse?
+    private var alertsCount: Int? {
+        guard let count = alertsData?.data?.count else { return nil }
+        return count > 0 ? count : nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
+        getCollaborationAlerts()
         setUpHardCodeData()
         setUpHeaderView()
         setAccessibilityIdentifiers()
@@ -64,6 +70,10 @@ class CollaborationViewController: UIViewController {
                 }
             }
         })
+    }
+    
+    private func getCollaborationAlerts() {
+        alertsData = ProductionAlertsResponse(meta: nil, data: [ProductionAlertsRow(id: "DPSX-169", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams"), ProductionAlertsRow(id: "DPSX-169", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams")])
     }
     
     private func startAnimation() {
@@ -141,7 +151,7 @@ class CollaborationViewController: UIViewController {
     
     private func setUpHardCodeData() {
         dataSource.append(CollaborationCellData(cellTitle: dataProvider.collaborationDetails?.description, updatesNumber: nil))
-        dataSource.append(CollaborationCellData(imageName: "applications_icon", cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: nil, imageStatus: .loading))
+        dataSource.append(CollaborationCellData(imageName: "applications_icon", cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: alertsCount, imageStatus: .loading))
         dataSource.append(CollaborationCellData(imageName: "whatsNew_icon", cellTitle: "What’s New", cellSubtitle: "Learn about new features", updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "usage_metrics_icon", cellTitle: "Usage Metrics", cellSubtitle: "Collaboration Analytics", updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "tips_n_tricks_icon", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
@@ -179,6 +189,7 @@ class CollaborationViewController: UIViewController {
     private func showOffice365Screen() {
         let office365 = Office365ViewController()
         office365.appName = "Office365"
+        office365.alertsData = alertsData
         office365.dataProvider = dataProvider
         navigationController?.pushViewController(office365, animated: true)
     }

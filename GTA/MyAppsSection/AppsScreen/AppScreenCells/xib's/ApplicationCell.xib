@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Bold.ttf">
+            <string>SFProText-Bold</string>
+        </array>
         <array key="SF-Pro-Text-Regular.otf">
             <string>SFProText-Regular</string>
         </array>
@@ -76,7 +79,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AOMA" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="idg-Oi-FFL">
-                        <rect key="frame" x="93" y="37.5" width="207" height="19.5"/>
+                        <rect key="frame" x="93" y="37.5" width="47.5" height="19.5"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -91,15 +94,40 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qy5-ES-diR">
+                        <rect key="frame" x="264" y="27" width="40" height="40"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOz-S9-XeL">
+                        <rect key="frame" x="274" y="37" width="20" height="20"/>
+                        <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="z7J-th-Aug"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="12"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="LOz-S9-XeL" firstAttribute="width" secondItem="LOz-S9-XeL" secondAttribute="height" multiplier="1:1" id="3g3-tR-WTJ"/>
                     <constraint firstItem="0ZE-SM-vhB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="3tg-DO-8Zp"/>
                     <constraint firstItem="7bn-Nu-co3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4i9-CA-8Tq"/>
-                    <constraint firstAttribute="trailing" secondItem="idg-Oi-FFL" secondAttribute="trailing" constant="20" id="NZV-Bf-E6t"/>
+                    <constraint firstItem="qy5-ES-diR" firstAttribute="bottom" secondItem="LOz-S9-XeL" secondAttribute="bottom" constant="10" id="6xt-Us-Kft"/>
+                    <constraint firstItem="qy5-ES-diR" firstAttribute="leading" secondItem="LOz-S9-XeL" secondAttribute="leading" constant="-10" id="9Mp-W7-GVQ"/>
+                    <constraint firstItem="LOz-S9-XeL" firstAttribute="centerY" secondItem="XHH-Yb-Cnv" secondAttribute="centerY" id="9wO-QR-9pC"/>
+                    <constraint firstAttribute="trailing" secondItem="LOz-S9-XeL" secondAttribute="trailing" constant="26" id="A2g-R9-5Py"/>
                     <constraint firstItem="0ZE-SM-vhB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="PXp-TY-bao"/>
                     <constraint firstItem="idg-Oi-FFL" firstAttribute="centerY" secondItem="0ZE-SM-vhB" secondAttribute="centerY" id="SNj-D9-bUE"/>
                     <constraint firstItem="idg-Oi-FFL" firstAttribute="leading" secondItem="FEH-Qe-7Ys" secondAttribute="trailing" constant="20" id="U1S-xK-2jP"/>
                     <constraint firstAttribute="trailing" secondItem="7bn-Nu-co3" secondAttribute="trailing" id="fbl-0c-EkS"/>
+                    <constraint firstItem="qy5-ES-diR" firstAttribute="trailing" secondItem="LOz-S9-XeL" secondAttribute="trailing" constant="10" id="ian-xb-6hy"/>
+                    <constraint firstItem="qy5-ES-diR" firstAttribute="top" secondItem="LOz-S9-XeL" secondAttribute="top" constant="-10" id="jVG-xJ-YSH"/>
                     <constraint firstItem="0ZE-SM-vhB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="oDg-ml-ztc"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0ZE-SM-vhB" secondAttribute="bottom" constant="10" id="qlY-xM-PCO"/>
                     <constraint firstAttribute="bottom" secondItem="7bn-Nu-co3" secondAttribute="bottom" id="sEH-DW-Msf"/>
@@ -107,6 +135,8 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="alertsNumber" destination="LOz-S9-XeL" id="4Ex-LZ-EFp"/>
+                <outlet property="alertsNumberParentView" destination="qy5-ES-diR" id="xxl-GW-ThG"/>
                 <outlet property="appIcon" destination="FEH-Qe-7Ys" id="Vt0-Hn-tE8"/>
                 <outlet property="appName" destination="idg-Oi-FFL" id="aVI-D9-RMW"/>
                 <outlet property="appStatus" destination="mq4-R7-yG1" id="THe-k3-ZKq"/>

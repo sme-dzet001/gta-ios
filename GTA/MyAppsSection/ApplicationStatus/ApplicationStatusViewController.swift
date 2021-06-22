@@ -36,6 +36,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     var selectedMetricsPeriod: MetricsPeriod = .weekly
     var detailsDataResponseError: Error?
     weak var detailsDataDelegate: DetailsDataDelegate?
+    var alertsData: ProductionAlertsResponse?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,6 +106,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "SystemUpdatesCell", bundle: nil), forCellReuseIdentifier: "SystemUpdatesCell")
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
+        tableView.register(UINib(nibName: "ProductionAlertCounterCell", bundle: nil), forCellReuseIdentifier: "ProductionAlertCounterCell")
         tableView.register(UINib(nibName: "MetricStatsCell", bundle: nil), forCellReuseIdentifier: "MetricStatsCell")
         /* TODO: Need to find a better solution
          * Adding view for top bounce
@@ -121,6 +123,8 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         let aboutData = UIImage(named: "info_icon")
         let contactsData = UIImage(named: "contacts_icon")
         let tipsNtricksData = UIImage(named: "tips_n_tricks_icon")
+        let alertIcon = UIImage(named: "notification")
+        
         
         let metricsData = MetricsData(
             dailyData: [ChartData(legendTitle: "18/11/20", periodFullTitle: "18 November 2020", value: 85), ChartData(legendTitle: "17/11/20", periodFullTitle: "17 November 2020", value: 62), ChartData(legendTitle: "16/11/20", periodFullTitle: "16 November 2020", value: 105), ChartData(legendTitle: "15/11/20", periodFullTitle: "15 November 2020", value: 100), ChartData(legendTitle: "14/11/20", periodFullTitle: "14 November 2020", value: 70), ChartData(legendTitle: "13/11/20", periodFullTitle: "13 November 2020", value: 95), ChartData(legendTitle: "12/11/20", periodFullTitle: "12 November 2020", value: 100)],
@@ -130,10 +134,13 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         
 
         
-        let firstSection = [AppInfo(app_name: "Report Outages, System Issues", app_title: "Report Issue", imageData: bellData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Reset Account Access & login Assistance", app_title: "Login Help", imageData: loginHelpData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Description, wiki and support information", app_title: "About", imageData: aboutData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Get the most from the app", app_title: "Tips & Tricks", imageData: tipsNtricksData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Key Contacts and Member Profiles", app_title: "Contacts", imageData: contactsData?.pngData(), appStatus: .none, app_is_active: true)]
+        var firstSection = [AppInfo(app_name: "Report Outages, System Issues", app_title: "Report Issue", imageData: bellData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Reset Account Access & login Assistance", app_title: "Login Help", imageData: loginHelpData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Description, wiki and support information", app_title: "About", imageData: aboutData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Get the most from the app", app_title: "Tips & Tricks", imageData: tipsNtricksData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Key Contacts and Member Profiles", app_title: "Contacts", imageData: contactsData?.pngData(), appStatus: .none, app_is_active: true)]
         
 //        let secondSection = [AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "Scheduled maintenance", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "AWS outage reported", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true)]
-//                
+//
+        if let _ = alertsData {
+            firstSection.insert(AppInfo(app_name: "", app_title: "Production Alerts", imageData: alertIcon?.pngData(), appStatus: .none, app_is_active: true), at: 0)
+        }
         dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: firstSection, metricsData: nil)/*, AppsDataSource(sectionName: "System Updates", description: nil, cellData: secondSection), AppsDataSource(sectionName: "Stats", description: nil, cellData: [], metricsData: metricsData)*/]
     }
 
@@ -153,6 +160,61 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         } else {
             displayError(errorMessage: "Configure your mail in iOS mail app to use this feature", title: nil)
         }
+    }
+    
+    private func showProductionAlertScreen() {
+        let alertsScreen = ProductionAlertsViewController()
+        alertsScreen.dataSource = alertsData
+        self.navigationController?.pushViewController(alertsScreen, animated: true)
+    }
+    
+    private func showAboutScreen() {
+        let aboutScreen = AboutViewController()
+        aboutScreen.details = appDetailsData
+        aboutScreen.detailsDataResponseError = detailsDataResponseError
+        self.detailsDataDelegate = aboutScreen
+        aboutScreen.appTitle = appTitle
+        //aboutScreen.appImageUrl = appImageUrl
+        navigationController?.pushViewController(aboutScreen, animated: true)
+    }
+    
+    private func showTipsAndTricks() {
+        if let _ = appDetailsData, appDetailsData!.isNeedToUsePDF {
+            let appTipsAndTricksVC = AppTipsAndTricksViewController()
+            appTipsAndTricksVC.appName = appName
+            appTipsAndTricksVC.pdfUrlString = appDetailsData?.tipsAndTricksPDF
+            navigationController?.pushViewController(appTipsAndTricksVC, animated: true)
+        } else {
+            let appTipsAndTricksVC = QuickHelpViewController()
+            appTipsAndTricksVC.appName = appName
+            appTipsAndTricksVC.screenType = .appTipsAndTricks
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+            appTipsAndTricksVC.appsDataProvider = dataProvider
+            navigationController?.pushViewController(appTipsAndTricksVC, animated: true)
+        }
+    }
+    
+    private func showContacts() {
+        let contactsScreen = AppContactsViewController()
+        contactsScreen.dataProvider = dataProvider
+        contactsScreen.appName = appName ?? ""
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.pushViewController(contactsScreen, animated: true)
+    }
+    
+    private func showHelpReportScreen(for indexPath: IndexPath) {
+        if appDetailsData?.appSupportEmail == nil {
+            return
+        }
+        let reportScreen = HelpReportScreenViewController()
+        reportScreen.delegate = self
+        reportScreen.screenTitle = dataSource[indexPath.section].cellData[indexPath.row].app_title
+        reportScreen.appSupportEmail = appDetailsData?.appSupportEmail
+        reportScreen.appName = appName ?? ""
+        let reportIssueTypes = ["Navigation issues", "Slow app work", "No connection", "Missing data", "App crash", "App freeze", "Other"]
+        let loginIssueTypes = ["Invalid credentials error", "Forgot password", "2FA issue", "Other"]
+        reportScreen.pickerDataSource = indexPath.row == 0 ? reportIssueTypes : loginIssueTypes
+        presentPanModal(reportScreen)
     }
     
 }
@@ -221,9 +283,15 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dataArray = dataSource[indexPath.section].cellData
+        if indexPath.section == 0, indexPath.row == 0, alertsData != nil {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProductionAlertCounterCell", for: indexPath) as? ProductionAlertCounterCell
+            cell?.updatesNumberLabel.text = "\(alertsData?.data?.count ?? 0)"
+            cell?.cellTitle.text = "Production Alerts"
+            return cell ?? UITableViewCell()
+        }
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.separator.isHidden = false//indexPath.row == dataArray.count - 1
-            let isDisabled = indexPath.row < 3 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty || appDetailsData == nil)
+            let isDisabled = indexPath.row < 4 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty || appDetailsData == nil)
             cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, error: indexPath.row == 3 ? nil : detailsDataResponseError)
             cell.iconImageView.accessibilityIdentifier = "AppsStatusDescription"
             cell.descriptionLabel.accessibilityIdentifier = "AppsStatusSubtitleLabel"
@@ -264,47 +332,18 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
-        if indexPath.row == 2, (appDetailsData != nil) {
-            let aboutScreen = AboutViewController()
-            aboutScreen.details = appDetailsData
-            aboutScreen.detailsDataResponseError = detailsDataResponseError
-            self.detailsDataDelegate = aboutScreen
-            aboutScreen.appTitle = appTitle
-            //aboutScreen.appImageUrl = appImageUrl
-            navigationController?.pushViewController(aboutScreen, animated: true)
-        } else if indexPath.row == 3 {
-            if let _ = appDetailsData, appDetailsData!.isNeedToUsePDF {
-                let appTipsAndTricksVC = AppTipsAndTricksViewController()
-                appTipsAndTricksVC.appName = appName
-                appTipsAndTricksVC.pdfUrlString = appDetailsData?.tipsAndTricksPDF
-                navigationController?.pushViewController(appTipsAndTricksVC, animated: true)
-            } else {
-                let appTipsAndTricksVC = QuickHelpViewController()
-                appTipsAndTricksVC.appName = appName
-                appTipsAndTricksVC.screenType = .appTipsAndTricks
-                self.navigationController?.setNavigationBarHidden(true, animated: false)
-                appTipsAndTricksVC.appsDataProvider = dataProvider
-                navigationController?.pushViewController(appTipsAndTricksVC, animated: true)
-            }
+        if indexPath.row == 0 && alertsData != nil {
+            showProductionAlertScreen()
+            return
+        }
+        if indexPath.row == 3, (appDetailsData != nil) {
+            showAboutScreen()
         } else if indexPath.row == 4 {
-            let contactsScreen = AppContactsViewController()
-            contactsScreen.dataProvider = dataProvider
-            contactsScreen.appName = appName ?? ""
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
-            navigationController?.pushViewController(contactsScreen, animated: true)
+            showTipsAndTricks()
+        } else if indexPath.row == 5 {
+            showContacts()
         } else {
-            if appDetailsData?.appSupportEmail == nil {
-                return
-            }
-            let reportScreen = HelpReportScreenViewController()
-            reportScreen.delegate = self
-            reportScreen.screenTitle = dataSource[indexPath.section].cellData[indexPath.row].app_title
-            reportScreen.appSupportEmail = appDetailsData?.appSupportEmail
-            reportScreen.appName = appName ?? ""
-            let reportIssueTypes = ["Navigation issues", "Slow app work", "No connection", "Missing data", "App crash", "App freeze", "Other"]
-            let loginIssueTypes = ["Invalid credentials error", "Forgot password", "2FA issue", "Other"]
-            reportScreen.pickerDataSource = indexPath.row == 0 ? reportIssueTypes : loginIssueTypes
-            presentPanModal(reportScreen)
+            showHelpReportScreen(for: indexPath)
         }
     }
     

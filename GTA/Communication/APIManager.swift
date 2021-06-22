@@ -53,6 +53,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getGTTeam(generationNumber: Int)
         case getGlobalOutage(generationNumber: Int)
         case sendPushNotificationsToken
+        case getAppAlerts(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -82,6 +83,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getGTTeam(let generationNumber): return "/v3/widgets/management_team/data/\(generationNumber)/detailed"
                 case .getGlobalOutage(let generationNumber): return "/v3/widgets/global_alerts/data/\(generationNumber)/detailed"
                 case .sendPushNotificationsToken: return "/v1/me/push_token/"
+                case .getAppAlerts(let generationNumber): return "/v3/widgets/production_alerts/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -250,22 +252,11 @@ class APIManager: NSObject, URLSessionDelegate {
         session.dataTask(with: endpoint, completionHandler: completion).resume()
     }
     
-    
-//    func getAppsServiceAlert(for generationNumber: Int, completion: ((_ serviceDeskResponse: MyAppsResponse?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-//        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-//        self.makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders) {[weak self] (responseData, errorCode, error, isResponseSuccessful) in
-//            var reportDataResponse: MyAppsResponse?
-//            var retErr = error
-//            if let responseData = responseData {
-//                do {
-//                    reportDataResponse = try self?.parse(data: responseData)
-//                } catch {
-//                    retErr = error
-//                }
-//            }
-//            completion?(reportDataResponse, errorCode, retErr)
-//        }
-//    }
+    func getAppsServiceAlert(for generationNumber: Int, appName: String, completion: @escaping ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)) {
+        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        let requestBodyParams = ["s1": appName]
+        self.makeRequest(endpoint: .getAppAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
+    }
     
     // MARK: - Collaboration methods
     

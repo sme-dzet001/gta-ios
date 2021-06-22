@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Light.ttf">
+            <string>SFProText-Light</string>
+        </array>
+        <array key="SF-Pro-Text-Medium.otf">
+            <string>SFProText-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Z25-iy-yhT" customClass="AlertDetailsHeader" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="637" height="256"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3U-Jx-6CR">
+                    <rect key="frame" x="114" y="16" width="444" height="50.5"/>
+                    <string key="text">GRPS/MMT/Gold Downtime.
+Weds 10th Feb, 2020 6am
+EST/12pm CEST</string>
+                    <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DPSX-169" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYv-14-hdv">
+                    <rect key="frame" x="24" y="16" width="80" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="SIL-EX-gB2"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Zt-rT-6wa">
+                    <rect key="frame" x="568" y="16" width="45" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="45" id="bQU-Cp-QSc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="14"/>
+                    <color key="textColor" systemColor="systemGreenColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="6MO-YW-4y1"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="YYv-14-hdv" firstAttribute="top" secondItem="Z25-iy-yhT" secondAttribute="top" constant="16" id="Iqt-ob-NB5"/>
+                <constraint firstItem="0Zt-rT-6wa" firstAttribute="top" secondItem="Z25-iy-yhT" secondAttribute="top" constant="16" id="OOQ-PM-4jL"/>
+                <constraint firstItem="M3U-Jx-6CR" firstAttribute="leading" secondItem="YYv-14-hdv" secondAttribute="trailing" constant="10" id="VBj-eH-gYF"/>
+                <constraint firstItem="M3U-Jx-6CR" firstAttribute="top" secondItem="Z25-iy-yhT" secondAttribute="top" constant="16" id="fRj-1c-Ybd"/>
+                <constraint firstItem="6MO-YW-4y1" firstAttribute="trailing" secondItem="0Zt-rT-6wa" secondAttribute="trailing" constant="24" id="fXj-Y2-kAN"/>
+                <constraint firstItem="YYv-14-hdv" firstAttribute="leading" secondItem="6MO-YW-4y1" secondAttribute="leading" constant="24" id="jAJ-gY-C51"/>
+                <constraint firstItem="0Zt-rT-6wa" firstAttribute="leading" secondItem="M3U-Jx-6CR" secondAttribute="trailing" constant="10" id="pUD-fb-Kl2"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="alertNumberLabel" destination="YYv-14-hdv" id="VuQ-Rr-yIs"/>
+                <outlet property="alertTitleLabel" destination="M3U-Jx-6CR" id="A8A-I9-VaV"/>
+                <outlet property="statusLabel" destination="0Zt-rT-6wa" id="U02-Kt-Efk"/>
+            </connections>
+            <point key="canvasLocation" x="80.434782608695656" y="322.76785714285711"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

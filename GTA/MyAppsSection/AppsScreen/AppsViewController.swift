@@ -21,6 +21,7 @@ class AppsViewController: UIViewController {
     private var allAppsLastUpdateDate: Date?
     private var allAppsLoadingError: Error?
     private var myAppsLoadingError: Error?
+    private var alertsData: ProductionAlertsResponse?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,7 @@ class AppsViewController: UIViewController {
         //self.dataProvider.appImageDelegate = self
         setUpNavigationItem()
         setAccessibilityIdentifiers()
+        getProductionAlerts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -116,6 +118,10 @@ class AppsViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    private func getProductionAlerts() {
+        alertsData = ProductionAlertsResponse(meta: nil, data: [ProductionAlertsRow(id: "DPSX-169", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams"), ProductionAlertsRow(id: "DPSX-169", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams")])
     }
     
     private func startAnimation() {
@@ -218,6 +224,9 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     cell.showFirstChar()
                 }
+                if indexPath.section == 0, indexPath.row == 0 {
+                    cell.setAlert(alertCount: alertsData?.data?.count)
+                }
                 cell.separator.isHidden = indexPath.row != dataProvider.appsData[indexPath.section].cellData.count - 1
             } else {
                 print("!!!error my apps cell no data!!!!")
@@ -253,6 +262,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         appVC.appLastUpdateDate = dataProvider.appsData[indexPath.section].cellData[indexPath.row].lastUpdateDate
         appVC.systemStatus = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appStatus
         appVC.dataProvider = dataProvider
+        appVC.alertsData = alertsData
         self.navigationController?.pushViewController(appVC, animated: true)
     }
 
