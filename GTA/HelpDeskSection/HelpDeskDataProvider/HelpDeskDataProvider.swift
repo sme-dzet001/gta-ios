@@ -255,6 +255,11 @@ class HelpDeskDataProvider {
                 }
             }
         })
+        var range = (res.string as NSString).range(of: "\n", options: .backwards)
+        while range.length > 0 {
+            res.deleteCharacters(in: range)
+            range = (res.string as NSString).range(of: "\n", options: .backwards)
+        }
         return res
     }
     

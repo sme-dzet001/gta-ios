@@ -9,6 +9,7 @@ import UIKit
 
 class QuickHelpViewController: UIViewController {
     
+    @IBOutlet weak var titleStackView: UIStackView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navBarView: UIView!
     @IBOutlet weak var subTitleLabel: UILabel!
@@ -21,8 +22,8 @@ class QuickHelpViewController: UIViewController {
     var screenType: QuickHelpScreenType = .quickHelp
     var appName: String?
     var appsDataProvider: MyAppsDataProvider?
-    var collaborationDataProvider: CollaborationDataProvider? 
-
+    var collaborationDataProvider: CollaborationDataProvider?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.accessibilityIdentifier = "QuickHelpTableView"
@@ -144,6 +145,10 @@ class QuickHelpViewController: UIViewController {
             subTitleLabel.text = "Tips & Tricks"
             titleLabel.accessibilityIdentifier = "QuickHelpAppsTitle"
             subTitleLabel.accessibilityIdentifier = "QuickHelpAppsSubtitle"
+            if UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se {
+                titleStackView.spacing = 5
+                self.view.layoutIfNeeded()
+            }
             return
         }
         var title = ""
@@ -280,7 +285,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
     
     private func getCellHeight(for indexPath: IndexPath) -> CGFloat {
         if expandedRowsIndex.contains(indexPath.row) {
-            return heightForQuestionAt(indexPath: indexPath) + heightForAnswerAt(indexPath: indexPath)
+            return UITableView.automaticDimension// expandedCellHeight[indexPath] ?? heightForQuestionAt(indexPath: indexPath) + heightForAnswerAt(indexPath: indexPath)
         }
         return heightForQuestionAt(indexPath: indexPath)
     }
@@ -290,6 +295,7 @@ extension QuickHelpViewController: UITableViewDataSource, UITableViewDelegate {
 extension QuickHelpViewController: QuickHelpCellDelegate {
 
     func quickHelpCellTapped(_ cell: QuickHelpCell, animationDuration: Double) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
         guard let cellIndex = tableView.indexPath(for: cell)?.row else { return }
         guard getHelpData().count > cellIndex else { return }
         if expandedRowsIndex.contains(cellIndex) {
