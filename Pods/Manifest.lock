@@ -45,7 +45,6 @@ PODS:
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
-  - SwiftyGif (5.4.0)
 
 DEPENDENCIES:
   - AdvancedPageControl
@@ -54,7 +53,6 @@ DEPENDENCIES:
   - PanModal
   - RNCryptor
   - SDWebImage
-  - SwiftyGif
 
 SPEC REPOS:
   trunk:
@@ -72,7 +70,6 @@ SPEC REPOS:
     - PromisesObjC
     - RNCryptor
     - SDWebImage
-    - SwiftyGif
 
 SPEC CHECKSUMS:
   AdvancedPageControl: df5912b03c7b78a7719d4f479b79f7eb3a2966bb
@@ -89,8 +86,7 @@ SPEC CHECKSUMS:
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
 
-PODFILE CHECKSUM: 71482e4fd3a417ec6abe650d957495891d16f571
+PODFILE CHECKSUM: df3b7321614299708ec49f2ac43e9061bd273e98
 
 COCOAPODS: 1.10.1
