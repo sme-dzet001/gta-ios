@@ -32,14 +32,26 @@ class ServiceDeskContactsViewController: UIViewController {
     }
     
     private func setUpNavigationItem() {
-        navigationItem.title = "Service Desk Contacts"
+        let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+        tlabel.text = "Service Desk Contacts"
+        tlabel.textColor = UIColor.black
+        tlabel.textAlignment = .center
+        tlabel.font = UIFont(name: "SFProDisplay-Medium", size: 20.0)
+        tlabel.backgroundColor = UIColor.clear
+        tlabel.minimumScaleFactor = 0.6
+        tlabel.numberOfLines = 2
+        tlabel.adjustsFontSizeToFitWidth = true
+        self.navigationItem.titleView = tlabel
+        self.navigationItem.titleView?.accessibilityIdentifier = "ServiceDeskContactsTitleLabel"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
         navigationItem.leftBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        navigationItem.leftBarButtonItem?.accessibilityIdentifier = "ServiceDeskContactsBackButton"
     }
     
     private func setUpTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "ServiceDeskContactCell", bundle: nil), forCellReuseIdentifier: "ServiceDeskContactCell")
+        tableView.accessibilityIdentifier = "ServiceDeskContactsTableView"
     }
     
     private func loadContactsData() {

@@ -35,7 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        UIApplication.shared.applicationIconBadgeNumber = 0
+        //UIApplication.shared.applicationIconBadgeNumber = 0
         UIView.animate(withDuration: 0.3) {
             self.appSwitcherView?.alpha = 0
         } completion: { (_) in
@@ -131,6 +131,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         UserDefaults.standard.set(false, forKey: "userLoggedIn")
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let loginViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
+        UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
         loginViewController.sessionExpired = sessionExpired
         let navController = UINavigationController(rootViewController: loginViewController as UIViewController)
         navController.isNavigationBarHidden = true

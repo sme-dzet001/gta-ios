@@ -61,6 +61,7 @@ class OfficeLocationViewController: UIViewController {
         titleLabel.text = title
         closeButton.isHidden = forceOfficeSelection
         setNeedsStatusBarAppearanceUpdate()
+        setAccessibilityIdentifiers()
         NotificationCenter.default.addObserver(self, selector: #selector(dismissVC), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
     
@@ -74,6 +75,13 @@ class OfficeLocationViewController: UIViewController {
         heightObserver = self.navigationController?.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
             self?.setUpTableViewLayout()
         })
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        tableView.accessibilityIdentifier = "OfficeSelectionScreenTableView"
+        backArrow.accessibilityIdentifier = "OfficeSelectionScreenBackButton"
+        titleLabel.accessibilityIdentifier = "OfficeSelectionScreenTitleLabel"
+        closeButton.accessibilityIdentifier = "OfficeSelectionScreenCloseButton"
     }
     
     private func setUpTableView() {
@@ -176,11 +184,14 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
             cell?.iconImageView.image = UIImage(named: "gps_icon")
             cell?.arrowIcon.isHidden = true
             cell?.separator.isHidden = false
+            cell?.mainLabel.accessibilityIdentifier = "OfficeSelectionScreenOfficeCurrentLocationTitleLabel"
+            cell?.descriptionLabel.accessibilityIdentifier = "OfficeSelectionScreenOfficeCurrentLocationDescriptionLabel"
             return cell ?? UITableViewCell()
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeInfoCell", for: indexPath) as? OfficeInfoCell
         cell?.iconImageView.image = UIImage(named: "region_icon")
         cell?.infoLabel?.text = regionDataSource[indexPath.row].text
+        cell?.infoLabel?.accessibilityIdentifier = "OfficeSelectionScreenOfficeRegionTitleLabel"
         return cell ?? UITableViewCell()
     }
     
@@ -194,6 +205,8 @@ extension OfficeLocationViewController: UITableViewDataSource, UITableViewDelega
         cell?.iconImageView.image = UIImage(named: "location")
         cell?.separator.isHidden = false
         cell?.topSeparator.isHidden = indexPath.row != 0
+        cell?.mainLabel.accessibilityIdentifier = "OfficeSelectionScreenOfficeLocationTitle"
+        cell?.descriptionLabel.accessibilityIdentifier = "OfficeSelectionScreenOfficeLocationDescriptionLabel"
         return cell ?? UITableViewCell()
     }
     

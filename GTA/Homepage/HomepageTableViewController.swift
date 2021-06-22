@@ -24,6 +24,8 @@ class HomepageTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
+        tableView.accessibilityIdentifier = "HomeScreenTableView"
+        NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,6 +46,30 @@ class HomepageTableViewController: UITableViewController {
                     }
                 }
             }
+        }
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        guard let items = self.tabBarController?.tabBar.items else { return }
+        for (index, _) in items.enumerated() {
+            self.tabBarController?.tabBar.items?[index].accessibilityIdentifier = getIdentifierForTabbarIndex(index)
+        }
+    }
+    
+    private func getIdentifierForTabbarIndex(_ index: Int) -> String {
+        switch index {
+        case 0:
+            return "TabBarHomeTab"
+        case 1:
+            return "TabBarServiceDeskTab"
+        case 2:
+            return "TabBarAppsTab"
+        case 3:
+            return "TabBarCollaborationTab"
+        case 4:
+            return "TabBarGeneralTab"
+        default:
+            return ""
         }
     }
     
@@ -135,9 +161,10 @@ class HomepageTableViewController: UITableViewController {
         })
     }
     
-    private func getGlobalAlerts() {
+    @objc private func getGlobalAlerts() {
         dataProvider?.getGlobalAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
+                UIApplication.shared.applicationIconBadgeNumber = 0
                 if error == nil && errorCode == 200 {
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()
@@ -236,6 +263,7 @@ class HomepageTableViewController: UITableViewController {
                 cell?.descriptionLabel.text = nil
                 cell?.setMainLabelAtCenter()
             }
+            cell?.mainLabel.accessibilityIdentifier = "HomeScreenAlertTitleLabel"
             return cell ?? UITableViewCell()
         } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GTTeamCell", for: indexPath) as? GTTeamCell
@@ -254,6 +282,8 @@ class HomepageTableViewController: UITableViewController {
                 cell?.officeErrorLabel.isHidden = true
                 cell?.separator.isHidden = false
                 cell?.arrowImage.isHidden = false
+                cell?.officeStatusLabel.accessibilityIdentifier = "HomeScreenOfficeTitleLabel"
+                cell?.officeAddressLabel.accessibilityIdentifier = "HomeScreenOfficeAddressLabel"
                 return cell ?? UITableViewCell()
             } else {
                 if let errorStr = officeLoadingError {
@@ -327,6 +357,10 @@ class HomepageTableViewController: UITableViewController {
         let contactsViewController = GTTeamViewController()
         contactsViewController.dataProvider = dataProvider
         self.navigationController?.pushViewController(contactsViewController, animated: true)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
 }

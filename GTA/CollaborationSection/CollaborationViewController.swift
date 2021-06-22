@@ -30,6 +30,7 @@ class CollaborationViewController: UIViewController {
         setUpTableView()
         setUpHardCodeData()
         setUpHeaderView()
+        setAccessibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -147,6 +148,11 @@ class CollaborationViewController: UIViewController {
         dataSource.append(CollaborationCellData(imageName: "team_contacts_icon", cellTitle: "Team Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil))
     }
     
+    private func setAccessibilityIdentifiers() {
+        tableView.accessibilityIdentifier = "CollaborationScreenTableView"
+        headerTitleView.accessibilityIdentifier = "CollaborationScreenTitleView"
+    }
+    
     private func showContactsScreen() {
         let contactsScreen = AppContactsViewController()
         contactsScreen.collaborationDataProvider = dataProvider
@@ -211,6 +217,7 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "CollaborationHeaderCell", for: indexPath) as? CollaborationHeaderCell {
             cell.descriptionLabel.text = dataProvider.collaborationDetails?.description
+            cell.descriptionLabel.accessibilityIdentifier = "CollaborationScreenDescription"
             return cell
         }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CollaborationCounterCell", for: indexPath) as? CollaborationCounterCell {
@@ -220,6 +227,8 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
                 delegate = cell
                 cell.ticketNumberUpdated(dataProvider.getUnreadArticlesNumber())
             }
+            cell.cellTitle.accessibilityIdentifier = "CollaborationScreenCellTitle"
+            cell.cellSubtitle.accessibilityIdentifier = "CollaborationScreenCellSubtitle"
             return cell
         }
         return UITableViewCell()

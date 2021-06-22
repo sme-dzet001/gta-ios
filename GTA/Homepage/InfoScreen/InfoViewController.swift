@@ -11,6 +11,7 @@ class InfoViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var officeStatusLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var blurView: UIView!
@@ -38,6 +39,7 @@ class InfoViewController: UIViewController {
         setUpTableView()
         setupHeaderImageView()
         setNeedsStatusBarAppearanceUpdate()
+        setAccessibilityIdentifiers()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -81,6 +83,13 @@ class InfoViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        tableView.accessibilityIdentifier = "InfoScreenTableView"
+        backButton.accessibilityIdentifier = "InfoScreenBackButton"
+        screenTitleLabel.accessibilityIdentifier = "InfoScreenTitleLabel"
+        infoLabel.accessibilityIdentifier = "InfoScreenInfoLabel"
     }
     
     func setUpConstraints() {
@@ -224,6 +233,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
             }
             cell?.infoLabel.attributedText = htmlBody
             cell?.delegate = self
+            cell?.infoLabel.accessibilityIdentifier = "InfoScreenInformationLabel"
             return cell ?? UITableViewCell()
         default:
             let data = officeDataSoure[indexPath.row]
@@ -231,6 +241,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeInfoCell", for: indexPath) as? OfficeInfoCell
                 cell?.iconImageView.image = UIImage(named: data.imageName)
                 cell?.infoLabel.text = data.text.replacingOccurrences(of: "\u{00A0}", with: " ")
+                cell?.infoLabel.accessibilityIdentifier = indexPath.row == 0 ? "InfoScreenCellPhoneNumberLabel" : "InfoScreenCellLocationLabel"
                 return cell ?? UITableViewCell()
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
@@ -238,6 +249,8 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
             cell?.mainLabel.text = data.text
             cell?.descriptionLabel.text = data.additionalText
             cell?.separator.isHidden = false
+            cell?.mainLabel.accessibilityIdentifier = "InfoScreenOfficesCellTitle"
+            cell?.descriptionLabel.accessibilityIdentifier = "InfoScreenOfficesCellSubtitle"
             return cell ?? UITableViewCell()
         }
     }

@@ -10,7 +10,7 @@ import Foundation
 struct AccessTokenValidationResponseData: Codable {
     var username: String
     var token: String
-    var lifetime: Int
+    var lifetime: QuantumValue
     var actions: [String]
     var stickers: [String]
     

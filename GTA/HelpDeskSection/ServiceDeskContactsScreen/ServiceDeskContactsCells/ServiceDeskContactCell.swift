@@ -49,6 +49,16 @@ class ServiceDeskContactCell: UITableViewCell {
         let locationIsMissing = data?.contactLocation == nil || (data?.contactLocation ?? "").isEmpty
         locationIcon.isHidden = locationIsMissing
         setUpMargins(descIsEmpty: data?.contactBio?.isEmpty ?? true, funFactIsEmpty: data?.contactFunFact?.isEmpty ?? true)
+        addAccessibilityIdentifiers()
+    }
+    
+    private func addAccessibilityIdentifiers() {
+        contactNameLabel.accessibilityIdentifier = "ServiceDeskContactsContactNameLabel"
+        positionLabel.accessibilityIdentifier = "ServiceDeskContactsContactPositionLabel"
+        descriptionLabel.accessibilityIdentifier = "ServiceDeskContactsContactDescriptionLabel"
+        funFactLabel.accessibilityIdentifier = "ServiceDeskContactsContactFunFactLabel"
+        emailLabel.accessibilityIdentifier = "ServiceDeskContactsContactEmailLabel"
+        locationLabel.accessibilityIdentifier = "ServiceDeskContactsContactLocationLabel"
     }
     
     private func setUpMargins(descIsEmpty: Bool, funFactIsEmpty: Bool) {

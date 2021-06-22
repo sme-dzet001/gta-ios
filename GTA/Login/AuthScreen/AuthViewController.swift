@@ -28,6 +28,7 @@ class AuthViewController: UIViewController {
     private var usmLogoutWebView: WKWebView!
     private var continueButtonY: CGFloat?
     weak var delegate: AuthentificationPassed?
+    private var dataProvider: LoginDataProvider = LoginDataProvider()
     
     var isSignUp: Bool = KeychainManager.getPin() == nil
     
@@ -35,11 +36,13 @@ class AuthViewController: UIViewController {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
-        pinCodeBoxes.forEach { (box) in
+        pinCodeBoxes.enumerated().forEach { (index, box) in
             box.delegate = self
             box.textContentType = .username
             box.backwardDelegate = self
+            box.accessibilityIdentifier = "PinCodeScreenPinBox\(index)"
         }
+        setAccessibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,6 +68,11 @@ class AuthViewController: UIViewController {
         } else {
             hideKeyboard()
         }
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        backButton.accessibilityIdentifier = "PinCodeScreenBackButton"
+        continueButton.accessibilityIdentifier = "LoginScreenContinueButton"
     }
     
     private func setUpScreen() {
@@ -143,6 +151,8 @@ class AuthViewController: UIViewController {
                 self.showAuthenticationFailedAlert()
             }
         }
+        guard isSuccess else { return }
+        dataProvider.prolongSessionLength()
     }
     
     private func showAuthenticationFailedAlert() {
@@ -154,6 +164,7 @@ class AuthViewController: UIViewController {
     func startAuthenticationWithPin() {
         if KeychainManager.isPinValid(pin: getCodeFromBoxes()) {
             authentificatePassed()
+            dataProvider.prolongSessionLength()
         } else {
             let ac = UIAlertController(title: "Wrong PIN", message: "Entered pin code is incorrect", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
@@ -263,6 +274,8 @@ extension AuthViewController: WKNavigationDelegate {
         CacheManager().clearCache()
         KeychainManager.deletePinData()
         ImageCacheManager().removeCachedData()
+        UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
+        UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
         if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
             sceneDelegate.startLoginFlow()
         }
