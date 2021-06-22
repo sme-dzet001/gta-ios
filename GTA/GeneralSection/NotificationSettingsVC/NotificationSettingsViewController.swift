@@ -96,14 +96,19 @@ extension NotificationSettingsViewController: UITableViewDelegate, UITableViewDa
 extension NotificationSettingsViewController: SwitchStateChangedDelegate {
     func notificationSwitchDidChanged(isOn: Bool, switchControl: Switch) {
         if isNotificationAuthorized {
-            dataProvider?.setCurrentPreferences(nottificationsState: isOn, completion: {[weak self] code, error in
-                if let err = error {
-                    DispatchQueue.main.async {
-                        switchControl.setOn(!isOn, animated: true)
-                        self?.displayError(errorMessage: err.localizedDescription, title: nil, onClose: nil)
+            if Reachability.isConnectedToNetwork() {
+                dataProvider?.setCurrentPreferences(nottificationsState: isOn, completion: {[weak self] code, error in
+                    if let err = error {
+                        DispatchQueue.main.async {
+                            switchControl.setOn(!isOn, animated: true)
+                            self?.displayError(errorMessage: err.localizedDescription, title: nil, onClose: nil)
+                        }
                     }
-                }
-            })
+                })
+            } else {
+                displayError(errorMessage: "Notification Settings failed", title: nil, onClose: nil)
+                switchControl.setOn(!isOn, animated: true)
+            }
         } else {
             switchControl.setOn(false, animated: true)
             showNotificationNeededAlert()
