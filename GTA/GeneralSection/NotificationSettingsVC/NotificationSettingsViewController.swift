@@ -80,14 +80,19 @@ class NotificationSettingsViewController: UIViewController {
 extension NotificationSettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SwitcherCell", for: indexPath) as? SwitcherCell
-        cell?.switchControl.isOn = isNotificationAuthorized ? Preferences.allowEmergencyOutageNotifications : false
-        cell?.switchControl.switchStateChangedDelegate = self
-        delegate = cell
+        if indexPath.row == 0 {
+            cell?.label.text = "Emergency Outage Notifications"
+            cell?.switchControl.isOn = isNotificationAuthorized ? Preferences.allowEmergencyOutageNotifications : false
+            cell?.switchControl.switchStateChangedDelegate = self
+            delegate = cell
+        } else {
+            cell?.label.text = "Production Alerts Notifications"
+        }
         return cell ?? UITableViewCell()
     }
     

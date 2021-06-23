@@ -10,6 +10,7 @@ import UIKit
 class SwitcherCell: UITableViewCell {
 
     @IBOutlet weak var switchView: UIView!
+    @IBOutlet weak var label: UILabel!
     
     var switchControl = Switch()
     
