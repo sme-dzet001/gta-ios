@@ -297,8 +297,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension AppsViewController: AlertPopoverShowDelegate {
     func showAlertPopover(for rect: CGRect, sourceView: UIView) {
-        let indexPath = tableView.indexPath(for: sourceView as? UITableViewCell ?? UITableViewCell())
-        guard let indexPath = indexPath else { return }
+        guard let indexPath = tableView.indexPath(for: sourceView as? UITableViewCell ?? UITableViewCell()) else { return }
         let alertPopoverViewController = AlertPopoverViewController()
         alertPopoverViewController.modalPresentationStyle = .popover
         let cellData = dataProvider.appsData[indexPath.section].cellData[indexPath.row]
@@ -315,6 +314,7 @@ extension AppsViewController: AlertPopoverShowDelegate {
         }
     }
 }
+
 extension AppsViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
