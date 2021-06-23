@@ -21,7 +21,9 @@ class AppsViewController: UIViewController {
     private var allAppsLastUpdateDate: Date?
     private var allAppsLoadingError: Error?
     private var myAppsLoadingError: Error?
-    private var alertsData: ProductionAlertsResponse?
+    private var alertsData: [String : ProductionAlertsResponse?] {
+        return dataProvider.alertsData
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +31,6 @@ class AppsViewController: UIViewController {
         //self.dataProvider.appImageDelegate = self
         setUpNavigationItem()
         setAccessibilityIdentifiers()
-        getProductionAlerts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +46,7 @@ class AppsViewController: UIViewController {
             self.getMyApps()
         }
         activateStatusRefresh()
+        self.tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,6 +85,7 @@ class AppsViewController: UIViewController {
             self?.myAppsLoadingError = isFromCache ? nil : error
             DispatchQueue.main.async {
                 if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty {
+                    self?.getProductionAlerts()
                     if !isFromCache {
                         self?.myAppsLastUpdateDate = Date().addingTimeInterval(15)
                     }
@@ -103,6 +106,7 @@ class AppsViewController: UIViewController {
         dataProvider.getAllApps {[weak self] (errorCode, error, isFromCache) in
             self?.allAppsLoadingError = isFromCache ? nil : error
             DispatchQueue.main.async {
+                self?.getProductionAlerts()
                 if error == nil, errorCode == 200, let appsData = self?.dataProvider.appsData.first {
                     self?.errorLabel.isHidden = true
                     if !isFromCache {
@@ -121,7 +125,13 @@ class AppsViewController: UIViewController {
     }
     
     private func getProductionAlerts() {
-        alertsData = ProductionAlertsResponse(meta: nil, data: [ProductionAlertsRow(id: "DPSX-169", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams"), ProductionAlertsRow(id: "DPSX-169", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams")])
+        var totalCount = 0
+        let countArr = alertsData.compactMap({$0.value?.data})
+        for i in countArr {
+            totalCount += i.filter({$0?.isRead == false}).count
+        }
+        self.tabBarController?.tabBar.items?[2].badgeValue = totalCount > 0 ? "\(totalCount)" : nil
+        self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
     }
     
     private func startAnimation() {
@@ -148,6 +158,16 @@ class AppsViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "ApplicationCell", bundle: nil), forCellReuseIdentifier: "ApplicationCell")
+    }
+    
+    private func showProductionAlertScreen(id: String?, appName: String) {
+        guard let id = id, let alertsData = alertsData[appName] else { return }
+        let alertsScreen = ProductionAlertsViewController()
+        alertsScreen.dataSource = alertsData
+        alertsScreen.appName = appName
+        alertsScreen.selectedId = id
+        alertsScreen.dataProvider = dataProvider
+        self.navigationController?.pushViewController(alertsScreen, animated: true)
     }
     
 }
@@ -202,7 +222,8 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             return createErrorCell(with: error.localizedDescription)
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicationCell", for: indexPath) as? ApplicationCell {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
-                cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
+                let cellData = dataProvider.appsData[indexPath.section].cellData[indexPath.row]
+                cell.setUpCell(with: cellData)
                 //cell.startAnimation()
                 cell.appIcon.accessibilityIdentifier = "AppsScreenCellIcon"
                 cell.appStatus.accessibilityIdentifier = "AppsScreenAppStatus"
@@ -224,8 +245,10 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     cell.showFirstChar()
                 }
-                if indexPath.section == 0, indexPath.row == 0 {
-                    cell.setAlert(alertCount: alertsData?.data?.count)
+                if indexPath.section == 0, let alerts = dataProvider.alertsData[cellData.app_name ?? ""]??.data?.filter({$0?.isRead == false}) {
+                    cell.popoverShowDelegate = self
+                    cell.showAlertScreenDelegate = self
+                    cell.setAlert(alertCount: alerts.count)
                 }
                 cell.separator.isHidden = indexPath.row != dataProvider.appsData[indexPath.section].cellData.count - 1
             } else {
@@ -256,43 +279,67 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         guard indexPath.section < dataProvider.appsData.count else { return }
         guard !dataProvider.appsData[indexPath.section].cellData.isEmpty else { return }
         let appVC = ApplicationStatusViewController()
-        appVC.appName = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_name
-        appVC.appTitle = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_title
-        appVC.appImageUrl = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appImage ?? ""
-        appVC.appLastUpdateDate = dataProvider.appsData[indexPath.section].cellData[indexPath.row].lastUpdateDate
-        appVC.systemStatus = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appStatus
+        let cellData = dataProvider.appsData[indexPath.section].cellData[indexPath.row]
+        appVC.appName = cellData.app_name
+        appVC.appTitle = cellData.app_title
+        appVC.appImageUrl = cellData.appImage ?? ""
+        appVC.appLastUpdateDate = cellData.lastUpdateDate
+        appVC.systemStatus = cellData.appStatus
         appVC.dataProvider = dataProvider
-        appVC.alertsData = alertsData
+        if let alertsData = dataProvider.alertsData[cellData.app_name ?? ""] {
+            appVC.alertsData = alertsData
+        }
+        
         self.navigationController?.pushViewController(appVC, animated: true)
     }
 
 }
-//
-//extension AppsViewController: AppImageDelegate {
-//
-//    func setImage(with data: Data?, for appName: String?, error: Error?) {
-//        DispatchQueue.main.async {
-//            let sectionIndex = self.dataProvider.appsData.firstIndex(where: {$0.cellData.contains(where: {$0.app_name == appName})})
-//            if let _ = sectionIndex {
-//                let rowIndex = self.dataProvider.appsData[sectionIndex!].cellData.firstIndex(where: {$0.app_name == appName})
-//                guard let _ = rowIndex else { return }
-//                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageData = data
-//                var isFailed: Bool = false
-//                if let _ = data, let _ = UIImage(data: data!) {
-//                    isFailed = false
-//                } else {
-//                    isFailed = true
-//                }
-//                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageStatus = isFailed ? .failed : .loaded
-//                self.setCellImageView(for: IndexPath(row: rowIndex!, section: sectionIndex!))
-//            }
-//        }
-//    }
-//
-//    private func setCellImageView(for indexPath: IndexPath) {
-//        if let cell = self.tableView.cellForRow(at: indexPath) as? ApplicationCell {
-//            cell.setUpCell(with: self.dataProvider.appsData[indexPath.section].cellData[indexPath.row])
-//        }
-//    }
-//
-//}
+
+extension AppsViewController: AlertPopoverShowDelegate {
+    func showAlertPopover(for rect: CGRect, sourceView: UIView) {
+        let indexPath = tableView.indexPath(for: sourceView as? UITableViewCell ?? UITableViewCell())
+        guard let indexPath = indexPath else { return }
+        let alertPopoverViewController = AlertPopoverViewController()
+        alertPopoverViewController.modalPresentationStyle = .popover
+        let cellData = dataProvider.appsData[indexPath.section].cellData[indexPath.row]
+        alertPopoverViewController.alertsData = alertsData[cellData.app_name ?? ""]??.data
+        alertPopoverViewController.appName = cellData.app_name ?? ""
+        alertPopoverViewController.delegate = self
+        alertPopoverViewController.preferredContentSize = alertPopoverViewController.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        if let popoverPresentationController = alertPopoverViewController.popoverPresentationController {
+            popoverPresentationController.permittedArrowDirections = .right
+            popoverPresentationController.sourceView = sourceView
+            popoverPresentationController.sourceRect = rect
+            popoverPresentationController.delegate = self
+            present(alertPopoverViewController, animated: true, completion: nil)
+        }
+    }
+}
+extension AppsViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+
+    }
+
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
+        return true
+    }
+}
+
+extension AppsViewController: AlertPopoverSelectionDelegate {
+    func didSelectAlertId(_ id: String?, appName: String) {
+        showProductionAlertScreen(id: id, appName: appName)
+    }
+    
+}
+
+extension AppsViewController: ShowAlertScreenDelegate {
+    func showAlertScreen() {
+        let alertsScreen = ProductionAlertsViewController()
+        //alertsScreen.dataSource = alertsData
+        self.navigationController?.pushViewController(alertsScreen, animated: true)
+    }
+}

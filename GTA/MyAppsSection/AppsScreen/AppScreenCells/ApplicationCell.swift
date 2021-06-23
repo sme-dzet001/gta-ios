@@ -19,6 +19,9 @@ class ApplicationCell: UITableViewCell {
     @IBOutlet weak var alertsNumber: UILabel!
     @IBOutlet weak var alertsNumberParentView: UIView!
     
+    weak var popoverShowDelegate: AlertPopoverShowDelegate?
+    weak var showAlertScreenDelegate: ShowAlertScreenDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -70,7 +73,7 @@ class ApplicationCell: UITableViewCell {
     }
     
     func setAlert(alertCount: Int?) {
-        guard let number = alertCount else { return }
+        guard let number = alertCount, number > 0 else { return }
         self.alertsNumberParentView.isHidden = false
         self.alertsNumber.isHidden = false
         self.alertsNumber.text = "\(number)" //: nil
@@ -79,12 +82,14 @@ class ApplicationCell: UITableViewCell {
     
     private func setTapGesture() {
         let longTap = UILongPressGestureRecognizer(target: self, action: #selector(showPreview))
-        longTap.cancelsTouchesInView = false
+        //longTap.cancelsTouchesInView = false
         self.alertsNumberParentView.addGestureRecognizer(longTap)
     }
     
     @objc private func showPreview() {
-        
+        var frame = alertsNumberParentView.frame
+        frame.origin.x -= alertsNumberParentView.frame.width / 2
+        popoverShowDelegate?.showAlertPopover(for: frame, sourceView: self)
     }
 
 }

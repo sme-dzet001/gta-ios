@@ -32,5 +32,5 @@ struct ProductionAlertsRow {//}: Codable {
     var start: String?
     var duration: String?
     var summary: String?
-    
+    var isRead: Bool = false
 }

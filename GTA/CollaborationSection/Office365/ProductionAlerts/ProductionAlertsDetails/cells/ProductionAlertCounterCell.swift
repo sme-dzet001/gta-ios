@@ -29,11 +29,17 @@ class ProductionAlertCounterCell: UITableViewCell {
         showAlertScreenDelegate?.showAlertScreen()
     }
     
-    func setAlert(alertCount: Int?) {
-        guard let number = alertCount else { return }
-        self.alertsNumberParentView.isHidden = false
-        self.updatesNumberLabel.text = "\(number)" //: nil
-        setTapGesture()
+    func setAlert(alertCount: Int?, setTap: Bool = true) {
+        if let number = alertCount {
+            self.alertsNumberParentView.isHidden = false
+            self.updatesNumberLabel.text = "\(number)" //: nil
+            guard setTap else { return }
+            setTapGesture()
+        } else {
+            self.alertsNumberParentView.isHidden = true
+            self.updatesNumberLabel.isHidden = true
+        }
+        
     }
     
     private func setTapGesture() {

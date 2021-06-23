@@ -30,6 +30,7 @@ class MyAppsDataProvider {
     private var cachedReportData: Data?
     private(set) var tipsAndTricksData = [String : [QuickHelpRow]]()
     private(set) var appContactsData: [String : AppContactsData?] = [:]
+    var alertsData: [String : ProductionAlertsResponse?] = [:]
         
     // MARK: - Calling methods
     
@@ -239,6 +240,24 @@ class MyAppsDataProvider {
         cacheManager.getCachedResponse(requestURI: path.endpoint, completion: completion)
     }
     
+    
+    // temp. For UI POC ONLY!
+    func getProductionAlerts(for apps: [AppInfo]) {
+        for app in apps {
+            if Bool.random() {
+                let randomInt = Int.random(in: 1..<9)
+                var alertsRows: [ProductionAlertsRow] = []
+                for i in 0...randomInt {
+                    alertsRows.append(ProductionAlertsRow(id: "DPSX-169\(i)", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams"))
+                }
+               // let productionAlertsRows = [ProductionAlertsRow](repeating: ProductionAlertsRow(id: "DPSX-169\()", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams"), count: randomInt)
+                alertsData[app.app_name ?? ""] = ProductionAlertsResponse(meta: nil, data: alertsRows)
+            } else {
+                alertsData[app.app_name ?? ""] = nil
+            }
+        }
+    }
+    
     // MARK: - Production alerts related methods
     
     func getProductionAlerts(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -353,6 +372,9 @@ class MyAppsDataProvider {
             } else {
                 otherAppsSection.cellData.append(response[index])
             }
+        }
+        if alertsData.isEmpty {
+            getProductionAlerts(for: myAppsSection.cellData)
         }
         var result = [AppsDataSource]()
         result.append(myAppsSection)

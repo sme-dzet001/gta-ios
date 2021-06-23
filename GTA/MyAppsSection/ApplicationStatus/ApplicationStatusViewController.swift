@@ -51,6 +51,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppDetailsData()
         }
+        tableView.reloadData()
         self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
     }
     
@@ -165,6 +166,8 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     private func showProductionAlertScreen() {
         let alertsScreen = ProductionAlertsViewController()
         alertsScreen.dataSource = alertsData
+        alertsScreen.dataProvider = dataProvider
+        alertsScreen.appName = appName
         self.navigationController?.pushViewController(alertsScreen, animated: true)
     }
     
@@ -285,7 +288,10 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         let dataArray = dataSource[indexPath.section].cellData
         if indexPath.section == 0, indexPath.row == 0, alertsData != nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProductionAlertCounterCell", for: indexPath) as? ProductionAlertCounterCell
-            cell?.updatesNumberLabel.text = "\(alertsData?.data?.count ?? 0)"
+            let totalCount = dataProvider?.alertsData[appName ?? ""]??.data?.filter({$0?.isRead == false}).count ?? 0
+            //let totalCount = alertsData?.data?.filter({$0?.isRead == false}).count ?? 0
+            cell?.setAlert(alertCount: totalCount == 0 ? nil : totalCount, setTap: false)
+            //cell?.updatesNumberLabel.text = totalCount == 0 ? nil : totalCount
             cell?.cellTitle.text = "Production Alerts"
             return cell ?? UITableViewCell()
         }

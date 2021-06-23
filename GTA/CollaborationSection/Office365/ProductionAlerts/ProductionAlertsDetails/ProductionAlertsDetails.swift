@@ -27,6 +27,14 @@ class ProductionAlertsDetails: UIViewController, PanModalPresentable {
         return false
     }
     
+    var topOffset: CGFloat {
+        if let keyWindow = UIWindow.key {
+            return keyWindow.safeAreaInsets.top
+        } else {
+            return 0
+        }
+    }
+    
     var longFormHeight: PanModalHeight {
         return .maxHeight
     }
