@@ -322,7 +322,11 @@ extension QuickHelpViewController: QuickHelpCellDelegate {
                 self.tableView.endUpdates()
                 CATransaction.commit()
                 if let cellIndexPath = self.tableView.indexPath(for: cell) {
-                    self.tableView.scrollToRow(at: cellIndexPath, at: .none, animated: true)
+                    if cell.bounds.height > self.tableView.frame.height {
+                        self.tableView.scrollToRow(at: cellIndexPath, at: .top, animated: true)
+                    } else {
+                        self.tableView.scrollToRow(at: cellIndexPath, at: .none, animated: true)
+                    }
                 }
             }
         }
