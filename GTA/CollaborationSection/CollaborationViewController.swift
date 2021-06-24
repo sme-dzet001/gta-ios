@@ -151,7 +151,7 @@ class CollaborationViewController: UIViewController {
     
     private func setUpHardCodeData() {
         dataSource.append(CollaborationCellData(cellTitle: dataProvider.collaborationDetails?.description, updatesNumber: nil))
-        dataSource.append(CollaborationCellData(imageName: "applications_icon", cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: alertsCount, imageStatus: .loading))
+        dataSource.append(CollaborationCellData(imageName: "applications_icon", cellTitle: "Office 365 Applications", cellSubtitle: "Create, Collaborate & Connect", updatesNumber: nil, imageStatus: .loading))
         dataSource.append(CollaborationCellData(imageName: "whatsNew_icon", cellTitle: "What’s New", cellSubtitle: "Learn about new features", updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "usage_metrics_icon", cellTitle: "Usage Metrics", cellSubtitle: "Collaboration Analytics", updatesNumber: nil))
         dataSource.append(CollaborationCellData(imageName: "tips_n_tricks_icon", cellTitle: "Tips & Tricks", cellSubtitle: "Get the most from the app", updatesNumber: nil))
@@ -189,7 +189,7 @@ class CollaborationViewController: UIViewController {
     private func showOffice365Screen() {
         let office365 = Office365ViewController()
         office365.appName = "Office365"
-        office365.alertsData = alertsData
+        //office365.alertsData = alertsData
         office365.dataProvider = dataProvider
         navigationController?.pushViewController(office365, animated: true)
     }
@@ -234,10 +234,10 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CollaborationCounterCell", for: indexPath) as? CollaborationCounterCell {
             let cellData = dataSource[indexPath.row]
             cell.setUpCell(with: cellData, isActive: true, isNeedCornerRadius: true)
-            if indexPath.row == 2 {
-                delegate = cell
-                cell.ticketNumberUpdated(dataProvider.getUnreadArticlesNumber())
-            }
+//            if indexPath.row == 2 {
+//                delegate = cell
+//                cell.ticketNumberUpdated(dataProvider.getUnreadArticlesNumber())
+//            }
             cell.cellTitle.accessibilityIdentifier = "CollaborationScreenCellTitle"
             cell.cellSubtitle.accessibilityIdentifier = "CollaborationScreenCellSubtitle"
             return cell
