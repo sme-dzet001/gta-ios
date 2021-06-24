@@ -98,10 +98,10 @@ extension NotificationSettingsViewController: SwitchStateChangedDelegate {
         if isNotificationAuthorized {
             if Reachability.isConnectedToNetwork() {
                 dataProvider?.setCurrentPreferences(nottificationsState: isOn, completion: {[weak self] code, error in
-                    if let err = error {
+                    if error != nil {
                         DispatchQueue.main.async {
+                            self?.displayError(errorMessage: "Notification Settings failed", title: nil, onClose: nil)
                             switchControl.setOn(!isOn, animated: true)
-                            self?.displayError(errorMessage: err.localizedDescription, title: nil, onClose: nil)
                         }
                     }
                 })
