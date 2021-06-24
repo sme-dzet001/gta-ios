@@ -8,44 +8,12 @@
 import UIKit
 import PanModal
 
-class ProductionAlertsDetails: UIViewController, PanModalPresentable {
+class ProductionAlertsDetails: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
     var alertData: ProductionAlertsRow?
     private var dataSource: [[String : String]] = []
-    
-    var panScrollable: UIScrollView? {
-        return tableView
-    }
-    
-    var cornerRadius: CGFloat {
-        return 20
-    }
-    
-    var showDragIndicator: Bool {
-        return false
-    }
-    
-    var topOffset: CGFloat {
-        if let keyWindow = UIWindow.key {
-            return keyWindow.safeAreaInsets.top
-        } else {
-            return 0
-        }
-    }
-    
-    var longFormHeight: PanModalHeight {
-        return .maxHeight
-    }
-    
-    var shortFormHeight: PanModalHeight {
-        guard !UIDevice.current.iPhone5_se else { return .maxHeight }
-        let coefficient = (UIScreen.main.bounds.width * 0.8)
-        var statusBarHeight: CGFloat = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 10 : statusBarHeight - 20
-        return PanModalHeight.contentHeight(UIScreen.main.bounds.height - (coefficient + statusBarHeight))
-    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -107,6 +75,40 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
         cell?.titleLabel.text = key
         cell?.descriptionLabel.text = dataSource[indexPath.row][key]
         return cell ?? UITableViewCell()
+    }
+    
+}
+
+extension ProductionAlertsDetails: PanModalPresentable {
+    
+    var panScrollable: UIScrollView? {
+        return tableView
+    }
+    
+    var cornerRadius: CGFloat {
+        return 20
+    }
+    
+    var showDragIndicator: Bool {
+        return false
+    }
+    
+    var topOffset: CGFloat {
+        if let keyWindow = UIWindow.key {
+            return keyWindow.safeAreaInsets.top
+        } else {
+            return 0
+        }
+    }
+    
+    var longFormHeight: PanModalHeight {
+        return .maxHeight
+    }
+    
+    var shortFormHeight: PanModalHeight {
+        guard !UIDevice.current.iPhone5_se else { return .maxHeight }
+        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
+        return PanModalHeight.contentHeight(coefficient - (view.window?.safeAreaInsets.bottom ?? 0))
     }
     
 }
