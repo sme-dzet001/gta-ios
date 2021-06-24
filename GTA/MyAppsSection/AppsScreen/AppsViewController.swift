@@ -310,6 +310,7 @@ extension AppsViewController: AlertPopoverShowDelegate {
             popoverPresentationController.sourceView = sourceView
             popoverPresentationController.sourceRect = rect
             popoverPresentationController.delegate = self
+            self.tabBarController?.tabBar.tintAdjustmentMode = .normal
             present(alertPopoverViewController, animated: true, completion: nil)
         }
     }
