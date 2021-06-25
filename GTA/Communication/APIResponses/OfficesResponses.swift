@@ -72,9 +72,11 @@ struct AllOfficesResponse: Codable {
 struct UserPreferences: Codable {
     var officeId: String?
     var allowEmergencyOutageNotifications: Bool?
+    var allowProductionAlertsNotifications: Bool?
     enum CodingKeys: String, CodingKey {
         case officeId = "office_id"
         case allowEmergencyOutageNotifications = "allow_notifications_emergency_outage"
+        case allowProductionAlertsNotifications = "allow_notifications_production_alerts"
     }
 }
 

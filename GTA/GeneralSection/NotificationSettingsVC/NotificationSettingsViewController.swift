@@ -15,9 +15,12 @@ class NotificationSettingsViewController: UIViewController {
     weak var delegate: NotificationStateUpdatedDelegate?
     
     private var isNotificationAuthorized: Bool = false
-    private var isSwitchOn: Bool {
-        print("sddsdsdsdsdskjdskjdsjkdskjdsjkdskjdsjkds \n \(Preferences.allowEmergencyOutageNotifications)")
+    private var isEmergencySwitchOn: Bool {
         return Preferences.allowEmergencyOutageNotifications && isNotificationAuthorized
+    }
+    
+    private var isProductionAlertSwitchOn: Bool {
+        return Preferences.allowProductionAlertsNotifications && isNotificationAuthorized
     }
     
     override func viewDidLoad() {
@@ -33,7 +36,8 @@ class NotificationSettingsViewController: UIViewController {
         dataProvider?.getCurrentPreferences(completion: {[weak self] code, error in
             if error == nil && code == 200 {
                 DispatchQueue.main.async {
-                    self?.delegate?.notificationStateUpdatedDelegate(state: self?.isSwitchOn ?? false)
+                    self?.delegate?.notificationStateUpdatedDelegate(state: self?.isEmergencySwitchOn ?? false, type: .emergencyOutageNotifications)
+                    self?.delegate?.notificationStateUpdatedDelegate(state: self?.isProductionAlertSwitchOn ?? false, type: .productionAlertsNotifications)
                 }
             }
         })
@@ -48,7 +52,8 @@ class NotificationSettingsViewController: UIViewController {
                 self?.isNotificationAuthorized = true
             }
             DispatchQueue.main.async {
-                self?.delegate?.notificationStateUpdatedDelegate(state: self?.isSwitchOn ?? false)
+                self?.delegate?.notificationStateUpdatedDelegate(state: self?.isEmergencySwitchOn ?? false, type: .emergencyOutageNotifications)
+                self?.delegate?.notificationStateUpdatedDelegate(state: self?.isProductionAlertSwitchOn ?? false, type: .productionAlertsNotifications)
             }
         }
     }
@@ -85,14 +90,26 @@ extension NotificationSettingsViewController: UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SwitcherCell", for: indexPath) as? SwitcherCell
-        if indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
             cell?.label.text = "Emergency Outage Notifications"
             cell?.switchControl.isOn = isNotificationAuthorized ? Preferences.allowEmergencyOutageNotifications : false
-            cell?.switchControl.switchStateChangedDelegate = self
-            delegate = cell
-        } else {
+            cell?.switchControl.switchNotificationsType = .emergencyOutageNotifications
+        default:
             cell?.label.text = "Production Alerts Notifications"
+            cell?.switchControl.isOn = isNotificationAuthorized ? Preferences.allowProductionAlertsNotifications : false
+            cell?.switchControl.switchNotificationsType = .productionAlertsNotifications
         }
+        cell?.switchControl.switchStateChangedDelegate = self
+        delegate = cell
+//        if indexPath.row == 0 {
+//            cell?.label.text = "Emergency Outage Notifications"
+//            cell?.switchControl.isOn = isNotificationAuthorized ? Preferences.allowEmergencyOutageNotifications : false
+//            cell?.switchControl.switchStateChangedDelegate = self
+//            delegate = cell
+//        } else {
+//            cell?.label.text = "Production Alerts Notifications"
+//        }
         return cell ?? UITableViewCell()
     }
     
@@ -102,7 +119,8 @@ extension NotificationSettingsViewController: SwitchStateChangedDelegate {
     func notificationSwitchDidChanged(isOn: Bool, switchControl: Switch) {
         if isNotificationAuthorized {
             if Reachability.isConnectedToNetwork() {
-                dataProvider?.setCurrentPreferences(nottificationsState: isOn, completion: {[weak self] code, error in
+                let notificationsType = switchControl.switchNotificationsType ?? .emergencyOutageNotifications
+                dataProvider?.setCurrentPreferences(notificationsState: isOn, notificationsType: notificationsType, completion: {[weak self] code, error in
                     if error != nil {
                         DispatchQueue.main.async {
                             self?.displayError(errorMessage: "Notification Settings failed", title: nil, onClose: nil)
@@ -134,5 +152,5 @@ extension NotificationSettingsViewController: SwitchStateChangedDelegate {
 }
 
 protocol NotificationStateUpdatedDelegate: AnyObject {
-    func notificationStateUpdatedDelegate(state: Bool)
+    func notificationStateUpdatedDelegate(state: Bool, type: NotificationsType)
 }

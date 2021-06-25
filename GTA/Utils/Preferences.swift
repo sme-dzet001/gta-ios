@@ -11,6 +11,7 @@ class Preferences {
     
     static var officeId: Int?
     static var allowEmergencyOutageNotifications: Bool = true
+    static var allowProductionAlertsNotifications: Bool = true
     static var ticketsSortingType: SortType {
         get {
             let sortType = SortType(rawValue: UserDefaults.standard.string(forKey: Constants.sortingKey) ?? "")
