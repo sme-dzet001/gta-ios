@@ -14,6 +14,7 @@ class GeneralDataProvider {
     
     private var selectedOfficeId: Int?
     private(set) var allowEmergencyOutageNotifications: Bool = true
+    private(set) var allowProductionAlertsNotifications: Bool = true
     
     func getCurrentPreferences(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getCurrentPreferences) {[weak self] (data, cacheError) in
@@ -46,21 +47,39 @@ class GeneralDataProvider {
         if let userPreferencesResponse = userPreferencesResponse {
             selectedOfficeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
             allowEmergencyOutageNotifications = userPreferencesResponse.data.preferences?.allowEmergencyOutageNotifications ?? true
+            allowProductionAlertsNotifications = userPreferencesResponse.data.preferences?.allowProductionAlertsNotifications ?? true
             //Preferences.allowEmergencyOutageNotifications = userPreferencesResponse.data.preferences?.allowEmergencyOutageNotifications ?? true
         }
         completion?(errorCode, retErr)
     }
     
-    func setCurrentPreferences(nottificationsState: Bool, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func setCurrentPreferences(notificationsState: Bool, notificationsType: NotificationsType, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let officeId = Preferences.officeId ?? selectedOfficeId ?? 0
-        let preferences = "{\"office_id\":\"\(officeId)\", \"allow_notifications_emergency_outage\": \(nottificationsState)}"
-        Preferences.allowEmergencyOutageNotifications = nottificationsState
+        let prodAlertsState = Preferences.allowProductionAlertsNotifications
+        let emergencyOutageState = Preferences.allowEmergencyOutageNotifications
+        var preferences = ""
+        switch notificationsType {
+        case .emergencyOutageNotifications:
+            preferences = "{\"office_id\":\"\(officeId)\", \"allow_notifications_emergency_outage\": \(notificationsState), \"allow_notifications_production_alerts\": \(prodAlertsState)}"
+            Preferences.allowEmergencyOutageNotifications = notificationsState
+        default:
+            preferences = "{\"office_id\":\"\(officeId)\", \"allow_notifications_emergency_outage\": \(emergencyOutageState), \"allow_notifications_production_alerts\": \(notificationsState)}"
+            Preferences.allowProductionAlertsNotifications = notificationsState
+        }
         apiManager.setCurrentPreferences(preferences: preferences) { [weak self] (response, errorCode, error) in
             if let _ = response, errorCode == 200, error == nil {
-                self?.allowEmergencyOutageNotifications = nottificationsState
+                if notificationsType == .emergencyOutageNotifications {
+                    self?.allowEmergencyOutageNotifications = notificationsState
+                } else {
+                    self?.allowProductionAlertsNotifications = notificationsState
+                }
                 //Preferences.allowEmergencyOutageNotifications = nottificationsState
             } else {
-                Preferences.allowEmergencyOutageNotifications = !nottificationsState
+                if notificationsType == .emergencyOutageNotifications {
+                    Preferences.allowEmergencyOutageNotifications = !notificationsState
+                } else {
+                    Preferences.allowProductionAlertsNotifications = !notificationsState
+                }
                 completion?(errorCode, ResponseError.generate(error: error))
                 return
             }
@@ -106,4 +125,9 @@ class GeneralDataProvider {
         cacheManager.getCachedResponse(requestURI: path.endpoint, completion: completion)
     }
     
+}
+
+enum NotificationsType {
+    case emergencyOutageNotifications
+    case productionAlertsNotifications
 }

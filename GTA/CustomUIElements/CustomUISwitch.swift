@@ -18,6 +18,7 @@ class Switch: UIControl {
     }
 
     var isStretchEnable: Bool = true
+    var switchNotificationsType: NotificationsType?
 
     var borderWidt: CGFloat = 0 {
         didSet {

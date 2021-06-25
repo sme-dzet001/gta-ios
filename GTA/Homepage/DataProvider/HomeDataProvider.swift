@@ -412,13 +412,14 @@ class HomeDataProvider {
                 selectedOfficeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
                 Preferences.officeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
                 Preferences.allowEmergencyOutageNotifications = userPreferencesResponse.data.preferences?.allowEmergencyOutageNotifications ?? true
+                Preferences.allowProductionAlertsNotifications = userPreferencesResponse.data.preferences?.allowProductionAlertsNotifications ?? true
             }
         }
         completion?(errorCode, retErr, fromCache)
     }
     
     func setCurrentOffice(officeId: Int, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let preferences = "{\"office_id\":\"\(officeId)\", \"allow_notifications_emergency_outage\": \(Preferences.allowEmergencyOutageNotifications)}"
+        let preferences = "{\"office_id\":\"\(officeId)\", \"allow_notifications_emergency_outage\": \(Preferences.allowEmergencyOutageNotifications), \"allow_notifications_production_alerts\": \(Preferences.allowProductionAlertsNotifications)}"
         apiManager.setCurrentPreferences(preferences: preferences) { [weak self] (response, errorCode, error) in
             if let _ = response, errorCode == 200, error == nil {
                 self?.officeSelectionDelegate?.officeWasSelected()
