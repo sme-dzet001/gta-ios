@@ -121,6 +121,10 @@ extension ProductionAlertsViewController: UITableViewDataSource, UITableViewDele
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductionAlertCell", for: indexPath) as? ProductionAlertCell
+        guard (dataSource?.data?.count ?? 0) > indexPath.row, let data = dataSource?.data?[indexPath.row] else { return UITableViewCell() }
+        cell?.alertNumberLabel.text = data.id
+        cell?.dateLabel.text = data.date
+        //cell?.descriptionLabel.text = data.
         return cell ?? UITableViewCell()
     }
     
