@@ -73,7 +73,7 @@ class CacheManager {
         case getGSDTicketComments(userEmail: String, ticketNumber: String)
         case getGTTeamData
         case getGlobalOutage
-        case getAppsAlert(appName: String)
+        case getAppsProductionAlerts
         
         var endpoint: String {
             switch self {
@@ -101,7 +101,7 @@ class CacheManager {
             case .getGSDTicketComments(let userEmail, let ticketNumber): return "/v3/widgets/gsd_my_ticket_comments/\(userEmail)/\(ticketNumber)/data/"
             case .getGTTeamData: return "/v3/widgets/management_team/data/"
             case .getGlobalOutage: return "/v3/widgets/global_alerts/data/detailed"
-            case .getAppsAlert(let appName): return "/v3/widgets/app_alerts/data/\(appName)"
+            case .getAppsProductionAlerts: return "/v3/widgets/app_alerts/data"
             }
         }
     }
