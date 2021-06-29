@@ -33,7 +33,7 @@ class CollaborationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
-        getCollaborationAlerts()
+        //getCollaborationAlerts()
         setUpHardCodeData()
         setUpHeaderView()
         setAccessibilityIdentifiers()
@@ -234,10 +234,10 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CollaborationCounterCell", for: indexPath) as? CollaborationCounterCell {
             let cellData = dataSource[indexPath.row]
             cell.setUpCell(with: cellData, isActive: true, isNeedCornerRadius: true)
-//            if indexPath.row == 2 {
-//                delegate = cell
-//                cell.ticketNumberUpdated(dataProvider.getUnreadArticlesNumber())
-//            }
+            if indexPath.row == 2 {
+                delegate = cell
+                cell.ticketNumberUpdated(dataProvider.getUnreadArticlesNumber())
+            }
             cell.cellTitle.accessibilityIdentifier = "CollaborationScreenCellTitle"
             cell.cellSubtitle.accessibilityIdentifier = "CollaborationScreenCellSubtitle"
             return cell
