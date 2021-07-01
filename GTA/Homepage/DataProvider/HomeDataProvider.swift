@@ -656,13 +656,16 @@ class HomeDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
+        var data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
         if data.values.isEmpty {
             retErr = ResponseError.noDataAvailable
         }
         var count = 0
         for key in data.keys {
-            count += data[key]?.data?.rows?.count ?? 0
+            for (index, _) in (data[key]?.data?.rows ?? []).enumerated() {
+                data[key]?.data?.rows?[index]?.indexes = getDataIndexes(columns: prodAlertsResponse?.meta?.widgetsDataSource?.params?.columns)
+            }
+            count += data[key]?.data?.rows?.filter({$0?.isRead == false}).count ?? 0
         }
         completion?(errorCode, retErr, count)
     }

@@ -122,11 +122,10 @@ class AppsViewController: UIViewController {
     }
     
     @objc private func getProductionAlerts() {
-        dataProvider.getProductionAlerts {[weak self] errorCode, error in
+        dataProvider.getProductionAlerts {[weak self] errorCode, error, count  in
             DispatchQueue.main.async {
                 if error == nil {
-                    let totalCount = self?.dataProvider.alertsData.values.count ?? 0
-                    self?.tabBarController?.tabBar.items?[2].badgeValue = totalCount > 0 ? "\(totalCount)" : nil
+                    self?.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
                     self?.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
                 }
             }
@@ -247,7 +246,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     cell.showFirstChar()
                 }
-                if let alerts = dataProvider.alertsData[cellData.app_name ?? ""] {
+                if let alerts = dataProvider.alertsData[cellData.app_name ?? ""]?.filter({$0.isRead == false}) {
                     cell.popoverShowDelegate = self
                     cell.showAlertScreenDelegate = self
                     cell.setAlert(alertCount: alerts.count)

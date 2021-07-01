@@ -16,6 +16,10 @@ class ProductionAlertsViewController: UIViewController {
     var appName: String?
     var selectedId: String?
     
+    var badgeCount: Int {
+        return dataProvider?.getProductionAlertsCount() ?? 0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
@@ -23,11 +27,6 @@ class ProductionAlertsViewController: UIViewController {
         if let id = selectedId {
             showAlertDetails(for: id)
         }
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        handleBlurShowing(animated: false)
     }
     
     private func setUpNavigationItem() {
@@ -52,37 +51,30 @@ class ProductionAlertsViewController: UIViewController {
         tableView.register(UINib(nibName: "ProductionAlertCell", bundle: nil), forCellReuseIdentifier: "ProductionAlertCell")
     }
     
-    func handleBlurShowing(animated: Bool) {
-        let isReachedBottom = tableView.contentOffset.y >= (tableView.contentSize.height - tableView.frame.size.height).rounded(.towardZero)
-        if animated {
-            UIView.animate(withDuration: 0.2) {
-                self.blurView.alpha = isReachedBottom ? 0 : 1
-            }
-        } else {
-            blurView.alpha = isReachedBottom ? 0 : 1
-        }
-    }
-    
-    func addBlurToView() {
-        let gradientMaskLayer = CAGradientLayer()
-        gradientMaskLayer.frame = blurView.bounds
-        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(0.3) .cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
-        gradientMaskLayer.locations = [0, 0.1, 0.9, 1]
-        blurView.layer.mask = gradientMaskLayer
-    }
-    
     private func showAlertDetails(for id: String) {
         let detailsVC = ProductionAlertsDetails()
         if let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == id.lowercased()}) {
-            detailsVC.alertData = dataProvider?.alertsData[appName ?? ""]?[index]
+            let alertData = dataProvider?.alertsData[appName ?? ""]?[index]
+            detailsVC.alertData = alertData
+            if let summary = alertData?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
+                UserDefaults.standard.setValue(summary, forKey: summary.lowercased())
+            }
         }
+        self.tabBarController?.tabBar.items?[2].badgeValue = badgeCount > 0 ? "\(badgeCount)" : nil
+        self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
         presentPanModal(detailsVC)
     }
     
     private func showAlertDetails(for row: Int) {
         guard (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row else { return }
         let detailsVC = ProductionAlertsDetails()
-        detailsVC.alertData = dataProvider?.alertsData[appName ?? ""]?[row]
+        let alertData = dataProvider?.alertsData[appName ?? ""]?[row]
+        detailsVC.alertData = alertData
+        if let summary = alertData?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
+            UserDefaults.standard.setValue(summary, forKey: summary.lowercased())
+        }
+        self.tabBarController?.tabBar.items?[2].badgeValue = badgeCount > 0 ? "\(badgeCount)" : nil
+        self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
         presentPanModal(detailsVC)
     }
     
@@ -122,10 +114,6 @@ extension ProductionAlertsViewController: UITableViewDataSource, UITableViewDele
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showAlertDetails(for: indexPath.row)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        handleBlurShowing(animated: true)
     }
     
 }

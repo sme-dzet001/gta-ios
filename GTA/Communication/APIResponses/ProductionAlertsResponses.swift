@@ -99,4 +99,10 @@ struct ProductionAlertsRow: Codable {
             return .closed
         }
     }
+    var isRead: Bool {
+        if let _ = UserDefaults.standard.value(forKey: summary?.lowercased() ?? "") {
+            return true
+        }
+        return false
+    }
 }
