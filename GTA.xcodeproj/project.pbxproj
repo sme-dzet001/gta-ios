@@ -2192,8 +2192,8 @@
 			children = (
 				9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */,
 				9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */,
-				9F2C82492657CE02004407B4 /* xib */,
 				9F2C824D2657CE02004407B4 /* GlobalAlertDetailsCell.swift */,
+				9F2C82492657CE02004407B4 /* xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";

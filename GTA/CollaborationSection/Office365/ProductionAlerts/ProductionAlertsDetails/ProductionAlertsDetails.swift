@@ -52,7 +52,7 @@ class ProductionAlertsDetails: UIViewController {
     private func setUpDataSource() {
         dataSource.append(["title" : "title"])
         if let start = alertData?.startDateString?.getFormattedDateStringForMyTickets() {
-            dataSource.append(["Start" : start])
+            dataSource.append(["Notification Date" : start])
         }
         if let close = alertData?.closeDateString?.getFormattedDateStringForMyTickets() {
             dataSource.append(["Close Date" : close])
@@ -155,6 +155,17 @@ extension ProductionAlertsDetails: PanModalPresentable {
     
     var position: CGFloat {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
+    }
+    
+    func willTransition(to state: PanModalPresentationController.PresentationState) {
+        switch state {
+        case .shortForm:
+            UIView.animate(withDuration: 0.2) {
+                self.blurView.alpha = 1
+            }
+        default:
+            return
+        }
     }
     
 }
