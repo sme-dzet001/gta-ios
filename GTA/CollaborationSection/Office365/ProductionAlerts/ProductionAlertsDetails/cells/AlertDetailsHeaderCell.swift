@@ -17,12 +17,11 @@ class AlertDetailsHeaderCell: UITableViewCell {
         switch status {
         case .inProgress, .open:
             statusLabel.text = status == .inProgress ? "In " : "Open"
-            //separatorUnderStatusDate.isHidden = true
-            statusLabel.textColor = UIColor(hex: 0x34C759)
+            statusLabel.textColor = UIColor(hex: 0xFF3E33)
         case .closed:
             statusLabel.text = "Closed"
             //separatorUnderStatusDate.isHidden = false
-            statusLabel.textColor = UIColor(hex: 0xFF3E33)
+            statusLabel.textColor = UIColor(hex: 0x34C759)
         default: statusLabel.text = ""
         }
     }
