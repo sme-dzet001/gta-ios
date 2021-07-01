@@ -247,7 +247,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     cell.showFirstChar()
                 }
-                if let alerts = dataProvider.alertsData[cellData.app_name ?? ""] {
+                if indexPath.section == 0, let alerts = dataProvider.alertsData[cellData.app_name ?? ""] {
                     cell.popoverShowDelegate = self
                     cell.showAlertScreenDelegate = self
                     cell.setAlert(alertCount: alerts.count)
