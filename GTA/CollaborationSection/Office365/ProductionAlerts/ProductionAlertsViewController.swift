@@ -27,6 +27,23 @@ class ProductionAlertsViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let appName = appName, let alertsData = dataProvider?.alertsData[appName] {
+            dataSource = alertsData
+            tableView.reloadData()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let activeProductionAlertId = dataProvider?.activeProductionAlertId {
+            if dataSource != nil {
+                showAlertDetails(for: activeProductionAlertId)
+            }
+        }
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         handleBlurShowing(animated: false)
@@ -74,9 +91,11 @@ class ProductionAlertsViewController: UIViewController {
     
     private func showAlertDetails(for id: String) {
         let detailsVC = ProductionAlertsDetails()
+        detailsVC.dataProvider = dataProvider
+        detailsVC.appName = appName
         // for POC only
         // need to change in future
-        if let index = dataProvider?.alertsData[appName ?? ""]??.data?.firstIndex(where: {$0?.id == id}) {
+        if !(dataProvider?.forceUpdateProductionAlerts ?? false), let index = dataProvider?.alertsData[appName ?? ""]??.data?.firstIndex(where: {$0?.id == id}) {
             dataProvider?.alertsData[appName ?? ""]??.data?[index]?.isRead = true
             detailsVC.alertData = dataProvider?.alertsData[appName ?? ""]??.data?[index]
         }
@@ -88,6 +107,8 @@ class ProductionAlertsViewController: UIViewController {
     private func showAlertDetails(for row: Int) {
         guard (dataSource?.data?.count ?? 0) > row else { return }
         let detailsVC = ProductionAlertsDetails()
+        detailsVC.dataProvider = dataProvider
+        detailsVC.appName = appName
         // for POC only
         // need to change in future
         dataProvider?.alertsData[appName ?? ""]??.data?[row]?.isRead = true

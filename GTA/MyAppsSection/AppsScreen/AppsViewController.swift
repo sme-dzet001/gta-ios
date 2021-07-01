@@ -25,12 +25,18 @@ class AppsViewController: UIViewController {
         return dataProvider.alertsData
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationReceived), object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
         //self.dataProvider.appImageDelegate = self
         setUpNavigationItem()
         setAccessibilityIdentifiers()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(productionAlertNotificationReceived), name: Notification.Name(NotificationsNames.productionAlertNotificationReceived), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,6 +90,9 @@ class AppsViewController: UIViewController {
         dataProvider.getMyAppsStatus {[weak self] (errorCode, error, isFromCache) in
             self?.myAppsLoadingError = isFromCache ? nil : error
             DispatchQueue.main.async {
+                if !isFromCache {
+                    self?.checkForPendingProductionAlert()
+                }
                 if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty {
                     self?.getProductionAlerts()
                     if !isFromCache {
@@ -106,6 +115,9 @@ class AppsViewController: UIViewController {
         dataProvider.getAllApps {[weak self] (errorCode, error, isFromCache) in
             self?.allAppsLoadingError = isFromCache ? nil : error
             DispatchQueue.main.async {
+                if !isFromCache {
+                    self?.checkForPendingProductionAlert()
+                }
                 self?.getProductionAlerts()
                 if error == nil, errorCode == 200, let appsData = self?.dataProvider.appsData.first {
                     self?.errorLabel.isHidden = true
@@ -132,6 +144,17 @@ class AppsViewController: UIViewController {
         }
         self.tabBarController?.tabBar.items?[2].badgeValue = totalCount > 0 ? "\(totalCount)" : nil
         self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+    }
+    
+    private func checkForPendingProductionAlert() {
+        if !dataProvider.alertsData.isEmpty {
+            if let productionAlertInfo = UserDefaults.standard.object(forKey: "productionAlertNotificationReceived") as? [String : Any] {
+                navigateToAppDetails(withProductionAlertInfo: productionAlertInfo)
+            }
+            UserDefaults.standard.removeObject(forKey: "productionAlertNotificationReceived")
+        } else if myAppsLoadingError != nil || allAppsLoadingError != nil {
+            UserDefaults.standard.removeObject(forKey: "productionAlertNotificationReceived")
+        }
     }
     
     private func startAnimation() {
@@ -170,6 +193,35 @@ class AppsViewController: UIViewController {
         self.navigationController?.pushViewController(alertsScreen, animated: true)
     }
     
+    @objc func productionAlertNotificationReceived(notification: NSNotification) {
+        guard let productionAlertInfo = notification.userInfo as? [String : Any] else { return }
+        dataProvider.forceUpdateProductionAlerts = true
+        navigateToAppDetails(withProductionAlertInfo: productionAlertInfo)
+    }
+    
+    private func navigateToAppDetails(withProductionAlertInfo alertData: [String : Any]) {
+        guard let appName = alertData["app_name"] as? String else { return }
+        guard let targetAppData = dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) else { return }
+        guard let productionAlertId = alertData["production_alert_id"] as? String else { return }
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.dismissPanModalIfPresented { [weak self] in
+            guard let self = self else { return }
+            guard let embeddedController = self.navigationController else { return }
+            guard let applicationsTabIdx = self.tabBarController?.viewControllers?.firstIndex(of: embeddedController) else { return }
+            self.tabBarController?.selectedIndex = applicationsTabIdx
+            embeddedController.popToRootViewController(animated: false)
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+            //show details for notification target app
+            let appVC = ApplicationStatusViewController()
+            appVC.appName = targetAppData.app_name
+            appVC.appTitle = targetAppData.app_title
+            appVC.appImageUrl = targetAppData.appImage ?? ""
+            appVC.appLastUpdateDate = targetAppData.lastUpdateDate
+            appVC.systemStatus = targetAppData.appStatus
+            appVC.dataProvider = self.dataProvider
+            self.navigationController?.pushViewController(appVC, animated: true)
+        }
+    }
 }
 
 extension AppsViewController: UITableViewDelegate, UITableViewDataSource {

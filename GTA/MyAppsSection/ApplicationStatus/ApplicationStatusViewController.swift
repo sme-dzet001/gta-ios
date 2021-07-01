@@ -51,8 +51,22 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppDetailsData()
         }
+        if let appName = appName, let alertsData = dataProvider?.alertsData[appName] {
+            self.alertsData = alertsData
+        }
         tableView.reloadData()
         self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if dataProvider?.activeProductionAlertId != nil {
+            if alertsData != nil {
+                showProductionAlertScreen()
+            } else {
+                dataProvider?.activeProductionAlertId = nil
+            }
+        }
     }
     
     private func getAppDetailsData() {

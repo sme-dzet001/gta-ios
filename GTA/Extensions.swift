@@ -714,14 +714,30 @@ extension UITapGestureRecognizer {
 }
 
 extension UNNotification {
+    var payloadDict: [String : AnyObject]? {
+        let userInfo = request.content.userInfo
+        guard let payload = userInfo[Constants.payloadKey] as? String else { return nil }
+        guard let payloadData = Data(base64Encoded: payload) else { return nil }
+        let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject]
+        return payloadDict
+    }
+    
+    private var pushType: String? {
+        guard let payloadDict = payloadDict else { return nil }
+        return payloadDict[Constants.pushTypeKey] as? String
+    }
+    
     var isEmergencyOutage: Bool {
         get {
-            let userInfo = request.content.userInfo
-            guard let payload = userInfo[Constants.payloadKey] as? String else { return false }
-            guard let payloadData = Data(base64Encoded: payload) else { return false }
-            guard let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject] else { return false }
-            guard let pushType = payloadDict[Constants.pushTypeKey] as? String else { return false }
-            return pushType == Constants.pushType
+            guard let pushType = pushType else { return false }
+            return pushType == Constants.pushTypeEmergencyOutage
+        }
+    }
+    
+    var isProductionAlert: Bool {
+        get {
+            guard let pushType = pushType else { return false }
+            return pushType == Constants.pushTypeProductionAlert
         }
     }
 }

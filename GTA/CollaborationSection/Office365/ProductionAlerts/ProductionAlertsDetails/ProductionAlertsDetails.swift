@@ -12,6 +12,9 @@ class ProductionAlertsDetails: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var dataProvider: MyAppsDataProvider?
+    var appName: String?
+    
     var alertData: ProductionAlertsRow?
     private var dataSource: [[String : String]] = []
     
@@ -23,7 +26,37 @@ class ProductionAlertsDetails: UIViewController {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
         setUpTableView()
-        setUpDataSource()
+        loadProductionAlertsData()
+    }
+    
+    private var loadProductionAlertsInProgress: (loadAllAppsInProgress: Bool, loadMyAppsInProgress: Bool) = (false, false) {
+        didSet {
+            if loadProductionAlertsInProgress == (false, false), let appName = appName, let alert = dataProvider?.alertsData[appName], let activeProductionAlertId = dataProvider?.activeProductionAlertId, let index = alert?.data?.firstIndex(where: {$0?.id == activeProductionAlertId}) {
+                dataProvider?.forceUpdateProductionAlerts = false
+                dataProvider?.activeProductionAlertId = nil
+                alertData = alert?.data?[index]
+                setUpDataSource()
+            }
+            tableView.reloadData()
+        }
+    }
+    
+    private func loadProductionAlertsData() {
+        if let forceUpdateProductionAlerts = dataProvider?.forceUpdateProductionAlerts, forceUpdateProductionAlerts {
+            loadProductionAlertsInProgress = (true, true)
+            dataProvider?.getAllAppsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
+                DispatchQueue.main.async {
+                    self?.loadProductionAlertsInProgress.loadAllAppsInProgress = false
+                }
+            })
+            dataProvider?.getMyAppsStatusIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
+                DispatchQueue.main.async {
+                    self?.loadProductionAlertsInProgress.loadMyAppsInProgress = false
+                }
+            })
+        } else {
+            setUpDataSource()
+        }
     }
     
     private func setUpTableView() {

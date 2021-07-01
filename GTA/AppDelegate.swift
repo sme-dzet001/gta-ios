@@ -118,7 +118,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             lastActivityDate = aDate
         }
         if topViewController == nil || topViewController is LoginViewController || topViewController is AuthViewController || lastActivityDate.addingTimeInterval(1200) < Date() {
-            UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
+            if response.notification.isEmergencyOutage {
+                UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
+            }
+            if response.notification.isProductionAlert {
+                UserDefaults.standard.setValue(response.notification.payloadDict, forKey: "productionAlertNotificationReceived")
+            }
             return
         }
         if topViewController is UsageMetricsViewController {
@@ -129,6 +134,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
         if response.notification.isEmergencyOutage {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        }
+        if response.notification.isProductionAlert {
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.productionAlertNotificationReceived), object: nil, userInfo: response.notification.payloadDict)
         }
         completionHandler()
     }

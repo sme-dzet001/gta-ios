@@ -31,6 +31,15 @@ class MyAppsDataProvider {
     private(set) var tipsAndTricksData = [String : [QuickHelpRow]]()
     private(set) var appContactsData: [String : AppContactsData?] = [:]
     var alertsData: [String : ProductionAlertsResponse?] = [:]
+    
+    var myAppsSection: AppsDataSource? {
+        get {
+            return appsData.first(where: { $0.sectionName == "My Apps" })
+        }
+    }
+    
+    var activeProductionAlertId: String?
+    var forceUpdateProductionAlerts: Bool = false
         
     // MARK: - Calling methods
     
@@ -58,6 +67,17 @@ class MyAppsDataProvider {
 //        }
     }
     
+    func getMyAppsStatusIgnoringCache(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
+            if let _ = error {
+                completion?(errorCode, ResponseError.generate(error: error), false)
+            } else {
+                self?.processMyAppsStatusSectionReport(reportResponse, errorCode, error, false, completion)
+            }
+        })
+    }
+    
     func getAllApps(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
@@ -75,6 +95,17 @@ class MyAppsDataProvider {
                 })
             })
         }
+    }
+    
+    func getAllAppsIgnoringCache(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
+            if let _ = error {
+                completion?(errorCode, ResponseError.generate(error: error), false)
+            } else {
+                self?.processAllAppsSectionReport(reportResponse, errorCode, error, false, completion)
+            }
+        })
     }
     
     func getAppDetailsData(for app: String?, completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
@@ -373,9 +404,6 @@ class MyAppsDataProvider {
                 otherAppsSection.cellData.append(response[index])
             }
         }
-        if alertsData.isEmpty {
-            getProductionAlerts(for: myAppsSection.cellData)
-        }
         var result = [AppsDataSource]()
         result.append(myAppsSection)
         result.append(otherAppsSection)
@@ -398,6 +426,9 @@ class MyAppsDataProvider {
         myAppsResponse?.indexes = getDataIndexes(columns: columns)
         if let myAppsResponse = myAppsResponse, self.myAppsStatusData != myAppsResponse {
             self.myAppsStatusData = myAppsResponse
+        }
+        if let myAppsSection = self.myAppsSection, !isFromCache, self.alertsData.isEmpty {
+            getProductionAlerts(for: myAppsSection.cellData)
         }
         if (myAppsResponse?.values ?? []).isEmpty {
             retErr = ResponseError.noDataAvailable
@@ -477,6 +508,9 @@ class MyAppsDataProvider {
         allAppsResponse?.isStatusExpired = isNeedToRemoveStatus
          if let allAppsResponse = allAppsResponse, (allAppsResponse != self.allAppsData || isNeedToRemoveStatus) {
             self.allAppsData = allAppsResponse
+            if let myAppsSection = self.myAppsSection, !isFromCache, self.alertsData.isEmpty {
+                getProductionAlerts(for: myAppsSection.cellData)
+            }
         }
         if allAppsResponse == nil || (allAppsResponse?.myAppsStatus ?? []).isEmpty {
             retErr = ResponseError.noDataAvailable
