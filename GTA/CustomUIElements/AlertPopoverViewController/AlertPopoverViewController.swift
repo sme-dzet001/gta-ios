@@ -10,6 +10,7 @@ import UIKit
 class AlertPopoverViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
     var alertsData: [ProductionAlertsRow?]?
     var appName: String = ""
@@ -31,6 +32,7 @@ class AlertPopoverViewController: UIViewController {
         } else {
             var contentSize = self.tableView.contentSize
             contentSize.height = self.tableView.contentSize.height + 10
+            topConstraint?.constant = 5
             self.preferredContentSize = contentSize
         }
     }
