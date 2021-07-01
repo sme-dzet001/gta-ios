@@ -288,7 +288,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         appVC.appLastUpdateDate = cellData.lastUpdateDate
         appVC.systemStatus = cellData.appStatus
         appVC.dataProvider = dataProvider
-        if let alertsData = dataProvider.alertsData[cellData.app_name ?? ""] {
+        if indexPath.section == 0, let alertsData = dataProvider.alertsData[cellData.app_name ?? ""] {
             appVC.alertsData = alertsData
         }
         
