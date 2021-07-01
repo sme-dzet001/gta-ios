@@ -73,6 +73,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
             DispatchQueue.main.async {
                 if error == nil {
+                    self?.setHardCodeData()
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()
                     } else {
@@ -299,17 +300,13 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0:
-            if let alerts = alertsData, alerts.count > 0 {
-                return 80
-            }
-            return 0
-        case 1:
-            return 80
-        default:
-            return UITableView.automaticDimension
-        }
+        return 80
+//        switch indexPath.section {
+//        case 1:
+//            return 80
+//        default:
+//            return UITableView.automaticDimension
+//        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
