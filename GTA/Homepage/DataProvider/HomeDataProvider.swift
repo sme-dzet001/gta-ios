@@ -127,9 +127,6 @@ class HomeDataProvider {
                 })
             })
         }
-//        getSectionReport {[weak self] (data, errorCode, error, isFromCache) in
-//            self?.processGlobalNewsSectionReport(data, 200, error, isFromCache, completion)
-//        }
     }
     
     private func processGlobalNewsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
@@ -259,10 +256,6 @@ class HomeDataProvider {
                 })
             })
         }
-        
-//        getSectionReport {[weak self] (data, errorCode, error, isFromCache) in
-//            self?.processSpecialAlertsSectionReport(data, errorCode, error, isFromCache, completion)
-//        }
     }
     
     private func fillAlertsData(with alertsResponse: SpecialAlertsResponse) {
@@ -604,6 +597,74 @@ class HomeDataProvider {
             return true
         }
         return false
+    }
+    
+    // MARK: - App Production Alerts related methods
+    
+    func getProductionAlerts(completion: ((_ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleProductionAlertsSectionReport(data, code, cachedError, true, { (code, error, count) in
+                if error == nil {
+                    completion?(code, cachedError, count)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let _ = error {
+                        completion?(errorCode, ResponseError.serverError, 0)
+                    } else {
+                        self?.handleProductionAlertsSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    private func handleProductionAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.productionAlerts.rawValue }?.generationNumber
+        if let _ = generationNumber, generationNumber != 0 {
+            if fromCache {
+                getCachedResponse(for: .getAppsProductionAlerts) {[weak self] (data, error) in
+                    self?.processProductionAlerts(reportData, data, errorCode, error, completion)
+                }
+                return
+            }
+            apiManager.getAppsProductionAlerts(for: generationNumber!, userEmail: KeychainManager.getUsername() ?? "", completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getAppsProductionAlerts)
+                self?.processProductionAlerts(reportData, data, errorCode, error, completion)
+            })
+        } else {
+            let err = error == nil ? ResponseError.commonError : error
+            if error != nil || generationNumber == 0 {
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, 0)
+                return
+            }
+            completion?(0, err, 0)
+        }
+    }
+    
+    private func processProductionAlerts(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
+        var prodAlertsResponse: ProductionAlertsResponse?
+        var retErr = error
+        if let responseData = myAppsDataResponse {
+            do {
+                prodAlertsResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        } else {
+            retErr = ResponseError.commonError
+        }
+        let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
+        if data.values.isEmpty {
+            retErr = ResponseError.noDataAvailable
+        }
+        var count = 0
+        for key in data.keys {
+            count += data[key]?.data?.rows?.count ?? 0
+        }
+        completion?(errorCode, retErr, count)
     }
     
     

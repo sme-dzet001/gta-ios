@@ -30,7 +30,7 @@ class MyAppsDataProvider {
     private var cachedReportData: Data?
     private(set) var tipsAndTricksData = [String : [QuickHelpRow]]()
     private(set) var appContactsData: [String : AppContactsData?] = [:]
-    var alertsData: [String : ProductionAlertsResponse?] = [:]
+    private(set) var alertsData: [String : [ProductionAlertsRow]] = [:]
             
     // MARK: - Apps Status related methods
     
@@ -502,23 +502,6 @@ class MyAppsDataProvider {
         refreshTimer = nil
     }
     
-    // temp. For UI POC ONLY!
-    func getProductionAlerts(for apps: [AppInfo]) {
-        for app in apps {
-            if Bool.random() {
-                let randomInt = Int.random(in: 1..<9)
-                var alertsRows: [ProductionAlertsRow] = []
-                for i in 0...randomInt {
-                    alertsRows.append(ProductionAlertsRow(id: "DPSX-169\(i)", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams"))
-                }
-               // let productionAlertsRows = [ProductionAlertsRow](repeating: ProductionAlertsRow(id: "DPSX-169\()", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams"), count: randomInt)
-                alertsData[app.app_name ?? ""] = ProductionAlertsResponse(meta: nil, data: alertsRows)
-            } else {
-                alertsData[app.app_name ?? ""] = nil
-            }
-        }
-    }
-    
     // MARK: - Production alerts related methods
     
     func getProductionAlerts(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -550,8 +533,7 @@ class MyAppsDataProvider {
                 }
                 return
             }
-            apiManager.getAppsProductionAlerts(for: generationNumber!, appName: "GOLD", completion: { [weak self] (data, errorCode, error) in
-                //let dataWithStatus = self?.addStatusRequest(to: data)
+            apiManager.getAppsProductionAlerts(for: generationNumber!, userEmail: KeychainManager.getUsername() ?? "", completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getAppsProductionAlerts)
                 self?.processProductionAlerts(reportData, data, errorCode, error, completion)
             })
@@ -566,23 +548,103 @@ class MyAppsDataProvider {
     }
     
     private func processProductionAlerts(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        var myAppsResponse: MyAppsResponse?
+        var prodAlertsResponse: ProductionAlertsResponse?
         var retErr = error
         if let responseData = myAppsDataResponse {
             do {
-                myAppsResponse = try DataParser.parse(data: responseData)
+                prodAlertsResponse = try DataParser.parse(data: responseData)
             } catch {
                 retErr = ResponseError.parsingError
             }
         } else {
             retErr = ResponseError.commonError
         }
-        let columns = myAppsResponse?.meta?.widgetsDataSource?.params?.columns
-        myAppsResponse?.indexes = getDataIndexes(columns: columns)
-        if let myAppsResponse = myAppsResponse, self.myAppsStatusData != myAppsResponse {
-            self.myAppsStatusData = myAppsResponse
+        setProductAlerts(from: prodAlertsResponse)
+        let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
+        if data.values.isEmpty {
+            retErr = ResponseError.noDataAvailable
         }
-        if (myAppsResponse?.values ?? []).isEmpty {
+        completion?(errorCode, retErr)
+    }
+    
+    private func setProductAlerts(from response: ProductionAlertsResponse?) {
+        let columns = response?.meta?.widgetsDataSource?.params?.columns ?? []
+        let indexes = getDataIndexes(columns: columns)
+        var data = response?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
+        for key in data.keys {
+            for (index, _) in (data[key]?.data?.rows ?? []).enumerated() {
+                data[key]?.data?.rows?[index]?.indexes = indexes
+                data[key]?.data?.rows?.removeAll(where: {$0?.isExpired == true})
+            }
+            let inProgressAlerts = data[key]?.data?.rows?.filter({$0?.status == .inProgress}).compactMap({$0}) ?? []
+            let closedAlerts = data[key]?.data?.rows?.filter({$0?.status == .closed}).compactMap({$0}) ?? []
+            if inProgressAlerts.count >= 1 {
+                alertsData[key] = inProgressAlerts.sorted(by: {$0.startDate.timeIntervalSince1970 > $1.startDate.timeIntervalSince1970})
+            } else if closedAlerts.count >= 1 {
+                alertsData[key] = closedAlerts.sorted(by: {$0.closeDate.timeIntervalSince1970 > $1.closeDate.timeIntervalSince1970})
+            }
+        }
+       // return dataWasChanged
+    }
+    
+    func getProductionAlert(for app: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleProductionAlertsSectionReport(data, code, cachedError, true, { (code, error) in
+                if error == nil {
+                    completion?(code, cachedError)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let _ = error {
+                        completion?(errorCode, ResponseError.serverError)
+                    } else {
+                        self?.handleProductionAlertsSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    private func handleAppProductionAlertsSectionReport(for app: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.productionAlerts.rawValue }?.generationNumber
+        if let _ = generationNumber, generationNumber != 0 {
+            if fromCache {
+                getCachedResponse(for: .getAppProductionAlerts(appName: app)) {[weak self] (data, error) in
+                    self?.processAppProductionAlerts(appName: app, reportData, data, errorCode, error, completion)
+                }
+                return
+            }
+            apiManager.getAppsProductionAlerts(for: generationNumber!, userEmail: KeychainManager.getUsername() ?? "", appName: app, completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getAppProductionAlerts(appName: app))
+                self?.processAppProductionAlerts(appName: app, reportData, data, errorCode, error, completion)
+            })
+        } else {
+            let err = error == nil ? ResponseError.commonError : error
+            if error != nil || generationNumber == 0 {
+                completion?(0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
+            completion?(0, err)
+        }
+    }
+    
+    private func processAppProductionAlerts(appName: String, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var prodAlertsResponse: ProductionAlertsResponse?
+        var retErr = error
+        if let responseData = myAppsDataResponse {
+            do {
+                prodAlertsResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        } else {
+            retErr = ResponseError.commonError
+        }
+        setProductAlerts(from: prodAlertsResponse)
+        let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
+        if data.values.isEmpty {
             retErr = ResponseError.noDataAvailable
         }
         completion?(errorCode, retErr)
@@ -646,9 +708,6 @@ class MyAppsDataProvider {
             } else {
                 otherAppsSection.cellData.append(response[index])
             }
-        }
-        if alertsData.isEmpty {
-            getProductionAlerts(for: myAppsSection.cellData)
         }
         var result = [AppsDataSource]()
         result.append(myAppsSection)

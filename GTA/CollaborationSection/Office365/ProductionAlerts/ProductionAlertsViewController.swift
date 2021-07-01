@@ -13,8 +13,6 @@ class ProductionAlertsViewController: UIViewController {
     @IBOutlet weak var blurView: UIView!
     
     var dataProvider: MyAppsDataProvider?
-    
-    var dataSource: ProductionAlertsResponse?
     var appName: String?
     var selectedId: String?
     
@@ -50,6 +48,7 @@ class ProductionAlertsViewController: UIViewController {
     private func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "ProductionAlertCell", bundle: nil), forCellReuseIdentifier: "ProductionAlertCell")
     }
     
@@ -74,38 +73,30 @@ class ProductionAlertsViewController: UIViewController {
     
     private func showAlertDetails(for id: String) {
         let detailsVC = ProductionAlertsDetails()
-        // for POC only
-        // need to change in future
-        if let index = dataProvider?.alertsData[appName ?? ""]??.data?.firstIndex(where: {$0?.id == id}) {
-            dataProvider?.alertsData[appName ?? ""]??.data?[index]?.isRead = true
-            detailsVC.alertData = dataProvider?.alertsData[appName ?? ""]??.data?[index]
-        }
-       // dataProvider?.alertsData[appName ?? ""]??.data?[row]?.isRead = true
-        
-        presentDetails(detailsVC: detailsVC)
-    }
-    
-    private func showAlertDetails(for row: Int) {
-        guard (dataSource?.data?.count ?? 0) > row else { return }
-        let detailsVC = ProductionAlertsDetails()
-        // for POC only
-        // need to change in future
-        dataProvider?.alertsData[appName ?? ""]??.data?[row]?.isRead = true
-        detailsVC.alertData = dataProvider?.alertsData[appName ?? ""]??.data?[row]
-        presentDetails(detailsVC: detailsVC)
-    }
-    
-    private func presentDetails(detailsVC: ProductionAlertsDetails) {
-        var totalCount = 0
-        if let countArr = dataProvider?.alertsData.compactMap({$0.value?.data}) {
-            for i in countArr {
-                totalCount += i.filter({$0?.isRead == false}).count
-            }
-            let value = (Int(self.tabBarController?.tabBar.items?[2].badgeValue ?? "") ?? 0) - 1
-            self.tabBarController?.tabBar.items?[2].badgeValue = value > 0 ? "\(value)" : nil
+        if let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == id.lowercased()}) {
+            detailsVC.alertData = dataProvider?.alertsData[appName ?? ""]?[index]
         }
         presentPanModal(detailsVC)
     }
+    
+    private func showAlertDetails(for row: Int) {
+        guard (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row else { return }
+        let detailsVC = ProductionAlertsDetails()
+        detailsVC.alertData = dataProvider?.alertsData[appName ?? ""]?[row]
+        presentPanModal(detailsVC)
+    }
+    
+//    private func presentDetails(detailsVC: ProductionAlertsDetails) {
+//        var totalCount = 0
+//        if let countArr = dataProvider?.alertsData.compactMap({$0.value?.data}) {
+//            for i in countArr {
+//                totalCount += i.filter({$0?.isRead == false}).count
+//            }
+//            let value = (Int(self.tabBarController?.tabBar.items?[2].badgeValue ?? "") ?? 0) - 1
+//            self.tabBarController?.tabBar.items?[2].badgeValue = value > 0 ? "\(value)" : nil
+//        }
+//        presentPanModal(detailsVC)
+//    }
     
     @objc private func backPressed() {
         self.navigationController?.popViewController(animated: true)
@@ -116,15 +107,16 @@ class ProductionAlertsViewController: UIViewController {
 extension ProductionAlertsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource?.data?.count ?? 0
+        return dataProvider?.alertsData[appName ?? ""]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductionAlertCell", for: indexPath) as? ProductionAlertCell
-        guard (dataSource?.data?.count ?? 0) > indexPath.row, let data = dataSource?.data?[indexPath.row] else { return UITableViewCell() }
-        cell?.alertNumberLabel.text = data.id
-        cell?.dateLabel.text = data.date
-        //cell?.descriptionLabel.text = data.
+        let data = dataProvider?.alertsData[appName ?? ""]
+        guard (data?.count ?? 0) > indexPath.row, let cellData = data?[indexPath.row] else { return UITableViewCell() }
+        cell?.alertNumberLabel.text = cellData.ticketNumber
+        cell?.dateLabel.text = cellData.closeDateString == nil ? cellData.startDateString?.getFormattedDateStringForProdAlert() : cellData.closeDateString?.getFormattedDateStringForProdAlert()
+        cell?.descriptionLabel.text = cellData.description
         return cell ?? UITableViewCell()
     }
     

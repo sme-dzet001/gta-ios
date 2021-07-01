@@ -74,6 +74,7 @@ class CacheManager {
         case getGTTeamData
         case getGlobalOutage
         case getAppsProductionAlerts
+        case getAppProductionAlerts(appName: String)
         
         var endpoint: String {
             switch self {
@@ -102,6 +103,7 @@ class CacheManager {
             case .getGTTeamData: return "/v3/widgets/management_team/data/"
             case .getGlobalOutage: return "/v3/widgets/global_alerts/data/detailed"
             case .getAppsProductionAlerts: return "/v3/widgets/app_alerts/data"
+            case .getAppProductionAlerts(let appName): return "/v3/widgets/app_alerts/\(appName)/data"
             }
         }
     }

@@ -17,9 +17,8 @@ class AlertPopoverViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let newAlerts = alertsData?.filter({$0?.isRead == false})
-        let count = (newAlerts?.count ?? 0) > 2 ? (newAlerts?.count ?? 0) - 2 : 0
-        alertsData = Array(newAlerts?.dropFirst(count) ?? [])
+        let count = (alertsData?.count ?? 0) > 2 ? (alertsData?.count ?? 0) - 2 : 0
+        alertsData = Array(alertsData?.dropFirst(count) ?? [])
         setUpTableView()
         self.tableView.sizeToFit()
     }
@@ -27,7 +26,13 @@ class AlertPopoverViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.layoutIfNeeded()
-        self.preferredContentSize = self.tableView.contentSize
+        if (alertsData?.count ?? 0) > 1 {
+            self.preferredContentSize = self.tableView.contentSize
+        } else {
+            var contentSize = self.tableView.contentSize
+            contentSize.height = self.tableView.contentSize.height + 10
+            self.preferredContentSize = contentSize
+        }
     }
     
     private func setUpTableView() {
@@ -48,8 +53,8 @@ extension AlertPopoverViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let count = alertsData?.count, count > indexPath.row, let data = alertsData?[indexPath.row] else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlertPopoverCell", for: indexPath) as? AlertPopoverCell
-        cell?.ticketNumberLabel.text = data.id
-        cell?.descriptionLabel.text = data.title
+        cell?.ticketNumberLabel.text = data.ticketNumber
+        cell?.descriptionLabel.text = data.description
         cell?.separator.isHidden = indexPath.row == count - 1
         return cell ?? UITableViewCell()
     }
@@ -57,7 +62,7 @@ extension AlertPopoverViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard (alertsData?.count ?? 0) > indexPath.row else { return }
         self.dismiss(animated: false, completion: nil)
-        delegate?.didSelectAlertId(alertsData?[indexPath.row]?.id, appName: appName)
+        delegate?.didSelectAlertId(alertsData?[indexPath.row]?.ticketNumber, appName: appName)
     }
     
 }

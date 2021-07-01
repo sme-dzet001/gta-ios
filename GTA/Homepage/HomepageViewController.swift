@@ -32,7 +32,9 @@ class HomepageViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
         
         NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlertsCount), name: UIApplication.didBecomeActiveNotification, object: nil)
         collectionView.accessibilityIdentifier = "HomeScreenCollectionView"
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,10 +42,12 @@ class HomepageViewController: UIViewController {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadNewsData()
         }
+        getProductionAlertsCount()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     private func loadNewsData() {
@@ -129,6 +133,15 @@ class HomepageViewController: UIViewController {
                 embeddedController.popToRootViewController(animated: false)
                 self.dataProvider.forceUpdateAlertDetails = true
                 self.showGlobalAlertModal()
+            }
+        }
+    }
+    
+    @objc private func getProductionAlertsCount() {
+        dataProvider.getProductionAlerts {[weak self] _, _, count in
+            DispatchQueue.main.async {
+                self?.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
+                self?.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
             }
         }
     }

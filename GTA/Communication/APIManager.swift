@@ -252,10 +252,13 @@ class APIManager: NSObject, URLSessionDelegate {
         session.dataTask(with: endpoint, completionHandler: completion).resume()
     }
     
-    func getAppsProductionAlerts(for generationNumber: Int, appName: String, completion: @escaping ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)) {
-        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? "", "username" : "kostiantyn.dzetsiuk.intimetechnologies@sonymusic.com"]
-        let requestBodyParams = ["s1": appName]
-        self.makeRequest(endpoint: .getProductionAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyJSONParams: requestBodyParams, completion: completion)
+    func getAppsProductionAlerts(for generationNumber: Int, userEmail: String, appName: String? = nil, completion: @escaping ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)) {
+        let requestHeaders = ["Content-Type": "text/plain", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        var requestBodyParams = ["s1" : userEmail]
+        if let _ = appName {
+            requestBodyParams["s2"] = appName!
+        }
+        self.makeRequest(endpoint: .getProductionAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyParams: requestBodyParams, completion: completion)
     }
     
     // MARK: - Collaboration methods
