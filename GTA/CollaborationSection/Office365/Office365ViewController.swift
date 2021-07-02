@@ -17,6 +17,7 @@ class Office365ViewController: UIViewController {
     
     var dataProvider: CollaborationDataProvider?
     var appName: String = ""
+    var alertsData: ProductionAlertsResponse?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +90,7 @@ class Office365ViewController: UIViewController {
         tableView.dataSource = self
         tableView.rowHeight = 80
         tableView.register(UINib(nibName: "Office365AppCell", bundle: nil), forCellReuseIdentifier: "Office365AppCell")
+        tableView.register(UINib(nibName: "ProductionAlertCounterCell", bundle: nil), forCellReuseIdentifier: "ProductionAlertCounterCell")
     }
     
     private func showAppDetailsScreen(with details: CollaborationAppDetailsRow) {
@@ -108,7 +110,14 @@ class Office365ViewController: UIViewController {
 
 extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return alertsData == nil ? 1 : 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 && alertsData != nil {
+            return 1
+        }
         if let count = dataProvider?.collaborationAppDetailsRows?.count {
             return count
         }
@@ -116,6 +125,11 @@ extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0, let _ = alertsData {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProductionAlertCounterCell", for: indexPath) as? ProductionAlertCounterCell
+            cell?.updatesNumberLabel.text = "\(alertsData?.data?.count ?? 0)"
+            return cell ?? UITableViewCell()
+        }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "Office365AppCell", for: indexPath) as? Office365AppCell {
             guard let cellData = dataProvider?.collaborationAppDetailsRows else { return cell }
             cell.setUpCell(with: cellData[indexPath.row], isAppsScreen: true)
@@ -140,6 +154,12 @@ extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0, alertsData != nil {
+            let alertsScreen = ProductionAlertsViewController()
+            //alertsScreen.dataSource = alertsData
+            self.navigationController?.pushViewController(alertsScreen, animated: true)
+            return
+        }
         guard let detailsRows = dataProvider?.collaborationAppDetailsRows, indexPath.row < detailsRows.count else { return }
         showAppDetailsScreen(with: detailsRows[indexPath.row])
     }

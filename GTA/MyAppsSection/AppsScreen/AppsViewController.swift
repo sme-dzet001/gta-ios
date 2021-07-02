@@ -28,10 +28,12 @@ class AppsViewController: UIViewController {
         //self.dataProvider.appImageDelegate = self
         setUpNavigationItem()
         setAccessibilityIdentifiers()
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getProductionAlerts()
         addErrorLabel(errorLabel)
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
@@ -43,6 +45,7 @@ class AppsViewController: UIViewController {
             self.getMyApps()
         }
         activateStatusRefresh()
+        self.tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -118,6 +121,17 @@ class AppsViewController: UIViewController {
         }
     }
     
+    @objc private func getProductionAlerts() {
+        dataProvider.getProductionAlerts {[weak self] errorCode, error, count  in
+            DispatchQueue.main.async {
+                if error == nil {
+                    self?.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
+                    self?.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+                }
+            }
+        }
+    }
+    
     private func startAnimation() {
         guard dataProvider.appsData.isEmpty else { return }
         self.errorLabel.isHidden = true
@@ -142,6 +156,19 @@ class AppsViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "ApplicationCell", bundle: nil), forCellReuseIdentifier: "ApplicationCell")
+    }
+    
+    private func showProductionAlertScreen(id: String?, appName: String) {
+        guard let id = id else { return }
+        let alertsScreen = ProductionAlertsViewController()
+        alertsScreen.appName = appName
+        alertsScreen.selectedId = id
+        alertsScreen.dataProvider = dataProvider
+        self.navigationController?.pushViewController(alertsScreen, animated: true)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
 }
@@ -196,7 +223,8 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             return createErrorCell(with: error.localizedDescription)
         } else if let cell = tableView.dequeueReusableCell(withIdentifier: "ApplicationCell", for: indexPath) as? ApplicationCell {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
-                cell.setUpCell(with: dataProvider.appsData[indexPath.section].cellData[indexPath.row])
+                let cellData = dataProvider.appsData[indexPath.section].cellData[indexPath.row]
+                cell.setUpCell(with: cellData)
                 //cell.startAnimation()
                 cell.appIcon.accessibilityIdentifier = "AppsScreenCellIcon"
                 cell.appStatus.accessibilityIdentifier = "AppsScreenAppStatus"
@@ -217,6 +245,11 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
                 })
                 } else {
                     cell.showFirstChar()
+                }
+                if let alerts = dataProvider.alertsData[cellData.app_name ?? ""]?.filter({$0.isRead == false}) {
+                    cell.popoverShowDelegate = self
+                    cell.showAlertScreenDelegate = self
+                    cell.setAlert(alertCount: alerts.count)
                 }
                 cell.separator.isHidden = indexPath.row != dataProvider.appsData[indexPath.section].cellData.count - 1
             } else {
@@ -247,42 +280,68 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         guard indexPath.section < dataProvider.appsData.count else { return }
         guard !dataProvider.appsData[indexPath.section].cellData.isEmpty else { return }
         let appVC = ApplicationStatusViewController()
-        appVC.appName = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_name
-        appVC.appTitle = dataProvider.appsData[indexPath.section].cellData[indexPath.row].app_title
-        appVC.appImageUrl = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appImage ?? ""
-        appVC.appLastUpdateDate = dataProvider.appsData[indexPath.section].cellData[indexPath.row].lastUpdateDate
-        appVC.systemStatus = dataProvider.appsData[indexPath.section].cellData[indexPath.row].appStatus
+        let cellData = dataProvider.appsData[indexPath.section].cellData[indexPath.row]
+        appVC.appName = cellData.app_name ?? ""
+        appVC.appTitle = cellData.app_title
+        appVC.appImageUrl = cellData.appImage ?? ""
+        appVC.appLastUpdateDate = cellData.lastUpdateDate
+        appVC.systemStatus = cellData.appStatus
         appVC.dataProvider = dataProvider
+        if let alertsData = dataProvider.alertsData[cellData.app_name ?? ""] {
+            appVC.alertsData = alertsData
+        }
+        
         self.navigationController?.pushViewController(appVC, animated: true)
     }
 
 }
-//
-//extension AppsViewController: AppImageDelegate {
-//
-//    func setImage(with data: Data?, for appName: String?, error: Error?) {
-//        DispatchQueue.main.async {
-//            let sectionIndex = self.dataProvider.appsData.firstIndex(where: {$0.cellData.contains(where: {$0.app_name == appName})})
-//            if let _ = sectionIndex {
-//                let rowIndex = self.dataProvider.appsData[sectionIndex!].cellData.firstIndex(where: {$0.app_name == appName})
-//                guard let _ = rowIndex else { return }
-//                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageData = data
-//                var isFailed: Bool = false
-//                if let _ = data, let _ = UIImage(data: data!) {
-//                    isFailed = false
-//                } else {
-//                    isFailed = true
-//                }
-//                self.dataProvider.appsData[sectionIndex!].cellData[rowIndex!].appImageData.imageStatus = isFailed ? .failed : .loaded
-//                self.setCellImageView(for: IndexPath(row: rowIndex!, section: sectionIndex!))
-//            }
-//        }
-//    }
-//
-//    private func setCellImageView(for indexPath: IndexPath) {
-//        if let cell = self.tableView.cellForRow(at: indexPath) as? ApplicationCell {
-//            cell.setUpCell(with: self.dataProvider.appsData[indexPath.section].cellData[indexPath.row])
-//        }
-//    }
-//
-//}
+
+extension AppsViewController: AlertPopoverShowDelegate {
+    func showAlertPopover(for rect: CGRect, sourceView: UIView) {
+        guard let indexPath = tableView.indexPath(for: sourceView as? UITableViewCell ?? UITableViewCell()) else { return }
+        let alertPopoverViewController = AlertPopoverViewController()
+        alertPopoverViewController.modalPresentationStyle = .popover
+        let cellData = dataProvider.appsData[indexPath.section].cellData[indexPath.row]
+        alertPopoverViewController.alertsData = dataProvider.alertsData[cellData.app_name ?? ""]
+        alertPopoverViewController.appName = cellData.app_name ?? ""
+        alertPopoverViewController.delegate = self
+        alertPopoverViewController.preferredContentSize = alertPopoverViewController.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        if let popoverPresentationController = alertPopoverViewController.popoverPresentationController {
+            popoverPresentationController.permittedArrowDirections = .right
+            popoverPresentationController.sourceView = sourceView
+            popoverPresentationController.sourceRect = rect
+            popoverPresentationController.delegate = self
+            self.tabBarController?.tabBar.tintAdjustmentMode = .normal
+            present(alertPopoverViewController, animated: true, completion: nil)
+        }
+    }
+}
+
+extension AppsViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+
+    }
+
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
+        return true
+    }
+}
+
+extension AppsViewController: AlertPopoverSelectionDelegate {
+    func didSelectAlertId(_ id: String?, appName: String) {
+        showProductionAlertScreen(id: id, appName: appName)
+    }
+    
+}
+
+extension AppsViewController: ShowAlertScreenDelegate {
+    func showAlertScreen() {
+        let alertsScreen = ProductionAlertsViewController()
+        //alertsScreen.dataSource = alertsData
+        self.navigationController?.pushViewController(alertsScreen, animated: true)
+    }
+}

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Light.ttf">
+            <string>SFProText-Light</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProductionAlertCell" rowHeight="258" id="KGk-i7-Jjw" customClass="ProductionAlertCell" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="436" height="258"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="436" height="258"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2021-02-10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNG-LZ-TsN">
+                        <rect key="frame" x="24" y="116.5" width="90" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="Hhx-Ig-goJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="14"/>
+                        <color key="textColor" red="0.51372549019607838" green="0.51372549019607838" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DPSX-169" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BUg-Lm-4PG">
+                        <rect key="frame" x="24" y="94.5" width="66.5" height="17"/>
+                        <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9G0-Q4-fKF">
+                        <rect key="frame" x="134" y="21" width="278" height="217"/>
+                        <string key="text">GRPS/MMT/Gold Downtime.
+Weds 10th Feb, 2020 6am
+EST/12pm CESTGRPS/MMT/Gold Downtime.
+Weds 10th Feb, 2020 6am
+EST/12pm CESTGRPS/MMT/Gold Downtime.
+Weds 10th Feb, 2020 6am
+EST/12pm CEST</string>
+                        <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Af7-g9-mYA" userLabel="separator">
+                        <rect key="frame" x="0.0" y="257" width="436" height="1"/>
+                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="Sfd-WS-g3E"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="9G0-Q4-fKF" firstAttribute="leading" secondItem="MNG-LZ-TsN" secondAttribute="trailing" constant="20" id="0mG-w6-LDP"/>
+                    <constraint firstAttribute="bottom" secondItem="Af7-g9-mYA" secondAttribute="bottom" id="3Iu-kd-2hS"/>
+                    <constraint firstAttribute="trailing" secondItem="9G0-Q4-fKF" secondAttribute="trailing" constant="24" id="3YD-Qe-7fQ"/>
+                    <constraint firstItem="Af7-g9-mYA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5My-Cc-tdR"/>
+                    <constraint firstAttribute="trailing" secondItem="Af7-g9-mYA" secondAttribute="trailing" id="HAw-UO-eXo"/>
+                    <constraint firstAttribute="bottom" secondItem="9G0-Q4-fKF" secondAttribute="bottom" constant="20" id="Nef-Mu-fqN"/>
+                    <constraint firstItem="BUg-Lm-4PG" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" multiplier="0.8" id="T5v-HA-0zq"/>
+                    <constraint firstItem="MNG-LZ-TsN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="WfY-Ud-nKn"/>
+                    <constraint firstItem="MNG-LZ-TsN" firstAttribute="top" secondItem="BUg-Lm-4PG" secondAttribute="bottom" constant="5" id="fQI-CQ-uGH"/>
+                    <constraint firstItem="BUg-Lm-4PG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="lgY-C5-ZqD"/>
+                    <constraint firstItem="9G0-Q4-fKF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="21" id="w13-b4-Eii"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="alertNumberLabel" destination="BUg-Lm-4PG" id="R8a-XW-aiU"/>
+                <outlet property="dateLabel" destination="MNG-LZ-TsN" id="uC4-3j-uJH"/>
+                <outlet property="descriptionLabel" destination="9G0-Q4-fKF" id="KgB-fA-4Qx"/>
+            </connections>
+            <point key="canvasLocation" x="178.2608695652174" y="135.26785714285714"/>
+        </tableViewCell>
+    </objects>
+</document>

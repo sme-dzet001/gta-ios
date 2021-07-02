@@ -24,10 +24,16 @@ class CollaborationViewController: UIViewController {
     
     private var dataSource: [CollaborationCellData] = []
     private weak var delegate: TicketsNumberDelegate?
+    private var alertsData: ProductionAlertsResponse?
+    private var alertsCount: Int? {
+        guard let count = alertsData?.data?.count else { return nil }
+        return count > 0 ? count : nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
+        //getCollaborationAlerts()
         setUpHardCodeData()
         setUpHeaderView()
         setAccessibilityIdentifiers()
@@ -179,6 +185,7 @@ class CollaborationViewController: UIViewController {
     private func showOffice365Screen() {
         let office365 = Office365ViewController()
         office365.appName = "Office365"
+        //office365.alertsData = alertsData
         office365.dataProvider = dataProvider
         navigationController?.pushViewController(office365, animated: true)
     }
