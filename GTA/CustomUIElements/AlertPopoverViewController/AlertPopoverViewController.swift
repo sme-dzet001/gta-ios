@@ -56,7 +56,7 @@ extension AlertPopoverViewController: UITableViewDataSource, UITableViewDelegate
         guard let count = alertsData?.count, count > indexPath.row, let data = alertsData?[indexPath.row] else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlertPopoverCell", for: indexPath) as? AlertPopoverCell
         cell?.ticketNumberLabel.text = data.ticketNumber
-        cell?.descriptionLabel.text = data.description
+        cell?.descriptionLabel.text = data.summary
         cell?.separator.isHidden = indexPath.row == count - 1
         return cell ?? UITableViewCell()
     }

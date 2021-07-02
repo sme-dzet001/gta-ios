@@ -108,7 +108,7 @@ extension ProductionAlertsViewController: UITableViewDataSource, UITableViewDele
         guard (data?.count ?? 0) > indexPath.row, let cellData = data?[indexPath.row] else { return UITableViewCell() }
         cell?.alertNumberLabel.text = cellData.ticketNumber
         cell?.dateLabel.text = cellData.closeDateString == nil ? cellData.startDateString?.getFormattedDateStringForProdAlert() : cellData.closeDateString?.getFormattedDateStringForProdAlert()
-        cell?.descriptionLabel.text = cellData.description
+        cell?.descriptionLabel.text = cellData.summary
         return cell ?? UITableViewCell()
     }
     

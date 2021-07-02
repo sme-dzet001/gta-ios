@@ -64,14 +64,17 @@ class ProductionAlertsDetails: UIViewController {
         if let start = alertData?.startDateString?.getFormattedDateStringForMyTickets() {
             dataSource.append(["Notification Date" : start])
         }
-        if let close = alertData?.closeDateString?.getFormattedDateStringForMyTickets() {
+        if alertData?.status == .closed, let close = alertData?.closeDateString?.getFormattedDateStringForMyTickets() {
             dataSource.append(["Close Date" : close])
         }
-//        if let duration = alertData?.d {
-//            dataSource.append(["Duration" : duration])
-//        }
-        if let summary = alertData?.summary {
+        if let duration = alertData?.duration {
+            dataSource.append(["Estimated Duration" : duration])
+        }
+        if let summary = alertData?.description {
             dataSource.append(["Summary" : summary])
+        }
+        if let impactedSystems = alertData?.impactedSystems {
+            dataSource.append(["Affected Systems" : impactedSystems])
         }
     }
     
@@ -121,7 +124,7 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AlertDetailsHeaderCell", for: indexPath) as? AlertDetailsHeaderCell
             cell?.alertNumberLabel.text = alertData?.ticketNumber
-            cell?.alertTitleLabel.text = alertData?.description
+            cell?.alertTitleLabel.text = alertData?.summary
             cell?.setStatus(alertData?.status)
             return cell ?? UITableViewCell()
         }
