@@ -47,7 +47,13 @@ class ArticleViewController: UIViewController {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
         articleTextView.delegate = self
-        if let _ = attributedArticleText {
+        if let attributedText = attributedArticleText {
+            attributedText.enumerateAttribute(.link, in: NSRange(location: 0, length: attributedText.length), options: .longestEffectiveRangeNotRequired) { attributes, range, _ in
+                if attributes != nil {
+                    attributedText.insert(NSAttributedString(string: " "), at: range.location)
+                }
+                
+            }
             articleTextView.attributedText = attributedArticleText
         } else {
             articleTextView.text = articleText
