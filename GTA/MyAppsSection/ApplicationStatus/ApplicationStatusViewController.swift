@@ -37,6 +37,9 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     var detailsDataResponseError: Error?
     weak var detailsDataDelegate: DetailsDataDelegate?
     var alertsData: [ProductionAlertsRow]?
+    private var alertsCount: Int {
+        return dataProvider?.alertsData[appName]?.filter({$0.isRead == false && $0.isExpired == false}).count ?? 0
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -313,9 +316,8 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         let dataArray = dataSource[indexPath.section].cellData
         if indexPath.section == 0, indexPath.row == 0, alertsData != nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProductionAlertCounterCell", for: indexPath) as? ProductionAlertCounterCell
-            let totalCount = dataProvider?.alertsData[appName]?.count ?? 0
             //let totalCount = alertsData?.data?.filter({$0?.isRead == false}).count ?? 0
-            cell?.setAlert(alertCount: totalCount == 0 ? nil : totalCount, setTap: false)
+            cell?.setAlert(alertCount: alertsCount == 0 ? nil : alertsCount, setTap: false)
             //cell?.updatesNumberLabel.text = totalCount == 0 ? nil : totalCount
             cell?.cellTitle.text = "Production Alerts"
             return cell ?? UITableViewCell()
