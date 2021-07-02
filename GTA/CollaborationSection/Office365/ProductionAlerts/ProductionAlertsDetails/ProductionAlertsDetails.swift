@@ -31,14 +31,24 @@ class ProductionAlertsDetails: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addBlurToView()
-        heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
-            self?.configureBlurViewPosition()
-        })
+        addHeightObservation()
+        configureBlurViewPosition(isInitial: true)
     }
     
     override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         configureBlurViewPosition()
+    }
+    
+    private func configureBlurViewPosition(isInitial: Bool = false) {
+        guard position > 0 else { return }
+        blurView.frame.origin.y = !isInitial ? position - blurView.frame.height: initialHeight - 44
+        self.view.layoutIfNeeded()
+    }
+    
+    private func addHeightObservation() {
+        heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
+            self?.configureBlurViewPosition()
+        })
     }
     
     private func setUpTableView() {
@@ -80,6 +90,17 @@ class ProductionAlertsDetails: UIViewController {
         self.view.layoutIfNeeded()
     }
     
+    private func handleBlurShowing(animated: Bool) {
+        let isReachedBottom = tableView.contentOffset.y >= (tableView.contentSize.height - tableView.frame.size.height).rounded(.towardZero)
+        if animated {
+            UIView.animate(withDuration: 0.2) {
+                self.blurView.alpha = isReachedBottom ? 0 : 1
+            }
+        } else {
+            blurView.alpha = isReachedBottom ? 0 : 1
+        }
+    }
+    
     @IBAction func backButtonPressed(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -112,11 +133,7 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
     }
         
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if tableView.contentOffset.y >= (tableView.contentSize.height - tableView.frame.size.height) {
-            blurView.isHidden = true
-        } else {
-            blurView.isHidden = false
-        }
+        handleBlurShowing(animated: true)
     }
     
 }
@@ -147,10 +164,14 @@ extension ProductionAlertsDetails: PanModalPresentable {
         return .maxHeight
     }
     
+    var initialHeight: CGFloat {
+        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
+        return coefficient - (view.window?.safeAreaInsets.bottom ?? 0)
+    }
+    
     var shortFormHeight: PanModalHeight {
         guard !UIDevice.current.iPhone5_se else { return .maxHeight }
-        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
-        return PanModalHeight.contentHeight(coefficient - (view.window?.safeAreaInsets.bottom ?? 0))
+        return PanModalHeight.contentHeight(initialHeight)
     }
     
     var position: CGFloat {
