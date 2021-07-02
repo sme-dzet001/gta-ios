@@ -559,16 +559,18 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        setProductAlerts(from: prodAlertsResponse)
-        let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
-        if data.values.isEmpty {
-            retErr = ResponseError.noDataAvailable
+        //setProductAlerts(from: prodAlertsResponse)
+        setProductAlerts(from: prodAlertsResponse) { [weak self] in
+            let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
+            if data.values.isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
+            let count = self?.getProductionAlertsCount() ?? 0
+            completion?(errorCode, retErr, count)
         }
-        let count = getProductionAlertsCount()
-        completion?(errorCode, retErr, count)
     }
     
-    private func setProductAlerts(from response: ProductionAlertsResponse?) {
+    private func setProductAlerts(from response: ProductionAlertsResponse?, _ completion: @escaping (() -> Void)) {
         let queue = DispatchQueue(label: "dictionary-writer-queue")
         let columns = response?.meta?.widgetsDataSource?.params?.columns ?? []
         let indexes = getDataIndexes(columns: columns)
@@ -587,6 +589,7 @@ class MyAppsDataProvider {
                     self.alertsData[key] = closedAlerts.sorted(by: {$0.closeDate.timeIntervalSince1970 > $1.closeDate.timeIntervalSince1970})
                 }
             }
+            completion()
         }
     }
     
@@ -645,12 +648,14 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        setProductAlerts(from: prodAlertsResponse)
-        let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
-        if data.values.isEmpty {
-            retErr = ResponseError.noDataAvailable
+        //setProductAlerts(from: prodAlertsResponse)
+        setProductAlerts(from: prodAlertsResponse) {
+            let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
+            if data.values.isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
+            completion?(errorCode, retErr)
         }
-        completion?(errorCode, retErr)
     }
     
     func getProductionAlertsCount() -> Int {
