@@ -24,6 +24,20 @@ class HomepageViewController: UIViewController {
     var homepageTableVC: HomepageTableViewController?
     
     private var presentedVC: ArticleViewController?
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        commonInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    func commonInit() {
+        NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +45,6 @@ class HomepageViewController: UIViewController {
         setUpPageControl()
         setNeedsStatusBarAppearanceUpdate()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
         collectionView.accessibilityIdentifier = "HomeScreenCollectionView"
     }
     

@@ -64,6 +64,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
             if alertsData != nil {
                 showProductionAlertScreen()
             } else {
+                dataProvider?.forceUpdateProductionAlerts = false
                 dataProvider?.activeProductionAlertId = nil
             }
         }

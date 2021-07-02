@@ -29,13 +29,21 @@ class ProductionAlertsDetails: UIViewController {
         loadProductionAlertsData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        dataProvider?.forceUpdateProductionAlerts = false
+        dataProvider?.activeProductionAlertId = nil
+    }
+    
     private var loadProductionAlertsInProgress: (loadAllAppsInProgress: Bool, loadMyAppsInProgress: Bool) = (false, false) {
         didSet {
-            if loadProductionAlertsInProgress == (false, false), let appName = appName, let alert = dataProvider?.alertsData[appName], let activeProductionAlertId = dataProvider?.activeProductionAlertId, let index = alert?.data?.firstIndex(where: {$0?.id == activeProductionAlertId}) {
+            if loadProductionAlertsInProgress == (false, false) {
+                if let appName = appName, let alertsData = dataProvider?.alertsData, let alertsDataForApp = alertsData[appName] as? ProductionAlertsResponse, let activeProductionAlertId = dataProvider?.activeProductionAlertId, let alertData = alertsDataForApp.data?.first(where: {$0?.id == activeProductionAlertId}) {
+                    self.alertData = alertData
+                    setUpDataSource()
+                }
                 dataProvider?.forceUpdateProductionAlerts = false
                 dataProvider?.activeProductionAlertId = nil
-                alertData = alert?.data?[index]
-                setUpDataSource()
             }
             tableView.reloadData()
         }
@@ -87,7 +95,7 @@ class ProductionAlertsDetails: UIViewController {
 extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
+        return (dataSource.count > 0) ? dataSource.count : 1
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -103,7 +111,12 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard dataSource.count > indexPath.row, let key = dataSource[indexPath.row].keys.first else { return UITableViewCell() }
+        if loadProductionAlertsInProgress.loadAllAppsInProgress || loadProductionAlertsInProgress.loadMyAppsInProgress {
+            return createLoadingCell(withBottomSeparator: false)
+        }
+        guard dataSource.count > indexPath.row, let key = dataSource[indexPath.row].keys.first else {
+            return createErrorCell(with: "No data available")
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlertDetailsCell", for: indexPath) as? AlertDetailsCell
         cell?.titleLabel.text = key
         cell?.descriptionLabel.text = dataSource[indexPath.row][key]

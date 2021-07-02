@@ -218,6 +218,15 @@ extension UITableView {
 fileprivate let tabBarItemTag: Int = 10090
 extension UITabBarController {
     
+    public func setSelectedTabAccordingToPendingAlert() {
+        if UserDefaults.standard.object(forKey: "productionAlertNotificationReceived") != nil, let applicationsTabIdx = viewControllers?.firstIndex(where: { (vc: UIViewController) in
+            guard let appsNavController = vc as? UINavigationController else { return false }
+            return appsNavController.rootViewController is AppsViewController
+        }) {
+            selectedIndex = applicationsTabIdx
+        }
+    }
+    
     public func addAlertItemBadge(atIndex index: Int) {
         guard let itemCount = self.tabBar.items?.count, itemCount > 0 else { return }
         guard index < itemCount else { return }

@@ -40,6 +40,9 @@ class ProductionAlertsViewController: UIViewController {
         if let activeProductionAlertId = dataProvider?.activeProductionAlertId {
             if dataSource != nil {
                 showAlertDetails(for: activeProductionAlertId)
+            } else {
+                dataProvider?.forceUpdateProductionAlerts = false
+                dataProvider?.activeProductionAlertId = nil
             }
         }
     }

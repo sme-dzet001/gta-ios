@@ -191,7 +191,8 @@ class AuthViewController: UIViewController {
         let navController = UINavigationController(rootViewController: mainViewController)
         navController.isNavigationBarHidden = true
         navController.isToolbarHidden = true
-        self.view.window?.rootViewController = navController        
+        self.view.window?.rootViewController = navController
+        (mainViewController as? UITabBarController)?.setSelectedTabAccordingToPendingAlert()
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {

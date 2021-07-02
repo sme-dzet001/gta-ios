@@ -5610,7 +5610,7 @@
 				CODE_SIGN_ENTITLEMENTS = GTA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 44443HH46G;
+				DEVELOPMENT_TEAM = H9636WUCU4;
 				INFOPLIST_FILE = GTA/Plists/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

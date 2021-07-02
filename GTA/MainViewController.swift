@@ -26,12 +26,6 @@ class MainViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedTabBar", let navController = segue.destination as? UINavigationController, let tabBarController = navController.rootViewController as? UITabBarController {
             tabBarController.modalPresentationCapturesStatusBarAppearance = true
-            if UserDefaults.standard.object(forKey: "productionAlertNotificationReceived") != nil, let applicationsTabIdx = self.tabBarController?.viewControllers?.firstIndex(where: { (vc: UIViewController) in
-                guard let appsNavController = vc as? UINavigationController else { return false }
-                return appsNavController.rootViewController is AppsViewController
-            }) {
-                tabBarController.selectedIndex = applicationsTabIdx
-            }
         }
     }
 

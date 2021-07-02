@@ -89,7 +89,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                 if let aDate = UserDefaults.standard.value(forKey: "lastActivityDate") as? Date {
                     lastActivityDate = aDate
                 }
-                if lastActivityDate.addingTimeInterval(1200) > Date(),  let _ = KeychainManager.getPin(), isAuthentificationPassed ?? false {
+                if lastActivityDate.addingTimeInterval(/*1200*/10) > Date(),  let _ = KeychainManager.getPin(), isAuthentificationPassed ?? false {
                     if let navController = self.window?.rootViewController as? UINavigationController, navController.rootViewController is UITabBarController {
                         return
                     }

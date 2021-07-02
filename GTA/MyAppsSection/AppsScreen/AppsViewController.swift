@@ -25,6 +25,20 @@ class AppsViewController: UIViewController {
         return dataProvider.alertsData
     }
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        commonInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    func commonInit() {
+        NotificationCenter.default.addObserver(self, selector: #selector(productionAlertNotificationReceived), name: Notification.Name(NotificationsNames.productionAlertNotificationReceived), object: nil)
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationReceived), object: nil)
     }
@@ -35,8 +49,6 @@ class AppsViewController: UIViewController {
         //self.dataProvider.appImageDelegate = self
         setUpNavigationItem()
         setAccessibilityIdentifiers()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(productionAlertNotificationReceived), name: Notification.Name(NotificationsNames.productionAlertNotificationReceived), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -204,6 +216,7 @@ class AppsViewController: UIViewController {
         guard let targetAppData = dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) else { return }
         guard let productionAlertId = alertData["production_alert_id"] as? String else { return }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        dataProvider.activeProductionAlertId = productionAlertId
         appDelegate.dismissPanModalIfPresented { [weak self] in
             guard let self = self else { return }
             guard let embeddedController = self.navigationController else { return }
