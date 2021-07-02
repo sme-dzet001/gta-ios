@@ -43,6 +43,7 @@ class ProductionAlertsViewController: UIViewController {
             } else {
                 dataProvider?.forceUpdateProductionAlerts = false
                 dataProvider?.activeProductionAlertId = nil
+                dataProvider?.activeProductionAlertAppName = nil
             }
         }
     }
@@ -95,7 +96,6 @@ class ProductionAlertsViewController: UIViewController {
     private func showAlertDetails(for id: String) {
         let detailsVC = ProductionAlertsDetails()
         detailsVC.dataProvider = dataProvider
-        detailsVC.appName = appName
         // for POC only
         // need to change in future
         if !(dataProvider?.forceUpdateProductionAlerts ?? false), let index = dataProvider?.alertsData[appName ?? ""]??.data?.firstIndex(where: {$0?.id == id}) {
@@ -111,7 +111,6 @@ class ProductionAlertsViewController: UIViewController {
         guard (dataSource?.data?.count ?? 0) > row else { return }
         let detailsVC = ProductionAlertsDetails()
         detailsVC.dataProvider = dataProvider
-        detailsVC.appName = appName
         // for POC only
         // need to change in future
         dataProvider?.alertsData[appName ?? ""]??.data?[row]?.isRead = true

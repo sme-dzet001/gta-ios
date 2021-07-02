@@ -66,6 +66,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
             } else {
                 dataProvider?.forceUpdateProductionAlerts = false
                 dataProvider?.activeProductionAlertId = nil
+                dataProvider?.activeProductionAlertAppName = nil
             }
         }
     }

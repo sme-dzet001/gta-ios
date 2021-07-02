@@ -39,6 +39,7 @@ class MyAppsDataProvider {
     }
     
     var activeProductionAlertId: String?
+    var activeProductionAlertAppName: String?
     var forceUpdateProductionAlerts: Bool = false
         
     // MARK: - Calling methods

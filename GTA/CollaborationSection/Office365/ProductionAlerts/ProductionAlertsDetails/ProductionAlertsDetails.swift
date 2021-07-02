@@ -13,7 +13,6 @@ class ProductionAlertsDetails: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var dataProvider: MyAppsDataProvider?
-    var appName: String?
     
     var alertData: ProductionAlertsRow?
     private var dataSource: [[String : String]] = []
@@ -31,19 +30,23 @@ class ProductionAlertsDetails: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        dataProvider?.forceUpdateProductionAlerts = false
-        dataProvider?.activeProductionAlertId = nil
+        if loadProductionAlertsInProgress.loadAllAppsInProgress || loadProductionAlertsInProgress.loadMyAppsInProgress {
+            dataProvider?.forceUpdateProductionAlerts = false
+            dataProvider?.activeProductionAlertId = nil
+            dataProvider?.activeProductionAlertAppName = nil
+        }
     }
     
     private var loadProductionAlertsInProgress: (loadAllAppsInProgress: Bool, loadMyAppsInProgress: Bool) = (false, false) {
         didSet {
             if loadProductionAlertsInProgress == (false, false) {
-                if let appName = appName, let alertsData = dataProvider?.alertsData, let alertsDataForApp = alertsData[appName] as? ProductionAlertsResponse, let activeProductionAlertId = dataProvider?.activeProductionAlertId, let alertData = alertsDataForApp.data?.first(where: {$0?.id == activeProductionAlertId}) {
+                if let appName = dataProvider?.activeProductionAlertAppName, let alertsData = dataProvider?.alertsData, let alertsDataForApp = alertsData[appName] as? ProductionAlertsResponse, let activeProductionAlertId = dataProvider?.activeProductionAlertId, let alertData = alertsDataForApp.data?.first(where: {$0?.id == activeProductionAlertId}) {
                     self.alertData = alertData
                     setUpDataSource()
                 }
                 dataProvider?.forceUpdateProductionAlerts = false
                 dataProvider?.activeProductionAlertId = nil
+                dataProvider?.activeProductionAlertAppName = nil
             }
             tableView.reloadData()
         }
@@ -63,6 +66,9 @@ class ProductionAlertsDetails: UIViewController {
                 }
             })
         } else {
+            dataProvider?.forceUpdateProductionAlerts = false
+            dataProvider?.activeProductionAlertId = nil
+            dataProvider?.activeProductionAlertAppName = nil
             setUpDataSource()
         }
     }

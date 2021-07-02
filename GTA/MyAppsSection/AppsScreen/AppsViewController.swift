@@ -213,18 +213,26 @@ class AppsViewController: UIViewController {
     
     private func navigateToAppDetails(withProductionAlertInfo alertData: [String : Any]) {
         guard let appName = alertData["app_name"] as? String else { return }
-        guard let targetAppData = dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) else { return }
+        //guard let targetAppData = dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) else { return }
         guard let productionAlertId = alertData["production_alert_id"] as? String else { return }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        dataProvider.activeProductionAlertId = productionAlertId
+        //dataProvider.activeProductionAlertId = productionAlertId
+        //dataProvider.activeProductionAlertAppName = appName
         appDelegate.dismissPanModalIfPresented { [weak self] in
             guard let self = self else { return }
             guard let embeddedController = self.navigationController else { return }
             guard let applicationsTabIdx = self.tabBarController?.viewControllers?.firstIndex(of: embeddedController) else { return }
+            self.dataProvider.activeProductionAlertId = productionAlertId
+            self.dataProvider.activeProductionAlertAppName = appName
             self.tabBarController?.selectedIndex = applicationsTabIdx
             embeddedController.popToRootViewController(animated: false)
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
             //show details for notification target app
+            guard !self.dataProvider.appsData.isEmpty else {
+                UserDefaults.standard.setValue(alertData, forKey: "productionAlertNotificationReceived")
+                return
+            }
+            guard let targetAppData = self.dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) else { return }
             let appVC = ApplicationStatusViewController()
             appVC.appName = targetAppData.app_name
             appVC.appTitle = targetAppData.app_title
