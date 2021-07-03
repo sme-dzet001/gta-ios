@@ -579,8 +579,8 @@ class MyAppsDataProvider {
             for key in data.keys {
                 for (index, _) in (data[key]?.data?.rows ?? []).enumerated() {
                     data[key]?.data?.rows?[index]?.indexes = indexes
-                    data[key]?.data?.rows?.removeAll(where: {$0?.isExpired == true})
                 }
+                data[key]?.data?.rows?.removeAll(where: {$0?.isExpired == true})
                 let inProgressAlerts = data[key]?.data?.rows?.filter({$0?.status == .inProgress}).compactMap({$0}) ?? []
                 let closedAlerts = data[key]?.data?.rows?.filter({$0?.status == .closed}).compactMap({$0}) ?? []
                 if inProgressAlerts.count >= 1 {
