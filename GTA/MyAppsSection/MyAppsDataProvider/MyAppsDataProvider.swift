@@ -559,31 +559,37 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        setProductAlerts(from: prodAlertsResponse)
-        let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
-        if data.values.isEmpty {
-            retErr = ResponseError.noDataAvailable
+        //setProductAlerts(from: prodAlertsResponse)
+        setProductAlerts(from: prodAlertsResponse) { [weak self] in
+            let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
+            if data.values.isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
+            let count = self?.getProductionAlertsCount() ?? 0
+            completion?(errorCode, retErr, count)
         }
-        var count = getProductionAlertsCount()
-        completion?(errorCode, retErr, count)
     }
     
-    private func setProductAlerts(from response: ProductionAlertsResponse?) {
+    private func setProductAlerts(from response: ProductionAlertsResponse?, _ completion: @escaping (() -> Void)) {
+        let queue = DispatchQueue(label: "dictionary-writer-queue")
         let columns = response?.meta?.widgetsDataSource?.params?.columns ?? []
         let indexes = getDataIndexes(columns: columns)
         var data = response?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
-        for key in data.keys {
-            for (index, _) in (data[key]?.data?.rows ?? []).enumerated() {
-                data[key]?.data?.rows?[index]?.indexes = indexes
+        queue.async {
+            for key in data.keys {
+                for (index, _) in (data[key]?.data?.rows ?? []).enumerated() {
+                    data[key]?.data?.rows?[index]?.indexes = indexes
+                }
                 data[key]?.data?.rows?.removeAll(where: {$0?.isExpired == true})
+                let inProgressAlerts = data[key]?.data?.rows?.filter({$0?.status == .inProgress}).compactMap({$0}) ?? []
+                let closedAlerts = data[key]?.data?.rows?.filter({$0?.status == .closed}).compactMap({$0}) ?? []
+                if inProgressAlerts.count >= 1 {
+                    self.alertsData[key] = inProgressAlerts.sorted(by: {$0.startDate.timeIntervalSince1970 > $1.startDate.timeIntervalSince1970})
+                } else if closedAlerts.count >= 1 {
+                    self.alertsData[key] = closedAlerts.sorted(by: {$0.closeDate.timeIntervalSince1970 > $1.closeDate.timeIntervalSince1970})
+                }
             }
-            let inProgressAlerts = data[key]?.data?.rows?.filter({$0?.status == .inProgress}).compactMap({$0}) ?? []
-            let closedAlerts = data[key]?.data?.rows?.filter({$0?.status == .closed}).compactMap({$0}) ?? []
-            if inProgressAlerts.count >= 1 {
-                alertsData[key] = inProgressAlerts.sorted(by: {$0.startDate.timeIntervalSince1970 > $1.startDate.timeIntervalSince1970})
-            } else if closedAlerts.count >= 1 {
-                alertsData[key] = closedAlerts.sorted(by: {$0.closeDate.timeIntervalSince1970 > $1.closeDate.timeIntervalSince1970})
-            }
+            completion()
         }
     }
     
@@ -642,12 +648,14 @@ class MyAppsDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        setProductAlerts(from: prodAlertsResponse)
-        let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
-        if data.values.isEmpty {
-            retErr = ResponseError.noDataAvailable
+        //setProductAlerts(from: prodAlertsResponse)
+        setProductAlerts(from: prodAlertsResponse) {
+            let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
+            if data.values.isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
+            completion?(errorCode, retErr)
         }
-        completion?(errorCode, retErr)
     }
     
     func getProductionAlertsCount() -> Int {

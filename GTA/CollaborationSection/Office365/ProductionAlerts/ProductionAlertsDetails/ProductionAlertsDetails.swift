@@ -31,14 +31,24 @@ class ProductionAlertsDetails: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addBlurToView()
-        heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
-            self?.configureBlurViewPosition()
-        })
+        addHeightObservation()
+        configureBlurViewPosition(isInitial: true)
     }
     
     override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         configureBlurViewPosition()
+    }
+    
+    private func configureBlurViewPosition(isInitial: Bool = false) {
+        guard position > 0 else { return }
+        blurView.frame.origin.y = !isInitial ? position - blurView.frame.height: initialHeight - 44
+        self.view.layoutIfNeeded()
+    }
+    
+    private func addHeightObservation() {
+        heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
+            self?.configureBlurViewPosition()
+        })
     }
     
     private func setUpTableView() {
@@ -54,14 +64,17 @@ class ProductionAlertsDetails: UIViewController {
         if let start = alertData?.startDateString?.getFormattedDateStringForMyTickets() {
             dataSource.append(["Notification Date" : start])
         }
-        if let close = alertData?.closeDateString?.getFormattedDateStringForMyTickets() {
+        if alertData?.status == .closed, let close = alertData?.closeDateString?.getFormattedDateStringForMyTickets() {
             dataSource.append(["Close Date" : close])
         }
-//        if let duration = alertData?.d {
-//            dataSource.append(["Duration" : duration])
-//        }
-        if let summary = alertData?.summary {
+        if let duration = alertData?.duration {
+            dataSource.append(["Estimated Duration" : duration])
+        }
+        if let summary = alertData?.description {
             dataSource.append(["Summary" : summary])
+        }
+        if let impactedSystems = alertData?.impactedSystems {
+            dataSource.append(["Affected Systems" : impactedSystems])
         }
     }
     
@@ -78,6 +91,17 @@ class ProductionAlertsDetails: UIViewController {
         guard position > 0 else { return }
         blurView.frame.origin.y = position - blurView.frame.height
         self.view.layoutIfNeeded()
+    }
+    
+    private func handleBlurShowing(animated: Bool) {
+        let isReachedBottom = tableView.contentOffset.y >= (tableView.contentSize.height - tableView.frame.size.height).rounded(.towardZero)
+        if animated {
+            UIView.animate(withDuration: 0.2) {
+                self.blurView.alpha = isReachedBottom ? 0 : 1
+            }
+        } else {
+            blurView.alpha = isReachedBottom ? 0 : 1
+        }
     }
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
@@ -100,7 +124,7 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AlertDetailsHeaderCell", for: indexPath) as? AlertDetailsHeaderCell
             cell?.alertNumberLabel.text = alertData?.ticketNumber
-            cell?.alertTitleLabel.text = alertData?.description
+            cell?.alertTitleLabel.text = alertData?.summary
             cell?.setStatus(alertData?.status)
             return cell ?? UITableViewCell()
         }
@@ -112,11 +136,7 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
     }
         
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if tableView.contentOffset.y >= (tableView.contentSize.height - tableView.frame.size.height) {
-            blurView.isHidden = true
-        } else {
-            blurView.isHidden = false
-        }
+        handleBlurShowing(animated: true)
     }
     
 }
@@ -147,10 +167,14 @@ extension ProductionAlertsDetails: PanModalPresentable {
         return .maxHeight
     }
     
+    var initialHeight: CGFloat {
+        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
+        return coefficient - (view.window?.safeAreaInsets.bottom ?? 0)
+    }
+    
     var shortFormHeight: PanModalHeight {
         guard !UIDevice.current.iPhone5_se else { return .maxHeight }
-        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
-        return PanModalHeight.contentHeight(coefficient - (view.window?.safeAreaInsets.bottom ?? 0))
+        return PanModalHeight.contentHeight(initialHeight)
     }
     
     var position: CGFloat {

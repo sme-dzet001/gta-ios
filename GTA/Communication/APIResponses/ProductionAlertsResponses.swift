@@ -48,6 +48,10 @@ struct ProductionAlertsRow: Codable {
         guard let values = values, let index = indexes["impacted_systems"], values.count > index else { return nil }
         return values[index]?.stringValue
     }
+    var duration: String? {
+        guard let values = values, let index = indexes["maintenance_duration"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
     var sendPush: String? {
         guard let values = values, let index = indexes["send_push"], values.count > index else { return nil }
         return values[index]?.stringValue

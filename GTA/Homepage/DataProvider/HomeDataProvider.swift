@@ -657,18 +657,25 @@ class HomeDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
-        var data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
+        let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
         if data.values.isEmpty {
             retErr = ResponseError.noDataAvailable
         }
+        let indexes = getDataIndexes(columns: prodAlertsResponse?.meta?.widgetsDataSource?.params?.columns)
+        let count = getProductionAlertsCount(sdsd: data, indexes: indexes)
+        completion?(errorCode, retErr, count)
+    }
+    
+    private func getProductionAlertsCount(sdsd: [String : ProductionAlertsData], indexes: [String : Int]) -> Int {
+        var data = sdsd
         var count = 0
         for key in data.keys {
             for (index, _) in (data[key]?.data?.rows ?? []).enumerated() {
-                data[key]?.data?.rows?[index]?.indexes = getDataIndexes(columns: prodAlertsResponse?.meta?.widgetsDataSource?.params?.columns)
+                data[key]?.data?.rows?[index]?.indexes = indexes
             }
-            count += data[key]?.data?.rows?.filter({$0?.isRead == false}).count ?? 0
+            count += data[key]?.data?.rows?.filter({$0?.isRead == false && $0?.isExpired == false}).count ?? 0
         }
-        completion?(errorCode, retErr, count)
+        return count
     }
     
     
