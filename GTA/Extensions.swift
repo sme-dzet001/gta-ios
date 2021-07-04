@@ -529,6 +529,14 @@ extension String {
        // return self
     }
     
+    func getFormattedDateStringForProdAlert() -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        guard let date = dateFormatterPrint.date(from: self) else { return self }
+        dateFormatterPrint.dateFormat = String.newsDateFormat
+        return dateFormatterPrint.string(from: date)
+    }
+    
 }
 
 extension Date {

@@ -56,12 +56,8 @@ class HelpReportScreenViewController: UIViewController, PanModalPresentable {
     }
     
     private var defaultHeight: CGFloat {
-        if UIDevice.current.iPhone5_se {
-            return self.view.frame.height - 50
-        } else if UIDevice.current.iPhone7_8 || UIDevice.current.iPhone7_8_Plus {
-            return UIScreen.main.bounds.height / 1.5
-        }
-        return UIScreen.main.bounds.height / 2
+        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
+        return coefficient - (view.window?.safeAreaInsets.bottom ?? 0)
     }
     
     private var height: CGFloat {

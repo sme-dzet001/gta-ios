@@ -21,9 +21,6 @@ class AppsViewController: UIViewController {
     private var allAppsLastUpdateDate: Date?
     private var allAppsLoadingError: Error?
     private var myAppsLoadingError: Error?
-    private var alertsData: [String : ProductionAlertsResponse?] {
-        return dataProvider.alertsData
-    }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -41,6 +38,7 @@ class AppsViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationReceived), object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewDidLoad() {
@@ -49,10 +47,12 @@ class AppsViewController: UIViewController {
         //self.dataProvider.appImageDelegate = self
         setUpNavigationItem()
         setAccessibilityIdentifiers()
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getProductionAlerts()
         addErrorLabel(errorLabel)
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
@@ -106,7 +106,6 @@ class AppsViewController: UIViewController {
                     self?.checkForPendingProductionAlert()
                 }
                 if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty {
-                    self?.getProductionAlerts()
                     if !isFromCache {
                         self?.myAppsLastUpdateDate = Date().addingTimeInterval(15)
                     }
@@ -130,7 +129,6 @@ class AppsViewController: UIViewController {
                 if !isFromCache {
                     self?.checkForPendingProductionAlert()
                 }
-                self?.getProductionAlerts()
                 if error == nil, errorCode == 200, let appsData = self?.dataProvider.appsData.first {
                     self?.errorLabel.isHidden = true
                     if !isFromCache {
@@ -148,14 +146,15 @@ class AppsViewController: UIViewController {
         }
     }
     
-    private func getProductionAlerts() {
-        var totalCount = 0
-        let countArr = alertsData.compactMap({$0.value?.data})
-        for i in countArr {
-            totalCount += i.filter({$0?.isRead == false}).count
+    @objc private func getProductionAlerts() {
+        dataProvider.getProductionAlerts {[weak self] errorCode, error, count  in
+            DispatchQueue.main.async {
+                if error == nil {
+                    self?.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
+                    self?.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+                }
+            }
         }
-        self.tabBarController?.tabBar.items?[2].badgeValue = totalCount > 0 ? "\(totalCount)" : nil
-        self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
     }
     
     private func checkForPendingProductionAlert() {
@@ -196,9 +195,8 @@ class AppsViewController: UIViewController {
     }
     
     private func showProductionAlertScreen(id: String?, appName: String) {
-        guard let id = id, let alertsData = alertsData[appName] else { return }
+        guard let id = id else { return }
         let alertsScreen = ProductionAlertsViewController()
-        alertsScreen.dataSource = alertsData
         alertsScreen.appName = appName
         alertsScreen.selectedId = id
         alertsScreen.dataProvider = dataProvider
@@ -234,7 +232,7 @@ class AppsViewController: UIViewController {
             }
             guard let targetAppData = self.dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) else { return }
             let appVC = ApplicationStatusViewController()
-            appVC.appName = targetAppData.app_name
+            appVC.appName = targetAppData.app_name ?? ""
             appVC.appTitle = targetAppData.app_title
             appVC.appImageUrl = targetAppData.appImage ?? ""
             appVC.appLastUpdateDate = targetAppData.lastUpdateDate
@@ -318,7 +316,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     cell.showFirstChar()
                 }
-                if indexPath.section == 0, let alerts = dataProvider.alertsData[cellData.app_name ?? ""]??.data?.filter({$0?.isRead == false}) {
+                if let alerts = dataProvider.alertsData[cellData.app_name ?? ""]?.filter({$0.isRead == false}) {
                     cell.popoverShowDelegate = self
                     cell.showAlertScreenDelegate = self
                     cell.setAlert(alertCount: alerts.count)
@@ -353,7 +351,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         guard !dataProvider.appsData[indexPath.section].cellData.isEmpty else { return }
         let appVC = ApplicationStatusViewController()
         let cellData = dataProvider.appsData[indexPath.section].cellData[indexPath.row]
-        appVC.appName = cellData.app_name
+        appVC.appName = cellData.app_name ?? ""
         appVC.appTitle = cellData.app_title
         appVC.appImageUrl = cellData.appImage ?? ""
         appVC.appLastUpdateDate = cellData.lastUpdateDate
@@ -374,7 +372,7 @@ extension AppsViewController: AlertPopoverShowDelegate {
         let alertPopoverViewController = AlertPopoverViewController()
         alertPopoverViewController.modalPresentationStyle = .popover
         let cellData = dataProvider.appsData[indexPath.section].cellData[indexPath.row]
-        alertPopoverViewController.alertsData = alertsData[cellData.app_name ?? ""]??.data
+        alertPopoverViewController.alertsData = dataProvider.alertsData[cellData.app_name ?? ""]
         alertPopoverViewController.appName = cellData.app_name ?? ""
         alertPopoverViewController.delegate = self
         alertPopoverViewController.preferredContentSize = alertPopoverViewController.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)

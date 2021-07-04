@@ -156,7 +156,7 @@ extension Office365ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0, alertsData != nil {
             let alertsScreen = ProductionAlertsViewController()
-            alertsScreen.dataSource = alertsData
+            //alertsScreen.dataSource = alertsData
             self.navigationController?.pushViewController(alertsScreen, animated: true)
             return
         }

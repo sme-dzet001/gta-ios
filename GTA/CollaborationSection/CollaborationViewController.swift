@@ -72,10 +72,6 @@ class CollaborationViewController: UIViewController {
         })
     }
     
-    private func getCollaborationAlerts() {
-        alertsData = ProductionAlertsResponse(meta: nil, data: [ProductionAlertsRow(id: "DPSX-169", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams"), ProductionAlertsRow(id: "DPSX-169", title: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST", date: "2021-02-10", status: "open", start: "2021-02-10 15:30 EDT", duration: "4hrs", summary: "GRPS/MMT/Gold Downtime. Weds 10th Feb, 2020 6am EST/12pm CEST - 90 mins A downtime is required for the next GROS release. Pleease log out of the application before thiss time. Users will be notified when systems are back up. Thank you GRPS/MMT/Gold Teams")])
-    }
-    
     private func startAnimation() {
         self.tableView.alpha = 0
         errorLabel.isHidden = true

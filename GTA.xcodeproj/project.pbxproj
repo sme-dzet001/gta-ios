@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		065F4544928F3E2C1844ADA1 /* Pods_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB6219B91F984FFA0A2D3BC /* Pods_GTAStage.framework */; };
 		310602184FDF9DE277F359C7 /* Pods_GTA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA50956AA53DEAF0E40A50B2 /* Pods_GTA.framework */; };
 		425533B70404A097DEAE7C6E /* Pods_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB6219B91F984FFA0A2D3BC /* Pods_GTAStage.framework */; };
 		637797F8E36BC3A596840E88 /* Pods_GTAUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 711206694A10F0701C6DAF95 /* Pods_GTAUITests.framework */; };
@@ -131,7 +132,6 @@
 		65437CAB2665387600B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */; };
 		65437CAC2665387600B2F38A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
 		65437CAD2665387600B2F38A /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
-		65437CAF2665387600B2F38A /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */; };
 		65437CB12665387600B2F38A /* ServiceDeskAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0FC25B08CAC004A9C65 /* ServiceDeskAboutCell.xib */; };
 		65437CB22665387600B2F38A /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEB255404F100E13B77 /* SF-Pro-Display-Thin.otf */; };
 		65437CB32665387600B2F38A /* AppTipsAndTricksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F44AE1B25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib */; };
@@ -329,7 +329,6 @@
 		65437E79266539BF00B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */; };
 		65437E7A266539BF00B2F38A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
 		65437E7B266539BF00B2F38A /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
-		65437E7D266539BF00B2F38A /* Pods_GTA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA50956AA53DEAF0E40A50B2 /* Pods_GTA.framework */; };
 		65437E7F266539BF00B2F38A /* ServiceDeskAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0FC25B08CAC004A9C65 /* ServiceDeskAboutCell.xib */; };
 		65437E80266539BF00B2F38A /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEB255404F100E13B77 /* SF-Pro-Display-Thin.otf */; };
 		65437E81266539BF00B2F38A /* GTTeamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC8FB2645A30B004074C8 /* GTTeamViewController.xib */; };
@@ -528,7 +527,6 @@
 		65437FE62665568000B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */; };
 		65437FE72665568000B2F38A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F895B7A255D8810004489C6 /* CustomTextField.swift */; };
 		65437FE82665568000B2F38A /* AppTipsAndTricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44AE1A25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift */; };
-		65437FEA2665568000B2F38A /* Pods_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB6219B91F984FFA0A2D3BC /* Pods_GTAStage.framework */; };
 		65437FEC2665568000B2F38A /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEB255404F100E13B77 /* SF-Pro-Display-Thin.otf */; };
 		65437FED2665568000B2F38A /* OfficeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */; };
 		65437FEE2665568000B2F38A /* GTTeamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC8FB2645A30B004074C8 /* GTTeamViewController.xib */; };
@@ -751,13 +749,13 @@
 		9F3027E72681D228009A3096 /* ProductionAlertCounterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027D62681D228009A3096 /* ProductionAlertCounterCell.swift */; };
 		9F3027E82681D228009A3096 /* ProductionAlertCounterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027D62681D228009A3096 /* ProductionAlertCounterCell.swift */; };
 		9F3027E92681D228009A3096 /* ProductionAlertCounterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027D62681D228009A3096 /* ProductionAlertCounterCell.swift */; };
-		9F3027EA2681D228009A3096 /* AlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeader.xib */; };
-		9F3027EB2681D228009A3096 /* AlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeader.xib */; };
-		9F3027EC2681D228009A3096 /* AlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeader.xib */; };
-		9F3027ED2681D228009A3096 /* AlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeader.xib */; };
-		9F3027EE2681D228009A3096 /* AlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeader.xib */; };
-		9F3027EF2681D228009A3096 /* AlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeader.xib */; };
-		9F3027F02681D228009A3096 /* AlertDetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeader.xib */; };
+		9F3027EA2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeaderCell.xib */; };
+		9F3027EB2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeaderCell.xib */; };
+		9F3027EC2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeaderCell.xib */; };
+		9F3027ED2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeaderCell.xib */; };
+		9F3027EE2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeaderCell.xib */; };
+		9F3027EF2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeaderCell.xib */; };
+		9F3027F02681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D82681D228009A3096 /* AlertDetailsHeaderCell.xib */; };
 		9F3027F12681D228009A3096 /* ProductionAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D92681D228009A3096 /* ProductionAlertCell.xib */; };
 		9F3027F22681D228009A3096 /* ProductionAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D92681D228009A3096 /* ProductionAlertCell.xib */; };
 		9F3027F32681D228009A3096 /* ProductionAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3027D92681D228009A3096 /* ProductionAlertCell.xib */; };
@@ -793,13 +791,13 @@
 		9F3028112681D228009A3096 /* AlertDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DD2681D228009A3096 /* AlertDetailsCell.swift */; };
 		9F3028122681D228009A3096 /* AlertDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DD2681D228009A3096 /* AlertDetailsCell.swift */; };
 		9F3028132681D228009A3096 /* AlertDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DD2681D228009A3096 /* AlertDetailsCell.swift */; };
-		9F3028142681D228009A3096 /* AlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeader.swift */; };
-		9F3028152681D228009A3096 /* AlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeader.swift */; };
-		9F3028162681D228009A3096 /* AlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeader.swift */; };
-		9F3028172681D228009A3096 /* AlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeader.swift */; };
-		9F3028182681D228009A3096 /* AlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeader.swift */; };
-		9F3028192681D228009A3096 /* AlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeader.swift */; };
-		9F30281A2681D228009A3096 /* AlertDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeader.swift */; };
+		9F3028142681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeaderCell.swift */; };
+		9F3028152681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeaderCell.swift */; };
+		9F3028162681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeaderCell.swift */; };
+		9F3028172681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeaderCell.swift */; };
+		9F3028182681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeaderCell.swift */; };
+		9F3028192681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeaderCell.swift */; };
+		9F30281A2681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DE2681D228009A3096 /* AlertDetailsHeaderCell.swift */; };
 		9F30281B2681D228009A3096 /* ProductionAlertsDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DF2681D228009A3096 /* ProductionAlertsDetails.swift */; };
 		9F30281C2681D228009A3096 /* ProductionAlertsDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DF2681D228009A3096 /* ProductionAlertsDetails.swift */; };
 		9F30281D2681D228009A3096 /* ProductionAlertsDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3027DF2681D228009A3096 /* ProductionAlertsDetails.swift */; };
@@ -922,7 +920,7 @@
 		9F33F67F260A3C4000470A47 /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035932578095A0068441F /* CommonResponses.swift */; };
 		9F33F680260A3C4000470A47 /* Office365AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35862825FD37BF0003658D /* Office365AppCell.swift */; };
 		9F33F681260A3C4000470A47 /* AboutHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */; };
-		9F33F682260A3C4000470A47 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		9F33F682260A3C4000470A47 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		9F33F683260A3C4000470A47 /* OfficeSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFDA2D25A5E2E200F57817 /* OfficeSelectionCell.swift */; };
 		9F33F684260A3C4000470A47 /* SecondSendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0547225681FC60071E596 /* SecondSendMessageView.swift */; };
 		9F33F685260A3C4000470A47 /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF172564901E001E86F6 /* AboutInfoCell.swift */; };
@@ -966,7 +964,7 @@
 		9F33F6AF260A3C4000470A47 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
 		9F33F6B0260A3C4000470A47 /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
 		9F33F6B1260A3C4000470A47 /* ServiceDeskAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0FC25B08CAC004A9C65 /* ServiceDeskAboutCell.xib */; };
-		9F33F6B2260A3C4000470A47 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		9F33F6B2260A3C4000470A47 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		9F33F6B3260A3C4000470A47 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEA255404F100E13B77 /* SF-Pro-Display-Medium.otf */; };
 		9F33F6B4260A3C4000470A47 /* SystemStatusHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */; };
 		9F33F6B5260A3C4000470A47 /* AboutSupportPolicyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */; };
@@ -1387,6 +1385,7 @@
 		9FF0548325681FCD0071E596 /* SecondSendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */; };
 		9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		9FFD5F102565A1F900B6A65C /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
+		B91515CADDA8F4D79221D7D3 /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */; };
 		C907E0C025D437BF00FB0B55 /* AppContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */; };
 		C907E0C125D437BF00FB0B55 /* AppContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */; };
 		C907E0C225D437BF00FB0B55 /* AppContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */; };
@@ -1541,6 +1540,7 @@
 		C9EFDA3425A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
 		C9EFEBC4256D1F4800112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
+		DFAAD1A54637CE612A28E656 /* Pods_GTA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA50956AA53DEAF0E40A50B2 /* Pods_GTA.framework */; };
 		E3FC81827C497B70A6BE2619 /* Pods_QA_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BE0E1440AA8E1F11335BEA /* Pods_QA_GTAStage.framework */; };
 		F46C590F1188F7704A82EC84 /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */; };
 		F79A8B6137ED17E0F54EBFC3 /* Pods_GTATests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F85A9BFD7B4F3349DA0E61A /* Pods_GTATests.framework */; };
@@ -1565,14 +1565,13 @@
 
 /* Begin PBXFileReference section */
 		0EB6219B91F984FFA0A2D3BC /* Pods_GTAStage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTAStage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		14C6014CE4EF94EB0EA97541 /* Pods-GTADev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.release.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.release.xcconfig"; sourceTree = "<group>"; };
 		1A7D518D353B3ABD08C45F73 /* Pods-QA-GTAStage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QA-GTAStage.debug.xcconfig"; path = "Target Support Files/Pods-QA-GTAStage/Pods-QA-GTAStage.debug.xcconfig"; sourceTree = "<group>"; };
-		1F17817328889F6FE03FC0C0 /* Pods-GTAStage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.release.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.release.xcconfig"; sourceTree = "<group>"; };
+		1D1BF4F505A64A9B29B0B2CC /* Pods-GTADev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.debug.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.debug.xcconfig"; sourceTree = "<group>"; };
 		3E85F17D55FED615DEDA5CC2 /* Pods-GTATests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.release.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.release.xcconfig"; sourceTree = "<group>"; };
-		43E62144876B40ED6DD138BF /* Pods-GTADev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.release.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.release.xcconfig"; sourceTree = "<group>"; };
+		412149B0DC7F875C8F96C994 /* Pods-GTAStage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.debug.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.debug.xcconfig"; sourceTree = "<group>"; };
 		440780615F4BB9CB2146021D /* Pods-GTAUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAUITests.release.xcconfig"; path = "Target Support Files/Pods-GTAUITests/Pods-GTAUITests.release.xcconfig"; sourceTree = "<group>"; };
 		516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTADev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		54F47DB5F580B842726A02CE /* Pods-GTA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.debug.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.debug.xcconfig"; sourceTree = "<group>"; };
-		5C62324FACAA4F8AE15B4ECA /* Pods-GTADev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.debug.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.debug.xcconfig"; sourceTree = "<group>"; };
 		5F85A9BFD7B4F3349DA0E61A /* Pods_GTATests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTATests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65398BCB256D4C5E0039C24E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageMetricsViewController.swift; sourceTree = "<group>"; };
@@ -1617,8 +1616,8 @@
 		65D2909A256C0DDD001B658A /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsManager.swift; sourceTree = "<group>"; };
 		711206694A10F0701C6DAF95 /* Pods_GTAUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTAUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7684C58C0D8D159DE2D8E4F1 /* Pods-GTAStage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.debug.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.debug.xcconfig"; sourceTree = "<group>"; };
-		791710547768B4DBE8B60339 /* Pods-GTA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.release.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.release.xcconfig"; sourceTree = "<group>"; };
+		7D7DCF89663672692BDCB100 /* Pods-GTA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.release.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.release.xcconfig"; sourceTree = "<group>"; };
+		80E0794DE09523B4BA0F99B4 /* Pods-GTAStage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.release.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.release.xcconfig"; sourceTree = "<group>"; };
 		9F02881C094285F6F34C8971 /* Pods-GTAUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAUITests.debug.xcconfig"; path = "Target Support Files/Pods-GTAUITests/Pods-GTAUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F0CA54B2566875F00275B25 /* OfficeLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeLocationViewController.swift; sourceTree = "<group>"; };
 		9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfficeLocationViewController.xib; sourceTree = "<group>"; };
@@ -1643,13 +1642,13 @@
 		9F2C82702657F1E1004407B4 /* CustomUISwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUISwitch.swift; sourceTree = "<group>"; };
 		9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationResponses.swift; sourceTree = "<group>"; };
 		9F3027D62681D228009A3096 /* ProductionAlertCounterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductionAlertCounterCell.swift; sourceTree = "<group>"; };
-		9F3027D82681D228009A3096 /* AlertDetailsHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertDetailsHeader.xib; sourceTree = "<group>"; };
+		9F3027D82681D228009A3096 /* AlertDetailsHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertDetailsHeaderCell.xib; sourceTree = "<group>"; };
 		9F3027D92681D228009A3096 /* ProductionAlertCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductionAlertCell.xib; sourceTree = "<group>"; };
 		9F3027DA2681D228009A3096 /* AlertDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertDetailsCell.xib; sourceTree = "<group>"; };
 		9F3027DB2681D228009A3096 /* ProductionAlertCounterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductionAlertCounterCell.xib; sourceTree = "<group>"; };
 		9F3027DC2681D228009A3096 /* ProductionAlertCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductionAlertCell.swift; sourceTree = "<group>"; };
 		9F3027DD2681D228009A3096 /* AlertDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDetailsCell.swift; sourceTree = "<group>"; };
-		9F3027DE2681D228009A3096 /* AlertDetailsHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDetailsHeader.swift; sourceTree = "<group>"; };
+		9F3027DE2681D228009A3096 /* AlertDetailsHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDetailsHeaderCell.swift; sourceTree = "<group>"; };
 		9F3027DF2681D228009A3096 /* ProductionAlertsDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductionAlertsDetails.swift; sourceTree = "<group>"; };
 		9F3027E02681D228009A3096 /* ProductionAlertsDetails.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductionAlertsDetails.xib; sourceTree = "<group>"; };
 		9F3027E12681D228009A3096 /* ProductionAlertsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductionAlertsViewController.swift; sourceTree = "<group>"; };
@@ -1768,6 +1767,7 @@
 		9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondSendMessageView.xib; sourceTree = "<group>"; };
 		9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
+		C050026C351D2A066387E69F /* Pods-GTA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.debug.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.debug.xcconfig"; sourceTree = "<group>"; };
 		C5BE0E1440AA8E1F11335BEA /* Pods_QA_GTAStage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QA_GTAStage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContactsViewController.swift; sourceTree = "<group>"; };
 		C907E0BF25D437BF00FB0B55 /* AppContactsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppContactsViewController.xib; sourceTree = "<group>"; };
@@ -1832,7 +1832,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65437CAF2665387600B2F38A /* Pods_GTADev.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1840,7 +1839,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65437E7D266539BF00B2F38A /* Pods_GTA.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1848,7 +1846,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65437FEA2665568000B2F38A /* Pods_GTAStage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1857,6 +1854,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				310602184FDF9DE277F359C7 /* Pods_GTA.framework in Frameworks */,
+				DFAAD1A54637CE612A28E656 /* Pods_GTA.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1889,6 +1887,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				425533B70404A097DEAE7C6E /* Pods_GTAStage.framework in Frameworks */,
+				065F4544928F3E2C1844ADA1 /* Pods_GTAStage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1897,6 +1896,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F46C590F1188F7704A82EC84 /* Pods_GTADev.framework in Frameworks */,
+				B91515CADDA8F4D79221D7D3 /* Pods_GTADev.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2117,18 +2117,18 @@
 		859404A3899213CC1A467C10 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				54F47DB5F580B842726A02CE /* Pods-GTA.debug.xcconfig */,
-				791710547768B4DBE8B60339 /* Pods-GTA.release.xcconfig */,
-				5C62324FACAA4F8AE15B4ECA /* Pods-GTADev.debug.xcconfig */,
-				43E62144876B40ED6DD138BF /* Pods-GTADev.release.xcconfig */,
-				7684C58C0D8D159DE2D8E4F1 /* Pods-GTAStage.debug.xcconfig */,
-				1F17817328889F6FE03FC0C0 /* Pods-GTAStage.release.xcconfig */,
 				E353C3DA5467688CAA689058 /* Pods-GTATests.debug.xcconfig */,
 				3E85F17D55FED615DEDA5CC2 /* Pods-GTATests.release.xcconfig */,
 				9F02881C094285F6F34C8971 /* Pods-GTAUITests.debug.xcconfig */,
 				440780615F4BB9CB2146021D /* Pods-GTAUITests.release.xcconfig */,
 				1A7D518D353B3ABD08C45F73 /* Pods-QA-GTAStage.debug.xcconfig */,
 				EF4680B237CDFEB05422165C /* Pods-QA-GTAStage.release.xcconfig */,
+				C050026C351D2A066387E69F /* Pods-GTA.debug.xcconfig */,
+				7D7DCF89663672692BDCB100 /* Pods-GTA.release.xcconfig */,
+				1D1BF4F505A64A9B29B0B2CC /* Pods-GTADev.debug.xcconfig */,
+				14C6014CE4EF94EB0EA97541 /* Pods-GTADev.release.xcconfig */,
+				412149B0DC7F875C8F96C994 /* Pods-GTAStage.debug.xcconfig */,
+				80E0794DE09523B4BA0F99B4 /* Pods-GTAStage.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -2192,8 +2192,8 @@
 			children = (
 				9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */,
 				9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */,
-				9F2C82492657CE02004407B4 /* xib */,
 				9F2C824D2657CE02004407B4 /* GlobalAlertDetailsCell.swift */,
+				9F2C82492657CE02004407B4 /* xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -2235,7 +2235,7 @@
 				9F3027D72681D228009A3096 /* xib */,
 				9F3027DC2681D228009A3096 /* ProductionAlertCell.swift */,
 				9F3027DD2681D228009A3096 /* AlertDetailsCell.swift */,
-				9F3027DE2681D228009A3096 /* AlertDetailsHeader.swift */,
+				9F3027DE2681D228009A3096 /* AlertDetailsHeaderCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -2243,7 +2243,7 @@
 		9F3027D72681D228009A3096 /* xib */ = {
 			isa = PBXGroup;
 			children = (
-				9F3027D82681D228009A3096 /* AlertDetailsHeader.xib */,
+				9F3027D82681D228009A3096 /* AlertDetailsHeaderCell.xib */,
 				9F3027D92681D228009A3096 /* ProductionAlertCell.xib */,
 				9F3027DA2681D228009A3096 /* AlertDetailsCell.xib */,
 				9F3027DB2681D228009A3096 /* ProductionAlertCounterCell.xib */,
@@ -2985,11 +2985,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65437D062665387600B2F38A /* Build configuration list for PBXNativeTarget "GTADev-pushTest" */;
 			buildPhases = (
-				65437C392665387600B2F38A /* [CP] Check Pods Manifest.lock */,
 				65437C3A2665387600B2F38A /* Sources */,
 				65437CAE2665387600B2F38A /* Frameworks */,
 				65437CB02665387600B2F38A /* Resources */,
-				65437D052665387600B2F38A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3004,12 +3002,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65437ED6266539BF00B2F38A /* Build configuration list for PBXNativeTarget "GTA-pushTest" */;
 			buildPhases = (
-				65437E07266539BF00B2F38A /* [CP] Check Pods Manifest.lock */,
 				65437E08266539BF00B2F38A /* Sources */,
 				65437E7C266539BF00B2F38A /* Frameworks */,
 				65437E7E266539BF00B2F38A /* Resources */,
 				65437ED4266539BF00B2F38A /* ShellScript */,
-				65437ED5266539BF00B2F38A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3024,12 +3020,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 654380432665568000B2F38A /* Build configuration list for PBXNativeTarget "GTAStage-pushTest" */;
 			buildPhases = (
-				65437F742665568000B2F38A /* [CP] Check Pods Manifest.lock */,
 				65437F752665568000B2F38A /* Sources */,
 				65437FE92665568000B2F38A /* Frameworks */,
 				65437FEB2665568000B2F38A /* Resources */,
 				654380412665568000B2F38A /* ShellScript */,
-				654380422665568000B2F38A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3242,7 +3236,7 @@
 				65437CCC2665387600B2F38A /* SwitcherCell.xib in Resources */,
 				65437CCD2665387600B2F38A /* GTTeamCell.xib in Resources */,
 				9F3028052681D228009A3096 /* ProductionAlertCounterCell.xib in Resources */,
-				9F3027F02681D228009A3096 /* AlertDetailsHeader.xib in Resources */,
+				9F3027F02681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
 				65437CCE2665387600B2F38A /* Apps.storyboard in Resources */,
 				65437CCF2665387600B2F38A /* SF-Pro-Text-Medium.otf in Resources */,
 				65437CD02665387600B2F38A /* Collaboration.storyboard in Resources */,
@@ -3367,7 +3361,7 @@
 				65437EB2266539BF00B2F38A /* HelpDeskCell.xib in Resources */,
 				65437EB3266539BF00B2F38A /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				65437EB4266539BF00B2F38A /* AppsServiceAlertCell.xib in Resources */,
-				9F3027EE2681D228009A3096 /* AlertDetailsHeader.xib in Resources */,
+				9F3027EE2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
 				65437EB5266539BF00B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
 				65437EB6266539BF00B2F38A /* HelpReportScreenViewController.xib in Resources */,
 				65437EB7266539BF00B2F38A /* OfficeStatusCell.xib in Resources */,
@@ -3467,7 +3461,7 @@
 				6543801F2665568000B2F38A /* MyDevicesViewController.xib in Resources */,
 				654380202665568000B2F38A /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				654380212665568000B2F38A /* SystemUpdatesCell.xib in Resources */,
-				9F3027EF2681D228009A3096 /* AlertDetailsHeader.xib in Resources */,
+				9F3027EF2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
 				654380222665568000B2F38A /* OfficeSelectionCell.xib in Resources */,
 				654380232665568000B2F38A /* GoogleService-Info.plist in Resources */,
 				654380242665568000B2F38A /* TicketDescriptionCell.xib in Resources */,
@@ -3567,7 +3561,7 @@
 				C91F708E2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
 				9F2C82582657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				9F895AF0255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
-				9F3027EA2681D228009A3096 /* AlertDetailsHeader.xib in Resources */,
+				9F3027EA2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
 				659A5AF3255404F100E13B77 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F895B6D255D3D27004489C6 /* HelpReportScreenViewController.xib in Resources */,
 				9F78D0E1256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
@@ -3636,7 +3630,7 @@
 				9F33F6AF260A3C4000470A47 /* SF-Pro-Text-Semibold.ttf in Resources */,
 				9F33F6B0260A3C4000470A47 /* HelpDeskHeader.xib in Resources */,
 				9F33F6B1260A3C4000470A47 /* ServiceDeskAboutCell.xib in Resources */,
-				9F33F6B2260A3C4000470A47 /* (null) in Resources */,
+				9F33F6B2260A3C4000470A47 /* BuildFile in Resources */,
 				9F33F6B3260A3C4000470A47 /* SF-Pro-Display-Medium.otf in Resources */,
 				9F33F6B4260A3C4000470A47 /* SystemStatusHeader.xib in Resources */,
 				9F33F6B5260A3C4000470A47 /* AboutSupportPolicyCell.xib in Resources */,
@@ -3662,7 +3656,7 @@
 				9F33F6C5260A3C4000470A47 /* AboutHeaderCell.xib in Resources */,
 				9F33F6C6260A3C4000470A47 /* Office365AppCell.xib in Resources */,
 				9F3AC9032645A30B004074C8 /* GTTeamViewController.xib in Resources */,
-				9F3027ED2681D228009A3096 /* AlertDetailsHeader.xib in Resources */,
+				9F3027ED2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
 				9F33F6C7260A3C4000470A47 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F3AC93B264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
 				9F33F6C8260A3C4000470A47 /* HelpReportScreenViewController.xib in Resources */,
@@ -3782,7 +3776,7 @@
 				C9424E0525642632003C247E /* MyDevicesViewController.xib in Resources */,
 				9F2C82592657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
-				9F3027EB2681D228009A3096 /* AlertDetailsHeader.xib in Resources */,
+				9F3027EB2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
 				C9EFDA3325A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */,
 				9FCFA2A7259E138D00E893D2 /* GoogleService-Info.plist in Resources */,
 				9F803248260A666900ED6224 /* TicketDescriptionCell.xib in Resources */,
@@ -3856,7 +3850,7 @@
 				9F3AC95C264D4790004074C8 /* SwitcherCell.xib in Resources */,
 				9F3AC90E2645B17A004074C8 /* GTTeamCell.xib in Resources */,
 				9F3028012681D228009A3096 /* ProductionAlertCounterCell.xib in Resources */,
-				9F3027EC2681D228009A3096 /* AlertDetailsHeader.xib in Resources */,
+				9F3027EC2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
 				9FA2C6A52628CFC900EC5BE3 /* Apps.storyboard in Resources */,
 				9F819AC7255C1646007C1739 /* SF-Pro-Text-Medium.otf in Resources */,
 				6547566F25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */,
@@ -4022,67 +4016,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GTAStage/Pods-GTAStage-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		65437C392665387600B2F38A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GTADev-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		65437D052665387600B2F38A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GTADev/Pods-GTADev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GTADev/Pods-GTADev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GTADev/Pods-GTADev-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		65437E07266539BF00B2F38A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GTA-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		65437ED4266539BF00B2F38A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4102,45 +4035,6 @@
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/FirebaseCrashlytics/run\n${DWARF_DSYM_FOLDER_PATH} -name \"*.dSYM\" | xargs -I \\{\\} $PODS_ROOT/FirebaseCrashlytics/upload-symbols -gsp ${PROJECT_DIR}/GTA/Plists/GooglePlists/GTA/GoogleService-Info.plist -p ios\n";
 		};
-		65437ED5266539BF00B2F38A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GTA/Pods-GTA-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GTA/Pods-GTA-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GTA/Pods-GTA-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		65437F742665568000B2F38A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GTAStage-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		654380412665568000B2F38A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4159,23 +4053,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/FirebaseCrashlytics/run\n${PODS_ROOT}/FirebaseCrashlytics/upload-symbols -gsp ${PROJECT_DIR}/GTA/Plists/GooglePlists/GTAStage/GoogleService-Info.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\n";
-		};
-		654380422665568000B2F38A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GTAStage/Pods-GTAStage-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GTAStage/Pods-GTAStage-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GTAStage/Pods-GTAStage-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		72A0DA116C1F91AA8E5C799D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4375,7 +4252,7 @@
 				65437C592665387600B2F38A /* HomepageTableViewController.swift in Sources */,
 				65437C5A2665387600B2F38A /* AuthViewController.swift in Sources */,
 				65437C5B2665387600B2F38A /* TicketDetailsMessageCell.swift in Sources */,
-				9F30281A2681D228009A3096 /* AlertDetailsHeader.swift in Sources */,
+				9F30281A2681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				65437C5C2665387600B2F38A /* ChartLayoutHelper.swift in Sources */,
 				65437C5D2665387600B2F38A /* CollaborationHeaderCell.swift in Sources */,
 				65437C5E2665387600B2F38A /* AppsTableViewHeader.swift in Sources */,
@@ -4507,7 +4384,7 @@
 				65437E27266539BF00B2F38A /* AuthViewController.swift in Sources */,
 				65437E28266539BF00B2F38A /* InfoArticleCell.swift in Sources */,
 				65437E29266539BF00B2F38A /* LoginViewController.swift in Sources */,
-				9F3028182681D228009A3096 /* AlertDetailsHeader.swift in Sources */,
+				9F3028182681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				65437E2A266539BF00B2F38A /* CollaborationHeaderCell.swift in Sources */,
 				65437E2B266539BF00B2F38A /* ArticleViewController.swift in Sources */,
 				65437E2C266539BF00B2F38A /* OfficeInfoCell.swift in Sources */,
@@ -4639,7 +4516,7 @@
 				65437F942665568000B2F38A /* HomepageTableViewController.swift in Sources */,
 				65437F952665568000B2F38A /* AuthViewController.swift in Sources */,
 				65437F962665568000B2F38A /* TicketDetailsMessageCell.swift in Sources */,
-				9F3028192681D228009A3096 /* AlertDetailsHeader.swift in Sources */,
+				9F3028192681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				65437F972665568000B2F38A /* ChartLayoutHelper.swift in Sources */,
 				65437F982665568000B2F38A /* CollaborationHeaderCell.swift in Sources */,
 				65437F992665568000B2F38A /* AppsTableViewHeader.swift in Sources */,
@@ -4771,7 +4648,7 @@
 				9F9D9CB52588C59600DC4231 /* AuthViewController.swift in Sources */,
 				9F1620DA2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
-				9F3028142681D228009A3096 /* AlertDetailsHeader.swift in Sources */,
+				9F3028142681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				9F35860425FD219C0003658D /* CollaborationHeaderCell.swift in Sources */,
 				9F78D07B256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				9F1620DD2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
@@ -4926,7 +4803,7 @@
 				9F33F665260A3C4000470A47 /* AppsTableViewHeader.swift in Sources */,
 				9F33F666260A3C4000470A47 /* LoginViewController.swift in Sources */,
 				9F33F667260A3C4000470A47 /* ErrorHandler.swift in Sources */,
-				9F3028172681D228009A3096 /* AlertDetailsHeader.swift in Sources */,
+				9F3028172681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				9F33F668260A3C4000470A47 /* HelpDeskContactOptionCell.swift in Sources */,
 				9F33F669260A3C4000470A47 /* SecondTicketDetailsViewController.swift in Sources */,
 				9F33F66A260A3C4000470A47 /* ArticleViewController.swift in Sources */,
@@ -4964,7 +4841,7 @@
 				9F30284F2681E68C009A3096 /* AlertPopoverCell.swift in Sources */,
 				9F643576261B5D40000D94A4 /* WhatsNewMoreViewController.swift in Sources */,
 				9F33F681260A3C4000470A47 /* AboutHeaderCell.swift in Sources */,
-				9F33F682260A3C4000470A47 /* (null) in Sources */,
+				9F33F682260A3C4000470A47 /* BuildFile in Sources */,
 				9F33F683260A3C4000470A47 /* OfficeSelectionCell.swift in Sources */,
 				9F33F684260A3C4000470A47 /* SecondSendMessageView.swift in Sources */,
 				9F33F685260A3C4000470A47 /* AboutInfoCell.swift in Sources */,
@@ -5052,7 +4929,7 @@
 				9F36D4662562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F9D9CB62588C59600DC4231 /* AuthViewController.swift in Sources */,
 				9FF054302567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
-				9F3028152681D228009A3096 /* AlertDetailsHeader.swift in Sources */,
+				9F3028152681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F35860525FD219C0003658D /* CollaborationHeaderCell.swift in Sources */,
 				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
@@ -5184,7 +5061,7 @@
 				9F36D4672562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F9D9CB72588C59600DC4231 /* AuthViewController.swift in Sources */,
 				9FF054312567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
-				9F3028162681D228009A3096 /* AlertDetailsHeader.swift in Sources */,
+				9F3028162681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				9F35860625FD219D0003658D /* CollaborationHeaderCell.swift in Sources */,
 				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
@@ -5315,7 +5192,6 @@
 /* Begin XCBuildConfiguration section */
 		65437D072665387600B2F38A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C62324FACAA4F8AE15B4ECA /* Pods-GTADev.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5339,7 +5215,6 @@
 		};
 		65437D082665387600B2F38A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 43E62144876B40ED6DD138BF /* Pods-GTADev.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5363,7 +5238,6 @@
 		};
 		65437ED7266539BF00B2F38A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 54F47DB5F580B842726A02CE /* Pods-GTA.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5388,7 +5262,6 @@
 		};
 		65437ED8266539BF00B2F38A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 791710547768B4DBE8B60339 /* Pods-GTA.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5412,7 +5285,6 @@
 		};
 		654380442665568000B2F38A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7684C58C0D8D159DE2D8E4F1 /* Pods-GTAStage.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5437,7 +5309,6 @@
 		};
 		654380452665568000B2F38A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F17817328889F6FE03FC0C0 /* Pods-GTAStage.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5578,7 +5449,7 @@
 		};
 		659A5AD8255401EE00E13B77 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 54F47DB5F580B842726A02CE /* Pods-GTA.debug.xcconfig */;
+			baseConfigurationReference = C050026C351D2A066387E69F /* Pods-GTA.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5603,7 +5474,7 @@
 		};
 		659A5AD9255401EE00E13B77 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 791710547768B4DBE8B60339 /* Pods-GTA.release.xcconfig */;
+			baseConfigurationReference = 7D7DCF89663672692BDCB100 /* Pods-GTA.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5757,7 +5628,7 @@
 		};
 		9F819AA4255C1572007C1739 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7684C58C0D8D159DE2D8E4F1 /* Pods-GTAStage.debug.xcconfig */;
+			baseConfigurationReference = 412149B0DC7F875C8F96C994 /* Pods-GTAStage.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5782,7 +5653,7 @@
 		};
 		9F819AA5255C1572007C1739 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F17817328889F6FE03FC0C0 /* Pods-GTAStage.release.xcconfig */;
+			baseConfigurationReference = 80E0794DE09523B4BA0F99B4 /* Pods-GTAStage.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5807,7 +5678,7 @@
 		};
 		9F819ACE255C1646007C1739 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C62324FACAA4F8AE15B4ECA /* Pods-GTADev.debug.xcconfig */;
+			baseConfigurationReference = 1D1BF4F505A64A9B29B0B2CC /* Pods-GTADev.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -5831,7 +5702,7 @@
 		};
 		9F819ACF255C1646007C1739 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 43E62144876B40ED6DD138BF /* Pods-GTADev.release.xcconfig */;
+			baseConfigurationReference = 14C6014CE4EF94EB0EA97541 /* Pods-GTADev.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

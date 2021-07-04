@@ -28,7 +28,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
             detailsDataDelegate?.detailsDataUpdated(detailsData: appDetailsData, error: detailsDataResponseError)
         }
     }
-    var appName: String? = ""
+    var appName: String = ""
     var appTitle: String?
     var appImageUrl: String = ""
     var appLastUpdateDate: String?
@@ -36,7 +36,10 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     var selectedMetricsPeriod: MetricsPeriod = .weekly
     var detailsDataResponseError: Error?
     weak var detailsDataDelegate: DetailsDataDelegate?
-    var alertsData: ProductionAlertsResponse?
+    var alertsData: [ProductionAlertsRow]?
+    private var alertsCount: Int {
+        return dataProvider?.alertsData[appName]?.filter({$0.isRead == false && $0.isExpired == false}).count ?? 0
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,14 +47,16 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         setHardCodeData()
         setUpTableView()
         setUpNavigationItem()
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getProductionAlerts()
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppDetailsData()
         }
-        if let appName = appName, let alertsData = dataProvider?.alertsData[appName] {
+        if let alertsData = dataProvider?.alertsData[appName] {
             self.alertsData = alertsData
         }
         tableView.reloadData()
@@ -80,6 +85,23 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
                 self?.appDetailsData = detailsData
             }
             self?.stopAnimation()
+        }
+    }
+    
+    @objc private func getProductionAlerts() {
+        dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
+            DispatchQueue.main.async {
+                if error == nil {
+                    self?.setHardCodeData()
+                    if self?.tableView.dataHasChanged == true {
+                        self?.tableView.reloadData()
+                    } else {
+                        UIView.performWithoutAnimation {
+                            self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -181,7 +203,6 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     
     private func showProductionAlertScreen() {
         let alertsScreen = ProductionAlertsViewController()
-        alertsScreen.dataSource = alertsData
         alertsScreen.dataProvider = dataProvider
         alertsScreen.appName = appName
         self.navigationController?.pushViewController(alertsScreen, animated: true)
@@ -216,7 +237,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     private func showContacts() {
         let contactsScreen = AppContactsViewController()
         contactsScreen.dataProvider = dataProvider
-        contactsScreen.appName = appName ?? ""
+        contactsScreen.appName = appName
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.pushViewController(contactsScreen, animated: true)
     }
@@ -229,11 +250,15 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         reportScreen.delegate = self
         reportScreen.screenTitle = dataSource[indexPath.section].cellData[indexPath.row].app_title
         reportScreen.appSupportEmail = appDetailsData?.appSupportEmail
-        reportScreen.appName = appName ?? ""
+        reportScreen.appName = appName
         let reportIssueTypes = ["Navigation issues", "Slow app work", "No connection", "Missing data", "App crash", "App freeze", "Other"]
         let loginIssueTypes = ["Invalid credentials error", "Forgot password", "2FA issue", "Other"]
         reportScreen.pickerDataSource = indexPath.row == 0 ? reportIssueTypes : loginIssueTypes
         presentPanModal(reportScreen)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
 }
@@ -294,19 +319,21 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 80
-        }
-        return UITableView.automaticDimension
+        return 80
+//        switch indexPath.section {
+//        case 1:
+//            return 80
+//        default:
+//            return UITableView.automaticDimension
+//        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dataArray = dataSource[indexPath.section].cellData
         if indexPath.section == 0, indexPath.row == 0, alertsData != nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProductionAlertCounterCell", for: indexPath) as? ProductionAlertCounterCell
-            let totalCount = dataProvider?.alertsData[appName ?? ""]??.data?.filter({$0?.isRead == false}).count ?? 0
             //let totalCount = alertsData?.data?.filter({$0?.isRead == false}).count ?? 0
-            cell?.setAlert(alertCount: totalCount == 0 ? nil : totalCount, setTap: false)
+            cell?.setAlert(alertCount: alertsCount == 0 ? nil : alertsCount, setTap: false)
             //cell?.updatesNumberLabel.text = totalCount == 0 ? nil : totalCount
             cell?.cellTitle.text = "Production Alerts"
             return cell ?? UITableViewCell()

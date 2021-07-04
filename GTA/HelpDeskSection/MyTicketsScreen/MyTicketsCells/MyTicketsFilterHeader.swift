@@ -18,7 +18,7 @@ class MyTicketsFilterHeader: UIView {
     
     private var sortingPickerView: UIPickerView = UIPickerView()
     private var filterPickerView: UIPickerView = UIPickerView()
-    private let filterDataSource: [FilterType] = [.all, .closed, .new]
+    private let filterDataSource: [FilterType] = [.all, .new, .closed]
     private let sortingDataSource: [SortType] = [.newToOld, .oldToNew]
     
     class func instanceFromNib() -> MyTicketsFilterHeader {

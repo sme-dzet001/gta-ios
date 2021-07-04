@@ -13,6 +13,7 @@ class AppContactsViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var titleStackView: UIStackView!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
@@ -34,6 +35,7 @@ class AppContactsViewController: UIViewController {
         tableView.accessibilityIdentifier = "AppContactsTableView"
         setUpNavigationItem()
         setUpTableView()
+        setUpNavigationItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +66,10 @@ class AppContactsViewController: UIViewController {
             subtitleLabel.text = "Contacts"
             titleLabel.accessibilityIdentifier = "AppContactsMainTitle"
             subtitleLabel.accessibilityIdentifier = "AppContactsSubTitle"
+            if UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se {
+                titleStackView.spacing = 5
+                self.view.layoutIfNeeded()
+            }
             return
         }
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))

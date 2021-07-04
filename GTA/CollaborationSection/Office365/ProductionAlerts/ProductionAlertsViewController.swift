@@ -13,10 +13,12 @@ class ProductionAlertsViewController: UIViewController {
     @IBOutlet weak var blurView: UIView!
     
     var dataProvider: MyAppsDataProvider?
-    
-    var dataSource: ProductionAlertsResponse?
     var appName: String?
     var selectedId: String?
+    
+    var badgeCount: Int {
+        return dataProvider?.getProductionAlertsCount() ?? 0
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +31,7 @@ class ProductionAlertsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let appName = appName, let alertsData = dataProvider?.alertsData[appName] {
-            dataSource = alertsData
+        if let alertsData = dataProvider?.alertsData[appName ?? ""] {
             tableView.reloadData()
         }
     }
@@ -38,7 +39,7 @@ class ProductionAlertsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let activeProductionAlertId = dataProvider?.activeProductionAlertId {
-            if dataSource != nil {
+            if dataProvider?.alertsData[appName ?? ""] != nil {
                 showAlertDetails(for: activeProductionAlertId)
             } else {
                 dataProvider?.forceUpdateProductionAlerts = false
@@ -46,11 +47,6 @@ class ProductionAlertsViewController: UIViewController {
                 dataProvider?.activeProductionAlertAppName = nil
             }
         }
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        handleBlurShowing(animated: false)
     }
     
     private func setUpNavigationItem() {
@@ -71,64 +67,49 @@ class ProductionAlertsViewController: UIViewController {
     private func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "ProductionAlertCell", bundle: nil), forCellReuseIdentifier: "ProductionAlertCell")
-    }
-    
-    func handleBlurShowing(animated: Bool) {
-        let isReachedBottom = tableView.contentOffset.y >= (tableView.contentSize.height - tableView.frame.size.height).rounded(.towardZero)
-        if animated {
-            UIView.animate(withDuration: 0.2) {
-                self.blurView.alpha = isReachedBottom ? 0 : 1
-            }
-        } else {
-            blurView.alpha = isReachedBottom ? 0 : 1
-        }
-    }
-    
-    func addBlurToView() {
-        let gradientMaskLayer = CAGradientLayer()
-        gradientMaskLayer.frame = blurView.bounds
-        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(0.3) .cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
-        gradientMaskLayer.locations = [0, 0.1, 0.9, 1]
-        blurView.layer.mask = gradientMaskLayer
     }
     
     private func showAlertDetails(for id: String) {
         let detailsVC = ProductionAlertsDetails()
         detailsVC.dataProvider = dataProvider
-        // for POC only
-        // need to change in future
-        if !(dataProvider?.forceUpdateProductionAlerts ?? false), let index = dataProvider?.alertsData[appName ?? ""]??.data?.firstIndex(where: {$0?.id == id}) {
-            dataProvider?.alertsData[appName ?? ""]??.data?[index]?.isRead = true
-            detailsVC.alertData = dataProvider?.alertsData[appName ?? ""]??.data?[index]
+        if let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == id.lowercased()}) {
+            let alertData = dataProvider?.alertsData[appName ?? ""]?[index]
+            detailsVC.alertData = alertData
+            if let summary = alertData?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
+                UserDefaults.standard.setValue(summary, forKey: summary.lowercased())
+            }
         }
-       // dataProvider?.alertsData[appName ?? ""]??.data?[row]?.isRead = true
-        
-        presentDetails(detailsVC: detailsVC)
+        self.tabBarController?.tabBar.items?[2].badgeValue = badgeCount > 0 ? "\(badgeCount)" : nil
+        self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+        presentPanModal(detailsVC)
     }
     
     private func showAlertDetails(for row: Int) {
-        guard (dataSource?.data?.count ?? 0) > row else { return }
+        guard (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row else { return }
         let detailsVC = ProductionAlertsDetails()
-        detailsVC.dataProvider = dataProvider
-        // for POC only
-        // need to change in future
-        dataProvider?.alertsData[appName ?? ""]??.data?[row]?.isRead = true
-        detailsVC.alertData = dataProvider?.alertsData[appName ?? ""]??.data?[row]
-        presentDetails(detailsVC: detailsVC)
-    }
-    
-    private func presentDetails(detailsVC: ProductionAlertsDetails) {
-        var totalCount = 0
-        if let countArr = dataProvider?.alertsData.compactMap({$0.value?.data}) {
-            for i in countArr {
-                totalCount += i.filter({$0?.isRead == false}).count
-            }
-            let value = (Int(self.tabBarController?.tabBar.items?[2].badgeValue ?? "") ?? 0) - 1
-            self.tabBarController?.tabBar.items?[2].badgeValue = value > 0 ? "\(value)" : nil
+        let alertData = dataProvider?.alertsData[appName ?? ""]?[row]
+        detailsVC.alertData = alertData
+        if let summary = alertData?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
+            UserDefaults.standard.setValue(summary, forKey: summary.lowercased())
         }
+        self.tabBarController?.tabBar.items?[2].badgeValue = badgeCount > 0 ? "\(badgeCount)" : nil
+        self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
         presentPanModal(detailsVC)
     }
+    
+//    private func presentDetails(detailsVC: ProductionAlertsDetails) {
+//        var totalCount = 0
+//        if let countArr = dataProvider?.alertsData.compactMap({$0.value?.data}) {
+//            for i in countArr {
+//                totalCount += i.filter({$0?.isRead == false}).count
+//            }
+//            let value = (Int(self.tabBarController?.tabBar.items?[2].badgeValue ?? "") ?? 0) - 1
+//            self.tabBarController?.tabBar.items?[2].badgeValue = value > 0 ? "\(value)" : nil
+//        }
+//        presentPanModal(detailsVC)
+//    }
     
     @objc private func backPressed() {
         self.navigationController?.popViewController(animated: true)
@@ -139,24 +120,21 @@ class ProductionAlertsViewController: UIViewController {
 extension ProductionAlertsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource?.data?.count ?? 0
+        return dataProvider?.alertsData[appName ?? ""]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductionAlertCell", for: indexPath) as? ProductionAlertCell
-        guard (dataSource?.data?.count ?? 0) > indexPath.row, let data = dataSource?.data?[indexPath.row] else { return UITableViewCell() }
-        cell?.alertNumberLabel.text = data.id
-        cell?.dateLabel.text = data.date
-        //cell?.descriptionLabel.text = data.
+        let data = dataProvider?.alertsData[appName ?? ""]
+        guard (data?.count ?? 0) > indexPath.row, let cellData = data?[indexPath.row] else { return UITableViewCell() }
+        cell?.alertNumberLabel.text = cellData.ticketNumber
+        cell?.dateLabel.text = cellData.closeDateString == nil ? cellData.startDateString?.getFormattedDateStringForProdAlert() : cellData.closeDateString?.getFormattedDateStringForProdAlert()
+        cell?.descriptionLabel.text = cellData.summary
         return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showAlertDetails(for: indexPath.row)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        handleBlurShowing(animated: true)
     }
     
 }

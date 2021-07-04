@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Group-6-40.png",
+      "filename" : "send.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Group-6-40@2x.png",
+      "filename" : "send-1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Group-6-40@3x.png",
+      "filename" : "send-2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

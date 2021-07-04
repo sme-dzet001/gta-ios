@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40x-WX-5Xf">
-                        <rect key="frame" x="24" y="18" width="390" height="83"/>
+                        <rect key="frame" x="24" y="21" width="390" height="77"/>
                         <attributedString key="attributedText">
                             <fragment>
                                 <string key="content">On 10 September 2020, Jersey reclassified nine cases as old infections resulting in negative cases reported on 11 September 2020.</string>
@@ -44,9 +44,9 @@
                     <constraint firstItem="9M8-6X-EvS" firstAttribute="leading" secondItem="odm-Qr-s41" secondAttribute="leading" id="Lbn-a2-5eh"/>
                     <constraint firstAttribute="trailing" secondItem="40x-WX-5Xf" secondAttribute="trailing" constant="24" id="Mou-xj-Fko"/>
                     <constraint firstAttribute="bottom" secondItem="9M8-6X-EvS" secondAttribute="bottom" id="XWW-hg-5sY"/>
-                    <constraint firstItem="40x-WX-5Xf" firstAttribute="top" secondItem="odm-Qr-s41" secondAttribute="top" constant="18" id="a1V-La-NDS"/>
+                    <constraint firstItem="40x-WX-5Xf" firstAttribute="top" secondItem="odm-Qr-s41" secondAttribute="top" constant="21" id="a1V-La-NDS"/>
                     <constraint firstItem="40x-WX-5Xf" firstAttribute="leading" secondItem="odm-Qr-s41" secondAttribute="leading" constant="24" id="ig8-tg-VOI"/>
-                    <constraint firstItem="9M8-6X-EvS" firstAttribute="top" secondItem="40x-WX-5Xf" secondAttribute="bottom" constant="18" id="jMS-Wd-Gje"/>
+                    <constraint firstItem="9M8-6X-EvS" firstAttribute="top" secondItem="40x-WX-5Xf" secondAttribute="bottom" constant="21" id="jMS-Wd-Gje"/>
                     <constraint firstAttribute="trailing" secondItem="9M8-6X-EvS" secondAttribute="trailing" id="mNG-7Q-gqK"/>
                 </constraints>
             </tableViewCellContentView>
