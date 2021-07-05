@@ -20,7 +20,7 @@ struct ProductionAlertsRows: Codable {
     var rows: [ProductionAlertsRow?]?
 }
 
-struct ProductionAlertsRow: Codable {
+struct ProductionAlertsRow: Codable, Equatable {
     var values: [QuantumValue?]?
     
     enum CodingKeys: String, CodingKey {
