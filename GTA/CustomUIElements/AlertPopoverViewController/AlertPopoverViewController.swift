@@ -19,7 +19,7 @@ class AlertPopoverViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let count = (alertsData?.count ?? 0) > 2 ? (alertsData?.count ?? 0) - 2 : 0
-        alertsData = Array(alertsData?.dropFirst(count) ?? [])
+        alertsData = Array(alertsData?.dropLast(count) ?? [])
         setUpTableView()
         self.tableView.sizeToFit()
     }
