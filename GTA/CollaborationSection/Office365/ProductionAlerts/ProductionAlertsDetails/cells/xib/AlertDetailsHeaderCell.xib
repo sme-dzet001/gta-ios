@@ -25,72 +25,43 @@
                 <rect key="frame" x="0.0" y="0.0" width="621" height="87"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ZRr-Q5-EAx">
-                        <rect key="frame" x="24" y="5" width="573" height="77"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zsD-IY-sNk">
-                                <rect key="frame" x="0.0" y="0.0" width="82" height="57"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="DPSX-169" textAlignment="natural" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHC-1l-m0K">
-                                        <rect key="frame" x="0.0" y="0.0" width="82" height="17"/>
-                                        <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="14"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="aHC-1l-m0K" secondAttribute="trailing" id="2Jq-Kd-Q7h"/>
-                                    <constraint firstItem="aHC-1l-m0K" firstAttribute="top" secondItem="zsD-IY-sNk" secondAttribute="top" id="K1S-lr-5j9"/>
-                                    <constraint firstItem="aHC-1l-m0K" firstAttribute="leading" secondItem="zsD-IY-sNk" secondAttribute="leading" id="n6H-0z-Dou"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WEd-bk-Sih">
-                                <rect key="frame" x="86" y="0.0" width="417.5" height="77"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHQ-gu-uWt">
-                                        <rect key="frame" x="0.0" y="0.0" width="417.5" height="77"/>
-                                        <string key="text">GRPS/MMT/Gold Downtime.
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="DPSX-16933" textAlignment="natural" lineBreakMode="clip" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHC-1l-m0K">
+                        <rect key="frame" x="24" y="5" width="90" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="3Vn-FV-moJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHQ-gu-uWt">
+                        <rect key="frame" x="117" y="5" width="422" height="77"/>
+                        <string key="text">GRPS/MMT/Gold Downtime.
 Weds 10th Feb, 2020 6am
 EST/12pm CEST</string>
-                                        <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="14"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="FHQ-gu-uWt" firstAttribute="top" secondItem="WEd-bk-Sih" secondAttribute="top" id="LIs-b7-nhU"/>
-                                    <constraint firstItem="FHQ-gu-uWt" firstAttribute="leading" secondItem="WEd-bk-Sih" secondAttribute="leading" id="Zbk-bE-YCT"/>
-                                    <constraint firstAttribute="bottom" secondItem="FHQ-gu-uWt" secondAttribute="bottom" id="bqb-jU-euW"/>
-                                    <constraint firstAttribute="trailing" secondItem="FHQ-gu-uWt" secondAttribute="trailing" id="zU3-Mm-OWW"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="24B-4X-m0d">
-                                <rect key="frame" x="507.5" y="0.0" width="65.5" height="57"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Open" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyW-bg-Ycp">
-                                        <rect key="frame" x="0.0" y="0.0" width="65.5" height="17"/>
-                                        <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="14"/>
-                                        <color key="textColor" systemColor="systemGreenColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="IyW-bg-Ycp" firstAttribute="leading" secondItem="24B-4X-m0d" secondAttribute="leading" id="6iM-51-Fuz"/>
-                                    <constraint firstAttribute="trailing" secondItem="IyW-bg-Ycp" secondAttribute="trailing" id="KYU-AA-jle"/>
-                                    <constraint firstItem="IyW-bg-Ycp" firstAttribute="top" secondItem="24B-4X-m0d" secondAttribute="top" id="M0G-hK-JFl"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                    </stackView>
+                        <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Closed" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyW-bg-Ycp">
+                        <rect key="frame" x="542" y="5" width="55" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="55" id="JHR-mi-mrG"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="14"/>
+                        <color key="textColor" systemColor="systemGreenColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="ZRr-Q5-EAx" firstAttribute="top" secondItem="kRp-7X-R7e" secondAttribute="top" constant="5" id="29Z-IO-02F"/>
-                    <constraint firstItem="ZRr-Q5-EAx" firstAttribute="leading" secondItem="kRp-7X-R7e" secondAttribute="leading" constant="24" id="c1g-dU-8YR"/>
-                    <constraint firstAttribute="trailing" secondItem="ZRr-Q5-EAx" secondAttribute="trailing" constant="24" id="iqG-XZ-mFS"/>
-                    <constraint firstAttribute="bottom" secondItem="ZRr-Q5-EAx" secondAttribute="bottom" constant="5" id="y9v-3I-21R"/>
+                    <constraint firstAttribute="bottom" secondItem="FHQ-gu-uWt" secondAttribute="bottom" constant="5" id="9tD-P6-FHY"/>
+                    <constraint firstAttribute="trailing" secondItem="IyW-bg-Ycp" secondAttribute="trailing" constant="24" id="Bpt-sB-7Ze"/>
+                    <constraint firstItem="IyW-bg-Ycp" firstAttribute="top" secondItem="kRp-7X-R7e" secondAttribute="top" constant="5" id="FRG-Ua-DRD"/>
+                    <constraint firstItem="aHC-1l-m0K" firstAttribute="top" secondItem="kRp-7X-R7e" secondAttribute="top" constant="5" id="Jds-3n-cog"/>
+                    <constraint firstItem="FHQ-gu-uWt" firstAttribute="leading" secondItem="aHC-1l-m0K" secondAttribute="trailing" constant="3" id="PU0-Zg-1wR"/>
+                    <constraint firstItem="IyW-bg-Ycp" firstAttribute="leading" secondItem="FHQ-gu-uWt" secondAttribute="trailing" constant="3" id="Poa-fX-oxy"/>
+                    <constraint firstItem="FHQ-gu-uWt" firstAttribute="top" secondItem="kRp-7X-R7e" secondAttribute="top" constant="5" id="TQZ-XT-CDR"/>
+                    <constraint firstItem="aHC-1l-m0K" firstAttribute="leading" secondItem="kRp-7X-R7e" secondAttribute="leading" constant="24" id="hir-vM-I9R"/>
                 </constraints>
             </tableViewCellContentView>
             <userDefinedRuntimeAttributes>
@@ -107,9 +78,6 @@ EST/12pm CEST</string>
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
