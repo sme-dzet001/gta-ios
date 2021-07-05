@@ -581,13 +581,16 @@ class MyAppsDataProvider {
                     data[key]?.data?.rows?[index]?.indexes = indexes
                 }
                 data[key]?.data?.rows?.removeAll(where: {$0?.isExpired == true})
-                let inProgressAlerts = data[key]?.data?.rows?.filter({$0?.status == .inProgress}).compactMap({$0}) ?? []
+                var appAlerts: [ProductionAlertsRow] = []
+                let inProgressAlerts = data[key]?.data?.rows?.filter({$0?.status == .inProgress || $0?.status == .open}).compactMap({$0}) ?? []
                 let closedAlerts = data[key]?.data?.rows?.filter({$0?.status == .closed}).compactMap({$0}) ?? []
                 if inProgressAlerts.count >= 1 {
-                    self.alertsData[key] = inProgressAlerts.sorted(by: {$0.startDate.timeIntervalSince1970 > $1.startDate.timeIntervalSince1970})
-                } else if closedAlerts.count >= 1 {
-                    self.alertsData[key] = closedAlerts.sorted(by: {$0.closeDate.timeIntervalSince1970 > $1.closeDate.timeIntervalSince1970})
+                    appAlerts = inProgressAlerts.sorted(by: {$0.startDate.timeIntervalSince1970 > $1.startDate.timeIntervalSince1970})
                 }
+                if closedAlerts.count >= 1 {
+                    appAlerts.append(contentsOf: closedAlerts.sorted(by: {$0.closeDate.timeIntervalSince1970 > $1.closeDate.timeIntervalSince1970}))
+                }
+                self.alertsData[key] = appAlerts
             }
             completion()
         }
