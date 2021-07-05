@@ -519,6 +519,7 @@ extension String {
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
         if let date = dateFormatterPrint.date(from: self) {
             dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
+            dateFormatterPrint.timeZone = .current
             return dateFormatterPrint.string(from: date)
         } else {
             dateFormatterPrint.dateFormat = String.newsDateFormat
@@ -532,8 +533,10 @@ extension String {
     func getFormattedDateStringForProdAlert() -> String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
         guard let date = dateFormatterPrint.date(from: self) else { return self }
         dateFormatterPrint.dateFormat = String.newsDateFormat
+        dateFormatterPrint.timeZone = .current
         return dateFormatterPrint.string(from: date)
     }
     
