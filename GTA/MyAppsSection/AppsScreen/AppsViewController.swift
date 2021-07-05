@@ -48,6 +48,7 @@ class AppsViewController: UIViewController {
         setUpNavigationItem()
         setAccessibilityIdentifiers()
         NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,6 +153,7 @@ class AppsViewController: UIViewController {
                 if error == nil {
                     self?.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
                     self?.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+                    self?.tableView.reloadData()
                 }
             }
         }

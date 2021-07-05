@@ -38,6 +38,7 @@ class HomepageViewController: UIViewController {
     func commonInit() {
         NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlertsCount), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlertsCount), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
     }
 
     override func viewDidLoad() {
@@ -59,6 +60,7 @@ class HomepageViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
