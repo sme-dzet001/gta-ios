@@ -246,7 +246,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     cell.showFirstChar()
                 }
-                if let alerts = dataProvider.alertsData[cellData.app_name ?? ""]?.filter({$0.isRead == false}) {
+                if indexPath.section == 0, let alerts = dataProvider.alertsData[cellData.app_name ?? ""]?.filter({$0.isRead == false}) {
                     cell.popoverShowDelegate = self
                     cell.showAlertScreenDelegate = self
                     cell.setAlert(alertCount: alerts.count)
@@ -287,7 +287,7 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
         appVC.appLastUpdateDate = cellData.lastUpdateDate
         appVC.systemStatus = cellData.appStatus
         appVC.dataProvider = dataProvider
-        if let alertsData = dataProvider.alertsData[cellData.app_name ?? ""] {
+        if indexPath.section == 0, let alertsData = dataProvider.alertsData[cellData.app_name ?? ""] {
             appVC.alertsData = alertsData
         }
         
