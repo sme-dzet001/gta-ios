@@ -27,14 +27,15 @@ class AlertPopoverViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.layoutIfNeeded()
-        if (alertsData?.count ?? 0) > 1 {
-            self.preferredContentSize = self.tableView.contentSize
-        } else {
+//        if (alertsData?.count ?? 0) > 1 {
+//            self.preferredContentSize = self.tableView.contentSize
+//        } else {
+            let constant: CGFloat = 30
             var contentSize = self.tableView.contentSize
-            contentSize.height = self.tableView.contentSize.height + 10
-            topConstraint?.constant = 5
+            contentSize.height = self.tableView.contentSize.height + constant
+            topConstraint?.constant = constant / 2
             self.preferredContentSize = contentSize
-        }
+        //}
     }
     
     private func setUpTableView() {
