@@ -391,11 +391,12 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             showProductionAlertScreen()
             return
         }
-        if indexPath.row == 3, (appDetailsData != nil) {
+        let commandBase = productionAlertsSectionAvailable ? 3 : 2
+        if indexPath.row == commandBase, (appDetailsData != nil) {
             showAboutScreen()
-        } else if indexPath.row == 4 {
+        } else if indexPath.row == commandBase + 1 {
             showTipsAndTricks()
-        } else if indexPath.row == 5 {
+        } else if indexPath.row == commandBase + 2 {
             showContacts()
         } else {
             showHelpReportScreen(for: indexPath)
