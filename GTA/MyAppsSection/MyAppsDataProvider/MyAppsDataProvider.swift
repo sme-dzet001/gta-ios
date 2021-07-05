@@ -582,7 +582,7 @@ class MyAppsDataProvider {
                 }
                 data[key]?.data?.rows?.removeAll(where: {$0?.isExpired == true})
                 var appAlerts: [ProductionAlertsRow] = []
-                let inProgressAlerts = data[key]?.data?.rows?.filter({$0?.status == .inProgress || $0?.status == .open}).compactMap({$0}) ?? []
+                let inProgressAlerts = data[key]?.data?.rows?.filter({$0?.status != .closed}).compactMap({$0}) ?? []
                 let closedAlerts = data[key]?.data?.rows?.filter({$0?.status == .closed}).compactMap({$0}) ?? []
                 if inProgressAlerts.count >= 1 {
                     appAlerts = inProgressAlerts.sorted(by: {$0.startDate.timeIntervalSince1970 > $1.startDate.timeIntervalSince1970})
