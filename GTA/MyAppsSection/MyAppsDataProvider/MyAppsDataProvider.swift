@@ -565,11 +565,11 @@ class MyAppsDataProvider {
                 retErr = ResponseError.noDataAvailable
             }
             var dataWasChanged = false
-            let count = self?.getProductionAlertsCount() ?? 0
             if self?.alertsData != alerts {
                 dataWasChanged = true
             }
             self?.alertsData = alerts
+            let count = self?.getProductionAlertsCount() ?? 0
             completion?(dataWasChanged, errorCode, retErr, count)
         }
     }
