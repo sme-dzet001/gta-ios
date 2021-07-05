@@ -68,7 +68,7 @@ class ProductionAlertsDetails: UIViewController {
             dataSource.append(["Close Date" : close])
         }
         if let duration = alertData?.duration {
-            dataSource.append(["Estimated Duration" : duration])
+            dataSource.append(["Maintenance Duration" : duration])
         }
         if let summary = alertData?.description {
             dataSource.append(["Summary" : summary])

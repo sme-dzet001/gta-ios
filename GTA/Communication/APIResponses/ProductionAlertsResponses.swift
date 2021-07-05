@@ -50,7 +50,12 @@ struct ProductionAlertsRow: Codable {
     }
     var duration: String? {
         guard let values = values, let index = indexes["maintenance_duration"], values.count > index else { return nil }
-        return values[index]?.stringValue
+        let duration = Float(values[index]?.stringValue ?? "") ?? 0.0
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute]
+        formatter.unitsStyle = .abbreviated
+        let formattedString = formatter.string(from: TimeInterval(duration * 3600))!
+        return formattedString
     }
     var sendPush: String? {
         guard let values = values, let index = indexes["send_push"], values.count > index else { return nil }
