@@ -115,7 +115,7 @@ class NewTicketViewController: UIViewController, PanModalPresentable {
     @IBAction func submitButtonDidPressed(_ sender: UIButton) {
         if textView.text.isEmpty || (subjectTextField.text?.isEmpty ?? true) {
             //panModalTransition(to: .longForm)
-            let alert = UIAlertController(title: nil, message: "Please make sure all fields are filled in", preferredStyle: .alert)
+            let alert = UIAlertController(title: nil, message: "Please, make sure all fields are filled in", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return
