@@ -37,11 +37,14 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     var detailsDataResponseError: Error?
     weak var detailsDataDelegate: DetailsDataDelegate?
     var alertsData: [ProductionAlertsRow]?
+    private var activeAlertsCount: Int {
+        return dataProvider?.alertsData[appName]?.filter({$0.isExpired == false}).count ?? 0
+    }
     private var alertsCount: Int {
         return dataProvider?.alertsData[appName]?.filter({$0.isRead == false && $0.isExpired == false}).count ?? 0
     }
     private var productionAlertsSectionAvailable: Bool {
-        return alertsData != nil && alertsCount > 0
+        return alertsData != nil && activeAlertsCount > 0
     }
     
     override func viewDidLoad() {
