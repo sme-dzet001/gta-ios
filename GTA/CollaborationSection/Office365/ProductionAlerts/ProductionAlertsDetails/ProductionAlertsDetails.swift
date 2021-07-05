@@ -181,7 +181,6 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
             cell?.setStatus(alertData?.status)
             return cell ?? UITableViewCell()
         }
-        guard dataSource.count > indexPath.row, let key = dataSource[indexPath.row].keys.first else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlertDetailsCell", for: indexPath) as? AlertDetailsCell
         cell?.titleLabel.text = key
         cell?.descriptionLabel.text = dataSource[indexPath.row][key]
