@@ -662,12 +662,12 @@ class HomeDataProvider {
             retErr = ResponseError.noDataAvailable
         }
         let indexes = getDataIndexes(columns: prodAlertsResponse?.meta?.widgetsDataSource?.params?.columns)
-        let count = getProductionAlertsCount(sdsd: data, indexes: indexes)
+        let count = getProductionAlertsCount(alertData: data, indexes: indexes)
         completion?(errorCode, retErr, count)
     }
     
-    private func getProductionAlertsCount(sdsd: [String : ProductionAlertsData], indexes: [String : Int]) -> Int {
-        var data = sdsd
+    private func getProductionAlertsCount(alertData: [String : ProductionAlertsData], indexes: [String : Int]) -> Int {
+        var data = alertData
         var count = 0
         for key in data.keys {
             for (index, _) in (data[key]?.data?.rows ?? []).enumerated() {
