@@ -147,9 +147,12 @@ class AppsViewController: UIViewController {
     }
     
     @objc private func getProductionAlerts() {
-        dataProvider.getProductionAlerts {[weak self] errorCode, error, count  in
+        dataProvider.getProductionAlerts {[weak self] dataWasChanged, errorCode, error, count  in
             DispatchQueue.main.async {
                 if error == nil {
+                    if dataWasChanged {
+                        self?.tableView.reloadData()
+                    }
                     self?.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
                     self?.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
                 }

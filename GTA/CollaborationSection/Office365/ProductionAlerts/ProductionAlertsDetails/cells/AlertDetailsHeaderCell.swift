@@ -16,7 +16,7 @@ class AlertDetailsHeaderCell: UITableViewCell {
     func setStatus(_ status: GlobalAlertStatus?) {
         switch status {
         case .inProgress, .open:
-            statusLabel.text = status == .inProgress ? "In " : "Open"
+            statusLabel.text = "Open"
             statusLabel.textColor = UIColor(hex: 0xFF3E33)
         case .closed:
             statusLabel.text = "Closed"

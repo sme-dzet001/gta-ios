@@ -31,9 +31,7 @@ class ProductionAlertsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let alertsData = dataProvider?.alertsData[appName ?? ""] {
-            tableView.reloadData()
-        }
+        self.tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -72,44 +70,32 @@ class ProductionAlertsViewController: UIViewController {
     }
     
     private func showAlertDetails(for id: String) {
-        let detailsVC = ProductionAlertsDetails()
-        detailsVC.dataProvider = dataProvider
-        if let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == id.lowercased()}) {
-            let alertData = dataProvider?.alertsData[appName ?? ""]?[index]
-            detailsVC.alertData = alertData
-            if let summary = alertData?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
-                UserDefaults.standard.setValue(summary, forKey: summary.lowercased())
-            }
-        }
-        self.tabBarController?.tabBar.items?[2].badgeValue = badgeCount > 0 ? "\(badgeCount)" : nil
-        self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
-        presentPanModal(detailsVC)
+        let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == id.lowercased()})
+        guard let row = index, (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row else { return }
+        createAndShowDetailsScreenForRow(row)
     }
     
     private func showAlertDetails(for row: Int) {
         guard (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row else { return }
+        createAndShowDetailsScreenForRow(row)
+    }
+    
+    private func createAndShowDetailsScreenForRow(_ row: Int) {
         let detailsVC = ProductionAlertsDetails()
+        detailsVC.dataProvider = dataProvider
         let alertData = dataProvider?.alertsData[appName ?? ""]?[row]
         detailsVC.alertData = alertData
-        if let summary = alertData?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
+        readAlertAndUpdateTabCount(alert: alertData)
+        presentPanModal(detailsVC)
+    }
+    
+    private func readAlertAndUpdateTabCount(alert: ProductionAlertsRow?) {
+        if let summary = alert?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
             UserDefaults.standard.setValue(summary, forKey: summary.lowercased())
         }
         self.tabBarController?.tabBar.items?[2].badgeValue = badgeCount > 0 ? "\(badgeCount)" : nil
         self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
-        presentPanModal(detailsVC)
     }
-    
-//    private func presentDetails(detailsVC: ProductionAlertsDetails) {
-//        var totalCount = 0
-//        if let countArr = dataProvider?.alertsData.compactMap({$0.value?.data}) {
-//            for i in countArr {
-//                totalCount += i.filter({$0?.isRead == false}).count
-//            }
-//            let value = (Int(self.tabBarController?.tabBar.items?[2].badgeValue ?? "") ?? 0) - 1
-//            self.tabBarController?.tabBar.items?[2].badgeValue = value > 0 ? "\(value)" : nil
-//        }
-//        presentPanModal(detailsVC)
-//    }
     
     @objc private func backPressed() {
         self.navigationController?.popViewController(animated: true)
@@ -128,6 +114,7 @@ extension ProductionAlertsViewController: UITableViewDataSource, UITableViewDele
         let data = dataProvider?.alertsData[appName ?? ""]
         guard (data?.count ?? 0) > indexPath.row, let cellData = data?[indexPath.row] else { return UITableViewCell() }
         cell?.alertNumberLabel.text = cellData.ticketNumber
+        cell?.contentView.backgroundColor = cellData.isRead ? .white : UIColor(hex: 0xF7F7FA)
         cell?.dateLabel.text = cellData.closeDateString == nil ? cellData.startDateString?.getFormattedDateStringForProdAlert() : cellData.closeDateString?.getFormattedDateStringForProdAlert()
         cell?.descriptionLabel.text = cellData.summary
         return cell ?? UITableViewCell()
