@@ -52,7 +52,7 @@ struct ProductionAlertsRow: Codable {
         guard let values = values, let index = indexes["maintenance_duration"], values.count > index else { return nil }
         let duration = Float(values[index]?.stringValue ?? "") ?? 0.0
         let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute]
+        formatter.allowedUnits = [.month, .day, .hour, .minute]
         formatter.unitsStyle = .abbreviated
         let formattedString = formatter.string(from: TimeInterval(duration * 3600))!
         return formattedString
