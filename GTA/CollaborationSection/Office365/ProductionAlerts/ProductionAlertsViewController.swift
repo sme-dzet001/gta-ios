@@ -50,7 +50,7 @@ class ProductionAlertsViewController: UIViewController {
     private func setUpNavigationItem() {
         navigationController?.navigationBar.barTintColor = UIColor.white
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        tlabel.text = "Production Alerts"
+        tlabel.text = "\(appName ?? "") Production Alerts"
         tlabel.textColor = UIColor.black
         tlabel.textAlignment = .center
         tlabel.font = UIFont(name: "SFProDisplay-Medium", size: 20.0)
