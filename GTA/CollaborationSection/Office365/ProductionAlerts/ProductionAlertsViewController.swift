@@ -32,6 +32,7 @@ class ProductionAlertsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getProductionAlerts()
         self.tableView.reloadData()
     }
     
