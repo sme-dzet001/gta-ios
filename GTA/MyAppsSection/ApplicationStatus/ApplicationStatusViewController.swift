@@ -37,8 +37,14 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     var detailsDataResponseError: Error?
     weak var detailsDataDelegate: DetailsDataDelegate?
     var alertsData: [ProductionAlertsRow]?
+    private var activeAlertsCount: Int {
+        return dataProvider?.alertsData[appName]?.filter({$0.isExpired == false}).count ?? 0
+    }
     private var alertsCount: Int {
         return dataProvider?.alertsData[appName]?.filter({$0.isRead == false && $0.isExpired == false}).count ?? 0
+    }
+    private var productionAlertsSectionAvailable: Bool {
+        return alertsData != nil && activeAlertsCount > 0
     }
     
     override func viewDidLoad() {
@@ -66,7 +72,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if dataProvider?.activeProductionAlertId != nil {
-            if alertsData != nil {
+            if productionAlertsSectionAvailable {
                 showProductionAlertScreen()
             } else {
                 dataProvider?.forceUpdateProductionAlerts = false
@@ -177,7 +183,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         
 //        let secondSection = [AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "Scheduled maintenance", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "AWS outage reported", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true)]
 //
-        if let _ = alertsData {
+        if productionAlertsSectionAvailable {
             firstSection.insert(AppInfo(app_name: "", app_title: "Production Alerts", imageData: alertIcon?.pngData(), appStatus: .none, app_is_active: true), at: 0)
         }
         dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: firstSection, metricsData: nil)/*, AppsDataSource(sectionName: "System Updates", description: nil, cellData: secondSection), AppsDataSource(sectionName: "Stats", description: nil, cellData: [], metricsData: metricsData)*/]
@@ -330,7 +336,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dataArray = dataSource[indexPath.section].cellData
-        if indexPath.section == 0, indexPath.row == 0, alertsData != nil {
+        if indexPath.section == 0, indexPath.row == 0, productionAlertsSectionAvailable {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProductionAlertCounterCell", for: indexPath) as? ProductionAlertCounterCell
             //let totalCount = alertsData?.data?.filter({$0?.isRead == false}).count ?? 0
             cell?.setAlert(alertCount: alertsCount == 0 ? nil : alertsCount, setTap: false)
@@ -381,15 +387,16 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
-        if indexPath.row == 0 && alertsData != nil {
+        if indexPath.row == 0 && productionAlertsSectionAvailable {
             showProductionAlertScreen()
             return
         }
-        if indexPath.row == 3, (appDetailsData != nil) {
+        let commandBase = productionAlertsSectionAvailable ? 3 : 2
+        if indexPath.row == commandBase, (appDetailsData != nil) {
             showAboutScreen()
-        } else if indexPath.row == 4 {
+        } else if indexPath.row == commandBase + 1 {
             showTipsAndTricks()
-        } else if indexPath.row == 5 {
+        } else if indexPath.row == commandBase + 2 {
             showContacts()
         } else {
             showHelpReportScreen(for: indexPath)
