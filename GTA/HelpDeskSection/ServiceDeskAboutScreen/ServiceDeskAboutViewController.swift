@@ -84,7 +84,7 @@ extension ServiceDeskAboutViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ServiceDeskAboutCell", for: indexPath) as? ServiceDeskAboutCell {
             let descEncoded = aboutData?.desc
-            let descDecoded = dataProvider?.formQuickHelpAnswerBody(from: descEncoded)
+            let descDecoded = dataProvider?.formServiceDeskAboutDescBody(from: descEncoded)
             if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
                 descDecoded?.setFontFace(font: neededFont)
             }
