@@ -93,6 +93,9 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
             DispatchQueue.main.async {
                 if error == nil {
+                    if let alertsData = self?.dataProvider?.alertsData[self?.appName ?? ""] {
+                        self?.alertsData = alertsData
+                    }
                     self?.setHardCodeData()
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()
