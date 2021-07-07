@@ -646,24 +646,28 @@ class HomeDataProvider {
     }
     
     private func processProductionAlerts(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
-        var prodAlertsResponse: ProductionAlertsResponse?
-        var retErr = error
-        if let responseData = myAppsDataResponse {
-            do {
-                prodAlertsResponse = try DataParser.parse(data: responseData)
-            } catch {
-                retErr = ResponseError.parsingError
+        let queue = DispatchQueue(label: "HomeTabProcessProductionAlertsQueue", qos: .userInteractive, attributes: .concurrent)
+        queue.async {
+            var prodAlertsResponse: ProductionAlertsResponse?
+            var retErr = error
+            if let responseData = myAppsDataResponse {
+                do {
+                    prodAlertsResponse = try DataParser.parse(data: responseData)
+                } catch {
+                    retErr = ResponseError.parsingError
+                }
+            } else {
+                retErr = ResponseError.commonError
             }
-        } else {
-            retErr = ResponseError.commonError
+            let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
+            if data.values.isEmpty {
+                retErr = ResponseError.noDataAvailable
+            }
+            let indexes = self.getDataIndexes(columns: prodAlertsResponse?.meta?.widgetsDataSource?.params?.columns)
+            let count = self.getProductionAlertsCount(alertData: data, indexes: indexes)
+            completion?(errorCode, retErr, count)
         }
-        let data = prodAlertsResponse?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
-        if data.values.isEmpty {
-            retErr = ResponseError.noDataAvailable
-        }
-        let indexes = getDataIndexes(columns: prodAlertsResponse?.meta?.widgetsDataSource?.params?.columns)
-        let count = getProductionAlertsCount(alertData: data, indexes: indexes)
-        completion?(errorCode, retErr, count)
+        
     }
     
     private func getProductionAlertsCount(alertData: [String : ProductionAlertsData], indexes: [String : Int]) -> Int {
@@ -709,9 +713,9 @@ class HomeDataProvider {
         return reportDataResponse
     }
     
-    private func getDataIndexes(columns: [ColumnName]?) -> [String : Int] {
+    private func getDataIndexes(columns: [ColumnName?]?) -> [String : Int] {
         var indexes: [String : Int] = [:]
-        guard let columns = columns else { return indexes}
+        guard let columns = columns?.compactMap({$0}) else { return indexes }
         for (index, column) in columns.enumerated() {
             if let name = column.name {
                 indexes[name] = index

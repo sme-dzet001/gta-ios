@@ -22,4 +22,5 @@ class NotificationsNames {
     static let emergencyOutageNotificationReceived = "emergencyOutageNotificationReceived"
     static let productionAlertNotificationReceived = "productionAlertNotificationReceived"
     static let globalAlertWillShow = "globalAlertWillShow"
+    static let productionAlertNotificationDisplayed = "productionAlertNotificationDisplayed"
 }

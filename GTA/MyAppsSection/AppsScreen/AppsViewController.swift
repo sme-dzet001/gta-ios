@@ -48,6 +48,7 @@ class AppsViewController: UIViewController {
         setUpNavigationItem()
         setAccessibilityIdentifiers()
         NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -298,7 +299,6 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             if indexPath.section < dataProvider.appsData.count, indexPath.row < dataProvider.appsData[indexPath.section].cellData.count {
                 let cellData = dataProvider.appsData[indexPath.section].cellData[indexPath.row]
                 cell.setUpCell(with: cellData)
-                //cell.startAnimation()
                 cell.appIcon.accessibilityIdentifier = "AppsScreenCellIcon"
                 cell.appStatus.accessibilityIdentifier = "AppsScreenAppStatus"
                 cell.appName.accessibilityIdentifier = "AppsScreenAppNameTitleLabel"

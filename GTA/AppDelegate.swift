@@ -108,6 +108,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             completionHandler([.alert, .sound])
             return
         }
+        if notification.isProductionAlert {
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+        }
         completionHandler([.alert, .sound, .badge])
     }
     

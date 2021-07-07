@@ -26,7 +26,7 @@ struct WidgetsDataSource: Codable {
 }
 
 struct WidgetsDataSourceColumns: Codable {
-    var columns: [ColumnName]?
+    var columns: [ColumnName?]?
 }
 
 struct ColumnName: Codable {

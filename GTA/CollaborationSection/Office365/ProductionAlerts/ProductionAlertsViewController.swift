@@ -27,10 +27,12 @@ class ProductionAlertsViewController: UIViewController {
         if let id = selectedId {
             showAlertDetails(for: id)
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getProductionAlerts()
         self.tableView.reloadData()
     }
     
@@ -43,6 +45,21 @@ class ProductionAlertsViewController: UIViewController {
                 dataProvider?.forceUpdateProductionAlerts = false
                 dataProvider?.activeProductionAlertId = nil
                 dataProvider?.activeProductionAlertAppName = nil
+            }
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+    }
+    
+    @objc private func getProductionAlerts() {
+        guard let appName = appName else { return }
+        dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
+            DispatchQueue.main.async {
+                if error == nil {
+                    self?.tableView.reloadData()
+                }
             }
         }
     }

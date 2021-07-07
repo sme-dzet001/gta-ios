@@ -54,6 +54,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         setUpTableView()
         setUpNavigationItem()
         NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,6 +99,9 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
             DispatchQueue.main.async {
                 if error == nil {
+                    if let alertsData = self?.dataProvider?.alertsData[self?.appName ?? ""] {
+                        self?.alertsData = alertsData
+                    }
                     self?.setHardCodeData()
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()
@@ -265,6 +269,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
     }
     
 }
