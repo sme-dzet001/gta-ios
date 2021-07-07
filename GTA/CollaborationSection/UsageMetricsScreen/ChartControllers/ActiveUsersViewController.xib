@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActiveUsersViewController" customModule="GTA" customModuleProvider="target">
+            <connections>
+                <outlet property="chartView" destination="Zho-0m-qak" id="cMc-0l-Ymq"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZQ-gB-GUS">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zho-0m-qak" customClass="LineChartView" customModule="Charts">
+                            <rect key="frame" x="0.0" y="0.0" width="800" height="818"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="800" id="Wv7-YC-AGY"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Zho-0m-qak" secondAttribute="trailing" id="Dm9-CS-X4f"/>
+                        <constraint firstItem="Zho-0m-qak" firstAttribute="top" secondItem="kZQ-gB-GUS" secondAttribute="top" id="G8l-gZ-NVW"/>
+                        <constraint firstAttribute="bottom" secondItem="Zho-0m-qak" secondAttribute="bottom" id="UvR-Zb-Bfg"/>
+                        <constraint firstItem="Zho-0m-qak" firstAttribute="height" secondItem="kZQ-gB-GUS" secondAttribute="height" id="Z8A-Ms-Ugl"/>
+                        <constraint firstItem="Zho-0m-qak" firstAttribute="width" secondItem="kZQ-gB-GUS" secondAttribute="width" priority="700" id="n9o-pa-XWV"/>
+                        <constraint firstItem="Zho-0m-qak" firstAttribute="leading" secondItem="kZQ-gB-GUS" secondAttribute="leading" id="piO-10-dqH"/>
+                    </constraints>
+                    <viewLayoutGuide key="contentLayoutGuide" id="Qad-9Y-FVE"/>
+                    <viewLayoutGuide key="frameLayoutGuide" id="duc-24-wLx"/>
+                </scrollView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="kZQ-gB-GUS" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" id="8I5-he-o5Y"/>
+                <constraint firstItem="kZQ-gB-GUS" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Rh9-fK-Nnm"/>
+                <constraint firstItem="kZQ-gB-GUS" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" id="kwh-qj-VcH"/>
+                <constraint firstItem="kZQ-gB-GUS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tUn-Gg-Uug"/>
+            </constraints>
+            <point key="canvasLocation" x="138" y="46"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

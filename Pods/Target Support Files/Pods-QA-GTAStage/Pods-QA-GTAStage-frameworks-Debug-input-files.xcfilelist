@@ -1,5 +1,6 @@
 ${PODS_ROOT}/Target Support Files/Pods-QA-GTAStage/Pods-QA-GTAStage-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/AdvancedPageControl/AdvancedPageControl.framework
+${BUILT_PRODUCTS_DIR}/Charts/Charts.framework
 ${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework
 ${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework
 ${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework

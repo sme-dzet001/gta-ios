@@ -10,7 +10,31 @@ import WebKit
 
 class UsageMetricsViewController: UIViewController {
     
-    private var usageMetricsWebView: WKWebView!
+    private var dataProvider: UsageMetricsDataProvider = UsageMetricsDataProvider()
+    
+    deinit {
+        activeUsersVC.removeFromParent()
+    }
+    
+    private lazy var activeUsersVC: ActiveUsersViewController = {
+        let activeUsersVC = ActiveUsersViewController()
+        activeUsersVC.dataProvider = dataProvider
+        return activeUsersVC
+    }()
+    
+    private lazy var activeUsersChartCell: UITableViewCell = {
+        let cell = UITableViewCell()
+        activeUsersVC.view.translatesAutoresizingMaskIntoConstraints = false
+        cell.contentView.addSubview(activeUsersVC.view)
+        NSLayoutConstraint.activate([
+            activeUsersVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            activeUsersVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            activeUsersVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            activeUsersVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
+        ])
+        addChild(activeUsersVC)
+        return cell
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,33 +43,14 @@ class UsageMetricsViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = .white
         
         setUpNavigationItem()
-        setUpWebView()
-        //loadUsageMetrics()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        removeCookies()
-        let value = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-        
-        loadUsageMetrics()
-    }
-    
-    func removeCookies() {
-        let cookieStore = usageMetricsWebView.configuration.websiteDataStore.httpCookieStore
-        cookieStore.getAllCookies { cookies in
-            for cookie in cookies {
-                cookieStore.delete(cookie)
-            }
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        let value = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-        UINavigationController.attemptRotationToDeviceOrientation()
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -62,64 +67,25 @@ class UsageMetricsViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
     }
     
-    private func setUpWebView() {
-        usageMetricsWebView = WKWebView(frame: CGRect.zero)
-        usageMetricsWebView.translatesAutoresizingMaskIntoConstraints = false
-        usageMetricsWebView.scrollView.showsVerticalScrollIndicator = false
-        usageMetricsWebView.scrollView.showsHorizontalScrollIndicator = false
-        view.addSubview(usageMetricsWebView)
-        NSLayoutConstraint.activate([
-            usageMetricsWebView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            usageMetricsWebView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            usageMetricsWebView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            usageMetricsWebView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
-        ])
-        usageMetricsWebView.navigationDelegate = self
-    }
-    
     @objc private func backPressed() {
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    private func loadUsageMetrics() {
-        ///iframe
-        
-        /*let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"></HEAD><BODY>"
-        let htmlEnd = "</BODY></HTML>"
-        let htmlBodyStr = "<iframe width=\"\(usageMetricsWebView.frame.size.width)\" height=\"\(usageMetricsWebView.frame.size.height)\" src=\"https://app.powerbi.com/view?r=eyJrIjoiNmVhZTljOTQtZDRhOS00M2YwLTljMDAtOTgwYTY0NTI5ZGI1IiwidCI6ImYwYWZmM2I3LTkxYTUtNGFhZS1hZjcxLWM2M2UxZGRhMjA0OSIsImMiOjh9\"frameborder=\"0\" allowFullScreen=\"true\"></iframe>"
-        let htmlFullStr = "\(htmlStart)\(htmlBodyStr)\(htmlEnd)"
-        usageMetricsWebView.loadHTMLString(htmlFullStr, baseURL: Bundle.main.bundleURL)*/
-        
-        ///direct link loading
-        
-        if let url = URL(string: "https://app.powerbi.com/view?r=eyJrIjoiNmVhZTljOTQtZDRhOS00M2YwLTljMDAtOTgwYTY0NTI5ZGI1IiwidCI6ImYwYWZmM2I3LTkxYTUtNGFhZS1hZjcxLWM2M2UxZGRhMjA0OSIsImMiOjh9") {
-            let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
-            usageMetricsWebView.load(request)
-        }
     }
 
 }
 
-extension UsageMetricsViewController : WKNavigationDelegate {
+extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
     
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        let err = error as NSError
-        let message: String
-        switch err.code {
-        case -1009:
-            message = "Please verify your network connection and try again. If the error persists please try again later"
-        case -1001:
-            message = "The request timed out. Try again later"
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            return activeUsersChartCell
         default:
-            message = "Oops, something went wrong"
-        }
-        displayError(errorMessage: message, title: nil) {[weak self] _ in
-            self?.backPressed()
+            return UITableViewCell()
         }
     }
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-        decisionHandler(.allow)
-    }
     
 }

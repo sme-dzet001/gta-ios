@@ -49,14 +49,6 @@ class CollaborationViewController: UIViewController {
         getMyTickets()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //guard UIDevice.current.orientation != .portrait else { return }
-        let value = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-        UINavigationController.attemptRotationToDeviceOrientation()
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
