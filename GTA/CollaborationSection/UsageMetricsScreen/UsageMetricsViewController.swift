@@ -14,12 +14,19 @@ class UsageMetricsViewController: UIViewController {
     
     deinit {
         activeUsersVC.removeFromParent()
+        teamChatUsersVC.removeFromParent()
     }
     
     private lazy var activeUsersVC: ActiveUsersViewController = {
         let activeUsersVC = ActiveUsersViewController()
         activeUsersVC.dataProvider = dataProvider
         return activeUsersVC
+    }()
+    
+    private lazy var teamChatUsersVC: TeamChatUsersViewController = {
+        let teamChatUsersVC = TeamChatUsersViewController()
+        teamChatUsersVC.dataProvider = dataProvider
+        return teamChatUsersVC
     }()
     
     private lazy var activeUsersChartCell: UITableViewCell = {
@@ -33,6 +40,20 @@ class UsageMetricsViewController: UIViewController {
             activeUsersVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
         ])
         addChild(activeUsersVC)
+        return cell
+    }()
+    
+    private lazy var teamChatUsersChartCell: UITableViewCell = {
+        let cell = UITableViewCell()
+        teamChatUsersVC.view.translatesAutoresizingMaskIntoConstraints = false
+        cell.contentView.addSubview(teamChatUsersVC.view)
+        NSLayoutConstraint.activate([
+            teamChatUsersVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            teamChatUsersVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            teamChatUsersVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            teamChatUsersVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
+        ])
+        addChild(teamChatUsersVC)
         return cell
     }()
 
@@ -78,10 +99,14 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
         return 1
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            return activeUsersChartCell
+            return teamChatUsersChartCell
         default:
             return UITableViewCell()
         }
