@@ -73,13 +73,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if dataProvider?.activeProductionAlertId != nil {
-            if productionAlertsSectionAvailable {
-                showProductionAlertScreen()
-            } else {
-                dataProvider?.forceUpdateProductionAlerts = false
-                dataProvider?.activeProductionAlertId = nil
-                dataProvider?.activeProductionAlertAppName = nil
-            }
+            showProductionAlertScreen()
         }
     }
     

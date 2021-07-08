@@ -39,13 +39,7 @@ class ProductionAlertsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let activeProductionAlertId = dataProvider?.activeProductionAlertId {
-            if dataProvider?.alertsData[appName ?? ""] != nil {
-                showAlertDetails(for: activeProductionAlertId)
-            } else {
-                dataProvider?.forceUpdateProductionAlerts = false
-                dataProvider?.activeProductionAlertId = nil
-                dataProvider?.activeProductionAlertAppName = nil
-            }
+            showAlertDetails(for: activeProductionAlertId)
         }
     }
     
@@ -87,9 +81,9 @@ class ProductionAlertsViewController: UIViewController {
     }
     
     private func showAlertDetails(for id: String) {
-        let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == id.lowercased()})
-        guard let row = index, (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row else { return }
-        createAndShowDetailsScreenForRow(row)
+        let detailsVC = ProductionAlertsDetails()
+        detailsVC.dataProvider = dataProvider
+        presentPanModal(detailsVC)
     }
     
     private func showAlertDetails(for row: Int) {

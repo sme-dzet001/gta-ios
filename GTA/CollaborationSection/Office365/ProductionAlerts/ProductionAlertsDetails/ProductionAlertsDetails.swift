@@ -42,15 +42,23 @@ class ProductionAlertsDetails: UIViewController {
     private var loadProductionAlertsInProgress: (loadAllAppsInProgress: Bool, loadMyAppsInProgress: Bool) = (false, false) {
         didSet {
             if loadProductionAlertsInProgress == (false, false) {
-                if let appName = dataProvider?.activeProductionAlertAppName, let alertsData = dataProvider?.alertsData, let alertsDataForApp = alertsData[appName], let activeProductionAlertId = dataProvider?.activeProductionAlertId, let alertData = alertsDataForApp.first(where: {$0.ticketNumber == activeProductionAlertId}) {
-                    self.alertData = alertData
-                    setUpDataSource()
+                if let appName = dataProvider?.activeProductionAlertAppName {
+                    dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
+                        DispatchQueue.main.async {
+                            if error == nil {
+                                if let alertsData = self?.dataProvider?.alertsData, let alertsDataForApp = alertsData[appName], let activeProductionAlertId = self?.dataProvider?.activeProductionAlertId, let alertData = alertsDataForApp.first(where: {$0.ticketNumber == activeProductionAlertId}) {
+                                        self?.alertData = alertData
+                                        self?.setUpDataSource()
+                                }
+                            }
+                            self?.dataProvider?.forceUpdateProductionAlerts = false
+                            self?.dataProvider?.activeProductionAlertId = nil
+                            self?.dataProvider?.activeProductionAlertAppName = nil
+                            self?.tableView.reloadData()
+                        }
+                    }
                 }
-                dataProvider?.forceUpdateProductionAlerts = false
-                dataProvider?.activeProductionAlertId = nil
-                dataProvider?.activeProductionAlertAppName = nil
             }
-            tableView.reloadData()
         }
     }
     
