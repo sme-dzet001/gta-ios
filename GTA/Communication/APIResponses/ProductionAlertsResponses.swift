@@ -48,6 +48,14 @@ struct ProductionAlertsRow: Codable, Equatable {
         guard let values = values, let index = indexes["impacted_systems"], values.count > index else { return nil }
         return values[index]?.stringValue
     }
+    var sourceJiraIssue: String? {
+        guard let values = values, let index = indexes["source_jira_issue"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    var lastComment: String? {
+        guard let values = values, let index = indexes["last_comment"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
     var duration: String? {
         guard let values = values, let index = indexes["maintenance_duration"], values.count > index else { return nil }
         let duration = Float(values[index]?.stringValue ?? "") ?? 0.0

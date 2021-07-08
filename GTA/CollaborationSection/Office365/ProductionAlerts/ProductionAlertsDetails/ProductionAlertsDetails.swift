@@ -108,6 +108,9 @@ class ProductionAlertsDetails: UIViewController {
     
     private func setUpDataSource() {
         dataSource.append(["title" : "title"])
+        if let maintenanceReason = alertData?.issueReason {
+            dataSource.append(["Maintenance Reason" : maintenanceReason])
+        }
         if let start = alertData?.startDateString?.getFormattedDateStringForMyTickets() {
             dataSource.append(["Notification Date" : start])
         }
@@ -122,6 +125,12 @@ class ProductionAlertsDetails: UIViewController {
         }
         if let impactedSystems = alertData?.impactedSystems {
             dataSource.append(["Affected Systems" : impactedSystems])
+        }
+        if let sourceJiraIssue = alertData?.sourceJiraIssue {
+            dataSource.append(["Original Source Jira Issue" : sourceJiraIssue])
+        }
+        if alertData?.status == .closed, let lastComment = alertData?.lastComment {
+            dataSource.append(["Close Comment" : lastComment])
         }
     }
     
