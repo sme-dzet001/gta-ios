@@ -22,8 +22,8 @@ class TeamChatUsersViewController: UIViewController {
         updateChartData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         addGridView()
     }
@@ -43,12 +43,12 @@ class TeamChatUsersViewController: UIViewController {
         chartView.addSubview(gridView)
         gridView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            gridView.leadingAnchor.constraint(equalTo: chartView.leadingAnchor, constant: 60),
+            gridView.leadingAnchor.constraint(equalTo: chartView.leadingAnchor, constant: chartView.xAxis.labelWidth + chartView.minOffset),
             gridView.trailingAnchor.constraint(equalTo: chartView.trailingAnchor, constant: -32),
             gridView.topAnchor.constraint(equalTo: chartView.topAnchor, constant: 10),
             gridView.bottomAnchor.constraint(equalTo: chartView.bottomAnchor, constant: -10)
         ])
-        
+        gridView.layoutIfNeeded()
         setHorizontalLines(linesCount: 9, lineHeight: 1)
     }
     
