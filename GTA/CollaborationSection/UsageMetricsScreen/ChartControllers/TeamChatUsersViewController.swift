@@ -39,6 +39,7 @@ class TeamChatUsersViewController: UIViewController {
     }
     
     func addGridView() {
+        guard let linesCount = dataProvider?.teamsChatUserData.count, linesCount > 1 else {return}
         gridView = setGridView()
         chartView.addSubview(gridView)
         gridView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,7 +50,7 @@ class TeamChatUsersViewController: UIViewController {
             gridView.bottomAnchor.constraint(equalTo: chartView.bottomAnchor, constant: -10)
         ])
         gridView.layoutIfNeeded()
-        setHorizontalLines(linesCount: 9, lineHeight: 1)
+        setHorizontalLines(linesCount: linesCount - 1, lineHeight: 1)
     }
     
     private func setData(_ values: [BarChartDataEntry]) {
