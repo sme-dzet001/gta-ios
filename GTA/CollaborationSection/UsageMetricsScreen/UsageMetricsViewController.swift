@@ -8,6 +8,12 @@
 import UIKit
 import WebKit
 
+class ChartTableView : UITableView, UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
 class UsageMetricsViewController: UIViewController {
     
     private var dataProvider: UsageMetricsDataProvider = UsageMetricsDataProvider()

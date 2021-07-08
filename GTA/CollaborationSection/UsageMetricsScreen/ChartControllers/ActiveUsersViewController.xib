@@ -11,7 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActiveUsersViewController" customModule="GTA" customModuleProvider="target">
             <connections>
-                <outlet property="chartView" destination="Zho-0m-qak" id="cMc-0l-Ymq"/>
+                <outlet property="chartView" destination="Zho-0m-qak" id="2Kt-yI-Cn9"/>
+                <outlet property="chartViewWidth" destination="Wv7-YC-AGY" id="H5e-bk-2wa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,14 +21,14 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZQ-gB-GUS">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZQ-gB-GUS" customClass="ChartScrollView" customModule="GTA" customModuleProvider="target">
+                    <rect key="frame" x="32" y="44" width="362" height="818"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zho-0m-qak" customClass="LineChartView" customModule="Charts">
-                            <rect key="frame" x="0.0" y="0.0" width="800" height="818"/>
+                            <rect key="frame" x="0.0" y="0.0" width="1200" height="818"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="800" id="Wv7-YC-AGY"/>
+                                <constraint firstAttribute="width" constant="1200" id="Wv7-YC-AGY"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -46,10 +47,10 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="kZQ-gB-GUS" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-20" id="1ir-Fb-YIK"/>
                 <constraint firstItem="kZQ-gB-GUS" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" id="8I5-he-o5Y"/>
                 <constraint firstItem="kZQ-gB-GUS" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Rh9-fK-Nnm"/>
-                <constraint firstItem="kZQ-gB-GUS" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" id="kwh-qj-VcH"/>
-                <constraint firstItem="kZQ-gB-GUS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tUn-Gg-Uug"/>
+                <constraint firstItem="kZQ-gB-GUS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="32" id="tUn-Gg-Uug"/>
             </constraints>
             <point key="canvasLocation" x="138" y="46"/>
         </view>

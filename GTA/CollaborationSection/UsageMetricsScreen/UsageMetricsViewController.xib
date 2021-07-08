@@ -19,8 +19,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="400" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AS4-Kq-hCp">
-                    <rect key="frame" x="0.0" y="60" width="414" height="836"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="260" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AS4-Kq-hCp" customClass="ChartTableView" customModule="GTA" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="2c7-rY-yBS"/>
@@ -31,10 +31,10 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="AS4-Kq-hCp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="7c1-ev-fgv"/>
-                <constraint firstItem="AS4-Kq-hCp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="60" id="D8z-yK-AOQ"/>
-                <constraint firstAttribute="trailing" secondItem="AS4-Kq-hCp" secondAttribute="trailing" id="u1O-OZ-IcR"/>
-                <constraint firstAttribute="bottom" secondItem="AS4-Kq-hCp" secondAttribute="bottom" id="xow-wL-L9K"/>
+                <constraint firstItem="AS4-Kq-hCp" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="7c1-ev-fgv"/>
+                <constraint firstItem="AS4-Kq-hCp" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="D8z-yK-AOQ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="AS4-Kq-hCp" secondAttribute="trailing" id="u1O-OZ-IcR"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="AS4-Kq-hCp" secondAttribute="bottom" constant="-34" id="xow-wL-L9K"/>
             </constraints>
             <point key="canvasLocation" x="138" y="47"/>
         </view>
