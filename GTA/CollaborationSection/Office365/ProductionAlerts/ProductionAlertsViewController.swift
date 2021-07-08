@@ -28,6 +28,7 @@ class ProductionAlertsViewController: UIViewController {
             showAlertDetails(for: id)
         }
         NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+        self.tabBarController?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,6 +116,9 @@ class ProductionAlertsViewController: UIViewController {
     }
     
     @objc private func backPressed() {
+        dataProvider?.forceUpdateProductionAlerts = false
+        dataProvider?.activeProductionAlertId = nil
+        dataProvider?.activeProductionAlertAppName = nil
         self.navigationController?.popViewController(animated: true)
     }
 
@@ -139,6 +143,16 @@ extension ProductionAlertsViewController: UITableViewDataSource, UITableViewDele
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showAlertDetails(for: indexPath.row)
+    }
+    
+}
+
+extension ProductionAlertsViewController: UITabBarControllerDelegate {
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        dataProvider?.forceUpdateProductionAlerts = false
+        dataProvider?.activeProductionAlertId = nil
+        dataProvider?.activeProductionAlertAppName = nil
     }
     
 }
