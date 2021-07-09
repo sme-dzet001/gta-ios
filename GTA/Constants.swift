@@ -23,4 +23,5 @@ class NotificationsNames {
     static let productionAlertNotificationReceived = "productionAlertNotificationReceived"
     static let globalAlertWillShow = "globalAlertWillShow"
     static let productionAlertNotificationDisplayed = "productionAlertNotificationDisplayed"
+    static let updateActiveProductionAlertStatus = "updateActiveProductionAlertStatus"
 }

@@ -226,14 +226,15 @@ class AppsViewController: UIViewController {
             embeddedController.popToRootViewController(animated: false)
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
             //show details for notification target app
-            guard let targetAppData = self.dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) else { return }
             let appVC = ApplicationStatusViewController()
-            appVC.appName = targetAppData.app_name ?? ""
-            appVC.appTitle = targetAppData.app_title
-            appVC.appImageUrl = targetAppData.appImage ?? ""
-            appVC.appLastUpdateDate = targetAppData.lastUpdateDate
-            appVC.systemStatus = targetAppData.appStatus
+            appVC.appName = appName
             appVC.dataProvider = self.dataProvider
+            if let targetAppData = self.dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) {
+                appVC.appTitle = targetAppData.app_title
+                appVC.appImageUrl = targetAppData.appImage ?? ""
+                appVC.appLastUpdateDate = targetAppData.lastUpdateDate
+                appVC.systemStatus = targetAppData.appStatus
+            }
             self.navigationController?.pushViewController(appVC, animated: true)
         }
     }

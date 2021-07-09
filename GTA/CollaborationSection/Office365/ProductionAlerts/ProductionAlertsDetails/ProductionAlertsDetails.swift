@@ -43,12 +43,13 @@ class ProductionAlertsDetails: UIViewController {
         didSet {
             if loadProductionAlertsInProgress == (false, false) {
                 if let appName = dataProvider?.activeProductionAlertAppName {
-                    dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
+                    dataProvider?.getProductionAlertIgnoringCache(for: appName) {[weak self] errorCode, error in
                         DispatchQueue.main.async {
                             if error == nil {
                                 if let alertsData = self?.dataProvider?.alertsData, let alertsDataForApp = alertsData[appName], let activeProductionAlertId = self?.dataProvider?.activeProductionAlertId, let alertData = alertsDataForApp.first(where: {$0.ticketNumber == activeProductionAlertId}) {
                                         self?.alertData = alertData
                                         self?.setUpDataSource()
+                                    NotificationCenter.default.post(name: Notification.Name(NotificationsNames.updateActiveProductionAlertStatus), object: nil, userInfo: ["alertId" : activeProductionAlertId])
                                 }
                             }
                             self?.dataProvider?.forceUpdateProductionAlerts = false
