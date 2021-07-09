@@ -28,6 +28,7 @@ class ProductionAlertsViewController: UIViewController {
             showAlertDetails(for: id)
         }
         NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateActiveProductionAlertStatus), name: Notification.Name(NotificationsNames.updateActiveProductionAlertStatus), object: nil)
         self.tabBarController?.delegate = self
     }
     
@@ -40,18 +41,13 @@ class ProductionAlertsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let activeProductionAlertId = dataProvider?.activeProductionAlertId {
-            if dataProvider?.alertsData[appName ?? ""] != nil {
-                showAlertDetails(for: activeProductionAlertId)
-            } else {
-                dataProvider?.forceUpdateProductionAlerts = false
-                dataProvider?.activeProductionAlertId = nil
-                dataProvider?.activeProductionAlertAppName = nil
-            }
+            showAlertDetails(for: activeProductionAlertId)
         }
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.updateActiveProductionAlertStatus), object: nil)
     }
     
     @objc private func getProductionAlerts() {
@@ -88,9 +84,9 @@ class ProductionAlertsViewController: UIViewController {
     }
     
     private func showAlertDetails(for id: String) {
-        let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == id.lowercased()})
-        guard let row = index, (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row else { return }
-        createAndShowDetailsScreenForRow(row)
+        let detailsVC = ProductionAlertsDetails()
+        detailsVC.dataProvider = dataProvider
+        presentPanModal(detailsVC)
     }
     
     private func showAlertDetails(for row: Int) {
@@ -113,6 +109,14 @@ class ProductionAlertsViewController: UIViewController {
         }
         self.tabBarController?.tabBar.items?[2].badgeValue = badgeCount > 0 ? "\(badgeCount)" : nil
         self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+    }
+    
+    @objc private func updateActiveProductionAlertStatus(notification: NSNotification) {
+        guard let activeProductionAlertId = (notification.userInfo as? [String : String] ?? [:])["alertId"] else { return }
+        let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == activeProductionAlertId.lowercased()})
+        guard let row = index, (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row else { return }
+        let alertData = dataProvider?.alertsData[appName ?? ""]?[row]
+        readAlertAndUpdateTabCount(alert: alertData)
     }
     
     @objc private func backPressed() {

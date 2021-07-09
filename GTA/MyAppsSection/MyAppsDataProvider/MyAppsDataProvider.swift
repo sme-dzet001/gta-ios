@@ -692,6 +692,20 @@ class MyAppsDataProvider {
         }
     }
     
+    func getProductionAlertIgnoringCache(for app: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let queue = DispatchQueue(label: "getProductionAlertFor\(app)Queue", qos: .userInteractive, attributes: .concurrent)
+        queue.async {[weak self] in
+            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                self?.cacheData(reportResponse, path: .getSectionReport)
+                if let _ = error {
+                    completion?(errorCode, ResponseError.serverError)
+                } else {
+                    self?.handleAppProductionAlertsSectionReport(for: app, reportResponse, errorCode, error, false, completion)
+                }
+            })
+        }
+    }
+    
     private func handleAppProductionAlertsSectionReport(for app: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.productionAlerts.rawValue }?.generationNumber

@@ -103,9 +103,7 @@ class AppsViewController: UIViewController {
         dataProvider.getMyAppsStatus {[weak self] (errorCode, error, isFromCache) in
             self?.myAppsLoadingError = isFromCache ? nil : error
             DispatchQueue.main.async {
-                if !isFromCache {
-                    self?.checkForPendingProductionAlert()
-                }
+                self?.checkForPendingProductionAlert()
                 if error == nil, errorCode == 200, let isEmpty = self?.dataProvider.appsData.isEmpty {
                     if !isFromCache {
                         self?.myAppsLastUpdateDate = Date().addingTimeInterval(15)
@@ -127,9 +125,7 @@ class AppsViewController: UIViewController {
         dataProvider.getAllApps {[weak self] (errorCode, error, isFromCache) in
             self?.allAppsLoadingError = isFromCache ? nil : error
             DispatchQueue.main.async {
-                if !isFromCache {
-                    self?.checkForPendingProductionAlert()
-                }
+                self?.checkForPendingProductionAlert()
                 if error == nil, errorCode == 200, let appsData = self?.dataProvider.appsData.first {
                     self?.errorLabel.isHidden = true
                     if !isFromCache {
@@ -162,14 +158,14 @@ class AppsViewController: UIViewController {
     }
     
     private func checkForPendingProductionAlert() {
-        if !dataProvider.alertsData.isEmpty {
-            if let productionAlertInfo = UserDefaults.standard.object(forKey: "productionAlertNotificationReceived") as? [String : Any] {
-                navigateToAppDetails(withProductionAlertInfo: productionAlertInfo)
-            }
-            UserDefaults.standard.removeObject(forKey: "productionAlertNotificationReceived")
-        } else if myAppsLoadingError != nil || allAppsLoadingError != nil {
-            UserDefaults.standard.removeObject(forKey: "productionAlertNotificationReceived")
+        guard let _ = self.dataProvider.myAppsSection else {
+            return
         }
+        if let productionAlertInfo = UserDefaults.standard.object(forKey: "productionAlertNotificationReceived") as? [String : Any] {
+            dataProvider.forceUpdateProductionAlerts = true
+            navigateToAppDetails(withProductionAlertInfo: productionAlertInfo)
+        }
+        UserDefaults.standard.removeObject(forKey: "productionAlertNotificationReceived")
     }
     
     private func startAnimation() {
@@ -230,18 +226,15 @@ class AppsViewController: UIViewController {
             embeddedController.popToRootViewController(animated: false)
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
             //show details for notification target app
-            guard !self.dataProvider.appsData.isEmpty else {
-                UserDefaults.standard.setValue(alertData, forKey: "productionAlertNotificationReceived")
-                return
-            }
-            guard let targetAppData = self.dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) else { return }
             let appVC = ApplicationStatusViewController()
-            appVC.appName = targetAppData.app_name ?? ""
-            appVC.appTitle = targetAppData.app_title
-            appVC.appImageUrl = targetAppData.appImage ?? ""
-            appVC.appLastUpdateDate = targetAppData.lastUpdateDate
-            appVC.systemStatus = targetAppData.appStatus
+            appVC.appName = appName
             appVC.dataProvider = self.dataProvider
+            if let targetAppData = self.dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) {
+                appVC.appTitle = targetAppData.app_title
+                appVC.appImageUrl = targetAppData.appImage ?? ""
+                appVC.appLastUpdateDate = targetAppData.lastUpdateDate
+                appVC.systemStatus = targetAppData.appStatus
+            }
             self.navigationController?.pushViewController(appVC, animated: true)
         }
     }
