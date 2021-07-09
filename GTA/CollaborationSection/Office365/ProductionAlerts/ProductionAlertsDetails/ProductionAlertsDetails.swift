@@ -32,50 +32,37 @@ class ProductionAlertsDetails: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if loadProductionAlertsInProgress.loadAllAppsInProgress || loadProductionAlertsInProgress.loadMyAppsInProgress {
+        if loadProductionAlertsInProgress
+        {
             dataProvider?.forceUpdateProductionAlerts = false
             dataProvider?.activeProductionAlertId = nil
             dataProvider?.activeProductionAlertAppName = nil
         }
     }
     
-    private var loadProductionAlertsInProgress: (loadAllAppsInProgress: Bool, loadMyAppsInProgress: Bool) = (false, false) {
-        didSet {
-            if loadProductionAlertsInProgress == (false, false) {
-                if let appName = dataProvider?.activeProductionAlertAppName {
-                    dataProvider?.getProductionAlertIgnoringCache(for: appName) {[weak self] errorCode, error in
-                        DispatchQueue.main.async {
-                            if error == nil {
-                                if let alertsData = self?.dataProvider?.alertsData, let alertsDataForApp = alertsData[appName], let activeProductionAlertId = self?.dataProvider?.activeProductionAlertId, let alertData = alertsDataForApp.first(where: {$0.ticketNumber == activeProductionAlertId}) {
-                                        self?.alertData = alertData
-                                        self?.setUpDataSource()
-                                    NotificationCenter.default.post(name: Notification.Name(NotificationsNames.updateActiveProductionAlertStatus), object: nil, userInfo: ["alertId" : activeProductionAlertId])
-                                }
-                            }
-                            self?.dataProvider?.forceUpdateProductionAlerts = false
-                            self?.dataProvider?.activeProductionAlertId = nil
-                            self?.dataProvider?.activeProductionAlertAppName = nil
-                            self?.tableView.reloadData()
-                        }
-                    }
-                }
-            }
-        }
-    }
+    private var loadProductionAlertsInProgress = false
     
     private func loadProductionAlertsData() {
         if let forceUpdateProductionAlerts = dataProvider?.forceUpdateProductionAlerts, forceUpdateProductionAlerts {
-            loadProductionAlertsInProgress = (true, true)
-            dataProvider?.getAllAppsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
-                DispatchQueue.main.async {
-                    self?.loadProductionAlertsInProgress.loadAllAppsInProgress = false
+            loadProductionAlertsInProgress = true
+            if let appName = dataProvider?.activeProductionAlertAppName {
+                dataProvider?.getProductionAlertIgnoringCache(for: appName) {[weak self] errorCode, error in
+                    DispatchQueue.main.async {
+                        self?.loadProductionAlertsInProgress = false
+                        if error == nil {
+                            if let alertsData = self?.dataProvider?.alertsData, let alertsDataForApp = alertsData[appName], let activeProductionAlertId = self?.dataProvider?.activeProductionAlertId, let alertData = alertsDataForApp.first(where: {$0.ticketNumber == activeProductionAlertId}) {
+                                    self?.alertData = alertData
+                                    self?.setUpDataSource()
+                                NotificationCenter.default.post(name: Notification.Name(NotificationsNames.updateActiveProductionAlertStatus), object: nil, userInfo: ["alertId" : activeProductionAlertId])
+                            }
+                        }
+                        self?.dataProvider?.forceUpdateProductionAlerts = false
+                        self?.dataProvider?.activeProductionAlertId = nil
+                        self?.dataProvider?.activeProductionAlertAppName = nil
+                        self?.tableView.reloadData()
+                    }
                 }
-            })
-            dataProvider?.getMyAppsStatusIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
-                DispatchQueue.main.async {
-                    self?.loadProductionAlertsInProgress.loadMyAppsInProgress = false
-                }
-            })
+            }
         } else {
             dataProvider?.forceUpdateProductionAlerts = false
             dataProvider?.activeProductionAlertId = nil
@@ -186,7 +173,7 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if loadProductionAlertsInProgress.loadAllAppsInProgress || loadProductionAlertsInProgress.loadMyAppsInProgress {
+        if loadProductionAlertsInProgress {
             return createLoadingCell(withBottomSeparator: false)
         }
         guard dataSource.count > indexPath.row, let key = dataSource[indexPath.row].keys.first else {

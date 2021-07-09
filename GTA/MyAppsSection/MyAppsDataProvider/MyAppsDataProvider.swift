@@ -700,7 +700,13 @@ class MyAppsDataProvider {
                 if let _ = error {
                     completion?(errorCode, ResponseError.serverError)
                 } else {
-                    self?.handleAppProductionAlertsSectionReport(for: app, reportResponse, errorCode, error, false, completion)
+                    let reportData = self?.parseSectionReport(data: reportResponse)
+                    let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.productionAlerts.rawValue }?.generationNumber
+                    self?.apiManager.getAppsProductionAlerts(for: generationNumber!, userEmail: KeychainManager.getUsername() ?? "", appName: app, completion: { [weak self] (data, errorCode, error) in
+                        self?.cacheData(data, path: .getAppProductionAlerts(appName: app))
+                        self?.processAppProductionAlerts(appName: app, reportData, data, errorCode, error, completion)
+                    })
+
                 }
             })
         }
