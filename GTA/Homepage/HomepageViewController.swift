@@ -37,7 +37,7 @@ class HomepageViewController: UIViewController {
     
     func commonInit() {
         NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlertsCount), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlertsCount), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
     }
 
@@ -54,6 +54,9 @@ class HomepageViewController: UIViewController {
         super.viewWillAppear(animated)
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadNewsData()
+        }
+        if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+            emergencyOutageNotificationReceived()
         }
         getProductionAlertsCount()
     }
@@ -73,9 +76,9 @@ class HomepageViewController: UIViewController {
         dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
-                if !isFromCache && UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
-                    self?.emergencyOutageNotificationReceived()
-                }
+//                if !isFromCache && UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+//                    self?.emergencyOutageNotificationReceived()
+//                }
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
@@ -149,6 +152,13 @@ class HomepageViewController: UIViewController {
                 self.showGlobalAlertModal()
             }
         }
+    }
+    
+    @objc private func didBecomeActive() {
+        if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+            emergencyOutageNotificationReceived()
+        }
+        getProductionAlertsCount()
     }
     
     @objc private func getProductionAlertsCount() {
