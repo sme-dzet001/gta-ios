@@ -84,9 +84,14 @@ class ProductionAlertsViewController: UIViewController {
     }
     
     private func showAlertDetails(for id: String) {
-        let detailsVC = ProductionAlertsDetails()
-        detailsVC.dataProvider = dataProvider
-        presentPanModal(detailsVC)
+        let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == id.lowercased()})
+        if let row = index, (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row {
+            createAndShowDetailsScreenForRow(row)
+        } else {
+            let detailsVC = ProductionAlertsDetails()
+            detailsVC.dataProvider = dataProvider
+            presentPanModal(detailsVC)
+        }
     }
     
     private func showAlertDetails(for row: Int) {
