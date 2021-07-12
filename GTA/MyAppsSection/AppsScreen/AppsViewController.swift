@@ -146,6 +146,7 @@ class AppsViewController: UIViewController {
     @objc private func getProductionAlerts() {
         dataProvider.getProductionAlerts {[weak self] dataWasChanged, errorCode, error, count  in
             DispatchQueue.main.async {
+                self?.checkForPendingProductionAlert()
                 if error == nil {
                     if dataWasChanged {
                         self?.tableView.reloadData()
