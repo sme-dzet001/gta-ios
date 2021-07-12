@@ -701,8 +701,11 @@ class MyAppsDataProvider {
                     completion?(errorCode, ResponseError.serverError)
                 } else {
                     let reportData = self?.parseSectionReport(data: reportResponse)
-                    let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.productionAlerts.rawValue }?.generationNumber
-                    self?.apiManager.getAppsProductionAlerts(for: generationNumber!, userEmail: KeychainManager.getUsername() ?? "", appName: app, completion: { [weak self] (data, errorCode, error) in
+                    guard let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.appDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.productionAlerts.rawValue }?.generationNumber else {
+                        completion?(errorCode, ResponseError.serverError)
+                        return
+                    }
+                    self?.apiManager.getAppsProductionAlerts(for: generationNumber, userEmail: KeychainManager.getUsername() ?? "", appName: app, completion: { [weak self] (data, errorCode, error) in
                         self?.cacheData(data, path: .getAppProductionAlerts(appName: app))
                         self?.processAppProductionAlerts(appName: app, reportData, data, errorCode, error, completion)
                     })
