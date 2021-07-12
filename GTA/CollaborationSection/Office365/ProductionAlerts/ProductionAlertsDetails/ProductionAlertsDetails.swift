@@ -238,6 +238,10 @@ extension ProductionAlertsDetails: PanModalPresentable {
         return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
     }
     
+    var allowsExtendedPanScrolling: Bool {
+        return true
+    }
+    
     func willTransition(to state: PanModalPresentationController.PresentationState) {
         switch state {
         case .shortForm:

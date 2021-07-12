@@ -223,4 +223,8 @@ extension GlobalAlertViewController: PanModalPresentable {
     var shortFormHeight: PanModalHeight {
         return PanModalHeight.contentHeight(shortHeight)
     }
+    
+    var allowsExtendedPanScrolling: Bool {
+        return true
+    }
 }
