@@ -19,7 +19,7 @@ class AlertPopoverViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let count = (alertsData?.count ?? 0) > 2 ? (alertsData?.count ?? 0) - 2 : 0
-        alertsData = Array(alertsData?.dropFirst(count) ?? [])
+        alertsData = Array(alertsData?.dropLast(count) ?? [])
         setUpTableView()
         self.tableView.sizeToFit()
     }
@@ -27,14 +27,15 @@ class AlertPopoverViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.layoutIfNeeded()
-        if (alertsData?.count ?? 0) > 1 {
-            self.preferredContentSize = self.tableView.contentSize
-        } else {
+//        if (alertsData?.count ?? 0) > 1 {
+//            self.preferredContentSize = self.tableView.contentSize
+//        } else {
+            let constant: CGFloat = 30
             var contentSize = self.tableView.contentSize
-            contentSize.height = self.tableView.contentSize.height + 10
-            topConstraint?.constant = 5
+            contentSize.height = self.tableView.contentSize.height + constant
+            topConstraint?.constant = constant / 2
             self.preferredContentSize = contentSize
-        }
+        //}
     }
     
     private func setUpTableView() {
@@ -56,7 +57,7 @@ extension AlertPopoverViewController: UITableViewDataSource, UITableViewDelegate
         guard let count = alertsData?.count, count > indexPath.row, let data = alertsData?[indexPath.row] else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlertPopoverCell", for: indexPath) as? AlertPopoverCell
         cell?.ticketNumberLabel.text = data.ticketNumber
-        cell?.descriptionLabel.text = data.description
+        cell?.descriptionLabel.text = data.summary
         cell?.separator.isHidden = indexPath.row == count - 1
         return cell ?? UITableViewCell()
     }

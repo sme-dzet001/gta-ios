@@ -76,7 +76,8 @@ class ApplicationCell: UITableViewCell {
         guard let number = alertCount, number > 0 else { return }
         self.alertsNumberParentView.isHidden = false
         self.alertsNumber.isHidden = false
-        self.alertsNumber.text = "\(number)" //: nil
+        let count = number > 99 ? 99 : number
+        self.alertsNumber.text = "\(count)" //: nil
         setTapGesture()
     }
     

@@ -196,54 +196,54 @@ struct AppDetailsData: Codable {
     
     var indexes: [String : Int] = [:]
     
-    var values: [QuantumValue] {
-        let rows = data?.first?.value.data?.rows?.first?.values?.compactMap({$0})
+    var values: [QuantumValue?] {
+        let rows = data?.first?.value.data?.rows?.first?.values
         return rows ?? []
     }
     
     var appTitle: String? {
         guard let index = indexes["app title"], values.count > index else { return nil }
-        return values[index].stringValue
+        return values[index]?.stringValue
     }
     
     var appIcon: String? {
         guard let index = indexes["app icon"], values.count > index else { return nil }
-        return values[index].stringValue
+        return values[index]?.stringValue
     }
     
     var appDescription: String? {
         guard let index = indexes["app desc"], values.count > index else { return nil }
-        return values[index].stringValue
+        return values[index]?.stringValue
     }
     
     var appSupportEmail: String? {
         guard let index = indexes["app support email"], values.count > index else { return nil }
-        return values[index].stringValue
+        return values[index]?.stringValue
     }
     
     var appWikiUrl: String? {
         guard let index = indexes["app wiki url"], values.count > index else { return nil }
-        return values[index].stringValue
+        return values[index]?.stringValue
     }
     
     var appJiraSupportUrl: String? {
         guard let index = indexes["app jira support url"], values.count > index else { return nil }
-        return values[index].stringValue
+        return values[index]?.stringValue
     }
     
     var appSupportPolicy: String? {
         guard let index = indexes["app support policy"], values.count > index else { return nil }
-        return values[index].stringValue
+        return values[index]?.stringValue
     }
     
     var appTeamContact: String? {
         guard let index = indexes["app team contact"], values.count > index else { return nil }
-        return values[index].stringValue
+        return values[index]?.stringValue
     }
     
     var isNeedToUsePDF: Bool {
         guard let index = indexes["use pdf for tips and tricks"], values.count > index else { return false }
-        if let isNeedPDF = values[index].boolValue {
+        if let isNeedPDF = values[index]?.boolValue {
             return isNeedPDF
         }
         return false
@@ -251,7 +251,7 @@ struct AppDetailsData: Codable {
     
     var tipsAndTricksPDF: String? {
         guard let index = indexes["tips and tricks pdf"], values.count > index else { return nil }
-        return values[index].stringValue
+        return values[index]?.stringValue
     }
         
     enum CodingKeys: String, CodingKey {

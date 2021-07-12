@@ -15,8 +15,8 @@ class SessionExpiredHandler: ExpiredSessionDelegate {
         if let _ = data {
             metaData = try? DataParser.parse(data: data!)
         }
-        guard let meta = metaData, (meta.meta?.userMessage == "Session expired" || meta.meta?.userMessage == "Authorization error"), let _ = KeychainManager.getToken() else { return }
-        print("Session expired")
+        guard let userMessage = metaData?.meta?.userMessage, (userMessage == "Session expired" || userMessage == "Authorization error"), let _ = KeychainManager.getToken() else { return }
+        print("Session expired \(userMessage)")
         KeychainManager.deleteUsername()
         KeychainManager.deleteToken()
         KeychainManager.deleteTokenExpirationDate()

@@ -1337,6 +1337,13 @@
 		9FA2C6A42628CFC900EC5BE3 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA2C6A22628CFC900EC5BE3 /* Apps.storyboard */; };
 		9FA2C6A52628CFC900EC5BE3 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA2C6A22628CFC900EC5BE3 /* Apps.storyboard */; };
 		9FA2C6A62628CFC900EC5BE3 /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA2C6A22628CFC900EC5BE3 /* Apps.storyboard */; };
+		9FA4DC8C2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA4DC8B2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf */; };
+		9FA4DC8D2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA4DC8B2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf */; };
+		9FA4DC8E2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA4DC8B2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf */; };
+		9FA4DC8F2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA4DC8B2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf */; };
+		9FA4DC902684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA4DC8B2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf */; };
+		9FA4DC912684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA4DC8B2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf */; };
+		9FA4DC922684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FA4DC8B2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf */; };
 		9FA83E70262739DB009A0BAD /* TicketDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F803242260A666900ED6224 /* TicketDescriptionCell.swift */; };
 		9FA83E77262739DE009A0BAD /* TicketDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F803243260A666900ED6224 /* TicketDescriptionCell.xib */; };
 		9FA8E8FB25B054C6007D3B9F /* AboutSupportPolicyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */; };
@@ -1775,6 +1782,7 @@
 		9F9D9CF6258A063800DC4231 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		9FA17E3026340E3500CC78D3 /* SF-Pro-Text-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Italic.ttf"; sourceTree = "<group>"; };
 		9FA2C6A22628CFC900EC5BE3 /* Apps.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Apps.storyboard; path = GTA/MyAppsSection/AppsScreen/Apps.storyboard; sourceTree = SOURCE_ROOT; };
+		9FA4DC8B2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold-Italic.ttf"; sourceTree = "<group>"; };
 		9FA8E8F925B054C6007D3B9F /* AboutSupportPolicyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSupportPolicyCell.swift; sourceTree = "<group>"; };
 		9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutSupportPolicyCell.xib; sourceTree = "<group>"; };
 		9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutHeaderCell.swift; sourceTree = "<group>"; };
@@ -2110,6 +2118,7 @@
 				9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */,
 				659A5AEE255404F100E13B77 /* SF-Pro-Text-Medium.otf */,
 				659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */,
+				9FA4DC8B2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf */,
 				9FA17E3026340E3500CC78D3 /* SF-Pro-Text-Italic.ttf */,
 				9F78D0942565321100BCD38F /* SF-Pro-Text-Light.ttf */,
 			);
@@ -3315,6 +3324,7 @@
 				65437CE22665387600B2F38A /* OfficeStatusCell.xib in Resources */,
 				65437CE32665387600B2F38A /* InfoViewController.xib in Resources */,
 				65437CE42665387600B2F38A /* GlobalAlertCell.xib in Resources */,
+				9FA4DC922684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
 				65437CE52665387600B2F38A /* ServiceDeskContactCell.xib in Resources */,
 				65437CE62665387600B2F38A /* QuickHelpCell.xib in Resources */,
 				65437CE72665387600B2F38A /* OfficeLocationViewController.xib in Resources */,
@@ -3420,7 +3430,7 @@
 				65437EB5266539BF00B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
 				65437EB6266539BF00B2F38A /* HelpReportScreenViewController.xib in Resources */,
 				65437EB7266539BF00B2F38A /* OfficeStatusCell.xib in Resources */,
-				658BEF4C268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
+				9FA4DC902684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
 				65437EB8266539BF00B2F38A /* TicketDescriptionCell.xib in Resources */,
 				9F3027F52681D228009A3096 /* ProductionAlertCell.xib in Resources */,
 				65437EB9266539BF00B2F38A /* HelpDeskContactOptionCell.xib in Resources */,
@@ -3522,7 +3532,7 @@
 				654380222665568000B2F38A /* OfficeSelectionCell.xib in Resources */,
 				654380232665568000B2F38A /* GoogleService-Info.plist in Resources */,
 				654380242665568000B2F38A /* TicketDescriptionCell.xib in Resources */,
-				658BEF4D268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
+				9FA4DC912684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
 				654380252665568000B2F38A /* MyTicketsViewController.xib in Resources */,
 				9F3027F62681D228009A3096 /* ProductionAlertCell.xib in Resources */,
 				654380262665568000B2F38A /* HelpDeskContactOptionCell.xib in Resources */,
@@ -3624,7 +3634,7 @@
 				659A5AF3255404F100E13B77 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F895B6D255D3D27004489C6 /* HelpReportScreenViewController.xib in Resources */,
 				9F78D0E1256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
-				658BEF48268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
+				9FA4DC8C2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
 				9F803247260A666900ED6224 /* TicketDescriptionCell.xib in Resources */,
 				9F3027F12681D228009A3096 /* ProductionAlertCell.xib in Resources */,
 				C9EC9E9C25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
@@ -3702,6 +3712,7 @@
 				9F2C825B2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				9F33F6BA260A3C4000470A47 /* LaunchScreen.storyboard in Resources */,
 				9F33F6BB260A3C4000470A47 /* SF-Pro-Text-Medium.otf in Resources */,
+				9FA4DC8F2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
 				9F33F6BC260A3C4000470A47 /* TicketDetailsMessageCell.xib in Resources */,
 				9F33F6BD260A3C4000470A47 /* Assets.xcassets in Resources */,
 				9F33F6BE260A3C4000470A47 /* ServiceDeskContactsViewController.xib in Resources */,
@@ -3843,7 +3854,7 @@
 				C9EFDA3325A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */,
 				9FCFA2A7259E138D00E893D2 /* GoogleService-Info.plist in Resources */,
 				9F803248260A666900ED6224 /* TicketDescriptionCell.xib in Resources */,
-				658BEF49268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
+				9FA4DC8D2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
 				C9705B802566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
 				9F3027F22681D228009A3096 /* ProductionAlertCell.xib in Resources */,
 				C9EC9E9D25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
@@ -3941,6 +3952,7 @@
 				9F78D0E3256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */,
 				9F2C82622657CE02004407B4 /* GlobalAlertCell.xib in Resources */,
+				9FA4DC8E2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
 				C9D035E32579B68D0068441F /* ServiceDeskContactCell.xib in Resources */,
 				C993A2CB2576686500F9146A /* QuickHelpCell.xib in Resources */,
 				9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
@@ -5561,7 +5573,7 @@
 				CODE_SIGN_ENTITLEMENTS = GTA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 44443HH46G;
+				DEVELOPMENT_TEAM = H9636WUCU4;
 				INFOPLIST_FILE = GTA/Plists/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
