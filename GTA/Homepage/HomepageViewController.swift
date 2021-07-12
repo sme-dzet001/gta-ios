@@ -140,10 +140,11 @@ class HomepageViewController: UIViewController {
             embeddedController.popToRootViewController(animated: false)
             if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
                 UserDefaults.standard.removeObject(forKey: "emergencyOutageNotificationReceived")
-                if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
-                    NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
-                    self.showGlobalAlertModal()
-                }
+                //if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
+                NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+                self.dataProvider.forceUpdateAlertDetails = true
+                self.showGlobalAlertModal()
+                //}
             } else {
                 NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
                 self.tabBarController?.selectedIndex = homepageTabIdx
