@@ -79,8 +79,10 @@ class BarChartCell: UITableViewCell {
         barChartView.legend.setCustom(entries: entrys)
         barChartView.legend.font = UIFont(name: "SFProText-Regular", size: 10) ?? barChartView.leftAxis.labelFont
         barChartView.legend.textColor = UIColor(hex: 0xAEAEB2)
-        //barChartView.legend.horizontalAlignment = .center
+        
+        barChartView.legendRenderer.computeLegend(data: barChartView.data!)
         barChartView.legend.verticalAlignment = .bottom
+        barChartView.legend.xEntrySpace = ((barChartView.frame.width - barChartView.legend.neededWidth) / 4) - 12
         barChartView.legend.orientation = .horizontal
     }
 
