@@ -10,6 +10,20 @@
 		065F4544928F3E2C1844ADA1 /* Pods_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB6219B91F984FFA0A2D3BC /* Pods_GTAStage.framework */; };
 		310602184FDF9DE277F359C7 /* Pods_GTA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA50956AA53DEAF0E40A50B2 /* Pods_GTA.framework */; };
 		425533B70404A097DEAE7C6E /* Pods_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB6219B91F984FFA0A2D3BC /* Pods_GTAStage.framework */; };
+		54D59C1A2695CCD80037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C1B2695CCD80037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C1E2695DFF60037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C1F2695DFF60037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C202695DFF70037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C212695DFF80037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C222695DFF80037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C232695DFF90037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C242695DFFF0037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C252695DFFF0037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C262695E0000037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C272695E0000037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C282695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C292695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
 		637797F8E36BC3A596840E88 /* Pods_GTAUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 711206694A10F0701C6DAF95 /* Pods_GTAUITests.framework */; };
 		65398BCC256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
 		65398BCD256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
@@ -1600,6 +1614,8 @@
 		412149B0DC7F875C8F96C994 /* Pods-GTAStage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.debug.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.debug.xcconfig"; sourceTree = "<group>"; };
 		440780615F4BB9CB2146021D /* Pods-GTAUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAUITests.release.xcconfig"; path = "Target Support Files/Pods-GTAUITests/Pods-GTAUITests.release.xcconfig"; sourceTree = "<group>"; };
 		516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTADev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChatUsersViewController.swift; sourceTree = "<group>"; };
+		54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamChatUsersViewController.xib; sourceTree = "<group>"; };
 		5F85A9BFD7B4F3349DA0E61A /* Pods_GTATests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTATests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65398BCB256D4C5E0039C24E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageMetricsViewController.swift; sourceTree = "<group>"; };
@@ -2005,6 +2021,8 @@
 			children = (
 				658BEF77268FC63600D4FD2C /* ActiveUsersViewController.swift */,
 				658BEF78268FC63600D4FD2C /* ActiveUsersViewController.xib */,
+				54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */,
+				54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */,
 			);
 			path = ChartControllers;
 			sourceTree = "<group>";
@@ -3315,6 +3333,7 @@
 				65437CE22665387600B2F38A /* OfficeStatusCell.xib in Resources */,
 				65437CE32665387600B2F38A /* InfoViewController.xib in Resources */,
 				65437CE42665387600B2F38A /* GlobalAlertCell.xib in Resources */,
+				54D59C292695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				65437CE52665387600B2F38A /* ServiceDeskContactCell.xib in Resources */,
 				65437CE62665387600B2F38A /* QuickHelpCell.xib in Resources */,
 				65437CE72665387600B2F38A /* OfficeLocationViewController.xib in Resources */,
@@ -3429,6 +3448,7 @@
 				65437EBB266539BF00B2F38A /* NoCommentsCell.xib in Resources */,
 				65437EBC266539BF00B2F38A /* AppTipsAndTricksViewController.xib in Resources */,
 				65437EBD266539BF00B2F38A /* Collaboration.storyboard in Resources */,
+				54D59C272695E0000037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				65437EBE266539BF00B2F38A /* WhatsNewViewController.xib in Resources */,
 				65437EBF266539BF00B2F38A /* MyDevicesViewController.xib in Resources */,
 				65437EC0266539BF00B2F38A /* AppContactCell.xib in Resources */,
@@ -3531,6 +3551,7 @@
 				654380282665568000B2F38A /* NoCommentsCell.xib in Resources */,
 				654380292665568000B2F38A /* AppsTableViewHeader.xib in Resources */,
 				6543802A2665568000B2F38A /* Collaboration.storyboard in Resources */,
+				54D59C282695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				6543802B2665568000B2F38A /* WhatsNewViewController.xib in Resources */,
 				6543802C2665568000B2F38A /* SecondTicketDetailsViewController.xib in Resources */,
 				6543802D2665568000B2F38A /* TicketDetailsViewController.xib in Resources */,
@@ -3633,6 +3654,7 @@
 				9FB9C16B2631C04E00BA753D /* NoCommentsCell.xib in Resources */,
 				9F44AE1F25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
 				6547566D25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */,
+				54D59C1B2695CCD80037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				9F643554261B1C9F000D94A4 /* WhatsNewViewController.xib in Resources */,
 				C9424E0425642632003C247E /* MyDevicesViewController.xib in Resources */,
 				C907E0DB25D4382500FB0B55 /* AppContactCell.xib in Resources */,
@@ -3681,6 +3703,7 @@
 				9F33F6A8260A3C4000470A47 /* OfficeInfoCell.xib in Resources */,
 				9F33F6A9260A3C4000470A47 /* SecondSendMessageView.xib in Resources */,
 				9F30285D2681E68C009A3096 /* AlertPopoverViewController.xib in Resources */,
+				54D59C262695E0000037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				9F33F6AA260A3C4000470A47 /* Home.storyboard in Resources */,
 				658BEF83268FC63700D4FD2C /* ActiveUsersViewController.xib in Resources */,
 				9F33F6AB260A3C4000470A47 /* AuthViewController.xib in Resources */,
@@ -3852,6 +3875,7 @@
 				9FB9C16C2631C04E00BA753D /* NoCommentsCell.xib in Resources */,
 				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				6547566E25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */,
+				54D59C242695DFFF0037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				9F643555261B1C9F000D94A4 /* WhatsNewViewController.xib in Resources */,
 				9FF0546A25681F4A0071E596 /* SecondTicketDetailsViewController.xib in Resources */,
 				9F5B10612567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */,
@@ -3941,6 +3965,7 @@
 				9F78D0E3256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */,
 				9F2C82622657CE02004407B4 /* GlobalAlertCell.xib in Resources */,
+				54D59C252695DFFF0037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				C9D035E32579B68D0068441F /* ServiceDeskContactCell.xib in Resources */,
 				C993A2CB2576686500F9146A /* QuickHelpCell.xib in Resources */,
 				9F0CA5522566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
@@ -4408,6 +4433,7 @@
 				65437CA72665387600B2F38A /* CustomUISwitch.swift in Sources */,
 				65437CA82665387600B2F38A /* AppsServiceAlertCell.swift in Sources */,
 				65437CA92665387600B2F38A /* CacheManager.swift in Sources */,
+				54D59C232695DFF90037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				65437CAB2665387600B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437CAC2665387600B2F38A /* CustomTextField.swift in Sources */,
 				65437CAD2665387600B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
@@ -4542,6 +4568,7 @@
 				65437E76266539BF00B2F38A /* DeviceCell.swift in Sources */,
 				65437E77266539BF00B2F38A /* CacheManager.swift in Sources */,
 				65437E78266539BF00B2F38A /* AppsServiceAlertCell.swift in Sources */,
+				54D59C212695DFF80037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				65437E79266539BF00B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437E7A266539BF00B2F38A /* CustomTextField.swift in Sources */,
 				65437E7B266539BF00B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
@@ -4676,6 +4703,7 @@
 				65437FE22665568000B2F38A /* CustomUISwitch.swift in Sources */,
 				65437FE32665568000B2F38A /* AppsServiceAlertCell.swift in Sources */,
 				65437FE42665568000B2F38A /* CacheManager.swift in Sources */,
+				54D59C222695DFF80037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				65437FE62665568000B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437FE72665568000B2F38A /* CustomTextField.swift in Sources */,
 				65437FE82665568000B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
@@ -4810,6 +4838,7 @@
 				C9424E14256427F0003C247E /* DeviceCell.swift in Sources */,
 				659C595B25924106007953A7 /* CacheManager.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
+				54D59C1A2695CCD80037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				9F2C82542657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
 				9F44AE1C25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,
@@ -4949,6 +4978,7 @@
 				9F33F697260A3C4000470A47 /* PanModalNavigationController.swift in Sources */,
 				9F33F698260A3C4000470A47 /* MyDevicesViewController.swift in Sources */,
 				9F33F699260A3C4000470A47 /* GeneralViewController.swift in Sources */,
+				54D59C202695DFF70037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				9F7392D22631D1BD007882EB /* Constants.swift in Sources */,
 				9F2C82672657CE02004407B4 /* GlobalAlertDetailsCell.swift in Sources */,
 				9F33F69A260A3C4000470A47 /* DataParser.swift in Sources */,
@@ -5095,6 +5125,7 @@
 				9F2C82722657F1E1004407B4 /* CustomUISwitch.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				659C595C25924106007953A7 /* CacheManager.swift in Sources */,
+				54D59C1E2695DFF60037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				9F2C82552657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
 				9F44AE1D25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,
@@ -5229,6 +5260,7 @@
 				9F2C82732657F1E1004407B4 /* CustomUISwitch.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				659C595D25924106007953A7 /* CacheManager.swift in Sources */,
+				54D59C1F2695DFF60037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				9F2C82562657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
 				9F44AE1E25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,
