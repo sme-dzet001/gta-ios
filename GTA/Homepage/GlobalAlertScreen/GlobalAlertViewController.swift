@@ -21,18 +21,25 @@ class GlobalAlertViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setNeedsStatusBarAppearanceUpdate()
-        setUpTableView()
-        loadGlobalAlertsData()
+    private let errorLabel = UILabel()
+    private let activityIndicator = UIActivityIndicatorView(style: .medium)
+    private var shortHeight: CGFloat {
+        guard !UIDevice.current.iPhone5_se else { return view.frame.height }
+        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
+        return coefficient - (view.window?.safeAreaInsets.bottom ?? 0)
     }
     
     private var loadGlobalAlertsInProgress = false {
         didSet {
             tableView.reloadData()
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setNeedsStatusBarAppearanceUpdate()
+        setUpTableView()
+        loadGlobalAlertsData()
     }
     
     private func loadGlobalAlertsData() {
@@ -81,6 +88,44 @@ class GlobalAlertViewController: UIViewController {
         }
     }
     
+    private func setActivityIndicator(_ needToShow: Bool) {
+        if needToShow {
+            view.addSubview(activityIndicator)
+            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: view.topAnchor, constant: shortHeight / 2)
+            ])
+            activityIndicator.startAnimating()
+            tableView.isHidden = true
+        } else {
+            activityIndicator.stopAnimating()
+            activityIndicator.removeFromSuperview()
+            tableView.isHidden = false
+        }
+    }
+    
+    private func setErrorLabel(_ needToShow: Bool) {
+        if needToShow {
+            view.addSubview(errorLabel)
+            errorLabel.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                errorLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: shortHeight / 2),
+                errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            ])
+            errorLabel.numberOfLines = 0
+            errorLabel.font = UIFont(name: "SFProText-Regular", size: 16)!
+            errorLabel.textAlignment = .center
+            errorLabel.textColor = .black
+            errorLabel.adjustsFontSizeToFitWidth = true
+            errorLabel.minimumScaleFactor = 0.7
+            errorLabel.text = "No data available"
+        } else {
+            errorLabel.removeFromSuperview()
+        }
+    }
+    
     @IBAction func backButtonPressed(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -94,6 +139,16 @@ extension GlobalAlertViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if loadGlobalAlertsInProgress {
+            setActivityIndicator(true)
+            return 0
+        }
+        if dataSource.count == 0 {
+            setErrorLabel(true)
+            return 0
+        }
+        setActivityIndicator(false)
+        setErrorLabel(false)
         switch section {
         case 0:
             return 1
@@ -117,12 +172,6 @@ extension GlobalAlertViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            if loadGlobalAlertsInProgress {
-                return createLoadingCell(withBottomSeparator: false)
-            }
-            if dataSource.count == 0 {
-                return createErrorCell(with: "No data available")
-            }
             let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertDetailsHeaderCell", for: indexPath) as? GlobalAlertDetailsHeaderCell
             cell?.alertNumberLabel.text = alertData?.ticketNumber
             cell?.alertTitleLabel.text = alertData?.alertTitle
@@ -172,8 +221,6 @@ extension GlobalAlertViewController: PanModalPresentable {
     }
     
     var shortFormHeight: PanModalHeight {
-        guard !UIDevice.current.iPhone5_se else { return .maxHeight }
-        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
-        return PanModalHeight.contentHeight(coefficient - (view.window?.safeAreaInsets.bottom ?? 0))
+        return PanModalHeight.contentHeight(shortHeight)
     }
 }

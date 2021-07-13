@@ -20,7 +20,7 @@ struct ProductionAlertsRows: Codable {
     var rows: [ProductionAlertsRow?]?
 }
 
-struct ProductionAlertsRow: Codable {
+struct ProductionAlertsRow: Codable, Equatable {
     var values: [QuantumValue?]?
     
     enum CodingKeys: String, CodingKey {
@@ -47,6 +47,23 @@ struct ProductionAlertsRow: Codable {
     var impactedSystems: String? {
         guard let values = values, let index = indexes["impacted_systems"], values.count > index else { return nil }
         return values[index]?.stringValue
+    }
+    var sourceJiraIssue: String? {
+        guard let values = values, let index = indexes["source_jira_issue"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    var lastComment: String? {
+        guard let values = values, let index = indexes["last_comment"], values.count > index else { return nil }
+        return values[index]?.stringValue
+    }
+    var duration: String? {
+        guard let values = values, let index = indexes["maintenance_duration"], values.count > index else { return nil }
+        let duration = Float(values[index]?.stringValue ?? "") ?? 0.0
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.month, .day, .hour, .minute]
+        formatter.unitsStyle = .abbreviated
+        let formattedString = formatter.string(from: TimeInterval(duration * 3600))!
+        return formattedString
     }
     var sendPush: String? {
         guard let values = values, let index = indexes["send_push"], values.count > index else { return nil }

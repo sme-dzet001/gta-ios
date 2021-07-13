@@ -100,21 +100,32 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             completionHandler([.alert, .sound])
             return
         }
+        if notification.isProductionAlert {
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+        }
         completionHandler([.alert, .sound, .badge])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let topViewController = getTopViewController()
-        var lastActivityDate = Date.distantPast
-        if let aDate = UserDefaults.standard.value(forKey: "lastActivityDate") as? Date {
-            lastActivityDate = aDate
+        var appIsInTray = false
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            appIsInTray = sceneDelegate.appIsInTray
         }
-        if topViewController == nil || topViewController is LoginViewController || topViewController is AuthViewController || lastActivityDate.addingTimeInterval(1200) < Date() {
-            UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
+        if topViewController == nil || topViewController is LoginViewController || topViewController is AuthViewController || appIsInTray {
+            if response.notification.isEmergencyOutage {
+                UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
+            }
+            if response.notification.isProductionAlert {
+                UserDefaults.standard.setValue(response.notification.payloadDict, forKey: "productionAlertNotificationReceived")
+            }
             return
         }
         if response.notification.isEmergencyOutage {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        }
+        if response.notification.isProductionAlert {
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.productionAlertNotificationReceived), object: nil, userInfo: response.notification.payloadDict)
         }
         completionHandler()
     }

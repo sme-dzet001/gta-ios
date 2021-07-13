@@ -27,12 +27,44 @@ class ProductionAlertsViewController: UIViewController {
         if let id = selectedId {
             showAlertDetails(for: id)
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateActiveProductionAlertStatus), name: Notification.Name(NotificationsNames.updateActiveProductionAlertStatus), object: nil)
+        self.tabBarController?.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getProductionAlerts()
+        self.tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let activeProductionAlertId = dataProvider?.activeProductionAlertId {
+            showAlertDetails(for: activeProductionAlertId)
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.updateActiveProductionAlertStatus), object: nil)
+    }
+    
+    @objc private func getProductionAlerts() {
+        guard let appName = appName else { return }
+        dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
+            DispatchQueue.main.async {
+                if error == nil {
+                    self?.tableView.reloadData()
+                }
+            }
+        }
     }
     
     private func setUpNavigationItem() {
         navigationController?.navigationBar.barTintColor = UIColor.white
         let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        tlabel.text = "Production Alerts"
+        tlabel.text = "\(appName ?? "") Production Alerts"
         tlabel.textColor = UIColor.black
         tlabel.textAlignment = .center
         tlabel.font = UIFont(name: "SFProDisplay-Medium", size: 20.0)
@@ -52,45 +84,50 @@ class ProductionAlertsViewController: UIViewController {
     }
     
     private func showAlertDetails(for id: String) {
-        let detailsVC = ProductionAlertsDetails()
-        if let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == id.lowercased()}) {
-            let alertData = dataProvider?.alertsData[appName ?? ""]?[index]
-            detailsVC.alertData = alertData
-            if let summary = alertData?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
-                UserDefaults.standard.setValue(summary, forKey: summary.lowercased())
-            }
+        let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == id.lowercased()})
+        if let row = index, (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row {
+            createAndShowDetailsScreenForRow(row)
+        } else {
+            let detailsVC = ProductionAlertsDetails()
+            detailsVC.dataProvider = dataProvider
+            presentPanModal(detailsVC)
         }
-        self.tabBarController?.tabBar.items?[2].badgeValue = badgeCount > 0 ? "\(badgeCount)" : nil
-        self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
-        presentPanModal(detailsVC)
     }
     
     private func showAlertDetails(for row: Int) {
         guard (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row else { return }
+        createAndShowDetailsScreenForRow(row)
+    }
+    
+    private func createAndShowDetailsScreenForRow(_ row: Int) {
         let detailsVC = ProductionAlertsDetails()
+        detailsVC.dataProvider = dataProvider
         let alertData = dataProvider?.alertsData[appName ?? ""]?[row]
         detailsVC.alertData = alertData
-        if let summary = alertData?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
+        readAlertAndUpdateTabCount(alert: alertData)
+        presentPanModal(detailsVC)
+    }
+    
+    private func readAlertAndUpdateTabCount(alert: ProductionAlertsRow?) {
+        if let summary = alert?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
             UserDefaults.standard.setValue(summary, forKey: summary.lowercased())
         }
         self.tabBarController?.tabBar.items?[2].badgeValue = badgeCount > 0 ? "\(badgeCount)" : nil
         self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
-        presentPanModal(detailsVC)
     }
     
-//    private func presentDetails(detailsVC: ProductionAlertsDetails) {
-//        var totalCount = 0
-//        if let countArr = dataProvider?.alertsData.compactMap({$0.value?.data}) {
-//            for i in countArr {
-//                totalCount += i.filter({$0?.isRead == false}).count
-//            }
-//            let value = (Int(self.tabBarController?.tabBar.items?[2].badgeValue ?? "") ?? 0) - 1
-//            self.tabBarController?.tabBar.items?[2].badgeValue = value > 0 ? "\(value)" : nil
-//        }
-//        presentPanModal(detailsVC)
-//    }
+    @objc private func updateActiveProductionAlertStatus(notification: NSNotification) {
+        guard let activeProductionAlertId = (notification.userInfo as? [String : String] ?? [:])["alertId"] else { return }
+        let index = dataProvider?.alertsData[appName ?? ""]?.firstIndex(where: {$0.ticketNumber?.lowercased() == activeProductionAlertId.lowercased()})
+        guard let row = index, (dataProvider?.alertsData[appName ?? ""]?.count ?? 0) > row else { return }
+        let alertData = dataProvider?.alertsData[appName ?? ""]?[row]
+        readAlertAndUpdateTabCount(alert: alertData)
+    }
     
     @objc private func backPressed() {
+        dataProvider?.forceUpdateProductionAlerts = false
+        dataProvider?.activeProductionAlertId = nil
+        dataProvider?.activeProductionAlertAppName = nil
         self.navigationController?.popViewController(animated: true)
     }
 
@@ -107,13 +144,24 @@ extension ProductionAlertsViewController: UITableViewDataSource, UITableViewDele
         let data = dataProvider?.alertsData[appName ?? ""]
         guard (data?.count ?? 0) > indexPath.row, let cellData = data?[indexPath.row] else { return UITableViewCell() }
         cell?.alertNumberLabel.text = cellData.ticketNumber
+        cell?.contentView.backgroundColor = cellData.isRead ? .white : UIColor(hex: 0xF7F7FA)
         cell?.dateLabel.text = cellData.closeDateString == nil ? cellData.startDateString?.getFormattedDateStringForProdAlert() : cellData.closeDateString?.getFormattedDateStringForProdAlert()
-        cell?.descriptionLabel.text = cellData.description
+        cell?.descriptionLabel.text = cellData.summary
         return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showAlertDetails(for: indexPath.row)
+    }
+    
+}
+
+extension ProductionAlertsViewController: UITabBarControllerDelegate {
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        dataProvider?.forceUpdateProductionAlerts = false
+        dataProvider?.activeProductionAlertId = nil
+        dataProvider?.activeProductionAlertAppName = nil
     }
     
 }

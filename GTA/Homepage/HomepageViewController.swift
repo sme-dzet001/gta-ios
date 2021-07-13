@@ -24,15 +24,28 @@ class HomepageViewController: UIViewController {
     var homepageTableVC: HomepageTableViewController?
     
     private var presentedVC: ArticleViewController?
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        commonInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    func commonInit() {
+        NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlertsCount), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
         setUpPageControl()
         setNeedsStatusBarAppearanceUpdate()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlertsCount), name: UIApplication.didBecomeActiveNotification, object: nil)
         collectionView.accessibilityIdentifier = "HomeScreenCollectionView"
         
     }
@@ -42,11 +55,15 @@ class HomepageViewController: UIViewController {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadNewsData()
         }
+        if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+            emergencyOutageNotificationReceived()
+        }
         getProductionAlertsCount()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
@@ -59,15 +76,15 @@ class HomepageViewController: UIViewController {
         dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
+//                if !isFromCache && UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+//                    self?.emergencyOutageNotificationReceived()
+//                }
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
                     self?.collectionView.reloadData()
-                    if !isFromCache && UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
-                        self?.emergencyOutageNotificationReceived()
-                    }
                 } else {
                     let isNoData = (self?.dataProvider.newsDataIsEmpty ?? true)
                     if isNoData {
@@ -135,6 +152,13 @@ class HomepageViewController: UIViewController {
                 self.showGlobalAlertModal()
             }
         }
+    }
+    
+    @objc private func didBecomeActive() {
+        if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+            emergencyOutageNotificationReceived()
+        }
+        getProductionAlertsCount()
     }
     
     @objc private func getProductionAlertsCount() {

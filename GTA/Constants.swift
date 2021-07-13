@@ -15,12 +15,16 @@ class Constants {
     // MARK: Push notifications constants
     static let payloadKey = "payload"
     static let pushTypeKey = "push_type"
-    static let pushType = "Emergency Outage"
+    static let pushTypeEmergencyOutage = "Emergency Outage"
+    static let pushTypeProductionAlert = "Production Alert"
 }
 
 class NotificationsNames {
     static let emergencyOutageNotificationReceived = "emergencyOutageNotificationReceived"
+    static let productionAlertNotificationReceived = "productionAlertNotificationReceived"
     static let globalAlertWillShow = "globalAlertWillShow"
+    static let productionAlertNotificationDisplayed = "productionAlertNotificationDisplayed"
+    static let updateActiveProductionAlertStatus = "updateActiveProductionAlertStatus"
 }
 
 class ChartsFormatting {

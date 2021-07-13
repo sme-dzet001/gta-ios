@@ -32,7 +32,8 @@ class ProductionAlertCounterCell: UITableViewCell {
     func setAlert(alertCount: Int?, setTap: Bool = true) {
         if let number = alertCount {
             self.alertsNumberParentView.isHidden = false
-            self.updatesNumberLabel.text = "\(number)" //: nil
+            let count = number > 99 ? 99 : number
+            self.updatesNumberLabel.text = "\(count)" //: nil
             guard setTap else { return }
             setTapGesture()
         } else {

@@ -8,17 +8,13 @@
 import UIKit
 import PanModal
 
-class ArticleViewController: UIViewController, PanModalPresentable {
+class ArticleViewController: UIViewController {
     
     @IBOutlet weak var articleTextView: UITextView!
     @IBOutlet weak var blurView: UIView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var articleTextViewBottom: NSLayoutConstraint!
     
-    private var heightObserver: NSKeyValueObservation?
-    var position: CGFloat {
-        return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
-    }
     var articleText: String?
     var attributedArticleText: NSMutableAttributedString? {
         didSet {
@@ -38,60 +34,27 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         }
     }
     
-    var panScrollable: UIScrollView? {
-        return articleTextView
-    }
-    
-    var showDragIndicator: Bool {
-        return false
-    }
     var initialHeight: CGFloat = 0.0
-    weak var appearanceDelegate: PanModalAppearanceDelegate?
-    
-    private var gestureStartPoint: CGPoint = CGPoint(x: 0, y: 0)
-    private var presentationView: UIView? {
-        return self.presentationController?.containerView?.subviews.filter({$0 is DimmedView}).first
-    }
-    
-    var longFormHeight: PanModalHeight {
-        return .maxHeight
-    }
-    
-    var shortFormHeight: PanModalHeight {
-        guard !UIDevice.current.iPhone5_se else { return .maxHeight }
-        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
-        return PanModalHeight.contentHeight(coefficient - (view.window?.safeAreaInsets.bottom ?? 0))
-    }
-    
-    var topOffset: CGFloat {
-        if let keyWindow = UIWindow.key {
-            return keyWindow.safeAreaInsets.top
-        } else {
-            return 0
-        }
-    }
-    
-    var allowsTapToDismiss: Bool {
-        return false
-    }
-    
-    var cornerRadius: CGFloat {
-        return 20
-    }
-    
-    var panModalBackgroundColor: UIColor {
-        return .clear
-    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-        
+    
+    private var gestureStartPoint: CGPoint = CGPoint(x: 0, y: 0)
+    private var heightObserver: NSKeyValueObservation?
+    weak var appearanceDelegate: PanModalAppearanceDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
         articleTextView.delegate = self
-        if let _ = attributedArticleText {
+        if let attributedText = attributedArticleText {
+            attributedText.enumerateAttribute(.link, in: NSRange(location: 0, length: attributedText.length), options: .longestEffectiveRangeNotRequired) { attributes, range, _ in
+                if attributes != nil {
+                    attributedText.insert(NSAttributedString(string: " "), at: range.location)
+                }
+                
+            }
             articleTextView.attributedText = attributedArticleText
         } else {
             articleTextView.text = articleText
@@ -104,17 +67,25 @@ class ArticleViewController: UIViewController, PanModalPresentable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addBlurToView()
-        heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
-            self?.configureBlurViewPosition()
-        })
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(newsDidScroll))
-        panGesture.minimumNumberOfTouches = 1
-        panGesture.cancelsTouchesInView = false
-        presentationView?.addGestureRecognizer(panGesture)
+        addHeightObservation()
+        addGesture()
         configureBlurViewPosition(isInitial: true)
         if view.window?.safeAreaInsets.top ?? 0 <= 24 {
             articleTextViewBottom?.constant = 15
         }
+    }
+    
+    private func addHeightObservation() {
+        heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
+            self?.configureBlurViewPosition()
+        })
+    }
+    
+    private func addGesture() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(newsDidScroll))
+        panGesture.minimumNumberOfTouches = 1
+        panGesture.cancelsTouchesInView = false
+        presentationView?.addGestureRecognizer(panGesture)
     }
     
     override func viewDidLayoutSubviews() {
@@ -168,6 +139,13 @@ class ArticleViewController: UIViewController, PanModalPresentable {
         appearanceDelegate?.panModalDidDismiss()
     }
     
+    private func setParagraphStyle() {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8
+        paragraphStyle.paragraphSpacing = 22
+        
+    }
+    
     func willTransition(to state: PanModalPresentationController.PresentationState) {
         switch state {
         case .shortForm:
@@ -201,5 +179,53 @@ extension ArticleViewController: UITextViewDelegate {
             blurView.alpha = isReachedBottom ? 0 : 1
         }
     }
+}
+
+extension ArticleViewController: PanModalPresentable {
+    var position: CGFloat {
+        return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
+    }
     
+    var panScrollable: UIScrollView? {
+        return articleTextView
+    }
+    
+    var showDragIndicator: Bool {
+        return false
+    }
+    
+    private var presentationView: UIView? {
+        return self.presentationController?.containerView?.subviews.filter({$0 is DimmedView}).first
+    }
+    
+    var longFormHeight: PanModalHeight {
+        return .maxHeight
+    }
+    
+    var shortFormHeight: PanModalHeight {
+        guard !UIDevice.current.iPhone5_se else { return .maxHeight }
+        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
+        return PanModalHeight.contentHeight(coefficient - (view.window?.safeAreaInsets.bottom ?? 0))
+    }
+    
+    var topOffset: CGFloat {
+        if let keyWindow = UIWindow.key {
+            return keyWindow.safeAreaInsets.top
+        } else {
+            return 0
+        }
+    }
+    
+    var allowsTapToDismiss: Bool {
+        return false
+    }
+    
+    var cornerRadius: CGFloat {
+        return 20
+    }
+    
+    var panModalBackgroundColor: UIColor {
+        return .clear
+    }
+   
 }

@@ -37,6 +37,15 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     var detailsDataResponseError: Error?
     weak var detailsDataDelegate: DetailsDataDelegate?
     var alertsData: [ProductionAlertsRow]?
+    private var activeAlertsCount: Int {
+        return dataProvider?.alertsData[appName]?.filter({$0.isExpired == false}).count ?? 0
+    }
+    private var alertsCount: Int {
+        return dataProvider?.alertsData[appName]?.filter({$0.isRead == false && $0.isExpired == false}).count ?? 0
+    }
+    private var productionAlertsSectionAvailable: Bool {
+        return alertsData != nil && activeAlertsCount > 0
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +54,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         setUpTableView()
         setUpNavigationItem()
         NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,8 +63,18 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppDetailsData()
         }
+        if let alertsData = dataProvider?.alertsData[appName] {
+            self.alertsData = alertsData
+        }
         tableView.reloadData()
         self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if dataProvider?.activeProductionAlertId != nil {
+            showProductionAlertScreen()
+        }
     }
     
     private func getAppDetailsData() {
@@ -73,6 +93,9 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
             DispatchQueue.main.async {
                 if error == nil {
+                    if let alertsData = self?.dataProvider?.alertsData[self?.appName ?? ""] {
+                        self?.alertsData = alertsData
+                    }
                     self?.setHardCodeData()
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()
@@ -158,7 +181,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         
 //        let secondSection = [AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "Scheduled maintenance", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "AWS outage reported", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true)]
 //
-        if let _ = alertsData {
+        if productionAlertsSectionAvailable {
             firstSection.insert(AppInfo(app_name: "", app_title: "Production Alerts", imageData: alertIcon?.pngData(), appStatus: .none, app_is_active: true), at: 0)
         }
         dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: firstSection, metricsData: nil)/*, AppsDataSource(sectionName: "System Updates", description: nil, cellData: secondSection), AppsDataSource(sectionName: "Stats", description: nil, cellData: [], metricsData: metricsData)*/]
@@ -240,6 +263,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
     }
     
 }
@@ -311,11 +335,10 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dataArray = dataSource[indexPath.section].cellData
-        if indexPath.section == 0, indexPath.row == 0, alertsData != nil {
+        if indexPath.section == 0, indexPath.row == 0, productionAlertsSectionAvailable {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProductionAlertCounterCell", for: indexPath) as? ProductionAlertCounterCell
-            let totalCount = dataProvider?.alertsData[appName]?.count ?? 0
             //let totalCount = alertsData?.data?.filter({$0?.isRead == false}).count ?? 0
-            cell?.setAlert(alertCount: totalCount == 0 ? nil : totalCount, setTap: false)
+            cell?.setAlert(alertCount: alertsCount == 0 ? nil : alertsCount, setTap: false)
             //cell?.updatesNumberLabel.text = totalCount == 0 ? nil : totalCount
             cell?.cellTitle.text = "Production Alerts"
             return cell ?? UITableViewCell()
@@ -363,15 +386,16 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
-        if indexPath.row == 0 && alertsData != nil {
+        if indexPath.row == 0 && productionAlertsSectionAvailable {
             showProductionAlertScreen()
             return
         }
-        if indexPath.row == 3, (appDetailsData != nil) {
+        let commandBase = productionAlertsSectionAvailable ? 3 : 2
+        if indexPath.row == commandBase, (appDetailsData != nil) {
             showAboutScreen()
-        } else if indexPath.row == 4 {
+        } else if indexPath.row == commandBase + 1 {
             showTipsAndTricks()
-        } else if indexPath.row == 5 {
+        } else if indexPath.row == commandBase + 2 {
             showContacts()
         } else {
             showHelpReportScreen(for: indexPath)

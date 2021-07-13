@@ -231,6 +231,33 @@ class HelpDeskDataProvider {
         return Date() >= comparingDate
     }
     
+    func formServiceDeskAboutDescBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
+        guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
+        
+        let res = NSMutableAttributedString(attributedString: htmlAttrString)
+        
+        guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return res }
+        
+        let wholeRange = NSRange(res.string.startIndex..., in: res.string)
+        let matches = (mailRegex.matches(in: res.string, options: [], range: wholeRange))
+        for match in matches {
+            guard let mailLinkRange = Range(match.range, in: res.string) else { continue }
+            let mailLinkStr = res.string[mailLinkRange]
+            if let linkUrl = URL(string: "mailto:\(mailLinkStr)") {
+                res.addAttribute(.link, value: linkUrl, range: match.range)
+            }
+        }
+        res.enumerateAttributes(in: NSRange(location: 0, length: res.length), options: .longestEffectiveRangeNotRequired, using: { (attributes, range, _) in
+            for attribute in attributes {
+                if let fnt = attribute.value as? UIFont {
+                    let font = fnt.withSize(16.0)
+                    res.addAttribute(.font, value: font, range: range)
+                }
+            }
+        })
+        return res
+    }
+    
     func formQuickHelpAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
         guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
         
@@ -667,9 +694,9 @@ class HelpDeskDataProvider {
         return reportDataResponse
     }
     
-    private func getDataIndexes(columns: [ColumnName]?) -> [String : Int] {
+    private func getDataIndexes(columns: [ColumnName?]?) -> [String : Int] {
         var indexes: [String : Int] = [:]
-        guard let columns = columns else { return indexes}
+        guard let columns = columns?.compactMap({$0}) else { return indexes}
         for (index, column) in columns.enumerated() {
             if let name = column.name {
                 indexes[name] = index

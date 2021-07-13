@@ -34,6 +34,7 @@
 		<string>SF-Pro-Display-Regular.otf</string>
 		<string>SF-Pro-Display-Bold.otf</string>
 		<string>SF-Pro-Text-Italic.ttf</string>
+		<string>SF-Pro-Text-Bold-Italic.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
