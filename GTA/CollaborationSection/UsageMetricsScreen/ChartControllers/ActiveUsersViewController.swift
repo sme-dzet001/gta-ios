@@ -14,12 +14,6 @@ class ChartScrollView : UIScrollView, UIGestureRecognizerDelegate {
     }
 }
 
-class ActiveUsersYValueFormatter: NSObject, IAxisValueFormatter {
-    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        return String(format: "%.1fk", locale: Locale.current, value / 1000).replacingOccurrences(of: ".0", with: "")
-    }
-}
-
 class ActiveUsersXValueFormatter: NSObject, IAxisValueFormatter {
     var xLabels: [String] = []
     
@@ -33,7 +27,12 @@ class ActiveUsersXValueFormatter: NSObject, IAxisValueFormatter {
 class ActiveUsersViewController: UIViewController {
     
     @IBOutlet weak var chartView: LineChartView!
+    @IBOutlet weak var verticalAxisStackView: UIStackView!
+    @IBOutlet weak var percentLabel: UILabel!
+    
     @IBOutlet weak var chartViewWidth: NSLayoutConstraint!
+    @IBOutlet weak var verticalAxisViewTop: NSLayoutConstraint!
+    @IBOutlet weak var verticalAxisViewBottom: NSLayoutConstraint!
     
     let chartViewGridWidth: CGFloat = 64
     let lineColor = UIColor(hex: 0x428DF7)
@@ -91,11 +90,12 @@ class ActiveUsersViewController: UIViewController {
         chartView.xAxis.valueFormatter = xValueFormatter
         chartView.xAxis.setLabelCount(xValueFormatter.xLabels.count, force: true)
         
+        //chartView.setVisibleXRangeMaximum(Double(view.frame.size.width / chartViewGridWidth))
+        
         //Vertical axis formatting
         
         chartView.leftAxis.drawAxisLineEnabled = false
-        //chartView.leftAxis.drawLabelsEnabled = false
-        chartView.leftAxis.valueFormatter = ActiveUsersYValueFormatter()
+        chartView.leftAxis.drawLabelsEnabled = false
         
         let minYValue = chartView.leftAxis.axisMinimum
         
@@ -115,10 +115,35 @@ class ActiveUsersViewController: UIViewController {
         
         chartView.leftAxis.axisMaximum = Double(maxYFactor) * 1000
         
-        chartView.leftAxis.setLabelCount(maxYFactor - minYFactor + 1, force: true)
-        
         chartView.leftAxis.spaceTop = 0
         chartView.leftAxis.spaceBottom = 0
+        
+        let verticalLabelsCount = maxYFactor - minYFactor + 1
+        chartView.leftAxis.setLabelCount(verticalLabelsCount, force: true)
+        
+        var labels: [String] = []
+        for i in (minYFactor..<(maxYFactor + 1)) {
+            labels.insert(String(format: "%.1fk", locale: Locale.current, Double(i)).replacingOccurrences(of: ".0", with: ""), at: 0)
+        }
+        
+        setupLeftAxisCustomView(labels: labels, labelsFont: ChartsFormatting.labelFont, labelsTextColor: ChartsFormatting.labelTextColor)
+    }
+    
+    func setupLeftAxisCustomView(labels: [String], labelsFont: UIFont?, labelsTextColor: UIColor) {
+        guard labels.count > 1 else { return }
+        guard let labelsFont = labelsFont else { return }
+        let extraOffsetVertical = labelsFont.lineHeight / 2.5 + chartView.leftAxis.yOffset
+        verticalAxisViewTop.constant = extraOffsetVertical
+        verticalAxisViewBottom.constant = -chartView.xAxis.labelHeight
+        for i in (0..<labels.count) {
+            let label = labels[i]
+            let leftAxisLabel = UILabel()
+            leftAxisLabel.text = label
+            leftAxisLabel.font = labelsFont
+            leftAxisLabel.textColor = labelsTextColor
+            leftAxisLabel.textAlignment = .right
+            verticalAxisStackView.addArrangedSubview(leftAxisLabel)
+        }
     }
 
     func setLabelsFont(labelFont: UIFont?) {
