@@ -920,7 +920,7 @@
 		9F33F67F260A3C4000470A47 /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035932578095A0068441F /* CommonResponses.swift */; };
 		9F33F680260A3C4000470A47 /* Office365AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35862825FD37BF0003658D /* Office365AppCell.swift */; };
 		9F33F681260A3C4000470A47 /* AboutHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */; };
-		9F33F682260A3C4000470A47 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		9F33F682260A3C4000470A47 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		9F33F683260A3C4000470A47 /* OfficeSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFDA2D25A5E2E200F57817 /* OfficeSelectionCell.swift */; };
 		9F33F684260A3C4000470A47 /* SecondSendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0547225681FC60071E596 /* SecondSendMessageView.swift */; };
 		9F33F685260A3C4000470A47 /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF172564901E001E86F6 /* AboutInfoCell.swift */; };
@@ -964,7 +964,7 @@
 		9F33F6AF260A3C4000470A47 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
 		9F33F6B0260A3C4000470A47 /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
 		9F33F6B1260A3C4000470A47 /* ServiceDeskAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0FC25B08CAC004A9C65 /* ServiceDeskAboutCell.xib */; };
-		9F33F6B2260A3C4000470A47 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		9F33F6B2260A3C4000470A47 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		9F33F6B3260A3C4000470A47 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEA255404F100E13B77 /* SF-Pro-Display-Medium.otf */; };
 		9F33F6B4260A3C4000470A47 /* SystemStatusHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */; };
 		9F33F6B5260A3C4000470A47 /* AboutSupportPolicyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */; };
@@ -1018,6 +1018,8 @@
 		9F33F6E7260A3C4000470A47 /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E13256427F0003C247E /* DeviceCell.xib */; };
 		9F33F6E8260A3C4000470A47 /* AppContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C907E0D725D4382500FB0B55 /* AppContactCell.xib */; };
 		9F33F6E9260A3C4000470A47 /* Office365ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35861C25FD23FF0003658D /* Office365ViewController.xib */; };
+		9F343A6F269DE3750071362D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A6C269DE3750071362D /* GoogleService-Info.plist */; };
+		9F343A74269DEC050071362D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A6C269DE3750071362D /* GoogleService-Info.plist */; };
 		9F35860425FD219C0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
 		9F35860525FD219C0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
 		9F35860625FD219D0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
@@ -1667,6 +1669,7 @@
 		9F3028442681E68B009A3096 /* AlertPopoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertPopoverViewController.xib; sourceTree = "<group>"; };
 		9F33F6EF260A3C4000470A47 /* QA-GTAStage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QA-GTAStage.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F33F6F0260A3C4000470A47 /* QA-GTAStage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QA-GTAStage-Info.plist"; path = "/Users/kostiantyndzetsiuk/Documents/gta-ios/QA-GTAStage-Info.plist"; sourceTree = "<absolute>"; };
+		9F343A6C269DE3750071362D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationHeaderCell.swift; sourceTree = "<group>"; };
 		9F35860125FD219C0003658D /* CollaborationHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollaborationHeader.xib; sourceTree = "<group>"; };
 		9F35860225FD219C0003658D /* CollaborationHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollaborationHeaderCell.xib; sourceTree = "<group>"; };
@@ -2279,6 +2282,14 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
+		9F343A6B269DE3480071362D /* GTADev */ = {
+			isa = PBXGroup;
+			children = (
+				9F343A6C269DE3750071362D /* GoogleService-Info.plist */,
+			);
+			path = GTADev;
+			sourceTree = "<group>";
+		};
 		9F3585FF25FD219C0003658D /* CollaborationCustomHeader */ = {
 			isa = PBXGroup;
 			children = (
@@ -2705,6 +2716,7 @@
 			children = (
 				9F825FCE25ED4DD3002A4560 /* GTA */,
 				9FCFA2B0259E143600E893D2 /* GTAStage */,
+				9F343A6B269DE3480071362D /* GTADev */,
 			);
 			path = GooglePlists;
 			sourceTree = "<group>";
@@ -3150,6 +3162,7 @@
 				9F819ABF255C1646007C1739 /* Frameworks */,
 				9F819AC0255C1646007C1739 /* Resources */,
 				E25A37242116BE13F9B62E2F /* [CP] Embed Pods Frameworks */,
+				9F343A6A269DE26D0071362D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3214,6 +3227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65437CB12665387600B2F38A /* ServiceDeskAboutCell.xib in Resources */,
+				9F343A74269DEC050071362D /* GoogleService-Info.plist in Resources */,
 				9F3027F72681D228009A3096 /* ProductionAlertCell.xib in Resources */,
 				65437CB22665387600B2F38A /* SF-Pro-Display-Thin.otf in Resources */,
 				65437CB32665387600B2F38A /* AppTipsAndTricksViewController.xib in Resources */,
@@ -3643,7 +3657,7 @@
 				9F33F6AF260A3C4000470A47 /* SF-Pro-Text-Semibold.ttf in Resources */,
 				9F33F6B0260A3C4000470A47 /* HelpDeskHeader.xib in Resources */,
 				9F33F6B1260A3C4000470A47 /* ServiceDeskAboutCell.xib in Resources */,
-				9F33F6B2260A3C4000470A47 /* BuildFile in Resources */,
+				9F33F6B2260A3C4000470A47 /* (null) in Resources */,
 				9F33F6B3260A3C4000470A47 /* SF-Pro-Display-Medium.otf in Resources */,
 				9F33F6B4260A3C4000470A47 /* SystemStatusHeader.xib in Resources */,
 				9F33F6B5260A3C4000470A47 /* AboutSupportPolicyCell.xib in Resources */,
@@ -3834,6 +3848,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C960A10225B08CAC004A9C65 /* ServiceDeskAboutCell.xib in Resources */,
+				9F343A6F269DE3750071362D /* GoogleService-Info.plist in Resources */,
 				9F3027F32681D228009A3096 /* ProductionAlertCell.xib in Resources */,
 				9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
 				9F44AE2125EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
@@ -4127,6 +4142,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/FirebaseCrashlytics/run\n${PODS_ROOT}/FirebaseCrashlytics/upload-symbols -gsp ${PROJECT_DIR}/GTA/Plists/GooglePlists/GTAStage/GoogleService-Info.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\n";
+		};
+		9F343A6A269DE26D0071362D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/FirebaseCrashlytics/run\n${PODS_ROOT}/FirebaseCrashlytics/upload-symbols -gsp ${PROJECT_DIR}/GTA/Plists/GooglePlists/GTADev/GoogleService-Info.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\n\n";
 		};
 		9F70BFF9259B4B6F0020A741 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4857,7 +4891,7 @@
 				9F30284F2681E68C009A3096 /* AlertPopoverCell.swift in Sources */,
 				9F643576261B5D40000D94A4 /* WhatsNewMoreViewController.swift in Sources */,
 				9F33F681260A3C4000470A47 /* AboutHeaderCell.swift in Sources */,
-				9F33F682260A3C4000470A47 /* BuildFile in Sources */,
+				9F33F682260A3C4000470A47 /* (null) in Sources */,
 				9F33F683260A3C4000470A47 /* OfficeSelectionCell.swift in Sources */,
 				9F33F684260A3C4000470A47 /* SecondSendMessageView.swift in Sources */,
 				9F33F685260A3C4000470A47 /* AboutInfoCell.swift in Sources */,
@@ -5701,6 +5735,7 @@
 				CODE_SIGN_ENTITLEMENTS = GTADev.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sergiy Savchenko (SL99M4JWZR)";
 				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H9636WUCU4;
 				INFOPLIST_FILE = "GTA/Plists/GTADev-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
