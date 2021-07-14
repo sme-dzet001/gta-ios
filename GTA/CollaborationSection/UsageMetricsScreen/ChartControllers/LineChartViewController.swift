@@ -24,7 +24,7 @@ class ActiveUsersXValueFormatter: NSObject, IAxisValueFormatter {
     }
 }
 
-class ActiveUsersViewController: UIViewController {
+class LineChartViewController: UIViewController {
     
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var verticalAxisStackView: UIStackView!
@@ -209,4 +209,10 @@ class ActiveUsersViewController: UIViewController {
     }
     */
 
+}
+
+extension LineChartViewController: ChartDimensions {
+    var optimalHeight: CGFloat {
+        return 294
+    }
 }

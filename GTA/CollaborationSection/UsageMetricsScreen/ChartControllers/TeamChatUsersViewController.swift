@@ -141,3 +141,10 @@ extension TeamChatUsersViewController {
         }
     }
 }
+
+extension TeamChatUsersViewController: ChartDimensions {
+    var optimalHeight: CGFloat {
+        let linesCount = dataProvider?.teamsChatUserData.count ?? 0
+        return 120 + CGFloat(linesCount) * ChartsFormatting.horizontalBarOptimalHeight
+    }
+}

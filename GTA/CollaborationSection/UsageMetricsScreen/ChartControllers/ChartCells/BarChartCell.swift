@@ -93,3 +93,9 @@ class BarChartCell: UITableViewCell {
     
     
 }
+
+extension BarChartCell: ChartDimensions {
+    var optimalHeight: CGFloat {
+        return 294
+    }
+}

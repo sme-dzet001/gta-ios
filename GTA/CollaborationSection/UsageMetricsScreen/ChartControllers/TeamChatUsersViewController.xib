@@ -31,8 +31,15 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zK2-mn-hks">
+                    <rect key="frame" x="0.0" y="854" width="414" height="8"/>
+                    <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="8" id="ECa-RY-TXf"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIP-lG-abm" customClass="HorizontalBarChartView" customModule="Charts">
-                    <rect key="frame" x="0.0" y="124" width="414" height="730"/>
+                    <rect key="frame" x="0.0" y="124" width="414" height="698"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
             </subviews>
@@ -44,7 +51,10 @@
                 <constraint firstItem="FIP-lG-abm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="80" id="BIv-Ht-9sH"/>
                 <constraint firstItem="eF2-GX-023" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="ERi-Xn-ASV"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FIP-lG-abm" secondAttribute="trailing" id="Smd-q0-paE"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="FIP-lG-abm" secondAttribute="bottom" constant="8" id="UyP-VG-8Kq"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="FIP-lG-abm" secondAttribute="bottom" constant="40" id="UyP-VG-8Kq"/>
+                <constraint firstItem="zK2-mn-hks" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Z7d-C2-RA0"/>
+                <constraint firstItem="zK2-mn-hks" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="c2i-Yf-uqL"/>
+                <constraint firstItem="zK2-mn-hks" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="yNZ-gF-Gld"/>
             </constraints>
             <point key="canvasLocation" x="44.927536231884062" y="85.714285714285708"/>
         </view>

@@ -17,7 +17,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActiveUsersViewController" customModule="GTA" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LineChartViewController" customModule="GTA" customModuleProvider="target">
             <connections>
                 <outlet property="chartScrollViewLeading" destination="tUn-Gg-Uug" id="LOZ-SM-QGz"/>
                 <outlet property="chartScrollViewTrailing" destination="1ir-Fb-YIK" id="VQT-Yf-RAE"/>

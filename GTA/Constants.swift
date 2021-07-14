@@ -32,4 +32,5 @@ class ChartsFormatting {
     static let labelTextColor = UIColor(hex: 0xAEAEB2)
     static let gridLineWidth: CGFloat = 1
     static let labelFont = UIFont(name: "SFProText-Regular", size: 10)
+    static let horizontalBarOptimalHeight: CGFloat = 32
 }

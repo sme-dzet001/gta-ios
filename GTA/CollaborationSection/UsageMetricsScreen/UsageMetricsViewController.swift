@@ -8,6 +8,10 @@
 import UIKit
 import WebKit
 
+protocol ChartDimensions: AnyObject {
+    var optimalHeight: CGFloat { get }
+}
+
 class ChartTableView : UITableView, UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
@@ -25,8 +29,8 @@ class UsageMetricsViewController: UIViewController {
         teamChatUsersVC.removeFromParent()
     }
     
-    private lazy var activeUsersVC: ActiveUsersViewController = {
-        let activeUsersVC = ActiveUsersViewController()
+    private lazy var activeUsersVC: LineChartViewController = {
+        let activeUsersVC = LineChartViewController(nibName: "ActiveUsersViewController", bundle: nil)
         activeUsersVC.dataProvider = dataProvider
         return activeUsersVC
     }()
@@ -72,6 +76,8 @@ class UsageMetricsViewController: UIViewController {
     }()
     
     private var chartCells: [UITableViewCell] = []
+    
+    private var chartDimensionsDict: [Int : ChartDimensions] = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,6 +88,12 @@ class UsageMetricsViewController: UIViewController {
         tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
         
         chartCells = [activeUsersChartCell, activeUsersByFuncChartCell, teamChatUsersChartCell]
+        
+        chartDimensionsDict[0] = activeUsersVC
+        if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
+            chartDimensionsDict[1] = barChartCell
+        }
+        chartDimensionsDict[2] = teamChatUsersVC
         
         setUpNavigationItem()
     }
@@ -119,7 +131,10 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
         return chartCells.count
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let chartDimensions = chartDimensionsDict[indexPath.row] {
+            return chartDimensions.optimalHeight
+        }
         return UITableView.automaticDimension
     }
     
