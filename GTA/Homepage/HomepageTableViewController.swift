@@ -192,6 +192,7 @@ class HomepageTableViewController: UITableViewController {
     @objc private func getGlobalAlertsIgnoringCache() {
         dataProvider?.getGlobalAlertsIgnoringCache {[weak self] dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
+                UIApplication.shared.applicationIconBadgeNumber = 0
                 if dataWasChanged, error == nil {
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()
