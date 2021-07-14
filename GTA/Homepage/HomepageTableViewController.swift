@@ -26,6 +26,7 @@ class HomepageTableViewController: UITableViewController {
         setUpTableView()
         tableView.accessibilityIdentifier = "HomeScreenTableView"
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -188,6 +189,22 @@ class HomepageTableViewController: UITableViewController {
         })
     }
     
+    @objc private func getGlobalAlertsIgnoringCache() {
+        dataProvider?.getGlobalAlertsIgnoringCache {[weak self] dataWasChanged, errorCode, error in
+            DispatchQueue.main.async {
+                if dataWasChanged, error == nil {
+                    if self?.tableView.dataHasChanged == true {
+                        self?.tableView.reloadData()
+                    } else {
+                        UIView.performWithoutAnimation {
+                            self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private func openOfficeSelectionModalScreen() {
         let officeLocation = OfficeLocationViewController()
         var statusBarHeight: CGFloat = 0.0
@@ -209,6 +226,42 @@ class HomepageTableViewController: UITableViewController {
         
         presentPanModal(panModalNavigationController)
     }
+    
+    private func openAlertScreen(for indexPath: IndexPath) {
+        guard let alertsData = dataProvider?.alertsData, indexPath.row < alertsData.count else { return }
+        let data = alertsData[indexPath.row]
+        let infoViewController = InfoViewController()
+        infoViewController.dataProvider = dataProvider
+        infoViewController.specialAlertData = data
+        infoViewController.infoType = .info
+        infoViewController.title = data.alertHeadline
+        self.navigationController?.pushViewController(infoViewController, animated: true)
+    }
+    
+    private func openOfficeScreen(for indexPath: IndexPath) {
+        guard let dataProvider = dataProvider, let selectedOffice = dataProvider.userOffice else { return }
+        let infoViewController = InfoViewController()
+        infoViewController.dataProvider = dataProvider
+        infoViewController.selectedOfficeData = selectedOffice
+        infoViewController.infoType = .office
+        infoViewController.selectedOfficeUIUpdateDelegate = self
+        infoViewController.title = selectedOffice.officeName
+        self.navigationController?.pushViewController(infoViewController, animated: true)
+    }
+    
+    private func openGTTeamScreen() {
+        let contactsViewController = GTTeamViewController()
+        contactsViewController.dataProvider = dataProvider
+        self.navigationController?.pushViewController(contactsViewController, animated: true)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+
+}
+
+extension HomepageTableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
@@ -331,38 +384,6 @@ class HomepageTableViewController: UITableViewController {
         }
     }
     
-    private func openAlertScreen(for indexPath: IndexPath) {
-        guard let alertsData = dataProvider?.alertsData, indexPath.row < alertsData.count else { return }
-        let data = alertsData[indexPath.row]
-        let infoViewController = InfoViewController()
-        infoViewController.dataProvider = dataProvider
-        infoViewController.specialAlertData = data
-        infoViewController.infoType = .info
-        infoViewController.title = data.alertHeadline
-        self.navigationController?.pushViewController(infoViewController, animated: true)
-    }
-    
-    private func openOfficeScreen(for indexPath: IndexPath) {
-        guard let dataProvider = dataProvider, let selectedOffice = dataProvider.userOffice else { return }
-        let infoViewController = InfoViewController()
-        infoViewController.dataProvider = dataProvider
-        infoViewController.selectedOfficeData = selectedOffice
-        infoViewController.infoType = .office
-        infoViewController.selectedOfficeUIUpdateDelegate = self
-        infoViewController.title = selectedOffice.officeName
-        self.navigationController?.pushViewController(infoViewController, animated: true)
-    }
-    
-    private func openGTTeamScreen() {
-        let contactsViewController = GTTeamViewController()
-        contactsViewController.dataProvider = dataProvider
-        self.navigationController?.pushViewController(contactsViewController, animated: true)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-
 }
 
 extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDelegate {
