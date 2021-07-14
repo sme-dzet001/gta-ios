@@ -27,9 +27,13 @@ class NotificationSettingsViewController: UIViewController {
         super.viewDidLoad()
         setUpTableView()
         setUpNavigationItem()
-        getNotificationPermision()
-        getCurrentPreferences()
         NotificationCenter.default.addObserver(self, selector: #selector(getNotificationPermision), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getCurrentPreferences()
+        getNotificationPermision()
     }
     
     private func getCurrentPreferences() {
