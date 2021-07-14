@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TeamChatUsersViewController" customModule="GTA" customModuleProvider="target">
             <connections>
@@ -20,16 +25,24 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team chat user % by Country" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eF2-GX-023">
+                    <rect key="frame" x="24" y="76" width="241.5" height="24"/>
+                    <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIP-lG-abm" customClass="HorizontalBarChartView" customModule="Charts">
-                    <rect key="frame" x="0.0" y="52" width="414" height="802"/>
+                    <rect key="frame" x="0.0" y="124" width="414" height="730"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="eF2-GX-023" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="9HB-kK-PFx"/>
                 <constraint firstItem="FIP-lG-abm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="AJL-v4-1Ks"/>
-                <constraint firstItem="FIP-lG-abm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="BIv-Ht-9sH"/>
+                <constraint firstItem="FIP-lG-abm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="80" id="BIv-Ht-9sH"/>
+                <constraint firstItem="eF2-GX-023" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="ERi-Xn-ASV"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FIP-lG-abm" secondAttribute="trailing" id="Smd-q0-paE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="FIP-lG-abm" secondAttribute="bottom" constant="8" id="UyP-VG-8Kq"/>
             </constraints>

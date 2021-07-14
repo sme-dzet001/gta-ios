@@ -45,7 +45,7 @@ class TeamChatUsersViewController: UIViewController {
         gridView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             gridView.leadingAnchor.constraint(equalTo: chartView.leadingAnchor, constant: chartView.xAxis.labelWidth + chartView.minOffset),
-            gridView.trailingAnchor.constraint(equalTo: chartView.trailingAnchor, constant: -32),
+            gridView.trailingAnchor.constraint(equalTo: chartView.trailingAnchor, constant: -40),
             gridView.topAnchor.constraint(equalTo: chartView.topAnchor, constant: 10),
             gridView.bottomAnchor.constraint(equalTo: chartView.bottomAnchor, constant: -10)
         ])

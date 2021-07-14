@@ -16,6 +16,8 @@ class ChartTableView : UITableView, UIGestureRecognizerDelegate {
 
 class UsageMetricsViewController: UIViewController {
     
+    @IBOutlet weak var tableView: ChartTableView!
+    
     private var dataProvider: UsageMetricsDataProvider = UsageMetricsDataProvider()
     
     deinit {
@@ -62,12 +64,24 @@ class UsageMetricsViewController: UIViewController {
         addChild(teamChatUsersVC)
         return cell
     }()
+    
+    private lazy var activeUsersByFuncChartCell: UITableViewCell = {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BarChartCell") as? BarChartCell else { return UITableViewCell() }
+        cell.setUpBarChartView()
+        return cell
+    }()
+    
+    private var chartCells: [UITableViewCell] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.barTintColor = .white
+        
+        tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
+        
+        chartCells = [activeUsersChartCell, activeUsersByFuncChartCell, teamChatUsersChartCell]
         
         setUpNavigationItem()
     }
@@ -102,7 +116,7 @@ class UsageMetricsViewController: UIViewController {
 
 extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return chartCells.count
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -110,12 +124,8 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
-            return teamChatUsersChartCell
-        default:
-            return UITableViewCell()
-        }
+        guard indexPath.row < chartCells.count else { return UITableViewCell() }
+        return chartCells[indexPath.row]
     }
     
     

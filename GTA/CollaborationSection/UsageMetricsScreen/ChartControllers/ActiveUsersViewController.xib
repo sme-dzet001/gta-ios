@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,12 +19,16 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActiveUsersViewController" customModule="GTA" customModuleProvider="target">
             <connections>
+                <outlet property="chartScrollViewLeading" destination="tUn-Gg-Uug" id="LOZ-SM-QGz"/>
+                <outlet property="chartScrollViewTrailing" destination="1ir-Fb-YIK" id="VQT-Yf-RAE"/>
                 <outlet property="chartView" destination="Zho-0m-qak" id="v5P-6y-dxX"/>
                 <outlet property="chartViewWidth" destination="Wv7-YC-AGY" id="H5e-bk-2wa"/>
+                <outlet property="maxValueLabel" destination="vKg-1h-0dZ" id="UHH-oW-E0Y"/>
                 <outlet property="percentLabel" destination="9tK-i9-6rO" id="Z8J-eD-dOS"/>
                 <outlet property="verticalAxisStackView" destination="DPE-10-hoZ" id="6ql-B0-sLR"/>
                 <outlet property="verticalAxisViewBottom" destination="RKQ-QF-FWx" id="7yY-ds-qYZ"/>
                 <outlet property="verticalAxisViewTop" destination="cAa-zT-AAL" id="g5Z-t5-GJe"/>
+                <outlet property="verticalAxisViewTrailing" destination="8UN-Fh-yAc" id="sh4-jS-cWk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -68,20 +72,6 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bq-fC-YTr" userLabel="Custom Vertical Axis View">
-                    <rect key="frame" x="0.0" y="124" width="50" height="704"/>
-                    <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="DPE-10-hoZ">
-                            <rect key="frame" x="0.0" y="0.0" width="50" height="704"/>
-                        </stackView>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="DPE-10-hoZ" firstAttribute="leading" secondItem="8bq-fC-YTr" secondAttribute="leading" id="NkG-99-K5n"/>
-                        <constraint firstAttribute="trailing" secondItem="DPE-10-hoZ" secondAttribute="trailing" id="jEn-qY-X3j"/>
-                        <constraint firstAttribute="bottom" secondItem="DPE-10-hoZ" secondAttribute="bottom" id="lpp-w4-4UV"/>
-                        <constraint firstItem="DPE-10-hoZ" firstAttribute="top" secondItem="8bq-fC-YTr" secondAttribute="top" id="pUd-KF-9eb"/>
-                    </constraints>
-                </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZQ-gB-GUS" customClass="ChartScrollView" customModule="GTA" customModuleProvider="target">
                     <rect key="frame" x="60" y="124" width="314" height="704"/>
                     <subviews>
@@ -104,12 +94,35 @@
                     <viewLayoutGuide key="contentLayoutGuide" id="Qad-9Y-FVE"/>
                     <viewLayoutGuide key="frameLayoutGuide" id="duc-24-wLx"/>
                 </scrollView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dTE-h0-Ec9">
+                    <rect key="frame" x="0.0" y="854" width="414" height="8"/>
+                    <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="8" id="Uqm-kh-Orc"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bq-fC-YTr" userLabel="Custom Vertical Axis View">
+                    <rect key="frame" x="0.0" y="124" width="50" height="704"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="DPE-10-hoZ">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="704"/>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="DPE-10-hoZ" firstAttribute="leading" secondItem="8bq-fC-YTr" secondAttribute="leading" id="NkG-99-K5n"/>
+                        <constraint firstAttribute="trailing" secondItem="DPE-10-hoZ" secondAttribute="trailing" id="jEn-qY-X3j"/>
+                        <constraint firstAttribute="bottom" secondItem="DPE-10-hoZ" secondAttribute="bottom" id="lpp-w4-4UV"/>
+                        <constraint firstItem="DPE-10-hoZ" firstAttribute="top" secondItem="8bq-fC-YTr" secondAttribute="top" id="pUd-KF-9eb"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="cqT-Nb-f4u" firstAttribute="centerY" secondItem="Zm3-GL-Usw" secondAttribute="centerY" id="1Ut-y2-D4b"/>
                 <constraint firstItem="kZQ-gB-GUS" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-40" id="1ir-Fb-YIK"/>
+                <constraint firstItem="dTE-h0-Ec9" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="3Ku-H4-Xh7"/>
                 <constraint firstItem="kZQ-gB-GUS" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" constant="-114" id="8I5-he-o5Y"/>
                 <constraint firstItem="8bq-fC-YTr" firstAttribute="trailing" secondItem="kZQ-gB-GUS" secondAttribute="leading" constant="-10" id="8UN-Fh-yAc"/>
                 <constraint firstItem="cqT-Nb-f4u" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="D9X-9z-qhN"/>
@@ -121,7 +134,9 @@
                 <constraint firstItem="cqT-Nb-f4u" firstAttribute="leading" secondItem="vKg-1h-0dZ" secondAttribute="trailing" constant="8" id="W4f-ZU-7wh"/>
                 <constraint firstItem="Zm3-GL-Usw" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="Xvp-QX-8aX"/>
                 <constraint firstItem="8bq-fC-YTr" firstAttribute="top" secondItem="kZQ-gB-GUS" secondAttribute="top" id="cAa-zT-AAL"/>
+                <constraint firstItem="dTE-h0-Ec9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fhm-Gx-8pV"/>
                 <constraint firstItem="kZQ-gB-GUS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="60" id="tUn-Gg-Uug"/>
+                <constraint firstItem="dTE-h0-Ec9" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="uW5-Hs-JVe"/>
                 <constraint firstItem="Zm3-GL-Usw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="yRh-wv-9rp"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="45.535714285714285"/>

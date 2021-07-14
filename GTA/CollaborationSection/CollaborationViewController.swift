@@ -168,7 +168,8 @@ class CollaborationViewController: UIViewController {
     }
     
     private func showUsageMetricsScreen() {
-        let usageMetricsVC = ChartsViewController()
+        //let usageMetricsVC = ChartsViewController()
+        let usageMetricsVC = UsageMetricsViewController()
         //usageMetricsVC.hidesBottomBarWhenPushed = true
         //self.tabBarController?.tabBar.isHidden = true
         navigationController?.pushViewController(usageMetricsVC, animated: true)
