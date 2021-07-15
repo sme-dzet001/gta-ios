@@ -13,6 +13,18 @@ struct TeamsByFunctionsDataEntry {
     var callCount: Int?
     var privateChatMessageCount: Int?
     var teamsChatMessageCount: Int?
+    
+    var formattedPeriod: String? {
+        let sourceDateFormatter = DateFormatter()
+        sourceDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        sourceDateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
+        if let period = refreshDate, let date = sourceDateFormatter.date(from: period) {
+            let targetDateFormatter = DateFormatter()
+            targetDateFormatter.dateFormat = "dd-MMM"
+            return targetDateFormatter.string(from: date)
+        }
+        return nil
+    }
 }
 
 struct ActiveUsersDataEntry {

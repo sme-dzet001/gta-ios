@@ -32,6 +32,20 @@
 		6513C9DC269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
 		6513C9DD269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
 		6513C9DE269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
+		6513CA04269F32FB0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA05269F32FB0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA06269F32FC0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA07269F32FC0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA08269F32FC0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA09269F32FC0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA0A269F32FC0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA1E269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA1F269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA20269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA21269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA22269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA23269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA24269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
 		65398BCC256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
 		65398BCD256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
 		65398BCE256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
@@ -1670,6 +1684,8 @@
 		54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamChatUsersViewController.xib; sourceTree = "<group>"; };
 		5F85A9BFD7B4F3349DA0E61A /* Pods_GTATests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTATests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamsByFunctionsViewController.xib; sourceTree = "<group>"; };
+		6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveUsersViewController.swift; sourceTree = "<group>"; };
+		6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsByFunctionsViewController.swift; sourceTree = "<group>"; };
 		65398BCB256D4C5E0039C24E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageMetricsViewController.swift; sourceTree = "<group>"; };
 		65437D092665387600B2F38A /* GTADev-pushTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GTADev-pushTest.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2081,7 +2097,9 @@
 			children = (
 				9F343A48269C4DFB0071362D /* ChartCells */,
 				658BEF77268FC63600D4FD2C /* LineChartViewController.swift */,
+				6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */,
 				658BEF78268FC63600D4FD2C /* ActiveUsersViewController.xib */,
+				6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */,
 				6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */,
 				54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */,
 				54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */,
@@ -4455,6 +4473,7 @@
 				65437C552665387600B2F38A /* AboutViewController.swift in Sources */,
 				65437C562665387600B2F38A /* WhatsNewViewController.swift in Sources */,
 				65437C572665387600B2F38A /* GlobalNewsResponses.swift in Sources */,
+				6513CA24269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				65437C582665387600B2F38A /* QuickHelpCell.swift in Sources */,
 				65437C592665387600B2F38A /* HomepageTableViewController.swift in Sources */,
 				65437C5A2665387600B2F38A /* AuthViewController.swift in Sources */,
@@ -4495,6 +4514,7 @@
 				65437C782665387600B2F38A /* Office365ViewController.swift in Sources */,
 				9F30284B2681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				65437C792665387600B2F38A /* AppsViewController.swift in Sources */,
+				6513CA0A269F32FC0046817F /* ActiveUsersViewController.swift in Sources */,
 				65437C7A2665387600B2F38A /* AnimatedCollectionViewLayout.swift in Sources */,
 				65437C7B2665387600B2F38A /* ServiceDeskContactCell.swift in Sources */,
 				65437C7C2665387600B2F38A /* GeneralDataProvider.swift in Sources */,
@@ -4593,6 +4613,7 @@
 				65437E23266539BF00B2F38A /* GlobalNewsResponses.swift in Sources */,
 				65437E24266539BF00B2F38A /* WhatsNewViewController.swift in Sources */,
 				65437E25266539BF00B2F38A /* QuickHelpCell.swift in Sources */,
+				6513CA22269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				65437E26266539BF00B2F38A /* AppsTableViewHeader.swift in Sources */,
 				65437E27266539BF00B2F38A /* AuthViewController.swift in Sources */,
 				65437E28266539BF00B2F38A /* InfoArticleCell.swift in Sources */,
@@ -4633,6 +4654,7 @@
 				65437E46266539BF00B2F38A /* TicketDetailsMessageCell.swift in Sources */,
 				9F3028492681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				65437E47266539BF00B2F38A /* AnimatedCollectionViewLayout.swift in Sources */,
+				6513CA08269F32FC0046817F /* ActiveUsersViewController.swift in Sources */,
 				65437E48266539BF00B2F38A /* ServiceDeskContactCell.swift in Sources */,
 				65437E49266539BF00B2F38A /* AboutInfoCell.swift in Sources */,
 				65437E4A266539BF00B2F38A /* GeneralDataProvider.swift in Sources */,
@@ -4731,6 +4753,7 @@
 				65437F902665568000B2F38A /* AboutViewController.swift in Sources */,
 				65437F912665568000B2F38A /* WhatsNewViewController.swift in Sources */,
 				65437F922665568000B2F38A /* GlobalNewsResponses.swift in Sources */,
+				6513CA23269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				65437F932665568000B2F38A /* QuickHelpCell.swift in Sources */,
 				65437F942665568000B2F38A /* HomepageTableViewController.swift in Sources */,
 				65437F952665568000B2F38A /* AuthViewController.swift in Sources */,
@@ -4771,6 +4794,7 @@
 				65437FB32665568000B2F38A /* Office365ViewController.swift in Sources */,
 				9F30284A2681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				65437FB42665568000B2F38A /* AppsViewController.swift in Sources */,
+				6513CA09269F32FC0046817F /* ActiveUsersViewController.swift in Sources */,
 				65437FB52665568000B2F38A /* AnimatedCollectionViewLayout.swift in Sources */,
 				65437FB62665568000B2F38A /* ServiceDeskContactCell.swift in Sources */,
 				65437FB72665568000B2F38A /* GeneralDataProvider.swift in Sources */,
@@ -4869,6 +4893,7 @@
 				C9D035992578095A0068441F /* GlobalNewsResponses.swift in Sources */,
 				9F643550261B1C9F000D94A4 /* WhatsNewViewController.swift in Sources */,
 				C993A2C62576686500F9146A /* QuickHelpCell.swift in Sources */,
+				6513CA1E269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F9D9CB52588C59600DC4231 /* AuthViewController.swift in Sources */,
 				9F1620DA2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
@@ -4909,6 +4934,7 @@
 				9FF0542F2567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				9F3028452681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
+				6513CA04269F32FB0046817F /* ActiveUsersViewController.swift in Sources */,
 				C9D035DE2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				9F2C823C26552A29004407B4 /* GeneralDataProvider.swift in Sources */,
@@ -4996,6 +5022,7 @@
 				9F33F647260A3C4000470A47 /* CollaborationDataProvider.swift in Sources */,
 				9F3027E62681D228009A3096 /* ProductionAlertCounterCell.swift in Sources */,
 				9F33F648260A3C4000470A47 /* AppContactCell.swift in Sources */,
+				6513CA21269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				9F3AC94C264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */,
 				9F33F649260A3C4000470A47 /* HelpDeskDataProvider.swift in Sources */,
 				9F33F64A260A3C4000470A47 /* SessionExpiredHandler.swift in Sources */,
@@ -5060,6 +5087,7 @@
 				9F643565261B1E88000D94A4 /* WhatsNewCell.swift in Sources */,
 				9F33F678260A3C4000470A47 /* Utils.swift in Sources */,
 				9F343A3D269C4AA00071362D /* BarChartCell.swift in Sources */,
+				6513CA07269F32FC0046817F /* ActiveUsersViewController.swift in Sources */,
 				9F33F679260A3C4000470A47 /* ApplicationCell.swift in Sources */,
 				9F33F67A260A3C4000470A47 /* Office365ViewController.swift in Sources */,
 				9F33F67B260A3C4000470A47 /* AppsViewController.swift in Sources */,
@@ -5162,6 +5190,7 @@
 				C93FCF0725648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F643551261B1C9F000D94A4 /* WhatsNewViewController.swift in Sources */,
 				C9D0359A2578095A0068441F /* GlobalNewsResponses.swift in Sources */,
+				6513CA1F269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				C993A2C72576686500F9146A /* QuickHelpCell.swift in Sources */,
 				9F36D4662562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F9D9CB62588C59600DC4231 /* AuthViewController.swift in Sources */,
@@ -5202,6 +5231,7 @@
 				9F35861E25FD23FF0003658D /* Office365ViewController.swift in Sources */,
 				9F3028462681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				6513CA05269F32FB0046817F /* ActiveUsersViewController.swift in Sources */,
 				9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035DF2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				9F2C823D26552A29004407B4 /* GeneralDataProvider.swift in Sources */,
@@ -5300,6 +5330,7 @@
 				C93FCF0825648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F643552261B1C9F000D94A4 /* WhatsNewViewController.swift in Sources */,
 				C9D0359B2578095A0068441F /* GlobalNewsResponses.swift in Sources */,
+				6513CA20269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				C993A2C82576686500F9146A /* QuickHelpCell.swift in Sources */,
 				9F36D4672562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F9D9CB72588C59600DC4231 /* AuthViewController.swift in Sources */,
@@ -5340,6 +5371,7 @@
 				9F35861F25FD23FF0003658D /* Office365ViewController.swift in Sources */,
 				9F3028472681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				6513CA06269F32FC0046817F /* ActiveUsersViewController.swift in Sources */,
 				9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035E02579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				9F2C823E26552A29004407B4 /* GeneralDataProvider.swift in Sources */,

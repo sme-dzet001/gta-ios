@@ -27,12 +27,19 @@ class UsageMetricsViewController: UIViewController {
     deinit {
         activeUsersVC.removeFromParent()
         teamChatUsersVC.removeFromParent()
+        teamsByFunctionsVC.removeFromParent()
     }
     
-    private lazy var activeUsersVC: LineChartViewController = {
-        let activeUsersVC = LineChartViewController(nibName: "ActiveUsersViewController", bundle: nil)
+    private lazy var activeUsersVC: ActiveUsersViewController = {
+        let activeUsersVC = ActiveUsersViewController(nibName: "ActiveUsersViewController", bundle: nil)
         activeUsersVC.dataProvider = dataProvider
         return activeUsersVC
+    }()
+    
+    private lazy var teamsByFunctionsVC: TeamsByFunctionsViewController = {
+        let teamsByFunctionsVC = TeamsByFunctionsViewController(nibName: "TeamsByFunctionsViewController", bundle: nil)
+        teamsByFunctionsVC.dataProvider = dataProvider
+        return teamsByFunctionsVC
     }()
     
     private lazy var teamChatUsersVC: TeamChatUsersViewController = {
@@ -52,6 +59,20 @@ class UsageMetricsViewController: UIViewController {
             activeUsersVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
         ])
         addChild(activeUsersVC)
+        return cell
+    }()
+    
+    private lazy var teamsByFunctionsChartCell: UITableViewCell = {
+        let cell = UITableViewCell()
+        teamsByFunctionsVC.view.translatesAutoresizingMaskIntoConstraints = false
+        cell.contentView.addSubview(teamsByFunctionsVC.view)
+        NSLayoutConstraint.activate([
+            teamsByFunctionsVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            teamsByFunctionsVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            teamsByFunctionsVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            teamsByFunctionsVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
+        ])
+        addChild(teamsByFunctionsVC)
         return cell
     }()
     
@@ -87,13 +108,14 @@ class UsageMetricsViewController: UIViewController {
         
         tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
         
-        chartCells = [activeUsersChartCell, activeUsersByFuncChartCell, teamChatUsersChartCell]
+        chartCells = [activeUsersChartCell, activeUsersByFuncChartCell, teamChatUsersChartCell, teamsByFunctionsChartCell]
         
         chartDimensionsDict[0] = activeUsersVC
         if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
             chartDimensionsDict[1] = barChartCell
         }
         chartDimensionsDict[2] = teamChatUsersVC
+        chartDimensionsDict[3] = teamsByFunctionsVC
         
         setUpNavigationItem()
     }

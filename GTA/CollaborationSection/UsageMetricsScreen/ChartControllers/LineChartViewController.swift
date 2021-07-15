@@ -14,7 +14,7 @@ class ChartScrollView : UIScrollView, UIGestureRecognizerDelegate {
     }
 }
 
-class ActiveUsersXValueFormatter: NSObject, IAxisValueFormatter {
+class LineChartXValueFormatter: NSObject, IAxisValueFormatter {
     var xLabels: [String] = []
     
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
@@ -32,12 +32,15 @@ class LineChartViewController: UIViewController {
     @IBOutlet weak var maxValueLabel: UILabel!
     @IBOutlet weak var percentLabel: UILabel!
     
+    @IBOutlet weak var blurViewLeft: UIView!
+    @IBOutlet weak var blurViewRight: UIView!
+    
     @IBOutlet weak var chartViewWidth: NSLayoutConstraint!
+    @IBOutlet weak var chartScrollView: UIScrollView!
     @IBOutlet weak var chartScrollViewTrailing: NSLayoutConstraint!
     @IBOutlet weak var chartScrollViewLeading: NSLayoutConstraint!
     @IBOutlet weak var verticalAxisViewTop: NSLayoutConstraint!
     @IBOutlet weak var verticalAxisViewBottom: NSLayoutConstraint!
-    @IBOutlet weak var verticalAxisViewTrailing: NSLayoutConstraint!
     
     let chartViewGridWidth: CGFloat = 64
     let lineColor = UIColor(hex: 0x428DF7)
@@ -50,24 +53,85 @@ class LineChartViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setupChartView()
         updateLabels()
         updateChartData()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateScrollView()
+    }
+    
     var lineChartData: [(period: String?, value: Int?)] {
-        return dataProvider?.activeUsersData.map({ return (period: $0.period, value: $0.value) }) ?? []
+        return []
+    }
+    
+    func updateBlurViews() {
+        blurViewLeft.isHidden = !(chartScrollView.contentOffset.x > 0)
+        blurViewRight.isHidden = !(chartScrollView.contentOffset.x < (chartViewWidth.constant - (UIScreen.main.bounds.width - chartScrollViewLeading.constant + chartScrollViewTrailing.constant)))
+    }
+    
+    func updateScrollView() {
+        chartScrollView.contentOffset = CGPoint(x: chartViewWidth.constant - (UIScreen.main.bounds.width - chartScrollViewLeading.constant + chartScrollViewTrailing.constant), y: 0)
     }
     
     func updateLabels() {
-        guard !lineChartData.isEmpty else { return }
+        guard lineChartData.count > 1 else {
+            maxValueLabel.text = ""
+            percentLabel.text = ""
+            return
+        }
         let maxValue = lineChartData.map({ return $0.value ?? 0 }).max() ?? 0
         let maxValueNumberFormatter = NumberFormatter()
         maxValueNumberFormatter.numberStyle = .decimal
         maxValueLabel.text = maxValueNumberFormatter.string(from: NSNumber(value: maxValue))?.replacingOccurrences(of: ",", with: " ")
+        
+        let lastValue = Double(lineChartData.map({ return $0.value ?? 0 })[lineChartData.count - 1])
+        let previousToLastValue = Double(lineChartData.map({ return $0.value ?? 0 })[lineChartData.count - 2])
+        if lastValue != 0 {
+            percentLabel.text = String(format: "%.1f", locale: Locale.current, Double(100) * previousToLastValue / lastValue).replacingOccurrences(of: ".0", with: "") + "%"
+        }
+    }
+    
+    var xValueFormatter: LineChartXValueFormatter {
+        let xValueFormatter = LineChartXValueFormatter()
+        xValueFormatter.xLabels = lineChartData.map( { ($0.period ?? "") } )
+        return xValueFormatter
+    }
+    
+    func setupChartView() {
+        //Common chart formatting
+        
+        chartView.rightAxis.enabled = false
+        chartView.legend.enabled = false
+        
+        setLabelsFont(labelFont: ChartsFormatting.labelFont)
+        setLabelsTextColor(labelsTextColor: ChartsFormatting.labelTextColor)
+        setGridColor(gridColor: ChartsFormatting.gridColor)
+        setGridLineWidth(gridLineWidth: ChartsFormatting.gridLineWidth)
+        
+        //Horizontal axis formatting
+        
+        chartView.xAxis.drawAxisLineEnabled = false
+        chartView.xAxis.labelPosition = .bottom
+        chartView.xAxis.valueFormatter = xValueFormatter
+        
+        //Vertical axis formatting
+        
+        chartView.leftAxis.drawAxisLineEnabled = false
+        chartView.leftAxis.drawLabelsEnabled = false
+        
+        chartView.leftAxis.spaceTop = 0
+        chartView.leftAxis.spaceBottom = 0
     }
     
     func updateChartData() {
         guard !lineChartData.isEmpty else { return }
+        
+        chartView.clearValues()
+        chartView.leftAxis.resetCustomAxisMin()
+        chartView.leftAxis.resetCustomAxisMax()
         
         chartViewWidth.constant = CGFloat(chartViewGridWidth) * CGFloat(lineChartData.count)
         
@@ -89,59 +153,38 @@ class LineChartViewController: UIViewController {
 
         chartView.data = chartData
         
-        //Common chart formatting
-        
-        chartView.rightAxis.enabled = false
-        chartView.legend.enabled = false
-        
-        setLabelsFont(labelFont: ChartsFormatting.labelFont)
-        setLabelsTextColor(labelsTextColor: ChartsFormatting.labelTextColor)
-        setGridColor(gridColor: ChartsFormatting.gridColor)
-        setGridLineWidth(gridLineWidth: ChartsFormatting.gridLineWidth)
-        
         //Horizontal axis formatting
         
-        chartView.xAxis.drawAxisLineEnabled = false
-        chartView.xAxis.labelPosition = .bottom
-        let xValueFormatter = ActiveUsersXValueFormatter()
-        xValueFormatter.xLabels = lineChartData.map( { ($0.period ?? "") } )
-        chartView.xAxis.valueFormatter = xValueFormatter
-        chartView.xAxis.setLabelCount(xValueFormatter.xLabels.count, force: true)
+        chartView.xAxis.setLabelCount(lineChartData.count, force: true)
         
         //chartView.setVisibleXRangeMaximum(Double(view.frame.size.width / chartViewGridWidth))
         
         //Vertical axis formatting
         
-        chartView.leftAxis.drawAxisLineEnabled = false
-        chartView.leftAxis.drawLabelsEnabled = false
+        let minYValue = lineChartData.map({ return $0.value ?? 0 }).min() ?? 0
         
-        let minYValue = chartView.leftAxis.axisMinimum
-        
-        var minYFactor = Int(minYValue) / 1000
-        if Double(minYFactor) * 1000 > minYValue {
+        var minYFactor = minYValue / 1000
+        if minYFactor * 1000 > minYValue {
             minYFactor -= 1
         }
         
         chartView.leftAxis.axisMinimum = Double(minYFactor) * 1000
         
-        let maxYValue = chartView.leftAxis.axisMaximum
+        let maxYValue = lineChartData.map({ return $0.value ?? 0 }).max() ?? 0
         
-        var maxYFactor = Int(maxYValue) / 1000
-        if Double(maxYFactor) * 1000 < maxYValue {
+        var maxYFactor = maxYValue / 1000
+        if maxYFactor * 1000 < maxYValue {
             maxYFactor += 1
         }
         
         chartView.leftAxis.axisMaximum = Double(maxYFactor) * 1000
         
-        chartView.leftAxis.spaceTop = 0
-        chartView.leftAxis.spaceBottom = 0
-        
-        let verticalLabelsCount = maxYFactor - minYFactor + 1
+        let verticalLabelsCount = 3//maxYFactor - minYFactor + 1
         chartView.leftAxis.setLabelCount(verticalLabelsCount, force: true)
         
         var labels: [String] = []
-        for i in (minYFactor..<(maxYFactor + 1)) {
-            labels.insert(String(format: "%.1fk", locale: Locale.current, Double(i)).replacingOccurrences(of: ".0", with: ""), at: 0)
+        for yAxisValue in [Double(minYFactor), (Double(maxYFactor) + Double(minYFactor)) / 2, Double(maxYFactor)] {
+            labels.insert(String(format: "%.1fk", locale: Locale.current, yAxisValue).replacingOccurrences(of: ".0", with: ""), at: 0)
         }
         
         setupLeftAxisCustomView(labels: labels, labelsFont: ChartsFormatting.labelFont, labelsTextColor: ChartsFormatting.labelTextColor)
@@ -155,6 +198,10 @@ class LineChartViewController: UIViewController {
         let extraOffsetVertical = labelsFont.lineHeight / 2.5 + chartView.leftAxis.yOffset
         verticalAxisViewTop.constant = extraOffsetVertical
         verticalAxisViewBottom.constant = -chartView.xAxis.labelHeight
+        for leftAxisLabel in verticalAxisStackView.arrangedSubviews {
+            verticalAxisStackView.removeArrangedSubview(leftAxisLabel)
+            leftAxisLabel.removeFromSuperview()
+        }
         for i in (0..<labels.count) {
             let label = labels[i]
             let leftAxisLabel = UILabel()
@@ -168,14 +215,35 @@ class LineChartViewController: UIViewController {
     
     func setUpBlurViews(firstLabel: String, lastLabel: String) {
         let extraSizeRight = (lastLabel as NSString).size(withAttributes: [.font : ChartsFormatting.labelFont as Any])
-        chartScrollViewTrailing.constant += extraSizeRight.width / 2
+        chartScrollViewTrailing.constant = CGFloat(-40) + extraSizeRight.width / 2
         chartView.extraRightOffset = extraSizeRight.width / 2
         
         let extraSizeLeft = (firstLabel as NSString).size(withAttributes: [.font : ChartsFormatting.labelFont as Any])
-        chartScrollViewLeading.constant -= extraSizeLeft.width / 2
+        chartScrollViewLeading.constant = CGFloat(60) - extraSizeLeft.width / 2
         chartView.extraLeftOffset = extraSizeLeft.width / 2
         
-        verticalAxisViewTrailing.constant += extraSizeLeft.width / 2
+        addBlurViewLeft()
+        addBlurViewRight()
+        
+        updateBlurViews()
+    }
+    
+    func addBlurViewLeft() {
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.frame = blurViewLeft.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(0.3).cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
+        gradientMaskLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+        blurViewLeft.layer.mask = gradientMaskLayer
+    }
+    
+    func addBlurViewRight() {
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.frame = blurViewRight.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(0.3).cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientMaskLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
+        blurViewRight.layer.mask = gradientMaskLayer
     }
 
     func setLabelsFont(labelFont: UIFont?) {
@@ -211,8 +279,8 @@ class LineChartViewController: UIViewController {
 
 }
 
-extension LineChartViewController: ChartDimensions {
-    var optimalHeight: CGFloat {
-        return 294
+extension LineChartViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        updateBlurViews()
     }
 }
