@@ -213,6 +213,7 @@ class AppsViewController: UIViewController {
         //guard let targetAppData = dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) else { return }
         guard let productionAlertId = alertData["production_alert_id"] as? String else { return }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        UIApplication.shared.applicationIconBadgeNumber = 0
         //dataProvider.activeProductionAlertId = productionAlertId
         //dataProvider.activeProductionAlertAppName = appName
         appDelegate.dismissPanModalIfPresented { [weak self] in
