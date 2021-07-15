@@ -40,8 +40,7 @@ class NotificationSettingsViewController: UIViewController {
         dataProvider?.getCurrentPreferences(completion: {[weak self] code, error in
             if error == nil && code == 200 {
                 DispatchQueue.main.async {
-                    self?.delegate?.notificationStateUpdatedDelegate(state: self?.isEmergencySwitchOn ?? false, type: .emergencyOutageNotifications)
-                    self?.delegate?.notificationStateUpdatedDelegate(state: self?.isProductionAlertSwitchOn ?? false, type: .productionAlertsNotifications)
+                    self?.tableView.reloadData()
                 }
             }
         })
@@ -56,8 +55,9 @@ class NotificationSettingsViewController: UIViewController {
                 self?.isNotificationAuthorized = true
             }
             DispatchQueue.main.async {
-                self?.delegate?.notificationStateUpdatedDelegate(state: self?.isEmergencySwitchOn ?? false, type: .emergencyOutageNotifications)
-                self?.delegate?.notificationStateUpdatedDelegate(state: self?.isProductionAlertSwitchOn ?? false, type: .productionAlertsNotifications)
+                //self?.delegate?.notificationStateUpdatedDelegate(state: self?.isEmergencySwitchOn ?? false, type: .emergencyOutageNotifications)
+                self?.tableView.reloadData()
+               // self?.delegate?.notificationStateUpdatedDelegate(isNotificationAuthorized: self?.isNotificationAuthorized ?? false)
             }
         }
     }
@@ -97,11 +97,11 @@ extension NotificationSettingsViewController: UITableViewDelegate, UITableViewDa
         switch indexPath.row {
         case 0:
             cell?.label.text = "Emergency Outage Notifications"
-            cell?.switchControl.isOn = isNotificationAuthorized ? Preferences.allowEmergencyOutageNotifications : false
+            cell?.switchControl.setOn(isEmergencySwitchOn, animated: true)//isOn = isEmergencySwitchOn
             cell?.switchControl.switchNotificationsType = .emergencyOutageNotifications
         default:
             cell?.label.text = "Production Alerts Notifications"
-            cell?.switchControl.isOn = isNotificationAuthorized ? Preferences.allowProductionAlertsNotifications : false
+            cell?.switchControl.setOn(isProductionAlertSwitchOn, animated: true) //isOn = isProductionAlertSwitchOn
             cell?.switchControl.switchNotificationsType = .productionAlertsNotifications
         }
         cell?.switchControl.switchStateChangedDelegate = self
@@ -156,5 +156,5 @@ extension NotificationSettingsViewController: SwitchStateChangedDelegate {
 }
 
 protocol NotificationStateUpdatedDelegate: AnyObject {
-    func notificationStateUpdatedDelegate(state: Bool, type: NotificationsType)
+    func notificationStateUpdatedDelegate(isNotificationAuthorized: Bool)
 }
