@@ -20,7 +20,16 @@ class HomepageTableViewController: UITableViewController {
     weak var showModalDelegate: ShowGlobalAlertModalDelegate?
     var dataSource: [HomepageCellData] = []
     private var lastUpdateDate: Date?
-    
+    private var emergencyOutageLoaded: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                if self.navigationController?.topViewController is HomepageViewController, self.emergencyOutageLoaded {
+                    UIApplication.shared.applicationIconBadgeNumber = 0
+                }
+            }
+        }
+    }
+     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
@@ -31,6 +40,10 @@ class HomepageTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if emergencyOutageLoaded {
+            emergencyOutageLoaded = false
+            UIApplication.shared.applicationIconBadgeNumber = 0
+        }
         getGlobalAlerts()
         dataProvider?.officeSelectionDelegate = self
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
@@ -163,10 +176,10 @@ class HomepageTableViewController: UITableViewController {
     }
     
     @objc private func getGlobalAlerts() {
-        dataProvider?.getGlobalAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
+        dataProvider?.getGlobalAlerts(completion: {[weak self] isFromCache, dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
-                UIApplication.shared.applicationIconBadgeNumber = 0
                 if error == nil && errorCode == 200 {
+                    self?.emergencyOutageLoaded = dataWasChanged && !isFromCache
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()
                     } else {
@@ -190,10 +203,10 @@ class HomepageTableViewController: UITableViewController {
     }
     
     @objc private func getGlobalAlertsIgnoringCache() {
-        dataProvider?.getGlobalAlertsIgnoringCache {[weak self] dataWasChanged, errorCode, error in
+        dataProvider?.getGlobalAlertsIgnoringCache {[weak self] _, dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
-                UIApplication.shared.applicationIconBadgeNumber = 0
                 if dataWasChanged, error == nil {
+                    self?.emergencyOutageLoaded = true
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()
                     } else {
