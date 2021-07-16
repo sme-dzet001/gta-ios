@@ -22,8 +22,8 @@ class UsageMetricsViewController: UIViewController {
     
     @IBOutlet weak var tableView: ChartTableView!
     
-    private var dataProvider: UsageMetricsDataProvider = UsageMetricsDataProvider()
-    private var collaborationDataProvider: CollaborationDataProvider = CollaborationDataProvider()
+    //private var dataProvider: UsageMetricsDataProvider = UsageMetricsDataProvider()
+    var dataProvider: CollaborationDataProvider?
     
     deinit {
         activeUsersVC.removeFromParent()
@@ -33,19 +33,19 @@ class UsageMetricsViewController: UIViewController {
     
     private lazy var activeUsersVC: ActiveUsersViewController = {
         let activeUsersVC = ActiveUsersViewController(nibName: "ActiveUsersViewController", bundle: nil)
-        activeUsersVC.dataProvider = dataProvider
+        //activeUsersVC.dataProvider = dataProvider
         return activeUsersVC
     }()
     
     private lazy var teamsByFunctionsVC: TeamsByFunctionsViewController = {
         let teamsByFunctionsVC = TeamsByFunctionsViewController(nibName: "TeamsByFunctionsViewController", bundle: nil)
-        teamsByFunctionsVC.dataProvider = dataProvider
+        //teamsByFunctionsVC.dataProvider = dataProvider
         return teamsByFunctionsVC
     }()
     
     private lazy var teamChatUsersVC: TeamChatUsersViewController = {
         let teamChatUsersVC = TeamChatUsersViewController()
-        teamChatUsersVC.dataProvider = dataProvider
+        //teamChatUsersVC.dataProvider = dataProvider
         return teamChatUsersVC
     }()
     
@@ -93,7 +93,7 @@ class UsageMetricsViewController: UIViewController {
     
     private lazy var activeUsersByFuncChartCell: UITableViewCell = {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BarChartCell") as? BarChartCell else { return UITableViewCell() }
-        cell.setUpBarChartView(with: collaborationDataProvider.verticalChartData)
+        cell.setUpBarChartView(with: dataProvider.verticalChartData)
         return cell
     }()
     
@@ -121,9 +121,11 @@ class UsageMetricsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collaborationDataProvider.getUsageMetrics {[weak self] _, _, _ in
+        dataProvider.getUsageMetrics {[weak self] dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
-                self?.reloadData()
+                if dataWasChanged {
+                    self?.reloadData()
+                }
             }
         }
     }

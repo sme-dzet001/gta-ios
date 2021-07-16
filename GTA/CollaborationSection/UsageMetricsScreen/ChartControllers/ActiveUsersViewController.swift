@@ -12,6 +12,8 @@ class ActiveUsersViewController: LineChartViewController {
     override var lineChartData: [(period: String?, value: Int?)] {
         return dataProvider?.activeUsersData.map({ return (period: $0.period, value: $0.value) }) ?? []
     }
+    
+    var chartData: ChartStructure?
 }
 
 extension ActiveUsersViewController: ChartDimensions {

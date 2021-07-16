@@ -24,7 +24,7 @@ class CollaborationDataProvider {
     private(set) var horizontalChartData: ChartStructure?
     private(set) var verticalChartData: ChartStructure?
     private(set) var activeUsersLineChartData: ChartStructure?
-    private(set) var teamsByFunctionsLineChartData: [String : ChartStructure]?
+    private(set) var teamsByFunctionsLineChartData: [String : [ChartStructure]]?
     
     
     // MARK: - Collaboration details handling
@@ -497,7 +497,7 @@ class CollaborationDataProvider {
 //                detailsData?.data?[appName]??.data?.rows?[index].fullImageUrl = url
 //            }
 //        }
-        var dataWasChanged: Bool = false
+        var dataWasChanged: Bool = true
 //        if detailsData?.data?.first?.value?.data?.rows != self.collaborationAppDetailsRows {
 //            if detailsData?.data?.first?.value?.data?.rows == nil && self.collaborationAppDetailsRows != nil {
 //            } else {
@@ -521,10 +521,8 @@ class CollaborationDataProvider {
     }
     
     private func fillHorizontalChartData(for rows: [CollaborationMetricsRow?]) {
-        let titles = rows.compactMap({$0?.chartTitle}).removeDuplicates()
-        for title in titles {
-            
-        }
+        let title = rows.compactMap({$0?.chartTitle}).first ?? ""
+        horizontalChartData = ChartStructure(title: title, values: rows.compactMap({$0?.value}), legends: rows.compactMap({$0?.legend}))
     }
     
     private func fillVerticalChartData(for rows: [CollaborationMetricsRow?]) {
@@ -538,15 +536,13 @@ class CollaborationDataProvider {
         for chartSubtitle in chartSubtitles {
             let legends = rows.compactMap({$0?.legend})
             let values = rows.compactMap({$0?.value})
-            teamsByFunctionsLineChartData?[chartSubtitle] = ChartStructure(title: title, values: values, legends: legends)
+            teamsByFunctionsLineChartData?[title]?.append(ChartStructure(title: chartSubtitle, values: values, legends: legends))
         }
     }
     
     private func fillActiveUsersLineChartData(for rows: [CollaborationMetricsRow?]) {
-        let chartSubtitles = rows.compactMap({$0?.chartSubtitle}).removeDuplicates()
-        for chartSubtitle in chartSubtitles {
-            
-        }
+        let title = rows.compactMap({$0?.chartTitle}).first ?? ""
+        activeUsersLineChartData = ChartStructure(title: title, values: rows.compactMap({$0?.value}), legends: rows.compactMap({$0?.legend}))
     }
     
     // MARK:- Additional methods
