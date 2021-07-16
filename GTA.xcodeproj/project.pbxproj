@@ -1491,6 +1491,10 @@
 		9FF0548125681FCD0071E596 /* SecondSendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */; };
 		9FF0548225681FCD0071E596 /* SecondSendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */; };
 		9FF0548325681FCD0071E596 /* SecondSendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */; };
+		9FFB81A526A1E26800674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
+		9FFB81A626A1E26A00674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
+		9FFB81A726A1E26B00674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
+		9FFB81A826A1E26C00674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
 		9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		9FFD5F102565A1F900B6A65C /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		B91515CADDA8F4D79221D7D3 /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */; };
@@ -3493,6 +3497,7 @@
 				65437E86266539BF00B2F38A /* AuthViewController.xib in Resources */,
 				65437E87266539BF00B2F38A /* ApplicationStatusViewController.xib in Resources */,
 				9F3028342681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
+				9FFB81A726A1E26B00674872 /* UsageMetricsViewController.xib in Resources */,
 				65437E88266539BF00B2F38A /* CollaborationCounterCell.xib in Resources */,
 				65437E89266539BF00B2F38A /* TicketDetailsMessageCell.xib in Resources */,
 				658BEF84268FC63700D4FD2C /* ActiveUsersViewController.xib in Resources */,
@@ -3600,6 +3605,7 @@
 				65437FF32665568000B2F38A /* SF-Pro-Display-Light.ttf in Resources */,
 				65437FF42665568000B2F38A /* ApplicationCell.xib in Resources */,
 				9F3028352681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
+				9FFB81A826A1E26C00674872 /* UsageMetricsViewController.xib in Resources */,
 				65437FF52665568000B2F38A /* CollaborationCounterCell.xib in Resources */,
 				65437FF62665568000B2F38A /* SF-Pro-Text-Semibold.ttf in Resources */,
 				658BEF85268FC63700D4FD2C /* ActiveUsersViewController.xib in Resources */,
@@ -3707,6 +3713,7 @@
 				9F9D9CB82588C59600DC4231 /* AuthViewController.xib in Resources */,
 				9F895B12255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9F3028302681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
+				9FFB81A626A1E26A00674872 /* UsageMetricsViewController.xib in Resources */,
 				9F6435CF261F2077000D94A4 /* CollaborationCounterCell.xib in Resources */,
 				9FF054322567E1D80071E596 /* TicketDetailsMessageCell.xib in Resources */,
 				658BEF80268FC63600D4FD2C /* ActiveUsersViewController.xib in Resources */,
@@ -3937,6 +3944,7 @@
 				9F36D43D2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F895AEB255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F3028312681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
+				9FFB81A526A1E26800674872 /* UsageMetricsViewController.xib in Resources */,
 				9F6435D0261F2077000D94A4 /* CollaborationCounterCell.xib in Resources */,
 				9F36D4342562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */,
 				658BEF81268FC63600D4FD2C /* ActiveUsersViewController.xib in Resources */,
