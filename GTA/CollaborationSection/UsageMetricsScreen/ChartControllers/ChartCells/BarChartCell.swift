@@ -17,12 +17,12 @@ class BarChartCell: UITableViewCell {
         // Initialization code
     }
     
-    func setUpBarChartView(with data: [BarChartDataEntry]? = nil) {
-        let yValues: [BarChartDataEntry] = getHardcodeValues()
+    func setUpBarChartView(with chartStructure: ChartStructure?) {
+        guard let chartData = chartStructure else { return }
+        let yValues: [BarChartDataEntry] = getValues(with: chartData.values)
         let set = BarChartDataSet(entries: yValues, label: nil)
         set.drawIconsEnabled = true
         set.colors = getBarColors()
-//        set.stackLabels = ["Meeting", "Call", "Private Chat", "Team Chat"]
         let data = BarChartData(dataSet: set)
         data.setDrawValues(false)
         setUpAxis()
@@ -30,7 +30,7 @@ class BarChartCell: UITableViewCell {
         barChartView.data = data
         barChartView.extraBottomOffset = 13
         //barChartView.delegate = self
-        let stackLabels = ["Meeting", "Call", "Private Chat", "Team Chat"]
+        let stackLabels = chartData.legends
         setUpChartLegend(for: yValues.count, labels: stackLabels)
     }
     
@@ -59,9 +59,9 @@ class BarChartCell: UITableViewCell {
         
     }
     
-    private func getHardcodeValues() -> [BarChartDataEntry] {
+    private func getValues(with data: [Float]) -> [BarChartDataEntry] {
         var x: Double = 0
-        let values = [Double(5293), Double(4866), Double(5204), Double(1112)]
+        let values = data.compactMap({Double($0)}) //data.forEach({Double($0)})// [Double(5293), Double(4866), Double(5204), Double(1112)]
         var yValues: [BarChartDataEntry] = []
         for value in values {
             yValues.append(BarChartDataEntry(x: x, yValues: [value], icon: nil))
@@ -88,10 +88,8 @@ class BarChartCell: UITableViewCell {
 
     private func getBarColors() -> [UIColor]{
         // hardcode
-        return [UIColor(red: 66.0 / 255.0, green: 141.0 / 255.0, blue: 247.0 / 255.0, alpha: 1.0), UIColor(red: 106.0 / 255.0, green: 26.0 / 255.0, blue: 128.0 / 255.0, alpha: 1.0), UIColor(red: 184.0 / 255.0, green: 73.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0), UIColor(red: 240.0 / 255.0, green: 156.0 / 255.0, blue: 105.0 / 255.0, alpha: 1.0)]
+        return [UIColor(red: 66.0 / 255.0, green: 141.0 / 255.0, blue: 247.0 / 255.0, alpha: 1.0), UIColor(red: 106.0 / 255.0, green: 26.0 / 255.0, blue: 128.0 / 255.0, alpha: 1.0), UIColor(red: 184.0 / 255.0, green: 73.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0), UIColor(red: 240.0 / 255.0, green: 156.0 / 255.0, blue: 105.0 / 255.0, alpha: 1.0), UIColor(red: 66.0 / 255.0, green: 141.0 / 255.0, blue: 247.0 / 255.0, alpha: 1.0), UIColor(red: 106.0 / 255.0, green: 26.0 / 255.0, blue: 128.0 / 255.0, alpha: 1.0), UIColor(red: 184.0 / 255.0, green: 73.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0), UIColor(red: 240.0 / 255.0, green: 156.0 / 255.0, blue: 105.0 / 255.0, alpha: 1.0), UIColor(red: 66.0 / 255.0, green: 141.0 / 255.0, blue: 247.0 / 255.0, alpha: 1.0), UIColor(red: 106.0 / 255.0, green: 26.0 / 255.0, blue: 128.0 / 255.0, alpha: 1.0), UIColor(red: 184.0 / 255.0, green: 73.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0), UIColor(red: 240.0 / 255.0, green: 156.0 / 255.0, blue: 105.0 / 255.0, alpha: 1.0)]
     }
-    
-    
 }
 
 extension BarChartCell: ChartDimensions {

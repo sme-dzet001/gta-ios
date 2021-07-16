@@ -23,6 +23,7 @@ class UsageMetricsViewController: UIViewController {
     @IBOutlet weak var tableView: ChartTableView!
     
     private var dataProvider: UsageMetricsDataProvider = UsageMetricsDataProvider()
+    private var collaborationDataProvider: CollaborationDataProvider = CollaborationDataProvider()
     
     deinit {
         activeUsersVC.removeFromParent()
@@ -92,7 +93,7 @@ class UsageMetricsViewController: UIViewController {
     
     private lazy var activeUsersByFuncChartCell: UITableViewCell = {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BarChartCell") as? BarChartCell else { return UITableViewCell() }
-        cell.setUpBarChartView()
+        cell.setUpBarChartView(with: collaborationDataProvider.verticalChartData)
         return cell
     }()
     
@@ -108,8 +109,6 @@ class UsageMetricsViewController: UIViewController {
         
         tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
         
-        chartCells = [activeUsersChartCell, activeUsersByFuncChartCell, teamChatUsersChartCell, teamsByFunctionsChartCell]
-        
         chartDimensionsDict[0] = activeUsersVC
         if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
             chartDimensionsDict[1] = barChartCell
@@ -118,6 +117,20 @@ class UsageMetricsViewController: UIViewController {
         chartDimensionsDict[3] = teamsByFunctionsVC
         
         setUpNavigationItem()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collaborationDataProvider.getUsageMetrics {[weak self] _, _, _ in
+            DispatchQueue.main.async {
+                self?.reloadData()
+            }
+        }
+    }
+    
+    private func reloadData() {
+        self.chartCells = [activeUsersChartCell, activeUsersByFuncChartCell, teamChatUsersChartCell, teamsByFunctionsChartCell]
+        self.tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {

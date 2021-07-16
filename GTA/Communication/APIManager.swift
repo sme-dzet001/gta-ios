@@ -54,6 +54,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getGlobalOutage(generationNumber: Int)
         case sendPushNotificationsToken
         case getProductionAlerts(generationNumber: Int)
+        case getCollaborationMetrics(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -84,6 +85,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getGlobalOutage(let generationNumber): return "/v3/widgets/global_alerts/data/\(generationNumber)/detailed"
                 case .sendPushNotificationsToken: return "/v1/me/push_token/"
                 case .getProductionAlerts(let generationNumber): return "/v3/widgets/production_alerts/data/\(generationNumber)/detailed"
+                case .getCollaborationMetrics(let generationNumber): return "/v3/widgets/collaboration_metrics/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -116,6 +118,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case collaborationNews = "collaboration_news"
         case gTTeam = "management_team"
         case globalAlerts = "global_alerts"
+        case collaborationMetrics = "collaboration_metrics"
     }
     
     init(accessToken: String?) {
@@ -290,6 +293,11 @@ class APIManager: NSObject, URLSessionDelegate {
     func getCollaborationNews(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         self.makeRequest(endpoint: .getCollaborationNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders,  completion: completion)
+    }
+    
+    func getCollaborationMetrics(for generationNumber: Int, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Content-Type": "application/json", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
+        self.makeRequest(endpoint: .getCollaborationMetrics(generationNumber: generationNumber), method: "POST", headers: requestHeaders,  completion: completion)
     }
     
     //MARK: - Push notifications

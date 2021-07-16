@@ -68,7 +68,7 @@ extension ChartsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BarChartCell", for: indexPath) as? BarChartCell
-        cell?.setUpBarChartView()
+        //cell?.setUpBarChartView()
         return cell ?? UITableViewCell()
     }
 }

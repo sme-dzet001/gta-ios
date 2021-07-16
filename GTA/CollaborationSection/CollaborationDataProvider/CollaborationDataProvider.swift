@@ -21,6 +21,11 @@ class CollaborationDataProvider {
     weak var appSuiteIconDelegate: AppSuiteIconDelegate?
     private(set) var collaborationAppDetailsRows: [CollaborationAppDetailsRow]?
     private(set) var appContactsData: AppContactsData?
+    private(set) var horizontalChartData: ChartStructure?
+    private(set) var verticalChartData: ChartStructure?
+    private(set) var activeUsersLineChartData: ChartStructure?
+    private(set) var teamsByFunctionsLineChartData: [String : ChartStructure]?
+    
     
     // MARK: - Collaboration details handling
     
@@ -410,6 +415,138 @@ class CollaborationDataProvider {
             
         }
         completion?(dataWasChanged, errorCode, retErr)
+    }
+    
+    // MARK: - Usage metrics related methods
+    
+    func getUsageMetrics(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (reportResponse, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleUsageMetricsSectionReport(reportResponse, code, cachedError, true, { (dataWasChanged, code, error) in
+                if error == nil {
+                    completion?(dataWasChanged, code, error)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let _ = error {
+                        completion?(dataWasChanged, errorCode, ResponseError.generate(error: error))
+                    } else {
+                        self?.handleUsageMetricsSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    private func handleUsageMetricsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaborationAppDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationAppDetailsV1.rawValue }?.generationNumber
+        if let _ = generationNumber, generationNumber != 0 {
+            if fromCache {
+                getCachedResponse(for: .getCollaborationMetrics) {[weak self] (data, error) in
+                    self?.processUsageMetrics(reportData, data, errorCode, error, completion)
+                }
+                return
+            }
+            apiManager.getCollaborationMetrics(for: generationNumber!,  completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getCollaborationMetrics)
+                if let _ = error {
+                    completion?(false, 0, ResponseError.generate(error: error))
+                } else {
+                    self?.processUsageMetrics(reportData, data, errorCode, error, completion)
+                }
+            })
+        } else {
+            if error != nil || generationNumber == 0 {
+                completion?(generationNumber == 0 ? true : false, 0, generationNumber == 0 ? ResponseError.noDataAvailable : ResponseError.generate(error: error))
+                return
+            }
+            completion?(false, 0, error)
+        }
+    }
+    
+    private func processUsageMetrics(_ reportData: ReportDataResponse?, _ detailsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var metricsData: CollaborationMetricsResponse?
+        var retErr = error
+        if let responseData = detailsResponse {
+            do {
+                metricsData = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        } else {
+            retErr = ResponseError.commonError
+        }
+        let columns = metricsData?.meta?.widgetsDataSource?.params?.columns
+        let indexes = getDataIndexes(columns: columns)
+        var rows = metricsData?.collaborationMetricsData?.data?.rows ?? []
+        //var dfdfdf: HorizontalBarChart?
+        for (index, _) in rows.enumerated() {
+            rows[index]?.indexes = indexes
+        }
+        
+        fillChartsData(for: rows)
+        
+        //let rrr = rows.filter({$0?.chartType == .line && $0?.chartTitle == })
+//        if let rows = detailsData?.data?[appName]??.data?.rows {
+//            retErr = rows.isEmpty ? ResponseError.noDataAvailable : retErr
+            
+//            for (index, _) in rows.enumerated() {
+//                detailsData?.data?[appName]??.data?.rows?[index].indexes = indexes
+//                let url = formImageURL(from: detailsData?.data?[appName]??.data?.rows?[index].imageUrl)
+//                detailsData?.data?[appName]??.data?.rows?[index].fullImageUrl = url
+//            }
+//        }
+        var dataWasChanged: Bool = false
+//        if detailsData?.data?.first?.value?.data?.rows != self.collaborationAppDetailsRows {
+//            if detailsData?.data?.first?.value?.data?.rows == nil && self.collaborationAppDetailsRows != nil {
+//            } else {
+//                self.collaborationAppDetailsRows = detailsData?.data?.first?.value?.data?.rows
+//                dataWasChanged = true
+//            }
+//
+//        }
+        completion?(dataWasChanged, errorCode, retErr)
+    }
+    
+    private func fillChartsData(for rows: [CollaborationMetricsRow?]) {
+        let horizontalBars = rows.filter({$0?.chartType == .horizontalBar})
+        fillHorizontalChartData(for: horizontalBars)
+        let verticalBars = rows.filter({$0?.chartType == .verticalBar})
+        fillVerticalChartData(for: verticalBars)
+        let activeUsers = rows.filter({$0?.chartType == .line && $0?.chartSubtitle == nil})
+        fillActiveUsersLineChartData(for: activeUsers)
+        let teamsByFunctions = rows.filter({$0?.chartType == .line && $0?.chartSubtitle != nil})
+        fillTeamsByFunctionsLineChartData(for: teamsByFunctions)
+    }
+    
+    private func fillHorizontalChartData(for rows: [CollaborationMetricsRow?]) {
+        let titles = rows.compactMap({$0?.chartTitle}).removeDuplicates()
+        for title in titles {
+            
+        }
+    }
+    
+    private func fillVerticalChartData(for rows: [CollaborationMetricsRow?]) {
+        let title = rows.compactMap({$0?.chartTitle}).first ?? ""
+        verticalChartData = ChartStructure(title: title, values: rows.compactMap({$0?.value}), legends: rows.compactMap({$0?.legend}))
+    }
+    
+    private func fillTeamsByFunctionsLineChartData(for rows: [CollaborationMetricsRow?]) {
+        let title = rows.compactMap({$0?.chartTitle}).first ?? ""
+        let chartSubtitles = rows.compactMap({$0?.chartSubtitle}).removeDuplicates()
+        for chartSubtitle in chartSubtitles {
+            let legends = rows.compactMap({$0?.legend})
+            let values = rows.compactMap({$0?.value})
+            teamsByFunctionsLineChartData?[chartSubtitle] = ChartStructure(title: title, values: values, legends: legends)
+        }
+    }
+    
+    private func fillActiveUsersLineChartData(for rows: [CollaborationMetricsRow?]) {
+        let chartSubtitles = rows.compactMap({$0?.chartSubtitle}).removeDuplicates()
+        for chartSubtitle in chartSubtitles {
+            
+        }
     }
     
     // MARK:- Additional methods
