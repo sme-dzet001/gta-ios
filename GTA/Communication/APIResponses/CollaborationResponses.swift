@@ -253,7 +253,8 @@ struct CollaborationNewsRow: Codable, Equatable, ImageDataProtocol {
     
 }
 
-struct CollaborationMetricsResponse: Codable {
+struct CollaborationMetricsResponse: Codable, Equatable {
+    
     var meta: ResponseMetaData?
     var data: [String : CollaborationMetricsData?]?//CollaborationMetricsRows?
     var collaborationMetricsData: CollaborationMetricsData? {
@@ -265,6 +266,11 @@ struct CollaborationMetricsResponse: Codable {
     enum CodingKeys: String, CodingKey {
         case meta, data
     }
+    
+    static func == (lhs: CollaborationMetricsResponse, rhs: CollaborationMetricsResponse) -> Bool {
+        return lhs.collaborationMetricsData == rhs.collaborationMetricsData && lhs.data == rhs.data
+    }
+    
 }
 
 struct CollaborationMetricsData: Codable, Equatable {

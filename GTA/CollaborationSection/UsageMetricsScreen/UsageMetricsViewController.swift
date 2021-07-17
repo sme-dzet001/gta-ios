@@ -22,30 +22,32 @@ class UsageMetricsViewController: UIViewController {
     
     @IBOutlet weak var tableView: ChartTableView!
     
-    //private var dataProvider: UsageMetricsDataProvider = UsageMetricsDataProvider()
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var errorLabel: UILabel = UILabel()
     var dataProvider: CollaborationDataProvider?
     
     deinit {
         activeUsersVC.removeFromParent()
         teamChatUsersVC.removeFromParent()
         teamsByFunctionsVC.removeFromParent()
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     private lazy var activeUsersVC: ActiveUsersViewController = {
         let activeUsersVC = ActiveUsersViewController(nibName: "ActiveUsersViewController", bundle: nil)
-        //activeUsersVC.dataProvider = dataProvider
+        activeUsersVC.chartData = dataProvider?.activeUsersLineChartData
         return activeUsersVC
     }()
     
     private lazy var teamsByFunctionsVC: TeamsByFunctionsViewController = {
         let teamsByFunctionsVC = TeamsByFunctionsViewController(nibName: "TeamsByFunctionsViewController", bundle: nil)
-        //teamsByFunctionsVC.dataProvider = dataProvider
+        teamsByFunctionsVC.data = dataProvider?.teamsByFunctionsLineChartData
         return teamsByFunctionsVC
     }()
     
     private lazy var teamChatUsersVC: TeamChatUsersViewController = {
         let teamChatUsersVC = TeamChatUsersViewController()
-        //teamChatUsersVC.dataProvider = dataProvider
+        teamChatUsersVC.chartData = dataProvider?.horizontalChartData
         return teamChatUsersVC
     }()
     
@@ -93,7 +95,7 @@ class UsageMetricsViewController: UIViewController {
     
     private lazy var activeUsersByFuncChartCell: UITableViewCell = {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BarChartCell") as? BarChartCell else { return UITableViewCell() }
-        cell.setUpBarChartView(with: dataProvider.verticalChartData)
+        cell.setUpBarChartView(with: dataProvider?.verticalChartData)
         return cell
     }()
     
@@ -103,36 +105,19 @@ class UsageMetricsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(getChartsData), name: UIApplication.didBecomeActiveNotification, object: nil)
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.barTintColor = .white
         
         tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
-        
-        chartDimensionsDict[0] = activeUsersVC
-        if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
-            chartDimensionsDict[1] = barChartCell
-        }
-        chartDimensionsDict[2] = teamChatUsersVC
-        chartDimensionsDict[3] = teamsByFunctionsVC
         
         setUpNavigationItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        dataProvider.getUsageMetrics {[weak self] dataWasChanged, errorCode, error in
-            DispatchQueue.main.async {
-                if dataWasChanged {
-                    self?.reloadData()
-                }
-            }
-        }
-    }
-    
-    private func reloadData() {
-        self.chartCells = [activeUsersChartCell, activeUsersByFuncChartCell, teamChatUsersChartCell, teamsByFunctionsChartCell]
-        self.tableView.reloadData()
+        addErrorLabel(errorLabel)
+        getChartsData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -142,6 +127,49 @@ class UsageMetricsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    @objc private func getChartsData() {
+        startAnimation()
+        dataProvider?.getUsageMetrics {[weak self] isFromCache, dataWasChanged, errorCode, error in
+            DispatchQueue.main.async {
+                if error == nil {
+                    self?.stopAnimation()
+                    self?.reloadData()
+                } else if error != nil, !isFromCache {
+                    self?.stopAnimation(with: error)
+                }
+            }
+        }
+    }
+    
+    private func reloadData() {
+        chartDimensionsDict[0] = activeUsersVC
+        if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
+            chartDimensionsDict[1] = barChartCell
+        }
+        chartDimensionsDict[2] = teamChatUsersVC
+        chartDimensionsDict[3] = teamsByFunctionsVC
+        self.chartCells = [activeUsersChartCell, activeUsersByFuncChartCell, teamChatUsersChartCell, teamsByFunctionsChartCell]
+        self.tableView.reloadData()
+    }
+    
+    private func startAnimation() {
+        self.errorLabel.isHidden = true
+        self.tableView.alpha = 0
+        self.addLoadingIndicator(activityIndicator)
+        self.activityIndicator.startAnimating()
+    }
+    
+    private func stopAnimation(with error: Error? = nil) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.errorLabel.isHidden = error == nil
+            self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+            self.tableView.alpha = error == nil ? 1 : 0
+           // self.activityIndicator.stopAnimating()
+            self.activityIndicator.removeFromSuperview()
+        }
     }
     
     private func setUpNavigationItem() {

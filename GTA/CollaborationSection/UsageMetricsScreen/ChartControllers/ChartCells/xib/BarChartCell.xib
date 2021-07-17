@@ -59,6 +59,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="barChartView" destination="O2t-6B-ZhQ" id="838-7f-LJb"/>
+                <outlet property="titleLabel" destination="M2U-hE-kNu" id="Yqt-pE-Csx"/>
             </connections>
             <point key="canvasLocation" x="63.768115942028992" y="116.18303571428571"/>
         </tableViewCell>

@@ -10,6 +10,7 @@ import Charts
 
 class BarChartCell: UITableViewCell {
 
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var barChartView: BarChartView!
     
     override func awakeFromNib() {
@@ -19,6 +20,7 @@ class BarChartCell: UITableViewCell {
     
     func setUpBarChartView(with chartStructure: ChartStructure?) {
         guard let chartData = chartStructure else { return }
+        titleLabel.text = chartData.title
         let yValues: [BarChartDataEntry] = getValues(with: chartData.values)
         let set = BarChartDataSet(entries: yValues, label: nil)
         set.drawIconsEnabled = true

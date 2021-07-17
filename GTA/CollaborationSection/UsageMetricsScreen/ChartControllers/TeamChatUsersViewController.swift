@@ -12,24 +12,32 @@ import Charts
 class TeamChatUsersViewController: UIViewController {
 
     @IBOutlet weak var chartView: HorizontalBarChartView!
+    @IBOutlet weak var titleLabel: UILabel!
     
-    var dataProvider: UsageMetricsDataProvider?
+    //var dataProvider: UsageMetricsDataProvider?
+    var chartData: [String : [TeamsChatUserDataEntry]]?
+    var key: String {
+        return chartData?.keys.first ?? ""
+    }
     var gridView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         updateChartData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        titleLabel.text = key
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         addGridView()
     }
     
     func updateChartData() {
-        guard let activeUsersData = dataProvider?.teamsChatUserData.sorted(by: {$0.percent ?? 0 < $1.percent ?? 0}), !activeUsersData.isEmpty else { return }
+        guard let activeUsersData = chartData?[key]?.sorted(by: {$0.percent ?? 0 < $1.percent ?? 0}), !activeUsersData.isEmpty else { return }
         let chartValues = activeUsersData.enumerated().map { (index, dataEntry) -> BarChartDataEntry in
             return BarChartDataEntry(x: Double(index), y: dataEntry.percent ?? 0)
         }
@@ -39,7 +47,7 @@ class TeamChatUsersViewController: UIViewController {
     }
     
     func addGridView() {
-        guard let linesCount = dataProvider?.teamsChatUserData.count, linesCount > 1 else {return}
+        guard let linesCount = chartData?[key]?.count, linesCount > 1 else {return}
         gridView = setGridView()
         chartView.addSubview(gridView)
         gridView.translatesAutoresizingMaskIntoConstraints = false
@@ -144,7 +152,7 @@ extension TeamChatUsersViewController {
 
 extension TeamChatUsersViewController: ChartDimensions {
     var optimalHeight: CGFloat {
-        let linesCount = dataProvider?.teamsChatUserData.count ?? 0
+        let linesCount = chartData?[key]?.count ?? 0
         return 120 + CGFloat(linesCount) * ChartsFormatting.horizontalBarOptimalHeight
     }
 }

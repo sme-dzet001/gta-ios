@@ -47,12 +47,11 @@ class LineChartViewController: UIViewController {
     let chartLineWidth: CGFloat = 2
     let chartLineCircleRadius: CGFloat = 8
     
-    var dataProvider: UsageMetricsDataProvider?
+    //var dataProvider: UsageMetricsDataProvider?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         setupChartView()
         updateLabels()
         updateChartData()

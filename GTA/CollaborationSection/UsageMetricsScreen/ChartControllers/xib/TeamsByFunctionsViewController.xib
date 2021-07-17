@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -28,6 +28,7 @@
                 <outlet property="chartViewWidth" destination="z7e-iY-qZs" id="GX1-aq-fu5"/>
                 <outlet property="maxValueLabel" destination="MjZ-06-QQD" id="p0Z-Z6-V3u"/>
                 <outlet property="percentLabel" destination="xAm-il-0dc" id="iC3-ia-INJ"/>
+                <outlet property="titleLabel" destination="Rdc-KV-sXz" id="LEJ-yb-gJ8"/>
                 <outlet property="verticalAxisStackView" destination="TAx-EZ-XYl" id="hFs-9g-opL"/>
                 <outlet property="verticalAxisViewBottom" destination="Xld-MP-U6N" id="FCD-tV-Lgs"/>
                 <outlet property="verticalAxisViewTop" destination="dPF-R6-9pp" id="P3h-6q-HJj"/>
