@@ -51,14 +51,33 @@ class ProductionAlertsViewController: UIViewController {
     }
     
     @objc private func getProductionAlerts() {
-        guard let appName = appName else { return }
-        dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
+        if let _ = dataProvider?.activeProductionAlertId {
+            getProductionAlertIgnoringCache()
+        } else {
+            getProductionAlertsWithCache()
+        }
+    }
+    
+    private func getProductionAlertsWithCache() {
+        guard let app = appName else { return }
+        dataProvider?.getProductionAlert(for: app) {[weak self] errorCode, error in
             DispatchQueue.main.async {
                 if error == nil {
                     self?.tableView.reloadData()
                 }
             }
         }
+    }
+    
+    private func getProductionAlertIgnoringCache() {
+        guard let app = appName else { return }
+        dataProvider?.getProductionAlertIgnoringCache(for: app, completion: {[weak self] errorCode, error in
+            DispatchQueue.main.async {
+                if error == nil {
+                    self?.tableView.reloadData()
+                }
+            }
+        })
     }
     
     private func setUpNavigationItem() {
