@@ -517,18 +517,23 @@ class HelpDeskDataProvider {
         let userEmail = KeychainManager.getUsername() ?? ""
         getCachedResponse(for: .getGSDTickets(userEmail: userEmail)) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            if cachedError == nil {
-                self?.processMyTickets(data, code, cachedError, completion)
-                //completion?(code, cachedError, true)
-            }
-            self?.apiManager.getGSDTickets(completion: { [weak self] (data, errorCode, error) in
-                self?.cacheData(data, path: .getGSDTickets(userEmail: userEmail))
-                if let _ = error {
-                    completion?(errorCode, ResponseError.generate(error: error), true)
-                } else {
-                    self?.processMyTickets(data, errorCode, error, completion)
+           // if cachedError == nil {
+                //self?.processMyTickets(data, code, cachedError, completion)
+            self?.processMyTickets(data, code, cachedError, {[weak self] code, error, dataWasChanged in
+                if error == nil, code == 200 {
+                    completion?(code, error, dataWasChanged)
                 }
+                self?.apiManager.getGSDTickets(completion: { [weak self] (data, errorCode, error) in
+                    self?.cacheData(data, path: .getGSDTickets(userEmail: userEmail))
+                    if let _ = error {
+                        completion?(errorCode, ResponseError.generate(error: error), true)
+                    } else {
+                        self?.processMyTickets(data, errorCode, error, completion)
+                    }
+                })
             })
+                //completion?(code, cachedError, true)
+            //}
         }
     }
     
