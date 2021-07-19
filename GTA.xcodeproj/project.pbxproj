@@ -1119,6 +1119,8 @@
 		9F343A9326A1CE3C0071362D /* BarChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A8E26A1CE3B0071362D /* BarChartCell.xib */; };
 		9F343A9426A1CE3C0071362D /* BarChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A8E26A1CE3B0071362D /* BarChartCell.xib */; };
 		9F343A9526A1CE3C0071362D /* BarChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A8E26A1CE3B0071362D /* BarChartCell.xib */; };
+		9F343A6F269DE3750071362D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A6C269DE3750071362D /* GoogleService-Info.plist */; };
+		9F343A74269DEC050071362D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A6C269DE3750071362D /* GoogleService-Info.plist */; };
 		9F35860425FD219C0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
 		9F35860525FD219C0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
 		9F35860625FD219D0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
@@ -1787,6 +1789,7 @@
 		9F343A62269C53CE0071362D /* BarChartHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarChartHeaderView.xib; sourceTree = "<group>"; };
 		9F343A8626A1CE2F0071362D /* BarChartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarChartCell.swift; sourceTree = "<group>"; };
 		9F343A8E26A1CE3B0071362D /* BarChartCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BarChartCell.xib; sourceTree = "<group>"; };
+		9F343A6C269DE3750071362D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationHeaderCell.swift; sourceTree = "<group>"; };
 		9F35860125FD219C0003658D /* CollaborationHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollaborationHeader.xib; sourceTree = "<group>"; };
 		9F35860225FD219C0003658D /* CollaborationHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollaborationHeaderCell.xib; sourceTree = "<group>"; };
@@ -2444,6 +2447,14 @@
 				9F343A62269C53CE0071362D /* BarChartHeaderView.xib */,
 			);
 			path = xib;
+            sourceTree = "<group>";
+        };
+		9F343A6B269DE3480071362D /* GTADev */ = {
+			isa = PBXGroup;
+			children = (
+				9F343A6C269DE3750071362D /* GoogleService-Info.plist */,
+			);
+			path = GTADev;
 			sourceTree = "<group>";
 		};
 		9F3585FF25FD219C0003658D /* CollaborationCustomHeader */ = {
@@ -2872,6 +2883,7 @@
 			children = (
 				9F825FCE25ED4DD3002A4560 /* GTA */,
 				9FCFA2B0259E143600E893D2 /* GTAStage */,
+				9F343A6B269DE3480071362D /* GTADev */,
 			);
 			path = GooglePlists;
 			sourceTree = "<group>";
@@ -3317,6 +3329,7 @@
 				9F819ABF255C1646007C1739 /* Frameworks */,
 				9F819AC0255C1646007C1739 /* Resources */,
 				E25A37242116BE13F9B62E2F /* [CP] Embed Pods Frameworks */,
+				9F343A6A269DE26D0071362D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3381,6 +3394,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65437CB12665387600B2F38A /* ServiceDeskAboutCell.xib in Resources */,
+				9F343A74269DEC050071362D /* GoogleService-Info.plist in Resources */,
 				9F3027F72681D228009A3096 /* ProductionAlertCell.xib in Resources */,
 				65437CB22665387600B2F38A /* SF-Pro-Display-Thin.otf in Resources */,
 				65437CB32665387600B2F38A /* AppTipsAndTricksViewController.xib in Resources */,
@@ -4043,6 +4057,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C960A10225B08CAC004A9C65 /* ServiceDeskAboutCell.xib in Resources */,
+				9F343A6F269DE3750071362D /* GoogleService-Info.plist in Resources */,
 				9F3027F32681D228009A3096 /* ProductionAlertCell.xib in Resources */,
 				9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
 				9F44AE2125EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
@@ -4343,6 +4358,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/FirebaseCrashlytics/run\n${PODS_ROOT}/FirebaseCrashlytics/upload-symbols -gsp ${PROJECT_DIR}/GTA/Plists/GooglePlists/GTAStage/GoogleService-Info.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\n";
+		};
+		9F343A6A269DE26D0071362D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/FirebaseCrashlytics/run\n${PODS_ROOT}/FirebaseCrashlytics/upload-symbols -gsp ${PROJECT_DIR}/GTA/Plists/GooglePlists/GTADev/GoogleService-Info.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\n\n";
 		};
 		9F70BFF9259B4B6F0020A741 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5973,6 +6007,7 @@
 				CODE_SIGN_ENTITLEMENTS = GTADev.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sergiy Savchenko (SL99M4JWZR)";
 				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H9636WUCU4;
 				INFOPLIST_FILE = "GTA/Plists/GTADev-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
