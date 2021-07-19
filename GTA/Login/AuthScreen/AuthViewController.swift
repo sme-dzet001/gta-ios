@@ -269,6 +269,7 @@ extension AuthViewController: WKNavigationDelegate {
     }
     
     private func logout() {
+        KeychainManager.deletePushNotificationTokenSent()
         KeychainManager.deleteUsername()
         KeychainManager.deleteToken()
         KeychainManager.deleteTokenExpirationDate()

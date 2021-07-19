@@ -21,6 +21,7 @@ class SessionExpiredHandler: ExpiredSessionDelegate {
         KeychainManager.deleteToken()
         KeychainManager.deleteTokenExpirationDate()
         KeychainManager.deletePinData()
+        KeychainManager.deletePushNotificationTokenSent()
         ImageCacheManager().removeCachedData()
         UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
         UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
