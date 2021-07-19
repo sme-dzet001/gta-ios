@@ -12,6 +12,7 @@ def shared_pods
   pod 'Firebase/Crashlytics'
   pod 'Kingfisher'
   pod 'SDWebImage'
+  pod 'Charts'
 end
 
 target 'GTA' do

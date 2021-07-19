@@ -10,7 +10,42 @@
 		065F4544928F3E2C1844ADA1 /* Pods_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB6219B91F984FFA0A2D3BC /* Pods_GTAStage.framework */; };
 		310602184FDF9DE277F359C7 /* Pods_GTA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA50956AA53DEAF0E40A50B2 /* Pods_GTA.framework */; };
 		425533B70404A097DEAE7C6E /* Pods_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB6219B91F984FFA0A2D3BC /* Pods_GTAStage.framework */; };
+		54D59C1A2695CCD80037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C1B2695CCD80037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C1E2695DFF60037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C1F2695DFF60037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C202695DFF70037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C212695DFF80037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C222695DFF80037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C232695DFF90037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
+		54D59C242695DFFF0037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C252695DFFF0037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C262695E0000037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C272695E0000037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C282695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54D59C292695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
 		637797F8E36BC3A596840E88 /* Pods_GTAUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 711206694A10F0701C6DAF95 /* Pods_GTAUITests.framework */; };
+		6513C9D8269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
+		6513C9D9269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
+		6513C9DA269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
+		6513C9DB269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
+		6513C9DC269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
+		6513C9DD269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
+		6513C9DE269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
+		6513CA04269F32FB0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA05269F32FB0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA06269F32FC0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA07269F32FC0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA08269F32FC0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA09269F32FC0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA0A269F32FC0046817F /* ActiveUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */; };
+		6513CA1E269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA1F269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA20269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA21269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA22269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA23269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
+		6513CA24269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */; };
 		65398BCC256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
 		65398BCD256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
 		65398BCE256D4C5F0039C24E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
@@ -623,6 +658,30 @@
 		6563C2782592AD1500AA6168 /* GTA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */; };
 		6563C2792592AD1500AA6168 /* GTA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */; };
 		6563C27A2592AD1500AA6168 /* GTA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6563C2762592AD1500AA6168 /* GTA.xcdatamodeld */; };
+		658BEF4A268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
+		658BEF4B268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
+		658BEF4E268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
+		658BEF79268FC63600D4FD2C /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BEF77268FC63600D4FD2C /* LineChartViewController.swift */; };
+		658BEF7A268FC63600D4FD2C /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BEF77268FC63600D4FD2C /* LineChartViewController.swift */; };
+		658BEF7B268FC63600D4FD2C /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BEF77268FC63600D4FD2C /* LineChartViewController.swift */; };
+		658BEF7C268FC63600D4FD2C /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BEF77268FC63600D4FD2C /* LineChartViewController.swift */; };
+		658BEF7D268FC63600D4FD2C /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BEF77268FC63600D4FD2C /* LineChartViewController.swift */; };
+		658BEF7E268FC63600D4FD2C /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BEF77268FC63600D4FD2C /* LineChartViewController.swift */; };
+		658BEF7F268FC63600D4FD2C /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BEF77268FC63600D4FD2C /* LineChartViewController.swift */; };
+		658BEF80268FC63600D4FD2C /* ActiveUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF78268FC63600D4FD2C /* ActiveUsersViewController.xib */; };
+		658BEF81268FC63600D4FD2C /* ActiveUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF78268FC63600D4FD2C /* ActiveUsersViewController.xib */; };
+		658BEF82268FC63600D4FD2C /* ActiveUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF78268FC63600D4FD2C /* ActiveUsersViewController.xib */; };
+		658BEF83268FC63700D4FD2C /* ActiveUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF78268FC63600D4FD2C /* ActiveUsersViewController.xib */; };
+		658BEF84268FC63700D4FD2C /* ActiveUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF78268FC63600D4FD2C /* ActiveUsersViewController.xib */; };
+		658BEF85268FC63700D4FD2C /* ActiveUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF78268FC63600D4FD2C /* ActiveUsersViewController.xib */; };
+		658BEF86268FC63700D4FD2C /* ActiveUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF78268FC63600D4FD2C /* ActiveUsersViewController.xib */; };
+		658BF0C3268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
+		658BF0C4268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
+		658BF0C5268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
+		658BF0C6268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
+		658BF0C7268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
+		658BF0C8268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
+		658BF0C9268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
 		659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
 		659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
 		659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
@@ -920,7 +979,7 @@
 		9F33F67F260A3C4000470A47 /* CommonResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D035932578095A0068441F /* CommonResponses.swift */; };
 		9F33F680260A3C4000470A47 /* Office365AppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35862825FD37BF0003658D /* Office365AppCell.swift */; };
 		9F33F681260A3C4000470A47 /* AboutHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8E90B25B056D5007D3B9F /* AboutHeaderCell.swift */; };
-		9F33F682260A3C4000470A47 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		9F33F682260A3C4000470A47 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		9F33F683260A3C4000470A47 /* OfficeSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EFDA2D25A5E2E200F57817 /* OfficeSelectionCell.swift */; };
 		9F33F684260A3C4000470A47 /* SecondSendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF0547225681FC60071E596 /* SecondSendMessageView.swift */; };
 		9F33F685260A3C4000470A47 /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF172564901E001E86F6 /* AboutInfoCell.swift */; };
@@ -964,7 +1023,7 @@
 		9F33F6AF260A3C4000470A47 /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
 		9F33F6B0260A3C4000470A47 /* HelpDeskHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */; };
 		9F33F6B1260A3C4000470A47 /* ServiceDeskAboutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C960A0FC25B08CAC004A9C65 /* ServiceDeskAboutCell.xib */; };
-		9F33F6B2260A3C4000470A47 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		9F33F6B2260A3C4000470A47 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		9F33F6B3260A3C4000470A47 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEA255404F100E13B77 /* SF-Pro-Display-Medium.otf */; };
 		9F33F6B4260A3C4000470A47 /* SystemStatusHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */; };
 		9F33F6B5260A3C4000470A47 /* AboutSupportPolicyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */; };
@@ -1018,6 +1077,48 @@
 		9F33F6E7260A3C4000470A47 /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9424E13256427F0003C247E /* DeviceCell.xib */; };
 		9F33F6E8260A3C4000470A47 /* AppContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C907E0D725D4382500FB0B55 /* AppContactCell.xib */; };
 		9F33F6E9260A3C4000470A47 /* Office365ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35861C25FD23FF0003658D /* Office365ViewController.xib */; };
+		9F343A4C269C4EED0071362D /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A4A269C4EED0071362D /* ChartsViewController.swift */; };
+		9F343A4D269C4EED0071362D /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A4A269C4EED0071362D /* ChartsViewController.swift */; };
+		9F343A4E269C4EED0071362D /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A4A269C4EED0071362D /* ChartsViewController.swift */; };
+		9F343A4F269C4EED0071362D /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A4A269C4EED0071362D /* ChartsViewController.swift */; };
+		9F343A50269C4EED0071362D /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A4A269C4EED0071362D /* ChartsViewController.swift */; };
+		9F343A51269C4EED0071362D /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A4A269C4EED0071362D /* ChartsViewController.swift */; };
+		9F343A52269C4EED0071362D /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A4A269C4EED0071362D /* ChartsViewController.swift */; };
+		9F343A53269C4EED0071362D /* ChartsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A4B269C4EED0071362D /* ChartsViewController.xib */; };
+		9F343A54269C4EED0071362D /* ChartsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A4B269C4EED0071362D /* ChartsViewController.xib */; };
+		9F343A55269C4EED0071362D /* ChartsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A4B269C4EED0071362D /* ChartsViewController.xib */; };
+		9F343A56269C4EED0071362D /* ChartsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A4B269C4EED0071362D /* ChartsViewController.xib */; };
+		9F343A57269C4EED0071362D /* ChartsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A4B269C4EED0071362D /* ChartsViewController.xib */; };
+		9F343A58269C4EED0071362D /* ChartsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A4B269C4EED0071362D /* ChartsViewController.xib */; };
+		9F343A59269C4EED0071362D /* ChartsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A4B269C4EED0071362D /* ChartsViewController.xib */; };
+		9F343A5B269C53BC0071362D /* BarChartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A5A269C53BC0071362D /* BarChartHeaderView.swift */; };
+		9F343A5C269C53BC0071362D /* BarChartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A5A269C53BC0071362D /* BarChartHeaderView.swift */; };
+		9F343A5D269C53BC0071362D /* BarChartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A5A269C53BC0071362D /* BarChartHeaderView.swift */; };
+		9F343A5E269C53BD0071362D /* BarChartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A5A269C53BC0071362D /* BarChartHeaderView.swift */; };
+		9F343A5F269C53BD0071362D /* BarChartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A5A269C53BC0071362D /* BarChartHeaderView.swift */; };
+		9F343A60269C53BD0071362D /* BarChartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A5A269C53BC0071362D /* BarChartHeaderView.swift */; };
+		9F343A61269C53BD0071362D /* BarChartHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A5A269C53BC0071362D /* BarChartHeaderView.swift */; };
+		9F343A63269C53CE0071362D /* BarChartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A62269C53CE0071362D /* BarChartHeaderView.xib */; };
+		9F343A64269C53CE0071362D /* BarChartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A62269C53CE0071362D /* BarChartHeaderView.xib */; };
+		9F343A65269C53CE0071362D /* BarChartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A62269C53CE0071362D /* BarChartHeaderView.xib */; };
+		9F343A66269C53CE0071362D /* BarChartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A62269C53CE0071362D /* BarChartHeaderView.xib */; };
+		9F343A67269C53CE0071362D /* BarChartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A62269C53CE0071362D /* BarChartHeaderView.xib */; };
+		9F343A68269C53CE0071362D /* BarChartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A62269C53CE0071362D /* BarChartHeaderView.xib */; };
+		9F343A69269C53CE0071362D /* BarChartHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A62269C53CE0071362D /* BarChartHeaderView.xib */; };
+		9F343A8726A1CE2F0071362D /* BarChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A8626A1CE2F0071362D /* BarChartCell.swift */; };
+		9F343A8826A1CE2F0071362D /* BarChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A8626A1CE2F0071362D /* BarChartCell.swift */; };
+		9F343A8926A1CE2F0071362D /* BarChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A8626A1CE2F0071362D /* BarChartCell.swift */; };
+		9F343A8A26A1CE2F0071362D /* BarChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A8626A1CE2F0071362D /* BarChartCell.swift */; };
+		9F343A8B26A1CE2F0071362D /* BarChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A8626A1CE2F0071362D /* BarChartCell.swift */; };
+		9F343A8C26A1CE2F0071362D /* BarChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A8626A1CE2F0071362D /* BarChartCell.swift */; };
+		9F343A8D26A1CE2F0071362D /* BarChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F343A8626A1CE2F0071362D /* BarChartCell.swift */; };
+		9F343A8F26A1CE3C0071362D /* BarChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A8E26A1CE3B0071362D /* BarChartCell.xib */; };
+		9F343A9026A1CE3C0071362D /* BarChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A8E26A1CE3B0071362D /* BarChartCell.xib */; };
+		9F343A9126A1CE3C0071362D /* BarChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A8E26A1CE3B0071362D /* BarChartCell.xib */; };
+		9F343A9226A1CE3C0071362D /* BarChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A8E26A1CE3B0071362D /* BarChartCell.xib */; };
+		9F343A9326A1CE3C0071362D /* BarChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A8E26A1CE3B0071362D /* BarChartCell.xib */; };
+		9F343A9426A1CE3C0071362D /* BarChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A8E26A1CE3B0071362D /* BarChartCell.xib */; };
+		9F343A9526A1CE3C0071362D /* BarChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F343A8E26A1CE3B0071362D /* BarChartCell.xib */; };
 		9F35860425FD219C0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
 		9F35860525FD219C0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
 		9F35860625FD219D0003658D /* CollaborationHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */; };
@@ -1390,6 +1491,10 @@
 		9FF0548125681FCD0071E596 /* SecondSendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */; };
 		9FF0548225681FCD0071E596 /* SecondSendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */; };
 		9FF0548325681FCD0071E596 /* SecondSendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */; };
+		9FFB81A526A1E26800674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
+		9FFB81A626A1E26A00674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
+		9FFB81A726A1E26B00674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
+		9FFB81A826A1E26C00674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
 		9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		9FFD5F102565A1F900B6A65C /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		B91515CADDA8F4D79221D7D3 /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */; };
@@ -1579,7 +1684,12 @@
 		412149B0DC7F875C8F96C994 /* Pods-GTAStage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAStage.debug.xcconfig"; path = "Target Support Files/Pods-GTAStage/Pods-GTAStage.debug.xcconfig"; sourceTree = "<group>"; };
 		440780615F4BB9CB2146021D /* Pods-GTAUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAUITests.release.xcconfig"; path = "Target Support Files/Pods-GTAUITests/Pods-GTAUITests.release.xcconfig"; sourceTree = "<group>"; };
 		516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTADev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChatUsersViewController.swift; sourceTree = "<group>"; };
+		54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamChatUsersViewController.xib; sourceTree = "<group>"; };
 		5F85A9BFD7B4F3349DA0E61A /* Pods_GTATests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTATests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamsByFunctionsViewController.xib; sourceTree = "<group>"; };
+		6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveUsersViewController.swift; sourceTree = "<group>"; };
+		6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsByFunctionsViewController.swift; sourceTree = "<group>"; };
 		65398BCB256D4C5E0039C24E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageMetricsViewController.swift; sourceTree = "<group>"; };
 		65437D092665387600B2F38A /* GTADev-pushTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GTADev-pushTest.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1593,6 +1703,10 @@
 		6547566A25FA4AE6002C45C4 /* CollaborationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationViewController.swift; sourceTree = "<group>"; };
 		6547566C25FA4AE6002C45C4 /* CollaborationDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationDataProvider.swift; sourceTree = "<group>"; };
 		6563C2772592AD1500AA6168 /* GTA.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GTA.xcdatamodel; sourceTree = "<group>"; };
+		658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UsageMetricsViewController.xib; sourceTree = "<group>"; };
+		658BEF77268FC63600D4FD2C /* LineChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartViewController.swift; sourceTree = "<group>"; };
+		658BEF78268FC63600D4FD2C /* ActiveUsersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActiveUsersViewController.xib; sourceTree = "<group>"; };
+		658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageMetricsDataProvider.swift; sourceTree = "<group>"; };
 		659A5AAD255401EA00E13B77 /* GTA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		659A5AB0255401EA00E13B77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		659A5AB2255401EA00E13B77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1667,6 +1781,12 @@
 		9F3028442681E68B009A3096 /* AlertPopoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertPopoverViewController.xib; sourceTree = "<group>"; };
 		9F33F6EF260A3C4000470A47 /* QA-GTAStage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QA-GTAStage.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F33F6F0260A3C4000470A47 /* QA-GTAStage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QA-GTAStage-Info.plist"; path = "/Users/kostiantyndzetsiuk/Documents/gta-ios/QA-GTAStage-Info.plist"; sourceTree = "<absolute>"; };
+		9F343A4A269C4EED0071362D /* ChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
+		9F343A4B269C4EED0071362D /* ChartsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChartsViewController.xib; sourceTree = "<group>"; };
+		9F343A5A269C53BC0071362D /* BarChartHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartHeaderView.swift; sourceTree = "<group>"; };
+		9F343A62269C53CE0071362D /* BarChartHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarChartHeaderView.xib; sourceTree = "<group>"; };
+		9F343A8626A1CE2F0071362D /* BarChartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarChartCell.swift; sourceTree = "<group>"; };
+		9F343A8E26A1CE3B0071362D /* BarChartCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BarChartCell.xib; sourceTree = "<group>"; };
 		9F35860025FD219C0003658D /* CollaborationHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollaborationHeaderCell.swift; sourceTree = "<group>"; };
 		9F35860125FD219C0003658D /* CollaborationHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollaborationHeader.xib; sourceTree = "<group>"; };
 		9F35860225FD219C0003658D /* CollaborationHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollaborationHeaderCell.xib; sourceTree = "<group>"; };
@@ -1927,7 +2047,10 @@
 		653E78E7261FC51A00CABB4C /* UsageMetricsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				658BF0C1268FF2CE00D4FD2C /* UsageMetricsDataProvider */,
+				658BEF76268FA7D800D4FD2C /* ChartControllers */,
 				653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */,
+				658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */,
 			);
 			path = UsageMetricsScreen;
 			sourceTree = "<group>";
@@ -1971,6 +2094,31 @@
 				9F36D4642562C286000EE0F1 /* HomepageViewController.swift */,
 			);
 			path = Homepage;
+			sourceTree = "<group>";
+		};
+		658BEF76268FA7D800D4FD2C /* ChartControllers */ = {
+			isa = PBXGroup;
+			children = (
+				9F343A48269C4DFB0071362D /* ChartCells */,
+				658BEF77268FC63600D4FD2C /* LineChartViewController.swift */,
+				6513CA03269F32FA0046817F /* ActiveUsersViewController.swift */,
+				658BEF78268FC63600D4FD2C /* ActiveUsersViewController.xib */,
+				6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */,
+				6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */,
+				54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */,
+				54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */,
+				9F343A4A269C4EED0071362D /* ChartsViewController.swift */,
+				9F343A4B269C4EED0071362D /* ChartsViewController.xib */,
+			);
+			path = ChartControllers;
+			sourceTree = "<group>";
+		};
+		658BF0C1268FF2CE00D4FD2C /* UsageMetricsDataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */,
+			);
+			path = UsageMetricsDataProvider;
 			sourceTree = "<group>";
 		};
 		659A5AA4255401EA00E13B77 = {
@@ -2277,6 +2425,25 @@
 				9F3028432681E68B009A3096 /* AlertPopoverCell.xib */,
 			);
 			path = cell;
+			sourceTree = "<group>";
+		};
+		9F343A48269C4DFB0071362D /* ChartCells */ = {
+			isa = PBXGroup;
+			children = (
+				9F343A5A269C53BC0071362D /* BarChartHeaderView.swift */,
+				9F343A8626A1CE2F0071362D /* BarChartCell.swift */,
+				9F343A49269C4E0C0071362D /* xib */,
+			);
+			path = ChartCells;
+			sourceTree = "<group>";
+		};
+		9F343A49269C4E0C0071362D /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				9F343A8E26A1CE3B0071362D /* BarChartCell.xib */,
+				9F343A62269C53CE0071362D /* BarChartHeaderView.xib */,
+			);
+			path = xib;
 			sourceTree = "<group>";
 		};
 		9F3585FF25FD219C0003658D /* CollaborationCustomHeader */ = {
@@ -3249,9 +3416,11 @@
 				65437CCE2665387600B2F38A /* Apps.storyboard in Resources */,
 				65437CCF2665387600B2F38A /* SF-Pro-Text-Medium.otf in Resources */,
 				65437CD02665387600B2F38A /* Collaboration.storyboard in Resources */,
+				6513C9DE269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */,
 				65437CD12665387600B2F38A /* TicketDetailsMessageCell.xib in Resources */,
 				65437CD22665387600B2F38A /* Assets.xcassets in Resources */,
 				65437CD32665387600B2F38A /* ServiceDeskContactsViewController.xib in Resources */,
+				9F343A59269C4EED0071362D /* ChartsViewController.xib in Resources */,
 				65437CD42665387600B2F38A /* SF-Pro-Text-Regular.otf in Resources */,
 				65437CD52665387600B2F38A /* MetricStatsHeader.xib in Resources */,
 				65437CD62665387600B2F38A /* ServiceDeskAboutViewController.xib in Resources */,
@@ -3259,6 +3428,7 @@
 				65437CD82665387600B2F38A /* CollaborationHeaderCell.xib in Resources */,
 				65437CD92665387600B2F38A /* GlobalAlertViewController.xib in Resources */,
 				65437CDA2665387600B2F38A /* AboutSupportCell.xib in Resources */,
+				9F343A9526A1CE3C0071362D /* BarChartCell.xib in Resources */,
 				65437CDB2665387600B2F38A /* HelpDeskCell.xib in Resources */,
 				65437CDC2665387600B2F38A /* AppsServiceAlertCell.xib in Resources */,
 				9F3027FE2681D228009A3096 /* AlertDetailsCell.xib in Resources */,
@@ -3272,6 +3442,7 @@
 				65437CE22665387600B2F38A /* OfficeStatusCell.xib in Resources */,
 				65437CE32665387600B2F38A /* InfoViewController.xib in Resources */,
 				65437CE42665387600B2F38A /* GlobalAlertCell.xib in Resources */,
+				54D59C292695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				9FA4DC922684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
 				65437CE52665387600B2F38A /* ServiceDeskContactCell.xib in Resources */,
 				65437CE62665387600B2F38A /* QuickHelpCell.xib in Resources */,
@@ -3283,6 +3454,7 @@
 				65437CED2665387600B2F38A /* MyTicketsViewController.xib in Resources */,
 				65437CEE2665387600B2F38A /* GTTeamViewController.xib in Resources */,
 				65437CEF2665387600B2F38A /* HelpDeskContactOptionCell.xib in Resources */,
+				658BEF86268FC63700D4FD2C /* ActiveUsersViewController.xib in Resources */,
 				65437CF02665387600B2F38A /* AppContactsViewController.xib in Resources */,
 				65437CF12665387600B2F38A /* AppsTableViewHeader.xib in Resources */,
 				65437CF22665387600B2F38A /* SecondTicketDetailsViewController.xib in Resources */,
@@ -3293,8 +3465,10 @@
 				65437CF72665387600B2F38A /* Office365AppCell.xib in Resources */,
 				65437CF82665387600B2F38A /* NewsCollectionViewCell.xib in Resources */,
 				65437CF92665387600B2F38A /* MetricStatsCell.xib in Resources */,
+				658BEF4E268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
 				65437CFA2665387600B2F38A /* TicketDescriptionCell.xib in Resources */,
 				65437CFB2665387600B2F38A /* TicketCell.xib in Resources */,
+				9F343A69269C53CE0071362D /* BarChartHeaderView.xib in Resources */,
 				65437CFC2665387600B2F38A /* AboutViewController.xib in Resources */,
 				65437CFD2665387600B2F38A /* CollaborationCounterCell.xib in Resources */,
 				65437CFE2665387600B2F38A /* CollaborationHeader.xib in Resources */,
@@ -3323,8 +3497,10 @@
 				65437E86266539BF00B2F38A /* AuthViewController.xib in Resources */,
 				65437E87266539BF00B2F38A /* ApplicationStatusViewController.xib in Resources */,
 				9F3028342681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
+				9FFB81A726A1E26B00674872 /* UsageMetricsViewController.xib in Resources */,
 				65437E88266539BF00B2F38A /* CollaborationCounterCell.xib in Resources */,
 				65437E89266539BF00B2F38A /* TicketDetailsMessageCell.xib in Resources */,
+				658BEF84268FC63700D4FD2C /* ActiveUsersViewController.xib in Resources */,
 				65437E8A266539BF00B2F38A /* SF-Pro-Display-Light.ttf in Resources */,
 				65437E8B266539BF00B2F38A /* InfoArticleCell.xib in Resources */,
 				65437E8C266539BF00B2F38A /* HelpDeskHeader.xib in Resources */,
@@ -3348,9 +3524,11 @@
 				65437E9D266539BF00B2F38A /* CollaborationHeader.xib in Resources */,
 				65437E9E266539BF00B2F38A /* LaunchScreen.storyboard in Resources */,
 				65437E9F266539BF00B2F38A /* ServiceDeskAboutViewController.xib in Resources */,
+				6513C9DC269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */,
 				65437EA0266539BF00B2F38A /* SF-Pro-Text-Italic.ttf in Resources */,
 				65437EA1266539BF00B2F38A /* AboutSupportCell.xib in Resources */,
 				65437EA2266539BF00B2F38A /* SF-Pro-Text-Medium.otf in Resources */,
+				9F343A57269C4EED0071362D /* ChartsViewController.xib in Resources */,
 				65437EA3266539BF00B2F38A /* Office365AppCell.xib in Resources */,
 				65437EA4266539BF00B2F38A /* Assets.xcassets in Resources */,
 				65437EA5266539BF00B2F38A /* Apps.storyboard in Resources */,
@@ -3358,6 +3536,7 @@
 				65437EA7266539BF00B2F38A /* SwitcherCell.xib in Resources */,
 				65437EA8266539BF00B2F38A /* SF-Pro-Text-Regular.otf in Resources */,
 				9F3027FC2681D228009A3096 /* AlertDetailsCell.xib in Resources */,
+				9F343A9326A1CE3C0071362D /* BarChartCell.xib in Resources */,
 				65437EA9266539BF00B2F38A /* WhatsNewCell.xib in Resources */,
 				65437EAA266539BF00B2F38A /* QuickHelpViewController.xib in Resources */,
 				9F30285E2681E68C009A3096 /* AlertPopoverViewController.xib in Resources */,
@@ -3384,6 +3563,7 @@
 				65437EBB266539BF00B2F38A /* NoCommentsCell.xib in Resources */,
 				65437EBC266539BF00B2F38A /* AppTipsAndTricksViewController.xib in Resources */,
 				65437EBD266539BF00B2F38A /* Collaboration.storyboard in Resources */,
+				54D59C272695E0000037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				65437EBE266539BF00B2F38A /* WhatsNewViewController.xib in Resources */,
 				65437EBF266539BF00B2F38A /* MyDevicesViewController.xib in Resources */,
 				65437EC0266539BF00B2F38A /* AppContactCell.xib in Resources */,
@@ -3396,6 +3576,7 @@
 				65437EC7266539BF00B2F38A /* NewsCollectionViewCell.xib in Resources */,
 				65437EC8266539BF00B2F38A /* TicketCell.xib in Resources */,
 				9F3028572681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
+				9F343A67269C53CE0071362D /* BarChartHeaderView.xib in Resources */,
 				65437EC9266539BF00B2F38A /* GeneralScreen.storyboard in Resources */,
 				65437ECA266539BF00B2F38A /* GoogleService-Info.plist in Resources */,
 				65437ECB266539BF00B2F38A /* MetricStatsCell.xib in Resources */,
@@ -3424,8 +3605,10 @@
 				65437FF32665568000B2F38A /* SF-Pro-Display-Light.ttf in Resources */,
 				65437FF42665568000B2F38A /* ApplicationCell.xib in Resources */,
 				9F3028352681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
+				9FFB81A826A1E26C00674872 /* UsageMetricsViewController.xib in Resources */,
 				65437FF52665568000B2F38A /* CollaborationCounterCell.xib in Resources */,
 				65437FF62665568000B2F38A /* SF-Pro-Text-Semibold.ttf in Resources */,
+				658BEF85268FC63700D4FD2C /* ActiveUsersViewController.xib in Resources */,
 				65437FF72665568000B2F38A /* HelpDeskHeader.xib in Resources */,
 				65437FF82665568000B2F38A /* ServiceDeskAboutCell.xib in Resources */,
 				65437FF92665568000B2F38A /* SF-Pro-Display-Medium.otf in Resources */,
@@ -3449,9 +3632,11 @@
 				6543800A2665568000B2F38A /* CollaborationHeader.xib in Resources */,
 				6543800B2665568000B2F38A /* AboutSupportCell.xib in Resources */,
 				6543800C2665568000B2F38A /* HelpDeskCell.xib in Resources */,
+				6513C9DD269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */,
 				6543800D2665568000B2F38A /* SF-Pro-Text-Italic.ttf in Resources */,
 				6543800E2665568000B2F38A /* AppsServiceAlertCell.xib in Resources */,
 				6543800F2665568000B2F38A /* AboutHeaderCell.xib in Resources */,
+				9F343A58269C4EED0071362D /* ChartsViewController.xib in Resources */,
 				654380102665568000B2F38A /* Office365AppCell.xib in Resources */,
 				654380112665568000B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
 				654380122665568000B2F38A /* Apps.storyboard in Resources */,
@@ -3459,6 +3644,7 @@
 				654380142665568000B2F38A /* SwitcherCell.xib in Resources */,
 				654380152665568000B2F38A /* QuickHelpViewController.xib in Resources */,
 				9F3027FD2681D228009A3096 /* AlertDetailsCell.xib in Resources */,
+				9F343A9426A1CE3C0071362D /* BarChartCell.xib in Resources */,
 				654380162665568000B2F38A /* WhatsNewCell.xib in Resources */,
 				654380172665568000B2F38A /* OfficeStatusCell.xib in Resources */,
 				9F30285F2681E68C009A3096 /* AlertPopoverViewController.xib in Resources */,
@@ -3485,6 +3671,7 @@
 				654380282665568000B2F38A /* NoCommentsCell.xib in Resources */,
 				654380292665568000B2F38A /* AppsTableViewHeader.xib in Resources */,
 				6543802A2665568000B2F38A /* Collaboration.storyboard in Resources */,
+				54D59C282695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				6543802B2665568000B2F38A /* WhatsNewViewController.xib in Resources */,
 				6543802C2665568000B2F38A /* SecondTicketDetailsViewController.xib in Resources */,
 				6543802D2665568000B2F38A /* TicketDetailsViewController.xib in Resources */,
@@ -3497,6 +3684,7 @@
 				654380342665568000B2F38A /* ServiceDeskAboutViewController.xib in Resources */,
 				654380352665568000B2F38A /* MetricStatsCell.xib in Resources */,
 				9F3028582681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
+				9F343A68269C53CE0071362D /* BarChartHeaderView.xib in Resources */,
 				654380362665568000B2F38A /* GeneralScreen.storyboard in Resources */,
 				654380372665568000B2F38A /* TicketCell.xib in Resources */,
 				654380382665568000B2F38A /* AboutViewController.xib in Resources */,
@@ -3525,8 +3713,10 @@
 				9F9D9CB82588C59600DC4231 /* AuthViewController.xib in Resources */,
 				9F895B12255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9F3028302681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
+				9FFB81A626A1E26A00674872 /* UsageMetricsViewController.xib in Resources */,
 				9F6435CF261F2077000D94A4 /* CollaborationCounterCell.xib in Resources */,
 				9FF054322567E1D80071E596 /* TicketDetailsMessageCell.xib in Resources */,
+				658BEF80268FC63600D4FD2C /* ActiveUsersViewController.xib in Resources */,
 				9F36D43C2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F1620D42566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
 				C9EC9EB425756C1400315AAE /* HelpDeskHeader.xib in Resources */,
@@ -3550,9 +3740,11 @@
 				9F35860725FD219D0003658D /* CollaborationHeader.xib in Resources */,
 				659A5ABD255401ED00E13B77 /* LaunchScreen.storyboard in Resources */,
 				C960A0E825B08B52004A9C65 /* ServiceDeskAboutViewController.xib in Resources */,
+				6513C9D8269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */,
 				9FA17E3126340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */,
 				9FE173D225914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
 				659A5AF4255404F100E13B77 /* SF-Pro-Text-Medium.otf in Resources */,
+				9F343A53269C4EED0071362D /* ChartsViewController.xib in Resources */,
 				9F35862D25FD37BF0003658D /* Office365AppCell.xib in Resources */,
 				659A5ABA255401ED00E13B77 /* Assets.xcassets in Resources */,
 				9FA2C6A32628CFC900EC5BE3 /* Apps.storyboard in Resources */,
@@ -3560,6 +3752,7 @@
 				9F3AC95A264D4790004074C8 /* SwitcherCell.xib in Resources */,
 				659A5AF5255404F200E13B77 /* SF-Pro-Text-Regular.otf in Resources */,
 				9F3027F82681D228009A3096 /* AlertDetailsCell.xib in Resources */,
+				9F343A8F26A1CE3C0071362D /* BarChartCell.xib in Resources */,
 				9F643566261B1E88000D94A4 /* WhatsNewCell.xib in Resources */,
 				C993A2B12576664300F9146A /* QuickHelpViewController.xib in Resources */,
 				9F30285A2681E68C009A3096 /* AlertPopoverViewController.xib in Resources */,
@@ -3586,6 +3779,7 @@
 				9FB9C16B2631C04E00BA753D /* NoCommentsCell.xib in Resources */,
 				9F44AE1F25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
 				6547566D25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */,
+				54D59C1B2695CCD80037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				9F643554261B1C9F000D94A4 /* WhatsNewViewController.xib in Resources */,
 				C9424E0425642632003C247E /* MyDevicesViewController.xib in Resources */,
 				C907E0DB25D4382500FB0B55 /* AppContactCell.xib in Resources */,
@@ -3598,6 +3792,7 @@
 				9F78CFE82564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
 				C962D82B2566D21100727949 /* TicketCell.xib in Resources */,
 				9F3028532681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
+				9F343A63269C53CE0071362D /* BarChartHeaderView.xib in Resources */,
 				9F3AC938264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
 				9F825FF525ED5612002A4560 /* GoogleService-Info.plist in Resources */,
 				C9DFD47F2565721F00BF1740 /* MetricStatsCell.xib in Resources */,
@@ -3634,7 +3829,9 @@
 				9F33F6A8260A3C4000470A47 /* OfficeInfoCell.xib in Resources */,
 				9F33F6A9260A3C4000470A47 /* SecondSendMessageView.xib in Resources */,
 				9F30285D2681E68C009A3096 /* AlertPopoverViewController.xib in Resources */,
+				54D59C262695E0000037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				9F33F6AA260A3C4000470A47 /* Home.storyboard in Resources */,
+				658BEF83268FC63700D4FD2C /* ActiveUsersViewController.xib in Resources */,
 				9F33F6AB260A3C4000470A47 /* AuthViewController.xib in Resources */,
 				9F33F6AC260A3C4000470A47 /* ApplicationStatusViewController.xib in Resources */,
 				9F33F6AD260A3C4000470A47 /* SF-Pro-Display-Light.ttf in Resources */,
@@ -3643,7 +3840,8 @@
 				9F33F6AF260A3C4000470A47 /* SF-Pro-Text-Semibold.ttf in Resources */,
 				9F33F6B0260A3C4000470A47 /* HelpDeskHeader.xib in Resources */,
 				9F33F6B1260A3C4000470A47 /* ServiceDeskAboutCell.xib in Resources */,
-				9F33F6B2260A3C4000470A47 /* BuildFile in Resources */,
+				9F343A66269C53CE0071362D /* BarChartHeaderView.xib in Resources */,
+				9F33F6B2260A3C4000470A47 /* (null) in Resources */,
 				9F33F6B3260A3C4000470A47 /* SF-Pro-Display-Medium.otf in Resources */,
 				9F33F6B4260A3C4000470A47 /* SystemStatusHeader.xib in Resources */,
 				9F33F6B5260A3C4000470A47 /* AboutSupportPolicyCell.xib in Resources */,
@@ -3651,6 +3849,7 @@
 				9F33F6B7260A3C4000470A47 /* SF-Pro-Text-Light.ttf in Resources */,
 				9F33F6B8260A3C4000470A47 /* SF-Pro-Display-Bold.otf in Resources */,
 				9F33F6B9260A3C4000470A47 /* SendMessageView.xib in Resources */,
+				9F343A56269C4EED0071362D /* ChartsViewController.xib in Resources */,
 				9F2C825B2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */,
 				9F33F6BA260A3C4000470A47 /* LaunchScreen.storyboard in Resources */,
 				9F33F6BB260A3C4000470A47 /* SF-Pro-Text-Medium.otf in Resources */,
@@ -3662,6 +3861,7 @@
 				9F33F6BF260A3C4000470A47 /* SF-Pro-Text-Regular.otf in Resources */,
 				9F33F6C0260A3C4000470A47 /* MetricStatsHeader.xib in Resources */,
 				9F33F6C1260A3C4000470A47 /* CollaborationHeader.xib in Resources */,
+				658BEF4B268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
 				9F33F6C2260A3C4000470A47 /* AboutSupportCell.xib in Resources */,
 				9FA17E3426340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */,
 				9F33F6C3260A3C4000470A47 /* HelpDeskCell.xib in Resources */,
@@ -3700,8 +3900,10 @@
 				9F3027FB2681D228009A3096 /* AlertDetailsCell.xib in Resources */,
 				9F3027F42681D228009A3096 /* ProductionAlertCell.xib in Resources */,
 				9F33F6D9260A3C4000470A47 /* Collaboration.storyboard in Resources */,
+				6513C9DB269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */,
 				9F643557261B1C9F000D94A4 /* WhatsNewViewController.xib in Resources */,
 				9F3AC950264D44E7004074C8 /* NotificationSettingsViewController.xib in Resources */,
+				9F343A9226A1CE3C0071362D /* BarChartCell.xib in Resources */,
 				9F33F6DA260A3C4000470A47 /* SecondTicketDetailsViewController.xib in Resources */,
 				9F33F6DB260A3C4000470A47 /* TicketDetailsViewController.xib in Resources */,
 				9F6435DD261F22F6000D94A4 /* SF-Pro-Text-Bold.ttf in Resources */,
@@ -3742,8 +3944,10 @@
 				9F36D43D2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F895AEB255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F3028312681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
+				9FFB81A526A1E26800674872 /* UsageMetricsViewController.xib in Resources */,
 				9F6435D0261F2077000D94A4 /* CollaborationCounterCell.xib in Resources */,
 				9F36D4342562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */,
+				658BEF81268FC63600D4FD2C /* ActiveUsersViewController.xib in Resources */,
 				C9EC9EB525756C1400315AAE /* HelpDeskHeader.xib in Resources */,
 				C960A10125B08CAC004A9C65 /* ServiceDeskAboutCell.xib in Resources */,
 				9F819A99255C1572007C1739 /* SF-Pro-Display-Medium.otf in Resources */,
@@ -3767,9 +3971,11 @@
 				9F35860825FD219D0003658D /* CollaborationHeader.xib in Resources */,
 				9FE173D325914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
 				C91F708F2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
+				6513C9D9269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */,
 				9FA17E3226340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */,
 				9F895AF1255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				9FA8E91125B056D5007D3B9F /* AboutHeaderCell.xib in Resources */,
+				9F343A54269C4EED0071362D /* ChartsViewController.xib in Resources */,
 				9F35862E25FD37BF0003658D /* Office365AppCell.xib in Resources */,
 				9F819AA0255C1572007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
 				9FA2C6A42628CFC900EC5BE3 /* Apps.storyboard in Resources */,
@@ -3777,6 +3983,7 @@
 				9F3AC95B264D4790004074C8 /* SwitcherCell.xib in Resources */,
 				C993A2B22576664300F9146A /* QuickHelpViewController.xib in Resources */,
 				9F3027F92681D228009A3096 /* AlertDetailsCell.xib in Resources */,
+				9F343A9026A1CE3C0071362D /* BarChartCell.xib in Resources */,
 				9F643567261B1E88000D94A4 /* WhatsNewCell.xib in Resources */,
 				9F78D0E2256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				9F30285B2681E68C009A3096 /* AlertPopoverViewController.xib in Resources */,
@@ -3803,6 +4010,7 @@
 				9FB9C16C2631C04E00BA753D /* NoCommentsCell.xib in Resources */,
 				9F895AEE255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				6547566E25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */,
+				54D59C242695DFFF0037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				9F643555261B1C9F000D94A4 /* WhatsNewViewController.xib in Resources */,
 				9FF0546A25681F4A0071E596 /* SecondTicketDetailsViewController.xib in Resources */,
 				9F5B10612567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */,
@@ -3815,6 +4023,7 @@
 				C960A0E925B08B52004A9C65 /* ServiceDeskAboutViewController.xib in Resources */,
 				C9DFD4802565721F00BF1740 /* MetricStatsCell.xib in Resources */,
 				9F3028542681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
+				9F343A64269C53CE0071362D /* BarChartHeaderView.xib in Resources */,
 				9F3AC939264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
 				C962D82C2566D21100727949 /* TicketCell.xib in Resources */,
 				C93FCF0A25648FA0001E86F6 /* AboutViewController.xib in Resources */,
@@ -3869,9 +4078,11 @@
 				9FA2C6A52628CFC900EC5BE3 /* Apps.storyboard in Resources */,
 				9F819AC7255C1646007C1739 /* SF-Pro-Text-Medium.otf in Resources */,
 				6547566F25FA4AE6002C45C4 /* Collaboration.storyboard in Resources */,
+				6513C9DA269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */,
 				9FF054342567E1D80071E596 /* TicketDetailsMessageCell.xib in Resources */,
 				9F819AC8255C1646007C1739 /* Assets.xcassets in Resources */,
 				C9766FB12576394500E9E697 /* ServiceDeskContactsViewController.xib in Resources */,
+				9F343A55269C4EED0071362D /* ChartsViewController.xib in Resources */,
 				9F819AC9255C1646007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
 				C9DFD49D25657B7600BF1740 /* MetricStatsHeader.xib in Resources */,
 				C960A0EA25B08B52004A9C65 /* ServiceDeskAboutViewController.xib in Resources */,
@@ -3879,6 +4090,7 @@
 				9F35860C25FD219D0003658D /* CollaborationHeaderCell.xib in Resources */,
 				9F2C826E2657CE02004407B4 /* GlobalAlertViewController.xib in Resources */,
 				9FE173D425914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
+				9F343A9126A1CE3C0071362D /* BarChartCell.xib in Resources */,
 				C91F70902562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
 				9F895AF2255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				9F3027FA2681D228009A3096 /* AlertDetailsCell.xib in Resources */,
@@ -3892,6 +4104,7 @@
 				9F78D0E3256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */,
 				9F2C82622657CE02004407B4 /* GlobalAlertCell.xib in Resources */,
+				54D59C252695DFFF0037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				9FA4DC8E2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
 				C9D035E32579B68D0068441F /* ServiceDeskContactCell.xib in Resources */,
 				C993A2CB2576686500F9146A /* QuickHelpCell.xib in Resources */,
@@ -3903,6 +4116,7 @@
 				C9705B812566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
 				9F3AC9022645A30B004074C8 /* GTTeamViewController.xib in Resources */,
 				C9EC9E9E25756BA400315AAE /* HelpDeskContactOptionCell.xib in Resources */,
+				658BEF82268FC63600D4FD2C /* ActiveUsersViewController.xib in Resources */,
 				C907E0C525D437BF00FB0B55 /* AppContactsViewController.xib in Resources */,
 				9F895AEF255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9FF0546B25681F4A0071E596 /* SecondTicketDetailsViewController.xib in Resources */,
@@ -3913,8 +4127,10 @@
 				9F35862F25FD37BF0003658D /* Office365AppCell.xib in Resources */,
 				9F78CFEA2564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
 				C9DFD4812565721F00BF1740 /* MetricStatsCell.xib in Resources */,
+				658BEF4A268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
 				9F803249260A666900ED6224 /* TicketDescriptionCell.xib in Resources */,
 				C962D82D2566D21100727949 /* TicketCell.xib in Resources */,
+				9F343A65269C53CE0071362D /* BarChartHeaderView.xib in Resources */,
 				C93FCF0B25648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				9F6435D1261F2077000D94A4 /* CollaborationCounterCell.xib in Resources */,
 				9F35860925FD219D0003658D /* CollaborationHeader.xib in Resources */,
@@ -4252,18 +4468,21 @@
 				65437C492665387600B2F38A /* ImageCacheManager.swift in Sources */,
 				65437C4A2665387600B2F38A /* InfoArticleCell.swift in Sources */,
 				65437C4B2665387600B2F38A /* GlobalAlertDetailsCell.swift in Sources */,
+				9F343A8D26A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				65437C4C2665387600B2F38A /* CollaborationHeader.swift in Sources */,
 				65437C4D2665387600B2F38A /* QuickHelpViewController.swift in Sources */,
 				65437C4E2665387600B2F38A /* TicketDetailsViewController.swift in Sources */,
 				65437C4F2665387600B2F38A /* MyAppsResponses.swift in Sources */,
 				65437C502665387600B2F38A /* NewsCollectionViewCell.swift in Sources */,
 				65437C512665387600B2F38A /* GTTeamViewController.swift in Sources */,
+				9F343A52269C4EED0071362D /* ChartsViewController.swift in Sources */,
 				65437C522665387600B2F38A /* SendMessageView.swift in Sources */,
 				65437C532665387600B2F38A /* OfficeLocationViewController.swift in Sources */,
 				65437C542665387600B2F38A /* TicketCell.swift in Sources */,
 				65437C552665387600B2F38A /* AboutViewController.swift in Sources */,
 				65437C562665387600B2F38A /* WhatsNewViewController.swift in Sources */,
 				65437C572665387600B2F38A /* GlobalNewsResponses.swift in Sources */,
+				6513CA24269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				65437C582665387600B2F38A /* QuickHelpCell.swift in Sources */,
 				65437C592665387600B2F38A /* HomepageTableViewController.swift in Sources */,
 				65437C5A2665387600B2F38A /* AuthViewController.swift in Sources */,
@@ -4284,6 +4503,7 @@
 				65437C682665387600B2F38A /* GTA.xcdatamodeld in Sources */,
 				9F30280C2681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				65437C692665387600B2F38A /* ServiceDeskAboutViewController.swift in Sources */,
+				658BF0C9268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
 				65437C6A2665387600B2F38A /* GTTeamCell.swift in Sources */,
 				65437C6B2665387600B2F38A /* ServiceDeskContactsViewController.swift in Sources */,
 				65437C6C2665387600B2F38A /* HelpDeskCell.swift in Sources */,
@@ -4295,6 +4515,7 @@
 				65437C712665387600B2F38A /* LoginDataProvider.swift in Sources */,
 				65437C722665387600B2F38A /* SwitcherCell.swift in Sources */,
 				65437C732665387600B2F38A /* CollaborationCounterCell.swift in Sources */,
+				658BEF7F268FC63600D4FD2C /* LineChartViewController.swift in Sources */,
 				65437C742665387600B2F38A /* LoginUSMViewController.swift in Sources */,
 				65437C752665387600B2F38A /* WhatsNewCell.swift in Sources */,
 				65437C762665387600B2F38A /* Utils.swift in Sources */,
@@ -4302,6 +4523,7 @@
 				65437C782665387600B2F38A /* Office365ViewController.swift in Sources */,
 				9F30284B2681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				65437C792665387600B2F38A /* AppsViewController.swift in Sources */,
+				6513CA0A269F32FC0046817F /* ActiveUsersViewController.swift in Sources */,
 				65437C7A2665387600B2F38A /* AnimatedCollectionViewLayout.swift in Sources */,
 				65437C7B2665387600B2F38A /* ServiceDeskContactCell.swift in Sources */,
 				65437C7C2665387600B2F38A /* GeneralDataProvider.swift in Sources */,
@@ -4311,6 +4533,7 @@
 				65437C802665387600B2F38A /* CommonResponses.swift in Sources */,
 				65437C812665387600B2F38A /* Office365AppCell.swift in Sources */,
 				65437C822665387600B2F38A /* WhatsNewMoreViewController.swift in Sources */,
+				9F343A61269C53BD0071362D /* BarChartHeaderView.swift in Sources */,
 				65437C832665387600B2F38A /* AboutHeaderCell.swift in Sources */,
 				65437C842665387600B2F38A /* OfficeSelectionCell.swift in Sources */,
 				65437C852665387600B2F38A /* SecondSendMessageView.swift in Sources */,
@@ -4356,6 +4579,7 @@
 				65437CA72665387600B2F38A /* CustomUISwitch.swift in Sources */,
 				65437CA82665387600B2F38A /* AppsServiceAlertCell.swift in Sources */,
 				65437CA92665387600B2F38A /* CacheManager.swift in Sources */,
+				54D59C232695DFF90037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				65437CAB2665387600B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437CAC2665387600B2F38A /* CustomTextField.swift in Sources */,
 				65437CAD2665387600B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
@@ -4384,18 +4608,21 @@
 				65437E17266539BF00B2F38A /* ImageCacheManager.swift in Sources */,
 				65437E18266539BF00B2F38A /* CollaborationHeader.swift in Sources */,
 				65437E19266539BF00B2F38A /* GlobalAlertDetailsCell.swift in Sources */,
+				9F343A8B26A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				65437E1A266539BF00B2F38A /* QuickHelpViewController.swift in Sources */,
 				65437E1B266539BF00B2F38A /* InfoViewController.swift in Sources */,
 				65437E1C266539BF00B2F38A /* MyAppsResponses.swift in Sources */,
 				65437E1D266539BF00B2F38A /* AboutViewController.swift in Sources */,
 				65437E1E266539BF00B2F38A /* HomepageTableViewController.swift in Sources */,
 				65437E1F266539BF00B2F38A /* GTTeamViewController.swift in Sources */,
+				9F343A50269C4EED0071362D /* ChartsViewController.swift in Sources */,
 				65437E20266539BF00B2F38A /* ChartLayoutHelper.swift in Sources */,
 				65437E21266539BF00B2F38A /* TicketCell.swift in Sources */,
 				65437E22266539BF00B2F38A /* SecondTicketDetailsViewController.swift in Sources */,
 				65437E23266539BF00B2F38A /* GlobalNewsResponses.swift in Sources */,
 				65437E24266539BF00B2F38A /* WhatsNewViewController.swift in Sources */,
 				65437E25266539BF00B2F38A /* QuickHelpCell.swift in Sources */,
+				6513CA22269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				65437E26266539BF00B2F38A /* AppsTableViewHeader.swift in Sources */,
 				65437E27266539BF00B2F38A /* AuthViewController.swift in Sources */,
 				65437E28266539BF00B2F38A /* InfoArticleCell.swift in Sources */,
@@ -4416,6 +4643,7 @@
 				65437E36266539BF00B2F38A /* ServiceDeskAboutViewController.swift in Sources */,
 				9F30280A2681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				65437E37266539BF00B2F38A /* ServiceDeskContactsViewController.swift in Sources */,
+				658BF0C7268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
 				65437E38266539BF00B2F38A /* GTTeamCell.swift in Sources */,
 				65437E39266539BF00B2F38A /* ApplicationCell.swift in Sources */,
 				65437E3A266539BF00B2F38A /* MyAppsDataProvider.swift in Sources */,
@@ -4427,6 +4655,7 @@
 				65437E3F266539BF00B2F38A /* LoginUSMViewController.swift in Sources */,
 				65437E40266539BF00B2F38A /* SwitcherCell.swift in Sources */,
 				65437E41266539BF00B2F38A /* CollaborationCounterCell.swift in Sources */,
+				658BEF7D268FC63600D4FD2C /* LineChartViewController.swift in Sources */,
 				65437E42266539BF00B2F38A /* HomepageViewController.swift in Sources */,
 				65437E43266539BF00B2F38A /* WhatsNewCell.swift in Sources */,
 				65437E44266539BF00B2F38A /* TicketDetailsViewController.swift in Sources */,
@@ -4434,6 +4663,7 @@
 				65437E46266539BF00B2F38A /* TicketDetailsMessageCell.swift in Sources */,
 				9F3028492681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				65437E47266539BF00B2F38A /* AnimatedCollectionViewLayout.swift in Sources */,
+				6513CA08269F32FC0046817F /* ActiveUsersViewController.swift in Sources */,
 				65437E48266539BF00B2F38A /* ServiceDeskContactCell.swift in Sources */,
 				65437E49266539BF00B2F38A /* AboutInfoCell.swift in Sources */,
 				65437E4A266539BF00B2F38A /* GeneralDataProvider.swift in Sources */,
@@ -4443,6 +4673,7 @@
 				65437E4E266539BF00B2F38A /* Office365AppCell.swift in Sources */,
 				65437E4F266539BF00B2F38A /* AboutHeaderCell.swift in Sources */,
 				65437E50266539BF00B2F38A /* WhatsNewMoreViewController.swift in Sources */,
+				9F343A5F269C53BD0071362D /* BarChartHeaderView.swift in Sources */,
 				65437E51266539BF00B2F38A /* SendMessageView.swift in Sources */,
 				65437E52266539BF00B2F38A /* OfficeSelectionCell.swift in Sources */,
 				65437E53266539BF00B2F38A /* StatsBarView.swift in Sources */,
@@ -4488,6 +4719,7 @@
 				65437E76266539BF00B2F38A /* DeviceCell.swift in Sources */,
 				65437E77266539BF00B2F38A /* CacheManager.swift in Sources */,
 				65437E78266539BF00B2F38A /* AppsServiceAlertCell.swift in Sources */,
+				54D59C212695DFF80037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				65437E79266539BF00B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437E7A266539BF00B2F38A /* CustomTextField.swift in Sources */,
 				65437E7B266539BF00B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
@@ -4516,18 +4748,21 @@
 				65437F842665568000B2F38A /* ImageCacheManager.swift in Sources */,
 				65437F852665568000B2F38A /* InfoArticleCell.swift in Sources */,
 				65437F862665568000B2F38A /* GlobalAlertDetailsCell.swift in Sources */,
+				9F343A8C26A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				65437F872665568000B2F38A /* CollaborationHeader.swift in Sources */,
 				65437F882665568000B2F38A /* QuickHelpViewController.swift in Sources */,
 				65437F892665568000B2F38A /* TicketDetailsViewController.swift in Sources */,
 				65437F8A2665568000B2F38A /* MyAppsResponses.swift in Sources */,
 				65437F8B2665568000B2F38A /* NewsCollectionViewCell.swift in Sources */,
 				65437F8C2665568000B2F38A /* GTTeamViewController.swift in Sources */,
+				9F343A51269C4EED0071362D /* ChartsViewController.swift in Sources */,
 				65437F8D2665568000B2F38A /* SendMessageView.swift in Sources */,
 				65437F8E2665568000B2F38A /* OfficeLocationViewController.swift in Sources */,
 				65437F8F2665568000B2F38A /* TicketCell.swift in Sources */,
 				65437F902665568000B2F38A /* AboutViewController.swift in Sources */,
 				65437F912665568000B2F38A /* WhatsNewViewController.swift in Sources */,
 				65437F922665568000B2F38A /* GlobalNewsResponses.swift in Sources */,
+				6513CA23269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				65437F932665568000B2F38A /* QuickHelpCell.swift in Sources */,
 				65437F942665568000B2F38A /* HomepageTableViewController.swift in Sources */,
 				65437F952665568000B2F38A /* AuthViewController.swift in Sources */,
@@ -4548,6 +4783,7 @@
 				65437FA32665568000B2F38A /* GTA.xcdatamodeld in Sources */,
 				9F30280B2681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				65437FA42665568000B2F38A /* ServiceDeskAboutViewController.swift in Sources */,
+				658BF0C8268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
 				65437FA52665568000B2F38A /* GTTeamCell.swift in Sources */,
 				65437FA62665568000B2F38A /* ServiceDeskContactsViewController.swift in Sources */,
 				65437FA72665568000B2F38A /* HelpDeskCell.swift in Sources */,
@@ -4559,6 +4795,7 @@
 				65437FAC2665568000B2F38A /* LoginDataProvider.swift in Sources */,
 				65437FAD2665568000B2F38A /* SwitcherCell.swift in Sources */,
 				65437FAE2665568000B2F38A /* CollaborationCounterCell.swift in Sources */,
+				658BEF7E268FC63600D4FD2C /* LineChartViewController.swift in Sources */,
 				65437FAF2665568000B2F38A /* LoginUSMViewController.swift in Sources */,
 				65437FB02665568000B2F38A /* WhatsNewCell.swift in Sources */,
 				65437FB12665568000B2F38A /* Utils.swift in Sources */,
@@ -4566,6 +4803,7 @@
 				65437FB32665568000B2F38A /* Office365ViewController.swift in Sources */,
 				9F30284A2681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				65437FB42665568000B2F38A /* AppsViewController.swift in Sources */,
+				6513CA09269F32FC0046817F /* ActiveUsersViewController.swift in Sources */,
 				65437FB52665568000B2F38A /* AnimatedCollectionViewLayout.swift in Sources */,
 				65437FB62665568000B2F38A /* ServiceDeskContactCell.swift in Sources */,
 				65437FB72665568000B2F38A /* GeneralDataProvider.swift in Sources */,
@@ -4575,6 +4813,7 @@
 				65437FBB2665568000B2F38A /* CommonResponses.swift in Sources */,
 				65437FBC2665568000B2F38A /* Office365AppCell.swift in Sources */,
 				65437FBD2665568000B2F38A /* WhatsNewMoreViewController.swift in Sources */,
+				9F343A60269C53BD0071362D /* BarChartHeaderView.swift in Sources */,
 				65437FBE2665568000B2F38A /* AboutHeaderCell.swift in Sources */,
 				65437FBF2665568000B2F38A /* OfficeSelectionCell.swift in Sources */,
 				65437FC02665568000B2F38A /* SecondSendMessageView.swift in Sources */,
@@ -4620,6 +4859,7 @@
 				65437FE22665568000B2F38A /* CustomUISwitch.swift in Sources */,
 				65437FE32665568000B2F38A /* AppsServiceAlertCell.swift in Sources */,
 				65437FE42665568000B2F38A /* CacheManager.swift in Sources */,
+				54D59C222695DFF80037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				65437FE62665568000B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437FE72665568000B2F38A /* CustomTextField.swift in Sources */,
 				65437FE82665568000B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
@@ -4648,18 +4888,21 @@
 				9F6FD63E25B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9F35860D25FD219D0003658D /* CollaborationHeader.swift in Sources */,
 				9F2C82642657CE02004407B4 /* GlobalAlertDetailsCell.swift in Sources */,
+				9F343A8726A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				C993A2AE2576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */,
 				9F8164AF257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
 				C93FCF0625648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F36D4652562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F3AC8FC2645A30B004074C8 /* GTTeamViewController.swift in Sources */,
+				9F343A4C269C4EED0071362D /* ChartsViewController.swift in Sources */,
 				C9DFD4C025659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
 				C962D8282566D21100727949 /* TicketCell.swift in Sources */,
 				9FF0546625681F4A0071E596 /* SecondTicketDetailsViewController.swift in Sources */,
 				C9D035992578095A0068441F /* GlobalNewsResponses.swift in Sources */,
 				9F643550261B1C9F000D94A4 /* WhatsNewViewController.swift in Sources */,
 				C993A2C62576686500F9146A /* QuickHelpCell.swift in Sources */,
+				6513CA1E269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				9F895AE1255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F9D9CB52588C59600DC4231 /* AuthViewController.swift in Sources */,
 				9F1620DA2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
@@ -4680,6 +4923,7 @@
 				C960A0E525B08B52004A9C65 /* ServiceDeskAboutViewController.swift in Sources */,
 				9F3028062681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				C9766FAC2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
+				658BF0C3268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
 				9F3AC9082645B17A004074C8 /* GTTeamCell.swift in Sources */,
 				9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F8164B8257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
@@ -4691,6 +4935,7 @@
 				9FBAF4862577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				9F3AC956264D4790004074C8 /* SwitcherCell.swift in Sources */,
 				9F6435CB261F2077000D94A4 /* CollaborationCounterCell.swift in Sources */,
+				658BEF79268FC63600D4FD2C /* LineChartViewController.swift in Sources */,
 				9F36D4682562C286000EE0F1 /* HomepageViewController.swift in Sources */,
 				9F643562261B1E88000D94A4 /* WhatsNewCell.swift in Sources */,
 				9F5B105D2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
@@ -4698,6 +4943,7 @@
 				9FF0542F2567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				9F3028452681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				9FB59F852576825E00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
+				6513CA04269F32FB0046817F /* ActiveUsersViewController.swift in Sources */,
 				C9D035DE2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				C93FCF192564901E001E86F6 /* AboutInfoCell.swift in Sources */,
 				9F2C823C26552A29004407B4 /* GeneralDataProvider.swift in Sources */,
@@ -4707,6 +4953,7 @@
 				9F35862A25FD37BF0003658D /* Office365AppCell.swift in Sources */,
 				9FA8E90D25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
 				9F643573261B5D3F000D94A4 /* WhatsNewMoreViewController.swift in Sources */,
+				9F343A5B269C53BC0071362D /* BarChartHeaderView.swift in Sources */,
 				9FF0545C25680ED30071E596 /* SendMessageView.swift in Sources */,
 				C9EFDA2F25A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				C9DFD4B725659C1100BF1740 /* StatsBarView.swift in Sources */,
@@ -4752,6 +4999,7 @@
 				C9424E14256427F0003C247E /* DeviceCell.swift in Sources */,
 				659C595B25924106007953A7 /* CacheManager.swift in Sources */,
 				9F895AE4255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
+				54D59C1A2695CCD80037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				9F2C82542657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				9F895B7B255D8812004489C6 /* CustomTextField.swift in Sources */,
 				9F44AE1C25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,
@@ -4782,12 +5030,14 @@
 				9F33F647260A3C4000470A47 /* CollaborationDataProvider.swift in Sources */,
 				9F3027E62681D228009A3096 /* ProductionAlertCounterCell.swift in Sources */,
 				9F33F648260A3C4000470A47 /* AppContactCell.swift in Sources */,
+				6513CA21269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				9F3AC94C264D44E7004074C8 /* NotificationSettingsViewController.swift in Sources */,
 				9F33F649260A3C4000470A47 /* HelpDeskDataProvider.swift in Sources */,
 				9F33F64A260A3C4000470A47 /* SessionExpiredHandler.swift in Sources */,
 				9F33F64B260A3C4000470A47 /* AppContactsViewController.swift in Sources */,
 				9F33F64C260A3C4000470A47 /* MetricStatsHeader.swift in Sources */,
 				9F33F64D260A3C4000470A47 /* ApplicationStatusViewController.swift in Sources */,
+				658BF0C6268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
 				9F30283B2681D42F009A3096 /* ProductionAlertsResponses.swift in Sources */,
 				9F33F64E260A3C4000470A47 /* HelpDeskHeader.swift in Sources */,
 				9F33F64F260A3C4000470A47 /* HelpDeskResponses.swift in Sources */,
@@ -4798,6 +5048,7 @@
 				9F33F653260A3C4000470A47 /* ImageCacheManager.swift in Sources */,
 				9F33F654260A3C4000470A47 /* InfoArticleCell.swift in Sources */,
 				9F33F655260A3C4000470A47 /* CollaborationHeader.swift in Sources */,
+				658BEF7C268FC63600D4FD2C /* LineChartViewController.swift in Sources */,
 				9F33F656260A3C4000470A47 /* QuickHelpViewController.swift in Sources */,
 				9F33F657260A3C4000470A47 /* TicketDetailsViewController.swift in Sources */,
 				9F33F658260A3C4000470A47 /* MyAppsResponses.swift in Sources */,
@@ -4843,6 +5094,7 @@
 				9F33F677260A3C4000470A47 /* LoginUSMViewController.swift in Sources */,
 				9F643565261B1E88000D94A4 /* WhatsNewCell.swift in Sources */,
 				9F33F678260A3C4000470A47 /* Utils.swift in Sources */,
+				6513CA07269F32FC0046817F /* ActiveUsersViewController.swift in Sources */,
 				9F33F679260A3C4000470A47 /* ApplicationCell.swift in Sources */,
 				9F33F67A260A3C4000470A47 /* Office365ViewController.swift in Sources */,
 				9F33F67B260A3C4000470A47 /* AppsViewController.swift in Sources */,
@@ -4857,15 +5109,17 @@
 				9F30284F2681E68C009A3096 /* AlertPopoverCell.swift in Sources */,
 				9F643576261B5D40000D94A4 /* WhatsNewMoreViewController.swift in Sources */,
 				9F33F681260A3C4000470A47 /* AboutHeaderCell.swift in Sources */,
-				9F33F682260A3C4000470A47 /* BuildFile in Sources */,
+				9F33F682260A3C4000470A47 /* (null) in Sources */,
 				9F33F683260A3C4000470A47 /* OfficeSelectionCell.swift in Sources */,
 				9F33F684260A3C4000470A47 /* SecondSendMessageView.swift in Sources */,
 				9F33F685260A3C4000470A47 /* AboutInfoCell.swift in Sources */,
 				9F33F686260A3C4000470A47 /* ServiceDeskAboutCell.swift in Sources */,
 				9F2C826B2657CE02004407B4 /* GlobalAlertViewController.swift in Sources */,
 				9F3028482681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
+				9F343A5E269C53BD0071362D /* BarChartHeaderView.swift in Sources */,
 				9F33F687260A3C4000470A47 /* StatsBarView.swift in Sources */,
 				9F33F688260A3C4000470A47 /* HomeDataProvider.swift in Sources */,
+				9F343A4F269C4EED0071362D /* ChartsViewController.swift in Sources */,
 				9F33F689260A3C4000470A47 /* Extensions.swift in Sources */,
 				9F33F68A260A3C4000470A47 /* SystemUpdatesCell.swift in Sources */,
 				9F2C82742657F1E1004407B4 /* CustomUISwitch.swift in Sources */,
@@ -4889,6 +5143,7 @@
 				9F33F697260A3C4000470A47 /* PanModalNavigationController.swift in Sources */,
 				9F33F698260A3C4000470A47 /* MyDevicesViewController.swift in Sources */,
 				9F33F699260A3C4000470A47 /* GeneralViewController.swift in Sources */,
+				54D59C202695DFF70037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				9F7392D22631D1BD007882EB /* Constants.swift in Sources */,
 				9F2C82672657CE02004407B4 /* GlobalAlertDetailsCell.swift in Sources */,
 				9F33F69A260A3C4000470A47 /* DataParser.swift in Sources */,
@@ -4897,6 +5152,7 @@
 				9F33F69B260A3C4000470A47 /* CollaborationViewController.swift in Sources */,
 				9F33F69C260A3C4000470A47 /* LoginResponses.swift in Sources */,
 				9F33F69D260A3C4000470A47 /* KeychainManager.swift in Sources */,
+				9F343A8A26A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				9F2C82572657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				9F33F69E260A3C4000470A47 /* DeviceCell.swift in Sources */,
 				9F3AC90B2645B17A004074C8 /* GTTeamCell.swift in Sources */,
@@ -4929,18 +5185,21 @@
 				9F6FD63F25B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9F1620DB2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				9F2C82652657CE02004407B4 /* GlobalAlertDetailsCell.swift in Sources */,
+				9F343A8826A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				9F35860E25FD219D0003658D /* CollaborationHeader.swift in Sources */,
 				C993A2AF2576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9F5B105E2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
 				9F8164B0257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
 				9F78CFCE25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				9F3AC8FD2645A30B004074C8 /* GTTeamViewController.swift in Sources */,
+				9F343A4D269C4EED0071362D /* ChartsViewController.swift in Sources */,
 				9FF0545D25680ED30071E596 /* SendMessageView.swift in Sources */,
 				9F0CA54E2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
 				C962D8292566D21100727949 /* TicketCell.swift in Sources */,
 				C93FCF0725648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F643551261B1C9F000D94A4 /* WhatsNewViewController.swift in Sources */,
 				C9D0359A2578095A0068441F /* GlobalNewsResponses.swift in Sources */,
+				6513CA1F269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				C993A2C72576686500F9146A /* QuickHelpCell.swift in Sources */,
 				9F36D4662562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F9D9CB62588C59600DC4231 /* AuthViewController.swift in Sources */,
@@ -4961,6 +5220,7 @@
 				6563C2792592AD1500AA6168 /* GTA.xcdatamodeld in Sources */,
 				9F3028072681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				C960A0E625B08B52004A9C65 /* ServiceDeskAboutViewController.swift in Sources */,
+				658BF0C4268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
 				9F3AC9092645B17A004074C8 /* GTTeamCell.swift in Sources */,
 				C9766FAD2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708C2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
@@ -4972,6 +5232,7 @@
 				9F0D26A02577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9F3AC957264D4790004074C8 /* SwitcherCell.swift in Sources */,
 				9F6435CC261F2077000D94A4 /* CollaborationCounterCell.swift in Sources */,
+				658BEF7A268FC63600D4FD2C /* LineChartViewController.swift in Sources */,
 				9FBAF4872577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				9F643563261B1E88000D94A4 /* WhatsNewCell.swift in Sources */,
 				65398BCD256D4C5F0039C24E /* Utils.swift in Sources */,
@@ -4979,6 +5240,7 @@
 				9F35861E25FD23FF0003658D /* Office365ViewController.swift in Sources */,
 				9F3028462681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				9F895AF4255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				6513CA05269F32FB0046817F /* ActiveUsersViewController.swift in Sources */,
 				9FB59F862576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035DF2579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				9F2C823D26552A29004407B4 /* GeneralDataProvider.swift in Sources */,
@@ -4988,6 +5250,7 @@
 				C9D035972578095A0068441F /* CommonResponses.swift in Sources */,
 				9F35862B25FD37BF0003658D /* Office365AppCell.swift in Sources */,
 				9F643574261B5D3F000D94A4 /* WhatsNewMoreViewController.swift in Sources */,
+				9F343A5C269C53BC0071362D /* BarChartHeaderView.swift in Sources */,
 				9FA8E90E25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
 				C9EFDA3025A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				9FF0547425681FC60071E596 /* SecondSendMessageView.swift in Sources */,
@@ -5033,6 +5296,7 @@
 				9F2C82722657F1E1004407B4 /* CustomUISwitch.swift in Sources */,
 				9F895AE5255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				659C595C25924106007953A7 /* CacheManager.swift in Sources */,
+				54D59C1E2695DFF60037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				9F2C82552657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				9F895B7C255D8812004489C6 /* CustomTextField.swift in Sources */,
 				9F44AE1D25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,
@@ -5061,18 +5325,21 @@
 				9F6FD64025B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9F1620DC2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				9F2C82662657CE02004407B4 /* GlobalAlertDetailsCell.swift in Sources */,
+				9F343A8926A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				9F35860F25FD219D0003658D /* CollaborationHeader.swift in Sources */,
 				C993A2B02576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9F5B105F2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
 				9F8164B1257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
 				9F78CFCF25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				9F3AC8FE2645A30B004074C8 /* GTTeamViewController.swift in Sources */,
+				9F343A4E269C4EED0071362D /* ChartsViewController.swift in Sources */,
 				9FF0545E25680ED30071E596 /* SendMessageView.swift in Sources */,
 				9F0CA54F2566875F00275B25 /* OfficeLocationViewController.swift in Sources */,
 				C962D82A2566D21100727949 /* TicketCell.swift in Sources */,
 				C93FCF0825648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F643552261B1C9F000D94A4 /* WhatsNewViewController.swift in Sources */,
 				C9D0359B2578095A0068441F /* GlobalNewsResponses.swift in Sources */,
+				6513CA20269F37280046817F /* TeamsByFunctionsViewController.swift in Sources */,
 				C993A2C82576686500F9146A /* QuickHelpCell.swift in Sources */,
 				9F36D4672562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
 				9F9D9CB72588C59600DC4231 /* AuthViewController.swift in Sources */,
@@ -5093,6 +5360,7 @@
 				6563C27A2592AD1500AA6168 /* GTA.xcdatamodeld in Sources */,
 				9F3028082681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				C960A0E725B08B52004A9C65 /* ServiceDeskAboutViewController.swift in Sources */,
+				658BF0C5268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
 				9F3AC90A2645B17A004074C8 /* GTTeamCell.swift in Sources */,
 				C9766FAE2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708D2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
@@ -5104,6 +5372,7 @@
 				9F0D26A12577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9F3AC958264D4790004074C8 /* SwitcherCell.swift in Sources */,
 				9F6435CD261F2077000D94A4 /* CollaborationCounterCell.swift in Sources */,
+				658BEF7B268FC63600D4FD2C /* LineChartViewController.swift in Sources */,
 				9FBAF4882577D65E00B43F96 /* LoginUSMViewController.swift in Sources */,
 				9F643564261B1E88000D94A4 /* WhatsNewCell.swift in Sources */,
 				65398BCE256D4C5F0039C24E /* Utils.swift in Sources */,
@@ -5111,6 +5380,7 @@
 				9F35861F25FD23FF0003658D /* Office365ViewController.swift in Sources */,
 				9F3028472681E68C009A3096 /* AlertPopoverViewController.swift in Sources */,
 				9F895AF5255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				6513CA06269F32FC0046817F /* ActiveUsersViewController.swift in Sources */,
 				9FB59F872576825F00E14D7E /* AnimatedCollectionViewLayout.swift in Sources */,
 				C9D035E02579B68D0068441F /* ServiceDeskContactCell.swift in Sources */,
 				9F2C823E26552A29004407B4 /* GeneralDataProvider.swift in Sources */,
@@ -5120,6 +5390,7 @@
 				C9D035982578095A0068441F /* CommonResponses.swift in Sources */,
 				9F35862C25FD37BF0003658D /* Office365AppCell.swift in Sources */,
 				9F643575261B5D40000D94A4 /* WhatsNewMoreViewController.swift in Sources */,
+				9F343A5D269C53BC0071362D /* BarChartHeaderView.swift in Sources */,
 				9FA8E90F25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
 				C9EFDA3125A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				9FF0547525681FC60071E596 /* SecondSendMessageView.swift in Sources */,
@@ -5165,6 +5436,7 @@
 				9F2C82732657F1E1004407B4 /* CustomUISwitch.swift in Sources */,
 				9F895AE6255C22D7004489C6 /* AppsServiceAlertCell.swift in Sources */,
 				659C595D25924106007953A7 /* CacheManager.swift in Sources */,
+				54D59C1F2695DFF60037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				9F2C82562657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				9F895B7D255D8812004489C6 /* CustomTextField.swift in Sources */,
 				9F44AE1E25EFBD0500A0EDA4 /* AppTipsAndTricksViewController.swift in Sources */,

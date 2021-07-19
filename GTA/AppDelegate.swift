@@ -28,14 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        let topViewController = getTopViewController()
-        if let _ = topViewController, topViewController! is UsageMetricsViewController {
-            return .landscape
-        }
-        return .portrait
-    }
-    
     private func topViewController(controller: UIViewController?) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {
             return topViewController(controller: navigationController.visibleViewController)
@@ -128,12 +120,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 UserDefaults.standard.setValue(response.notification.payloadDict, forKey: "productionAlertNotificationReceived")
             }
             return
-        }
-        if topViewController is UsageMetricsViewController {
-            topViewController?.navigationController?.popToRootViewController(animated: false)
-            let value = UIInterfaceOrientation.portrait.rawValue
-            UIDevice.current.setValue(value, forKey: "orientation")
-            UINavigationController.attemptRotationToDeviceOrientation()
         }
         if response.notification.isEmergencyOutage {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
