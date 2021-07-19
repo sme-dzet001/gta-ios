@@ -27,13 +27,12 @@ class NotificationSettingsViewController: UIViewController {
         super.viewDidLoad()
         setUpTableView()
         setUpNavigationItem()
-        NotificationCenter.default.addObserver(self, selector: #selector(getNotificationPermision), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getNotificationsData), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getCurrentPreferences()
-        getNotificationPermision()
+        getNotificationsData()
     }
     
     private func getCurrentPreferences() {
@@ -60,6 +59,11 @@ class NotificationSettingsViewController: UIViewController {
                // self?.delegate?.notificationStateUpdatedDelegate(isNotificationAuthorized: self?.isNotificationAuthorized ?? false)
             }
         }
+    }
+    
+    @objc private func getNotificationsData() {
+        getNotificationPermision()
+        getCurrentPreferences()
     }
 
     private func setUpTableView() {
