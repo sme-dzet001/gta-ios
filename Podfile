@@ -10,7 +10,6 @@ def shared_pods
   pod 'PanModal'
   pod 'AdvancedPageControl'
   pod 'Firebase/Crashlytics'
-  pod 'SwiftyGif'
   pod 'Kingfisher'
   pod 'SDWebImage'
 end

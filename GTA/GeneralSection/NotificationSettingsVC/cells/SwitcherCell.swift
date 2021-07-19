@@ -10,9 +10,9 @@ import UIKit
 class SwitcherCell: UITableViewCell {
 
     @IBOutlet weak var switchView: UIView!
+    @IBOutlet weak var label: UILabel!
     
     var switchControl = Switch()
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,7 +27,9 @@ class SwitcherCell: UITableViewCell {
 }
 
 extension SwitcherCell: NotificationStateUpdatedDelegate {
-    func notificationStateUpdatedDelegate(state: Bool) {
-        switchControl.setOn(state, animated: true)
+    func notificationStateUpdatedDelegate(state: Bool, type: NotificationsType) {
+        if switchControl.switchNotificationsType == type {
+            switchControl.setOn(state, animated: true)
+        }
     }
 }

@@ -16,6 +16,11 @@ class ApplicationCell: UITableViewCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var statusParentView: UIView!
     @IBOutlet weak var separator: UILabel!
+    @IBOutlet weak var alertsNumber: UILabel!
+    @IBOutlet weak var alertsNumberParentView: UIView!
+    
+    weak var popoverShowDelegate: AlertPopoverShowDelegate?
+    weak var showAlertScreenDelegate: ShowAlertScreenDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,6 +31,9 @@ class ApplicationCell: UITableViewCell {
         super.prepareForReuse()
         appIcon.image = nil
         activityIndicator?.stopAnimating()
+        alertsNumber.text = nil
+        self.alertsNumber.isHidden = true
+        self.alertsNumberParentView.isHidden = true
     }
     
     func setUpCell(with data: AppInfo) {
@@ -62,6 +70,27 @@ class ApplicationCell: UITableViewCell {
         guard let char = appName.text?.trimmingCharacters(in: .whitespacesAndNewlines).first else { return }
         iconLabel.text = char.uppercased()
         iconLabel.isHidden = false
+    }
+    
+    func setAlert(alertCount: Int?) {
+        guard let number = alertCount, number > 0 else { return }
+        self.alertsNumberParentView.isHidden = false
+        self.alertsNumber.isHidden = false
+        let count = number > 99 ? 99 : number
+        self.alertsNumber.text = "\(count)" //: nil
+        setTapGesture()
+    }
+    
+    private func setTapGesture() {
+        let longTap = UILongPressGestureRecognizer(target: self, action: #selector(showPreview))
+        //longTap.cancelsTouchesInView = false
+        self.alertsNumberParentView.addGestureRecognizer(longTap)
+    }
+    
+    @objc private func showPreview() {
+        var frame = alertsNumberParentView.frame
+        frame.origin.x -= alertsNumberParentView.frame.width / 2
+        popoverShowDelegate?.showAlertPopover(for: frame, sourceView: self)
     }
 
 }

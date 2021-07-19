@@ -73,7 +73,8 @@ class CacheManager {
         case getGSDTicketComments(userEmail: String, ticketNumber: String)
         case getGTTeamData
         case getGlobalOutage
-        //case getImageDataFor(detailsPath: String)
+        case getAppsProductionAlerts
+        case getAppProductionAlerts(appName: String)
         
         var endpoint: String {
             switch self {
@@ -101,7 +102,8 @@ class CacheManager {
             case .getGSDTicketComments(let userEmail, let ticketNumber): return "/v3/widgets/gsd_my_ticket_comments/\(userEmail)/\(ticketNumber)/data/"
             case .getGTTeamData: return "/v3/widgets/management_team/data/"
             case .getGlobalOutage: return "/v3/widgets/global_alerts/data/detailed"
-            //case .getImageDataFor(let detailsPath): return "/images/\(detailsPath)/"
+            case .getAppsProductionAlerts: return "/v3/widgets/app_alerts/data"
+            case .getAppProductionAlerts(let appName): return "/v3/widgets/app_alerts/\(appName)/data"
             }
         }
     }
@@ -109,43 +111,43 @@ class CacheManager {
     private func getCachePath(requestURI: String, formatVersion: Int32, createIfNotExists: Bool = true, completion: @escaping ((_ path: String?, _ error: Error?) -> Void)) {
         var err: Error? = nil
         var path: String? = nil
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            err = ResponseError.commonError
-            completion(nil, err)
-            return
-        }
-        guard !cacheFolderPath.isEmpty else {
-            err = ResponseError.commonError
-            completion(nil, err)
-            return
-        }
-        var cachedRequestMetadata: CachedRequest? = nil
-        let managedContext = appDelegate.databaseContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CachedRequest")
-        fetchRequest.predicate = NSPredicate(format: "uri == %@", requestURI)
-        do {
-            let results = try managedContext.fetch(fetchRequest) as! [CachedRequest]
-            if results.count > 0 {
-                cachedRequestMetadata = results[0] as CachedRequest
-            }
-            if cachedRequestMetadata == nil && createIfNotExists {
-                let cachedRequestEntity = NSEntityDescription.entity(forEntityName: "CachedRequest", in: managedContext)!
-                cachedRequestMetadata = NSManagedObject(entity: cachedRequestEntity, insertInto: managedContext) as? CachedRequest
-                cachedRequestMetadata!.uri = requestURI
-                cachedRequestMetadata!.filePath = UUID().description
-            }
-            if cachedRequestMetadata != nil {
-                cachedRequestMetadata!.timestamp = Date()
-                cachedRequestMetadata!.formatVersion = formatVersion
-            }
-            
-            path = cachedRequestMetadata?.filePath
-            
-            try managedContext.save()
-        } catch {
-            err = error
-        }
         DispatchQueue.main.async {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                err = ResponseError.commonError
+                completion(nil, err)
+                return
+            }
+            guard !self.cacheFolderPath.isEmpty else {
+                err = ResponseError.commonError
+                completion(nil, err)
+                return
+            }
+            var cachedRequestMetadata: CachedRequest? = nil
+            let managedContext = appDelegate.databaseContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CachedRequest")
+            fetchRequest.predicate = NSPredicate(format: "uri == %@", requestURI)
+            do {
+                let results = try managedContext.fetch(fetchRequest) as! [CachedRequest]
+                if results.count > 0 {
+                    cachedRequestMetadata = results[0] as CachedRequest
+                }
+                if cachedRequestMetadata == nil && createIfNotExists {
+                    let cachedRequestEntity = NSEntityDescription.entity(forEntityName: "CachedRequest", in: managedContext)!
+                    cachedRequestMetadata = NSManagedObject(entity: cachedRequestEntity, insertInto: managedContext) as? CachedRequest
+                    cachedRequestMetadata!.uri = requestURI
+                    cachedRequestMetadata!.filePath = UUID().description
+                }
+                if cachedRequestMetadata != nil {
+                    cachedRequestMetadata!.timestamp = Date()
+                    cachedRequestMetadata!.formatVersion = formatVersion
+                }
+                
+                path = cachedRequestMetadata?.filePath
+                
+                try managedContext.save()
+            } catch {
+                err = error
+            }
             completion(path, err)
         }
     }
@@ -167,6 +169,7 @@ class CacheManager {
     
     private func deleteCacheMetadata(requestURI: String, completion: @escaping ((_ error: Error?) -> Void)) {
         var err: Error? = nil
+        DispatchQueue.main.async {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             err = ResponseError.commonError
             completion(err)
@@ -184,7 +187,6 @@ class CacheManager {
         } catch {
             err = error
         }
-        DispatchQueue.main.async {
             completion(err)
         }
     }
@@ -282,7 +284,7 @@ class CacheManager {
     }
     
     func getCachedResponse(requestURI: String, formatVersion: Int32 = 1, completion: @escaping ((_ responseData: Data?, _ error: Error?) -> Void)) {
-        DispatchQueue.main.async {
+       // DispatchQueue.main.async {
             var cachedResponseError: Error? = nil
             var responseData: Data? = nil
             if let bufferedData = self.getResponseFromBuffer(requestURI: requestURI) {
@@ -290,6 +292,7 @@ class CacheManager {
                 return
             }
             self.getCachePath(requestURI: requestURI, formatVersion: formatVersion, createIfNotExists: false) { [weak self] (path: String?, err: Error?) in
+                DispatchQueue(label: "getCachedResponseQueue", qos: .userInteractive, attributes: .concurrent).async {
                 cachedResponseError = err
                 if path != nil {
                     let cacheFolderURL = URL(fileURLWithPath: (self?.cacheFolderPath ?? ""))

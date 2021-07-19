@@ -218,6 +218,15 @@ extension UITableView {
 fileprivate let tabBarItemTag: Int = 10090
 extension UITabBarController {
     
+    public func setSelectedTabAccordingToPendingAlert() {
+        if UserDefaults.standard.object(forKey: "productionAlertNotificationReceived") != nil, let applicationsTabIdx = viewControllers?.firstIndex(where: { (vc: UIViewController) in
+            guard let appsNavController = vc as? UINavigationController else { return false }
+            return appsNavController.rootViewController is AppsViewController
+        }) {
+            selectedIndex = applicationsTabIdx
+        }
+    }
+    
     public func addAlertItemBadge(atIndex index: Int) {
         guard let itemCount = self.tabBar.items?.count, itemCount > 0 else { return }
         guard index < itemCount else { return }
@@ -510,6 +519,7 @@ extension String {
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
         if let date = dateFormatterPrint.date(from: self) {
             dateFormatterPrint.dateFormat = String.getTicketDateFormat(for: date)
+            dateFormatterPrint.timeZone = .current
             return dateFormatterPrint.string(from: date)
         } else {
             dateFormatterPrint.dateFormat = String.newsDateFormat
@@ -518,6 +528,16 @@ extension String {
             return dateFormatterPrint.string(from: date)
         }
        // return self
+    }
+    
+    func getFormattedDateStringForProdAlert() -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        guard let date = dateFormatterPrint.date(from: self) else { return self }
+        dateFormatterPrint.dateFormat = String.newsDateFormat
+        dateFormatterPrint.timeZone = .current
+        return dateFormatterPrint.string(from: date)
     }
     
 }
@@ -591,7 +611,11 @@ extension NSMutableAttributedString {
                 }
             } else if let f = value as? UIFont, f.fontName.lowercased().contains("italic") {
                 removeAttribute(.font, range: range)
-                if let font = UIFont(name: "SF Pro Text Italic", size: 16) {
+                if f.fontName.lowercased().contains("bolditalic") {
+                    if let font = UIFont(name: "SF Pro Text Italic Bold", size: 16) {
+                        addAttribute(.font, value: (font as Any), range: range)
+                    }
+                } else if let font = UIFont(name: "SF Pro Text Italic", size: 16) {
                     addAttribute(.font, value: (font as Any), range: range)
                 }
             }
@@ -714,14 +738,30 @@ extension UITapGestureRecognizer {
 }
 
 extension UNNotification {
+    var payloadDict: [String : AnyObject]? {
+        let userInfo = request.content.userInfo
+        guard let payload = userInfo[Constants.payloadKey] as? String else { return nil }
+        guard let payloadData = Data(base64Encoded: payload) else { return nil }
+        let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject]
+        return payloadDict
+    }
+    
+    private var pushType: String? {
+        guard let payloadDict = payloadDict else { return nil }
+        return payloadDict[Constants.pushTypeKey] as? String
+    }
+    
     var isEmergencyOutage: Bool {
         get {
-            let userInfo = request.content.userInfo
-            guard let payload = userInfo[Constants.payloadKey] as? String else { return false }
-            guard let payloadData = Data(base64Encoded: payload) else { return false }
-            guard let payloadDict = try? JSONSerialization.jsonObject(with: payloadData, options: .mutableContainers) as? [String : AnyObject] else { return false }
-            guard let pushType = payloadDict[Constants.pushTypeKey] as? String else { return false }
-            return pushType == Constants.pushType
+            guard let pushType = pushType else { return false }
+            return pushType == Constants.pushTypeEmergencyOutage
+        }
+    }
+    
+    var isProductionAlert: Bool {
+        get {
+            guard let pushType = pushType else { return false }
+            return pushType == Constants.pushTypeProductionAlert
         }
     }
 }

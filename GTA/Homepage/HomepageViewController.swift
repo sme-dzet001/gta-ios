@@ -24,15 +24,30 @@ class HomepageViewController: UIViewController {
     var homepageTableVC: HomepageTableViewController?
     
     private var presentedVC: ArticleViewController?
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        commonInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    func commonInit() {
+        NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlertsCount), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
         setUpPageControl()
         setNeedsStatusBarAppearanceUpdate()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
         collectionView.accessibilityIdentifier = "HomeScreenCollectionView"
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,10 +55,16 @@ class HomepageViewController: UIViewController {
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             loadNewsData()
         }
+        if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+            emergencyOutageNotificationReceived()
+        }
+        getProductionAlertsCount()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     private func loadNewsData() {
@@ -55,15 +76,15 @@ class HomepageViewController: UIViewController {
         dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
+//                if !isFromCache && UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+//                    self?.emergencyOutageNotificationReceived()
+//                }
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
                     self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
                     self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
                     self?.collectionView.reloadData()
-                    if !isFromCache && UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
-                        self?.emergencyOutageNotificationReceived()
-                    }
                 } else {
                     let isNoData = (self?.dataProvider.newsDataIsEmpty ?? true)
                     if isNoData {
@@ -119,16 +140,33 @@ class HomepageViewController: UIViewController {
             embeddedController.popToRootViewController(animated: false)
             if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
                 UserDefaults.standard.removeObject(forKey: "emergencyOutageNotificationReceived")
-                if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
-                    NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
-                    self.showGlobalAlertModal()
-                }
+                //if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
+                NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+                self.dataProvider.forceUpdateAlertDetails = true
+                self.showGlobalAlertModal()
+                //}
             } else {
                 NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
                 self.tabBarController?.selectedIndex = homepageTabIdx
                 embeddedController.popToRootViewController(animated: false)
                 self.dataProvider.forceUpdateAlertDetails = true
                 self.showGlobalAlertModal()
+            }
+        }
+    }
+    
+    @objc private func didBecomeActive() {
+        if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
+            emergencyOutageNotificationReceived()
+        }
+        getProductionAlertsCount()
+    }
+    
+    @objc private func getProductionAlertsCount() {
+        dataProvider.getProductionAlerts {[weak self] _, _, count in
+            DispatchQueue.main.async {
+                self?.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
+                self?.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
             }
         }
     }
