@@ -28,7 +28,7 @@ class BarChartCell: UITableViewCell {
         set.colors = getBarColors()
         let data = BarChartData(dataSet: set)
         data.setDrawValues(false)
-        let axisMaximum = getAxisMaximum(maxValue: Double(chartData.values.max() ?? 0.0))
+        let axisMaximum = Double(chartData.values.max() ?? 0.0).getAxisMaximum()
         setUpAxis(axisMaximum: axisMaximum)
         barChartView.fitBars = true
         barChartView.data = data
@@ -36,19 +36,6 @@ class BarChartCell: UITableViewCell {
         //barChartView.delegate = self
         let stackLabels = chartData.legends
         setUpChartLegend(for: yValues.count, labels: stackLabels)
-    }
-    
-    private func getAxisMaximum(maxValue: Double) -> Double {
-        var nearest: Double = 10
-        let count = "\(Int(maxValue))".count - 1
-        if count > 0 {
-            nearest = pow(nearest, Double(count))
-        }
-        return roundUp(maxValue, toNearest: nearest)
-    }
-    
-    private func roundUp(_ value: Double, toNearest: Double) -> Double {
-      return ceil(value / toNearest) * toNearest
     }
     
     private func setUpAxis(axisMaximum: Double) {
@@ -77,7 +64,7 @@ class BarChartCell: UITableViewCell {
         barChartView.leftAxis.axisLineWidth = 1
         barChartView.leftAxis.gridLineWidth = 1
         barChartView.rightAxis.gridLineWidth = 1
-//        barChartView.leftAxis.setLabelCount(3, force: true)
+        barChartView.leftAxis.setLabelCount(3, force: true)
     }
     
     private func getValues(with data: [Float]) -> [BarChartDataEntry] {

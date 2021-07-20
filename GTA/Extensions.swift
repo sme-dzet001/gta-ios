@@ -560,16 +560,16 @@ extension String {
     
     static func convertBigValueToString(value: Double) -> String {
         if abs(value) >= 1000000000000 {
-            return String((value/100000000000).rounded()/10) + " T"
+            return String(Int((value/100000000000).rounded()/10)) + " T"
         }
         if abs(value) >= 1000000000 {
-            return String((value/100000000).rounded()/10) + " B"
+            return String(Int((value/100000000).rounded()/10)) + " B"
         }
         if abs(value) >= 1000000 {
-            return String((value/100000).rounded()/10) + " M"
+            return String(Int((value/100000).rounded()/10)) + " M"
         }
         if abs(value) >= 1000 {
-            return String((value/100).rounded()/10) + " K"
+            return String(Int((value/100).rounded()/10)) + " K"
         }
         return "\(Int(value))"
     }
@@ -797,5 +797,33 @@ extension UNNotification {
             guard let pushType = pushType else { return false }
             return pushType == Constants.pushTypeProductionAlert
         }
+    }
+}
+
+extension Double {
+    func getAxisMaximum() -> Double {
+        return roundUp(self, toNearest: getNearestValue(for: self))
+    }
+    
+    func getAxisMinimum() -> Double {
+        let nearest = getNearestValue(for: self)
+        return roundDown(self, toNearest: nearest)
+    }
+    
+    func getNearestValue(for value: Double) -> Double {
+        var nearest: Double = 10
+        let count = "\(Int(value))".count - 1
+        if count > 0 {
+            nearest = pow(nearest, Double(count))
+        }
+        return nearest
+    }
+    
+    private func roundUp(_ value: Double, toNearest: Double) -> Double {
+      return ceil(value / toNearest) * toNearest
+    }
+    
+    private func roundDown(_ value: Double, toNearest: Double) -> Double {
+      return floor(value / toNearest) * toNearest
     }
 }
