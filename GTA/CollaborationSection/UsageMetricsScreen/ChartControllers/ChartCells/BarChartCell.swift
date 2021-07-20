@@ -22,12 +22,13 @@ class BarChartCell: UITableViewCell {
         guard let chartData = chartStructure else { return }
         titleLabel.text = chartData.title
         let yValues: [BarChartDataEntry] = getValues(with: chartData.values)
+        guard !yValues.isEmpty else { return }
         let set = BarChartDataSet(entries: yValues, label: nil)
         set.drawIconsEnabled = true
         set.colors = getBarColors()
         let data = BarChartData(dataSet: set)
         data.setDrawValues(false)
-        setUpAxis()
+        setUpAxis(axisMaximum:  Double(6000))
         barChartView.fitBars = true
         barChartView.data = data
         barChartView.extraBottomOffset = 13
@@ -36,10 +37,13 @@ class BarChartCell: UITableViewCell {
         setUpChartLegend(for: yValues.count, labels: stackLabels)
     }
     
-    private func setUpAxis() {
+    private func setUpAxis(axisMaximum: Double) {
         let font = UIFont(name: "SFProText-Regular", size: 10) ?? barChartView.leftAxis.labelFont
         let axisColor = UIColor(hex: 0xE5E5EA)
         barChartView.leftAxis.labelFont = font
+        barChartView.leftAxis.axisMinimum = 0
+        barChartView.leftAxis.axisMaximum = axisMaximum
+        barChartView.rightAxis.drawGridLinesEnabled = false
         barChartView.leftAxis.labelTextColor = UIColor(hex: 0xAEAEB2)
         barChartView.chartDescription?.enabled = false
         barChartView.xAxis.drawLabelsEnabled = false
@@ -58,7 +62,7 @@ class BarChartCell: UITableViewCell {
         barChartView.leftAxis.axisLineWidth = 1
         barChartView.leftAxis.gridLineWidth = 1
         barChartView.rightAxis.gridLineWidth = 1
-        
+//        barChartView.leftAxis.setLabelCount(3, force: true)
     }
     
     private func getValues(with data: [Float]) -> [BarChartDataEntry] {

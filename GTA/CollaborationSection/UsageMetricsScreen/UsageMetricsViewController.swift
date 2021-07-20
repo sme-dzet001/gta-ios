@@ -144,6 +144,9 @@ class UsageMetricsViewController: UIViewController {
     }
     
     private func reloadData() {
+        if let isChartDataEmpty = dataProvider?.isChartDataEmpty, isChartDataEmpty {
+            return
+        }
         chartDimensionsDict[0] = activeUsersVC
         if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
             chartDimensionsDict[1] = barChartCell
