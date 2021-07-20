@@ -50,17 +50,17 @@ class TeamChatUsersViewController: UIViewController {
             gridView.bottomAnchor.constraint(equalTo: chartView.bottomAnchor, constant: -10)
         ])
         gridView.layoutIfNeeded()
-        setHorizontalLines(linesCount: linesCount - 1, lineHeight: 1)
+        setHorizontalLines(linesCount: linesCount - 1, lineHeight: ChartsFormatting.gridLineWidth)
     }
     
     private func setData(_ values: [BarChartDataEntry]) {
         let dataSet = BarChartDataSet(entries: values, label: nil)
         dataSet.setColor(UIColor(hex: 0x428DF7))
-        dataSet.valueFont = .systemFont(ofSize: 14)
+        dataSet.valueFont = ChartsFormatting.labelFont ?? .systemFont(ofSize: 10)
         
         let data = BarChartData(dataSets: [dataSet])
         data.setDrawValues(true)
-        data.barWidth = 0.59
+        data.barWidth = 0.67
         data.setValueFormatter(DefaultValueFormatter(formatter: procentFormatter()))
         chartView.data = data
     }
@@ -88,8 +88,8 @@ class TeamChatUsersViewController: UIViewController {
         xAxis.labelCount = activeUsers.count
         xAxis.valueFormatter = IndexAxisValueFormatter(values: activeUsers.map{data -> String in return data.countryCode ?? ""
         })
-        xAxis.labelFont = .systemFont(ofSize: 14)
-        xAxis.labelTextColor = .lightGray
+        xAxis.labelFont = ChartsFormatting.labelFont ?? .systemFont(ofSize: 10)
+        xAxis.labelTextColor = ChartsFormatting.labelTextColor
         
         // LeftAxis
         let leftAxis = chartView.leftAxis
@@ -121,8 +121,8 @@ extension TeamChatUsersViewController {
 extension TeamChatUsersViewController {
     private func setGridView() -> UIView {
         let gv = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        gv.borderWidth = 1
-        gv.borderColor = .lightGray
+        gv.borderWidth = ChartsFormatting.gridLineWidth
+        gv.borderColor = ChartsFormatting.gridColor
         gv.backgroundColor = .clear
         
         return gv
@@ -136,7 +136,7 @@ extension TeamChatUsersViewController {
         
         for i in 1..<linesCount + 1 {
             let lineView = UIView(frame: CGRect(x: 0, y: (linesSpacing + lineHeight) * CGFloat(i), width: containerWidth, height: lineHeight))
-            lineView.backgroundColor = .lightGray
+            lineView.backgroundColor = ChartsFormatting.gridColor
             gridView.addSubview(lineView)
         }
     }
