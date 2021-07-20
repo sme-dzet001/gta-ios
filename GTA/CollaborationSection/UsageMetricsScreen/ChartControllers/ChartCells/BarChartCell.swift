@@ -28,7 +28,8 @@ class BarChartCell: UITableViewCell {
         set.colors = getBarColors()
         let data = BarChartData(dataSet: set)
         data.setDrawValues(false)
-        setUpAxis(axisMaximum:  Double(6000))
+        let axisMaximum = getAxisMaximum(maxValue: Double(chartData.values.max() ?? 0.0))
+        setUpAxis(axisMaximum: axisMaximum)
         barChartView.fitBars = true
         barChartView.data = data
         barChartView.extraBottomOffset = 13
@@ -37,12 +38,26 @@ class BarChartCell: UITableViewCell {
         setUpChartLegend(for: yValues.count, labels: stackLabels)
     }
     
+    private func getAxisMaximum(maxValue: Double) -> Double {
+        var nearest: Double = 10
+        let count = "\(Int(maxValue))".count - 1
+        if count > 0 {
+            nearest = pow(nearest, Double(count))
+        }
+        return roundUp(maxValue, toNearest: nearest)
+    }
+    
+    private func roundUp(_ value: Double, toNearest: Double) -> Double {
+      return ceil(value / toNearest) * toNearest
+    }
+    
     private func setUpAxis(axisMaximum: Double) {
         let font = UIFont(name: "SFProText-Regular", size: 10) ?? barChartView.leftAxis.labelFont
         let axisColor = UIColor(hex: 0xE5E5EA)
         barChartView.leftAxis.labelFont = font
         barChartView.leftAxis.axisMinimum = 0
         barChartView.leftAxis.axisMaximum = axisMaximum
+        barChartView.leftAxis.valueFormatter = BarChartLeftAxisValueFormatter()
         barChartView.rightAxis.drawGridLinesEnabled = false
         barChartView.leftAxis.labelTextColor = UIColor(hex: 0xAEAEB2)
         barChartView.chartDescription?.enabled = false
@@ -67,7 +82,7 @@ class BarChartCell: UITableViewCell {
     
     private func getValues(with data: [Float]) -> [BarChartDataEntry] {
         var x: Double = 0
-        let values = data.compactMap({Double($0)}) //data.forEach({Double($0)})// [Double(5293), Double(4866), Double(5204), Double(1112)]
+        let values = data.compactMap({Double($0)})
         var yValues: [BarChartDataEntry] = []
         for value in values {
             yValues.append(BarChartDataEntry(x: x, yValues: [value], icon: nil))
@@ -101,5 +116,12 @@ class BarChartCell: UITableViewCell {
 extension BarChartCell: ChartDimensions {
     var optimalHeight: CGFloat {
         return 294
+    }
+}
+
+
+class BarChartLeftAxisValueFormatter: NSObject, IAxisValueFormatter {
+    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        return String.convertBigValueToString(value: value)
     }
 }

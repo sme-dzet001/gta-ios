@@ -558,6 +558,22 @@ extension String {
         return dateFormatterPrint.string(from: date)
     }
     
+    static func convertBigValueToString(value: Double) -> String {
+        if abs(value) >= 1000000000000 {
+            return String((value/100000000000).rounded()/10) + " T"
+        }
+        if abs(value) >= 1000000000 {
+            return String((value/100000000).rounded()/10) + " B"
+        }
+        if abs(value) >= 1000000 {
+            return String((value/100000).rounded()/10) + " M"
+        }
+        if abs(value) >= 1000 {
+            return String((value/100).rounded()/10) + " K"
+        }
+        return "\(Int(value))"
+    }
+    
 }
 
 extension Date {
