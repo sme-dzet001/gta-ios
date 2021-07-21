@@ -144,7 +144,7 @@ class LineChartViewController: UIViewController {
         }
         
         let chartDataSet = LineChartDataSet(entries: chartValues)
-        
+        chartDataSet.mode = .horizontalBezier
         chartDataSet.drawValuesEnabled = false
         chartDataSet.setColor(lineColor)
         chartDataSet.setCircleColor(lineColor)
