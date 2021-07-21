@@ -480,7 +480,7 @@ extension String {
     }
     
     static var usageMetricsDateFormat: String {
-        return "dd-MMM-yy"
+        return "MMM\nyyyy"
     }
     
     static var ticketDateFormat: String {

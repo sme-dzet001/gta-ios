@@ -17,7 +17,7 @@ struct TeamsByFunctionsDataEntry {
         sourceDateFormatter.dateFormat = String.convertMetricsDateFormat
         if let period = refreshDate, let date = sourceDateFormatter.date(from: period) {
             let targetDateFormatter = DateFormatter()
-            targetDateFormatter.dateFormat = "dd-MMM"
+            targetDateFormatter.dateFormat = String.usageMetricsDateFormat//"dd-MMM"
             return targetDateFormatter.string(from: date)
         }
         return nil

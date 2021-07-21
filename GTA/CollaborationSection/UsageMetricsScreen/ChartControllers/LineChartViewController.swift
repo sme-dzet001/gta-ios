@@ -122,6 +122,9 @@ class LineChartViewController: UIViewController {
         chartView.leftAxis.drawAxisLineEnabled = false
         chartView.leftAxis.drawLabelsEnabled = false
         
+        chartView.rightAxis.drawGridLinesEnabled = false
+        chartView.xAxis.drawGridLinesEnabled = false
+        
         chartView.leftAxis.spaceTop = 0
         chartView.leftAxis.spaceBottom = 0
     }
