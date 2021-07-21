@@ -134,6 +134,10 @@ class LineChartViewController: UIViewController {
         chartView.leftAxis.resetCustomAxisMax()
         
         chartViewWidth.constant = CGFloat(chartViewGridWidth) * CGFloat(lineChartData.count)
+        chartView.scaleXEnabled = false
+        chartView.scaleYEnabled = false
+        chartView.pinchZoomEnabled = false
+        
         
         let chartValues = lineChartData.enumerated().map { (index, dataEntry) -> ChartDataEntry in
             return ChartDataEntry(x: Double(index), y: Double(dataEntry.value ?? 0))

@@ -32,6 +32,9 @@ class BarChartCell: UITableViewCell {
         let axisMaximum = Double(chartData.values.max() ?? 0.0).getAxisMaximum()
         setUpAxis(axisMaximum: axisMaximum)
         barChartView.fitBars = true
+        barChartView.scaleXEnabled = false
+        barChartView.scaleYEnabled = false
+        barChartView.pinchZoomEnabled = false
         barChartView.data = data
         barChartView.extraBottomOffset = 13
         //barChartView.delegate = self

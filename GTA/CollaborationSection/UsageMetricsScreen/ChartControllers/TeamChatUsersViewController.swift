@@ -111,6 +111,9 @@ class TeamChatUsersViewController: UIViewController {
         let righAxis = chartView.rightAxis
         righAxis.enabled = false
         righAxis.drawGridLinesEnabled = false
+        chartView.scaleXEnabled = false
+        chartView.scaleYEnabled = false
+        chartView.pinchZoomEnabled = false
     }
 }
 
