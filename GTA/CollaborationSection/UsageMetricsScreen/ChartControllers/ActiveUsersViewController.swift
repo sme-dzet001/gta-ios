@@ -17,7 +17,7 @@ class ActiveUsersViewController: LineChartViewController {
             let legend = legends[index].getDateForUsageMetrics()
             data.append((period: legend, value: Int(value)))
         }
-        return data//dataProvider?.activeUsersData.map({ return (period: $0.period, value: $0.value) }) ?? []
+        return data
     }
     
     var chartData: ChartStructure?
