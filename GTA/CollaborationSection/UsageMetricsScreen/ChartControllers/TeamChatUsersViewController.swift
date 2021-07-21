@@ -133,7 +133,7 @@ extension TeamChatUsersViewController {
     private func setGridView() -> UIView {
         let gv = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         gv.borderWidth = 1
-        gv.borderColor = .lightGray
+        gv.borderColor = UIColor(hex: 0xE5E5EA)
         gv.backgroundColor = .clear
         
         return gv
@@ -147,7 +147,7 @@ extension TeamChatUsersViewController {
         
         for i in 1..<linesCount + 1 {
             let lineView = UIView(frame: CGRect(x: 0, y: (linesSpacing + lineHeight) * CGFloat(i), width: containerWidth, height: lineHeight))
-            lineView.backgroundColor = .lightGray
+            lineView.backgroundColor = UIColor(hex: 0xE5E5EA)
             gridView.addSubview(lineView)
         }
     }
