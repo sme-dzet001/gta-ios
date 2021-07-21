@@ -20,10 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let navBarTitleAttributes = [NSAttributedString.Key.font: navBarTitleFont]
             UINavigationBar.appearance().titleTextAttributes = navBarTitleAttributes
         }
-        #if GTADev
-        #else
         FirebaseApp.configure()
-        #endif
         registerForPushNotifications()
         return true
     }

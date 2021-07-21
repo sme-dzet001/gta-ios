@@ -33,6 +33,8 @@ class AppsViewController: UIViewController {
     }
     
     func commonInit() {
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(productionAlertNotificationReceived), name: Notification.Name(NotificationsNames.productionAlertNotificationReceived), object: nil)
     }
     
@@ -47,8 +49,6 @@ class AppsViewController: UIViewController {
         //self.dataProvider.appImageDelegate = self
         setUpNavigationItem()
         setAccessibilityIdentifiers()
-        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlerts), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -146,21 +146,20 @@ class AppsViewController: UIViewController {
     @objc private func getProductionAlerts() {
         dataProvider.getProductionAlerts {[weak self] dataWasChanged, errorCode, error, count  in
             DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.checkForPendingProductionAlert()
                 if error == nil {
-                    if dataWasChanged {
-                        self?.tableView.reloadData()
+                    if dataWasChanged && self.isViewLoaded {
+                        self.tableView.reloadData()
                     }
-                    self?.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
-                    self?.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+                    self.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
+                    self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
                 }
             }
         }
     }
     
     private func checkForPendingProductionAlert() {
-        guard let _ = self.dataProvider.myAppsSection else {
-            return
-        }
         if let productionAlertInfo = UserDefaults.standard.object(forKey: "productionAlertNotificationReceived") as? [String : Any] {
             dataProvider.forceUpdateProductionAlerts = true
             navigateToAppDetails(withProductionAlertInfo: productionAlertInfo)
@@ -214,6 +213,7 @@ class AppsViewController: UIViewController {
         //guard let targetAppData = dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) else { return }
         guard let productionAlertId = alertData["production_alert_id"] as? String else { return }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        UIApplication.shared.applicationIconBadgeNumber = 0
         //dataProvider.activeProductionAlertId = productionAlertId
         //dataProvider.activeProductionAlertAppName = appName
         appDelegate.dismissPanModalIfPresented { [weak self] in
