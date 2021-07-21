@@ -27,6 +27,7 @@ class BarChartCell: UITableViewCell {
         set.drawIconsEnabled = true
         set.colors = getBarColors()
         let data = BarChartData(dataSet: set)
+        data.highlightEnabled = false
         data.setDrawValues(false)
         let axisMaximum = Double(chartData.values.max() ?? 0.0).getAxisMaximum()
         setUpAxis(axisMaximum: axisMaximum)
