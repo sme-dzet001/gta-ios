@@ -14,7 +14,6 @@ class TeamChatUsersViewController: UIViewController {
     @IBOutlet weak var chartView: HorizontalBarChartView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    //var dataProvider: UsageMetricsDataProvider?
     var chartData: [String : [TeamsChatUserDataEntry]]?
     var key: String {
         return chartData?.keys.first ?? ""

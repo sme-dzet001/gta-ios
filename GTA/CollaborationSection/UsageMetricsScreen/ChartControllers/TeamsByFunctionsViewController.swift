@@ -69,20 +69,9 @@ class TeamsByFunctionsViewController: LineChartViewController {
     
     override var lineChartData: [(period: String?, value: Int?)] {
         let count = chartsData?.count ?? 0
-        //switch dataSourceIdx {
-        //case 1:
-            guard count > dataSourceIdx else { return [(period: String?, value: Int?)]() }
-            let values = chartsData?[dataSourceIdx] ?? []
-            return values.map({ return (period: $0.formattedLegend, value: $0.value) })
-//        case 2:
-//            guard count > 3 else { return [(period: String?, value: Int?)]() }
-//            let values = chartsData?[2] ?? []
-//            return values.map({ return (period: $0.formattedLegend, value: $0.value) })
-//        case 3:
-//            return dataProvider?.teamsByFunctionsUsersData.map({ return (period: $0.formattedPeriod, value: $0.teamsChatMessageCount) }) ?? []
-//        default:
-//            return dataProvider?.teamsByFunctionsUsersData.map({ return (period: $0.formattedPeriod, value: $0.meetingCount) }) ?? []
-//        }
+        guard count > dataSourceIdx else { return [(period: String?, value: Int?)]() }
+        let values = chartsData?[dataSourceIdx] ?? []
+        return values.map({ return (period: $0.formattedLegend, value: $0.value) })
     }
     
     @IBAction func dataSourceSelectorBtnTapped(_ sender: ChartDataSourceSelectionButton) {
