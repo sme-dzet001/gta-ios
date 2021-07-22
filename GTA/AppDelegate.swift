@@ -95,8 +95,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         if notification.isEmergencyOutage {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
-            completionHandler([.alert, .sound])
-            return
+            //completionHandler([.alert, .sound])
+            //return
         }
         if notification.isProductionAlert {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
