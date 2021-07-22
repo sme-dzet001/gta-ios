@@ -530,6 +530,16 @@ extension String {
        // return self
     }
     
+    func getFormattedDateStringForNews() -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        guard let date = dateFormatterPrint.date(from: self) else { return self }
+        dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
+        dateFormatterPrint.timeZone = .current
+        return dateFormatterPrint.string(from: date)
+    }
+    
     func getFormattedDateStringForProdAlert() -> String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
