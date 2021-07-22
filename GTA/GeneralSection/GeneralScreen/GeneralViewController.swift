@@ -119,6 +119,7 @@ extension GeneralViewController: WKNavigationDelegate {
             UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
             KeychainManager.deleteUsername()
             KeychainManager.deleteToken()
+            KeychainManager.deletePushNotificationTokenSent()
             KeychainManager.deleteTokenExpirationDate()
             CacheManager().clearCache()
             KeychainManager.deletePinData()

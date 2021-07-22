@@ -8,9 +8,97 @@
 import UIKit
 import WebKit
 
+protocol ChartDimensions: AnyObject {
+    var optimalHeight: CGFloat { get }
+}
+
+class ChartTableView : UITableView, UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
 class UsageMetricsViewController: UIViewController {
     
-    private var usageMetricsWebView: WKWebView!
+    @IBOutlet weak var tableView: ChartTableView!
+    
+    private var dataProvider: UsageMetricsDataProvider = UsageMetricsDataProvider()
+    
+    deinit {
+        activeUsersVC.removeFromParent()
+        teamChatUsersVC.removeFromParent()
+        teamsByFunctionsVC.removeFromParent()
+    }
+    
+    private lazy var activeUsersVC: ActiveUsersViewController = {
+        let activeUsersVC = ActiveUsersViewController(nibName: "ActiveUsersViewController", bundle: nil)
+        activeUsersVC.dataProvider = dataProvider
+        return activeUsersVC
+    }()
+    
+    private lazy var teamsByFunctionsVC: TeamsByFunctionsViewController = {
+        let teamsByFunctionsVC = TeamsByFunctionsViewController(nibName: "TeamsByFunctionsViewController", bundle: nil)
+        teamsByFunctionsVC.dataProvider = dataProvider
+        return teamsByFunctionsVC
+    }()
+    
+    private lazy var teamChatUsersVC: TeamChatUsersViewController = {
+        let teamChatUsersVC = TeamChatUsersViewController()
+        teamChatUsersVC.dataProvider = dataProvider
+        return teamChatUsersVC
+    }()
+    
+    private lazy var activeUsersChartCell: UITableViewCell = {
+        let cell = UITableViewCell()
+        activeUsersVC.view.translatesAutoresizingMaskIntoConstraints = false
+        cell.contentView.addSubview(activeUsersVC.view)
+        NSLayoutConstraint.activate([
+            activeUsersVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            activeUsersVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            activeUsersVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            activeUsersVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
+        ])
+        addChild(activeUsersVC)
+        return cell
+    }()
+    
+    private lazy var teamsByFunctionsChartCell: UITableViewCell = {
+        let cell = UITableViewCell()
+        teamsByFunctionsVC.view.translatesAutoresizingMaskIntoConstraints = false
+        cell.contentView.addSubview(teamsByFunctionsVC.view)
+        NSLayoutConstraint.activate([
+            teamsByFunctionsVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            teamsByFunctionsVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            teamsByFunctionsVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            teamsByFunctionsVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
+        ])
+        addChild(teamsByFunctionsVC)
+        return cell
+    }()
+    
+    private lazy var teamChatUsersChartCell: UITableViewCell = {
+        let cell = UITableViewCell()
+        teamChatUsersVC.view.translatesAutoresizingMaskIntoConstraints = false
+        cell.contentView.addSubview(teamChatUsersVC.view)
+        NSLayoutConstraint.activate([
+            teamChatUsersVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            teamChatUsersVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            teamChatUsersVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            teamChatUsersVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
+        ])
+        addChild(teamChatUsersVC)
+        return cell
+    }()
+    
+    private lazy var activeUsersByFuncChartCell: UITableViewCell = {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BarChartCell") as? BarChartCell else { return UITableViewCell() }
+        cell.setUpBarChartView()
+        return cell
+    }()
+    
+    private var chartCells: [UITableViewCell] = []
+    
+    private var chartDimensionsDict: [Int : ChartDimensions] = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,34 +106,26 @@ class UsageMetricsViewController: UIViewController {
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.barTintColor = .white
         
+        tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
+        
+        chartCells = [activeUsersChartCell, activeUsersByFuncChartCell, teamChatUsersChartCell, teamsByFunctionsChartCell]
+        
+        chartDimensionsDict[0] = activeUsersVC
+        if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
+            chartDimensionsDict[1] = barChartCell
+        }
+        chartDimensionsDict[2] = teamChatUsersVC
+        chartDimensionsDict[3] = teamsByFunctionsVC
+        
         setUpNavigationItem()
-        setUpWebView()
-        //loadUsageMetrics()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        removeCookies()
-        let value = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-        
-        loadUsageMetrics()
-    }
-    
-    func removeCookies() {
-        let cookieStore = usageMetricsWebView.configuration.websiteDataStore.httpCookieStore
-        cookieStore.getAllCookies { cookies in
-            for cookie in cookies {
-                cookieStore.delete(cookie)
-            }
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        let value = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-        UINavigationController.attemptRotationToDeviceOrientation()
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -62,64 +142,28 @@ class UsageMetricsViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
     }
     
-    private func setUpWebView() {
-        usageMetricsWebView = WKWebView(frame: CGRect.zero)
-        usageMetricsWebView.translatesAutoresizingMaskIntoConstraints = false
-        usageMetricsWebView.scrollView.showsVerticalScrollIndicator = false
-        usageMetricsWebView.scrollView.showsHorizontalScrollIndicator = false
-        view.addSubview(usageMetricsWebView)
-        NSLayoutConstraint.activate([
-            usageMetricsWebView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            usageMetricsWebView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            usageMetricsWebView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            usageMetricsWebView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
-        ])
-        usageMetricsWebView.navigationDelegate = self
-    }
-    
     @objc private func backPressed() {
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    private func loadUsageMetrics() {
-        ///iframe
-        
-        /*let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"></HEAD><BODY>"
-        let htmlEnd = "</BODY></HTML>"
-        let htmlBodyStr = "<iframe width=\"\(usageMetricsWebView.frame.size.width)\" height=\"\(usageMetricsWebView.frame.size.height)\" src=\"https://app.powerbi.com/view?r=eyJrIjoiNmVhZTljOTQtZDRhOS00M2YwLTljMDAtOTgwYTY0NTI5ZGI1IiwidCI6ImYwYWZmM2I3LTkxYTUtNGFhZS1hZjcxLWM2M2UxZGRhMjA0OSIsImMiOjh9\"frameborder=\"0\" allowFullScreen=\"true\"></iframe>"
-        let htmlFullStr = "\(htmlStart)\(htmlBodyStr)\(htmlEnd)"
-        usageMetricsWebView.loadHTMLString(htmlFullStr, baseURL: Bundle.main.bundleURL)*/
-        
-        ///direct link loading
-        
-        if let url = URL(string: "https://app.powerbi.com/view?r=eyJrIjoiNmVhZTljOTQtZDRhOS00M2YwLTljMDAtOTgwYTY0NTI5ZGI1IiwidCI6ImYwYWZmM2I3LTkxYTUtNGFhZS1hZjcxLWM2M2UxZGRhMjA0OSIsImMiOjh9") {
-            let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
-            usageMetricsWebView.load(request)
-        }
     }
 
 }
 
-extension UsageMetricsViewController : WKNavigationDelegate {
-    
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        let err = error as NSError
-        let message: String
-        switch err.code {
-        case -1009:
-            message = "Please verify your network connection and try again. If the error persists please try again later"
-        case -1001:
-            message = "The request timed out. Try again later"
-        default:
-            message = "Oops, something went wrong"
-        }
-        displayError(errorMessage: message, title: nil) {[weak self] _ in
-            self?.backPressed()
-        }
+extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return chartCells.count
     }
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-        decisionHandler(.allow)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let chartDimensions = chartDimensionsDict[indexPath.row] {
+            return chartDimensions.optimalHeight
+        }
+        return UITableView.automaticDimension
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard indexPath.row < chartCells.count else { return UITableViewCell() }
+        return chartCells[indexPath.row]
+    }
+    
     
 }

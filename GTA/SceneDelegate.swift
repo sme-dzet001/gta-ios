@@ -118,6 +118,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
     }
     
     private func removeAllData() {
+        KeychainManager.deletePushNotificationTokenSent()
         KeychainManager.deleteUsername()
         KeychainManager.deleteToken()
         KeychainManager.deleteTokenExpirationDate()

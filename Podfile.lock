@@ -1,44 +1,49 @@
 PODS:
-  - AdvancedPageControl (0.1.5)
-  - Firebase/CoreOnly (7.7.0):
-    - FirebaseCore (= 7.7.0)
-  - Firebase/Crashlytics (7.7.0):
+  - AdvancedPageControl (0.9.0)
+  - Charts (3.6.0):
+    - Charts/Core (= 3.6.0)
+  - Charts/Core (3.6.0)
+  - Firebase/CoreOnly (8.2.0):
+    - FirebaseCore (= 8.2.0)
+  - Firebase/Crashlytics (8.2.0):
     - Firebase/CoreOnly
-    - FirebaseCrashlytics (~> 7.7.0)
-  - FirebaseCore (7.7.0):
-    - FirebaseCoreDiagnostics (~> 7.4)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/Logger (~> 7.0)
-  - FirebaseCoreDiagnostics (7.7.0):
-    - GoogleDataTransport (~> 8.0)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/Logger (~> 7.0)
-    - nanopb (~> 2.30907.0)
-  - FirebaseCrashlytics (7.7.0):
-    - FirebaseCore (~> 7.0)
-    - FirebaseInstallations (~> 7.0)
-    - GoogleDataTransport (~> 8.0)
-    - nanopb (~> 2.30907.0)
+    - FirebaseCrashlytics (~> 8.2.0)
+  - FirebaseCore (8.2.0):
+    - FirebaseCoreDiagnostics (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/Logger (~> 7.4)
+  - FirebaseCoreDiagnostics (8.2.0):
+    - GoogleDataTransport (~> 9.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/Logger (~> 7.4)
+    - nanopb (~> 2.30908.0)
+  - FirebaseCrashlytics (8.2.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleDataTransport (~> 9.0)
+    - nanopb (~> 2.30908.0)
     - PromisesObjC (~> 1.2)
-  - FirebaseInstallations (7.7.0):
-    - FirebaseCore (~> 7.0)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/UserDefaults (~> 7.0)
+  - FirebaseInstallations (8.2.0):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/UserDefaults (~> 7.4)
     - PromisesObjC (~> 1.2)
-  - GoogleDataTransport (8.2.0):
-    - nanopb (~> 2.30907.0)
-  - GoogleUtilities/Environment (7.2.2):
+  - GoogleDataTransport (9.0.1):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
     - PromisesObjC (~> 1.2)
-  - GoogleUtilities/Logger (7.2.2):
+  - GoogleUtilities/Environment (7.4.3):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (7.4.3):
     - GoogleUtilities/Environment
-  - GoogleUtilities/UserDefaults (7.2.2):
+  - GoogleUtilities/UserDefaults (7.4.3):
     - GoogleUtilities/Logger
-  - Kingfisher (6.2.1)
-  - nanopb (2.30907.0):
-    - nanopb/decode (= 2.30907.0)
-    - nanopb/encode (= 2.30907.0)
-  - nanopb/decode (2.30907.0)
-  - nanopb/encode (2.30907.0)
+  - Kingfisher (6.3.0)
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
   - PanModal (1.2.7)
   - PromisesObjC (1.2.12)
   - RNCryptor (5.1.0)
@@ -48,6 +53,7 @@ PODS:
 
 DEPENDENCIES:
   - AdvancedPageControl
+  - Charts
   - Firebase/Crashlytics
   - Kingfisher
   - PanModal
@@ -57,6 +63,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AdvancedPageControl
+    - Charts
     - Firebase
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -72,21 +79,22 @@ SPEC REPOS:
     - SDWebImage
 
 SPEC CHECKSUMS:
-  AdvancedPageControl: df5912b03c7b78a7719d4f479b79f7eb3a2966bb
-  Firebase: cd2ab85eec8170dc260186159f21072ecb679ad5
-  FirebaseCore: ac35d680a0bf32319a59966a1478e0741536b97b
-  FirebaseCoreDiagnostics: 179bf3831213451c8addd036aca7fcf5492ec154
-  FirebaseCrashlytics: 47af228115805e190b566db12c028263531b8ce0
-  FirebaseInstallations: 42c86e7b02ff75b7f27f85833bf5dcb5f38a9774
-  GoogleDataTransport: 1024b1a4dfbd7a0e92cb20d7e0a6f1fb66b449a4
-  GoogleUtilities: 31c5b01f978a70c6cff2afc6272b3f1921614b43
-  Kingfisher: e71c6fac2aebb1262888cabc2cb13d313362a48f
-  nanopb: 59221d7f958fb711001e6a449489542d92ae113e
+  AdvancedPageControl: 39e3b32b00b2d324c534f8e17cc6c5be9abe84b7
+  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
+  Firebase: 12c568897b807321964e89d2b263ef4c6cff3db6
+  FirebaseCore: 3a83f24c3de69ec9f9a426e2598125ea51f3a2ce
+  FirebaseCoreDiagnostics: 61384f54989065b15c36b5922b65112e86811d3c
+  FirebaseCrashlytics: 935dbdb043a286ca92a22d15e5780802403ea0ea
+  FirebaseInstallations: 9394ea09e242bf0816e95ac30e56a9214cc86ced
+  GoogleDataTransport: 04c3e9a480bbcaa2ec3f5d27f1cdeb6a92f20c8d
+  GoogleUtilities: 45dbb24a7f351d69d0a601482b39ad6c32e30dab
+  Kingfisher: 6c3df386db71d82c0817a429d2c9421a77396529
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
 
-PODFILE CHECKSUM: df3b7321614299708ec49f2ac43e9061bd273e98
+PODFILE CHECKSUM: af2ac2ad10c9a236e5b1fd14c58f96499933a2a0
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.0

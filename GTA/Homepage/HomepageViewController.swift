@@ -249,7 +249,7 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offSet = scrollView.contentOffset.x
         let width = scrollView.frame.width
-        pageControl.setCurrentItem(offset: CGFloat(offSet),width: CGFloat(width))
+        pageControl.setPageOffset(CGFloat(offSet) / CGFloat(width))
     }
     
 }

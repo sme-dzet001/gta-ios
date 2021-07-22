@@ -96,11 +96,13 @@ class HomepageTableViewController: UITableViewController {
     }
     
     private func loadSpecialAlertsData() {
+        let numberOfRows = tableView.numberOfRows(inSection: 1)
         dataProvider?.getSpecialAlertsData { [weak self] (errorCode, error, isFromCache) in
             DispatchQueue.main.async {
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                    if let dataHasChanged = self?.tableView.dataHasChanged, dataHasChanged {
+                    let doubleCheck = numberOfRows == self?.dataProvider?.alertsData.count
+                    if let dataHasChanged = self?.tableView.dataHasChanged, dataHasChanged || !doubleCheck {
                         self?.tableView.reloadData()
                     } else {
                         self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
@@ -283,12 +285,12 @@ extension HomepageTableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            let alert = dataProvider?.globalAlertsData
-            if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
-                return 0
-            }
-            return 1
+//        case 0:
+//            let alert = dataProvider?.globalAlertsData
+//            if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
+//                return 0
+//            }
+//            return 1
         case 1:
             return dataProvider?.alertsData.count ?? 0
         default:
@@ -298,7 +300,13 @@ extension HomepageTableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
-        case 0, 1, 2:
+        case 0:
+            let alert = dataProvider?.globalAlertsData
+            if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
+                return 0
+            }
+            return 80
+        case 1, 2:
             return 80
         default:
             return UITableView.automaticDimension
@@ -324,7 +332,7 @@ extension HomepageTableViewController {
             cell?.iconImageView.image = UIImage(named: "info_icon")
             cell?.mainLabel.text = data[indexPath.row].alertTitle
             cell?.mainLabel.textColor = .black
-            if let date = data[indexPath.row].alertDate?.getFormattedDateStringForMyTickets() {//dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
+            if let date = data[indexPath.row].alertDate?.getFormattedDateStringForMyTickets() { //dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
                 cell?.descriptionLabel.text = date
             } else {
                 cell?.descriptionLabel.text = nil
