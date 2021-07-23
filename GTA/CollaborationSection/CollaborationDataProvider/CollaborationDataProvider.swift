@@ -424,7 +424,7 @@ class CollaborationDataProvider {
     
     // MARK: - Usage metrics related methods
     
-    func getUsageMetrics(appGroup: String = "Office365", appName: String = "Sampleapp", completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getUsageMetrics(appGroup: String = "Office365", appName: String = "Teams", completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (reportResponse, cachedError) in
             let code = cachedError == nil ? 200 : 0
             self?.handleUsageMetricsSectionReport(appGroup: appGroup, appName: appName, reportResponse, code, cachedError, true, { (fromCache, dataWasChanged, code, error) in
