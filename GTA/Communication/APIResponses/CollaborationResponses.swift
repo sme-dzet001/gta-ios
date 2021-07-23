@@ -256,10 +256,13 @@ struct CollaborationNewsRow: Codable, Equatable, ImageDataProtocol {
 struct CollaborationMetricsResponse: Codable, Equatable {
     
     var meta: ResponseMetaData?
-    var data: [String : CollaborationMetricsData?]?//CollaborationMetricsRows?
+    var data: [String : [String: CollaborationMetricsData?]?]?//CollaborationMetricsRows?
+    var appGroup: String?
+    var appName: String?
+    
     var collaborationMetricsData: CollaborationMetricsData? {
-        let key = data?.keys.first ?? ""
-        guard let metricsData = data?[key] else { return nil }
+        let key = data?.keys.first(where: {$0 == appGroup}) ?? ""
+        guard let metricsData = data?[key]??[appName ?? ""] else { return nil }
         return metricsData
     }
     
