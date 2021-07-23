@@ -85,6 +85,7 @@ class LineChartViewController: UIViewController {
         //let maxValue = lineChartData.map({ return $0.value ?? 0 }).last ?? 0
         let maxValueNumberFormatter = NumberFormatter()
         maxValueNumberFormatter.numberStyle = .decimal
+        maxValueNumberFormatter.decimalSeparator = "."
         maxValueLabel.text = String.convertBigValueToString(value: lastValue)//maxValueNumberFormatter.string(from: NSNumber(value: maxValue))?.replacingOccurrences(of: ",", with: " ")
         
         //let lastValue = Double(lineChartData.map({ return Double($0.value ?? 0) }).last ?? 0.0)
