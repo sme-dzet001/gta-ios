@@ -97,15 +97,16 @@ class BarChartCell: UITableViewCell {
         barChartView.legendRenderer.computeLegend(data: barChartView.data!)
         barChartView.legend.verticalAlignment = .bottom
         barChartView.legend.xEntrySpace = ((barChartView.frame.width - barChartView.legend.neededWidth) / 4) - 12
+        barChartView.legend.yEntrySpace = 5
         barChartView.legend.orientation = .horizontal
     }
 
-    private func getBarColors(for count: Int) -> [UIColor] {
+    private func getBarColors(for entriesSize: Int) -> [UIColor] {
         var colors = [UIColor]()
         let hueRange = 360
-        let entriesSize = 10
+        //let entriesSize = 10
         let step = hueRange  / entriesSize
-        for i in 1...count {
+        for i in 1...entriesSize {
             let HSVColor = HSV.rgb(h: Float(step * i))
             let color = UIColor(red: CGFloat(HSVColor.r), green: CGFloat(HSVColor.g), blue: CGFloat(HSVColor.b), alpha: 1.0)
             colors.append(color)
@@ -120,14 +121,14 @@ class BarChartCell: UITableViewCell {
         if floatBarCount <= minUISupportedEntriesCount {
             return 0.01 * (width / minUISupportedEntriesCount)
         } else {
-            return 0.01 * (width / floatBarCount)
+            return width / floatBarCount
         }
     }
 }
 
 extension BarChartCell: ChartDimensions {
     var optimalHeight: CGFloat {
-        return 294
+        return 294 + barChartView.legend.neededHeight
     }
 }
 

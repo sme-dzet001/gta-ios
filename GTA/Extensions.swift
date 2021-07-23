@@ -479,12 +479,16 @@ extension String {
         return "yyyy-MM-dd HH:mm:ssZ"
     }
     
+    static var convertMetricsSlashDateFormat: String { // TODO: Need better name
+        return "MM/dd/yyyy HH:mm"
+    }
+    
     static var usageMetricsDateFormat: String {
         return "dd-MMM-yy"
     }
     
     static var ticketDateFormat: String {
-        return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//"yyyy-MM-dd'T'HH:mm:ss.SSS Z"
+        return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     }
     
     static var statusDateFormat: String {
@@ -584,10 +588,19 @@ extension String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.convertMetricsDateFormat
         if let date = dateFormatterPrint.date(from: self) {
-            dateFormatterPrint.dateFormat = String.usageMetricsDateFormat
-            return dateFormatterPrint.string(from: date)
+            return getUsageMetricStringDate(from: date)
+        }
+        dateFormatterPrint.dateFormat = String.convertMetricsSlashDateFormat
+        if let date = dateFormatterPrint.date(from: self) {
+            return getUsageMetricStringDate(from: date)
         }
         return ""
+    }
+    
+    private func getUsageMetricStringDate(from date: Date) -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.usageMetricsDateFormat
+        return dateFormatterPrint.string(from: date)
     }
     
     func getFormattedDateStringForProdAlert() -> String {
