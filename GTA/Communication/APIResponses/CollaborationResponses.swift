@@ -345,12 +345,6 @@ enum ChartType: String {
     case none = ""
 }
 
-struct ChartStructure {
-    var title: String
-    var values: [Float]
-    var legends: [String]
-}
-
 protocol ImageDataProtocol {
     //var fullTitle: String? { get }
     var imageData: Data? { get set }

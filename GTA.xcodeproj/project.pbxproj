@@ -661,13 +661,13 @@
 		658BEF7D268FC63600D4FD2C /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BEF77268FC63600D4FD2C /* LineChartViewController.swift */; };
 		658BEF7E268FC63600D4FD2C /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BEF77268FC63600D4FD2C /* LineChartViewController.swift */; };
 		658BEF7F268FC63600D4FD2C /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BEF77268FC63600D4FD2C /* LineChartViewController.swift */; };
-		658BF0C3268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
-		658BF0C4268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
-		658BF0C5268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
-		658BF0C6268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
-		658BF0C7268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
-		658BF0C8268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
-		658BF0C9268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */; };
+		658BF0C3268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* ChartsDataStructures.swift */; };
+		658BF0C4268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* ChartsDataStructures.swift */; };
+		658BF0C5268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* ChartsDataStructures.swift */; };
+		658BF0C6268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* ChartsDataStructures.swift */; };
+		658BF0C7268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* ChartsDataStructures.swift */; };
+		658BF0C8268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* ChartsDataStructures.swift */; };
+		658BF0C9268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658BF0C2268FF30000D4FD2C /* ChartsDataStructures.swift */; };
 		659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB0255401EA00E13B77 /* AppDelegate.swift */; };
 		659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
 		659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB4255401EA00E13B77 /* LoginViewController.swift */; };
@@ -1678,7 +1678,7 @@
 		6563C2772592AD1500AA6168 /* GTA.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GTA.xcdatamodel; sourceTree = "<group>"; };
 		658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UsageMetricsViewController.xib; sourceTree = "<group>"; };
 		658BEF77268FC63600D4FD2C /* LineChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartViewController.swift; sourceTree = "<group>"; };
-		658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageMetricsDataProvider.swift; sourceTree = "<group>"; };
+		658BF0C2268FF30000D4FD2C /* ChartsDataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsDataStructures.swift; sourceTree = "<group>"; };
 		659A5AAD255401EA00E13B77 /* GTA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		659A5AB0255401EA00E13B77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		659A5AB2255401EA00E13B77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -2018,7 +2018,7 @@
 		653E78E7261FC51A00CABB4C /* UsageMetricsScreen */ = {
 			isa = PBXGroup;
 			children = (
-				658BF0C1268FF2CE00D4FD2C /* UsageMetricsDataProvider */,
+				9FF6A11E26A88C4700EC5A7C /* ChartsDataStructures */,
 				658BEF76268FA7D800D4FD2C /* ChartControllers */,
 				653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */,
 				658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */,
@@ -2078,14 +2078,6 @@
 				54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */,
 			);
 			path = ChartControllers;
-			sourceTree = "<group>";
-		};
-		658BF0C1268FF2CE00D4FD2C /* UsageMetricsDataProvider */ = {
-			isa = PBXGroup;
-			children = (
-				658BF0C2268FF30000D4FD2C /* UsageMetricsDataProvider.swift */,
-			);
-			path = UsageMetricsDataProvider;
 			sourceTree = "<group>";
 		};
 		659A5AA4255401EA00E13B77 = {
@@ -2898,6 +2890,14 @@
 				9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */,
 			);
 			path = SecondSendMessageView;
+			sourceTree = "<group>";
+		};
+		9FF6A11E26A88C4700EC5A7C /* ChartsDataStructures */ = {
+			isa = PBXGroup;
+			children = (
+				658BF0C2268FF30000D4FD2C /* ChartsDataStructures.swift */,
+			);
+			path = ChartsDataStructures;
 			sourceTree = "<group>";
 		};
 		C907E0CB25D437DD00FB0B55 /* AppContactsScreen */ = {
@@ -4495,7 +4495,7 @@
 				65437C682665387600B2F38A /* GTA.xcdatamodeld in Sources */,
 				9F30280C2681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				65437C692665387600B2F38A /* ServiceDeskAboutViewController.swift in Sources */,
-				658BF0C9268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
+				658BF0C9268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */,
 				65437C6A2665387600B2F38A /* GTTeamCell.swift in Sources */,
 				65437C6B2665387600B2F38A /* ServiceDeskContactsViewController.swift in Sources */,
 				65437C6C2665387600B2F38A /* HelpDeskCell.swift in Sources */,
@@ -4633,7 +4633,7 @@
 				65437E36266539BF00B2F38A /* ServiceDeskAboutViewController.swift in Sources */,
 				9F30280A2681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				65437E37266539BF00B2F38A /* ServiceDeskContactsViewController.swift in Sources */,
-				658BF0C7268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
+				658BF0C7268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */,
 				65437E38266539BF00B2F38A /* GTTeamCell.swift in Sources */,
 				65437E39266539BF00B2F38A /* ApplicationCell.swift in Sources */,
 				65437E3A266539BF00B2F38A /* MyAppsDataProvider.swift in Sources */,
@@ -4771,7 +4771,7 @@
 				65437FA32665568000B2F38A /* GTA.xcdatamodeld in Sources */,
 				9F30280B2681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				65437FA42665568000B2F38A /* ServiceDeskAboutViewController.swift in Sources */,
-				658BF0C8268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
+				658BF0C8268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */,
 				65437FA52665568000B2F38A /* GTTeamCell.swift in Sources */,
 				65437FA62665568000B2F38A /* ServiceDeskContactsViewController.swift in Sources */,
 				65437FA72665568000B2F38A /* HelpDeskCell.swift in Sources */,
@@ -4909,7 +4909,7 @@
 				C960A0E525B08B52004A9C65 /* ServiceDeskAboutViewController.swift in Sources */,
 				9F3028062681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				C9766FAC2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
-				658BF0C3268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
+				658BF0C3268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */,
 				9F3AC9082645B17A004074C8 /* GTTeamCell.swift in Sources */,
 				9F895AE7255C22D7004489C6 /* ApplicationCell.swift in Sources */,
 				9F8164B8257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
@@ -5021,7 +5021,7 @@
 				9F33F64B260A3C4000470A47 /* AppContactsViewController.swift in Sources */,
 				9F33F64C260A3C4000470A47 /* MetricStatsHeader.swift in Sources */,
 				9F33F64D260A3C4000470A47 /* ApplicationStatusViewController.swift in Sources */,
-				658BF0C6268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
+				658BF0C6268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */,
 				9F30283B2681D42F009A3096 /* ProductionAlertsResponses.swift in Sources */,
 				9F33F64E260A3C4000470A47 /* HelpDeskHeader.swift in Sources */,
 				9F33F64F260A3C4000470A47 /* HelpDeskResponses.swift in Sources */,
@@ -5202,7 +5202,7 @@
 				6563C2792592AD1500AA6168 /* GTA.xcdatamodeld in Sources */,
 				9F3028072681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				C960A0E625B08B52004A9C65 /* ServiceDeskAboutViewController.swift in Sources */,
-				658BF0C4268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
+				658BF0C4268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */,
 				9F3AC9092645B17A004074C8 /* GTTeamCell.swift in Sources */,
 				C9766FAD2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708C2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
@@ -5340,7 +5340,7 @@
 				6563C27A2592AD1500AA6168 /* GTA.xcdatamodeld in Sources */,
 				9F3028082681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				C960A0E725B08B52004A9C65 /* ServiceDeskAboutViewController.swift in Sources */,
-				658BF0C5268FF30100D4FD2C /* UsageMetricsDataProvider.swift in Sources */,
+				658BF0C5268FF30100D4FD2C /* ChartsDataStructures.swift in Sources */,
 				9F3AC90A2645B17A004074C8 /* GTTeamCell.swift in Sources */,
 				C9766FAE2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708D2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
