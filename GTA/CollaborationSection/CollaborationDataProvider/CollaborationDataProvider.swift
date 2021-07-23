@@ -423,10 +423,10 @@ class CollaborationDataProvider {
     
     // MARK: - Usage metrics related methods
     
-    func getUsageMetrics(completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getUsageMetrics(appGroup: String = "Office365", appName: String = "Teams", completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (reportResponse, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.handleUsageMetricsSectionReport(reportResponse, code, cachedError, true, { (fromCache, dataWasChanged, code, error) in
+            self?.handleUsageMetricsSectionReport(appGroup: appGroup, appName: appName, reportResponse, code, cachedError, true, { (fromCache, dataWasChanged, code, error) in
                 if error == nil {
                     completion?(fromCache, dataWasChanged, code, error)
                 }
@@ -435,20 +435,20 @@ class CollaborationDataProvider {
                     if let _ = error {
                         completion?(false, dataWasChanged, errorCode, ResponseError.generate(error: error))
                     } else {
-                        self?.handleUsageMetricsSectionReport(reportResponse, errorCode, error, false, completion)
+                        self?.handleUsageMetricsSectionReport(appGroup: appGroup, appName: appName, reportResponse, errorCode, error, false, completion)
                     }
                 })
             })
         }
     }
     
-    private func handleUsageMetricsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func handleUsageMetricsSectionReport(appGroup: String, appName: String, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
-        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaborationAppDetails.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationAppDetailsV1.rawValue }?.generationNumber
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaborationMetrics.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationMetrics.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
             if fromCache {
                 getCachedResponse(for: .getCollaborationMetrics) {[weak self] (data, error) in
-                    self?.processUsageMetrics(reportData, data, errorCode, error, true, completion)
+                    self?.processUsageMetrics(appGroup: appGroup, appName: appName, reportData, data, errorCode, error, true, completion)
                 }
                 return
             }
@@ -457,7 +457,7 @@ class CollaborationDataProvider {
                 if let _ = error {
                     completion?(fromCache, false, 0, ResponseError.generate(error: error))
                 } else {
-                    self?.processUsageMetrics(reportData, data, errorCode, error, fromCache, completion)
+                    self?.processUsageMetrics(appGroup: appGroup, appName: appName, reportData, data, errorCode, error, fromCache, completion)
                 }
             })
         } else {
@@ -469,7 +469,7 @@ class CollaborationDataProvider {
         }
     }
     
-    private func processUsageMetrics(_ reportData: ReportDataResponse?, _ detailsResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool,  _ completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processUsageMetrics(appGroup: String, appName: String, _ reportData: ReportDataResponse?, _ detailsResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool,  _ completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var metricsData: CollaborationMetricsResponse?
         var retErr = error
         if let responseData = detailsResponse {
@@ -481,6 +481,8 @@ class CollaborationDataProvider {
         } else {
             retErr = ResponseError.commonError
         }
+        metricsData?.appGroup = appGroup
+        metricsData?.appName = appName
         let columns = metricsData?.meta?.widgetsDataSource?.params?.columns
         let indexes = getDataIndexes(columns: columns)
         var rows = metricsData?.collaborationMetricsData?.data?.rows ?? []
