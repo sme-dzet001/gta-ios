@@ -41,7 +41,7 @@ class WhatsNewCell: UITableViewCell {
     
     func setDate(_ date: String?) {
         if let date = date {
-            subtitleLabel.text = date.getFormattedDateStringForMyTickets()
+            subtitleLabel.text = date.getFormattedDateStringForNews()
         } else {
             subtitleLabel.text = date
         }
