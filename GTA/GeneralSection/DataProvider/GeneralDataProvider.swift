@@ -13,24 +13,33 @@ class GeneralDataProvider {
     private var cacheManager: CacheManager = CacheManager()
     
     private var selectedOfficeId: Int?
-    private(set) var allowEmergencyOutageNotifications: Bool = true
-    private(set) var allowProductionAlertsNotifications: Bool = true
+    private var needToGetDataFromServer: Bool = false
+    //private(set) var allowEmergencyOutageNotifications: Bool = true
+    //private(set) var allowProductionAlertsNotifications: Bool = true
     
     func getCurrentPreferences(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        getCachedResponse(for: .getCurrentPreferences) {[weak self] (data, cacheError) in
-            self?.processGetCurrentPreferences(data, cacheError == nil ? 200 : 0, cacheError, { (code, error) in
-                if error == nil {
-                    completion?(code, error)
-                }
-                self?.apiManager.getCurrentPreferences { [weak self] (response, errorCode, error) in
-                    self?.cacheData(response, path: .getCurrentPreferences)
-                    if let _ = error {
-                        completion?(0, ResponseError.generate(error: error))
-                    } else {
-                        self?.processGetCurrentPreferences(response, errorCode, error, completion)
+        if !needToGetDataFromServer {
+            getCachedResponse(for: .getCurrentPreferences) {[weak self] (data, cacheError) in
+                self?.processGetCurrentPreferences(data, cacheError == nil ? 200 : 0, cacheError, { (code, error) in
+                    if error == nil {
+                        completion?(code, error)
                     }
-                }
-            })
+                    self?.getCurrentPreferencesFromServer(completion: completion)
+                })
+            }
+        } else {
+            self.getCurrentPreferencesFromServer(completion: completion)
+        }
+    }
+    
+    private func getCurrentPreferencesFromServer(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        self.apiManager.getCurrentPreferences { [weak self] (response, errorCode, error) in
+            self?.cacheData(response, path: .getCurrentPreferences)
+            if let _ = error {
+                completion?(0, ResponseError.generate(error: error))
+            } else {
+                self?.processGetCurrentPreferences(response, errorCode, error, completion)
+            }
         }
     }
     
@@ -46,14 +55,14 @@ class GeneralDataProvider {
         }
         if let userPreferencesResponse = userPreferencesResponse {
             selectedOfficeId = Int(userPreferencesResponse.data.preferences?.officeId ?? "")
-            allowEmergencyOutageNotifications = userPreferencesResponse.data.preferences?.allowEmergencyOutageNotifications ?? true
-            allowProductionAlertsNotifications = userPreferencesResponse.data.preferences?.allowProductionAlertsNotifications ?? true
-            //Preferences.allowEmergencyOutageNotifications = userPreferencesResponse.data.preferences?.allowEmergencyOutageNotifications ?? true
+            Preferences.allowProductionAlertsNotifications = userPreferencesResponse.data.preferences?.allowProductionAlertsNotifications ?? true
+            Preferences.allowEmergencyOutageNotifications = userPreferencesResponse.data.preferences?.allowEmergencyOutageNotifications ?? true
         }
         completion?(errorCode, retErr)
     }
     
     func setCurrentPreferences(notificationsState: Bool, notificationsType: NotificationsType, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        needToGetDataFromServer = true
         let officeId = Preferences.officeId ?? selectedOfficeId ?? 0
         let prodAlertsState = Preferences.allowProductionAlertsNotifications
         let emergencyOutageState = Preferences.allowEmergencyOutageNotifications
@@ -66,14 +75,14 @@ class GeneralDataProvider {
             preferences = "{\"office_id\":\"\(officeId)\", \"allow_notifications_emergency_outage\": \(emergencyOutageState), \"allow_notifications_production_alerts\": \(notificationsState)}"
             Preferences.allowProductionAlertsNotifications = notificationsState
         }
-        apiManager.setCurrentPreferences(preferences: preferences) { [weak self] (response, errorCode, error) in
+        apiManager.setCurrentPreferences(preferences: preferences) {(response, errorCode, error) in
             if let _ = response, errorCode == 200, error == nil {
-                if notificationsType == .emergencyOutageNotifications {
-                    self?.allowEmergencyOutageNotifications = notificationsState
-                } else {
-                    self?.allowProductionAlertsNotifications = notificationsState
-                }
-                //Preferences.allowEmergencyOutageNotifications = nottificationsState
+//                if notificationsType == .emergencyOutageNotifications {
+//                    self?.allowEmergencyOutageNotifications = notificationsState
+//                } else {
+//                    self?.allowProductionAlertsNotifications = notificationsState
+//                }
+//                //Preferences.allowEmergencyOutageNotifications = nottificationsState
             } else {
                 if notificationsType == .emergencyOutageNotifications {
                     Preferences.allowEmergencyOutageNotifications = !notificationsState
