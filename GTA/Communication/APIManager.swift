@@ -295,9 +295,9 @@ class APIManager: NSObject, URLSessionDelegate {
         self.makeRequest(endpoint: .getCollaborationNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders,  completion: completion)
     }
     
-    func getCollaborationMetrics(for generationNumber: Int, appGroup: String = "Office365", completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getCollaborationMetrics(for generationNumber: Int, appGroup: String, appName: String, completion: ((_ responseData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Content-Type": "application/json; charset=UTF-8", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
-        let requestBodyParams = ["s1": appGroup]//, "s2": appName]
+        let requestBodyParams = ["s1": appGroup, "s2": appName]
         self.makeRequest(endpoint: .getCollaborationMetrics(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyParams: requestBodyParams, completion: completion)
     }
     

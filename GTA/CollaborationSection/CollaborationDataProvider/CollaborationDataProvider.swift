@@ -447,13 +447,13 @@ class CollaborationDataProvider {
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.collaborationMetrics.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.collaborationMetrics.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
             if fromCache {
-                getCachedResponse(for: .getCollaborationMetrics) {[weak self] (data, error) in
+                getCachedResponse(for: .getCollaborationMetrics(appGroup: appGroup, appName: appName)) {[weak self] (data, error) in
                     self?.processUsageMetrics(appGroup: appGroup, appName: appName, reportData, data, errorCode, error, true, completion)
                 }
                 return
             }
-            apiManager.getCollaborationMetrics(for: generationNumber!,  completion: { [weak self] (data, errorCode, error) in
-                self?.cacheData(data, path: .getCollaborationMetrics)
+            apiManager.getCollaborationMetrics(for: generationNumber!, appGroup: appGroup, appName: appName, completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getCollaborationMetrics(appGroup: appGroup, appName: appName))
                 if let _ = error {
                     completion?(fromCache, false, 0, ResponseError.generate(error: error))
                 } else {
