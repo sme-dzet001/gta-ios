@@ -43,11 +43,20 @@ class ChartDataSourceSelectionButton: UIButton {
 }
 
 class TeamsByFunctionsViewController: LineChartViewController {
+    
     @IBOutlet var selectorBtns: [ChartDataSourceSelectionButton]!
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    var data: [String : [[TeamsByFunctionsDataEntry]]]?
+    private var chartsData: [[TeamsByFunctionsDataEntry]]? {
+        guard let key = data?.keys.first else { return nil }
+        return data?[key]
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateSelectorBtns()
+        titleLabel.text = data?.keys.first
     }
     
     var dataSourceIdx: Int = 0 {
@@ -59,16 +68,10 @@ class TeamsByFunctionsViewController: LineChartViewController {
     }
     
     override var lineChartData: [(period: String?, value: Int?)] {
-        switch dataSourceIdx {
-        case 1:
-            return dataProvider?.teamsByFunctionsUsersData.map({ return (period: $0.formattedPeriod, value: $0.callCount) }) ?? []
-        case 2:
-            return dataProvider?.teamsByFunctionsUsersData.map({ return (period: $0.formattedPeriod, value: $0.privateChatMessageCount) }) ?? []
-        case 3:
-            return dataProvider?.teamsByFunctionsUsersData.map({ return (period: $0.formattedPeriod, value: $0.teamsChatMessageCount) }) ?? []
-        default:
-            return dataProvider?.teamsByFunctionsUsersData.map({ return (period: $0.formattedPeriod, value: $0.meetingCount) }) ?? []
-        }
+        let count = chartsData?.count ?? 0
+        guard count > dataSourceIdx else { return [(period: String?, value: Int?)]() }
+        let values = chartsData?[dataSourceIdx] ?? []
+        return values.map({ return (period: $0.formattedLegend, value: $0.value) })
     }
     
     @IBAction func dataSourceSelectorBtnTapped(_ sender: ChartDataSourceSelectionButton) {
