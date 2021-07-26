@@ -103,13 +103,11 @@ class BarChartCell: UITableViewCell {
 
     private func getBarColors(for entriesSize: Int) -> [UIColor] {
         var colors = [UIColor]()
-        let hueRange = 360
-        //let entriesSize = 10
-        let step = hueRange  / entriesSize
-        for i in 1...entriesSize {
-            let HSVColor = HSV.rgb(h: Float(step * i))
-            let color = UIColor(red: CGFloat(HSVColor.r), green: CGFloat(HSVColor.g), blue: CGFloat(HSVColor.b), alpha: 1.0)
-            colors.append(color)
+        let hardcodedColors = [UIColor(hex: 0xA6CEE3), UIColor(hex: 0x2493DE), UIColor(hex: 0xB2DF8A), UIColor(hex: 0x33A02C), UIColor(hex: 0xFB9A99),  UIColor(hex: 0xE31A1C), UIColor(hex: 0xFDBF6F), UIColor(hex: 0xFF7F00), UIColor(hex: 0xCAB2D6), UIColor(hex: 0x6A3D9A), UIColor(hex: 0x9AA1FF), UIColor(hex: 0x4C55D4), UIColor(hex: 0xEA4589), UIColor(hex: 0xBC2A66), UIColor(hex: 0xE390F1), UIColor(hex: 0xB656C6), UIColor(hex: 0x7A1859), UIColor(hex: 0xC9845E), UIColor(hex: 0x9C4612), UIColor(hex: 0xFFFF99), UIColor(hex: 0xFFEB32), UIColor(hex: 0xD0C9AA), UIColor(hex: 0x7E6442), UIColor(hex: 0xAEB5BC), UIColor(hex: 0x6E757C), UIColor(hex: 0x4AACB7), UIColor(hex: 0x3084AA), UIColor(hex: 0x85DAB5), UIColor(hex: 0x479D89), UIColor(hex: 0x326465)]
+        for i in 0..<entriesSize {
+            let index = hardcodedColors.count > i ? i : i - 30
+            guard hardcodedColors.count > index else { return colors }
+            colors.append(hardcodedColors[index])
         }
         return colors
     }
