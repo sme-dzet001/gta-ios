@@ -433,6 +433,14 @@ extension String {
         return "yyyy-MM-dd HH:mm:ss"
     }
     
+    static var convertMetricsDateFormat: String {
+        return "yyyy-MM-dd HH:mm:ssZ"
+    }
+    
+    static var usageMetricsDateFormat: String {
+        return "dd-MMM-yy"
+    }
+    
     static var ticketDateFormat: String {
         return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//"yyyy-MM-dd'T'HH:mm:ss.SSS Z"
     }
@@ -530,6 +538,26 @@ extension String {
        // return self
     }
     
+    func getFormattedDateStringForNews() -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        guard let date = dateFormatterPrint.date(from: self) else { return self }
+        dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
+        dateFormatterPrint.timeZone = .current
+        return dateFormatterPrint.string(from: date)
+    }
+    
+    func getDateForUsageMetrics() -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.convertMetricsDateFormat
+        if let date = dateFormatterPrint.date(from: self) {
+            dateFormatterPrint.dateFormat = String.usageMetricsDateFormat
+            return dateFormatterPrint.string(from: date)
+        }
+        return ""
+    }
+    
     func getFormattedDateStringForProdAlert() -> String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
@@ -538,6 +566,22 @@ extension String {
         dateFormatterPrint.dateFormat = String.newsDateFormat
         dateFormatterPrint.timeZone = .current
         return dateFormatterPrint.string(from: date)
+    }
+    
+    static func convertBigValueToString(value: Double) -> String {
+        if abs(value) >= 1000000000000 {
+            return String(Int((value/100000000000).rounded()/10)) + " T"
+        }
+        if abs(value) >= 1000000000 {
+            return String(Int((value/100000000).rounded()/10)) + " B"
+        }
+        if abs(value) >= 1000000 {
+            return String(Int((value/100000).rounded()/10)) + " M"
+        }
+        if abs(value) >= 1000 {
+            return String(Int((value/100).rounded()/10)) + " K"
+        }
+        return "\(Int(value))"
     }
     
 }
@@ -763,5 +807,33 @@ extension UNNotification {
             guard let pushType = pushType else { return false }
             return pushType == Constants.pushTypeProductionAlert
         }
+    }
+}
+
+extension Double {
+    func getAxisMaximum() -> Double {
+        return roundUp(self, toNearest: getNearestValue(for: self))
+    }
+    
+    func getAxisMinimum() -> Double {
+        let nearest = getNearestValue(for: self)
+        return roundDown(self, toNearest: nearest)
+    }
+    
+    func getNearestValue(for value: Double) -> Double {
+        var nearest: Double = 10
+        let count = "\(Int(value))".count - 1
+        if count > 0 {
+            nearest = pow(nearest, Double(count))
+        }
+        return nearest
+    }
+    
+    private func roundUp(_ value: Double, toNearest: Double) -> Double {
+      return ceil(value / toNearest) * toNearest
+    }
+    
+    private func roundDown(_ value: Double, toNearest: Double) -> Double {
+      return floor(value / toNearest) * toNearest
     }
 }

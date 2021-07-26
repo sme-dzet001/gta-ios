@@ -10,6 +10,7 @@ import Charts
 
 class BarChartCell: UITableViewCell {
 
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var barChartView: BarChartView!
     
     override func awakeFromNib() {
@@ -17,27 +18,38 @@ class BarChartCell: UITableViewCell {
         // Initialization code
     }
     
-    func setUpBarChartView(with data: [BarChartDataEntry]? = nil) {
-        let yValues: [BarChartDataEntry] = getHardcodeValues()
+    func setUpBarChartView(with chartStructure: ChartStructure?) {
+        guard let chartData = chartStructure else { return }
+        titleLabel.text = chartData.title
+        let yValues: [BarChartDataEntry] = getValues(with: chartData.values)
+        guard !yValues.isEmpty else { return }
         let set = BarChartDataSet(entries: yValues, label: nil)
         set.drawIconsEnabled = true
         set.colors = getBarColors()
-//        set.stackLabels = ["Meeting", "Call", "Private Chat", "Team Chat"]
         let data = BarChartData(dataSet: set)
+        data.highlightEnabled = false
         data.setDrawValues(false)
-        setUpAxis()
+        let axisMaximum = Double(chartData.values.max() ?? 0.0).getAxisMaximum()
+        setUpAxis(axisMaximum: axisMaximum)
         barChartView.fitBars = true
+        barChartView.scaleXEnabled = false
+        barChartView.scaleYEnabled = false
+        barChartView.pinchZoomEnabled = false
         barChartView.data = data
         barChartView.extraBottomOffset = 13
         //barChartView.delegate = self
-        let stackLabels = ["Meeting", "Call", "Private Chat", "Team Chat"]
+        let stackLabels = chartData.legends
         setUpChartLegend(for: yValues.count, labels: stackLabels)
     }
     
-    private func setUpAxis() {
+    private func setUpAxis(axisMaximum: Double) {
         let font = UIFont(name: "SFProText-Regular", size: 10) ?? barChartView.leftAxis.labelFont
         let axisColor = UIColor(hex: 0xE5E5EA)
         barChartView.leftAxis.labelFont = font
+        barChartView.leftAxis.axisMinimum = 0
+        barChartView.leftAxis.axisMaximum = axisMaximum
+        barChartView.leftAxis.valueFormatter = BarChartLeftAxisValueFormatter()
+        barChartView.rightAxis.drawGridLinesEnabled = false
         barChartView.leftAxis.labelTextColor = UIColor(hex: 0xAEAEB2)
         barChartView.chartDescription?.enabled = false
         barChartView.xAxis.drawLabelsEnabled = false
@@ -56,12 +68,12 @@ class BarChartCell: UITableViewCell {
         barChartView.leftAxis.axisLineWidth = 1
         barChartView.leftAxis.gridLineWidth = 1
         barChartView.rightAxis.gridLineWidth = 1
-        
+        barChartView.leftAxis.setLabelCount(3, force: true)
     }
     
-    private func getHardcodeValues() -> [BarChartDataEntry] {
+    private func getValues(with data: [Float]) -> [BarChartDataEntry] {
         var x: Double = 0
-        let values = [Double(5293), Double(4866), Double(5204), Double(1112)]
+        let values = data.compactMap({Double($0)})
         var yValues: [BarChartDataEntry] = []
         for value in values {
             yValues.append(BarChartDataEntry(x: x, yValues: [value], icon: nil))
@@ -88,14 +100,19 @@ class BarChartCell: UITableViewCell {
 
     private func getBarColors() -> [UIColor]{
         // hardcode
-        return [UIColor(red: 66.0 / 255.0, green: 141.0 / 255.0, blue: 247.0 / 255.0, alpha: 1.0), UIColor(red: 106.0 / 255.0, green: 26.0 / 255.0, blue: 128.0 / 255.0, alpha: 1.0), UIColor(red: 184.0 / 255.0, green: 73.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0), UIColor(red: 240.0 / 255.0, green: 156.0 / 255.0, blue: 105.0 / 255.0, alpha: 1.0)]
+        return [UIColor(red: 66.0 / 255.0, green: 141.0 / 255.0, blue: 247.0 / 255.0, alpha: 1.0), UIColor(red: 106.0 / 255.0, green: 26.0 / 255.0, blue: 128.0 / 255.0, alpha: 1.0), UIColor(red: 184.0 / 255.0, green: 73.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0), UIColor(red: 240.0 / 255.0, green: 156.0 / 255.0, blue: 105.0 / 255.0, alpha: 1.0), UIColor(red: 66.0 / 255.0, green: 141.0 / 255.0, blue: 247.0 / 255.0, alpha: 1.0), UIColor(red: 106.0 / 255.0, green: 26.0 / 255.0, blue: 128.0 / 255.0, alpha: 1.0), UIColor(red: 184.0 / 255.0, green: 73.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0), UIColor(red: 240.0 / 255.0, green: 156.0 / 255.0, blue: 105.0 / 255.0, alpha: 1.0), UIColor(red: 66.0 / 255.0, green: 141.0 / 255.0, blue: 247.0 / 255.0, alpha: 1.0), UIColor(red: 106.0 / 255.0, green: 26.0 / 255.0, blue: 128.0 / 255.0, alpha: 1.0), UIColor(red: 184.0 / 255.0, green: 73.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0), UIColor(red: 240.0 / 255.0, green: 156.0 / 255.0, blue: 105.0 / 255.0, alpha: 1.0)]
     }
-    
-    
 }
 
 extension BarChartCell: ChartDimensions {
     var optimalHeight: CGFloat {
         return 294
+    }
+}
+
+
+class BarChartLeftAxisValueFormatter: NSObject, IAxisValueFormatter {
+    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        return String.convertBigValueToString(value: value)
     }
 }

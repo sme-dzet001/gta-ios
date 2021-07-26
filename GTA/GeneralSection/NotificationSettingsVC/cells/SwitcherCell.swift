@@ -27,9 +27,16 @@ class SwitcherCell: UITableViewCell {
 }
 
 extension SwitcherCell: NotificationStateUpdatedDelegate {
-    func notificationStateUpdatedDelegate(state: Bool, type: NotificationsType) {
-        if switchControl.switchNotificationsType == type {
-            switchControl.setOn(state, animated: true)
+    func notificationStateUpdatedDelegate(isNotificationAuthorized: Bool) {
+        guard isNotificationAuthorized else { return }
+        switch switchControl.switchNotificationsType {
+        case .emergencyOutageNotifications:
+            switchControl.setOn(Preferences.allowEmergencyOutageNotifications, animated: true)
+        default:
+            switchControl.setOn(Preferences.allowProductionAlertsNotifications, animated: true)
         }
+//        if switchControl.switchNotificationsType == type {
+//            switchControl.setOn(state, animated: true)
+//        }
     }
 }

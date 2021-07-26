@@ -10,8 +10,17 @@ import Charts
 
 class ActiveUsersViewController: LineChartViewController {
     override var lineChartData: [(period: String?, value: Int?)] {
-        return dataProvider?.activeUsersData.map({ return (period: $0.period, value: $0.value) }) ?? []
+        var data = [(period: String?, value: Int?)]()
+        let values = chartData?.values ?? []
+        let legends = chartData?.legends ?? []
+        for (index, value) in values.enumerated() where index < legends.count {
+            let legend = legends[index].getDateForUsageMetrics()
+            data.append((period: legend, value: Int(value)))
+        }
+        return data//dataProvider?.activeUsersData.map({ return (period: $0.period, value: $0.value) }) ?? []
     }
+    
+    var chartData: ChartStructure?
 }
 
 extension ActiveUsersViewController: ChartDimensions {
