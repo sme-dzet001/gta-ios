@@ -558,18 +558,26 @@ extension String {
         return dateFormatterPrint.string(from: date)
     }
     
-    static func convertBigValueToString(value: Double) -> String {
+    static func convertBigValueToString(value: Double, for axis: Bool = false) -> String {
         if abs(value) >= 1000000000000 {
-            return String(Int((value/100000000000).rounded()/10)) + "T"
+            let calcValue = (value/100000000000).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "T"
         }
         if abs(value) >= 1000000000 {
-            return String(Int((value/100000000).rounded()/10)) + "B"
+            let calcValue = (value/100000000).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "B"
         }
         if abs(value) >= 1000000 {
-            return String(Int((value/100000).rounded()/10)) + "M"
+            let calcValue = (value/100000).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "M"
         }
         if abs(value) >= 1000 {
-            return String(Int((value/100).rounded()/10)) + "K"
+            let calcValue = (value/100).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "K"
         }
         return "\(Int(value))"
     }

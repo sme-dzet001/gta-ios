@@ -109,6 +109,6 @@ extension BarChartCell: ChartDimensions {
 
 class BarChartLeftAxisValueFormatter: NSObject, IAxisValueFormatter {
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        return String.convertBigValueToString(value: value)
+        return String.convertBigValueToString(value: value, for: true)
     }
 }

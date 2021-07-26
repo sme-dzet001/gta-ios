@@ -174,7 +174,7 @@ class LineChartViewController: UIViewController {
         chartView.leftAxis.setLabelCount(verticalLabelsCount, force: true)
         var labels: [String] = []
         for yAxisValue in [chartView.leftAxis.axisMinimum, (chartView.leftAxis.axisMaximum + chartView.leftAxis.axisMinimum) / 2, chartView.leftAxis.axisMaximum] {
-            labels.insert(String.convertBigValueToString(value: yAxisValue), at: 0)
+            labels.insert(String.convertBigValueToString(value: yAxisValue, for: true), at: 0)
             //labels.insert(String(format: "%.1fk", locale: Locale.current, yAxisValue).replacingOccurrences(of: ".0", with: ""), at: 0)
         }
         
