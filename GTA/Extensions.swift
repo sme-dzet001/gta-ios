@@ -262,8 +262,8 @@ extension UITabBarController {
         
         guard let value = value else { return }
         
-        let badgeHeight: CGFloat = 18
-        let badgeLabelFont = UIFont(name: "SFProText-Bold", size: 7)
+        let badgeHeight: CGFloat = 16
+        let badgeLabelFont = UIFont(name: "SFProText-Bold", size: 6)
         
         let badgeView = UIView()
         badgeView.backgroundColor = tabBar.barTintColor
