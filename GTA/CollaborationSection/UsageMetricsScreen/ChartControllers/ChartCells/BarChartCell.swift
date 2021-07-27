@@ -60,6 +60,8 @@ class BarChartCell: UITableViewCell, VerticalBarChartDataChangedDelegate {
         barChartView.xAxis.drawGridLinesEnabled = false
         barChartView.leftAxis.spaceBottom = 0
         barChartView.rightAxis.spaceBottom = 0
+        barChartView.leftAxis.drawAxisLineEnabled = false
+        barChartView.rightAxis.drawAxisLineEnabled = false
         barChartView.xAxis.axisLineColor = axisColor
         barChartView.rightAxis.axisLineColor = axisColor
         barChartView.leftAxis.axisLineColor = axisColor
