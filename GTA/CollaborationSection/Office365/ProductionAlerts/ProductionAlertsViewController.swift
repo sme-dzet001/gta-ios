@@ -59,8 +59,8 @@ class ProductionAlertsViewController: UIViewController {
     }
     
     private func getProductionAlertsWithCache() {
-        guard let app = appName else { return }
-        dataProvider?.getProductionAlert(for: app) {[weak self] errorCode, error in
+        guard let _ = appName else { return }
+        dataProvider?.getProductionAlerts {[weak self] dataWasChanged, errorCode, error, count in
             DispatchQueue.main.async {
                 if error == nil {
                     self?.tableView.reloadData()

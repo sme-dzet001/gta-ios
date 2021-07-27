@@ -90,7 +90,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     }
     
     @objc private func getProductionAlerts() {
-        dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
+        dataProvider?.getProductionAlerts {[weak self] dataWasChanged, errorCode, error, count in
             DispatchQueue.main.async {
                 if error == nil {
                     if let alertsData = self?.dataProvider?.alertsData[self?.appName ?? ""] {
