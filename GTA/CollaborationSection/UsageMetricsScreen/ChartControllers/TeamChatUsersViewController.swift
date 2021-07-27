@@ -29,7 +29,7 @@ class TeamChatUsersViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        addGridView()
+       // addGridView()
     }
     
     func updateChartData() {
@@ -128,6 +128,7 @@ extension TeamChatUsersViewController {
 }
 // Grid functions
 extension TeamChatUsersViewController {
+    
     private func setGridView() -> UIView {
         let gv = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         gv.borderWidth = ChartsFormatting.gridLineWidth
@@ -149,11 +150,12 @@ extension TeamChatUsersViewController {
             gridView.addSubview(lineView)
         }
     }
+ 
 }
 
 extension TeamChatUsersViewController: ChartDimensions {
     var optimalHeight: CGFloat {
         let linesCount = chartData?.data?.count ?? 0
-        return 120 + CGFloat(linesCount) * ChartsFormatting.horizontalBarOptimalHeight
+        return 170 + CGFloat(linesCount) * ChartsFormatting.horizontalBarOptimalHeight
     }
 }
