@@ -121,6 +121,7 @@ extension TeamChatUsersViewController {
         let formatter = NumberFormatter()
         formatter.numberStyle = .percent
         formatter.maximumFractionDigits = 2
+        formatter.decimalSeparator = "."
         formatter.multiplier = 1.0
         formatter.percentSymbol = "%"
         
