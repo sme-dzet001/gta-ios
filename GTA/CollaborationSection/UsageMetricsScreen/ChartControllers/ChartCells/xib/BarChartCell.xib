@@ -30,7 +30,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2t-6B-ZhQ" customClass="BarChartView" customModule="Charts">
-                        <rect key="frame" x="24" y="80" width="272" height="75"/>
+                        <rect key="frame" x="20" y="80" width="280" height="75"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r2o-Xg-UVG">
@@ -45,9 +45,9 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="O2t-6B-ZhQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="0K8-5g-Dgs"/>
+                    <constraint firstItem="O2t-6B-ZhQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="0K8-5g-Dgs"/>
                     <constraint firstItem="r2o-Xg-UVG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="8Zh-FD-H0m"/>
-                    <constraint firstAttribute="trailing" secondItem="O2t-6B-ZhQ" secondAttribute="trailing" constant="24" id="EDQ-fr-6vf"/>
+                    <constraint firstAttribute="trailing" secondItem="O2t-6B-ZhQ" secondAttribute="trailing" constant="20" id="EDQ-fr-6vf"/>
                     <constraint firstItem="O2t-6B-ZhQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="80" id="Kiv-YD-Og7"/>
                     <constraint firstItem="M2U-hE-kNu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="32" id="QLs-Sq-uQb"/>
                     <constraint firstAttribute="bottom" secondItem="r2o-Xg-UVG" secondAttribute="bottom" id="ZJw-p6-caX"/>

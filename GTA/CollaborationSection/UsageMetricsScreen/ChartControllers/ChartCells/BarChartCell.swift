@@ -96,9 +96,12 @@ class BarChartCell: UITableViewCell, VerticalBarChartDataChangedDelegate {
         
         barChartView.legendRenderer.computeLegend(data: barChartView.data!)
         barChartView.legend.verticalAlignment = .bottom
-        barChartView.legend.xEntrySpace = ((barChartView.frame.width - barChartView.legend.neededWidth) / 4) - 12
+        if count >= 4 {
+            barChartView.legend.xEntrySpace = ((barChartView.frame.width - barChartView.legend.neededWidth) / CGFloat(count)) - 12
+        }
         barChartView.legend.yEntrySpace = 5
         barChartView.legend.orientation = .horizontal
+        barChartView.legend.horizontalAlignment = count >= 4 ? .left : .center
     }
 
     private func getBarColors(for entriesSize: Int) -> [UIColor] {

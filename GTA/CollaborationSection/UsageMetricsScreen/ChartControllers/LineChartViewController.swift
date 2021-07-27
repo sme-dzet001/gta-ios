@@ -75,7 +75,7 @@ class LineChartViewController: UIViewController {
     
     func updateBlurViews() {
         blurViewLeft.isHidden = !(chartScrollView.contentOffset.x > 0)
-        blurViewRight.isHidden = !(chartScrollView.contentOffset.x < (chartViewWidth.constant - (UIScreen.main.bounds.width - chartScrollViewLeading.constant + chartScrollViewTrailing.constant)))
+        blurViewRight.isHidden = !(ceil(Double(chartScrollView.contentOffset.x)) < floor(Double(chartViewWidth.constant - (UIScreen.main.bounds.width - chartScrollViewLeading.constant + chartScrollViewTrailing.constant))))
     }
     
     func updateScrollView() {
@@ -94,8 +94,8 @@ class LineChartViewController: UIViewController {
         maxValueNumberFormatter.decimalSeparator = "."
         maxValueLabel.text = String.convertBigValueToString(value: lastValue)
         let previousToLastValue = Double(lineChartData.map({ return $0.value ?? 0 })[lineChartData.count - 2])
-        if lastValue != 0 {
-            percentLabel.text = String(format: "%.1f", locale: Locale.current, Double(100) * previousToLastValue / lastValue).replacingOccurrences(of: ".0", with: "") + "%"
+        if previousToLastValue != 0 {
+            percentLabel.text = String(format: "%.1f", locale: Locale.current, Double(100) * lastValue / previousToLastValue).replacingOccurrences(of: ".0", with: "") + "%"
         }
     }
     
@@ -215,7 +215,7 @@ class LineChartViewController: UIViewController {
         chartView.extraRightOffset = extraSizeRight.width / 2
         
         let extraSizeLeft = (firstLabel as NSString).size(withAttributes: [.font : ChartsFormatting.labelFont as Any])
-        chartScrollViewLeading.constant = CGFloat(60) - extraSizeLeft.width / 2
+        chartScrollViewLeading.constant = CGFloat(10) - extraSizeLeft.width / 2
         chartView.extraLeftOffset = extraSizeLeft.width / 2
         
         addBlurViewLeft()

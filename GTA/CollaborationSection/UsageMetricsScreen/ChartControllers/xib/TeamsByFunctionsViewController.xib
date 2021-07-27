@@ -22,7 +22,7 @@
                 <outlet property="blurViewLeft" destination="VfG-Yi-FQQ" id="3rE-LG-iyh"/>
                 <outlet property="blurViewRight" destination="dKP-9I-Fl4" id="TIH-er-hZP"/>
                 <outlet property="chartScrollView" destination="Uaw-HF-sh8" id="9a1-3X-Wa5"/>
-                <outlet property="chartScrollViewLeading" destination="ohN-rF-xHj" id="eSl-lz-gxK"/>
+                <outlet property="chartScrollViewLeading" destination="AGE-th-fWE" id="Dh2-cO-oy7"/>
                 <outlet property="chartScrollViewTrailing" destination="Mpn-an-5ly" id="WN7-3l-FQG"/>
                 <outlet property="chartView" destination="Rdr-IY-Dlc" id="v2w-oo-Kll"/>
                 <outlet property="chartViewWidth" destination="z7e-iY-qZs" id="GX1-aq-fu5"/>
@@ -213,6 +213,7 @@
                 <constraint firstItem="dKP-9I-Fl4" firstAttribute="trailing" secondItem="Uaw-HF-sh8" secondAttribute="trailing" id="600-gr-9JY"/>
                 <constraint firstItem="Uaw-HF-sh8" firstAttribute="height" secondItem="vUN-kp-3ea" secondAttribute="height" constant="-210" id="806-DG-5uR"/>
                 <constraint firstItem="MjZ-06-QQD" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="centerX" constant="-4" id="ADG-PA-VHu"/>
+                <constraint firstItem="Uaw-HF-sh8" firstAttribute="leading" secondItem="nmf-e1-UCo" secondAttribute="trailing" constant="10" id="AGE-th-fWE"/>
                 <constraint firstItem="VfG-Yi-FQQ" firstAttribute="top" secondItem="Uaw-HF-sh8" secondAttribute="top" id="Alj-ut-YUb"/>
                 <constraint firstItem="Rdc-KV-sXz" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="32" id="Kpv-6x-sAn"/>
                 <constraint firstItem="Uaw-HF-sh8" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-40" id="Mpn-an-5ly"/>
@@ -227,7 +228,6 @@
                 <constraint firstItem="MjZ-06-QQD" firstAttribute="centerY" secondItem="Tq2-uk-Lme" secondAttribute="centerY" id="iqH-fg-ysz"/>
                 <constraint firstItem="yub-jK-rno" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="m4C-wK-wYl"/>
                 <constraint firstItem="jJB-ET-kSJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="24" id="mfe-gz-BNZ"/>
-                <constraint firstItem="Uaw-HF-sh8" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="60" id="ohN-rF-xHj"/>
                 <constraint firstItem="nmf-e1-UCo" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="pTz-KJ-1LT"/>
                 <constraint firstItem="jJB-ET-kSJ" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-24" id="u9Y-cH-ydg"/>
                 <constraint firstItem="VfG-Yi-FQQ" firstAttribute="bottom" secondItem="nmf-e1-UCo" secondAttribute="bottom" id="uWm-dS-oEA"/>

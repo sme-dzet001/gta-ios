@@ -40,7 +40,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIP-lG-abm" customClass="HorizontalBarChartView" customModule="Charts">
-                    <rect key="frame" x="0.0" y="124" width="414" height="714"/>
+                    <rect key="frame" x="10" y="124" width="394" height="698"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
             </subviews>
@@ -48,11 +48,11 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="eF2-GX-023" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="9HB-kK-PFx"/>
-                <constraint firstItem="FIP-lG-abm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="AJL-v4-1Ks"/>
+                <constraint firstItem="FIP-lG-abm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="AJL-v4-1Ks"/>
+                <constraint firstItem="FIP-lG-abm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="80" id="BIv-Ht-9sH"/>
                 <constraint firstItem="eF2-GX-023" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="ERi-Xn-ASV"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FIP-lG-abm" secondAttribute="trailing" id="Smd-q0-paE"/>
-                <constraint firstItem="FIP-lG-abm" firstAttribute="top" secondItem="eF2-GX-023" secondAttribute="bottom" constant="24" id="TIv-fy-Z0g"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="FIP-lG-abm" secondAttribute="bottom" constant="24" id="UyP-VG-8Kq"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FIP-lG-abm" secondAttribute="trailing" constant="10" id="Smd-q0-paE"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="FIP-lG-abm" secondAttribute="bottom" constant="40" id="UyP-VG-8Kq"/>
                 <constraint firstItem="zK2-mn-hks" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Z7d-C2-RA0"/>
                 <constraint firstItem="zK2-mn-hks" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="c2i-Yf-uqL"/>
                 <constraint firstItem="zK2-mn-hks" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="yNZ-gF-Gld"/>
