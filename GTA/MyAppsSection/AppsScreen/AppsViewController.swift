@@ -152,8 +152,7 @@ class AppsViewController: UIViewController {
                     if dataWasChanged && self.isViewLoaded {
                         self.tableView.reloadData()
                     }
-                    self.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
-                    self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+                    self.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: count > 0 ? "\(count)" : nil)
                 }
             }
         }

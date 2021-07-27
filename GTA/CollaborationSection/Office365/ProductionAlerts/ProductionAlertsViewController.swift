@@ -131,8 +131,7 @@ class ProductionAlertsViewController: UIViewController {
         if let summary = alert?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
             UserDefaults.standard.setValue(summary, forKey: summary.lowercased())
         }
-        self.tabBarController?.tabBar.items?[2].badgeValue = badgeCount > 0 ? "\(badgeCount)" : nil
-        self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+        self.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: badgeCount > 0 ? "\(badgeCount)" : nil)
     }
     
     @objc private func updateActiveProductionAlertStatus(notification: NSNotification) {

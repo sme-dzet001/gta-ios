@@ -297,6 +297,56 @@ extension UITabBarController {
         self.tabBar.addSubview(badgeView)
     }
     
+    public func addProductionAlertsItemBadge(atIndex index: Int, value: String?, borderWidth: CGFloat = 2) {
+        guard let itemCount = self.tabBar.items?.count, itemCount > 0 else { return }
+        guard index < itemCount else { return }
+        removeItemBadge(atIndex: index)
+        
+        guard let value = value else { return }
+        
+        let badgeHeight: CGFloat = 16
+        let badgeLabelFont = UIFont(name: "SFProText-Bold", size: 6)
+        
+        let badgeView = UIView()
+        badgeView.backgroundColor = tabBar.barTintColor
+        badgeView.tag = tabBarItemTag + Int(index)
+        badgeView.layer.cornerRadius = badgeHeight / 2
+        
+        let badgeInnerView = UIView()
+        badgeInnerView.backgroundColor = UIColor(hex: 0xCC0000)
+        badgeInnerView.layer.cornerRadius = (badgeHeight - 2 * borderWidth) / 2
+        badgeInnerView.translatesAutoresizingMaskIntoConstraints = false
+        badgeView.addSubview(badgeInnerView)
+        NSLayoutConstraint.activate([
+            badgeInnerView.centerXAnchor.constraint(equalTo: badgeView.centerXAnchor),
+            badgeInnerView.centerYAnchor.constraint(equalTo: badgeView.centerYAnchor),
+            badgeInnerView.widthAnchor.constraint(equalToConstant: badgeHeight - 2 * borderWidth),
+            badgeInnerView.heightAnchor.constraint(equalToConstant: badgeHeight - 2 * borderWidth)
+        ])
+        
+        let badgeLabel = UILabel()
+        badgeLabel.text = value
+        badgeLabel.font = badgeLabelFont
+        badgeLabel.textColor = tabBar.barTintColor
+        badgeLabel.textAlignment = .center
+        badgeInnerView.addSubview(badgeLabel)
+        badgeLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            badgeLabel.centerXAnchor.constraint(equalTo: badgeInnerView.centerXAnchor),
+            badgeLabel.centerYAnchor.constraint(equalTo: badgeInnerView.centerYAnchor)
+        ])
+
+        let tabFrame = self.tabBar.frame
+        let percentX = (CGFloat(index) + 0.5) / CGFloat(itemCount)
+        let x = (percentX * tabFrame.size.width).rounded(.up)
+        let y = (CGFloat(0.03) * tabFrame.size.height).rounded(.up)
+        badgeView.frame = CGRect(x: x, y: y, width: badgeHeight, height: badgeHeight)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(selectTab(tap:)))
+        tap.cancelsTouchesInView = false
+        badgeView.addGestureRecognizer(tap)
+        self.tabBar.addSubview(badgeView)
+    }
+    
     @objc private func selectTab(tap: UITapGestureRecognizer) {
         let index = (tap.view?.tag ?? 0) - tabBarItemTag
         guard let itemCount = self.tabBar.items?.count, itemCount > 0 else { return }
