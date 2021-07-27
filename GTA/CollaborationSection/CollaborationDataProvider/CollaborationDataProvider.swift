@@ -22,10 +22,11 @@ class CollaborationDataProvider {
     private(set) var collaborationAppDetailsRows: [CollaborationAppDetailsRow]?
     private(set) var appContactsData: AppContactsData?
     private var receivedMetricsData: CollaborationMetricsResponse?
-    private(set) var horizontalChartData: [String : [TeamsChatUserDataEntry]]?
+    private(set) var horizontalChartData: TeamsChatUserData?
     private(set) var verticalChartData: ChartStructure?
     private(set) var activeUsersLineChartData: ChartStructure?
-    private(set) var teamsByFunctionsLineChartData: [String : [[TeamsByFunctionsDataEntry]]]?
+    private(set) var teamsByFunctionsLineChartData: TeamsByFunctionsLineChartData?//[String : [[TeamsByFunctionsDataEntry]]]?
+    var chartsPosition: [MetricsPosition?] = []
     
     var isChartDataEmpty: Bool {
         return teamsByFunctionsLineChartData == nil && activeUsersLineChartData == nil &&  verticalChartData == nil &&  horizontalChartData == nil
@@ -499,6 +500,7 @@ class CollaborationDataProvider {
     }
     
     private func fillChartsData(for rows: [CollaborationMetricsRow?]) {
+        chartsPosition = []
         let horizontalBars = rows.filter({$0?.chartType == .horizontalBar})
         fillHorizontalChartData(for: horizontalBars)
         let verticalBars = rows.filter({$0?.chartType == .verticalBar})
@@ -507,38 +509,43 @@ class CollaborationDataProvider {
         fillActiveUsersLineChartData(for: activeUsers)
         let teamsByFunctions = rows.filter({$0?.chartType == .line && $0?.chartSubtitle != nil})
         fillTeamsByFunctionsLineChartData(for: teamsByFunctions)
+        chartsPosition = chartsPosition.sorted(by: {($0?.position ?? 0) < ($1?.position ?? 0)})
     }
     
     private func fillHorizontalChartData(for rows: [CollaborationMetricsRow?]) {
         guard let title = rows.compactMap({$0?.chartTitle}).first else { return }
+        let position: Int? = rows.compactMap({$0?.chartPosition}).first
         var data = [TeamsChatUserDataEntry]()
         for row in rows {
             data.append(TeamsChatUserDataEntry(percent: Double(row?.value ?? 0), countryCode: row?.legend ?? ""))
         }
-        horizontalChartData = [:]
-        horizontalChartData?[title] = data
+        horizontalChartData = TeamsChatUserData(title: title, data: data, position: position)
+        chartsPosition.append(horizontalChartData)
     }
     
     private func fillVerticalChartData(for rows: [CollaborationMetricsRow?]) {
         guard let title = rows.compactMap({$0?.chartTitle}).first else { return }
-        verticalChartData = ChartStructure(title: title, values: rows.compactMap({$0?.value}), legends: rows.compactMap({$0?.legend}))
+        verticalChartData = ChartStructure(title: title, values: rows.compactMap({$0?.value}), legends: rows.compactMap({$0?.legend}), chartType: rows.compactMap({$0?.chartType}).first ?? .none, position: rows.compactMap({$0?.chartPosition}).first)
+        chartsPosition.append(verticalChartData)
     }
     
     private func fillTeamsByFunctionsLineChartData(for rows: [CollaborationMetricsRow?]) {
         guard let title = rows.compactMap({$0?.chartTitle}).first else { return }
         let chartSubtitles = rows.compactMap({$0?.chartSubtitle}).removeDuplicates()
+        let position: Int? = rows.compactMap({$0?.chartPosition}).first
         var data = [[TeamsByFunctionsDataEntry]]()
         for chartSubtitle in chartSubtitles {
             let neededRow = rows.filter({$0?.chartSubtitle == chartSubtitle})
-            data.append(neededRow.compactMap({TeamsByFunctionsDataEntry(refreshDate: $0?.legend, value: Int($0?.value ?? 0))}))
+            data.append(neededRow.compactMap({TeamsByFunctionsDataEntry(refreshDate: $0?.legend, value: Int($0?.value ?? 0), chartSubtitle: $0?.chartSubtitle)}))
         }
-        teamsByFunctionsLineChartData = [:]
-        teamsByFunctionsLineChartData?[title] = data
+        teamsByFunctionsLineChartData = TeamsByFunctionsLineChartData(title: title, data: data, position: position)
+        chartsPosition.append(teamsByFunctionsLineChartData)
     }
     
     private func fillActiveUsersLineChartData(for rows: [CollaborationMetricsRow?]) {
         guard let title = rows.compactMap({$0?.chartTitle}).first else { return }
-        activeUsersLineChartData = ChartStructure(title: title, values: rows.compactMap({$0?.value}), legends: rows.compactMap({$0?.legend}))
+        activeUsersLineChartData = ChartStructure(title: title, values: rows.compactMap({$0?.value}), legends: rows.compactMap({$0?.legend}), chartType: rows.compactMap({$0?.chartType}).first ?? .none, position: rows.compactMap({$0?.chartPosition}).first)
+        chartsPosition.append(activeUsersLineChartData)
     }
     
     // MARK:- Additional methods

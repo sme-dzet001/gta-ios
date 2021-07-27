@@ -37,6 +37,48 @@ extension UIColor {
         UIGraphicsEndImageContext()
         return image
     }
+    
+}
+
+struct RGB {
+    // Percent
+    let r: Float // [0,1]
+    let g: Float // [0,1]
+    let b: Float // [0,1]
+}
+
+struct HSV {
+    let h: Float // Angle in degrees [0,360] or -1 as Undefined
+    let s: Float // Percent [0,1]
+    let v: Float // Percent [0,1]
+
+static func rgb(h: Float, s: Float = 1, v: Float = 1) -> RGB {
+        if s == 0 { return RGB(r: v, g: v, b: v) } // Achromatic grey
+        
+        let angle = (h >= 360 ? 0 : h)
+        let sector = angle / 60 // Sector
+        let i = floor(sector)
+        let f = sector - i // Factorial part of h
+        
+        let p = v * (1 - s)
+        let q = v * (1 - (s * f))
+        let t = v * (1 - (s * (1 - f)))
+        
+        switch(i) {
+        case 0:
+            return RGB(r: v, g: t, b: p)
+        case 1:
+            return RGB(r: q, g: v, b: p)
+        case 2:
+            return RGB(r: p, g: v, b: t)
+        case 3:
+            return RGB(r: p, g: q, b: v)
+        case 4:
+            return RGB(r: t, g: p, b: v)
+        default:
+            return RGB(r: v, g: p, b: q)
+        }
+    }
 }
 
 extension UILabel {
@@ -437,12 +479,16 @@ extension String {
         return "yyyy-MM-dd HH:mm:ssZ"
     }
     
+    static var convertMetricsSlashDateFormat: String { // TODO: Need better name
+        return "MM/dd/yyyy HH:mm"
+    }
+    
     static var usageMetricsDateFormat: String {
         return "dd-MMM-yy"
     }
     
     static var ticketDateFormat: String {
-        return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//"yyyy-MM-dd'T'HH:mm:ss.SSS Z"
+        return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     }
     
     static var statusDateFormat: String {
@@ -552,10 +598,19 @@ extension String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.convertMetricsDateFormat
         if let date = dateFormatterPrint.date(from: self) {
-            dateFormatterPrint.dateFormat = String.usageMetricsDateFormat
-            return dateFormatterPrint.string(from: date)
+            return getUsageMetricStringDate(from: date)
+        }
+        dateFormatterPrint.dateFormat = String.convertMetricsSlashDateFormat
+        if let date = dateFormatterPrint.date(from: self) {
+            return getUsageMetricStringDate(from: date)
         }
         return ""
+    }
+    
+    private func getUsageMetricStringDate(from date: Date) -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.usageMetricsDateFormat
+        return dateFormatterPrint.string(from: date)
     }
     
     func getFormattedDateStringForProdAlert() -> String {

@@ -21,21 +21,23 @@ class BarChartCell: UITableViewCell {
     func setUpBarChartView(with chartStructure: ChartStructure?) {
         guard let chartData = chartStructure else { return }
         titleLabel.text = chartData.title
-        let yValues: [BarChartDataEntry] = getValues(with: chartData.values)
+        let width = calculateBarWidth(barCount: chartData.values.count)
+        let yValues: [BarChartDataEntry] = getValues(with: chartData.values, width: width)
         guard !yValues.isEmpty else { return }
         let set = BarChartDataSet(entries: yValues, label: nil)
         set.drawIconsEnabled = true
-        set.colors = getBarColors()
+        set.colors = getBarColors(for: yValues.count)
         let data = BarChartData(dataSet: set)
         data.highlightEnabled = false
         data.setDrawValues(false)
+        data.barWidth = width
         let axisMaximum = Double(chartData.values.max() ?? 0.0).getAxisMaximum()
         setUpAxis(axisMaximum: axisMaximum)
-        barChartView.fitBars = true
         barChartView.scaleXEnabled = false
         barChartView.scaleYEnabled = false
         barChartView.pinchZoomEnabled = false
         barChartView.data = data
+        barChartView.fitBars = true
         barChartView.extraBottomOffset = 13
         //barChartView.delegate = self
         let stackLabels = chartData.legends
@@ -71,20 +73,20 @@ class BarChartCell: UITableViewCell {
         barChartView.leftAxis.setLabelCount(3, force: true)
     }
     
-    private func getValues(with data: [Float]) -> [BarChartDataEntry] {
+    private func getValues(with data: [Float], width: Double) -> [BarChartDataEntry] {
         var x: Double = 0
         let values = data.compactMap({Double($0)})
         var yValues: [BarChartDataEntry] = []
         for value in values {
             yValues.append(BarChartDataEntry(x: x, yValues: [value], icon: nil))
-            x += 0.85
+            x += width
         }
         return yValues
     }
     
     private func setUpChartLegend(for count: Int, labels: [String]) {
         var entrys = [LegendEntry]()
-        let colors = getBarColors()
+        let colors = getBarColors(for: count)
         for index in 0..<count where labels.count > index {
             entrys.append(LegendEntry(label: labels[index], form: .circle, formSize: 12, formLineWidth: 0, formLineDashPhase: 0, formLineDashLengths: nil, formColor: colors[index]))
         }
@@ -95,18 +97,38 @@ class BarChartCell: UITableViewCell {
         barChartView.legendRenderer.computeLegend(data: barChartView.data!)
         barChartView.legend.verticalAlignment = .bottom
         barChartView.legend.xEntrySpace = ((barChartView.frame.width - barChartView.legend.neededWidth) / 4) - 12
+        barChartView.legend.yEntrySpace = 5
         barChartView.legend.orientation = .horizontal
     }
 
-    private func getBarColors() -> [UIColor]{
-        // hardcode
-        return [UIColor(red: 66.0 / 255.0, green: 141.0 / 255.0, blue: 247.0 / 255.0, alpha: 1.0), UIColor(red: 106.0 / 255.0, green: 26.0 / 255.0, blue: 128.0 / 255.0, alpha: 1.0), UIColor(red: 184.0 / 255.0, green: 73.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0), UIColor(red: 240.0 / 255.0, green: 156.0 / 255.0, blue: 105.0 / 255.0, alpha: 1.0), UIColor(red: 66.0 / 255.0, green: 141.0 / 255.0, blue: 247.0 / 255.0, alpha: 1.0), UIColor(red: 106.0 / 255.0, green: 26.0 / 255.0, blue: 128.0 / 255.0, alpha: 1.0), UIColor(red: 184.0 / 255.0, green: 73.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0), UIColor(red: 240.0 / 255.0, green: 156.0 / 255.0, blue: 105.0 / 255.0, alpha: 1.0), UIColor(red: 66.0 / 255.0, green: 141.0 / 255.0, blue: 247.0 / 255.0, alpha: 1.0), UIColor(red: 106.0 / 255.0, green: 26.0 / 255.0, blue: 128.0 / 255.0, alpha: 1.0), UIColor(red: 184.0 / 255.0, green: 73.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0), UIColor(red: 240.0 / 255.0, green: 156.0 / 255.0, blue: 105.0 / 255.0, alpha: 1.0)]
+    private func getBarColors(for entriesSize: Int) -> [UIColor] {
+        var colors = [UIColor]()
+        let hueRange = 360
+        //let entriesSize = 10
+        let step = hueRange  / entriesSize
+        for i in 1...entriesSize {
+            let HSVColor = HSV.rgb(h: Float(step * i))
+            let color = UIColor(red: CGFloat(HSVColor.r), green: CGFloat(HSVColor.g), blue: CGFloat(HSVColor.b), alpha: 1.0)
+            colors.append(color)
+        }
+        return colors
+    }
+    
+    private func calculateBarWidth(barCount: Int) -> Double {
+        let width = Double(barChartView.frame.width)
+        let floatBarCount = Double(barCount)
+        let minUISupportedEntriesCount: Double = 6
+        if floatBarCount <= minUISupportedEntriesCount {
+            return 0.01 * (width / minUISupportedEntriesCount)
+        } else {
+            return width / floatBarCount
+        }
     }
 }
 
 extension BarChartCell: ChartDimensions {
     var optimalHeight: CGFloat {
-        return 294
+        return 294 + barChartView.legend.neededHeight
     }
 }
 
