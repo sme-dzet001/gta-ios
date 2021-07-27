@@ -156,6 +156,6 @@ extension TeamChatUsersViewController {
 extension TeamChatUsersViewController: ChartDimensions {
     var optimalHeight: CGFloat {
         let linesCount = chartData?.data?.count ?? 0
-        return 120 + CGFloat(linesCount) * ChartsFormatting.horizontalBarOptimalHeight
+        return 170 + CGFloat(linesCount) * ChartsFormatting.horizontalBarOptimalHeight
     }
 }
