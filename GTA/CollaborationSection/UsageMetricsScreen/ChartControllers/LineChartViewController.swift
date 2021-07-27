@@ -66,7 +66,7 @@ class LineChartViewController: UIViewController {
     
     func updateBlurViews() {
         blurViewLeft.isHidden = !(chartScrollView.contentOffset.x > 0)
-        blurViewRight.isHidden = !(chartScrollView.contentOffset.x < (chartViewWidth.constant - (UIScreen.main.bounds.width - chartScrollViewLeading.constant + chartScrollViewTrailing.constant)))
+        blurViewRight.isHidden = !(ceil(Double(chartScrollView.contentOffset.x)) < floor(Double(chartViewWidth.constant - (UIScreen.main.bounds.width - chartScrollViewLeading.constant + chartScrollViewTrailing.constant))))
     }
     
     func updateScrollView() {
