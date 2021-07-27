@@ -45,7 +45,7 @@ class GlobalAlertViewController: UIViewController {
     private func loadGlobalAlertsData() {
         if let forceUpdateAlertDetails = dataProvider?.forceUpdateAlertDetails, forceUpdateAlertDetails {
             loadGlobalAlertsInProgress = true
-            dataProvider?.getGlobalAlertsIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
+            dataProvider?.getGlobalAlertsIgnoringCache(completion: {[weak self] _, dataWasChanged, errorCode, error in
                 DispatchQueue.main.async {
                     self?.dataProvider?.forceUpdateAlertDetails = false
                     if let alert = self?.dataProvider?.globalAlertsData, !alert.isExpired {

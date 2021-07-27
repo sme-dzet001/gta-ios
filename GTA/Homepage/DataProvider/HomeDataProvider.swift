@@ -425,17 +425,17 @@ class HomeDataProvider {
     
     // MARK: - Global Alerts related methods
     
-    func getGlobalAlerts(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getGlobalAlerts(completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.processGlobalAlertsSectionReport(data, code, cachedError, true, { (dataWasChanged, code, error) in
+            self?.processGlobalAlertsSectionReport(data, code, cachedError, true, { (_, dataWasChanged, code, error) in
                 if error == nil {
-                    completion?(dataWasChanged, code, cachedError)
+                    completion?(true, dataWasChanged, code, cachedError)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
-                        completion?(false, errorCode, ResponseError.generate(error: error))
+                        completion?(false, false, errorCode, ResponseError.generate(error: error))
                     } else {
                         self?.processGlobalAlertsSectionReport(reportResponse, errorCode, error, false, completion)
                     }
@@ -444,45 +444,45 @@ class HomeDataProvider {
         }
     }
     
-    func getGlobalAlertsIgnoringCache(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getGlobalAlertsIgnoringCache(completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
             self?.cacheData(reportResponse, path: .getSectionReport)
             if let _ = error {
-                completion?(false, errorCode, ResponseError.serverError)
+                completion?(false, false, errorCode, ResponseError.serverError)
             } else {
                 self?.processGlobalAlertsSectionReport(reportResponse, errorCode, error, false, completion)
             }
         })
     }
     
-    private func processGlobalAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processGlobalAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalAlerts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalAlerts.rawValue }?.generationNumber
         if let generationNumber = generationNumber, generationNumber != 0 {
             if isFromCache {
                 getCachedResponse(for: .getGlobalOutage) {[weak self] (data, error) in
-                    self?.processGlobalAlerts(reportData, data, 200, error, completion)
+                    self?.processGlobalAlerts(reportData, data, isFromCache, 200, error, completion)
                 }
                 return
             }
             apiManager.getGlobalAlerts(generationNumber: generationNumber) { [weak self] (response, errorCode, error) in
                 if let _ = error {
-                    completion?(true, 0, ResponseError.generate(error: error))
+                    completion?(false, true, 0, ResponseError.generate(error: error))
                     return
                 }
                 self?.cacheData(response, path: .getGlobalOutage)
-                self?.processGlobalAlerts(reportData, response, errorCode, error, completion)
+                self?.processGlobalAlerts(reportData, response, isFromCache, errorCode, error, completion)
             }
         } else {
             if error != nil || generationNumber == 0 {
-                completion?(false, 0, generationNumber == 0 ? ResponseError.noDataAvailable: ResponseError.generate(error: error))
+                completion?(isFromCache, false, 0, generationNumber == 0 ? ResponseError.noDataAvailable: ResponseError.generate(error: error))
                 return
             }
-            completion?(false, 0, error)
+            completion?(isFromCache, false, 0, error)
         }
     }
     
-    private func processGlobalAlerts(_ reportData: ReportDataResponse?, _ response: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processGlobalAlerts(_ reportData: ReportDataResponse?, _ response: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var alertsResponse: GlobalAlertsResponse?
         var retErr = error
         if let responseData = response {
@@ -496,7 +496,7 @@ class HomeDataProvider {
         if let _ = alertsResponse {
             dataWasChanged = fillGlobalAlertsData(with: alertsResponse!)
         }
-        completion?(dataWasChanged, errorCode, retErr)
+        completion?(isFromCache, dataWasChanged, errorCode, retErr)
     }
     
     private func fillGlobalAlertsData(with response: GlobalAlertsResponse) -> Bool {
