@@ -85,8 +85,8 @@ class LineChartViewController: UIViewController {
         maxValueNumberFormatter.decimalSeparator = "."
         maxValueLabel.text = String.convertBigValueToString(value: lastValue)
         let previousToLastValue = Double(lineChartData.map({ return $0.value ?? 0 })[lineChartData.count - 2])
-        if lastValue != 0 {
-            percentLabel.text = String(format: "%.1f", locale: Locale.current, Double(100) * previousToLastValue / lastValue).replacingOccurrences(of: ".0", with: "") + "%"
+        if previousToLastValue != 0 {
+            percentLabel.text = String(format: "%.1f", locale: Locale.current, Double(100) * lastValue / previousToLastValue).replacingOccurrences(of: ".0", with: "") + "%"
         }
     }
     
