@@ -51,7 +51,11 @@ class TeamsByFunctionsViewController: LineChartViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateSelectorBtns()
+        updateData()
+    }
+    
+    private func updateData() {
+        dataSourceIdx = 0
         titleLabel.text = chartsData?.title
     }
     
@@ -92,4 +96,13 @@ extension TeamsByFunctionsViewController: ChartDimensions {
     var optimalHeight: CGFloat {
         return 370
     }
+}
+
+extension TeamsByFunctionsViewController: TeamsByFunctionsDataChangedDelegate {
+    func teamsByFunctionsDataChanged(newData: TeamsByFunctionsLineChartData?) {
+        chartsData = newData
+        updateData()
+    }
+    
+    
 }

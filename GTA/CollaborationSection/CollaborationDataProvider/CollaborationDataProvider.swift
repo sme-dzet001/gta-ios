@@ -27,6 +27,8 @@ class CollaborationDataProvider {
     private(set) var activeUsersLineChartData: ChartStructure?
     private(set) var teamsByFunctionsLineChartData: TeamsByFunctionsLineChartData?//[String : [[TeamsByFunctionsDataEntry]]]?
     var chartsPosition: [MetricsPosition?] = []
+    private(set) var availableApps: [String] = []
+    var selectedApp: String = ""
     
     var isChartDataEmpty: Bool {
         return teamsByFunctionsLineChartData == nil && activeUsersLineChartData == nil &&  verticalChartData == nil &&  horizontalChartData == nil
@@ -425,9 +427,10 @@ class CollaborationDataProvider {
     // MARK: - Usage metrics related methods
     
     func getUsageMetrics(appGroup: String = "Office365", appName: String = "Teams", completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        selectedApp = selectedApp.isEmptyOrWhitespace() ? appName : selectedApp
         getCachedResponse(for: .getSectionReport) {[weak self] (reportResponse, cachedError) in
             let code = cachedError == nil ? 200 : 0
-            self?.handleUsageMetricsSectionReport(appGroup: appGroup, appName: appName, reportResponse, code, cachedError, true, { (fromCache, dataWasChanged, code, error) in
+            self?.handleUsageMetricsSectionReport(appGroup: appGroup, appName: self?.selectedApp ?? "", reportResponse, code, cachedError, true, { (fromCache, dataWasChanged, code, error) in
                 if error == nil {
                     completion?(fromCache, dataWasChanged, code, error)
                 }
@@ -436,7 +439,7 @@ class CollaborationDataProvider {
                     if let _ = error {
                         completion?(false, dataWasChanged, errorCode, ResponseError.generate(error: error))
                     } else {
-                        self?.handleUsageMetricsSectionReport(appGroup: appGroup, appName: appName, reportResponse, errorCode, error, false, completion)
+                        self?.handleUsageMetricsSectionReport(appGroup: appGroup, appName: self?.selectedApp ?? "", reportResponse, errorCode, error, false, completion)
                     }
                 })
             })
@@ -493,6 +496,7 @@ class CollaborationDataProvider {
         }
         let dataWasChanged: Bool = receivedMetricsData != metricsData
         if dataWasChanged {
+            availableApps = metricsData?.appNames ?? []
             receivedMetricsData = metricsData
             fillChartsData(for: rows)
         }
@@ -546,6 +550,23 @@ class CollaborationDataProvider {
         guard let title = rows.compactMap({$0?.chartTitle}).first else { return }
         activeUsersLineChartData = ChartStructure(title: title, values: rows.compactMap({$0?.value}), legends: rows.compactMap({$0?.legend}), chartType: rows.compactMap({$0?.chartType}).first ?? .none, position: rows.compactMap({$0?.chartPosition}).first)
         chartsPosition.append(activeUsersLineChartData)
+    }
+    
+    func getMetricsDataForApp(_ app: String) {
+        var metrics = receivedMetricsData
+        metrics?.appName = app
+        let rows = getRows(from: metrics)
+        fillChartsData(for: rows)
+    }
+    
+    private func getRows(from metricsData: CollaborationMetricsResponse?) -> [CollaborationMetricsRow?] {
+        let columns = metricsData?.meta?.widgetsDataSource?.params?.columns
+        let indexes = getDataIndexes(columns: columns)
+        var rows = metricsData?.collaborationMetricsData?.data?.rows ?? []
+        for (index, _) in (metricsData?.collaborationMetricsData?.data?.rows ?? []).enumerated() {
+            rows[index]?.indexes = indexes
+        }
+        return rows
     }
     
     // MARK:- Additional methods

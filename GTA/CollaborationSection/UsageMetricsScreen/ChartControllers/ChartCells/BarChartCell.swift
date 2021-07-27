@@ -8,7 +8,7 @@
 import UIKit
 import Charts
 
-class BarChartCell: UITableViewCell {
+class BarChartCell: UITableViewCell, VerticalBarChartDataChangedDelegate {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var barChartView: BarChartView!

@@ -266,6 +266,12 @@ struct CollaborationMetricsResponse: Codable, Equatable {
         return metricsData
     }
     
+    var appNames: [String] {
+        let key = data?.keys.first(where: {$0 == appGroup}) ?? ""
+        guard let names = data?[key]??.compactMap({$0.key}) else { return [] }
+        return names
+    }
+    
     enum CodingKeys: String, CodingKey {
         case meta, data
     }

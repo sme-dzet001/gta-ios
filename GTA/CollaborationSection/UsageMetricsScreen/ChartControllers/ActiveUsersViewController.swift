@@ -35,3 +35,13 @@ extension ActiveUsersViewController: ChartDimensions {
         return 294
     }
 }
+
+extension ActiveUsersViewController: ActiveUsersDataChangedDelegate {
+    func activeUsersDataChanged(newData: ChartStructure?) {
+        chartData = newData
+        self.chartTitleLabel.text = newData?.title
+        configureChart(isFirstTime: false)
+    }
+    
+    
+}

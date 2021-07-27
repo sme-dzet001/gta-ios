@@ -24,7 +24,6 @@ class TeamChatUsersViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        titleLabel.text = chartData?.title
     }
     
     override func viewDidLayoutSubviews() {
@@ -33,6 +32,7 @@ class TeamChatUsersViewController: UIViewController {
     }
     
     func updateChartData() {
+        titleLabel.text = chartData?.title
         guard let activeUsersData = chartData?.data?.sorted(by: {$0.percent ?? 0 < $1.percent ?? 0}), !activeUsersData.isEmpty else { return }
         let chartValues = activeUsersData.enumerated().map { (index, dataEntry) -> BarChartDataEntry in
             return BarChartDataEntry(x: Double(index), y: dataEntry.percent ?? 0)
@@ -157,5 +157,12 @@ extension TeamChatUsersViewController: ChartDimensions {
     var optimalHeight: CGFloat {
         let linesCount = chartData?.data?.count ?? 0
         return 170 + CGFloat(linesCount) * ChartsFormatting.horizontalBarOptimalHeight
+    }
+}
+
+extension TeamChatUsersViewController: HorizontallBarChartDataChangedDelegate {
+    func verticalBarChartDataChanged(newData: TeamsChatUserData?) {
+        chartData = newData
+        updateChartData()
     }
 }

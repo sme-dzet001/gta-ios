@@ -49,10 +49,19 @@ class LineChartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        configureChart()
+//        setupChartView()
+//        updateLabels()
+//        updateChartData()
+    }
+    
+    // TODO: Need to find better name
+    func configureChart(isFirstTime: Bool = true) {
         setupChartView()
         updateLabels()
         updateChartData()
+        guard !isFirstTime else { return }
+        updateScrollView()
     }
     
     override func viewDidLayoutSubviews() {

@@ -21,10 +21,18 @@ class ChartTableView : UITableView, UIGestureRecognizerDelegate {
 class UsageMetricsViewController: UIViewController {
     
     @IBOutlet weak var tableView: ChartTableView!
+    @IBOutlet weak var appTextField: CustomTextField!
+    
+    private let pickerView = UIPickerView()
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
     var dataProvider: CollaborationDataProvider?
+    
+    weak var teamsByFunctionsDataChangedDelegate: TeamsByFunctionsDataChangedDelegate?
+    weak var verticalBarChartDataChangedDelegate: VerticalBarChartDataChangedDelegate?
+    weak var horizontallBarChartDataChangedDelegate: HorizontallBarChartDataChangedDelegate?
+    weak var activeUsersDataChangedDelegate: ActiveUsersDataChangedDelegate?
     
     deinit {
         activeUsersVC.removeFromParent()
@@ -40,18 +48,21 @@ class UsageMetricsViewController: UIViewController {
     private lazy var activeUsersVC: ActiveUsersViewController = {
         let activeUsersVC = ActiveUsersViewController(nibName: "ActiveUsersViewController", bundle: nil)
         activeUsersVC.chartData = dataProvider?.activeUsersLineChartData
+        activeUsersDataChangedDelegate = activeUsersVC
         return activeUsersVC
     }()
     
     private lazy var teamsByFunctionsVC: TeamsByFunctionsViewController = {
         let teamsByFunctionsVC = TeamsByFunctionsViewController(nibName: "TeamsByFunctionsViewController", bundle: nil)
         teamsByFunctionsVC.chartsData = dataProvider?.teamsByFunctionsLineChartData
+        teamsByFunctionsDataChangedDelegate = teamsByFunctionsVC
         return teamsByFunctionsVC
     }()
     
     private lazy var teamChatUsersVC: TeamChatUsersViewController = {
         let teamChatUsersVC = TeamChatUsersViewController()
         teamChatUsersVC.chartData = dataProvider?.horizontalChartData
+        horizontallBarChartDataChangedDelegate = teamChatUsersVC
         return teamChatUsersVC
     }()
     
@@ -100,6 +111,7 @@ class UsageMetricsViewController: UIViewController {
     private lazy var activeUsersByFuncChartCell: UITableViewCell = {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BarChartCell") as? BarChartCell else { return UITableViewCell() }
         cell.setUpBarChartView(with: dataProvider?.verticalChartData)
+        verticalBarChartDataChangedDelegate = cell
         return cell
     }()
         
@@ -107,12 +119,15 @@ class UsageMetricsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(getChartsData), name: UIApplication.didBecomeActiveNotification, object: nil)
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.barTintColor = .white
         
         tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
-        
+        setUpTextField()
         setUpNavigationItem()
     }
     
@@ -129,6 +144,38 @@ class UsageMetricsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    private func setUpTextField() {
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        appTextField.inputView = pickerView
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
+        toolbar.barStyle = .default
+        toolbar.backgroundColor = .white
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexible, doneButton], animated: true)
+        appTextField.inputAccessoryView = toolbar
+    }
+    
+    @objc private func doneAction() {
+        updateChartsData()
+        reloadData()
+        view.endEditing(true)
+    }
+    
+    private func updateChartsData() {
+        let selectedIndex = pickerView.selectedRow(inComponent: 0)
+        let app = (dataProvider?.availableApps ?? [])[selectedIndex]
+        dataProvider?.getMetricsDataForApp(app)
+        setTextFieldText(app)
+        dataProvider?.selectedApp = app
+        activeUsersDataChangedDelegate?.activeUsersDataChanged(newData: dataProvider?.activeUsersLineChartData)
+        teamsByFunctionsDataChangedDelegate?.teamsByFunctionsDataChanged(newData: dataProvider?.teamsByFunctionsLineChartData)
+        verticalBarChartDataChangedDelegate?.setUpBarChartView(with: dataProvider?.verticalChartData)
+        horizontallBarChartDataChangedDelegate?.verticalBarChartDataChanged(newData: dataProvider?.horizontalChartData)
     }
     
     @objc private func getChartsData() {
@@ -161,6 +208,7 @@ class UsageMetricsViewController: UIViewController {
     private func startAnimation() {
         self.errorLabel.isHidden = true
         self.tableView.alpha = 0
+        self.appTextField.alpha = 0
         self.addLoadingIndicator(activityIndicator)
         self.activityIndicator.startAnimating()
     }
@@ -171,8 +219,31 @@ class UsageMetricsViewController: UIViewController {
             self.errorLabel.isHidden = error == nil
             self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
             self.tableView.alpha = error == nil ? 1 : 0
+            let selectedApp = self.dataProvider?.selectedApp ?? ""
+            self.setTextFieldText(selectedApp)
+            let row = self.dataProvider?.availableApps.firstIndex(of: selectedApp) ?? 0
+            self.pickerView.selectRow(row, inComponent: 0, animated: false)
+            self.appTextField.alpha = self.tableView.alpha
             self.activityIndicator.removeFromSuperview()
         }
+    }
+    
+    private func setTextFieldText(_ text: String) {
+        var firstPartAttributes: [NSAttributedString.Key : Any]? = [:]
+        if let firstPartFont = UIFont(name: "SFProText-Regular", size: 14) {
+            firstPartAttributes?[.font] = firstPartFont
+        }
+        firstPartAttributes?[.foregroundColor] = UIColor(hex: 0x8E8E93)
+        let firstPart = NSMutableAttributedString(string: "App: ", attributes: firstPartAttributes)
+        var secondPartAttributes: [NSAttributedString.Key : Any]? = [:]
+        if let secondPartFont = UIFont(name: "SFProText-Semibold", size: 14) {
+            secondPartAttributes?[.font] = secondPartFont
+        }
+        secondPartAttributes?[.foregroundColor] = UIColor.black
+        let secondPart = NSAttributedString(string: text, attributes: secondPartAttributes)
+        firstPart.append(secondPart)
+        appTextField.attributedText = firstPart
+        appTextField.setIconForPicker(for: self.view.frame.width, isCharts: true)
     }
     
     private func setUpNavigationItem() {
@@ -190,6 +261,10 @@ class UsageMetricsViewController: UIViewController {
     
     @objc private func backPressed() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func hideKeyboard() {
+        view.endEditing(true)
     }
 
 }
@@ -232,5 +307,43 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        hideKeyboard()
+    }
     
+}
+
+extension UsageMetricsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return dataProvider?.availableApps.count ?? 0
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        guard let apps = dataProvider?.availableApps, apps.count > row else {  return nil }
+        return apps[row]
+    }
+   
+}
+
+// TODO: Find better way
+
+protocol TeamsByFunctionsDataChangedDelegate: AnyObject {
+    func teamsByFunctionsDataChanged(newData: TeamsByFunctionsLineChartData?)
+}
+
+protocol VerticalBarChartDataChangedDelegate: AnyObject {
+    func setUpBarChartView(with chartStructure: ChartStructure?)
+}
+
+protocol HorizontallBarChartDataChangedDelegate: AnyObject {
+    func verticalBarChartDataChanged(newData: TeamsChatUserData?)
+}
+
+protocol ActiveUsersDataChangedDelegate: AnyObject {
+    func activeUsersDataChanged(newData: ChartStructure?)
 }
