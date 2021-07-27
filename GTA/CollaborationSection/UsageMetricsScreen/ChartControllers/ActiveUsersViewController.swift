@@ -9,6 +9,8 @@ import UIKit
 import Charts
 
 class ActiveUsersViewController: LineChartViewController {
+    @IBOutlet weak var chartTitleLabel: UILabel!
+    
     override var lineChartData: [(period: String?, value: Int?)] {
         var data = [(period: String?, value: Int?)]()
         let values = chartData?.values ?? []
@@ -21,6 +23,11 @@ class ActiveUsersViewController: LineChartViewController {
     }
     
     var chartData: ChartStructure?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.chartTitleLabel.text = chartData?.title
+    }
 }
 
 extension ActiveUsersViewController: ChartDimensions {

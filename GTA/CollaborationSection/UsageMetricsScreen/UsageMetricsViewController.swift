@@ -33,6 +33,10 @@ class UsageMetricsViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
+    var charts: [MetricsPosition?] {
+        return dataProvider?.chartsPosition ?? []
+    }
+    
     private lazy var activeUsersVC: ActiveUsersViewController = {
         let activeUsersVC = ActiveUsersViewController(nibName: "ActiveUsersViewController", bundle: nil)
         activeUsersVC.chartData = dataProvider?.activeUsersLineChartData
@@ -41,7 +45,7 @@ class UsageMetricsViewController: UIViewController {
     
     private lazy var teamsByFunctionsVC: TeamsByFunctionsViewController = {
         let teamsByFunctionsVC = TeamsByFunctionsViewController(nibName: "TeamsByFunctionsViewController", bundle: nil)
-        teamsByFunctionsVC.data = dataProvider?.teamsByFunctionsLineChartData
+        teamsByFunctionsVC.chartsData = dataProvider?.teamsByFunctionsLineChartData
         return teamsByFunctionsVC
     }()
     
@@ -98,9 +102,7 @@ class UsageMetricsViewController: UIViewController {
         cell.setUpBarChartView(with: dataProvider?.verticalChartData)
         return cell
     }()
-    
-    private var chartCells: [UITableViewCell] = []
-    
+        
     private var chartDimensionsDict: [Int : ChartDimensions] = [:]
 
     override func viewDidLoad() {
@@ -153,7 +155,6 @@ class UsageMetricsViewController: UIViewController {
         }
         chartDimensionsDict[2] = teamChatUsersVC
         chartDimensionsDict[3] = teamsByFunctionsVC
-        self.chartCells = [activeUsersChartCell, activeUsersByFuncChartCell, teamChatUsersChartCell, teamsByFunctionsChartCell]
         self.tableView.reloadData()
     }
     
@@ -170,7 +171,6 @@ class UsageMetricsViewController: UIViewController {
             self.errorLabel.isHidden = error == nil
             self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
             self.tableView.alpha = error == nil ? 1 : 0
-           // self.activityIndicator.stopAnimating()
             self.activityIndicator.removeFromSuperview()
         }
     }
@@ -196,7 +196,7 @@ class UsageMetricsViewController: UIViewController {
 
 extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chartCells.count
+        return charts.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -207,8 +207,29 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard indexPath.row < chartCells.count else { return UITableViewCell() }
-        return chartCells[indexPath.row]
+        guard indexPath.row < charts.count else { return UITableViewCell() }
+        let data = charts[indexPath.row]
+        switch data {
+        case is TeamsChatUserData:
+            chartDimensionsDict[indexPath.row] = teamChatUsersVC
+            return teamChatUsersChartCell
+        case is ChartStructure:
+            guard let chart = data as? ChartStructure else { return UITableViewCell() }
+            if chart.chartType == .line {
+                chartDimensionsDict[indexPath.row] = activeUsersVC
+                return activeUsersChartCell
+            } else {
+                if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
+                    chartDimensionsDict[indexPath.row] = barChartCell
+                }
+                return activeUsersByFuncChartCell
+            }
+        case is TeamsByFunctionsLineChartData:
+            chartDimensionsDict[indexPath.row] = teamsByFunctionsVC
+            return teamsByFunctionsChartCell
+        default:
+            return UITableViewCell()
+        }
     }
     
     
