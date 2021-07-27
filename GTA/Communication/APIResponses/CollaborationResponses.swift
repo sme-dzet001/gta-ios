@@ -316,9 +316,9 @@ struct CollaborationMetricsRow: Codable, Equatable {
         return valuesArr[index]?.stringValue
     }
     
-    var chartPosition: Float? {
+    var chartPosition: Int? {
         guard let valuesArr = values, let index = indexes["chart_position"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.floatValue
+        return valuesArr[index]?.intValue
     }
     
     var chartSubposition: Float? {
@@ -343,12 +343,6 @@ enum ChartType: String {
     case verticalBar = "vertical-bar"
     case horizontalBar = "horizontal-bar"
     case none = ""
-}
-
-struct ChartStructure {
-    var title: String
-    var values: [Float]
-    var legends: [String]
 }
 
 protocol ImageDataProtocol {

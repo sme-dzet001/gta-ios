@@ -47,8 +47,6 @@ class LineChartViewController: UIViewController {
     let chartLineWidth: CGFloat = 2
     let chartLineCircleRadius: CGFloat = 8
     
-    //var dataProvider: UsageMetricsDataProvider?
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -82,12 +80,10 @@ class LineChartViewController: UIViewController {
             return
         }
         let lastValue = Double(lineChartData.map({ return $0.value ?? 0 }).last ?? 0)
-        //let maxValue = lineChartData.map({ return $0.value ?? 0 }).last ?? 0
         let maxValueNumberFormatter = NumberFormatter()
         maxValueNumberFormatter.numberStyle = .decimal
-        maxValueLabel.text = String.convertBigValueToString(value: lastValue)//maxValueNumberFormatter.string(from: NSNumber(value: maxValue))?.replacingOccurrences(of: ",", with: " ")
-        
-        //let lastValue = Double(lineChartData.map({ return Double($0.value ?? 0) }).last ?? 0.0)
+        maxValueNumberFormatter.decimalSeparator = "."
+        maxValueLabel.text = String.convertBigValueToString(value: lastValue)
         let previousToLastValue = Double(lineChartData.map({ return $0.value ?? 0 })[lineChartData.count - 2])
         if lastValue != 0 {
             percentLabel.text = String(format: "%.1f", locale: Locale.current, Double(100) * previousToLastValue / lastValue).replacingOccurrences(of: ".0", with: "") + "%"
@@ -163,25 +159,19 @@ class LineChartViewController: UIViewController {
         //Horizontal axis formatting
         
         chartView.xAxis.setLabelCount(lineChartData.count, force: true)
-        
-        //chartView.setVisibleXRangeMaximum(Double(view.frame.size.width / chartViewGridWidth))
-        
+                
         //Vertical axis formatting
         
         let minYValue = lineChartData.map({ return Double($0.value ?? 0) }).min() ?? 0
         chartView.leftAxis.axisMinimum = minYValue.getAxisMinimum()
         
         let lineChartValues = lineChartData.map({ return Double($0.value ?? 0) })
-        //chartView.leftAxis.axisMinimum = Double(minYFactor) * 1000
-       // let maxYValue = lineChartData.map({ return $0.value ?? 0 }).max() ?? 0
-        chartView.leftAxis.axisMaximum = lineChartValues.max()?.getAxisMaximum() ?? 0.0// chartView.leftAxis.getAxisMaximum(maxValue: lineChartValues.max() ?? 0.0)//) Double(maxYFactor) * 1000
-        
-        let verticalLabelsCount = 3//maxYFactor - minYFactor + 1
+        chartView.leftAxis.axisMaximum = lineChartValues.max()?.getAxisMaximum() ?? 0.0
+        let verticalLabelsCount = 3
         chartView.leftAxis.setLabelCount(verticalLabelsCount, force: true)
         var labels: [String] = []
         for yAxisValue in [chartView.leftAxis.axisMinimum, (chartView.leftAxis.axisMaximum + chartView.leftAxis.axisMinimum) / 2, chartView.leftAxis.axisMaximum] {
-            labels.insert(String.convertBigValueToString(value: yAxisValue), at: 0)
-            //labels.insert(String(format: "%.1fk", locale: Locale.current, yAxisValue).replacingOccurrences(of: ".0", with: ""), at: 0)
+            labels.insert(String.convertBigValueToString(value: yAxisValue, for: true), at: 0)
         }
         
         setupLeftAxisCustomView(labels: labels, labelsFont: ChartsFormatting.labelFont, labelsTextColor: ChartsFormatting.labelTextColor)

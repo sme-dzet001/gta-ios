@@ -479,12 +479,16 @@ extension String {
         return "yyyy-MM-dd HH:mm:ssZ"
     }
     
+    static var convertMetricsSlashDateFormat: String { // TODO: Need better name
+        return "MM/dd/yyyy HH:mm"
+    }
+    
     static var usageMetricsDateFormat: String {
         return "MMM\nyyyy"
     }
     
     static var ticketDateFormat: String {
-        return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//"yyyy-MM-dd'T'HH:mm:ss.SSS Z"
+        return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     }
     
     static var statusDateFormat: String {
@@ -580,14 +584,33 @@ extension String {
        // return self
     }
     
+    func getFormattedDateStringForNews() -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        guard let date = dateFormatterPrint.date(from: self) else { return self }
+        dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
+        dateFormatterPrint.timeZone = .current
+        return dateFormatterPrint.string(from: date)
+    }
+    
     func getDateForUsageMetrics() -> String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.convertMetricsDateFormat
         if let date = dateFormatterPrint.date(from: self) {
-            dateFormatterPrint.dateFormat = String.usageMetricsDateFormat
-            return dateFormatterPrint.string(from: date)
+            return getUsageMetricStringDate(from: date)
+        }
+        dateFormatterPrint.dateFormat = String.convertMetricsSlashDateFormat
+        if let date = dateFormatterPrint.date(from: self) {
+            return getUsageMetricStringDate(from: date)
         }
         return ""
+    }
+    
+    private func getUsageMetricStringDate(from date: Date) -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.usageMetricsDateFormat
+        return dateFormatterPrint.string(from: date)
     }
     
     func getFormattedDateStringForProdAlert() -> String {
@@ -600,18 +623,26 @@ extension String {
         return dateFormatterPrint.string(from: date)
     }
     
-    static func convertBigValueToString(value: Double) -> String {
+    static func convertBigValueToString(value: Double, for axis: Bool = false) -> String {
         if abs(value) >= 1000000000000 {
-            return String(Int((value/100000000000).rounded()/10)) + " T"
+            let calcValue = (value/100000000000).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "T"
         }
         if abs(value) >= 1000000000 {
-            return String(Int((value/100000000).rounded()/10)) + " B"
+            let calcValue = (value/100000000).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "B"
         }
         if abs(value) >= 1000000 {
-            return String(Int((value/100000).rounded()/10)) + " M"
+            let calcValue = (value/100000).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "M"
         }
         if abs(value) >= 1000 {
-            return String(Int((value/100).rounded()/10)) + " K"
+            let calcValue = (value/100).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "K"
         }
         return "\(Int(value))"
     }
