@@ -206,7 +206,7 @@ class LineChartViewController: UIViewController {
         chartView.extraRightOffset = extraSizeRight.width / 2
         
         let extraSizeLeft = (firstLabel as NSString).size(withAttributes: [.font : ChartsFormatting.labelFont as Any])
-        chartScrollViewLeading.constant = CGFloat(60) - extraSizeLeft.width / 2
+        chartScrollViewLeading.constant = CGFloat(10) - extraSizeLeft.width / 2
         chartView.extraLeftOffset = extraSizeLeft.width / 2
         
         addBlurViewLeft()

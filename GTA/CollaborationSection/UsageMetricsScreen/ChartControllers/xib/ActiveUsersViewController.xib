@@ -22,7 +22,7 @@
                 <outlet property="blurViewLeft" destination="zUB-2w-BZQ" id="8C3-53-gbM"/>
                 <outlet property="blurViewRight" destination="AC8-1G-lNr" id="0b2-Of-fNb"/>
                 <outlet property="chartScrollView" destination="kZQ-gB-GUS" id="GFu-qp-fuy"/>
-                <outlet property="chartScrollViewLeading" destination="tUn-Gg-Uug" id="LOZ-SM-QGz"/>
+                <outlet property="chartScrollViewLeading" destination="K3h-We-xUC" id="B8k-Ze-yRD"/>
                 <outlet property="chartScrollViewTrailing" destination="1ir-Fb-YIK" id="VQT-Yf-RAE"/>
                 <outlet property="chartTitleLabel" destination="Zm3-GL-Usw" id="kut-1m-fQJ"/>
                 <outlet property="chartView" destination="Zho-0m-qak" id="v5P-6y-dxX"/>
@@ -76,7 +76,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZQ-gB-GUS" customClass="ChartScrollView" customModule="GTA" customModuleProvider="target">
-                    <rect key="frame" x="60" y="124" width="314" height="704"/>
+                    <rect key="frame" x="50" y="124" width="324" height="704"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zho-0m-qak" customClass="LineChartView" customModule="Charts">
                             <rect key="frame" x="0.0" y="0.0" width="1200" height="704"/>
@@ -108,7 +108,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zUB-2w-BZQ" userLabel="Blur View Left">
-                    <rect key="frame" x="50" y="124" width="24" height="704"/>
+                    <rect key="frame" x="40" y="124" width="24" height="704"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="24" id="DgC-6e-BLB"/>
@@ -122,16 +122,16 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bq-fC-YTr" userLabel="Custom Vertical Axis View">
-                    <rect key="frame" x="0.0" y="124" width="50" height="704"/>
+                    <rect key="frame" x="0.0" y="124" width="40" height="704"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="DPE-10-hoZ">
-                            <rect key="frame" x="0.0" y="0.0" width="50" height="704"/>
+                            <rect key="frame" x="0.0" y="0.0" width="40" height="704"/>
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="DPE-10-hoZ" firstAttribute="leading" secondItem="8bq-fC-YTr" secondAttribute="leading" id="NkG-99-K5n"/>
-                        <constraint firstAttribute="width" constant="50" id="X9a-tR-NUg"/>
+                        <constraint firstAttribute="width" constant="40" id="X9a-tR-NUg"/>
                         <constraint firstAttribute="trailing" secondItem="DPE-10-hoZ" secondAttribute="trailing" id="jEn-qY-X3j"/>
                         <constraint firstAttribute="bottom" secondItem="DPE-10-hoZ" secondAttribute="bottom" id="lpp-w4-4UV"/>
                         <constraint firstItem="DPE-10-hoZ" firstAttribute="top" secondItem="8bq-fC-YTr" secondAttribute="top" id="pUd-KF-9eb"/>
@@ -150,6 +150,7 @@
                 <constraint firstItem="cqT-Nb-f4u" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="D9X-9z-qhN"/>
                 <constraint firstItem="zUB-2w-BZQ" firstAttribute="bottom" secondItem="8bq-fC-YTr" secondAttribute="bottom" id="Fsq-4r-hXP"/>
                 <constraint firstItem="cqT-Nb-f4u" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-24" id="IR9-Zx-lO4"/>
+                <constraint firstItem="kZQ-gB-GUS" firstAttribute="leading" secondItem="8bq-fC-YTr" secondAttribute="trailing" constant="10" id="K3h-We-xUC"/>
                 <constraint firstItem="8bq-fC-YTr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Mnc-Iw-5pd"/>
                 <constraint firstItem="8bq-fC-YTr" firstAttribute="bottom" secondItem="kZQ-gB-GUS" secondAttribute="bottom" id="RKQ-QF-FWx"/>
                 <constraint firstItem="kZQ-gB-GUS" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="80" id="Rh9-fK-Nnm"/>
@@ -161,7 +162,6 @@
                 <constraint firstItem="zUB-2w-BZQ" firstAttribute="top" secondItem="kZQ-gB-GUS" secondAttribute="top" id="ZM9-Yy-duT"/>
                 <constraint firstItem="8bq-fC-YTr" firstAttribute="top" secondItem="kZQ-gB-GUS" secondAttribute="top" id="cAa-zT-AAL"/>
                 <constraint firstItem="dTE-h0-Ec9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fhm-Gx-8pV"/>
-                <constraint firstItem="kZQ-gB-GUS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="60" id="tUn-Gg-Uug"/>
                 <constraint firstItem="dTE-h0-Ec9" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="uW5-Hs-JVe"/>
                 <constraint firstItem="Zm3-GL-Usw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="yRh-wv-9rp"/>
             </constraints>
