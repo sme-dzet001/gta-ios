@@ -168,7 +168,8 @@ class UsageMetricsViewController: UIViewController {
     
     private func updateChartsData() {
         let selectedIndex = pickerView.selectedRow(inComponent: 0)
-        let app = (dataProvider?.availableApps ?? [])[selectedIndex]
+        guard let availableApps = dataProvider?.availableApps, availableApps.count > selectedIndex else { return }
+        let app = availableApps[selectedIndex]
         dataProvider?.getMetricsDataForApp(app)
         setTextFieldText(app)
         dataProvider?.selectedApp = app
