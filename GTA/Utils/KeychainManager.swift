@@ -123,8 +123,11 @@ public class KeychainManager: NSObject {
         if status == errSecSuccess {
             if let retrievedData = dataTypeRef as? Data {
                 guard let res = String(data: retrievedData, encoding: .utf8) else { return nil }
-                let expirationDate = Utils.stringToDate(from: res, dateFormat: "dd.MM.yyyy HH:mm:ss")
-                return expirationDate
+                if let expirationDate = Utils.stringToDate(from: res, dateFormat: "dd.MM.yyyy HH:mm:ss") {
+                    return expirationDate
+                } else {
+                    return Utils.stringToDate(from: res, dateFormat: "dd.MM.yyyy h:mm:ss a")
+                }
             }
         } else {
             return nil
