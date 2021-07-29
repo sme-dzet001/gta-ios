@@ -646,7 +646,7 @@ class HomeDataProvider {
     }
     
     private func processProductionAlerts(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "HomeTabProcessProductionAlertsQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "HomeTabProcessProductionAlertsQueue", qos: .userInteractive)
         queue.async {
             var prodAlertsResponse: ProductionAlertsResponse?
             var retErr = error
