@@ -21,6 +21,10 @@ class LoginUSMViewController: UIViewController {
     
     var emailAddress = ""
     var token: String = ""
+    
+    private var isNeedLogOut: Bool {
+        return UserDefaults.standard.bool(forKey: Constants.isNeedLogOut)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +43,11 @@ class LoginUSMViewController: UIViewController {
         ])
         usmWebView.navigationDelegate = self
         usmWebView.uiDelegate = self
-        loadUsmLogon()
+        if !isNeedLogOut {
+            loadUsmLogon()
+        } else {
+            logout()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,11 +104,14 @@ class LoginUSMViewController: UIViewController {
     }
     
     private func logout() {
-        guard let accessToken = KeychainManager.getToken() else { return }
-        let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
-        guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
-        let logoutRequest = URLRequest(url: logoutURL)
-        usmWebView.load(logoutRequest)
+        if let accessToken = KeychainManager.getToken() {
+            let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
+            guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
+            let logoutRequest = URLRequest(url: logoutURL)
+            usmWebView.load(logoutRequest)
+        } else {
+            loadUsmLogon()
+        }
     }
     
     /*
@@ -194,6 +205,10 @@ extension LoginUSMViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if isNeedLogOut {
+            loadUsmLogon()
+            UserDefaults.standard.setValue(false, forKey: Constants.isNeedLogOut)
+        }
         if let url = webView.url?.absoluteString, url.contains("login") {
             usmWebView.alpha = 1
             activityIndicator.stopAnimating()
