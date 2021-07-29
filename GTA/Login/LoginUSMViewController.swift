@@ -143,6 +143,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         guard let navigationRequestURL = navigationAction.request.url else { return }
+        print("\(navigationRequestURL.absoluteString)")
         if navigationRequestURL.absoluteString.hasPrefix(USMSettings.usmLogoutURL) {
             // logout was made
             KeychainManager.deleteUsername()
@@ -171,6 +172,11 @@ extension LoginUSMViewController: WKNavigationDelegate {
             decisionHandler(.cancel)
             return
         }
+        if navigationRequestURL.absoluteString.contains("app_code=1297") {
+            showLoginFailedAlert(message: "An unexpected error occurred. Please try logging in again.", title: "Login Failed")
+            decisionHandler(.cancel)
+            return
+        }
         if navigationRequestURL.absoluteString.hasPrefix(USMSettings.usmInternalRedirectURL) {
             guard let correctParsingFormatURL = URL(string: navigationRequestURL.absoluteString.replacingOccurrences(of: USMSettings.usmInternalRedirectURL, with: "https://correctparsingformat.com")) else {
                 decisionHandler(.cancel)
@@ -191,6 +197,10 @@ extension LoginUSMViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         decisionHandler(.allow)
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print("sdsdsdsddsdsdsds")
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
