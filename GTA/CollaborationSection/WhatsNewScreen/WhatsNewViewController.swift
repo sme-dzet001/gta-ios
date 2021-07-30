@@ -17,6 +17,7 @@ class WhatsNewViewController: UIViewController {
     private var errorLabel: UILabel = UILabel()
     private var cellForAnimation: WhatsNewCell?
     private var expandedRowsIndex = [Int]()
+    private var dispatchGroup = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,7 @@ class WhatsNewViewController: UIViewController {
                     self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
                 }
                 if dataWasChanged {
+                    self?.dispatchGroup.wait()
                     self?.tableView.reloadData()
                 }
                 self?.stopAnimation()
@@ -211,10 +213,12 @@ extension WhatsNewViewController : TappedLabelDelegate {
         guard let cellIndex = tableView.indexPath(for: cell) else { return }
         guard (dataProvider?.collaborationNewsData.count ?? 0) > cellIndex.row else { return }
         UIView.setAnimationsEnabled(false)
+        self.dispatchGroup.enter()
         self.tableView.beginUpdates()
         cell.descriptionLabel.attributedText = self.getDescriptionText(for: cellIndex)
         cell.descriptionLabel.numberOfLines = 0
         self.tableView.endUpdates()
+        self.dispatchGroup.leave()
         if !expandedRowsIndex.contains(cellIndex.row) {
             expandedRowsIndex.append(cellIndex.row)
         }
