@@ -122,12 +122,16 @@ class AuthViewController: UIViewController {
     }
     
     private func performLogout() {
-        guard let accessToken = KeychainManager.getToken() else { return }
-        addWebViewIfNeeded()
-        let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
-        guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
-        let logoutRequest = URLRequest(url: logoutURL)
-        usmLogoutWebView.load(logoutRequest)
+        if Reachability.isConnectedToNetwork() {
+            guard let accessToken = KeychainManager.getToken() else { return }
+            addWebViewIfNeeded()
+            let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
+            guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
+            let logoutRequest = URLRequest(url: logoutURL)
+            usmLogoutWebView.load(logoutRequest)
+        } else {
+            errorLogout()
+        }
     }
     
     func authenticateUser() {
@@ -257,7 +261,11 @@ class AuthViewController: UIViewController {
 extension AuthViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        logout()
+        errorLogout()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        errorLogout()
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
@@ -268,10 +276,17 @@ extension AuthViewController: WKNavigationDelegate {
         logout()
     }
     
-    private func logout() {
+    private func errorLogout() {
+        UserDefaults.standard.setValue(true, forKey: Constants.isNeedLogOut)
+        logout(deleteToken: false)
+    }
+    
+    private func logout(deleteToken: Bool = true) {
         KeychainManager.deletePushNotificationTokenSent()
         KeychainManager.deleteUsername()
-        KeychainManager.deleteToken()
+        if deleteToken {
+            KeychainManager.deleteToken()
+        }
         KeychainManager.deleteTokenExpirationDate()
         CacheManager().clearCache()
         KeychainManager.deletePinData()
