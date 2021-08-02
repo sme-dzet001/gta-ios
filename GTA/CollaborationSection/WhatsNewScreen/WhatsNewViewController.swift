@@ -85,6 +85,10 @@ class WhatsNewViewController: UIViewController {
 
 extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataProvider?.collaborationNewsData.count ?? 0
     }
@@ -212,13 +216,18 @@ extension WhatsNewViewController : TappedLabelDelegate {
     func moreButtonDidTapped(in cell: WhatsNewCell) {
         guard let cellIndex = tableView.indexPath(for: cell) else { return }
         guard (dataProvider?.collaborationNewsData.count ?? 0) > cellIndex.row else { return }
-        UIView.setAnimationsEnabled(false)
-        self.dispatchGroup.enter()
-        self.tableView.beginUpdates()
-        cell.descriptionLabel.attributedText = self.getDescriptionText(for: cellIndex)
-        cell.descriptionLabel.numberOfLines = 0
-        self.tableView.endUpdates()
-        self.dispatchGroup.leave()
+        if !tableView.dataHasChanged {
+            UIView.setAnimationsEnabled(false)
+            self.dispatchGroup.enter()
+            self.tableView.beginUpdates()
+            cell.descriptionLabel.attributedText = self.getDescriptionText(for: cellIndex)
+            cell.descriptionLabel.numberOfLines = 0
+            self.tableView.endUpdates()
+            self.dispatchGroup.leave()
+        } else {
+            tableView.reloadData()
+            return
+        }
         if !expandedRowsIndex.contains(cellIndex.row) {
             expandedRowsIndex.append(cellIndex.row)
         }
