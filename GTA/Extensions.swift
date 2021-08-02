@@ -100,11 +100,11 @@ extension UILabel {
         let readMoreAttributed = NSMutableAttributedString(string: readMoreText, attributes: [NSAttributedString.Key.font : font as Any, NSAttributedString.Key.foregroundColor: UIColor.gray])
         let lengthForVisibleString = vissibleTextLength
         if vissibleTextLength >= self.text!.count, let _ = self.attributedText {
-            self.text = text
-            let mutAttr = NSMutableAttributedString(attributedString: self.attributedText!)
-            mutAttr.mutableString.append("... ")
-            mutAttr.append(readMoreAttributed)
-            self.attributedText = mutAttr
+            //self.text = text
+//            let mutAttr = NSMutableAttributedString(attributedString: self.attributedText!)
+//            mutAttr.mutableString.append("... ")
+//            mutAttr.append(readMoreAttributed)
+//            self.attributedText = mutAttr
             return
         }
         let mutableString = NSMutableString(string: self.attributedText?.string ?? "")
@@ -140,7 +140,7 @@ extension UILabel {
         let attributedText = self.attributedText!// NSAttributedString(string: self.text!, attributes: attributes as? [NSAttributedString.Key : Any])
         let boundingRect: CGRect = attributedText.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
 
-        //if boundingRect.size.height > labelHeight {
+        if (self.text?.count ?? 0) > 110 {
             var index: Int = 0
             var prev: Int = 0
             let characterSet = CharacterSet.whitespacesAndNewlines
@@ -155,8 +155,8 @@ extension UILabel {
         let isNeedCoef = !UIDevice.current.name.lowercased().contains("pro max")
         let coefficient = isNeedCoef ? Int(Double(index - prev) / 1.9) : 0
             return prev + coefficient
-        //}
-        //return self.attributedText!.string.count
+        }
+        return self.attributedText!.string.count
     }
     
 }
