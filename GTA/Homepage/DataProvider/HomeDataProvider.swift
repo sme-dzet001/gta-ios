@@ -19,6 +19,7 @@ class HomeDataProvider {
     private(set) var allOfficesData = [OfficeRow]()
     private(set) var GTTeamContactsData: GTTeamResponse?
     private(set) var globalAlertsData: GlobalAlertRow?
+    private(set) var productionGlobalAlertsData: ProductionAlertsRow?
     private var selectedOfficeId: Int?
     
     var forceUpdateAlertDetails: Bool = false
@@ -682,24 +683,90 @@ class HomeDataProvider {
         return count
     }
     
+    // MARK: - Global Production Alerts related methods
+    
+    func getGlobalProductionAlerts(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.handleGlobalProductionAlertsSectionReport(data, code, cachedError, true, { (dataWasChanged, errorCode, error) in
+                if error == nil {
+                    completion?(dataWasChanged, errorCode, cachedError)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let _ = error {
+                        completion?(true, errorCode, ResponseError.serverError)
+                    } else {
+                        self?.handleGlobalProductionAlertsSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    private func handleGlobalProductionAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalAlerts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalProductionAlerts.rawValue }?.generationNumber
+        if let _ = generationNumber, generationNumber != 0 {
+            if fromCache {
+                getCachedResponse(for: .getGlobalProductionAlerts) {[weak self] (data, error) in
+                    self?.processGlobalProductionAlerts(reportData, data, errorCode, error, completion)
+                }
+                return
+            }
+            apiManager.getGlobalProductionAlerts(generationNumber: generationNumber!, completion: { [weak self] (data, errorCode, error) in
+                self?.cacheData(data, path: .getGlobalProductionAlerts)
+                self?.processGlobalProductionAlerts(reportData, data, errorCode, error, completion)
+            })
+        } else {
+            let err = error == nil ? ResponseError.commonError : error
+            if error != nil || generationNumber == 0 {
+                completion?(true, 0, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable)
+                return
+            }
+            completion?(true, 0, err)
+        }
+    }
+    
+    private func processGlobalProductionAlerts(_ reportData: ReportDataResponse?, _ globalProductionAlertsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var prodAlertsResponse: GlobalProductionAlertsResponse?
+        var retErr = error
+        if let responseData = globalProductionAlertsResponse {
+            do {
+                prodAlertsResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        } else {
+            retErr = ResponseError.commonError
+        }
+        if let data = prodAlertsResponse?.data?.rows, data.isEmpty {
+            retErr = ResponseError.noDataAvailable
+        }
+        let dataWasChanged = fillGlobalProductionAlertsData(prodAlertsResponse)
+        completion?(dataWasChanged, errorCode, retErr)
+    }
+    
+    private func fillGlobalProductionAlertsData(_ response: GlobalProductionAlertsResponse?) -> Bool {
+        let indexes = self.getDataIndexes(columns: response?.meta?.widgetsDataSource?.params?.columns)
+        var rows = response?.data?.rows?.compactMap({$0}) ?? []
+        for (index, _) in rows.enumerated() {
+            rows[index].indexes = indexes
+        }
+        var alert = rows.last
+        let inProgressAlerts = rows.filter({$0.status == .inProgress})
+        let closedAlerts = rows.filter({$0.status == .closed && $0.closeDate.addingTimeInterval(3600).timeIntervalSince1970 > Date().timeIntervalSince1970})
+        if inProgressAlerts.count >= 1 {
+            alert = inProgressAlerts.sorted(by: {$0.startDate.timeIntervalSince1970 > $1.startDate.timeIntervalSince1970}).first
+        } else if closedAlerts.count >= 1 {
+            alert = closedAlerts.sorted(by: {$0.closeDate.timeIntervalSince1970 > $1.closeDate.timeIntervalSince1970}).first
+        }
+        let dataWasChanged: Bool = productionGlobalAlertsData != alert
+        productionGlobalAlertsData = alert
+        return dataWasChanged
+    }
     
     // MARK: - Common methods
-    
-//    private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
-//        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
-//            if let _ = data, cachedError == nil {
-//                completion?(data, 200, cachedError, true)
-//            }
-//            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-//                self?.cacheData(reportResponse, path: .getSectionReport)
-//                var newError = error
-//                if let _ = error {
-//                    newError = ResponseError.serverError
-//                }
-//                completion?(reportResponse, errorCode, newError, false)
-//            })
-//        }
-//    }
     
     private func parseSectionReport(data: Data?) -> ReportDataResponse? {
         var reportDataResponse: ReportDataResponse?

@@ -55,6 +55,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case sendPushNotificationsToken
         case getProductionAlerts(generationNumber: Int)
         case getCollaborationMetrics(generationNumber: Int)
+        case getGlobalProductionAlerts(generationNumber: Int)
         
         var endpoint: String {
             switch self {
@@ -86,6 +87,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .sendPushNotificationsToken: return "/v1/me/push_token/"
                 case .getProductionAlerts(let generationNumber): return "/v3/widgets/production_alerts/data/\(generationNumber)/detailed"
                 case .getCollaborationMetrics(let generationNumber): return "/v3/widgets/collaboration_metrics/data/\(generationNumber)/detailed"
+                case .getGlobalProductionAlerts(let generationNumber): return "/v3/widgets/global_production_alerts/data/\(generationNumber)/detailed"
             }
         }
     }
@@ -119,6 +121,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case gTTeam = "management_team"
         case globalAlerts = "global_alerts"
         case collaborationMetrics = "collaboration_metrics"
+        case globalProductionAlerts = "global_production_alerts"
     }
     
     init(accessToken: String?) {
@@ -178,6 +181,11 @@ class APIManager: NSObject, URLSessionDelegate {
     func getGTTeamData(generationNumber: Int, completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         makeRequest(endpoint: .getGTTeam(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+    }
+    
+    func getGlobalProductionAlerts(generationNumber: Int, completion: ((_ alertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getGlobalProductionAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
     //MARK: - Service Desk methods
