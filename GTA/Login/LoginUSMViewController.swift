@@ -146,6 +146,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
         if navigationRequestURL.absoluteString.hasPrefix(USMSettings.usmLogoutURL) {
             // logout was made
             KeychainManager.deleteUsername()
+            KeychainManager.deletePushNotificationTokenSent()
             KeychainManager.deleteToken()
             KeychainManager.deleteTokenExpirationDate()
             CacheManager().clearCache()

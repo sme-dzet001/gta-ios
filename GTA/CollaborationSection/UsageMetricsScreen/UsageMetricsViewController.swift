@@ -8,45 +8,243 @@
 import UIKit
 import WebKit
 
+protocol ChartDimensions: AnyObject {
+    var optimalHeight: CGFloat { get }
+}
+
+class ChartTableView : UITableView, UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
 class UsageMetricsViewController: UIViewController {
     
-    private var usageMetricsWebView: WKWebView!
+    @IBOutlet weak var tableView: ChartTableView!
+    @IBOutlet weak var appTextField: CustomTextField!
+    
+    private let pickerView = UIPickerView()
+    
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var errorLabel: UILabel = UILabel()
+    var dataProvider: CollaborationDataProvider?
+    
+    weak var teamsByFunctionsDataChangedDelegate: TeamsByFunctionsDataChangedDelegate?
+    weak var verticalBarChartDataChangedDelegate: VerticalBarChartDataChangedDelegate?
+    weak var horizontallBarChartDataChangedDelegate: HorizontallBarChartDataChangedDelegate?
+    weak var activeUsersDataChangedDelegate: ActiveUsersDataChangedDelegate?
+    
+    deinit {
+        activeUsersVC.removeFromParent()
+        teamChatUsersVC.removeFromParent()
+        teamsByFunctionsVC.removeFromParent()
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    var charts: [MetricsPosition?] {
+        return dataProvider?.chartsPosition ?? []
+    }
+    
+    private lazy var activeUsersVC: ActiveUsersViewController = {
+        let activeUsersVC = ActiveUsersViewController(nibName: "ActiveUsersViewController", bundle: nil)
+        activeUsersVC.chartData = dataProvider?.activeUsersLineChartData
+        activeUsersDataChangedDelegate = activeUsersVC
+        return activeUsersVC
+    }()
+    
+    private lazy var teamsByFunctionsVC: TeamsByFunctionsViewController = {
+        let teamsByFunctionsVC = TeamsByFunctionsViewController(nibName: "TeamsByFunctionsViewController", bundle: nil)
+        teamsByFunctionsVC.chartsData = dataProvider?.teamsByFunctionsLineChartData
+        teamsByFunctionsDataChangedDelegate = teamsByFunctionsVC
+        return teamsByFunctionsVC
+    }()
+    
+    private lazy var teamChatUsersVC: TeamChatUsersViewController = {
+        let teamChatUsersVC = TeamChatUsersViewController()
+        teamChatUsersVC.chartData = dataProvider?.horizontalChartData
+        horizontallBarChartDataChangedDelegate = teamChatUsersVC
+        return teamChatUsersVC
+    }()
+    
+    private lazy var activeUsersChartCell: UITableViewCell = {
+        let cell = UITableViewCell()
+        activeUsersVC.view.translatesAutoresizingMaskIntoConstraints = false
+        cell.contentView.addSubview(activeUsersVC.view)
+        NSLayoutConstraint.activate([
+            activeUsersVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            activeUsersVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            activeUsersVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            activeUsersVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
+        ])
+        addChild(activeUsersVC)
+        return cell
+    }()
+    
+    private lazy var teamsByFunctionsChartCell: UITableViewCell = {
+        let cell = UITableViewCell()
+        teamsByFunctionsVC.view.translatesAutoresizingMaskIntoConstraints = false
+        cell.contentView.addSubview(teamsByFunctionsVC.view)
+        NSLayoutConstraint.activate([
+            teamsByFunctionsVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            teamsByFunctionsVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            teamsByFunctionsVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            teamsByFunctionsVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
+        ])
+        addChild(teamsByFunctionsVC)
+        return cell
+    }()
+    
+    private lazy var teamChatUsersChartCell: UITableViewCell = {
+        let cell = UITableViewCell()
+        teamChatUsersVC.view.translatesAutoresizingMaskIntoConstraints = false
+        cell.contentView.addSubview(teamChatUsersVC.view)
+        NSLayoutConstraint.activate([
+            teamChatUsersVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
+            teamChatUsersVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
+            teamChatUsersVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
+            teamChatUsersVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
+        ])
+        addChild(teamChatUsersVC)
+        return cell
+    }()
+    
+    private lazy var activeUsersByFuncChartCell: UITableViewCell = {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BarChartCell") as? BarChartCell else { return UITableViewCell() }
+        cell.setUpBarChartView(with: dataProvider?.verticalChartData)
+        verticalBarChartDataChangedDelegate = cell
+        return cell
+    }()
+        
+    private var chartDimensionsDict: [Int : ChartDimensions] = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        NotificationCenter.default.addObserver(self, selector: #selector(getChartsData), name: UIApplication.didBecomeActiveNotification, object: nil)
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.barTintColor = .white
         
+        tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
+        setUpTextField()
         setUpNavigationItem()
-        setUpWebView()
-        //loadUsageMetrics()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addErrorLabel(errorLabel)
+        getChartsData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        removeCookies()
-        let value = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-        
-        loadUsageMetrics()
-    }
-    
-    func removeCookies() {
-        let cookieStore = usageMetricsWebView.configuration.websiteDataStore.httpCookieStore
-        cookieStore.getAllCookies { cookies in
-            for cookie in cookies {
-                cookieStore.delete(cookie)
-            }
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        let value = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-        UINavigationController.attemptRotationToDeviceOrientation()
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    private func setUpTextField() {
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        appTextField.inputView = pickerView
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
+        toolbar.barStyle = .default
+        toolbar.backgroundColor = .white
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexible, doneButton], animated: true)
+        appTextField.inputAccessoryView = toolbar
+    }
+    
+    @objc private func doneAction() {
+        updateChartsData()
+        reloadData()
+        view.endEditing(true)
+    }
+    
+    private func updateChartsData() {
+        let selectedIndex = pickerView.selectedRow(inComponent: 0)
+        guard let availableApps = dataProvider?.availableApps, availableApps.count > selectedIndex else { return }
+        let app = availableApps[selectedIndex]
+        dataProvider?.getMetricsDataForApp(app)
+        setTextFieldText(app)
+        dataProvider?.selectedApp = app
+        activeUsersDataChangedDelegate?.activeUsersDataChanged(newData: dataProvider?.activeUsersLineChartData)
+        teamsByFunctionsDataChangedDelegate?.teamsByFunctionsDataChanged(newData: dataProvider?.teamsByFunctionsLineChartData)
+        verticalBarChartDataChangedDelegate?.setUpBarChartView(with: dataProvider?.verticalChartData)
+        horizontallBarChartDataChangedDelegate?.verticalBarChartDataChanged(newData: dataProvider?.horizontalChartData)
+    }
+    
+    @objc private func getChartsData() {
+        startAnimation()
+        dataProvider?.getUsageMetrics {[weak self] isFromCache, dataWasChanged, errorCode, error in
+            DispatchQueue.main.async {
+                if error == nil {
+                    self?.stopAnimation()
+                    self?.reloadData()
+                } else if error != nil, !isFromCache {
+                    self?.stopAnimation(with: error)
+                }
+            }
+        }
+    }
+    
+    private func reloadData() {
+        if let isChartDataEmpty = dataProvider?.isChartDataEmpty, isChartDataEmpty {
+            return
+        }
+        chartDimensionsDict[0] = activeUsersVC
+        if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
+            chartDimensionsDict[1] = barChartCell
+        }
+        chartDimensionsDict[2] = teamChatUsersVC
+        chartDimensionsDict[3] = teamsByFunctionsVC
+        self.tableView.reloadData()
+    }
+    
+    private func startAnimation() {
+        self.errorLabel.isHidden = true
+        self.tableView.alpha = 0
+        self.appTextField.alpha = 0
+        self.addLoadingIndicator(activityIndicator)
+        self.activityIndicator.startAnimating()
+    }
+    
+    private func stopAnimation(with error: Error? = nil) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.errorLabel.isHidden = error == nil
+            self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+            self.tableView.alpha = error == nil ? 1 : 0
+            let selectedApp = self.dataProvider?.selectedApp ?? ""
+            self.setTextFieldText(selectedApp)
+            let row = self.dataProvider?.availableApps.firstIndex(of: selectedApp) ?? 0
+            self.pickerView.selectRow(row, inComponent: 0, animated: false)
+            self.appTextField.alpha = self.tableView.alpha
+            self.activityIndicator.removeFromSuperview()
+        }
+    }
+    
+    private func setTextFieldText(_ text: String) {
+        var firstPartAttributes: [NSAttributedString.Key : Any]? = [:]
+        if let firstPartFont = UIFont(name: "SFProText-Regular", size: 14) {
+            firstPartAttributes?[.font] = firstPartFont
+        }
+        firstPartAttributes?[.foregroundColor] = UIColor(hex: 0x8E8E93)
+        let firstPart = NSMutableAttributedString(string: "App: ", attributes: firstPartAttributes)
+        var secondPartAttributes: [NSAttributedString.Key : Any]? = [:]
+        if let secondPartFont = UIFont(name: "SFProText-Semibold", size: 14) {
+            secondPartAttributes?[.font] = secondPartFont
+        }
+        secondPartAttributes?[.foregroundColor] = UIColor.black
+        let secondPart = NSAttributedString(string: text, attributes: secondPartAttributes)
+        firstPart.append(secondPart)
+        appTextField.attributedText = firstPart
+        appTextField.setIconForPicker(for: self.view.frame.width, isCharts: true)
     }
     
     private func setUpNavigationItem() {
@@ -62,64 +260,91 @@ class UsageMetricsViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
     }
     
-    private func setUpWebView() {
-        usageMetricsWebView = WKWebView(frame: CGRect.zero)
-        usageMetricsWebView.translatesAutoresizingMaskIntoConstraints = false
-        usageMetricsWebView.scrollView.showsVerticalScrollIndicator = false
-        usageMetricsWebView.scrollView.showsHorizontalScrollIndicator = false
-        view.addSubview(usageMetricsWebView)
-        NSLayoutConstraint.activate([
-            usageMetricsWebView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            usageMetricsWebView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            usageMetricsWebView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            usageMetricsWebView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
-        ])
-        usageMetricsWebView.navigationDelegate = self
-    }
-    
     @objc private func backPressed() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    private func loadUsageMetrics() {
-        ///iframe
-        
-        /*let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"></HEAD><BODY>"
-        let htmlEnd = "</BODY></HTML>"
-        let htmlBodyStr = "<iframe width=\"\(usageMetricsWebView.frame.size.width)\" height=\"\(usageMetricsWebView.frame.size.height)\" src=\"https://app.powerbi.com/view?r=eyJrIjoiNmVhZTljOTQtZDRhOS00M2YwLTljMDAtOTgwYTY0NTI5ZGI1IiwidCI6ImYwYWZmM2I3LTkxYTUtNGFhZS1hZjcxLWM2M2UxZGRhMjA0OSIsImMiOjh9\"frameborder=\"0\" allowFullScreen=\"true\"></iframe>"
-        let htmlFullStr = "\(htmlStart)\(htmlBodyStr)\(htmlEnd)"
-        usageMetricsWebView.loadHTMLString(htmlFullStr, baseURL: Bundle.main.bundleURL)*/
-        
-        ///direct link loading
-        
-        if let url = URL(string: "https://app.powerbi.com/view?r=eyJrIjoiNmVhZTljOTQtZDRhOS00M2YwLTljMDAtOTgwYTY0NTI5ZGI1IiwidCI6ImYwYWZmM2I3LTkxYTUtNGFhZS1hZjcxLWM2M2UxZGRhMjA0OSIsImMiOjh9") {
-            let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
-            usageMetricsWebView.load(request)
-        }
+    @objc func hideKeyboard() {
+        view.endEditing(true)
     }
 
 }
 
-extension UsageMetricsViewController : WKNavigationDelegate {
+extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return charts.count
+    }
     
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        let err = error as NSError
-        let message: String
-        switch err.code {
-        case -1009:
-            message = "Please verify your network connection and try again. If the error persists please try again later"
-        case -1001:
-            message = "The request timed out. Try again later"
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let chartDimensions = chartDimensionsDict[indexPath.row] {
+            return chartDimensions.optimalHeight
+        }
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard indexPath.row < charts.count else { return UITableViewCell() }
+        let data = charts[indexPath.row]
+        switch data {
+        case is TeamsChatUserData:
+            chartDimensionsDict[indexPath.row] = teamChatUsersVC
+            return teamChatUsersChartCell
+        case is ChartStructure:
+            guard let chart = data as? ChartStructure else { return UITableViewCell() }
+            if chart.chartType == .line {
+                chartDimensionsDict[indexPath.row] = activeUsersVC
+                return activeUsersChartCell
+            } else {
+                if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
+                    chartDimensionsDict[indexPath.row] = barChartCell
+                }
+                return activeUsersByFuncChartCell
+            }
+        case is TeamsByFunctionsLineChartData:
+            chartDimensionsDict[indexPath.row] = teamsByFunctionsVC
+            return teamsByFunctionsChartCell
         default:
-            message = "Oops, something went wrong"
-        }
-        displayError(errorMessage: message, title: nil) {[weak self] _ in
-            self?.backPressed()
+            return UITableViewCell()
         }
     }
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-        decisionHandler(.allow)
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        hideKeyboard()
     }
     
+}
+
+extension UsageMetricsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return dataProvider?.availableApps.count ?? 0
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        guard let apps = dataProvider?.availableApps, apps.count > row else {  return nil }
+        return apps[row]
+    }
+   
+}
+
+// TODO: Find better way
+
+protocol TeamsByFunctionsDataChangedDelegate: AnyObject {
+    func teamsByFunctionsDataChanged(newData: TeamsByFunctionsLineChartData?)
+}
+
+protocol VerticalBarChartDataChangedDelegate: AnyObject {
+    func setUpBarChartView(with chartStructure: ChartStructure?)
+}
+
+protocol HorizontallBarChartDataChangedDelegate: AnyObject {
+    func verticalBarChartDataChanged(newData: TeamsChatUserData?)
+}
+
+protocol ActiveUsersDataChangedDelegate: AnyObject {
+    func activeUsersDataChanged(newData: ChartStructure?)
 }

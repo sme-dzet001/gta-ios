@@ -165,8 +165,7 @@ class HomepageViewController: UIViewController {
     @objc private func getProductionAlertsCount() {
         dataProvider.getProductionAlerts {[weak self] _, _, count in
             DispatchQueue.main.async {
-                self?.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
-                self?.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+                self?.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: count > 0 ? "\(count)" : nil)
             }
         }
     }
@@ -249,7 +248,7 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offSet = scrollView.contentOffset.x
         let width = scrollView.frame.width
-        pageControl.setCurrentItem(offset: CGFloat(offSet),width: CGFloat(width))
+        pageControl.setPageOffset(CGFloat(offSet) / CGFloat(width))
     }
     
 }

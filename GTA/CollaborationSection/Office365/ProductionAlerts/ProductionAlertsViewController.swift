@@ -51,14 +51,33 @@ class ProductionAlertsViewController: UIViewController {
     }
     
     @objc private func getProductionAlerts() {
-        guard let appName = appName else { return }
-        dataProvider?.getProductionAlert(for: appName) {[weak self] errorCode, error in
+        if let _ = dataProvider?.activeProductionAlertId {
+            getProductionAlertIgnoringCache()
+        } else {
+            getProductionAlertsWithCache()
+        }
+    }
+    
+    private func getProductionAlertsWithCache() {
+        guard let _ = appName else { return }
+        dataProvider?.getProductionAlerts {[weak self] dataWasChanged, errorCode, error, count in
             DispatchQueue.main.async {
                 if error == nil {
                     self?.tableView.reloadData()
                 }
             }
         }
+    }
+    
+    private func getProductionAlertIgnoringCache() {
+        guard let app = appName else { return }
+        dataProvider?.getProductionAlertIgnoringCache(for: app, completion: {[weak self] errorCode, error in
+            DispatchQueue.main.async {
+                if error == nil {
+                    self?.tableView.reloadData()
+                }
+            }
+        })
     }
     
     private func setUpNavigationItem() {
@@ -112,8 +131,7 @@ class ProductionAlertsViewController: UIViewController {
         if let summary = alert?.summary, UserDefaults.standard.value(forKey: summary.lowercased()) == nil {
             UserDefaults.standard.setValue(summary, forKey: summary.lowercased())
         }
-        self.tabBarController?.tabBar.items?[2].badgeValue = badgeCount > 0 ? "\(badgeCount)" : nil
-        self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+        self.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: badgeCount > 0 ? "\(badgeCount)" : nil)
     }
     
     @objc private func updateActiveProductionAlertStatus(notification: NSNotification) {

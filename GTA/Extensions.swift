@@ -37,6 +37,48 @@ extension UIColor {
         UIGraphicsEndImageContext()
         return image
     }
+    
+}
+
+struct RGB {
+    // Percent
+    let r: Float // [0,1]
+    let g: Float // [0,1]
+    let b: Float // [0,1]
+}
+
+struct HSV {
+    let h: Float // Angle in degrees [0,360] or -1 as Undefined
+    let s: Float // Percent [0,1]
+    let v: Float // Percent [0,1]
+
+static func rgb(h: Float, s: Float = 1, v: Float = 1) -> RGB {
+        if s == 0 { return RGB(r: v, g: v, b: v) } // Achromatic grey
+        
+        let angle = (h >= 360 ? 0 : h)
+        let sector = angle / 60 // Sector
+        let i = floor(sector)
+        let f = sector - i // Factorial part of h
+        
+        let p = v * (1 - s)
+        let q = v * (1 - (s * f))
+        let t = v * (1 - (s * (1 - f)))
+        
+        switch(i) {
+        case 0:
+            return RGB(r: v, g: t, b: p)
+        case 1:
+            return RGB(r: q, g: v, b: p)
+        case 2:
+            return RGB(r: p, g: v, b: t)
+        case 3:
+            return RGB(r: p, g: q, b: v)
+        case 4:
+            return RGB(r: t, g: p, b: v)
+        default:
+            return RGB(r: v, g: p, b: q)
+        }
+    }
 }
 
 extension UILabel {
@@ -255,6 +297,56 @@ extension UITabBarController {
         self.tabBar.addSubview(badgeView)
     }
     
+    public func addProductionAlertsItemBadge(atIndex index: Int, value: String?, borderWidth: CGFloat = 2) {
+        guard let itemCount = self.tabBar.items?.count, itemCount > 0 else { return }
+        guard index < itemCount else { return }
+        removeItemBadge(atIndex: index)
+        
+        guard let value = value else { return }
+        
+        let badgeHeight: CGFloat = 16
+        let badgeLabelFont = UIFont(name: "SFProText-Bold", size: 6)
+        
+        let badgeView = UIView()
+        badgeView.backgroundColor = tabBar.barTintColor
+        badgeView.tag = tabBarItemTag + Int(index)
+        badgeView.layer.cornerRadius = badgeHeight / 2
+        
+        let badgeInnerView = UIView()
+        badgeInnerView.backgroundColor = UIColor(hex: 0xCC0000)
+        badgeInnerView.layer.cornerRadius = (badgeHeight - 2 * borderWidth) / 2
+        badgeInnerView.translatesAutoresizingMaskIntoConstraints = false
+        badgeView.addSubview(badgeInnerView)
+        NSLayoutConstraint.activate([
+            badgeInnerView.centerXAnchor.constraint(equalTo: badgeView.centerXAnchor),
+            badgeInnerView.centerYAnchor.constraint(equalTo: badgeView.centerYAnchor),
+            badgeInnerView.widthAnchor.constraint(equalToConstant: badgeHeight - 2 * borderWidth),
+            badgeInnerView.heightAnchor.constraint(equalToConstant: badgeHeight - 2 * borderWidth)
+        ])
+        
+        let badgeLabel = UILabel()
+        badgeLabel.text = value
+        badgeLabel.font = badgeLabelFont
+        badgeLabel.textColor = tabBar.barTintColor
+        badgeLabel.textAlignment = .center
+        badgeInnerView.addSubview(badgeLabel)
+        badgeLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            badgeLabel.centerXAnchor.constraint(equalTo: badgeInnerView.centerXAnchor),
+            badgeLabel.centerYAnchor.constraint(equalTo: badgeInnerView.centerYAnchor)
+        ])
+
+        let tabFrame = self.tabBar.frame
+        let percentX = (CGFloat(index) + 0.5) / CGFloat(itemCount)
+        let x = (percentX * tabFrame.size.width).rounded(.up)
+        let y = (CGFloat(0.03) * tabFrame.size.height).rounded(.up)
+        badgeView.frame = CGRect(x: x, y: y, width: badgeHeight, height: badgeHeight)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(selectTab(tap:)))
+        tap.cancelsTouchesInView = false
+        badgeView.addGestureRecognizer(tap)
+        self.tabBar.addSubview(badgeView)
+    }
+    
     @objc private func selectTab(tap: UITapGestureRecognizer) {
         let index = (tap.view?.tag ?? 0) - tabBarItemTag
         guard let itemCount = self.tabBar.items?.count, itemCount > 0 else { return }
@@ -433,8 +525,20 @@ extension String {
         return "yyyy-MM-dd HH:mm:ss"
     }
     
+    static var convertMetricsDateFormat: String {
+        return "yyyy-MM-dd HH:mm:ssZ"
+    }
+    
+    static var convertMetricsSlashDateFormat: String { // TODO: Need better name
+        return "MM/dd/yyyy HH:mm"
+    }
+    
+    static var usageMetricsDateFormat: String {
+        return "MMM\nyyyy"
+    }
+    
     static var ticketDateFormat: String {
-        return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"//"yyyy-MM-dd'T'HH:mm:ss.SSS Z"
+        return "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     }
     
     static var statusDateFormat: String {
@@ -530,6 +634,35 @@ extension String {
        // return self
     }
     
+    func getFormattedDateStringForNews() -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
+        guard let date = dateFormatterPrint.date(from: self) else { return self }
+        dateFormatterPrint.dateFormat = String.getTicketDateFormatWithoutTimeZone(for: date)
+        dateFormatterPrint.timeZone = .current
+        return dateFormatterPrint.string(from: date)
+    }
+    
+    func getDateForUsageMetrics() -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.convertMetricsDateFormat
+        if let date = dateFormatterPrint.date(from: self) {
+            return getUsageMetricStringDate(from: date)
+        }
+        dateFormatterPrint.dateFormat = String.convertMetricsSlashDateFormat
+        if let date = dateFormatterPrint.date(from: self) {
+            return getUsageMetricStringDate(from: date)
+        }
+        return ""
+    }
+    
+    private func getUsageMetricStringDate(from date: Date) -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = String.usageMetricsDateFormat
+        return dateFormatterPrint.string(from: date)
+    }
+    
     func getFormattedDateStringForProdAlert() -> String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
@@ -538,6 +671,30 @@ extension String {
         dateFormatterPrint.dateFormat = String.newsDateFormat
         dateFormatterPrint.timeZone = .current
         return dateFormatterPrint.string(from: date)
+    }
+    
+    static func convertBigValueToString(value: Double, for axis: Bool = false) -> String {
+        if abs(value) >= 1000000000000 {
+            let calcValue = (value/100000000000).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "T"
+        }
+        if abs(value) >= 1000000000 {
+            let calcValue = (value/100000000).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "B"
+        }
+        if abs(value) >= 1000000 {
+            let calcValue = (value/100000).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "M"
+        }
+        if abs(value) >= 1000 {
+            let calcValue = (value/100).rounded()/10
+            let result = axis ? String(Int(calcValue)) : String(calcValue)
+            return result + "K"
+        }
+        return "\(Int(value))"
     }
     
 }
@@ -763,5 +920,33 @@ extension UNNotification {
             guard let pushType = pushType else { return false }
             return pushType == Constants.pushTypeProductionAlert
         }
+    }
+}
+
+extension Double {
+    func getAxisMaximum() -> Double {
+        return roundUp(self, toNearest: getNearestValue(for: self))
+    }
+    
+    func getAxisMinimum() -> Double {
+        let nearest = getNearestValue(for: self)
+        return roundDown(self, toNearest: nearest)
+    }
+    
+    func getNearestValue(for value: Double) -> Double {
+        var nearest: Double = 10
+        let count = "\(Int(value))".count - 1
+        if count > 0 {
+            nearest = pow(nearest, Double(count))
+        }
+        return nearest
+    }
+    
+    private func roundUp(_ value: Double, toNearest: Double) -> Double {
+      return ceil(value / toNearest) * toNearest
+    }
+    
+    private func roundDown(_ value: Double, toNearest: Double) -> Double {
+      return floor(value / toNearest) * toNearest
     }
 }

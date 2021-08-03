@@ -252,7 +252,105 @@ struct CollaborationNewsRow: Codable, Equatable, ImageDataProtocol {
     }
     
 }
+
+struct CollaborationMetricsResponse: Codable, Equatable {
     
+    var meta: ResponseMetaData?
+    var data: [String : [String: CollaborationMetricsData?]?]?//CollaborationMetricsRows?
+    var appGroup: String?
+    var appName: String?
+    
+    var collaborationMetricsData: CollaborationMetricsData? {
+        let key = data?.keys.first(where: {$0 == appGroup}) ?? ""
+        guard let metricsData = data?[key]??[appName ?? ""] else { return nil }
+        return metricsData
+    }
+    
+    var appNames: [String] {
+        let key = data?.keys.first(where: {$0 == appGroup}) ?? ""
+        guard let names = data?[key]??.compactMap({$0.key}) else { return [] }
+        return names
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case meta, data
+    }
+    
+    static func == (lhs: CollaborationMetricsResponse, rhs: CollaborationMetricsResponse) -> Bool {
+        return lhs.collaborationMetricsData == rhs.collaborationMetricsData && lhs.data == rhs.data
+    }
+    
+}
+
+struct CollaborationMetricsData: Codable, Equatable {
+    var data: CollaborationMetricsRows?
+}
+
+struct CollaborationMetricsRows: Codable, Equatable {
+    var rows: [CollaborationMetricsRow?]?
+}
+ 
+struct CollaborationMetricsRow: Codable, Equatable {
+    var values: [QuantumValue?]?
+    var indexes: [String : Int] = [:]
+    enum CodingKeys: String, CodingKey {
+        case values
+    }
+    
+    private var chartTypeString: String? {
+        guard let valuesArr = values, let index = indexes["chart_type"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var chartType: ChartType {
+        guard let type = ChartType(rawValue: chartTypeString ?? "") else { return .none }
+        return type
+    }
+    
+    var appName: String? {
+        guard let valuesArr = values, let index = indexes["app_name"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var chartSubtitle: String? {
+        guard let valuesArr = values, let index = indexes["chart_subtitle"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var chartTitle: String? {
+        guard let valuesArr = values, let index = indexes["chart_title"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var chartPosition: Int? {
+        guard let valuesArr = values, let index = indexes["chart_position"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.intValue
+    }
+    
+    var chartSubposition: Float? {
+        guard let valuesArr = values, let index = indexes["chart_subposition"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.floatValue
+    }
+    
+    var legend: String? {
+        guard let valuesArr = values, let index = indexes["legend"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var value: Float? {
+        guard let valuesArr = values, let index = indexes["value"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.floatValue
+    }
+    
+}
+
+enum ChartType: String {
+    case line = "line"
+    case verticalBar = "vertical-bar"
+    case horizontalBar = "horizontal-bar"
+    case none = ""
+}
+
 protocol ImageDataProtocol {
     //var fullTitle: String? { get }
     var imageData: Data? { get set }

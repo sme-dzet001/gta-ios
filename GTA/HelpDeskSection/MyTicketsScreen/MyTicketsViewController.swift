@@ -51,22 +51,34 @@ class MyTicketsViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    self?.errorLabel.isHidden = true
-                    //self?.tableView.isHidden = false
+                    self?.showNoDataErrorLabelIfNeeded()
                     if dataWasChanged { self?.tableView.reloadData() }
                 } else {
                     if let myTickets = self?.myTicketsData, myTickets.isEmpty {
                         self?.tableView.reloadData()
                     }
-                    self?.errorLabel.isHidden = !(self?.myTicketsData?.isEmpty ?? true)
-                    if (error as? ResponseError) == .noDataAvailable {
-                        self?.errorLabel.text = "No tickets in the last 90 days"
-                    } else {
-                        self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                    }
+                    self?.handleErrorLabel(error: error)
                 }
             }
         })
+    }
+    
+    private func handleErrorLabel(error: Error?) {
+        errorLabel.isHidden = error == nil
+        guard let _ = error else { return }
+        if (error as? ResponseError) == .noDataAvailable {
+            self.errorLabel.text = "No tickets in the last 90 days"
+        } else {
+            self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+        }
+    }
+    
+    private func showNoDataErrorLabelIfNeeded() {
+        var error: Error?
+        if (self.myTicketsData ?? []).isEmpty {
+            error = ResponseError.noDataAvailable
+        }
+        self.handleErrorLabel(error: error)
     }
     
     private func startAnimation() {
@@ -250,12 +262,14 @@ extension MyTicketsViewController: FilterSortingSelectionDelegate {
         guard Preferences.ticketsFilterType != selectedType else { return }
         Preferences.ticketsFilterType = selectedType
         tableView.reloadData()
+        showNoDataErrorLabelIfNeeded()
     }
     
     func sortingTypeDidSelect(_ selectedType: SortType) {
         guard Preferences.ticketsSortingType != selectedType else { return }
         Preferences.ticketsSortingType = selectedType
         tableView.reloadData()
+        showNoDataErrorLabelIfNeeded()
     }
 }
 

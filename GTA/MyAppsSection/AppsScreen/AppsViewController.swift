@@ -152,8 +152,7 @@ class AppsViewController: UIViewController {
                     if dataWasChanged && self.isViewLoaded {
                         self.tableView.reloadData()
                     }
-                    self.tabBarController?.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
-                    self.tabBarController?.tabBar.items?[2].badgeColor = UIColor(hex: 0xCC0000)
+                    self.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: count > 0 ? "\(count)" : nil)
                 }
             }
         }
@@ -213,6 +212,7 @@ class AppsViewController: UIViewController {
         //guard let targetAppData = dataProvider.myAppsSection?.cellData.first(where: { $0.app_name == appName }) else { return }
         guard let productionAlertId = alertData["production_alert_id"] as? String else { return }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        UIApplication.shared.applicationIconBadgeNumber = 0
         //dataProvider.activeProductionAlertId = productionAlertId
         //dataProvider.activeProductionAlertAppName = appName
         appDelegate.dismissPanModalIfPresented { [weak self] in
