@@ -755,7 +755,7 @@ class HomeDataProvider {
         }
         var alert = rows.last
         let inProgressAlerts = rows.filter({$0.status == .inProgress})
-        let closedAlerts = rows.filter({$0.status == .closed && $0.closeDate.addingTimeInterval(3600).timeIntervalSince1970 > Date().timeIntervalSince1970})
+        let closedAlerts = rows.filter({ $0.status == .closed && $0.isExpired == false })
         if inProgressAlerts.count >= 1 {
             alert = inProgressAlerts.sorted(by: {$0.startDate.timeIntervalSince1970 > $1.startDate.timeIntervalSince1970}).first
         } else if closedAlerts.count >= 1 {
@@ -764,6 +764,17 @@ class HomeDataProvider {
         let dataWasChanged: Bool = productionGlobalAlertsData != alert
         productionGlobalAlertsData = alert
         return dataWasChanged
+    }
+    
+    func getGlobalProductionIgnoringCache(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+            self?.cacheData(reportResponse, path: .getSectionReport)
+            if let _ = error {
+                completion?(false, errorCode, ResponseError.serverError)
+            } else {
+                self?.handleGlobalProductionAlertsSectionReport(reportResponse, errorCode, error, false, completion)
+            }
+        })
     }
     
     // MARK: - Common methods

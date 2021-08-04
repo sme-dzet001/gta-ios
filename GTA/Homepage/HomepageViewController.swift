@@ -143,14 +143,14 @@ class HomepageViewController: UIViewController {
                 //if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
                 NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
                 self.dataProvider.forceUpdateAlertDetails = true
-                self.showGlobalAlertModal()
+                self.showGlobalAlertModal(isProdAlert: false)
                 //}
             } else {
                 NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
                 self.tabBarController?.selectedIndex = homepageTabIdx
                 embeddedController.popToRootViewController(animated: false)
                 self.dataProvider.forceUpdateAlertDetails = true
-                self.showGlobalAlertModal()
+                self.showGlobalAlertModal(isProdAlert: false)
             }
         }
     }
@@ -279,9 +279,10 @@ extension HomepageViewController: PanModalAppearanceDelegate {
 }
 
 extension HomepageViewController: ShowGlobalAlertModalDelegate {
-    func showGlobalAlertModal() {
+    func showGlobalAlertModal(isProdAlert: Bool) {
         let globalAlertViewController = GlobalAlertViewController()
         globalAlertViewController.dataProvider = dataProvider
+        globalAlertViewController.isProdAlert = isProdAlert
         presentPanModal(globalAlertViewController)
         
     }
@@ -293,5 +294,5 @@ protocol PanModalAppearanceDelegate: AnyObject {
 }
 
 protocol ShowGlobalAlertModalDelegate: AnyObject {
-    func showGlobalAlertModal()
+    func showGlobalAlertModal(isProdAlert: Bool)
 }

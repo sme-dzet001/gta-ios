@@ -20,6 +20,7 @@ class HomepageTableViewController: UITableViewController {
     weak var showModalDelegate: ShowGlobalAlertModalDelegate?
     var dataSource: [HomepageCellData] = []
     private var lastUpdateDate: Date?
+    private var dismissDidPressed: Bool = false
     private var emergencyOutageLoaded: Bool = false {
         didSet {
             DispatchQueue.main.async {
@@ -224,6 +225,9 @@ class HomepageTableViewController: UITableViewController {
     private func getGlobalProductionAlerts() {
         dataProvider?.getGlobalProductionAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
+                if dataWasChanged {
+                    self?.dismissDidPressed = false
+                }
                 if error == nil && errorCode == 200 {
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()
@@ -234,10 +238,18 @@ class HomepageTableViewController: UITableViewController {
                     }
                     if let data = self?.dataProvider?.productionGlobalAlertsData {
                         switch data.status {
+                        case .open:
+                            if self?.dataProvider?.globalAlertsData?.status != .inProgress {
+                                self?.tabBarController?.removeItemBadge(atIndex: 0)
+                            }
                         case .inProgress:
-                            self?.tabBarController?.addAlertItemBadge(atIndex: 0)
+                            let eventStarted = data.startDate.timeIntervalSince1970 >= Date().timeIntervalSince1970
+                            let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
+                            if eventStarted || eventFinished {
+                                self?.tabBarController?.addAlertItemBadge(atIndex: 0)
+                            }
                         default:
-                            self?.tabBarController?.removeItemBadge(atIndex: 0)
+                            return
                         }
                     }
                 } else {
@@ -339,7 +351,7 @@ extension HomepageTableViewController {
             return 80
         case 1:
             let alert = dataProvider?.productionGlobalAlertsData
-            if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
+            if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open || dismissDidPressed {
                 return 0
             }
             return 80
@@ -367,11 +379,9 @@ extension HomepageTableViewController {
             guard let alert = dataProvider?.productionGlobalAlertsData else { return UITableViewCell() }
             guard !alert.isExpired else { return UITableViewCell() }
             cell?.alertLabel.text = alert.issueReason ?? "Global Production Alert"
-            if alert.status == .closed {
-                cell?.setAlertOff()
-            } else {
-                cell?.setAlertOn()
-            }
+            cell?.closeButton.isHidden = false
+            cell?.delegate = self
+            cell?.setAlertBannerForGlobalProdAlert(startDate: alert.startDate, advancedTime: Double(alert.sendPushBeforeStartInHr ?? 0.0), status: alert.status)
             return cell ?? UITableViewCell()
         } else if indexPath.section == 2 {
             let data = dataProvider?.alertsData ?? []
@@ -444,9 +454,9 @@ extension HomepageTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            showModalDelegate?.showGlobalAlertModal()
+            showModalDelegate?.showGlobalAlertModal(isProdAlert: false)
         case 1:
-            showModalDelegate?.showGlobalAlertModal()
+            showModalDelegate?.showGlobalAlertModal(isProdAlert: true)
         case 2:
             openAlertScreen(for: indexPath)
         case 3:
@@ -485,6 +495,18 @@ extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUI
                 }
             }
         }
+    }
+}
+
+extension HomepageTableViewController: DismissAlertDelegate {
+    func closeAlertDidPressed() {
+        let alert = UIAlertController(title: nil, message: "Are you sure? (temp message)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            self.dismissDidPressed = true
+            self.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

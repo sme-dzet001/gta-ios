@@ -69,9 +69,9 @@ struct ProductionAlertsRow: Codable, Equatable {
         guard let values = values, let index = indexes["send_push"], values.count > index else { return nil }
         return values[index]?.stringValue
     }
-    var sendPushBeforeStartInHr: String? {
+    var sendPushBeforeStartInHr: Float? {
         guard let values = values, let index = indexes["send_push_before_start_in_hr"], values.count > index else { return nil }
-        return values[index]?.stringValue
+        return values[index]?.floatValue
     }
     private var statusString: String? {
         guard let values = values, let index = indexes["status"], values.count > index else { return nil }
