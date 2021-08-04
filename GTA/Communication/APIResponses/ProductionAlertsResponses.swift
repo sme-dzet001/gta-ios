@@ -140,10 +140,10 @@ struct ProductionAlertsRow: Codable, Equatable {
     }
 }
 
-enum ProductionAlertsStatus {
-    case activeAlert
-    case closed
-    case reminderState
-    case newAlertCreated
-    case none
+enum ProductionAlertsStatus: String {
+    case activeAlert = "activeAlert"
+    case closed = "closed"
+    case reminderState = "reminderState"
+    case newAlertCreated = "newAlertCreated"
+    case none = "none"
 }
