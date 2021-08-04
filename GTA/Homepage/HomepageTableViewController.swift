@@ -20,7 +20,15 @@ class HomepageTableViewController: UITableViewController {
     weak var showModalDelegate: ShowGlobalAlertModalDelegate?
     var dataSource: [HomepageCellData] = []
     private var lastUpdateDate: Date?
-    private var dismissDidPressed: Bool = false
+    private var dismissDidPressed: Bool {
+        if let value = UserDefaults.standard.value(forKey: "ClosedProdAlert") as? [String : String?] {
+            let issueReason = value["issueReason"] == self.dataProvider?.productionGlobalAlertsData?.issueReason
+            let prodAlertsStatus = value["prodAlertsStatus"] == self.dataProvider?.productionGlobalAlertsData?.prodAlertsStatus.rawValue
+            let summary = value["summary"] == self.dataProvider?.productionGlobalAlertsData?.summary
+            return issueReason && prodAlertsStatus && summary
+        }
+        return false
+    }
     private var emergencyOutageLoaded: Bool = false {
         didSet {
             DispatchQueue.main.async {
@@ -225,9 +233,6 @@ class HomepageTableViewController: UITableViewController {
     private func getGlobalProductionAlerts() {
         dataProvider?.getGlobalProductionAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
-                if dataWasChanged {
-                    self?.dismissDidPressed = false
-                }
                 if error == nil && errorCode == 200 {
                     if self?.tableView.dataHasChanged == true {
                         self?.tableView.reloadData()
@@ -500,12 +505,14 @@ extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUI
 
 extension HomepageTableViewController: DismissAlertDelegate {
     func closeAlertDidPressed() {
-        let alert = UIAlertController(title: nil, message: "Are you sure? (temp message)", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Confirm closing", message: "Notification will appear again when the outage starts", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            self.dismissDidPressed = true
+            let prodGlobalAlertsData = self.dataProvider?.productionGlobalAlertsData
+            let closedData = ["issueReason" : prodGlobalAlertsData?.issueReason, "prodAlertsStatus" : prodGlobalAlertsData?.prodAlertsStatus.rawValue, "summary" : prodGlobalAlertsData?.summary]
+            UserDefaults.standard.setValue(closedData, forKey: "ClosedProdAlert")
             self.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }
