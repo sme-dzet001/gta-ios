@@ -378,10 +378,10 @@ extension HomepageTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertCell", for: indexPath) as? GlobalAlertCell
             guard let alert = dataProvider?.productionGlobalAlertsData else { return UITableViewCell() }
             guard !alert.isExpired else { return UITableViewCell() }
-            cell?.alertLabel.text = alert.issueReason ?? "Global Production Alert"
+            cell?.alertLabel.text = "Production Alert"//alert.issueReason ?? "Global Production Alert"
             cell?.closeButton.isHidden = false
             cell?.delegate = self
-            cell?.setAlertBannerForGlobalProdAlert(startDate: alert.startDate, advancedTime: Double(alert.sendPushBeforeStartInHr ?? 0.0), status: alert.status)
+            cell?.setAlertBannerForGlobalProdAlert(prodAlertsStatus: alert.prodAlertsStatus)
             return cell ?? UITableViewCell()
         } else if indexPath.section == 2 {
             let data = dataProvider?.alertsData ?? []

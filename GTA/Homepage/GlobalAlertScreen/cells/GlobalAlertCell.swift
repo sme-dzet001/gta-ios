@@ -36,26 +36,22 @@ class GlobalAlertCell: UITableViewCell {
         delegate?.closeAlertDidPressed()
     }
     
-    func setAlertBannerForGlobalProdAlert(startDate: Date, advancedTime: Double, status: GlobalAlertStatus) {
-        if status == .inProgress {
-            let advancedTimeInterval = 3600 * advancedTime
-            if startDate.timeIntervalSince1970 - advancedTimeInterval < Date().timeIntervalSince1970 {
-                parentView.backgroundColor = UIColor(hex: 0x34C759)
-                alertImageView.image = UIImage(named: "global_alert_off")
-                closeButton.isHidden = false
-            } else if startDate.timeIntervalSince1970 - advancedTimeInterval >= Date().timeIntervalSince1970 {
-                parentView.backgroundColor = UIColor(hex: 0x34C759)
-                alertImageView.image = UIImage(named: "global_alert_off")
-                closeButton.isHidden = false
-            } else if startDate.timeIntervalSince1970 >= Date().timeIntervalSince1970 {
-                closeButton.isHidden = true
-                parentView.backgroundColor = UIColor(hex: 0xCC0000)
-                alertImageView.image = UIImage(named: "global_alert_on")
-            }
-        } else if status == .closed {
+    func setAlertBannerForGlobalProdAlert(prodAlertsStatus: ProductionAlertsStatus) {
+        switch prodAlertsStatus {
+        case .activeAlert, .reminderState:
+            parentView.backgroundColor = UIColor(hex: 0xFF9900)
+            alertImageView.image = UIImage(named: "global_alert_off")
+            closeButton.isHidden = false
+        case .newAlertCreated:
+            closeButton.isHidden = true
+            parentView.backgroundColor = UIColor(hex: 0xCC0000)
+            alertImageView.image = UIImage(named: "global_alert_on")
+        case .closed:
             parentView.backgroundColor = UIColor(hex: 0x34C759)
             alertImageView.image = UIImage(named: "global_alert_off")
             closeButton.isHidden = true
+        default:
+            return
         }
     }
     
