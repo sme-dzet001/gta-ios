@@ -186,6 +186,14 @@ class HomepageTableViewController: UITableViewController {
         })
     }
     
+    private var hasActiveGlobalProdAlerts: Bool {
+        guard let data = dataProvider?.productionGlobalAlertsData else { return false }
+        guard data.prodAlertsStatus == .activeAlert || data.prodAlertsStatus == .closed else { return false }
+        let eventStarted = data.startDate.timeIntervalSince1970 >= Date().timeIntervalSince1970
+        let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
+        return eventStarted || eventFinished
+    }
+    
     @objc private func getGlobalAlerts() {
         dataProvider?.getGlobalAlerts(completion: {[weak self] isFromCache, dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
@@ -203,7 +211,9 @@ class HomepageTableViewController: UITableViewController {
                         case .inProgress:
                             self?.tabBarController?.addAlertItemBadge(atIndex: 0)
                         default:
-                            self?.tabBarController?.removeItemBadge(atIndex: 0)
+                            if let self = self, !self.hasActiveGlobalProdAlerts {
+                                self.tabBarController?.removeItemBadge(atIndex: 0)
+                            }
                         }
                     }
                 } else {
@@ -242,12 +252,12 @@ class HomepageTableViewController: UITableViewController {
                         }
                     }
                     if let data = self?.dataProvider?.productionGlobalAlertsData {
-                        switch data.status {
-                        case .open:
+                        switch data.prodAlertsStatus {
+                        case .newAlertCreated, .reminderState:
                             if self?.dataProvider?.globalAlertsData?.status != .inProgress {
                                 self?.tabBarController?.removeItemBadge(atIndex: 0)
                             }
-                        case .inProgress:
+                        case .activeAlert, .closed:
                             let eventStarted = data.startDate.timeIntervalSince1970 >= Date().timeIntervalSince1970
                             let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
                             if eventStarted || eventFinished {
