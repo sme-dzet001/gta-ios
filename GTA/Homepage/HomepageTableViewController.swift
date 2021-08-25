@@ -45,6 +45,7 @@ class HomepageTableViewController: UITableViewController {
         tableView.accessibilityIdentifier = "HomeScreenTableView"
         NotificationCenter.default.addObserver(self, selector: #selector(getAllAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getGlobalProductionAlertsIgnoringCache), name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -240,6 +241,22 @@ class HomepageTableViewController: UITableViewController {
         }
     }
     
+    @objc private func getGlobalProductionAlertsIgnoringCache() {
+        dataProvider?.getGlobalProductionIgnoringCache {[weak self] dataWasChanged, errorCode, error in
+            DispatchQueue.main.async {
+                if dataWasChanged, error == nil {
+                    if self?.tableView.dataHasChanged == true {
+                        self?.tableView.reloadData()
+                    } else {
+                        UIView.performWithoutAnimation {
+                            self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private func getGlobalProductionAlerts() {
         dataProvider?.getGlobalProductionAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
@@ -331,6 +348,8 @@ class HomepageTableViewController: UITableViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
     }
 
 }

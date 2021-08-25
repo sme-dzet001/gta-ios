@@ -921,6 +921,13 @@ extension UNNotification {
             return pushType == Constants.pushTypeProductionAlert
         }
     }
+    
+    var isGlobalProductionAlert: Bool {
+        get {
+            guard let pushType = pushType else { return false }
+            return pushType == Constants.pushTypeGlobalProductionAlert
+        }
+    }
 }
 
 extension Double {

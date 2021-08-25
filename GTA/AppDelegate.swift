@@ -101,6 +101,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if notification.isProductionAlert {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
         }
+        if notification.isGlobalProductionAlert {
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
+        }
         completionHandler([.alert, .sound, .badge])
     }
     
@@ -117,6 +120,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if response.notification.isProductionAlert {
                 UserDefaults.standard.setValue(response.notification.payloadDict, forKey: "productionAlertNotificationReceived")
             }
+            if response.notification.isGlobalProductionAlert {
+                UserDefaults.standard.setValue(response.notification.payloadDict, forKey: "globalProductionAlertNotificationReceived")
+            }
             return
         }
         if response.notification.isEmergencyOutage {
@@ -124,6 +130,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
         if response.notification.isProductionAlert {
             NotificationCenter.default.post(name: Notification.Name(NotificationsNames.productionAlertNotificationReceived), object: nil, userInfo: response.notification.payloadDict)
+        }
+        if response.notification.isGlobalProductionAlert {
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalProductionAlertNotificationReceived), object: nil, userInfo: response.notification.payloadDict)
         }
         completionHandler()
     }
