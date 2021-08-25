@@ -335,7 +335,7 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         hideKeyboard()
     }
     
