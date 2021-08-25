@@ -38,11 +38,11 @@ class GlobalAlertCell: UITableViewCell {
     
     func setAlertBannerForGlobalProdAlert(prodAlertsStatus: ProductionAlertsStatus) {
         switch prodAlertsStatus {
-        case .activeAlert, .reminderState:
+        case .newAlertCreated, .reminderState:
             parentView.backgroundColor = UIColor(hex: 0xFF9900)
             alertImageView.image = UIImage(named: "global_alert_off")
             closeButton.isHidden = false
-        case .newAlertCreated:
+        case .activeAlert:
             closeButton.isHidden = true
             parentView.backgroundColor = UIColor(hex: 0xCC0000)
             alertImageView.image = UIImage(named: "global_alert_on")
