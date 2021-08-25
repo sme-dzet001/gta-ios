@@ -17,8 +17,13 @@ class SessionExpiredHandler: ExpiredSessionDelegate {
         }
         guard let userMessage = metaData?.meta?.userMessage, (userMessage == "Session expired" || userMessage == "Authorization error"), let _ = KeychainManager.getToken() else { return }
         print("Session expired \(userMessage)")
+        UserDefaults.standard.setValue(true, forKey: Constants.isNeedLogOut)
+        removeAllData()
+    }
+    
+    private func removeAllData() {
         KeychainManager.deleteUsername()
-        KeychainManager.deleteToken()
+        //KeychainManager.deleteToken()
         KeychainManager.deleteTokenExpirationDate()
         KeychainManager.deletePinData()
         KeychainManager.deletePushNotificationTokenSent()

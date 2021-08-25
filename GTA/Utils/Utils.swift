@@ -36,6 +36,8 @@ public class Utils: NSObject {
     class func dateToString(from date: Date, dateFormat: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat
+        dateFormatter.locale = .current
+        dateFormatter.timeZone = .current
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
@@ -43,6 +45,8 @@ public class Utils: NSObject {
     class func stringToDate(from dateString: String, dateFormat: String) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat
+        dateFormatter.locale = .current
+        dateFormatter.timeZone = .current
         let date = dateFormatter.date(from: dateString)
         return date
     }

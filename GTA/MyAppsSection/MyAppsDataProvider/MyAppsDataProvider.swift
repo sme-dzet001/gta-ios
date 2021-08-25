@@ -27,7 +27,6 @@ class MyAppsDataProvider {
     }
     
     private var refreshTimer: Timer?
-    private var cachedReportData: Data?
     private(set) var tipsAndTricksData = [String : [QuickHelpRow]]()
     private(set) var appContactsData: [String : AppContactsData?] = [:]
     
@@ -549,13 +548,15 @@ class MyAppsDataProvider {
     
     func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
-            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-                self?.cacheData(reportResponse, path: .getSectionReport)
-                if let cachedReport = self?.parseSectionReport(data: self?.cachedReportData), let serverReport = self?.parseSectionReport(data: reportResponse) {
-                    completion(serverReport != cachedReport)
-                } else {
-                    completion(true)
-                }
+            self?.getCachedResponse(for: .getSectionReport, completion: { cacheReport, _ in
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, _, _) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let cachedReport = self?.parseSectionReport(data: cacheReport), let serverReport = self?.parseSectionReport(data: reportResponse) {
+                        completion(serverReport != cachedReport)
+                    } else {
+                        completion(true)
+                    }
+                })
             })
         }
     }

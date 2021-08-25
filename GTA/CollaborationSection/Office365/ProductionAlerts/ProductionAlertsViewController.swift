@@ -165,6 +165,7 @@ extension ProductionAlertsViewController: UITableViewDataSource, UITableViewDele
         cell?.contentView.backgroundColor = cellData.isRead ? .white : UIColor(hex: 0xF7F7FA)
         cell?.dateLabel.text = cellData.closeDateString == nil ? cellData.startDateString?.getFormattedDateStringForProdAlert() : cellData.closeDateString?.getFormattedDateStringForProdAlert()
         cell?.descriptionLabel.text = cellData.summary
+        cell?.setConstraints()
         return cell ?? UITableViewCell()
     }
     

@@ -18,7 +18,6 @@ class HelpDeskDataProvider {
     private(set) var teamContactsData = [TeamContactsRow]()
     private(set) var myTickets: [GSDTickets]?// = [GSDMyTicketsRow]()
     private var refreshTimer: Timer?
-    private var cachedReportData: Data?
     
     var quickHelpDataIsEmpty: Bool {
         return quickHelpData.isEmpty
@@ -126,28 +125,17 @@ class HelpDeskDataProvider {
         }
     }
     
-//    private func getSectionReport(completion: ((_ reportData: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
-//        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
-//            self?.cachedReportData = data
-//            if let _ = data, cachedError == nil {
-//                completion?(data, 200, cachedError, true)
-//            }
-//            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-//                self?.cacheData(reportResponse, path: .getSectionReport)
-//                completion?(reportResponse, errorCode, error, false)
-//            })
-//        }
-//    }
-    
     func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
-            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-                self?.cacheData(reportResponse, path: .getSectionReport)
-                if let cahcedReport = self?.parseSectionReport(data: self?.cachedReportData), let serverReport = self?.parseSectionReport(data: reportResponse) {
-                    completion(serverReport != cahcedReport)
-                } else {
-                    completion(true)
-                }
+            self?.getCachedResponse(for: .getSectionReport, completion: { cacheReport, _ in
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, _, _) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let cachedReport = self?.parseSectionReport(data: cacheReport), let serverReport = self?.parseSectionReport(data: reportResponse) {
+                        completion(serverReport != cachedReport)
+                    } else {
+                        completion(true)
+                    }
+                })
             })
         }
     }

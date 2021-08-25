@@ -72,14 +72,11 @@ class GeneralViewController: UIViewController {
     @IBAction func onLogoutButtonTap(sender: UIButton) {
         let alert = UIAlertController(title: "Confirm Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (_) in
-//            guard let accessToken = KeychainManager.getToken() else { return }
-//            let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
-//            let logoutURLStr = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/logout?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))"
-//            if let logoutURL = URL(string: logoutURLStr) {
-//                let logoutRequest = URLRequest(url: logoutURL)
-//                self?.usmLogoutWebView.load(logoutRequest)
-//            }
-            self?.sendLogoutRequest()
+            if Reachability.isConnectedToNetwork() {
+                self?.sendLogoutRequest()
+            } else {
+                self?.errorLogout()
+            }
         }
         okAction.accessibilityIdentifier = "GeneralScreenAlertOKButton"
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -102,7 +99,11 @@ class GeneralViewController: UIViewController {
 extension GeneralViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        //logout()
+        errorLogout()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        errorLogout()
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
@@ -113,12 +114,19 @@ extension GeneralViewController: WKNavigationDelegate {
         logout()
     }
     
-    private func logout() {
+    private func errorLogout() {
+        UserDefaults.standard.setValue(true, forKey: Constants.isNeedLogOut)
+        logout(deleteToken: false)
+    }
+    
+    private func logout(deleteToken: Bool = true) {
         DispatchQueue.main.async {
             UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
             UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
             KeychainManager.deleteUsername()
-            KeychainManager.deleteToken()
+            if deleteToken {
+                KeychainManager.deleteToken()
+            }
             KeychainManager.deletePushNotificationTokenSent()
             KeychainManager.deleteTokenExpirationDate()
             CacheManager().clearCache()

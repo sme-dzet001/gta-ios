@@ -500,6 +500,9 @@ class CollaborationDataProvider {
             receivedMetricsData = metricsData
             fillChartsData(for: rows)
         }
+        if retErr == nil, rows.isEmpty {
+            retErr = ResponseError.noDataAvailable
+        }
         completion?(isFromCache, dataWasChanged, errorCode, retErr)
     }
     

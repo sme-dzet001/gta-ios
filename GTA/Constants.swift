@@ -17,6 +17,7 @@ class Constants {
     static let pushTypeKey = "push_type"
     static let pushTypeEmergencyOutage = "Emergency Outage"
     static let pushTypeProductionAlert = "Production Alert"
+    static let isNeedLogOut = "isNeedLogOut"
 }
 
 class NotificationsNames {
