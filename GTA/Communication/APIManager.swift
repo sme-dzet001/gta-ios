@@ -183,7 +183,7 @@ class APIManager: NSObject, URLSessionDelegate {
         makeRequest(endpoint: .getGTTeam(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
     
-    func getGlobalProductionAlerts(generationNumber: Int, completion: ((_ alertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getGlobalProductionAlerts(alertID: String? = nil, generationNumber: Int, completion: ((_ alertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         makeRequest(endpoint: .getGlobalProductionAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
@@ -313,8 +313,8 @@ class APIManager: NSObject, URLSessionDelegate {
     
     func sendPushNotificationsToken(completion: ((_ tokenData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? "", "Content-Type": "application/x-www-form-urlencoded"]
-        let bodyParams = ["device_token_type": "apns", "device_token": KeychainManager.getPushNotificationToken() ?? ""]
-        //let bodyParams = ["device_token_type": "apns_sandbox", "device_token": KeychainManager.getPushNotificationToken() ?? ""]
+        //let bodyParams = ["device_token_type": "apns", "device_token": KeychainManager.getPushNotificationToken() ?? ""]
+        let bodyParams = ["device_token_type": "apns_sandbox", "device_token": KeychainManager.getPushNotificationToken() ?? ""]
         makeRequest(endpoint: .sendPushNotificationsToken, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
     }
     

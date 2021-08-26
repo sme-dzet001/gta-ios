@@ -20,6 +20,7 @@ class HomeDataProvider {
     private(set) var GTTeamContactsData: GTTeamResponse?
     private(set) var globalAlertsData: GlobalAlertRow?
     private(set) var productionGlobalAlertsData: ProductionAlertsRow?
+    private(set) var activeProductionGlobalAlert: ProductionAlertsRow?
     private var selectedOfficeId: Int?
     
     var forceUpdateAlertDetails: Bool = false
@@ -704,7 +705,7 @@ class HomeDataProvider {
         }
     }
     
-    private func handleGlobalProductionAlertsSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func handleGlobalProductionAlertsSectionReport(alertID: String? = nil, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalAlerts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalProductionAlerts.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {
@@ -716,7 +717,7 @@ class HomeDataProvider {
             }
             apiManager.getGlobalProductionAlerts(generationNumber: generationNumber!, completion: { [weak self] (data, errorCode, error) in
                 self?.cacheData(data, path: .getGlobalProductionAlerts)
-                self?.processGlobalProductionAlerts(reportData, data, errorCode, error, completion)
+                self?.processGlobalProductionAlerts(alertID: alertID, reportData, data, errorCode, error, completion)
             })
         } else {
             let err = error == nil ? ResponseError.commonError : error
@@ -728,7 +729,7 @@ class HomeDataProvider {
         }
     }
     
-    private func processGlobalProductionAlerts(_ reportData: ReportDataResponse?, _ globalProductionAlertsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func processGlobalProductionAlerts(alertID: String? = nil, _ reportData: ReportDataResponse?, _ globalProductionAlertsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var prodAlertsResponse: GlobalProductionAlertsResponse?
         var retErr = error
         if let responseData = globalProductionAlertsResponse {
@@ -743,15 +744,18 @@ class HomeDataProvider {
         if let data = prodAlertsResponse?.data?.rows, data.isEmpty {
             retErr = ResponseError.noDataAvailable
         }
-        let dataWasChanged = fillGlobalProductionAlertsData(prodAlertsResponse)
+        let dataWasChanged = fillGlobalProductionAlertsData(alertID: alertID, prodAlertsResponse)
         completion?(dataWasChanged, errorCode, retErr)
     }
     
-    private func fillGlobalProductionAlertsData(_ response: GlobalProductionAlertsResponse?) -> Bool {
+    private func fillGlobalProductionAlertsData(alertID: String? = nil, _ response: GlobalProductionAlertsResponse?) -> Bool {
         let indexes = self.getDataIndexes(columns: response?.meta?.widgetsDataSource?.params?.columns)
         var rows = response?.data?.rows?.compactMap({$0}) ?? []
         for (index, _) in rows.enumerated() {
             rows[index].indexes = indexes
+        }
+        if let alertID = alertID {
+            rows = rows.filter({$0.ticketNumber?.lowercased() == alertID.lowercased()})
         }
         var alert = rows.last
         let activeAlerts = rows.filter({$0.prodAlertsStatus == .activeAlert})
@@ -767,18 +771,22 @@ class HomeDataProvider {
         } else if newAlertCreatedAlerts.count >= 1 {
             alert = newAlertCreatedAlerts.sorted(by: {$0.startDate.timeIntervalSince1970 > $1.startDate.timeIntervalSince1970}).first
         }
+        if alertID != nil {
+            activeProductionGlobalAlert = alert
+            return false
+        }
         let dataWasChanged: Bool = productionGlobalAlertsData != alert
         productionGlobalAlertsData = alert
         return dataWasChanged
     }
     
-    func getGlobalProductionIgnoringCache(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getGlobalProductionIgnoringCache(alertID: String? = nil, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
             self?.cacheData(reportResponse, path: .getSectionReport)
             if let _ = error {
                 completion?(false, errorCode, ResponseError.serverError)
             } else {
-                self?.handleGlobalProductionAlertsSectionReport(reportResponse, errorCode, error, false, completion)
+                self?.handleGlobalProductionAlertsSectionReport(alertID: alertID, reportResponse, errorCode, error, false, completion)
             }
         })
     }

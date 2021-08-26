@@ -488,9 +488,9 @@ extension HomepageTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            showModalDelegate?.showGlobalAlertModal(isProdAlert: false)
+            showModalDelegate?.showGlobalAlertModal(isProdAlert: false, productionAlertId: nil)
         case 1:
-            showModalDelegate?.showGlobalAlertModal(isProdAlert: true)
+            showModalDelegate?.showGlobalAlertModal(isProdAlert: true, productionAlertId: nil)
         case 2:
             openAlertScreen(for: indexPath)
         case 3:

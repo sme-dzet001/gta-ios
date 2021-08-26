@@ -13,11 +13,15 @@ class GlobalAlertViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var isProdAlert: Bool = false
+    var productionAlertId: String? = nil
     var dataProvider: HomeDataProvider?
     var alertData: GlobalAlertRow? {
         return dataProvider?.globalAlertsData
     }
     var prodAlertData: ProductionAlertsRow? {
+        if productionAlertId != nil {
+            return dataProvider?.activeProductionGlobalAlert
+        }
         return dataProvider?.productionGlobalAlertsData
     }
     private var dataSource: [[String : String]] = []
@@ -50,6 +54,11 @@ class GlobalAlertViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        dataProvider?.forceUpdateAlertDetails = false
+    }
+    
     private func loadGlobalAlertsData() {
         if let forceUpdateAlertDetails = dataProvider?.forceUpdateAlertDetails, forceUpdateAlertDetails {
             loadGlobalAlertsInProgress = true
@@ -70,11 +79,13 @@ class GlobalAlertViewController: UIViewController {
     private func loadProductionGlobalAlertsData() {
         if let forceUpdateAlertDetails = dataProvider?.forceUpdateAlertDetails, forceUpdateAlertDetails {
             loadGlobalAlertsInProgress = true
-            dataProvider?.getGlobalProductionIgnoringCache(completion: {[weak self] dataWasChanged, errorCode, error in
+            dataProvider?.getGlobalProductionIgnoringCache(alertID: productionAlertId, completion: {[weak self] dataWasChanged, errorCode, error in
                 DispatchQueue.main.async {
                     self?.dataProvider?.forceUpdateAlertDetails = false
                     if let alert = self?.dataProvider?.productionGlobalAlertsData, !alert.isExpired {
                         self?.setUpDataSource()
+                    } else {
+                        self?.errorLabel.text = "Global Production Alert has been closed"
                     }
                     self?.loadGlobalAlertsInProgress = false
                 }
