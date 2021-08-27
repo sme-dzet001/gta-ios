@@ -103,6 +103,7 @@ class HomepageTableViewController: UITableViewController {
         tableView.register(UINib(nibName: "OfficeStatusCell", bundle: nil), forCellReuseIdentifier: "OfficeStatusCell")
         tableView.register(UINib(nibName: "GTTeamCell", bundle: nil), forCellReuseIdentifier: "GTTeamCell")
         tableView.register(UINib(nibName: "GlobalAlertCell", bundle: nil), forCellReuseIdentifier: "GlobalAlertCell")
+        tableView.register(UINib(nibName: "GlobalAlertCell", bundle: nil), forCellReuseIdentifier: "GlobalProductionAlertCell")
     }
     
     private func loadSpecialAlertsData() {
@@ -409,7 +410,7 @@ extension HomepageTableViewController {
             }
             return cell ?? UITableViewCell()
         } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertCell", for: indexPath) as? GlobalAlertCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalProductionAlertCell", for: indexPath) as? GlobalAlertCell
             guard let alert = dataProvider?.productionGlobalAlertsData else { return UITableViewCell() }
             guard !alert.isExpired else { return UITableViewCell() }
             cell?.alertLabel.text = "Production Alert"//alert.issueReason ?? "Global Production Alert"
