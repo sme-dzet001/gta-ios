@@ -148,6 +148,7 @@ class HomepageViewController: UIViewController {
         guard let embeddedController = self.navigationController else { return }
         guard let homepageTabIdx = self.tabBarController?.viewControllers?.firstIndex(of: embeddedController) else { return }
         guard let productionAlertId = productionAlertInfo["production_alert_id"] as? String else { return }
+        UIApplication.shared.applicationIconBadgeNumber = 0
         appDelegate.dismissPanModalIfPresented { [weak self] in
             guard let self = self else { return }
             self.tabBarController?.selectedIndex = homepageTabIdx
