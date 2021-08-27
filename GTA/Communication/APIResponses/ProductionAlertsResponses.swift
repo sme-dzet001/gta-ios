@@ -126,7 +126,7 @@ struct ProductionAlertsRow: Codable, Equatable {
     var prodAlertsStatus: ProductionAlertsStatus {
         if status == .inProgress {
             let advancedTimeInterval = 3600 * Double(sendPushBeforeStartInHr ?? 0)
-            if startDate.timeIntervalSince1970 - advancedTimeInterval < Date().timeIntervalSince1970 {
+            if startDate.timeIntervalSince1970 < Date().timeIntervalSince1970 {
                 return .activeAlert
             } else if startDate.timeIntervalSince1970 - advancedTimeInterval >= Date().timeIntervalSince1970 {
                 return .reminderState
