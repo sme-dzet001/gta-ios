@@ -27,7 +27,6 @@ class GlobalAlertCell: UITableViewCell {
     }
     
     func setAlertOff() {
-        alertLabel.text = (alertLabel.text ?? "") + ": fixed"
         parentView.backgroundColor = UIColor(hex: 0x34C759)
         alertImageView.image = UIImage(named: "global_alert_off")
     }
