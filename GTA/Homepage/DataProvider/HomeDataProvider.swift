@@ -706,6 +706,7 @@ class HomeDataProvider {
     }
     
     private func handleGlobalProductionAlertsSectionReport(alertID: String? = nil, _ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        activeProductionGlobalAlert = nil
         let reportData = parseSectionReport(data: reportResponse)
         let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalAlerts.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.globalProductionAlerts.rawValue }?.generationNumber
         if let _ = generationNumber, generationNumber != 0 {

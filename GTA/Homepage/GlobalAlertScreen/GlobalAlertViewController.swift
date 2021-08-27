@@ -46,6 +46,7 @@ class GlobalAlertViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
+        errorLabel.text = "No data available"
         setUpTableView()
         if isProdAlert {
             loadProductionGlobalAlertsData()
@@ -82,7 +83,7 @@ class GlobalAlertViewController: UIViewController {
             dataProvider?.getGlobalProductionIgnoringCache(alertID: productionAlertId, completion: {[weak self] dataWasChanged, errorCode, error in
                 DispatchQueue.main.async {
                     self?.dataProvider?.forceUpdateAlertDetails = false
-                    if let alert = self?.dataProvider?.productionGlobalAlertsData, !alert.isExpired {
+                    if let alert = self?.prodAlertData, !alert.isExpired {
                         self?.setUpDataSource()
                     } else {
                         self?.errorLabel.text = "Global Production Alert has been closed"
@@ -186,7 +187,6 @@ class GlobalAlertViewController: UIViewController {
             errorLabel.textColor = .black
             errorLabel.adjustsFontSizeToFitWidth = true
             errorLabel.minimumScaleFactor = 0.7
-            errorLabel.text = "No data available"
         } else {
             errorLabel.removeFromSuperview()
         }
@@ -210,6 +210,7 @@ extension GlobalAlertViewController: UITableViewDataSource, UITableViewDelegate 
             return 0
         }
         if dataSource.count == 0 {
+            setActivityIndicator(false)
             setErrorLabel(true)
             return 0
         }
