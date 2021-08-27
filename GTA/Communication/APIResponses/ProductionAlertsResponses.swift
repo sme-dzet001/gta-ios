@@ -100,7 +100,11 @@ struct ProductionAlertsRow: Codable, Equatable {
         return dateFormatterPrint.date(from: dateString) ?? Date()
     }
     var isExpired: Bool {
+        #if GTADev
+        let isDateExpired = (Date().timeIntervalSince1970 - closeDate.timeIntervalSince1970) >= 600
+        #else
         let isDateExpired = (Date().timeIntervalSince1970 - closeDate.timeIntervalSince1970) >= 3600
+        #endif
         return status == .closed && isDateExpired
     }
     var status: GlobalAlertStatus {
