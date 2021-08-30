@@ -69,9 +69,9 @@ struct ProductionAlertsRow: Codable, Equatable {
         guard let values = values, let index = indexes["send_push"], values.count > index else { return nil }
         return values[index]?.stringValue
     }
-    var sendPushBeforeStartInHr: String? {
+    var sendPushBeforeStartInHr: Float? {
         guard let values = values, let index = indexes["send_push_before_start_in_hr"], values.count > index else { return nil }
-        return values[index]?.stringValue
+        return values[index]?.floatValue
     }
     private var statusString: String? {
         guard let values = values, let index = indexes["status"], values.count > index else { return nil }
@@ -126,4 +126,28 @@ struct ProductionAlertsRow: Codable, Equatable {
         }
         return false
     }
+    
+    var prodAlertsStatus: ProductionAlertsStatus {
+        if status == .inProgress {
+            let advancedTimeInterval = 3600 * Double(sendPushBeforeStartInHr ?? 0)
+            if startDate.timeIntervalSince1970 < Date().timeIntervalSince1970 {
+                return .activeAlert
+            } else if startDate.timeIntervalSince1970 - advancedTimeInterval >= Date().timeIntervalSince1970 {
+                return .reminderState
+            } else if startDate.timeIntervalSince1970 >= Date().timeIntervalSince1970 {
+                return .newAlertCreated
+            }
+        } else if status == .closed {
+            return .closed
+        }
+        return .none
+    }
+}
+
+enum ProductionAlertsStatus: String {
+    case activeAlert = "activeAlert"
+    case closed = "closed"
+    case reminderState = "reminderState"
+    case newAlertCreated = "newAlertCreated"
+    case none = "none"
 }
