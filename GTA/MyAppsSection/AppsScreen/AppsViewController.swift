@@ -369,7 +369,7 @@ extension AppsViewController: AlertPopoverShowDelegate {
         let alertPopoverViewController = AlertPopoverViewController()
         alertPopoverViewController.modalPresentationStyle = .popover
         let cellData = dataProvider.appsData[indexPath.section].cellData[indexPath.row]
-        alertPopoverViewController.alertsData = dataProvider.alertsData[cellData.app_name ?? ""]
+        alertPopoverViewController.alertsData = dataProvider.alertsData[cellData.app_name ?? ""]?.filter({$0.isRead == false})
         alertPopoverViewController.appName = cellData.app_name ?? ""
         alertPopoverViewController.delegate = self
         alertPopoverViewController.preferredContentSize = alertPopoverViewController.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
