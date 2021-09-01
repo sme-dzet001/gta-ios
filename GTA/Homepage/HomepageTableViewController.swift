@@ -402,7 +402,7 @@ extension HomepageTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertCell", for: indexPath) as? GlobalAlertCell
             guard let alert = dataProvider?.globalAlertsData else { return UITableViewCell() }
             guard !alert.isExpired else { return UITableViewCell() }
-            cell?.alertLabel.text = alert.alertTitle ?? "Emergency Outage"
+            cell?.alertLabel.text = "Emergency Outage: \(alert.alertTitle ?? "")"
             if alert.status == .closed {
                 cell?.setAlertOff()
             } else {
@@ -413,7 +413,7 @@ extension HomepageTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalProductionAlertCell", for: indexPath) as? GlobalAlertCell
             guard let alert = dataProvider?.productionGlobalAlertsData else { return UITableViewCell() }
             guard !alert.isExpired else { return UITableViewCell() }
-            cell?.alertLabel.text = "Production Alert"//alert.issueReason ?? "Global Production Alert"
+            cell?.alertLabel.text = "Production Alert: \(alert.summary ?? "")"//alert.issueReason ?? "Global Production Alert"
             cell?.closeButton.isHidden = false
             cell?.delegate = self
             cell?.setAlertBannerForGlobalProdAlert(prodAlertsStatus: alert.prodAlertsStatus)
