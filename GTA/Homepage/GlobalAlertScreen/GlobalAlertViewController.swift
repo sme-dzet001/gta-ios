@@ -114,6 +114,9 @@ class GlobalAlertViewController: UIViewController {
     }
     
     private func setUpProductionAlertsDataSource() {
+        if let issueReason = prodAlertData?.issueReason {
+            dataSource.append(["Maintenance Reason" : issueReason])
+        }
         if let start = prodAlertData?.startDateString {
             dataSource.append(["Notification Date" : start.getFormattedDateStringForMyTickets()])
         }
@@ -232,7 +235,7 @@ extension GlobalAlertViewController: UITableViewDataSource, UITableViewDelegate 
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertDetailsHeaderCell", for: indexPath) as? GlobalAlertDetailsHeaderCell
             cell?.alertNumberLabel.text = !isProdAlert ? alertData?.ticketNumber : prodAlertData?.ticketNumber
-            cell?.alertTitleLabel.text = !isProdAlert ? alertData?.alertTitle : prodAlertData?.issueReason
+            cell?.alertTitleLabel.text = !isProdAlert ? alertData?.alertTitle : prodAlertData?.summary
             cell?.setStatus(!isProdAlert ? alertData?.status : prodAlertData?.status)
             return cell ?? UITableViewCell()
         }
