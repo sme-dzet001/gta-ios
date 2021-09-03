@@ -63,22 +63,20 @@ class HomepageTableViewController: UIViewController {
     
     private func setUpTableView() {
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
-        tableView.register(UINib(nibName: "OfficeStatusCell", bundle: nil), forCellReuseIdentifier: "OfficeStatusCell")
-        tableView.register(UINib(nibName: "GTTeamCell", bundle: nil), forCellReuseIdentifier: "GTTeamCell")
-        tableView.register(UINib(nibName: "GlobalAlertCell", bundle: nil), forCellReuseIdentifier: "GlobalAlertCell")
-        tableView.register(UINib(nibName: "GlobalAlertCell", bundle: nil), forCellReuseIdentifier: "GlobalProductionAlertCell")
+        tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
     }
     
     private func loadNewsData() {
         guard let dataProvider = dataProvider else { return }
         if dataProvider.newsDataIsEmpty {
+            activityIndicator.isHidden = false
             activityIndicator.startAnimating()
             errorLabel.isHidden = true
         }
         dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
+                self?.activityIndicator.isHidden = true
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
                     self?.errorLabel.isHidden = true
@@ -235,30 +233,46 @@ class HomepageTableViewController: UIViewController {
 extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-//        case 0:
-//            let alert = dataProvider?.globalAlertsData
-//            if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
-//                return 0
-//            }
-//            return 1
-        case 2:
-            return dataProvider?.alertsData.count ?? 0
-        default:
-            return 1
-        }
+        return dataProvider?.newsData.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 312
+        return 372
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let dataProvider = dataProvider else { return UITableViewCell() }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell", for: indexPath) as? NewsTableViewCell
+        let cellDataSource = dataProvider.newsData[indexPath.row]
+        let imageURL = dataProvider.formImageURL(from: cellDataSource.posterUrl)
+        cell?.pictureView.accessibilityIdentifier = "HomeScreenCollectionImageView"
+        let url = URL(string: imageURL)
+        cell?.pictureView.kf.indicatorType = .activity
+        cell?.pictureView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+            switch result {
+            case .success(let resData):
+                cell?.pictureView.image = resData.image
+            case .failure(let error):
+                if !error.isNotCurrentTask {
+                    cell?.pictureView.image = nil
+                }
+            }
+        })
+        cell?.titleLabel.text = cellDataSource.newsTitle
+        //cell.byLabel.text = cellDataSource.newsAuthor
+        let newsDate = cellDataSource.newsDate
+        cell?.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
+        cell?.titleLabel.accessibilityIdentifier = "HomeScreenCollectionTitleLabel"
+        //cell.byLabel.attributedText = addShadow(for: cellDataSource.newsAuthor)
+        //cell.byLabel.accessibilityIdentifier = "HomeScreenCollectionByLabel"
+        cell?.dateLabel.accessibilityIdentifier = "HomeScreenCollectionDateLabel"
+        //cell.dateLabel.attributedText = addShadow(for: dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss"))
+        //cell.configurePosition()
+        return cell ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

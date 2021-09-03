@@ -227,7 +227,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="KVN-Cg-CUZ" kind="embed" id="kon-On-yDF"/>
+                                    <segue destination="KVN-Cg-CUZ" kind="embed" identifier="embedTable" id="kon-On-yDF"/>
                                 </connections>
                             </containerView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WOX-S5-YeY">
@@ -286,7 +286,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="584"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n4G-BQ-duz">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n4G-BQ-duz">
                                 <rect key="frame" x="0.0" y="44" width="414" height="540"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
@@ -330,7 +330,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="HomeScreenTitleBlack" width="199" height="25"/>
+        <image name="HomeScreenTitleBlack" width="199" height="24"/>
         <image name="global_alert_on" width="512" height="512"/>
         <image name="homepage_tab_icon" width="24" height="24"/>
         <image name="settings_icon" width="20" height="20"/>
