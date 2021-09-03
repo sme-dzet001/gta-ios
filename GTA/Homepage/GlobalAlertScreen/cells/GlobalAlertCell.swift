@@ -39,7 +39,7 @@ class GlobalAlertCell: UITableViewCell {
         switch prodAlertsStatus {
         case .newAlertCreated, .reminderState:
             parentView.backgroundColor = UIColor(hex: 0xFF9900)
-            alertImageView.image = UIImage(named: "global_alert_off")
+            alertImageView.image = UIImage(named: "global_alert_on")
             closeButton.isHidden = false
         case .activeAlert:
             closeButton.isHidden = true
