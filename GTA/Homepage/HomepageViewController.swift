@@ -35,6 +35,20 @@ class HomepageViewController: UIViewController {
     
     private var filterTabTypes : [FilterTabType] = [.all, .news, .specialAlerts, .teamsNews]
     
+    private var selectedFilterTab: FilterTabType = .all
+    
+    @objc private func onSwipe(_ gesture: UISwipeGestureRecognizer) {
+        var selectedFilterTabIdx = filterTabTypes.firstIndex(of: selectedFilterTab) ?? 0
+        if gesture.direction == .right && selectedFilterTabIdx > 0 {
+            selectedFilterTabIdx -= 1
+        }
+        if gesture.direction == .left && selectedFilterTabIdx < (filterTabTypes.count - 1) {
+            selectedFilterTabIdx += 1
+        }
+        filterTabs.selectItem(at: IndexPath(item: selectedFilterTabIdx, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+        selectedFilterTab = filterTabTypes[selectedFilterTabIdx]
+    }
+    
     private var filterTabItemWidths : [CGFloat] {
         var result: [CGFloat] = []
         guard let font: UIFont = UIFont(name: "SFProText-Medium", size: 14) else { return result }
@@ -72,6 +86,14 @@ class HomepageViewController: UIViewController {
         setUpFilterTabs()
         setUpBannerViews()
         setNeedsStatusBarAppearanceUpdate()
+        
+        let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(onSwipe(_:)))
+        swipeGestureLeft.direction = [.left]
+        view.addGestureRecognizer(swipeGestureLeft)
+        
+        let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(onSwipe(_:)))
+        swipeGestureRight.direction = [.right]
+        view.addGestureRecognizer(swipeGestureRight)
         
         NotificationCenter.default.addObserver(self, selector: #selector(getAllAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
@@ -408,7 +430,8 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        filterTabs.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        selectedFilterTab = filterTabTypes[indexPath.item]
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -526,24 +549,9 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     func panModalDidDismiss() {
         //pageControl.isHidden = false
     }
-}
-
-extension HomepageViewController: ShowGlobalAlertModalDelegate {
-    func showGlobalAlertModal(isProdAlert: Bool, productionAlertId: String? = nil) {
-        let globalAlertViewController = GlobalAlertViewController()
-        globalAlertViewController.dataProvider = dataProvider
-        globalAlertViewController.isProdAlert = isProdAlert
-        globalAlertViewController.productionAlertId = productionAlertId
-        presentPanModal(globalAlertViewController)
-        
-    }
 }*/
 
 protocol PanModalAppearanceDelegate: AnyObject {
     func needScrollToDirection(_ direction: UICollectionView.ScrollPosition)
     func panModalDidDismiss()
-}
-
-protocol ShowGlobalAlertModalDelegate: AnyObject {
-    func showGlobalAlertModal(isProdAlert: Bool, productionAlertId: String?)
 }
