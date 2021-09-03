@@ -11,65 +11,29 @@ protocol HomepageMainDelegate: AnyObject {
     func navigateToOfficeStatus()
 }
 
-class HomepageTableViewController: UITableViewController {
+class HomepageTableViewController: UIViewController {
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var errorLabel: UILabel!
     
     var dataProvider: HomeDataProvider?
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
-        
-    weak var showModalDelegate: ShowGlobalAlertModalDelegate?
+    
     var dataSource: [HomepageCellData] = []
     private var lastUpdateDate: Date?
-    private var dismissDidPressed: Bool {
-        if let value = UserDefaults.standard.value(forKey: "ClosedProdAlert") as? [String : String?] {
-            let issueReason = value["issueReason"] == self.dataProvider?.productionGlobalAlertsData?.issueReason
-            let prodAlertsStatus = value["prodAlertsStatus"] == self.dataProvider?.productionGlobalAlertsData?.prodAlertsStatus.rawValue
-            let summary = value["summary"] == self.dataProvider?.productionGlobalAlertsData?.summary
-            return issueReason && prodAlertsStatus && summary
-        }
-        return false
-    }
-    private var emergencyOutageLoaded: Bool = false {
-        didSet {
-            DispatchQueue.main.async {
-                if self.navigationController?.topViewController is HomepageViewController, self.emergencyOutageLoaded {
-                    UIApplication.shared.applicationIconBadgeNumber = 0
-                }
-            }
-        }
-    }
      
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
         tableView.accessibilityIdentifier = "HomeScreenTableView"
-        NotificationCenter.default.addObserver(self, selector: #selector(getAllAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(getGlobalProductionAlertsIgnoringCache), name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if emergencyOutageLoaded {
-            emergencyOutageLoaded = false
-            UIApplication.shared.applicationIconBadgeNumber = 0
-        }
-        getAllAlerts()
-        dataProvider?.officeSelectionDelegate = self
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
-            loadSpecialAlertsData()
-            if officeLoadingIsEnabled { loadOfficesData() }
-        } else {
-            // reloading office cell (because office could be changed on office selection screen)
-            if officeLoadingIsEnabled {
-                if tableView.dataHasChanged {
-                    tableView.reloadData()
-                } else {
-                    UIView.performWithoutAnimation {
-                        tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
-                    }
-                }
-            }
+            loadNewsData()
         }
     }
     
@@ -106,6 +70,31 @@ class HomepageTableViewController: UITableViewController {
         tableView.register(UINib(nibName: "GlobalAlertCell", bundle: nil), forCellReuseIdentifier: "GlobalProductionAlertCell")
     }
     
+    private func loadNewsData() {
+        guard let dataProvider = dataProvider else { return }
+        if dataProvider.newsDataIsEmpty {
+            activityIndicator.startAnimating()
+            errorLabel.isHidden = true
+        }
+        dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                if error == nil && errorCode == 200 {
+                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
+                    self?.errorLabel.isHidden = true
+                    self?.tableView.reloadData()
+                } else {
+                    let isNoData = dataProvider.newsDataIsEmpty
+                    if isNoData {
+                        self?.tableView.reloadData()
+                    }
+                    self?.errorLabel.isHidden = !isNoData
+                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                }
+            }
+        }
+    }
+    
     private func loadSpecialAlertsData() {
         let numberOfRows = tableView.numberOfRows(inSection: 1)
         dataProvider?.getSpecialAlertsData { [weak self] (errorCode, error, isFromCache) in
@@ -125,7 +114,7 @@ class HomepageTableViewController: UITableViewController {
         }
     }
     
-    private func loadOfficesData() {
+    /*private func loadOfficesData() {
         var forceOpenOfficeSelectionScreen = false
         officeLoadingError = nil
         if tableView.dataHasChanged {
@@ -188,115 +177,6 @@ class HomepageTableViewController: UITableViewController {
         })
     }
     
-    private var hasActiveGlobalProdAlerts: Bool {
-        guard let data = dataProvider?.productionGlobalAlertsData else { return false }
-        guard data.prodAlertsStatus == .activeAlert || data.prodAlertsStatus == .closed else { return false }
-        let eventStarted = data.startDate.timeIntervalSince1970 >= Date().timeIntervalSince1970
-        let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
-        return eventStarted || eventFinished
-    }
-    
-    @objc private func getGlobalAlerts() {
-        dataProvider?.getGlobalAlerts(completion: {[weak self] isFromCache, dataWasChanged, errorCode, error in
-            DispatchQueue.main.async {
-                if error == nil && errorCode == 200 {
-                    self?.emergencyOutageLoaded = dataWasChanged && !isFromCache
-                    if self?.tableView.dataHasChanged == true {
-                        self?.tableView.reloadData()
-                    } else {
-                        UIView.performWithoutAnimation {
-                            self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
-                        }
-                    }
-                    if let data = self?.dataProvider?.globalAlertsData {
-                        switch data.status {
-                        case .inProgress:
-                            self?.tabBarController?.addAlertItemBadge(atIndex: 0)
-                        default:
-                            if let self = self, !self.hasActiveGlobalProdAlerts {
-                                self.tabBarController?.removeItemBadge(atIndex: 0)
-                            }
-                        }
-                    }
-                } else {
-                    //self?.displayError(errorMessage: "Error was happened!")
-                }
-            }
-        })
-    }
-    
-    @objc private func getGlobalAlertsIgnoringCache() {
-        dataProvider?.getGlobalAlertsIgnoringCache {[weak self] _, dataWasChanged, errorCode, error in
-            DispatchQueue.main.async {
-                if dataWasChanged, error == nil {
-                    self?.emergencyOutageLoaded = true
-                    if self?.tableView.dataHasChanged == true {
-                        self?.tableView.reloadData()
-                    } else {
-                        UIView.performWithoutAnimation {
-                            self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    @objc private func getGlobalProductionAlertsIgnoringCache() {
-        dataProvider?.getGlobalProductionIgnoringCache {[weak self] dataWasChanged, errorCode, error in
-            DispatchQueue.main.async {
-                if dataWasChanged, error == nil {
-                    if self?.tableView.dataHasChanged == true {
-                        self?.tableView.reloadData()
-                    } else {
-                        UIView.performWithoutAnimation {
-                            self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    private func getGlobalProductionAlerts() {
-        dataProvider?.getGlobalProductionAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
-            DispatchQueue.main.async {
-                if error == nil && errorCode == 200 {
-                    if self?.tableView.dataHasChanged == true {
-                        self?.tableView.reloadData()
-                    } else {
-                        UIView.performWithoutAnimation {
-                            self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
-                        }
-                    }
-                    if let data = self?.dataProvider?.productionGlobalAlertsData {
-                        switch data.prodAlertsStatus {
-                        case .newAlertCreated, .reminderState:
-                            if self?.dataProvider?.globalAlertsData?.status != .inProgress {
-                                self?.tabBarController?.removeItemBadge(atIndex: 0)
-                            }
-                        case .activeAlert, .closed:
-                            let eventStarted = data.startDate.timeIntervalSince1970 >= Date().timeIntervalSince1970
-                            let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
-                            if eventStarted || eventFinished {
-                                self?.tabBarController?.addAlertItemBadge(atIndex: 0)
-                            }
-                        default:
-                            return
-                        }
-                    }
-                } else {
-                    //self?.displayError(errorMessage: "Error was happened!")
-                }
-            }
-        })
-    }
-    
-    @objc private func getAllAlerts() {
-        getGlobalAlerts()
-        getGlobalProductionAlerts()
-    }
-    
     private func openOfficeSelectionModalScreen() {
         let officeLocation = OfficeLocationViewController()
         var statusBarHeight: CGFloat = 0.0
@@ -345,23 +225,20 @@ class HomepageTableViewController: UITableViewController {
         let contactsViewController = GTTeamViewController()
         contactsViewController.dataProvider = dataProvider
         self.navigationController?.pushViewController(contactsViewController, animated: true)
-    }
+    }*/
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
     }
 
 }
 
-extension HomepageTableViewController {
+extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegate {
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 5
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
 //        case 0:
 //            let alert = dataProvider?.globalAlertsData
@@ -376,134 +253,20 @@ extension HomepageTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0:
-            let alert = dataProvider?.globalAlertsData
-            if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
-                return 0
-            }
-            return 80
-        case 1:
-            let alert = dataProvider?.productionGlobalAlertsData
-            if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open || dismissDidPressed {
-                return 0
-            }
-            return 80
-        case 2, 3:
-            return 80
-        default:
-            return UITableView.automaticDimension
-        }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 312
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertCell", for: indexPath) as? GlobalAlertCell
-            guard let alert = dataProvider?.globalAlertsData else { return UITableViewCell() }
-            guard !alert.isExpired else { return UITableViewCell() }
-            cell?.alertLabel.text = "Emergency Outage: \(alert.alertTitle ?? "")"
-            if alert.status == .closed {
-                cell?.setAlertOff()
-            } else {
-                cell?.setAlertOn()
-            }
-            return cell ?? UITableViewCell()
-        } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalProductionAlertCell", for: indexPath) as? GlobalAlertCell
-            guard let alert = dataProvider?.productionGlobalAlertsData else { return UITableViewCell() }
-            guard !alert.isExpired else { return UITableViewCell() }
-            cell?.alertLabel.text = "Production Alert: \(alert.summary ?? "")"//alert.issueReason ?? "Global Production Alert"
-            cell?.closeButton.isHidden = false
-            cell?.delegate = self
-            cell?.setAlertBannerForGlobalProdAlert(prodAlertsStatus: alert.prodAlertsStatus)
-            return cell ?? UITableViewCell()
-        } else if indexPath.section == 2 {
-            let data = dataProvider?.alertsData ?? []
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
-            cell?.separator.isHidden = false
-            cell?.iconImageView.image = UIImage(named: "info_icon")
-            cell?.mainLabel.text = data[indexPath.row].alertTitle
-            cell?.mainLabel.textColor = .black
-            if let date = data[indexPath.row].alertDate?.getFormattedDateStringForMyTickets() { //dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
-                cell?.descriptionLabel.text = date
-            } else {
-                cell?.descriptionLabel.text = nil
-                cell?.setMainLabelAtCenter()
-            }
-            cell?.mainLabel.accessibilityIdentifier = "HomeScreenAlertTitleLabel"
-            return cell ?? UITableViewCell()
-        } else if indexPath.section == 3 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "GTTeamCell", for: indexPath) as? GTTeamCell
-            return cell ?? UITableViewCell()
-        } else if indexPath.section == 4 {
-            let data = dataProvider?.userOffice
-            if let officeData = data {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
-                cell?.officeStatusLabel.text = officeData.officeName
-                cell?.officeAddressLabel.text = officeData.officeLocation?.replacingOccurrences(of: "\u{00A0}", with: " ")
-                cell?.officeAddressLabel.isHidden = officeData.officeLocation?.isEmpty ?? true
-                cell?.officeNumberLabel.text = officeData.officePhone
-                cell?.officeNumberLabel.isHidden = officeData.officePhone?.isEmpty ?? true
-                cell?.officeEmailLabel.text = officeData.officeEmail
-                cell?.officeEmailLabel.isHidden = officeData.officeEmail?.isEmpty ?? true
-                cell?.officeErrorLabel.isHidden = true
-                cell?.separator.isHidden = false
-                cell?.arrowImage.isHidden = false
-                cell?.officeStatusLabel.accessibilityIdentifier = "HomeScreenOfficeTitleLabel"
-                cell?.officeAddressLabel.accessibilityIdentifier = "HomeScreenOfficeAddressLabel"
-                return cell ?? UITableViewCell()
-            } else {
-                if let errorStr = officeLoadingError {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
-                    cell?.officeStatusLabel.text = " "
-                    cell?.officeAddressLabel.text = " "
-                    cell?.officeAddressLabel.isHidden = false
-                    cell?.officeNumberLabel.text = " "
-                    cell?.officeNumberLabel.isHidden = false
-                    cell?.officeEmailLabel.text = " "
-                    cell?.officeEmailLabel.isHidden = false
-                    cell?.officeErrorLabel.text = errorStr
-                    cell?.officeErrorLabel.isHidden = false
-                    cell?.separator.isHidden = false
-                    cell?.arrowImage.isHidden = true
-                    return cell ?? UITableViewCell()
-                } else {
-                    let loadingCell = createLoadingCell(withBottomSeparator: true, verticalOffset: 54)
-                    return loadingCell
-                }
-            }
-        } else  {
-            let data = dataSource[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
-            cell?.separator.isHidden = false
-            cell?.iconImageView.image = UIImage(named: data.image ?? "")?.withRenderingMode(data.enabled ? .alwaysOriginal : .alwaysTemplate)
-            cell?.iconImageView.tintColor = data.enabled ? nil : UIColor(hex: 0x9B9B9B)
-            cell?.mainLabel.text = data.mainText
-            cell?.descriptionLabel.text = data.additionalText
-            cell?.mainLabel.textColor = data.enabled ? UIColor.black : UIColor(hex: 0x9B9B9B)
-            return cell ?? UITableViewCell()
-        }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            showModalDelegate?.showGlobalAlertModal(isProdAlert: false, productionAlertId: nil)
-        case 1:
-            showModalDelegate?.showGlobalAlertModal(isProdAlert: true, productionAlertId: nil)
-        case 2:
-            openAlertScreen(for: indexPath)
-        case 3:
-            openGTTeamScreen()
-        default:
-            openOfficeScreen(for: indexPath)
-        }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
     
 }
 
-extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDelegate {
+/*extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDelegate {
     func officeWasSelected() {
         officeLoadingIsEnabled = false
         updateUIWithSelectedOffice()
@@ -531,21 +294,7 @@ extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUI
             }
         }
     }
-}
-
-extension HomepageTableViewController: DismissAlertDelegate {
-    func closeAlertDidPressed() {
-        let alert = UIAlertController(title: "Confirm closing", message: "Notification will appear again when the outage starts", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            let prodGlobalAlertsData = self.dataProvider?.productionGlobalAlertsData
-            let closedData = ["issueReason" : prodGlobalAlertsData?.issueReason, "prodAlertsStatus" : prodGlobalAlertsData?.prodAlertsStatus.rawValue, "summary" : prodGlobalAlertsData?.summary]
-            UserDefaults.standard.setValue(closedData, forKey: "ClosedProdAlert")
-            self.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-}
+}*/
 
 struct HomepageCellData {
     var mainText: String?

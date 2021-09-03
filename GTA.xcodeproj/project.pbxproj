@@ -25,6 +25,13 @@
 		54D59C282695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
 		54D59C292695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
 		637797F8E36BC3A596840E88 /* Pods_GTAUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 711206694A10F0701C6DAF95 /* Pods_GTAUITests.framework */; };
+		6500C70726DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6500C70626DFDE5100151F1D /* GlobalAlertBannerView.swift */; };
+		6500C70826DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6500C70626DFDE5100151F1D /* GlobalAlertBannerView.swift */; };
+		6500C70926DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6500C70626DFDE5100151F1D /* GlobalAlertBannerView.swift */; };
+		6500C70A26DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6500C70626DFDE5100151F1D /* GlobalAlertBannerView.swift */; };
+		6500C70B26DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6500C70626DFDE5100151F1D /* GlobalAlertBannerView.swift */; };
+		6500C70C26DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6500C70626DFDE5100151F1D /* GlobalAlertBannerView.swift */; };
+		6500C70D26DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6500C70626DFDE5100151F1D /* GlobalAlertBannerView.swift */; };
 		6513C9D8269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
 		6513C9D9269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
 		6513C9DA269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */; };
@@ -686,6 +693,20 @@
 		659C595B25924106007953A7 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
 		659C595C25924106007953A7 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
 		659C595D25924106007953A7 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659C595A25924106007953A7 /* CacheManager.swift */; };
+		65A3B10526E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3B10326E0444D00829946 /* HomepageFilterTabsCollectionCell.swift */; };
+		65A3B10626E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3B10326E0444D00829946 /* HomepageFilterTabsCollectionCell.swift */; };
+		65A3B10726E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3B10326E0444D00829946 /* HomepageFilterTabsCollectionCell.swift */; };
+		65A3B10826E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3B10326E0444D00829946 /* HomepageFilterTabsCollectionCell.swift */; };
+		65A3B10926E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3B10326E0444D00829946 /* HomepageFilterTabsCollectionCell.swift */; };
+		65A3B10A26E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3B10326E0444D00829946 /* HomepageFilterTabsCollectionCell.swift */; };
+		65A3B10B26E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A3B10326E0444D00829946 /* HomepageFilterTabsCollectionCell.swift */; };
+		65A3B10C26E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A3B10426E0444D00829946 /* HomepageFilterTabsCollectionCell.xib */; };
+		65A3B10D26E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A3B10426E0444D00829946 /* HomepageFilterTabsCollectionCell.xib */; };
+		65A3B10E26E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A3B10426E0444D00829946 /* HomepageFilterTabsCollectionCell.xib */; };
+		65A3B10F26E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A3B10426E0444D00829946 /* HomepageFilterTabsCollectionCell.xib */; };
+		65A3B11026E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A3B10426E0444D00829946 /* HomepageFilterTabsCollectionCell.xib */; };
+		65A3B11126E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A3B10426E0444D00829946 /* HomepageFilterTabsCollectionCell.xib */; };
+		65A3B11226E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A3B10426E0444D00829946 /* HomepageFilterTabsCollectionCell.xib */; };
 		65D14CB9256DA877004DFA70 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
 		65D14CBA256DA877004DFA70 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
 		65D14CBB256DA877004DFA70 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D14CB8256DA877004DFA70 /* GeneralViewController.swift */; };
@@ -1668,6 +1689,7 @@
 		54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChatUsersViewController.swift; sourceTree = "<group>"; };
 		54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamChatUsersViewController.xib; sourceTree = "<group>"; };
 		5F85A9BFD7B4F3349DA0E61A /* Pods_GTATests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTATests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6500C70626DFDE5100151F1D /* GlobalAlertBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAlertBannerView.swift; sourceTree = "<group>"; };
 		6513C9D7269F145C0046817F /* TeamsByFunctionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamsByFunctionsViewController.xib; sourceTree = "<group>"; };
 		6513CA1D269F37280046817F /* TeamsByFunctionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsByFunctionsViewController.swift; sourceTree = "<group>"; };
 		65398BCB256D4C5E0039C24E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -1708,6 +1730,8 @@
 		659A5AEF255404F100E13B77 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		659A5AF9255457B600E13B77 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		659C595A25924106007953A7 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		65A3B10326E0444D00829946 /* HomepageFilterTabsCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageFilterTabsCollectionCell.swift; sourceTree = "<group>"; };
+		65A3B10426E0444D00829946 /* HomepageFilterTabsCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomepageFilterTabsCollectionCell.xib; sourceTree = "<group>"; };
 		65D14CB8256DA877004DFA70 /* GeneralViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralViewController.swift; sourceTree = "<group>"; };
 		65D1A29225549A0600D71965 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		65D1A2A02554BE3700D71965 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
@@ -2307,6 +2331,7 @@
 				9F2C82462657CE02004407B4 /* cells */,
 				9F2C824E2657CE02004407B4 /* GlobalAlertViewController.swift */,
 				9F2C824F2657CE02004407B4 /* GlobalAlertViewController.xib */,
+				6500C70626DFDE5100151F1D /* GlobalAlertBannerView.swift */,
 			);
 			path = GlobalAlertScreen;
 			sourceTree = "<group>";
@@ -2317,6 +2342,7 @@
 				9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */,
 				9F2C82482657CE02004407B4 /* GlobalAlertDetailsHeaderCell.swift */,
 				9F2C824D2657CE02004407B4 /* GlobalAlertDetailsCell.swift */,
+				65A3B10326E0444D00829946 /* HomepageFilterTabsCollectionCell.swift */,
 				9F2C82492657CE02004407B4 /* xib */,
 			);
 			path = cells;
@@ -2328,6 +2354,7 @@
 				9F2C824A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib */,
 				9F2C824B2657CE02004407B4 /* GlobalAlertDetailsCell.xib */,
 				9F2C824C2657CE02004407B4 /* GlobalAlertCell.xib */,
+				65A3B10426E0444D00829946 /* HomepageFilterTabsCollectionCell.xib */,
 			);
 			path = xib;
 			sourceTree = "<group>";
@@ -3438,6 +3465,7 @@
 				65437CE32665387600B2F38A /* InfoViewController.xib in Resources */,
 				65437CE42665387600B2F38A /* GlobalAlertCell.xib in Resources */,
 				54D59C292695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */,
+				65A3B11226E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */,
 				9FA4DC922684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
 				65437CE52665387600B2F38A /* ServiceDeskContactCell.xib in Resources */,
 				65437CE62665387600B2F38A /* QuickHelpCell.xib in Resources */,
@@ -3544,6 +3572,7 @@
 				65437EB4266539BF00B2F38A /* AppsServiceAlertCell.xib in Resources */,
 				9F3027EE2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
 				65437EB5266539BF00B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
+				65A3B11026E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */,
 				65437EB6266539BF00B2F38A /* HelpReportScreenViewController.xib in Resources */,
 				65437EB7266539BF00B2F38A /* OfficeStatusCell.xib in Resources */,
 				9FA4DC902684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
@@ -3650,6 +3679,7 @@
 				654380212665568000B2F38A /* SystemUpdatesCell.xib in Resources */,
 				9F3027EF2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
 				654380222665568000B2F38A /* OfficeSelectionCell.xib in Resources */,
+				65A3B11126E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */,
 				654380232665568000B2F38A /* GoogleService-Info.plist in Resources */,
 				654380242665568000B2F38A /* TicketDescriptionCell.xib in Resources */,
 				9FA4DC912684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
@@ -3756,6 +3786,7 @@
 				9F895AF0255C22D7004489C6 /* AppsServiceAlertCell.xib in Resources */,
 				9F3027EA2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
 				659A5AF3255404F100E13B77 /* SF-Pro-Display-Regular.otf in Resources */,
+				65A3B10C26E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */,
 				9F895B6D255D3D27004489C6 /* HelpReportScreenViewController.xib in Resources */,
 				9F78D0E1256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				9FA4DC8C2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
@@ -3817,6 +3848,7 @@
 				9F33F6A9260A3C4000470A47 /* SecondSendMessageView.xib in Resources */,
 				9F30285D2681E68C009A3096 /* AlertPopoverViewController.xib in Resources */,
 				54D59C262695E0000037A9B1 /* TeamChatUsersViewController.xib in Resources */,
+				65A3B10F26E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */,
 				9F33F6AA260A3C4000470A47 /* Home.storyboard in Resources */,
 				9F33F6AB260A3C4000470A47 /* AuthViewController.xib in Resources */,
 				9F33F6AC260A3C4000470A47 /* ApplicationStatusViewController.xib in Resources */,
@@ -3983,6 +4015,7 @@
 				9F895B2C255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
 				9F3027EB2681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
 				C9EFDA3325A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */,
+				65A3B10D26E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */,
 				9FCFA2A7259E138D00E893D2 /* GoogleService-Info.plist in Resources */,
 				9F803248260A666900ED6224 /* TicketDescriptionCell.xib in Resources */,
 				9FA4DC8D2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
@@ -4089,6 +4122,7 @@
 				C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */,
 				9F2C82622657CE02004407B4 /* GlobalAlertCell.xib in Resources */,
 				54D59C252695DFFF0037A9B1 /* TeamChatUsersViewController.xib in Resources */,
+				65A3B10E26E0444D00829946 /* HomepageFilterTabsCollectionCell.xib in Resources */,
 				9FA4DC8E2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
 				C9D035E32579B68D0068441F /* ServiceDeskContactCell.xib in Resources */,
 				C993A2CB2576686500F9146A /* QuickHelpCell.xib in Resources */,
@@ -4490,6 +4524,8 @@
 				65437C5B2665387600B2F38A /* TicketDetailsMessageCell.swift in Sources */,
 				9F30281A2681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				65437C5C2665387600B2F38A /* ChartLayoutHelper.swift in Sources */,
+				65A3B10B26E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */,
+				6500C70D26DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */,
 				65437C5D2665387600B2F38A /* CollaborationHeaderCell.swift in Sources */,
 				65437C5E2665387600B2F38A /* AppsTableViewHeader.swift in Sources */,
 				65437C5F2665387600B2F38A /* LoginViewController.swift in Sources */,
@@ -4629,6 +4665,8 @@
 				65437E29266539BF00B2F38A /* LoginViewController.swift in Sources */,
 				9F3028182681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				65437E2A266539BF00B2F38A /* CollaborationHeaderCell.swift in Sources */,
+				65A3B10926E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */,
+				6500C70B26DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */,
 				65437E2B266539BF00B2F38A /* ArticleViewController.swift in Sources */,
 				65437E2C266539BF00B2F38A /* OfficeInfoCell.swift in Sources */,
 				65437E2D266539BF00B2F38A /* ErrorHandler.swift in Sources */,
@@ -4768,6 +4806,8 @@
 				65437F962665568000B2F38A /* TicketDetailsMessageCell.swift in Sources */,
 				9F3028192681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				65437F972665568000B2F38A /* ChartLayoutHelper.swift in Sources */,
+				65A3B10A26E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */,
+				6500C70C26DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */,
 				65437F982665568000B2F38A /* CollaborationHeaderCell.swift in Sources */,
 				65437F992665568000B2F38A /* AppsTableViewHeader.swift in Sources */,
 				65437F9A2665568000B2F38A /* LoginViewController.swift in Sources */,
@@ -4907,6 +4947,8 @@
 				659A5AB5255401EA00E13B77 /* LoginViewController.swift in Sources */,
 				9F3028142681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				9F35860425FD219C0003658D /* CollaborationHeaderCell.swift in Sources */,
+				65A3B10526E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */,
+				6500C70726DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */,
 				9F78D07B256530CD00BCD38F /* ArticleViewController.swift in Sources */,
 				9F1620DD2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */,
 				9F35867725FFBAC40003658D /* ErrorHandler.swift in Sources */,
@@ -5077,6 +5119,7 @@
 				9F33F66D260A3C4000470A47 /* AppDelegate.swift in Sources */,
 				9F33F66E260A3C4000470A47 /* MetricStatsCell.swift in Sources */,
 				9F33F66F260A3C4000470A47 /* GTA.xcdatamodeld in Sources */,
+				6500C70A26DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */,
 				9F33F670260A3C4000470A47 /* ServiceDeskAboutViewController.swift in Sources */,
 				9F33F671260A3C4000470A47 /* ServiceDeskContactsViewController.swift in Sources */,
 				9F33F672260A3C4000470A47 /* HelpDeskCell.swift in Sources */,
@@ -5118,6 +5161,7 @@
 				9F33F688260A3C4000470A47 /* HomeDataProvider.swift in Sources */,
 				9F33F689260A3C4000470A47 /* Extensions.swift in Sources */,
 				9F33F68A260A3C4000470A47 /* SystemUpdatesCell.swift in Sources */,
+				65A3B10826E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */,
 				9F2C82742657F1E1004407B4 /* CustomUISwitch.swift in Sources */,
 				9F33F68B260A3C4000470A47 /* SystemStatusHeader.swift in Sources */,
 				9F33F68C260A3C4000470A47 /* CustomTextView.swift in Sources */,
@@ -5202,6 +5246,8 @@
 				9FF054302567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				9F3028152681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				C9DFD4C125659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
+				65A3B10626E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */,
+				6500C70826DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */,
 				9F35860525FD219C0003658D /* CollaborationHeaderCell.swift in Sources */,
 				9F895AE2255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
@@ -5341,6 +5387,8 @@
 				9FF054312567E1D80071E596 /* TicketDetailsMessageCell.swift in Sources */,
 				9F3028162681D228009A3096 /* AlertDetailsHeaderCell.swift in Sources */,
 				C9DFD4C225659DAB00BF1740 /* ChartLayoutHelper.swift in Sources */,
+				65A3B10726E0444D00829946 /* HomepageFilterTabsCollectionCell.swift in Sources */,
+				6500C70926DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */,
 				9F35860625FD219D0003658D /* CollaborationHeaderCell.swift in Sources */,
 				9F895AE3255C22D7004489C6 /* AppsTableViewHeader.swift in Sources */,
 				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,

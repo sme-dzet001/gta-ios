@@ -759,7 +759,7 @@ class HomeDataProvider {
             rows = rows.filter({$0.ticketNumber?.lowercased() == alertID.lowercased()})
         }
         var alert = rows.last
-        let activeAlerts = rows.filter({$0.prodAlertsStatus == .activeAlert})
+        let activeAlerts = rows.filter({$0.prodAlertsStatus == .activeAlert })
         let closedAlerts = rows.filter({ $0.prodAlertsStatus == .closed && $0.isExpired == false })
         let reminderStateAlerts = rows.filter({$0.prodAlertsStatus == .reminderState})
         let newAlertCreatedAlerts = rows.filter({$0.prodAlertsStatus == .newAlertCreated})
