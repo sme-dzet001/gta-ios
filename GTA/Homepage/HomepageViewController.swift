@@ -28,7 +28,7 @@ class HomepageViewController: UIViewController {
     private var dataProvider: HomeDataProvider = HomeDataProvider()
     private var lastUpdateDate: Date?
     
-    var selectedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
+    //var selectedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     var homepageTableVC: HomepageTableViewController?
     
     private var presentedVC: ArticleViewController?
@@ -210,6 +210,7 @@ class HomepageViewController: UIViewController {
         if segue.identifier == "embedTable" {
             homepageTableVC = segue.destination as? HomepageTableViewController
             homepageTableVC?.dataProvider = dataProvider
+            homepageTableVC?.newsShowDelegate = self
         }
     }
     
@@ -443,6 +444,23 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         return 0
     }
 }
+
+extension HomepageViewController: NewsShowDelegate {
+    func showArticleViewController(with text: String?) {
+        let articleViewController = ArticleViewController()
+        presentedVC = articleViewController
+        let htmlBody = dataProvider.formNewsBody(from: text)
+        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
+            htmlBody?.setFontFace(font: neededFont)
+        }
+        if let _ = htmlBody {
+            articleViewController.attributedArticleText = htmlBody
+        } else {
+            articleViewController.articleText = text
+        }
+        presentPanModal(articleViewController)
+    }
+}
 /*
 extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -493,22 +511,6 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         selectedIndexPath.row = indexPath.row
     }
     
-    private func showArticleViewController(with text: String?) {
-        let articleViewController = ArticleViewController()
-        presentedVC = articleViewController
-        articleViewController.appearanceDelegate = self
-        let htmlBody = dataProvider.formNewsBody(from: text)
-        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
-            htmlBody?.setFontFace(font: neededFont)
-        }
-        if let _ = htmlBody {
-            articleViewController.attributedArticleText = htmlBody
-        } else {
-            articleViewController.articleText = text
-        }
-        presentPanModal(articleViewController)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.collectionView.frame.width, height: self.collectionView.frame.height)
     }
@@ -550,6 +552,10 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         //pageControl.isHidden = false
     }
 }*/
+
+protocol NewsShowDelegate: AnyObject {
+    func showArticleViewController(with text: String?)
+}
 
 protocol PanModalAppearanceDelegate: AnyObject {
     func needScrollToDirection(_ direction: UICollectionView.ScrollPosition)

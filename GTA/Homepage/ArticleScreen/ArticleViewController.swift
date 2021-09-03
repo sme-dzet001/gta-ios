@@ -225,7 +225,7 @@ extension ArticleViewController: PanModalPresentable {
     }
     
     var panModalBackgroundColor: UIColor {
-        return .clear
+        return UIColor(hex: 0x000000, alpha: 0.4)
     }
    
 }

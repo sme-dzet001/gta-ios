@@ -17,6 +17,8 @@ class HomepageTableViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var errorLabel: UILabel!
     
+    weak var newsShowDelegate: NewsShowDelegate?
+    
     var dataProvider: HomeDataProvider?
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
@@ -272,6 +274,10 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let dataProvider = dataProvider, dataProvider.newsData.count > indexPath.row else { return }
+        let newsBody = dataProvider.newsData[indexPath.row].newsBody
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        newsShowDelegate?.showArticleViewController(with: newsBody)
     }
     
 }
