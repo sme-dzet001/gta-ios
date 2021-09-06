@@ -30,7 +30,6 @@ class HomepageTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
-        //addBlurToView()
         tableView.accessibilityIdentifier = "HomeScreenTableView"
     }
     

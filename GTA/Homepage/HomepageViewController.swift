@@ -28,7 +28,6 @@ class HomepageViewController: UIViewController {
     private var dataProvider: HomeDataProvider = HomeDataProvider()
     private var lastUpdateDate: Date?
     
-    //var selectedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     var homepageTableVC: HomepageTableViewController?
     
     private var presentedVC: ArticleViewController?
@@ -461,31 +460,6 @@ extension HomepageViewController: NewsShowDelegate {
         presentPanModal(articleViewController)
     }
 }
-
-/*extension HomepageViewController: PanModalAppearanceDelegate {
-    
-    func needScrollToDirection(_ scrollPosition: UICollectionView.ScrollPosition) {
-        if scrollPosition == .left && selectedIndexPath.row < dataProvider.newsData.count - 1 {
-            selectedIndexPath.row += 1
-        } else if scrollPosition == .right && selectedIndexPath.row > 0 {
-            selectedIndexPath.row -= 1
-        } else {
-            return
-        }
-        collectionView.collectionViewLayout.invalidateLayout()
-        collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: scrollPosition)
-        let newsBody = dataProvider.newsData[selectedIndexPath.row].newsBody
-        let htmlBody = dataProvider.formNewsBody(from: newsBody)
-        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
-            htmlBody?.setFontFace(font: neededFont)
-        }
-        self.presentedVC?.attributedArticleText = htmlBody
-    }
-    
-    func panModalDidDismiss() {
-        //pageControl.isHidden = false
-    }
-}*/
 
 protocol NewsShowDelegate: AnyObject {
     func showArticleViewController(with text: String?)
