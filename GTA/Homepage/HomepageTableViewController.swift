@@ -16,6 +16,7 @@ class HomepageTableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var blurView: UIView!
     
     weak var newsShowDelegate: NewsShowDelegate?
     
@@ -29,6 +30,7 @@ class HomepageTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
+        //addBlurToView()
         tableView.accessibilityIdentifier = "HomeScreenTableView"
     }
     
@@ -61,6 +63,19 @@ class HomepageTableViewController: UIViewController {
         default:
             return ""
         }
+    }
+    
+    private func addBlurToView() {
+        if let gradientMaskLayer = blurView.layer.mask, gradientMaskLayer.name == "grad" {
+            return
+        }
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.name = "grad"
+        gradientMaskLayer.frame = blurView.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradientMaskLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+        blurView.layer.mask = gradientMaskLayer
     }
     
     private func setUpTableView() {
@@ -233,6 +248,15 @@ class HomepageTableViewController: UIViewController {
 }
 
 extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if tableView.contentOffset.y > 0 {
+            addBlurToView()
+            blurView.isHidden = false
+        } else {
+            blurView.isHidden = true
+        }
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
