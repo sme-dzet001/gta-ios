@@ -64,7 +64,7 @@ class HomepageTableViewController: UIViewController {
         }
     }
     
-    private func addBlurToView() {
+    private func addBlurToViewIfNeeded() {
         if let gradientMaskLayer = blurView.layer.mask, gradientMaskLayer.name == "grad" {
             return
         }
@@ -250,7 +250,7 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if tableView.contentOffset.y > 0 {
-            addBlurToView()
+            addBlurToViewIfNeeded()
             blurView.isHidden = false
         } else {
             blurView.isHidden = true
