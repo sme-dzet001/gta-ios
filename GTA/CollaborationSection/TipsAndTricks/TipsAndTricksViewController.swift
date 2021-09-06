@@ -81,8 +81,8 @@ class TipsAndTricksViewController: UIViewController {
         })
     }
     
-    func formAttributedQuestion(from question: String) -> NSMutableAttributedString? {
-        guard let neededFont = UIFont(name: "SFProText-Semibold", size: 16) else { return nil }
+    func formAttributedQuestion(from question: String, font: UIFont?) -> NSMutableAttributedString? {
+        guard let neededFont = font ?? UIFont(name: "SFProText-Semibold", size: 16) else { return nil }
         let fontAttributes = [NSAttributedString.Key.font: neededFont]
         var question = question
         if question.first == " " {
@@ -118,7 +118,7 @@ extension TipsAndTricksViewController: UITableViewDelegate, UITableViewDataSourc
         let cellDataSource = dataProvider?.tipsAndTricksData[indexPath.row]
         cell?.delegate = self
         
-        let questionFormatted = formAttributedQuestion(from: cellDataSource?.question ?? "")
+        let questionFormatted = formAttributedQuestion(from: cellDataSource?.question ?? "", font: cell?.titleLabel.font)
         let answerDecoded = decodedAnswer(answer: cellDataSource?.answer ?? "")
         answerDecoded.setParagraphStyleParams(lineSpacing: 8)
         

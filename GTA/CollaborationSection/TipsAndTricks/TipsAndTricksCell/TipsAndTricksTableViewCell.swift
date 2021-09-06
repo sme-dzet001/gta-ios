@@ -85,8 +85,10 @@ class TipsAndTricksTableViewCell: UITableViewCell {
         descriptionLabel.numberOfLines = 3
         descriptionLabel.sizeToFit()
         self.layoutIfNeeded()
-        descriptionLabel.attributedText = fullText
-        descriptionLabel.addReadMoreString("more")
+        DispatchQueue.main.async { [weak self] in
+            self?.descriptionLabel.attributedText = self?.fullText
+            self?.descriptionLabel.addReadMoreString("more")
+        }
     }
     
 }
