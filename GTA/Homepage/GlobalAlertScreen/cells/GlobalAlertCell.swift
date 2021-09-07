@@ -22,7 +22,7 @@ class GlobalAlertCell: UITableViewCell {
     }
     
     func setAlertOn() {
-        parentView.backgroundColor = UIColor(hex: 0xCC0000, alpha: 0.3)
+        parentView.backgroundColor = UIColor(hex: 0xCC0000, alpha: 0.8)
         alertImageView.image = UIImage(named: "global_alert_on")
     }
     
