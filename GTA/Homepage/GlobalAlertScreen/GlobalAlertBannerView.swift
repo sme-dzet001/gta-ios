@@ -1,25 +1,20 @@
 //
-//  GlobalAlertCell.swift
+//  GlobalAlertBannerView.swift
 //  GTA
 //
-//  Created by Kostiantyn Dzetsiuk on 14.05.2021.
+//  Created by Margarita N. Bock on 01.09.2021.
 //
 
 import UIKit
 
-class GlobalAlertCell: UITableViewCell {
-
+class GlobalAlertBannerView: UIView {
+    
     @IBOutlet weak var alertLabel: UILabel!
     @IBOutlet weak var alertImageView: UIImageView!
     @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var closeButton: UIButton!
     
     weak var delegate: DismissAlertDelegate?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
     
     func setAlertOn() {
         parentView.backgroundColor = UIColor(hex: 0xCC0000)
@@ -39,7 +34,7 @@ class GlobalAlertCell: UITableViewCell {
         switch prodAlertsStatus {
         case .newAlertCreated, .reminderState:
             parentView.backgroundColor = UIColor(hex: 0xFF9900)
-            alertImageView.image = UIImage(named: "global_alert_on")
+            alertImageView.image = UIImage(named: "global_alert_off")
             closeButton.isHidden = false
         case .activeAlert:
             closeButton.isHidden = true
@@ -54,4 +49,8 @@ class GlobalAlertCell: UITableViewCell {
         }
     }
     
+}
+
+protocol DismissAlertDelegate: AnyObject {
+    func closeAlertDidPressed()
 }

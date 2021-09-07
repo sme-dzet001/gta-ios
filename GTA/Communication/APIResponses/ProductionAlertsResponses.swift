@@ -140,7 +140,7 @@ struct ProductionAlertsRow: Codable, Equatable {
         } else if status == .closed {
             return .closed
         }
-        return .none
+         return .none
     }
 }
 

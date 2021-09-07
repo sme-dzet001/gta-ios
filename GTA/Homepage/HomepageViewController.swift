@@ -9,21 +9,59 @@ import UIKit
 import AdvancedPageControl
 import PanModal
 
+enum FilterTabType : String {
+    case all = "All"
+    case news = "News"
+    case specialAlerts = "Special Alerts"
+    case teamsNews = "Teams News"
+}
+
 class HomepageViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var errorLabel: UILabel!
-    @IBOutlet weak var pageControl: AdvancedPageControlView!
+    @IBOutlet weak var filterTabs: UICollectionView!
+    @IBOutlet weak var emergencyOutageBannerView: GlobalAlertBannerView!
+    @IBOutlet weak var globalProductionAlertBannerView: GlobalAlertBannerView!
+    @IBOutlet weak var emergencyOutageBannerViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var globalProductionAlertBannerViewHeight: NSLayoutConstraint!
     
     private var dataProvider: HomeDataProvider = HomeDataProvider()
     private var lastUpdateDate: Date?
     
-    var selectedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     var homepageTableVC: HomepageTableViewController?
     
     private var presentedVC: ArticleViewController?
+    
+    private var filterTabTypes : [FilterTabType] = [.all, .news, .specialAlerts, .teamsNews]
+    
+    private var selectedFilterTab: FilterTabType = .all
+    
+    @objc private func onSwipe(_ gesture: UISwipeGestureRecognizer) {
+        var selectedFilterTabIdx = filterTabTypes.firstIndex(of: selectedFilterTab) ?? 0
+        if gesture.direction == .right && selectedFilterTabIdx > 0 {
+            selectedFilterTabIdx -= 1
+        }
+        if gesture.direction == .left && selectedFilterTabIdx < (filterTabTypes.count - 1) {
+            selectedFilterTabIdx += 1
+        }
+        filterTabs.selectItem(at: IndexPath(item: selectedFilterTabIdx, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+        selectedFilterTab = filterTabTypes[selectedFilterTabIdx]
+    }
+    
+    private var filterTabItemWidths : [CGFloat] {
+        var result: [CGFloat] = []
+        guard let font: UIFont = UIFont(name: "SFProText-Medium", size: 14) else { return result }
+        for filterTabType in filterTabTypes {
+            let itemWidth = filterTabType.rawValue.width(height: self.filterTabs.frame.height, font: font) + 50
+            result.append(itemWidth)
+        }
+        let sumWidth = result.reduce(0, +)
+        let extraWidth = (view.bounds.size.width - 48 - sumWidth) / CGFloat(filterTabTypes.count)
+        if extraWidth > 0 {
+            result = result.map({ return $0 + extraWidth })
+        }
+        return result
+    }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -44,24 +82,33 @@ class HomepageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpCollectionView()
-        setUpPageControl()
+        setUpFilterTabs()
+        setUpBannerViews()
         setNeedsStatusBarAppearanceUpdate()
-        collectionView.accessibilityIdentifier = "HomeScreenCollectionView"
         
+        let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(onSwipe(_:)))
+        swipeGestureLeft.direction = [.left]
+        view.addGestureRecognizer(swipeGestureLeft)
+        
+        let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(onSwipe(_:)))
+        swipeGestureRight.direction = [.right]
+        view.addGestureRecognizer(swipeGestureRight)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(getAllAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getGlobalProductionAlertsIgnoringCache), name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
-            loadNewsData()
-        }
         if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
             emergencyOutageNotificationReceived()
         }
         if let productionAlertInfo = UserDefaults.standard.object(forKey: "globalProductionAlertNotificationReceived") as? [String : Any] {
             navigateToGlobalProdAlert(withAlertInfo: productionAlertInfo)
         }
+        updateBannerViews()
+        getAllAlerts()
         getProductionAlertsCount()
     }
     
@@ -70,69 +117,208 @@ class HomepageViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalProductionAlertNotificationReceived), object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
     }
     
-    private func loadNewsData() {
-        if dataProvider.newsDataIsEmpty {
-            activityIndicator.startAnimating()
-            errorLabel.isHidden = true
-            pageControl.isHidden = true
-        }
-        dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
-            DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
-//                if !isFromCache && UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
-//                    self?.emergencyOutageNotificationReceived()
-//                }
-                if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                    self?.errorLabel.isHidden = true
-                    self?.pageControl.isHidden = self?.dataProvider.newsDataIsEmpty ?? true
-                    self?.pageControl.numberOfPages = self?.dataProvider.newsData.count ?? 0
-                    self?.collectionView.reloadData()
-                } else {
-                    let isNoData = (self?.dataProvider.newsDataIsEmpty ?? true)
-                    if isNoData {
-                        self?.collectionView.reloadData()
-                    }
-                    self?.pageControl.isHidden = isNoData
-                    self?.errorLabel.isHidden = !isNoData
-                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                }
-            }
-        }
-    }
-    
-    private func setUpPageControl() {
-        let inactiveColor = UIColor(red: 147.0 / 255.0, green: 130.0 / 255.0, blue: 134.0 / 255.0, alpha: 1.0)
-        let newsCount = dataProvider.newsData.count
-        pageControl.drawer = ExtendedDotDrawer(numberOfPages: newsCount,  height: 4, width: 6, space: 6, dotsColor: inactiveColor, borderColor: inactiveColor, indicatorBorderColor: .white)
-        pageControl.drawer.currentItem = 0
-    }
-    
-    private func setUpCollectionView() {
-        collectionView.isPagingEnabled = true
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        if let layout = collectionView?.collectionViewLayout as? AnimatedCollectionViewLayout {
+    private func setUpFilterTabs() {
+        filterTabs.dataSource = self
+        filterTabs.delegate = self
+        if let layout = filterTabs.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .horizontal
         }
-        collectionView.register(UINib(nibName: "NewsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NewsCollectionViewCell")
+        filterTabs.register(UINib(nibName: "HomepageFilterTabsCollectionCell", bundle: nil), forCellWithReuseIdentifier: "HomepageFilterTabsCollectionCell")
+        
+        filterTabs.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .left)
+    }
+    
+    private func setUpBannerViews() {
+        emergencyOutageBannerView.delegate = self
+        globalProductionAlertBannerView.delegate = self
+    }
+
+    private func updateBannerViews() {
+        if isEmergencyOutageBannerVisible {
+            emergencyOutageBannerView.isHidden = false
+            emergencyOutageBannerViewHeight.constant = 80
+            populateEmergencyOutageBanner()
+        } else {
+            emergencyOutageBannerView.isHidden = true
+            emergencyOutageBannerViewHeight.constant = 0
+        }
+        
+        if isGlobalProductionAlertBannerVisible {
+            globalProductionAlertBannerView.isHidden = false
+            globalProductionAlertBannerViewHeight.constant = 80
+            populateGlobalProductionAlertBanner()
+        } else {
+            globalProductionAlertBannerView.isHidden = true
+            globalProductionAlertBannerViewHeight.constant = 0
+        }
+    }
+    
+    private func populateEmergencyOutageBanner() {
+        guard let alert = dataProvider.globalAlertsData else { return }
+        emergencyOutageBannerView.alertLabel.text = "Emergency Outage: \(alert.alertTitle ?? "")"
+        if alert.status == .closed {
+            emergencyOutageBannerView.setAlertOff()
+        } else {
+            emergencyOutageBannerView.setAlertOn()
+        }
+    }
+    
+    private func populateGlobalProductionAlertBanner() {
+        guard let alert = dataProvider.productionGlobalAlertsData else { return }
+        guard !alert.isExpired else { return }
+        globalProductionAlertBannerView.alertLabel.text = "Production Alert: \(alert.summary ?? "")"
+        globalProductionAlertBannerView.closeButton.isHidden = false
+        globalProductionAlertBannerView.delegate = self
+        globalProductionAlertBannerView.setAlertBannerForGlobalProdAlert(prodAlertsStatus: alert.prodAlertsStatus)
+    }
+    
+    private var isEmergencyOutageBannerVisible: Bool {
+        let alert = dataProvider.globalAlertsData
+        if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
+            return false
+        }
+        return true
+    }
+    
+    private var isGlobalProductionAlertBannerVisible: Bool {
+        let alert = dataProvider.productionGlobalAlertsData
+        if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open || dismissDidPressed {
+            return false
+        }
+        return true
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
+    @IBAction func emergencyOutageBannerPressed(_ sender: Any) {
+        showGlobalAlertModal(isProdAlert: false, productionAlertId: nil)
+    }
+    
+    @IBAction func globalProductionAlertBannerPressed(_ sender: Any) {
+        showGlobalAlertModal(isProdAlert: true, productionAlertId: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedTable" {
             homepageTableVC = segue.destination as? HomepageTableViewController
             homepageTableVC?.dataProvider = dataProvider
-            homepageTableVC?.showModalDelegate = self
+            homepageTableVC?.newsShowDelegate = self
         }
     }
     
     @IBAction func unwindToHomePage(segue: UIStoryboardSegue) {
+    }
+    
+    private var dismissDidPressed: Bool {
+        if let value = UserDefaults.standard.value(forKey: "ClosedProdAlert") as? [String : String?] {
+            let issueReason = value["issueReason"] == self.dataProvider.productionGlobalAlertsData?.issueReason
+            let prodAlertsStatus = value["prodAlertsStatus"] == self.dataProvider.productionGlobalAlertsData?.prodAlertsStatus.rawValue
+            let summary = value["summary"] == self.dataProvider.productionGlobalAlertsData?.summary
+            return issueReason && prodAlertsStatus && summary
+        }
+        return false
+    }
+    
+    private var emergencyOutageLoaded: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                if self.navigationController?.topViewController is HomepageViewController, self.emergencyOutageLoaded {
+                    UIApplication.shared.applicationIconBadgeNumber = 0
+                }
+            }
+        }
+    }
+    
+    private var hasActiveGlobalProdAlerts: Bool {
+        guard let data = dataProvider.productionGlobalAlertsData else { return false }
+        guard data.prodAlertsStatus == .activeAlert || data.prodAlertsStatus == .closed else { return false }
+        let eventStarted = data.startDate.timeIntervalSince1970 >= Date().timeIntervalSince1970
+        let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
+        return eventStarted || eventFinished
+    }
+    
+    @objc private func getAllAlerts() {
+        getGlobalAlerts()
+        getGlobalProductionAlerts()
+    }
+    
+    @objc private func getGlobalAlerts() {
+        dataProvider.getGlobalAlerts(completion: {[weak self] isFromCache, dataWasChanged, errorCode, error in
+            DispatchQueue.main.async {
+                if error == nil && errorCode == 200 {
+                    self?.emergencyOutageLoaded = dataWasChanged && !isFromCache
+                    self?.updateBannerViews()
+                    if let data = self?.dataProvider.globalAlertsData {
+                        switch data.status {
+                        case .inProgress:
+                            self?.tabBarController?.addAlertItemBadge(atIndex: 0)
+                        default:
+                            if let self = self, !self.hasActiveGlobalProdAlerts {
+                                self.tabBarController?.removeItemBadge(atIndex: 0)
+                            }
+                        }
+                    }
+                } else {
+                    //self?.displayError(errorMessage: "Error was happened!")
+                }
+            }
+        })
+    }
+    
+    @objc private func getGlobalAlertsIgnoringCache() {
+        dataProvider.getGlobalAlertsIgnoringCache {[weak self] _, dataWasChanged, errorCode, error in
+            DispatchQueue.main.async {
+                if dataWasChanged, error == nil {
+                    self?.emergencyOutageLoaded = true
+                    self?.updateBannerViews()
+                }
+            }
+        }
+    }
+    
+    @objc private func getGlobalProductionAlertsIgnoringCache() {
+        dataProvider.getGlobalProductionIgnoringCache {[weak self] dataWasChanged, errorCode, error in
+            DispatchQueue.main.async {
+                if dataWasChanged, error == nil {
+                    self?.updateBannerViews()
+                }
+            }
+        }
+    }
+    
+    private func getGlobalProductionAlerts() {
+        dataProvider.getGlobalProductionAlerts(completion: {[weak self] dataWasChanged, errorCode, error in
+            DispatchQueue.main.async {
+                if error == nil && errorCode == 200 {
+                    self?.updateBannerViews()
+                    if let data = self?.dataProvider.productionGlobalAlertsData {
+                        switch data.prodAlertsStatus {
+                        case .newAlertCreated, .reminderState:
+                            if self?.dataProvider.globalAlertsData?.status != .inProgress {
+                                self?.tabBarController?.removeItemBadge(atIndex: 0)
+                            }
+                        case .activeAlert, .closed:
+                            let eventStarted = data.startDate.timeIntervalSince1970 >= Date().timeIntervalSince1970
+                            let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
+                            if eventStarted || eventFinished {
+                                self?.tabBarController?.addAlertItemBadge(atIndex: 0)
+                            }
+                        default:
+                            return
+                        }
+                    }
+                } else {
+                    //self?.displayError(errorMessage: "Error was happened!")
+                }
+            }
+        })
     }
     
     @objc func globalProductionAlertNotificationReceived(notification: NSNotification) {
@@ -204,44 +390,39 @@ class HomepageViewController: UIViewController {
         }
     }
     
+    func showGlobalAlertModal(isProdAlert: Bool, productionAlertId: String? = nil) {
+        let globalAlertViewController = GlobalAlertViewController()
+        globalAlertViewController.dataProvider = dataProvider
+        globalAlertViewController.isProdAlert = isProdAlert
+        globalAlertViewController.productionAlertId = productionAlertId
+        presentPanModal(globalAlertViewController)
+        
+    }
+}
+
+extension HomepageViewController: DismissAlertDelegate {
+    func closeAlertDidPressed() {
+        let alert = UIAlertController(title: "Confirm closing", message: "Notification will appear again when the outage starts", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            let prodGlobalAlertsData = self.dataProvider.productionGlobalAlertsData
+            let closedData = ["issueReason" : prodGlobalAlertsData?.issueReason, "prodAlertsStatus" : prodGlobalAlertsData?.prodAlertsStatus.rawValue, "summary" : prodGlobalAlertsData?.summary]
+            UserDefaults.standard.setValue(closedData, forKey: "ClosedProdAlert")
+            self.updateBannerViews()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataProvider.newsData.count
+        return filterTabTypes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard dataProvider.newsData.count > indexPath.row else { return UICollectionViewCell() }
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewsCollectionViewCell", for: indexPath) as? NewsCollectionViewCell {
-            let cellDataSource = dataProvider.newsData[indexPath.row]
-            let imageURL = dataProvider.formImageURL(from: cellDataSource.posterUrl)
-            cell.imageView.accessibilityIdentifier = "HomeScreenCollectionImageView"
-            let url = URL(string: imageURL)
-            cell.imageView.kf.indicatorType = .activity
-            cell.imageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
-                switch result {
-                case .success(let resData):
-                    cell.imageView.image = resData.image
-                case .failure(let error):
-                    if !error.isNotCurrentTask {
-                        cell.imageView.image = nil
-                    }
-                }
-            })
-            //cell.titleLabel.text = cellDataSource.newsTitle
-            //cell.byLabel.text = cellDataSource.newsAuthor
-            let newsDate = cellDataSource.newsDate
-            //cell.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
-            cell.titleLabel.attributedText = addShadow(for: cellDataSource.newsTitle)
-            cell.titleLabel.accessibilityIdentifier = "HomeScreenCollectionTitleLabel"
-            cell.byLabel.attributedText = addShadow(for: cellDataSource.newsAuthor)
-            cell.byLabel.accessibilityIdentifier = "HomeScreenCollectionByLabel"
-            cell.dateLabel.attributedText = addShadow(for: newsDate?.getFormattedDateStringForMyTickets())
-            cell.dateLabel.accessibilityIdentifier = "HomeScreenCollectionDateLabel"
-            //cell.dateLabel.attributedText = addShadow(for: dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss"))
-            cell.configurePosition()
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomepageFilterTabsCollectionCell", for: indexPath) as? HomepageFilterTabsCollectionCell {
+            cell.titleLabel.text = filterTabTypes[indexPath.item].rawValue
             return cell
         } else {
             return UICollectionViewCell()
@@ -249,16 +430,24 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard dataProvider.newsData.count > indexPath.row else { return }
-        let newsBody = dataProvider.newsData[indexPath.row].newsBody
-        showArticleViewController(with: newsBody)
-        selectedIndexPath.row = indexPath.row
+        filterTabs.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        selectedFilterTab = filterTabTypes[indexPath.item]
     }
     
-    private func showArticleViewController(with text: String?) {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemWidth = filterTabItemWidths[indexPath.item]
+        return CGSize(width: itemWidth, height: self.filterTabs.frame.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+}
+
+extension HomepageViewController: NewsShowDelegate {
+    func showArticleViewController(with text: String?) {
         let articleViewController = ArticleViewController()
         presentedVC = articleViewController
-        articleViewController.appearanceDelegate = self
         let htmlBody = dataProvider.formNewsBody(from: text)
         if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
             htmlBody?.setFontFace(font: neededFont)
@@ -270,64 +459,13 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
         }
         presentPanModal(articleViewController)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.collectionView.frame.width, height: self.collectionView.frame.height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offSet = scrollView.contentOffset.x
-        let width = scrollView.frame.width
-        pageControl.setPageOffset(CGFloat(offSet) / CGFloat(width))
-    }
-    
 }
 
-extension HomepageViewController: PanModalAppearanceDelegate {
-    
-    func needScrollToDirection(_ scrollPosition: UICollectionView.ScrollPosition) {
-        if scrollPosition == .left && selectedIndexPath.row < dataProvider.newsData.count - 1 {
-            selectedIndexPath.row += 1
-        } else if scrollPosition == .right && selectedIndexPath.row > 0 {
-            selectedIndexPath.row -= 1
-        } else {
-            return
-        }
-        collectionView.collectionViewLayout.invalidateLayout()
-        collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: scrollPosition)
-        let newsBody = dataProvider.newsData[selectedIndexPath.row].newsBody
-        let htmlBody = dataProvider.formNewsBody(from: newsBody)
-        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
-            htmlBody?.setFontFace(font: neededFont)
-        }
-        self.presentedVC?.attributedArticleText = htmlBody
-    }
-    
-    func panModalDidDismiss() {
-        //pageControl.isHidden = false
-    }
-}
-
-extension HomepageViewController: ShowGlobalAlertModalDelegate {
-    func showGlobalAlertModal(isProdAlert: Bool, productionAlertId: String? = nil) {
-        let globalAlertViewController = GlobalAlertViewController()
-        globalAlertViewController.dataProvider = dataProvider
-        globalAlertViewController.isProdAlert = isProdAlert
-        globalAlertViewController.productionAlertId = productionAlertId
-        presentPanModal(globalAlertViewController)
-        
-    }
+protocol NewsShowDelegate: AnyObject {
+    func showArticleViewController(with text: String?)
 }
 
 protocol PanModalAppearanceDelegate: AnyObject {
     func needScrollToDirection(_ direction: UICollectionView.ScrollPosition)
     func panModalDidDismiss()
-}
-
-protocol ShowGlobalAlertModalDelegate: AnyObject {
-    func showGlobalAlertModal(isProdAlert: Bool, productionAlertId: String?)
 }

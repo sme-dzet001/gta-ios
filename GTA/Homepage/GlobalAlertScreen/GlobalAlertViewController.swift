@@ -266,7 +266,7 @@ extension GlobalAlertViewController: PanModalPresentable {
     }
     
     var panModalBackgroundColor: UIColor {
-        return .clear
+        return UIColor(hex: 0x000000, alpha: 0.4)
     }
     
     var topOffset: CGFloat {

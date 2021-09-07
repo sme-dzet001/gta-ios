@@ -606,6 +606,16 @@ extension String {
         return ceil(size.height)
     }
     
+    func width(height: CGFloat, font: UIFont) -> CGFloat {
+        let textSize = CGSize(width: .greatestFiniteMagnitude, height: height)
+        
+        let size = self.boundingRect(with: textSize,
+                                     options: .usesLineFragmentOrigin,
+                                     attributes: [NSAttributedString.Key.font : font],
+                                     context: nil)
+        return ceil(size.width)
+    }
+    
     func getFormattedDateStringForMyTickets() -> String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.ticketDateFormat
