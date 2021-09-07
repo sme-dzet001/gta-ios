@@ -77,6 +77,7 @@ class CacheManager {
         case getAppsProductionAlerts
         case getAppProductionAlerts(appName: String)
         case getCollaborationMetrics(appGroup: String, appName: String)
+        case getGlobalProductionAlerts
         
         var endpoint: String {
             switch self {
@@ -107,6 +108,7 @@ class CacheManager {
             case .getAppsProductionAlerts: return "/v3/widgets/app_alerts/data"
             case .getAppProductionAlerts(let appName): return "/v3/widgets/app_alerts/\(appName)/data"
             case .getCollaborationMetrics(let appGroup, let appName): return "/v3/widgets/collaboration_metrics/\(appGroup)/\(appName)/data"
+            case .getGlobalProductionAlerts: return "/v3/widgets/global_production_alerts/data"
             }
         }
     }

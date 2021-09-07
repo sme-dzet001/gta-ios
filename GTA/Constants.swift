@@ -17,14 +17,18 @@ class Constants {
     static let pushTypeKey = "push_type"
     static let pushTypeEmergencyOutage = "Emergency Outage"
     static let pushTypeProductionAlert = "Production Alert"
+    static let pushTypeGlobalProductionAlert = "Global Production Alert"
+    static let isNeedLogOut = "isNeedLogOut"
 }
 
 class NotificationsNames {
     static let emergencyOutageNotificationReceived = "emergencyOutageNotificationReceived"
     static let productionAlertNotificationReceived = "productionAlertNotificationReceived"
+    static let globalProductionAlertNotificationReceived = "globalProductionAlertNotificationReceived"
     static let globalAlertWillShow = "globalAlertWillShow"
     static let emergencyOutageNotificationDisplayed = "emergencyOutageNotificationDisplayed"
     static let productionAlertNotificationDisplayed = "productionAlertNotificationDisplayed"
+    static let globalProductionAlertNotificationDisplayed = "globalProductionAlertNotificationDisplayed"
     static let updateActiveProductionAlertStatus = "updateActiveProductionAlertStatus"
 }
 

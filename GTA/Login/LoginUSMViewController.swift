@@ -21,6 +21,10 @@ class LoginUSMViewController: UIViewController {
     
     var emailAddress = ""
     var token: String = ""
+    
+    private var isNeedLogOut: Bool {
+        return UserDefaults.standard.bool(forKey: Constants.isNeedLogOut)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +43,11 @@ class LoginUSMViewController: UIViewController {
         ])
         usmWebView.navigationDelegate = self
         usmWebView.uiDelegate = self
-        loadUsmLogon()
+        if !isNeedLogOut {
+            loadUsmLogon()
+        } else {
+            logout()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,11 +104,14 @@ class LoginUSMViewController: UIViewController {
     }
     
     private func logout() {
-        guard let accessToken = KeychainManager.getToken() else { return }
-        let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
-        guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
-        let logoutRequest = URLRequest(url: logoutURL)
-        usmWebView.load(logoutRequest)
+        if let accessToken = KeychainManager.getToken() {
+            let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
+            guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
+            let logoutRequest = URLRequest(url: logoutURL)
+            usmWebView.load(logoutRequest)
+        } else {
+            loadUsmLogon()
+        }
     }
     
     /*
@@ -143,6 +154,7 @@ extension LoginUSMViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         guard let navigationRequestURL = navigationAction.request.url else { return }
+        print("\(navigationRequestURL.absoluteString)")
         if navigationRequestURL.absoluteString.hasPrefix(USMSettings.usmLogoutURL) {
             // logout was made
             KeychainManager.deleteUsername()
@@ -171,6 +183,11 @@ extension LoginUSMViewController: WKNavigationDelegate {
             decisionHandler(.cancel)
             return
         }
+        if navigationRequestURL.absoluteString.contains("app_code=1297") {
+            showLoginFailedAlert(message: "An unexpected error occurred. Please try logging in again.", title: "Login Failed")
+            decisionHandler(.cancel)
+            return
+        }
         if navigationRequestURL.absoluteString.hasPrefix(USMSettings.usmInternalRedirectURL) {
             guard let correctParsingFormatURL = URL(string: navigationRequestURL.absoluteString.replacingOccurrences(of: USMSettings.usmInternalRedirectURL, with: "https://correctparsingformat.com")) else {
                 decisionHandler(.cancel)
@@ -193,7 +210,15 @@ extension LoginUSMViewController: WKNavigationDelegate {
         decisionHandler(.allow)
     }
     
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print("sdsdsdsddsdsdsds")
+    }
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if isNeedLogOut {
+            loadUsmLogon()
+            UserDefaults.standard.setValue(false, forKey: Constants.isNeedLogOut)
+        }
         if let url = webView.url?.absoluteString, url.contains("login") {
             usmWebView.alpha = 1
             activityIndicator.stopAnimating()

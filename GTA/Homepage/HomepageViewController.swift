@@ -37,6 +37,7 @@ class HomepageViewController: UIViewController {
     
     func commonInit() {
         NotificationCenter.default.addObserver(self, selector: #selector(emergencyOutageNotificationReceived), name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(globalProductionAlertNotificationReceived), name: Notification.Name(NotificationsNames.globalProductionAlertNotificationReceived), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getProductionAlertsCount), name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
     }
@@ -58,12 +59,16 @@ class HomepageViewController: UIViewController {
         if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
             emergencyOutageNotificationReceived()
         }
+        if let productionAlertInfo = UserDefaults.standard.object(forKey: "globalProductionAlertNotificationReceived") as? [String : Any] {
+            navigateToGlobalProdAlert(withAlertInfo: productionAlertInfo)
+        }
         getProductionAlertsCount()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalProductionAlertNotificationReceived), object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
@@ -130,6 +135,32 @@ class HomepageViewController: UIViewController {
     @IBAction func unwindToHomePage(segue: UIStoryboardSegue) {
     }
     
+    @objc func globalProductionAlertNotificationReceived(notification: NSNotification) {
+        guard let productionAlertInfo = notification.userInfo as? [String : Any] else { return }
+        navigateToGlobalProdAlert(withAlertInfo: productionAlertInfo)
+    }
+    
+    private func navigateToGlobalProdAlert(withAlertInfo productionAlertInfo: [String : Any]) {
+        if let _ = UserDefaults.standard.object(forKey: "globalProductionAlertNotificationReceived") as? [String : Any] {
+            UserDefaults.standard.removeObject(forKey: "globalProductionAlertNotificationReceived")
+        }
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        guard let embeddedController = self.navigationController else { return }
+        guard let homepageTabIdx = self.tabBarController?.viewControllers?.firstIndex(of: embeddedController) else { return }
+        guard let productionAlertId = productionAlertInfo["production_alert_id"] as? String else { return }
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        appDelegate.dismissPanModalIfPresented { [weak self] in
+            guard let self = self else { return }
+            self.tabBarController?.selectedIndex = homepageTabIdx
+            embeddedController.popToRootViewController(animated: false)
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+            self.tabBarController?.selectedIndex = homepageTabIdx
+            embeddedController.popToRootViewController(animated: false)
+            self.dataProvider.forceUpdateAlertDetails = true
+            self.showGlobalAlertModal(isProdAlert: true, productionAlertId: productionAlertId)
+        }
+    }
+    
     @objc func emergencyOutageNotificationReceived() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.dismissPanModalIfPresented { [weak self] in
@@ -143,14 +174,14 @@ class HomepageViewController: UIViewController {
                 //if let alert = self.dataProvider.globalAlertsData, !alert.isExpired {
                 NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
                 self.dataProvider.forceUpdateAlertDetails = true
-                self.showGlobalAlertModal()
+                self.showGlobalAlertModal(isProdAlert: false)
                 //}
             } else {
                 NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
                 self.tabBarController?.selectedIndex = homepageTabIdx
                 embeddedController.popToRootViewController(animated: false)
                 self.dataProvider.forceUpdateAlertDetails = true
-                self.showGlobalAlertModal()
+                self.showGlobalAlertModal(isProdAlert: false)
             }
         }
     }
@@ -158,6 +189,9 @@ class HomepageViewController: UIViewController {
     @objc private func didBecomeActive() {
         if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
             emergencyOutageNotificationReceived()
+        }
+        if let productionAlertInfo = UserDefaults.standard.object(forKey: "globalProductionAlertNotificationReceived") as? [String : Any] {
+            navigateToGlobalProdAlert(withAlertInfo: productionAlertInfo)
         }
         getProductionAlertsCount()
     }
@@ -279,9 +313,11 @@ extension HomepageViewController: PanModalAppearanceDelegate {
 }
 
 extension HomepageViewController: ShowGlobalAlertModalDelegate {
-    func showGlobalAlertModal() {
+    func showGlobalAlertModal(isProdAlert: Bool, productionAlertId: String? = nil) {
         let globalAlertViewController = GlobalAlertViewController()
         globalAlertViewController.dataProvider = dataProvider
+        globalAlertViewController.isProdAlert = isProdAlert
+        globalAlertViewController.productionAlertId = productionAlertId
         presentPanModal(globalAlertViewController)
         
     }
@@ -293,5 +329,5 @@ protocol PanModalAppearanceDelegate: AnyObject {
 }
 
 protocol ShowGlobalAlertModalDelegate: AnyObject {
-    func showGlobalAlertModal()
+    func showGlobalAlertModal(isProdAlert: Bool, productionAlertId: String?)
 }

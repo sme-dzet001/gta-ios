@@ -60,6 +60,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getProductionAlerts()
+        getMyApps()
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             getAppDetailsData()
         }
@@ -74,6 +75,20 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         super.viewDidAppear(animated)
         if dataProvider?.activeProductionAlertId != nil {
             showProductionAlertScreen()
+        }
+    }
+    
+    private func getMyApps() {
+        dataProvider?.getMyAppsStatus {[weak self] (errorCode, error, isFromCache) in
+            DispatchQueue.main.async {
+                if self?.tableView.dataHasChanged == true {
+                    self?.tableView.reloadData()
+                } else {
+                    UIView.performWithoutAnimation {
+                        self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
+                    }
+                }
+            }
         }
     }
     

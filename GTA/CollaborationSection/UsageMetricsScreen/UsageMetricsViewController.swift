@@ -34,12 +34,7 @@ class UsageMetricsViewController: UIViewController {
     weak var horizontallBarChartDataChangedDelegate: HorizontallBarChartDataChangedDelegate?
     weak var activeUsersDataChangedDelegate: ActiveUsersDataChangedDelegate?
     
-    deinit {
-        activeUsersVC.removeFromParent()
-        teamChatUsersVC.removeFromParent()
-        teamsByFunctionsVC.removeFromParent()
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
+    private var isKeyboardShow: Bool = false
     
     var charts: [MetricsPosition?] {
         return dataProvider?.chartsPosition ?? []
@@ -122,7 +117,7 @@ class UsageMetricsViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
-        NotificationCenter.default.addObserver(self, selector: #selector(getChartsData), name: UIApplication.didBecomeActiveNotification, object: nil)
+        addObservers()
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.barTintColor = .white
         
@@ -144,6 +139,25 @@ class UsageMetricsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    private func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIApplication.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIApplication.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func didBecomeActive() {
+        getChartsData()
+        hideKeyboard()
+    }
+    
+    @objc private func keyboardWillShow() {
+        isKeyboardShow = true
+    }
+    
+    @objc private func keyboardWillHide() {
+        isKeyboardShow = false
     }
     
     private func setUpTextField() {
@@ -261,11 +275,24 @@ class UsageMetricsViewController: UIViewController {
     }
     
     @objc private func backPressed() {
+        if isKeyboardShow {
+            hideKeyboard()
+            return
+        }
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc func hideKeyboard() {
         view.endEditing(true)
+    }
+    
+    deinit {
+        activeUsersVC.removeFromParent()
+        teamChatUsersVC.removeFromParent()
+        teamsByFunctionsVC.removeFromParent()
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillHideNotification, object: nil)
     }
 
 }
@@ -308,7 +335,7 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         hideKeyboard()
     }
     

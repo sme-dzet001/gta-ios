@@ -500,6 +500,9 @@ class CollaborationDataProvider {
             receivedMetricsData = metricsData
             fillChartsData(for: rows)
         }
+        if retErr == nil, rows.isEmpty {
+            retErr = ResponseError.noDataAvailable
+        }
         completion?(isFromCache, dataWasChanged, errorCode, retErr)
     }
     
@@ -582,8 +585,9 @@ class CollaborationDataProvider {
     }
     
     func getUnreadArticlesNumber() -> Int? {
+        let defaultValue = self.collaborationNewsData.count == 0 ? nil : self.collaborationNewsData.count
         var number: Int = 0
-        guard let storedArticle = UserDefaults.standard.array(forKey: "NumberOfNews") as? [Data] else { return self.collaborationNewsData.count }
+        guard let storedArticle = UserDefaults.standard.array(forKey: "NumberOfNews") as? [Data] else { return defaultValue }
         for data in self.collaborationNewsData {
             if let bodyData = data.body?.data(using: .utf8), !storedArticle.contains(bodyData) {
                 number += 1
