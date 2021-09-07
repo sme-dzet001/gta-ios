@@ -22,7 +22,7 @@ class GlobalAlertCell: UITableViewCell {
     }
     
     func setAlertOn() {
-        parentView.backgroundColor = UIColor(hex: 0xCC0000)
+        parentView.backgroundColor = UIColor(hex: 0xCC0000, alpha: 0.3)
         alertImageView.image = UIImage(named: "global_alert_on")
     }
     
@@ -43,7 +43,7 @@ class GlobalAlertCell: UITableViewCell {
             closeButton.isHidden = false
         case .activeAlert:
             closeButton.isHidden = true
-            parentView.backgroundColor = UIColor(hex: 0xCC0000)
+            parentView.backgroundColor = UIColor(hex: 0xCC0000,alpha: 0.8)
             alertImageView.image = UIImage(named: "global_alert_on")
         case .closed:
             parentView.backgroundColor = UIColor(hex: 0x34C759)

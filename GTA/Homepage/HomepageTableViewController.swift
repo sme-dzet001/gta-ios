@@ -383,13 +383,13 @@ extension HomepageTableViewController {
             if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
                 return 0
             }
-            return 80
+            return 72
         case 1:
             let alert = dataProvider?.productionGlobalAlertsData
             if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open || dismissDidPressed {
                 return 0
             }
-            return 80
+            return 72
         case 2, 3:
             return 80
         default:
