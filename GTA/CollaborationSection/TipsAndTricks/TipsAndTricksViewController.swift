@@ -134,38 +134,38 @@ extension TipsAndTricksViewController: UITableViewDelegate, UITableViewDataSourc
             cell?.descriptionLabel.sizeToFit()
         }
     
-//        cell?.imageUrl = cellDataSource?.imageUrl
-//        let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl) ?? ""
-//        let url = URL(string: imageURL)
-//        if imageURL.isEmptyOrWhitespace() {
-//            cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
-//        } else if let url = url, imageURL.contains(".gif") {
-//            cell?.activityIndicator.startAnimating()
-//            cell?.mainImageView.sd_setImage(with: url, placeholderImage: nil, options: .refreshCached, completed: { img, err, cacheType, _ in
-//                if let _ = err, (err! as NSError).code != 2002 {
-//                    cell?.activityIndicator.stopAnimating()
-//                    cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
-//                } else if let _ = img {
-//                    cell?.activityIndicator.stopAnimating()
-//                }
-//                cell?.mainImageView.autoPlayAnimatedImage = false
-//            })
-//        } else {
-//            cell?.mainImageView.kf.indicatorType = .activity
-//            cell?.mainImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
-//                switch result {
-//                case .success(let resData):
-//                    if !imageURL.contains(".gif") {
-//                       // cell?.mainImageView.setImage(resData.image)
-//                        cell?.mainImageView.image = resData.image
-//                    }
-//                case .failure(let error):
-//                    if !error.isNotCurrentTask {
-//                        cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
-//                    }
-//                }
-//            })
-//        }
+        cell?.imageUrl = cellDataSource?.banner
+        let imageURL = dataProvider?.formImageURL(from: cellDataSource?.banner) ?? ""
+        let url = URL(string: imageURL)
+        if imageURL.isEmptyOrWhitespace() {
+            cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+        } else if let url = url, imageURL.contains(".gif") {
+            cell?.activityIndicator.startAnimating()
+            cell?.mainImageView.sd_setImage(with: url, placeholderImage: nil, options: .refreshCached, completed: { img, err, cacheType, _ in
+                if let _ = err, (err! as NSError).code != 2002 {
+                    cell?.activityIndicator.stopAnimating()
+                    cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+                } else if let _ = img {
+                    cell?.activityIndicator.stopAnimating()
+                }
+                cell?.mainImageView.autoPlayAnimatedImage = false
+            })
+        } else {
+            cell?.mainImageView.kf.indicatorType = .activity
+            cell?.mainImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+                switch result {
+                case .success(let resData):
+                    if !imageURL.contains(".gif") {
+                       // cell?.mainImageView.setImage(resData.image)
+                        cell?.mainImageView.image = resData.image
+                    }
+                case .failure(let error):
+                    if !error.isNotCurrentTask {
+                        cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+                    }
+                }
+            })
+        }
         
         return cell ?? UITableViewCell()
     }
