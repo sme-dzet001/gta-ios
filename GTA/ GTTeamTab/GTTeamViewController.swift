@@ -14,10 +14,10 @@ class GTTeamViewController: UIViewController {
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
-    var dataProvider: HomeDataProvider?
+    var dataProvider = GTTeamDataProvider()
     //private var lastUpdateDate: Date?
     private var appContactsData: GTTeamResponse? {
-        return dataProvider?.GTTeamContactsData
+        return dataProvider.GTTeamContactsData
     }
 
     override func viewDidLoad() {
@@ -27,6 +27,7 @@ class GTTeamViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         addErrorLabel(errorLabel)
         navigationController?.navigationBar.barTintColor = UIColor.white
        // if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
@@ -47,7 +48,6 @@ class GTTeamViewController: UIViewController {
     }
     
     private func loadContactsData() {
-        guard let dataProvider = dataProvider else { return }
         let contactsDataIsEmpty = appContactsData?.data?.rows == nil || appContactsData?.data?.rows?.count == 0
         if contactsDataIsEmpty {
             startAnimation()
@@ -82,9 +82,6 @@ class GTTeamViewController: UIViewController {
         activityIndicator.removeFromSuperview()
     }
     
-    @IBAction func backButtonPressed(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
-    }
 }
 
 extension GTTeamViewController: UITableViewDelegate, UITableViewDataSource {
@@ -100,8 +97,8 @@ extension GTTeamViewController: UITableViewDelegate, UITableViewDataSource {
             let cellDataSource = data[indexPath.row]
             cell.contactEmail = data[indexPath.row].contactEmail
             cell.setUpCell(with: cellDataSource)
-            let imageURL = dataProvider?.formImageURL(from: cellDataSource.contactPhotoUrl)
-            let url = URL(string: imageURL ?? "")
+            let imageURL = dataProvider.formImageURL(from: cellDataSource.contactPhotoUrl)
+            let url = URL(string: imageURL )
             cell.photoImageView.kf.indicatorType = .activity
             cell.photoImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
                 switch result {

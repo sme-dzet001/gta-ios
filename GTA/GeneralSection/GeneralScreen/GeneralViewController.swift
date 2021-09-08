@@ -37,6 +37,8 @@ class GeneralViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         dataProvider.getCurrentPreferences()
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationItem.setHidesBackButton(true, animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {

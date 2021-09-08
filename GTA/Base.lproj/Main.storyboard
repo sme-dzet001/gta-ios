@@ -34,7 +34,53 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VvA-AY-jCf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-764" y="74"/>
+            <point key="canvasLocation" x="-1361" y="75"/>
+        </scene>
+        <!--Main View Controller-->
+        <scene sceneID="qcf-qP-MSX">
+            <objects>
+                <viewController storyboardIdentifier="MainViewController" id="a84-L4-w1z" customClass="MainViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VeZ-MP-YJj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6E-mf-B2I">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <connections>
+                                    <segue destination="2fU-G9-hR4" kind="embed" identifier="embedTabBar" id="Dqu-Bu-QHW"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NxS-vk-sP5">
+                                <rect key="frame" x="342" y="812" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="CB3-68-aeQ"/>
+                                    <constraint firstAttribute="width" constant="48" id="TzM-Hs-Psd"/>
+                                </constraints>
+                                <state key="normal" image="menu_button"/>
+                                <connections>
+                                    <action selector="menuButtonAction:" destination="a84-L4-w1z" eventType="touchUpInside" id="hRw-LH-P6c"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="82B-ax-9f3"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="v6E-mf-B2I" firstAttribute="top" secondItem="VeZ-MP-YJj" secondAttribute="top" id="0pj-2v-YV5"/>
+                            <constraint firstAttribute="bottom" secondItem="NxS-vk-sP5" secondAttribute="bottom" constant="36" id="54G-cB-Mz7"/>
+                            <constraint firstItem="v6E-mf-B2I" firstAttribute="leading" secondItem="82B-ax-9f3" secondAttribute="leading" id="JZX-uJ-vI3"/>
+                            <constraint firstItem="82B-ax-9f3" firstAttribute="trailing" secondItem="NxS-vk-sP5" secondAttribute="trailing" constant="24" id="eAo-Yt-a1H"/>
+                            <constraint firstAttribute="bottom" secondItem="v6E-mf-B2I" secondAttribute="bottom" id="egF-wL-Mpc"/>
+                            <constraint firstItem="82B-ax-9f3" firstAttribute="trailing" secondItem="v6E-mf-B2I" secondAttribute="trailing" id="uDn-DR-3RU"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="v6E-mf-B2I" id="hW7-g9-opW"/>
+                        <outlet property="menuButton" destination="NxS-vk-sP5" id="QRO-Xf-mEk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rzj-kO-kAi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="316" y="75"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -60,13 +106,13 @@
                                 <state key="normal" image="help"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Sony Music Global Technology" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cg-mN-F74">
-                                <rect key="frame" x="24" y="124" width="366" height="75"/>
+                                <rect key="frame" x="24" y="124" width="366" height="76.5"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Xr-Ki-8uN">
-                                <rect key="frame" x="24" y="347.5" width="366" height="37.5"/>
+                                <rect key="frame" x="24" y="346.5" width="366" height="38.5"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -155,7 +201,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="74"/>
+            <point key="canvasLocation" x="-458" y="75"/>
         </scene>
         <!--HomePageTab-->
         <scene sceneID="s2d-wz-7pa">
@@ -220,11 +266,12 @@
                         <segue destination="GHa-vp-tdW" kind="relationship" relationship="viewControllers" id="Pcy-Iq-xNy"/>
                         <segue destination="jMb-np-EdZ" kind="relationship" relationship="viewControllers" id="aGW-7x-a1k"/>
                         <segue destination="SpZ-Ir-VIk" kind="relationship" relationship="viewControllers" id="pC7-09-bSg"/>
+                        <segue destination="8tN-DR-hVt" kind="relationship" relationship="viewControllers" id="Ykx-ip-Sir"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yh2-Lr-uTb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1070" y="75"/>
+            <point key="canvasLocation" x="1119" y="76"/>
         </scene>
         <!--GeneralTab-->
         <scene sceneID="fZA-MA-41h">
@@ -234,7 +281,17 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6zc-EA-EgZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1688" y="220"/>
+            <point key="canvasLocation" x="1805" y="196"/>
+        </scene>
+        <!--GTTeamTab-->
+        <scene sceneID="D0N-2y-VQT">
+            <objects>
+                <viewControllerPlaceholder storyboardName="GTTeamStoryboard" referencedIdentifier="GTTeamTab" id="8tN-DR-hVt" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="vis-9J-jTG"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QcA-wt-lGf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1850" y="457"/>
         </scene>
         <!--LoginUSM View Controller-->
         <scene sceneID="PWb-dP-BE3">
@@ -284,12 +341,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nIK-VU-3yZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="yHG-yW-IY9" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="135" y="747"/>
+            <point key="canvasLocation" x="-461" y="748"/>
         </scene>
     </scenes>
     <designables>
         <designable name="JCo-dS-SrK">
-            <size key="intrinsicContentSize" width="39.5" height="20.5"/>
+            <size key="intrinsicContentSize" width="40.5" height="21"/>
         </designable>
     </designables>
     <resources>
@@ -299,6 +356,7 @@
         <image name="help" width="24" height="24"/>
         <image name="helpdesk_tab_icon" width="24" height="24"/>
         <image name="homepage_tab_icon" width="24" height="24"/>
+        <image name="menu_button" width="48" height="48"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
