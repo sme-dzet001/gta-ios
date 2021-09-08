@@ -97,6 +97,11 @@ struct TipsAndTricksRow: Codable, QuickHelpDataProtocol, Equatable {
         guard let valuesArr = values, let index = indexes["body"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
     }
+    
+    var banner: String? {
+        guard let valuesArr = values, let index = indexes["banner"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
 }
 
 struct TipsAndTricksRows: Codable {

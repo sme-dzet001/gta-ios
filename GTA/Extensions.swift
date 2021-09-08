@@ -95,7 +95,6 @@ extension UILabel {
         if numberOfLines != 3 {
             numberOfLines = 3
         }
-        self.font = UIFont(name: "SFProText-Regular", size: 16) ?? self.font
         guard let text = self.text, !text.isEmptyOrWhitespace() else { return }
         let readMoreAttributed = NSMutableAttributedString(string: readMoreText, attributes: [NSAttributedString.Key.font : font as Any, NSAttributedString.Key.foregroundColor: UIColor.gray])
         let lengthForVisibleString = vissibleTextLength
@@ -130,7 +129,6 @@ extension UILabel {
     }
 
     var vissibleTextLength: Int {
-        let font: UIFont = UIFont(name: "SFProText-Regular", size: 16) ?? self.font
         let mode: NSLineBreakMode = self.lineBreakMode
         let labelWidth: CGFloat = self.frame.size.width
         let labelHeight: CGFloat = self.frame.size.height
@@ -745,6 +743,7 @@ extension NSAttributedString {
         return ceil(rect.size.height)
     }
 }
+
 extension NSMutableAttributedString {
     // method to change attr string font without removing other attribures
     func setFontFace(font: UIFont, color: UIColor? = nil) {
@@ -755,10 +754,10 @@ extension NSMutableAttributedString {
         ) { (value, range, stop) in
 
             if let f = value as? UIFont,
-              let newFontDescriptor = f.fontDescriptor
+               let face = font.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.face) as? String, let newFontDescriptor = f.fontDescriptor
                 .withFamily(font.familyName)
-                .withSymbolicTraits(f.fontDescriptor.symbolicTraits) {
-
+                .withSymbolicTraits(f.fontDescriptor.symbolicTraits)?
+                .withFace(face) {
                 let newFont = UIFont(
                     descriptor: newFontDescriptor,
                     size: font.pointSize

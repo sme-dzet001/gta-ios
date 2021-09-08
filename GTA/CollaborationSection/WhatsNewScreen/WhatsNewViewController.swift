@@ -213,7 +213,8 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension WhatsNewViewController : TappedLabelDelegate {
-    func moreButtonDidTapped(in cell: WhatsNewCell) {
+    func moreButtonDidTapped(in cell: UITableViewCell) {
+        guard let cell = cell as? WhatsNewCell else { return }
         guard let cellIndex = tableView.indexPath(for: cell) else { return }
         guard (dataProvider?.collaborationNewsData.count ?? 0) > cellIndex.row else { return }
         if !tableView.dataHasChanged {
@@ -246,6 +247,6 @@ extension WhatsNewViewController : TappedLabelDelegate {
 
 
 protocol TappedLabelDelegate: AnyObject {
-    func moreButtonDidTapped(in cell: WhatsNewCell)
+    func moreButtonDidTapped(in cell: UITableViewCell)
     func openUrl(_ url: URL)
 }
