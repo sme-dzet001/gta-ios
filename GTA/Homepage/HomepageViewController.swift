@@ -141,7 +141,7 @@ class HomepageViewController: UIViewController {
     private func updateBannerViews() {
         if isEmergencyOutageBannerVisible {
             emergencyOutageBannerView.isHidden = false
-            emergencyOutageBannerViewHeight.constant = 80
+            emergencyOutageBannerViewHeight.constant = 72
             populateEmergencyOutageBanner()
         } else {
             emergencyOutageBannerView.isHidden = true
@@ -150,7 +150,7 @@ class HomepageViewController: UIViewController {
         
         if isGlobalProductionAlertBannerVisible {
             globalProductionAlertBannerView.isHidden = false
-            globalProductionAlertBannerViewHeight.constant = 80
+            globalProductionAlertBannerViewHeight.constant = 72
             populateGlobalProductionAlertBanner()
         } else {
             globalProductionAlertBannerView.isHidden = true
