@@ -34,11 +34,11 @@ class GlobalAlertBannerView: UIView {
         switch prodAlertsStatus {
         case .newAlertCreated, .reminderState:
             parentView.backgroundColor = UIColor(hex: 0xFF9900)
-            alertImageView.image = UIImage(named: "global_alert_off")
+            alertImageView.image = UIImage(named: "global_alert_on")
             closeButton.isHidden = false
         case .activeAlert:
             closeButton.isHidden = true
-            parentView.backgroundColor = UIColor(hex: 0xCC0000)
+            parentView.backgroundColor = UIColor(hex: 0xCC0000,alpha: 0.8)
             alertImageView.image = UIImage(named: "global_alert_on")
         case .closed:
             parentView.backgroundColor = UIColor(hex: 0x34C759)

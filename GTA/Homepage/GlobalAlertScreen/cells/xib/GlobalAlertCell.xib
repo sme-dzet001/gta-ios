@@ -23,23 +23,23 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6mf-Lf-zdo">
-                        <rect key="frame" x="24" y="20" width="272" height="130"/>
+                        <rect key="frame" x="24" y="24" width="272" height="126"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Global Emergency Outage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.90000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="Tfp-YB-bgJ">
-                                <rect key="frame" x="47" y="58" width="176" height="14.5"/>
+                                <rect key="frame" x="47" y="56" width="176" height="14.5"/>
                                 <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="global_alert_on" translatesAutoresizingMaskIntoConstraints="NO" id="M5f-lV-Hch">
-                                <rect key="frame" x="12" y="52.5" width="25" height="25"/>
+                                <rect key="frame" x="12" y="50.5" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="M5f-lV-Hch" secondAttribute="height" multiplier="1:1" id="Eyz-mk-qd6"/>
                                     <constraint firstAttribute="height" constant="25" id="zzw-Sh-fvY"/>
                                 </constraints>
                             </imageView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktb-UG-fF2">
-                                <rect key="frame" x="235" y="52.5" width="25" height="25"/>
+                                <rect key="frame" x="235" y="50.5" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ktb-UG-fF2" secondAttribute="height" multiplier="1:1" id="4bL-PO-yug"/>
                                     <constraint firstAttribute="height" constant="25" id="9au-2b-yX5"/>
@@ -72,7 +72,7 @@
                     <constraint firstAttribute="trailing" secondItem="6mf-Lf-zdo" secondAttribute="trailing" constant="24" id="6zg-ZM-cDk"/>
                     <constraint firstItem="6mf-Lf-zdo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="QAZ-32-HMM"/>
                     <constraint firstAttribute="bottom" secondItem="6mf-Lf-zdo" secondAttribute="bottom" id="i4n-Nt-BDQ"/>
-                    <constraint firstItem="6mf-Lf-zdo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="wSx-Rw-hAe"/>
+                    <constraint firstItem="6mf-Lf-zdo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="wSx-Rw-hAe"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
