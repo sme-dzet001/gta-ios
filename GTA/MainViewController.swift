@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         navigationController?.delegate = self
-        menuButton.dropShadow(color: .gray, opacity: 0.5, offSet: CGSize(width: 0, height: 0), radius: 15, scale: true)
+        configureMenuButton()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -82,6 +82,15 @@ class MainViewController: UIViewController {
         }) { _ in
             self.backgroundView?.removeFromSuperview()
         }
+    }
+    
+    private func configureMenuButton() {
+        menuButton.layer.shadowColor = UIColor.lightGray.cgColor
+        menuButton.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+        menuButton.layer.masksToBounds = false
+        menuButton.layer.shadowRadius = 3
+        menuButton.layer.shadowOpacity = 0.5
+        menuButton.layer.cornerRadius = menuButton.frame.width / 2
     }
     
 }
