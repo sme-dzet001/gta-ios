@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import WebKit
 
 protocol TabBarChangeIndexDelegate {
     func changeToIndex(index: Int)
+    func closeButtonPressed()
 }
 
 class MenuViewController: UIViewController {
@@ -28,14 +30,20 @@ class MenuViewController: UIViewController {
         MenuItems(name: "Collaboration", image: UIImage(named: "collaboration_tab_icon")),
         MenuItems(name: "General", image: UIImage(named: "general_tab_icon")),
         MenuItems(name: "Global Technology Team", image: UIImage(named: "team_contacts_icon")),
+        MenuItems(name: "Logout", image: UIImage(named: "logout")),
     ]
     var delegate: TabBarChangeIndexDelegate?
     var dataProvider = MenuViewControllerDataProvider()
     var selectedTabIdx: Int?
+    weak var tabBar: UITabBarController?
     
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
     private var lastUpdateDate: Date?
+    private var usmLogoutWebView: WKWebView!
+    
+    let defaultCellHeight: CGFloat = 48
+    let lineCellHeight:CGFloat = 40
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +56,10 @@ class MenuViewController: UIViewController {
         tableView.register(UINib(nibName: "OfficeStatusCell", bundle: nil), forCellReuseIdentifier: "OfficeStatusCell")
         
         dataProvider.officeSelectionDelegate = self
+        usmLogoutWebView = WKWebView(frame: CGRect.zero)
+        view.addSubview(usmLogoutWebView)
+        usmLogoutWebView.isHidden = true
+        usmLogoutWebView.navigationDelegate = self
         
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             if officeLoadingIsEnabled { loadOfficesData() }
@@ -59,7 +71,12 @@ class MenuViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     @IBAction func closeAction(_ sender: UIButton) {
+        delegate?.closeButtonPressed()
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -140,7 +157,31 @@ class MenuViewController: UIViewController {
             }
         })
     }
-
+    
+    private func logoutAlert() {
+        let alert = UIAlertController(title: "Confirm Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (_) in
+            if Reachability.isConnectedToNetwork() {
+                self?.sendLogoutRequest()
+            } else {
+                self?.errorLogout()
+            }
+        }
+        okAction.accessibilityIdentifier = "GeneralScreenAlertOKButton"
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        cancelAction.accessibilityIdentifier = "GeneralScreenAlertCancelButton"
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true)
+    }
+    
+    private func sendLogoutRequest() {
+        guard let accessToken = KeychainManager.getToken() else { return }
+        let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
+        guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
+        let logoutRequest = URLRequest(url: logoutURL)
+        usmLogoutWebView.load(logoutRequest)
+    }
 }
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -150,11 +191,11 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return 48
+            return defaultCellHeight
         case 1:
-            return 40
+            return lineCellHeight
         default:
-            return 101
+            return UITableView.automaticDimension
         }
     }
     
@@ -173,15 +214,17 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell") as? MenuTableViewCell else { return UITableViewCell() }
             cell.menuLabel.text = menuItems[indexPath.row].name
             cell.menuImage.image = menuItems[indexPath.row].image?.withRenderingMode(.alwaysTemplate)
+            cell.menuLabel.textColor = .black
             cell.menuImage.tintColor = .black
             
-            guard let index = selectedTabIdx, index <= 5, index == indexPath.row else { return cell }
+            guard let index = selectedTabIdx, index <= menuItems.count - 2, index == indexPath.row else { return cell }
             cell.menuLabel.textColor = .red
             cell.menuImage.tintColor = .red
             
             return cell
         case 1:
             let cell = UITableViewCell()
+            cell.selectionStyle = .none
             let grayView = UIView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 1))
             cell.addSubview(grayView)
             grayView.backgroundColor = .systemGray6
@@ -199,7 +242,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.officeErrorLabel.isHidden = true
                 cell.officeStatusLabel.accessibilityIdentifier = "HomeScreenOfficeTitleLabel"
                 cell.officeAddressLabel.accessibilityIdentifier = "HomeScreenOfficeAddressLabel"
-                guard let index = selectedTabIdx, index > 5 else { return cell }
+                cell.officeLabel.textColor = .black
+                cell.officeStatusLabel.textColor = .black
+                guard let index = selectedTabIdx, index > menuItems.count - 2 else { return cell }
                 cell.officeLabel.textColor = .red
                 cell.officeStatusLabel.textColor = .red
                 
@@ -216,7 +261,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.officeErrorLabel.isHidden = false
                     cell.officeLabel.textColor = .black
                     
-                    guard let index = selectedTabIdx, index > 5 else { return cell }
+                    guard let index = selectedTabIdx, index > menuItems.count - 2 else { return cell }
                     cell.officeLabel.textColor = .red
                     cell.officeStatusLabel.textColor = .red
                     
@@ -231,9 +276,19 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
+            if indexPath.row == menuItems.count - 1 {
+                logoutAlert()
+                return
+            }
             delegate?.changeToIndex(index: indexPath.row)
         } else if indexPath.section == 2 {
-            delegate?.changeToIndex(index: 6)
+            if let office = tabBar?.viewControllers?.first(where: { $0 is OfficeOverviewViewController }) as? OfficeOverviewViewController {
+                office.officeDataProvider = dataProvider
+                office.selectedOfficeData = dataProvider.userOffice
+                office.selectedOfficeUIUpdateDelegate = self
+                office.title = dataProvider.userOffice?.officeName
+            }
+            delegate?.changeToIndex(index: menuItems.count - 1)
         }
         closeAction(closeButton)
     }
@@ -259,6 +314,49 @@ extension MenuViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDel
         DispatchQueue.main.async {
             self.officeLoadingError = nil
             self.tableView.reloadData()
+        }
+    }
+}
+
+extension MenuViewController: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        errorLogout()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        errorLogout()
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+        decisionHandler(.allow)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        logout()
+    }
+    
+    private func errorLogout() {
+        UserDefaults.standard.setValue(true, forKey: Constants.isNeedLogOut)
+        logout(deleteToken: false)
+    }
+    
+    private func logout(deleteToken: Bool = true) {
+        DispatchQueue.main.async {
+            UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
+            UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
+            KeychainManager.deleteUsername()
+            if deleteToken {
+                KeychainManager.deleteToken()
+            }
+            KeychainManager.deletePushNotificationTokenSent()
+            KeychainManager.deleteTokenExpirationDate()
+            CacheManager().clearCache()
+            KeychainManager.deletePinData()
+            ImageCacheManager().removeCachedData()
+            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+                sceneDelegate.startLoginFlow()
+            }
         }
     }
 }

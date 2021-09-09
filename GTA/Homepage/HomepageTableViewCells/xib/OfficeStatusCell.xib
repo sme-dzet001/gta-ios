@@ -14,7 +14,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="OfficeStatusCell" rowHeight="101" id="d2P-RB-Elo" customClass="OfficeStatusCell" customModule="GTA" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="OfficeStatusCell" id="d2P-RB-Elo" customClass="OfficeStatusCell" customModule="GTA" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="414" height="109"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="d2P-RB-Elo" id="eYx-1Z-qqH">
@@ -22,16 +22,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="g1F-on-8LR">
-                        <rect key="frame" x="32" y="47" width="258" height="36"/>
+                        <rect key="frame" x="32" y="37" width="350" height="64"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9 Derry Street, London, W8 5HY, United Kindom" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9t-Uf-0dC">
-                                <rect key="frame" x="0.0" y="0.0" width="258" height="14"/>
+                                <rect key="frame" x="0.0" y="0.0" width="350" height="14"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                 <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(480) 555-0103" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmx-Ig-l11">
-                                <rect key="frame" x="0.0" y="22" width="258" height="14"/>
+                                <rect key="frame" x="0.0" y="50" width="350" height="14"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                 <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -39,7 +39,7 @@
                         </subviews>
                     </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Office: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ayQ-To-8HK">
-                        <rect key="frame" x="32" y="18" width="51.5" height="19"/>
+                        <rect key="frame" x="32" y="8" width="51.5" height="19"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -51,7 +51,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Sony Music UK" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="84p-gl-Gqp">
-                        <rect key="frame" x="83.5" y="18" width="111" height="19"/>
+                        <rect key="frame" x="83.5" y="8" width="111" height="19"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -59,14 +59,16 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="84p-gl-Gqp" firstAttribute="top" secondItem="ayQ-To-8HK" secondAttribute="top" id="1Mo-uS-oEy"/>
+                    <constraint firstAttribute="trailing" secondItem="g1F-on-8LR" secondAttribute="trailing" constant="32" id="3h4-4c-Z2D"/>
                     <constraint firstItem="VV9-Ul-fjq" firstAttribute="leading" secondItem="eYx-1Z-qqH" secondAttribute="leading" constant="24" id="6a9-vz-jO2"/>
                     <constraint firstItem="g1F-on-8LR" firstAttribute="top" secondItem="84p-gl-Gqp" secondAttribute="bottom" constant="10" id="Bkw-Ky-tBP"/>
                     <constraint firstItem="84p-gl-Gqp" firstAttribute="leading" secondItem="ayQ-To-8HK" secondAttribute="trailing" id="E3k-Ju-Rj6"/>
-                    <constraint firstItem="ayQ-To-8HK" firstAttribute="top" secondItem="eYx-1Z-qqH" secondAttribute="top" constant="18" id="Ni4-zA-V4h"/>
+                    <constraint firstAttribute="bottom" secondItem="g1F-on-8LR" secondAttribute="bottom" constant="8" id="Z3a-bu-ldX"/>
                     <constraint firstItem="ayQ-To-8HK" firstAttribute="leading" secondItem="eYx-1Z-qqH" secondAttribute="leading" constant="32" id="ZMQ-Js-kAa"/>
                     <constraint firstItem="VV9-Ul-fjq" firstAttribute="centerY" secondItem="eYx-1Z-qqH" secondAttribute="centerY" id="fKr-br-QRS"/>
                     <constraint firstItem="g1F-on-8LR" firstAttribute="leading" secondItem="eYx-1Z-qqH" secondAttribute="leading" constant="32" id="mXu-vD-wOv"/>
                     <constraint firstAttribute="trailing" secondItem="VV9-Ul-fjq" secondAttribute="trailing" constant="24" id="pGY-JQ-lsD"/>
+                    <constraint firstItem="84p-gl-Gqp" firstAttribute="top" secondItem="eYx-1Z-qqH" secondAttribute="top" constant="8" id="u1u-ca-8kt"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>

@@ -45,13 +45,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6E-mf-B2I">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="782"/>
                                 <connections>
                                     <segue destination="2fU-G9-hR4" kind="embed" identifier="embedTabBar" id="Dqu-Bu-QHW"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NxS-vk-sP5">
-                                <rect key="frame" x="342" y="812" width="48" height="48"/>
+                                <rect key="frame" x="342" y="790" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="CB3-68-aeQ"/>
                                     <constraint firstAttribute="width" constant="48" id="TzM-Hs-Psd"/>
@@ -66,11 +66,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="v6E-mf-B2I" firstAttribute="top" secondItem="VeZ-MP-YJj" secondAttribute="top" id="0pj-2v-YV5"/>
-                            <constraint firstAttribute="bottom" secondItem="NxS-vk-sP5" secondAttribute="bottom" constant="36" id="54G-cB-Mz7"/>
+                            <constraint firstItem="NxS-vk-sP5" firstAttribute="top" secondItem="v6E-mf-B2I" secondAttribute="bottom" constant="8" id="6Zl-MW-71a"/>
                             <constraint firstItem="v6E-mf-B2I" firstAttribute="leading" secondItem="82B-ax-9f3" secondAttribute="leading" id="JZX-uJ-vI3"/>
                             <constraint firstItem="82B-ax-9f3" firstAttribute="trailing" secondItem="NxS-vk-sP5" secondAttribute="trailing" constant="24" id="eAo-Yt-a1H"/>
-                            <constraint firstAttribute="bottom" secondItem="v6E-mf-B2I" secondAttribute="bottom" id="egF-wL-Mpc"/>
                             <constraint firstItem="82B-ax-9f3" firstAttribute="trailing" secondItem="v6E-mf-B2I" secondAttribute="trailing" id="uDn-DR-3RU"/>
+                            <constraint firstItem="82B-ax-9f3" firstAttribute="bottom" secondItem="NxS-vk-sP5" secondAttribute="bottom" constant="24" id="zIl-LL-tVN"/>
                         </constraints>
                     </view>
                     <connections>
@@ -80,7 +80,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rzj-kO-kAi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="316" y="75"/>
+            <point key="canvasLocation" x="314.49275362318843" y="75"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -106,13 +106,13 @@
                                 <state key="normal" image="help"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Sony Music Global Technology" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cg-mN-F74">
-                                <rect key="frame" x="24" y="124" width="366" height="76.5"/>
+                                <rect key="frame" x="24" y="124" width="366" height="75"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Xr-Ki-8uN">
-                                <rect key="frame" x="24" y="346.5" width="366" height="38.5"/>
+                                <rect key="frame" x="24" y="347.5" width="366" height="37.5"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -267,6 +267,7 @@
                         <segue destination="jMb-np-EdZ" kind="relationship" relationship="viewControllers" id="aGW-7x-a1k"/>
                         <segue destination="SpZ-Ir-VIk" kind="relationship" relationship="viewControllers" id="pC7-09-bSg"/>
                         <segue destination="8tN-DR-hVt" kind="relationship" relationship="viewControllers" id="Ykx-ip-Sir"/>
+                        <segue destination="JLl-gT-e64" kind="relationship" relationship="viewControllers" id="TSC-nl-Zkb"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yh2-Lr-uTb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -283,6 +284,17 @@
             </objects>
             <point key="canvasLocation" x="1805" y="196"/>
         </scene>
+        <!--OfficeOverviewViewController-->
+        <scene sceneID="4UZ-cR-Jc9">
+            <objects>
+                <viewControllerPlaceholder storyboardName="OfficeStoryboard" referencedIdentifier="OfficeOverviewViewController" id="JLl-gT-e64" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="dFJ-cJ-dsX"/>
+                    <navigationItem key="navigationItem" id="u3e-H7-FG8"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="55w-OL-pkC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1804" y="314"/>
+        </scene>
         <!--GTTeamTab-->
         <scene sceneID="D0N-2y-VQT">
             <objects>
@@ -291,7 +303,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QcA-wt-lGf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1850" y="457"/>
+            <point key="canvasLocation" x="1798" y="250"/>
         </scene>
         <!--LoginUSM View Controller-->
         <scene sceneID="PWb-dP-BE3">
@@ -346,7 +358,7 @@
     </scenes>
     <designables>
         <designable name="JCo-dS-SrK">
-            <size key="intrinsicContentSize" width="40.5" height="21"/>
+            <size key="intrinsicContentSize" width="39.5" height="20.5"/>
         </designable>
     </designables>
     <resources>

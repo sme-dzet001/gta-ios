@@ -13,6 +13,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var containerView: UIView!
     
+    let menuViewController = MenuViewController()
     var backgroundView: UIView?
     var tabBar: UITabBarController?
     var selectedTabIdx = 0 {
@@ -26,6 +27,7 @@ class MainViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         navigationController?.delegate = self
+        menuButton.dropShadow(color: .gray, opacity: 0.5, offSet: CGSize(width: 0, height: 0), radius: 15, scale: true)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -46,29 +48,22 @@ class MainViewController: UIViewController {
     }
  
     private func showPopoverMenu() {
-        let popoverContentController = MenuViewController()
-        popoverContentController.delegate = self
-        popoverContentController.selectedTabIdx = selectedTabIdx
-        popoverContentController.modalPresentationStyle = .popover
-        popoverContentController.preferredContentSize = CGSize(width: view.frame.width, height: 500)
-        let frame = CGRect(x: menuButton.frame.maxX - 48, y: menuButton.frame.maxY, width: menuButton.frame.width, height: menuButton.frame.height)
-        if let popoverPresentationController = popoverContentController.popoverPresentationController {
+        menuViewController.delegate = self
+        menuViewController.tabBar = tabBar
+        menuViewController.selectedTabIdx = selectedTabIdx
+        menuViewController.modalPresentationStyle = .popover
+//        let height = CGFloat(menuViewController.menuItems.count) * menuViewController.defaultCellHeight + menuViewController.lineCellHeight
+        menuViewController.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 530)
+        if let popoverPresentationController = menuViewController.popoverPresentationController {
             popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirection(rawValue:0)
             popoverPresentationController.sourceView = self.view
-            popoverPresentationController.sourceRect = frame
+            popoverPresentationController.sourceRect = menuButton.frame
             popoverPresentationController.delegate = self
-            present(popoverContentController, animated: true, completion: nil)
+            present(menuViewController, animated: true, completion: nil)
         }
     }
-}
-
-extension MainViewController: UIPopoverPresentationControllerDelegate {
     
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
-
-    func presentationController(_ presentationController: UIPresentationController, willPresentWithAdaptiveStyle style: UIModalPresentationStyle, transitionCoordinator: UIViewControllerTransitionCoordinator?) {
+    private func addBackground() {
         backgroundView = UIView(frame: UIScreen.main.bounds)
         backgroundView?.backgroundColor = .black
         backgroundView?.alpha = 0
@@ -81,12 +76,28 @@ extension MainViewController: UIPopoverPresentationControllerDelegate {
         }
     }
     
-    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+    private func clearBackground() {
         UIView.animate(withDuration: 0.3, animations: {
             self.backgroundView?.alpha = 0
         }) { _ in
             self.backgroundView?.removeFromSuperview()
         }
+    }
+    
+}
+
+extension MainViewController: UIPopoverPresentationControllerDelegate {
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+
+    func presentationController(_ presentationController: UIPresentationController, willPresentWithAdaptiveStyle style: UIModalPresentationStyle, transitionCoordinator: UIViewControllerTransitionCoordinator?) {
+        addBackground()
+    }
+    
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        clearBackground()
     }
     
     func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
@@ -101,6 +112,10 @@ extension MainViewController: UINavigationControllerDelegate {
 }
 
 extension MainViewController: TabBarChangeIndexDelegate {
+    func closeButtonPressed() {
+        clearBackground()
+    }
+    
     func changeToIndex(index: Int) {
         selectedTabIdx = index
     }

@@ -13,7 +13,6 @@ class GeneralViewController: UIViewController {
     private var usmLogoutWebView: WKWebView!
     @IBOutlet weak var softwareVersionLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var logoutButton: UIButton!
     
     var dataProvider: GeneralDataProvider = GeneralDataProvider()
     
@@ -60,7 +59,6 @@ class GeneralViewController: UIViewController {
     }
     
     private func setAccessibilityIdentifiers() {
-        logoutButton.accessibilityIdentifier = "GeneralScreenLogoutButton"
         softwareVersionLabel.accessibilityIdentifier = "GeneralScreenVersionLabel"
     }
     
