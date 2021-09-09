@@ -3,49 +3,51 @@ PODS:
   - Charts (3.6.0):
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
-  - Firebase/CoreOnly (8.2.0):
-    - FirebaseCore (= 8.2.0)
-  - Firebase/Crashlytics (8.2.0):
+  - Firebase/CoreOnly (8.7.0):
+    - FirebaseCore (= 8.7.0)
+  - Firebase/Crashlytics (8.7.0):
     - Firebase/CoreOnly
-    - FirebaseCrashlytics (~> 8.2.0)
-  - FirebaseCore (8.2.0):
+    - FirebaseCrashlytics (~> 8.7.0)
+  - FirebaseCore (8.7.0):
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
-  - FirebaseCoreDiagnostics (8.2.0):
+  - FirebaseCoreDiagnostics (8.7.0):
     - GoogleDataTransport (~> 9.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
     - nanopb (~> 2.30908.0)
-  - FirebaseCrashlytics (8.2.0):
+  - FirebaseCrashlytics (8.7.0):
     - FirebaseCore (~> 8.0)
     - FirebaseInstallations (~> 8.0)
     - GoogleDataTransport (~> 9.0)
+    - GoogleUtilities/Environment (~> 7.4)
     - nanopb (~> 2.30908.0)
-    - PromisesObjC (~> 1.2)
-  - FirebaseInstallations (8.2.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - FirebaseInstallations (8.7.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/UserDefaults (~> 7.4)
-    - PromisesObjC (~> 1.2)
-  - GoogleDataTransport (9.0.1):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleDataTransport (9.1.0):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
-    - PromisesObjC (~> 1.2)
-  - GoogleUtilities/Environment (7.4.3):
-    - PromisesObjC (~> 1.2)
-  - GoogleUtilities/Logger (7.4.3):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Environment (7.5.2):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.5.2):
     - GoogleUtilities/Environment
-  - GoogleUtilities/UserDefaults (7.4.3):
+  - GoogleUtilities/UserDefaults (7.5.2):
     - GoogleUtilities/Logger
-  - Kingfisher (6.3.0)
+  - Kingfisher (6.3.1)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PanModal (1.2.7)
-  - PromisesObjC (1.2.12)
+  - Parchment (3.0.1)
+  - PromisesObjC (2.0.0)
   - RNCryptor (5.1.0)
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
@@ -57,6 +59,7 @@ DEPENDENCIES:
   - Firebase/Crashlytics
   - Kingfisher
   - PanModal
+  - Parchment (~> 3.0)
   - RNCryptor
   - SDWebImage
 
@@ -74,6 +77,7 @@ SPEC REPOS:
     - Kingfisher
     - nanopb
     - PanModal
+    - Parchment
     - PromisesObjC
     - RNCryptor
     - SDWebImage
@@ -81,20 +85,21 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AdvancedPageControl: 39e3b32b00b2d324c534f8e17cc6c5be9abe84b7
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
-  Firebase: 12c568897b807321964e89d2b263ef4c6cff3db6
-  FirebaseCore: 3a83f24c3de69ec9f9a426e2598125ea51f3a2ce
-  FirebaseCoreDiagnostics: 61384f54989065b15c36b5922b65112e86811d3c
-  FirebaseCrashlytics: 935dbdb043a286ca92a22d15e5780802403ea0ea
-  FirebaseInstallations: 9394ea09e242bf0816e95ac30e56a9214cc86ced
-  GoogleDataTransport: 04c3e9a480bbcaa2ec3f5d27f1cdeb6a92f20c8d
-  GoogleUtilities: 45dbb24a7f351d69d0a601482b39ad6c32e30dab
-  Kingfisher: 6c3df386db71d82c0817a429d2c9421a77396529
+  Firebase: bc9325d5ee2041524bac78a5213d0e530c651309
+  FirebaseCore: f4804c1d3f4bbbefc88904d15653038f2c99ddf7
+  FirebaseCoreDiagnostics: b63732f581a1c6a453ec7241f9ab60b3a5bd3450
+  FirebaseCrashlytics: 6fac03d1eef054833b71c929c93ab95c12989728
+  FirebaseInstallations: ede6fb72bb6337914e5888b399271259d0c4910c
+  GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
+  GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
+  Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
-  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  Parchment: 466a1cfb6151780db8acb4bbedc2d9c6bfa1e2ff
+  PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
 
-PODFILE CHECKSUM: af2ac2ad10c9a236e5b1fd14c58f96499933a2a0
+PODFILE CHECKSUM: 792aa8ad5cdeaab1f10bf91f9c655eb1390216e8
 
 COCOAPODS: 1.10.0
