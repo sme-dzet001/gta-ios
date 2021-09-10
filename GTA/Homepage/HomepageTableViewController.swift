@@ -35,8 +35,11 @@ class HomepageTableViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
-            loadNewsData()
+        dataLoadingStarted()
+        if let dataProvider = dataProvider, !dataProvider.newsDataIsEmpty {
+            activityIndicator.stopAnimating()
+            activityIndicator.isHidden = true
+            tableView.reloadData()
         }
     }
     
@@ -82,30 +85,32 @@ class HomepageTableViewController: UIViewController {
         tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
     }
     
-    private func loadNewsData() {
+    func dataLoadingStarted() {
         guard let dataProvider = dataProvider else { return }
+        guard isViewLoaded else { return }
         if dataProvider.newsDataIsEmpty {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
             errorLabel.isHidden = true
         }
-        dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
-            DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
-                self?.activityIndicator.isHidden = true
-                if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                    self?.errorLabel.isHidden = true
-                    self?.tableView.reloadData()
-                } else {
-                    let isNoData = dataProvider.newsDataIsEmpty
-                    if isNoData {
-                        self?.tableView.reloadData()
-                    }
-                    self?.errorLabel.isHidden = !isNoData
-                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                }
+    }
+    
+    func dataLoadingFinished(errorCode: Int, error: Error?, isFromCache: Bool) {
+        guard let dataProvider = dataProvider else { return }
+        guard isViewLoaded else { return }
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+        if error == nil && errorCode == 200 {
+            lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : lastUpdateDate
+            errorLabel.isHidden = true
+            tableView.reloadData()
+        } else {
+            let isNoData = dataProvider.newsDataIsEmpty
+            if isNoData {
+                tableView.reloadData()
             }
+            errorLabel.isHidden = !isNoData
+            errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
         }
     }
     
@@ -127,119 +132,6 @@ class HomepageTableViewController: UIViewController {
             }
         }
     }
-    
-    /*private func loadOfficesData() {
-        var forceOpenOfficeSelectionScreen = false
-        officeLoadingError = nil
-        if tableView.dataHasChanged {
-            tableView.reloadData()
-        } else {
-            UIView.performWithoutAnimation {
-                tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
-            }
-        }
-        dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error, isFromCache) in
-            if error == nil && errorCode == 200 {
-                self?.dataProvider?.getAllOfficesData { [weak self] (errorCode, error) in
-                    DispatchQueue.main.async {
-                        if error == nil && errorCode == 200 {
-                            self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                            if self?.dataProvider?.allOfficesDataIsEmpty == true {
-                                self?.officeLoadingError = "No data available"
-                                self?.lastUpdateDate = nil
-                            } else if self?.dataProvider?.userOffice == nil {
-                                self?.officeLoadingError = "Not Selected"
-                                self?.lastUpdateDate = nil
-                                forceOpenOfficeSelectionScreen = true
-                            } else {
-                                self?.officeLoadingError = nil
-                            }
-                            if self?.tableView.dataHasChanged == true {
-                                self?.tableView.reloadData()
-                            } else {
-                                UIView.performWithoutAnimation {
-                                    self?.tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
-                                }
-                            }
-                            if forceOpenOfficeSelectionScreen {
-                                self?.openOfficeSelectionModalScreen()
-                            }
-                        } else {
-                            self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                            if self?.tableView.dataHasChanged == true {
-                                self?.tableView.reloadData()
-                            } else {
-                                UIView.performWithoutAnimation {
-                                    self?.tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                    if self?.tableView.dataHasChanged == true {
-                        self?.tableView.reloadData()
-                    } else {
-                        UIView.performWithoutAnimation {
-                            self?.tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
-                        }
-                    }
-                }
-            }
-        })
-    }
-    
-    private func openOfficeSelectionModalScreen() {
-        let officeLocation = OfficeLocationViewController()
-        var statusBarHeight: CGFloat = 0.0
-        if #available(iOS 13.0, *) {
-            statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-            statusBarHeight = view.window?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
-        } else {
-            statusBarHeight = self.view.bounds.height - UIApplication.shared.statusBarFrame.height
-            statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0 > 24 ? statusBarHeight - 17 : statusBarHeight - 21
-        }
-        officeLocation.title = "Select Sony Music Office Region"
-        officeLocation.dataProvider = dataProvider
-        officeLocation.forceOfficeSelection = true
-        //officeLocation.officeSelectionDelegate = self
-        let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
-        panModalNavigationController.setNavigationBarHidden(true, animated: true)
-        panModalNavigationController.initialHeight = self.tableView.bounds.height - statusBarHeight
-        panModalNavigationController.forceOfficeSelection = true
-        
-        presentPanModal(panModalNavigationController)
-    }
-    
-    private func openAlertScreen(for indexPath: IndexPath) {
-        guard let alertsData = dataProvider?.alertsData, indexPath.row < alertsData.count else { return }
-        let data = alertsData[indexPath.row]
-        let infoViewController = InfoViewController()
-        infoViewController.dataProvider = dataProvider
-        infoViewController.specialAlertData = data
-        infoViewController.infoType = .info
-        infoViewController.title = data.alertHeadline
-        self.navigationController?.pushViewController(infoViewController, animated: true)
-    }
-    
-    private func openOfficeScreen(for indexPath: IndexPath) {
-        guard let dataProvider = dataProvider, let selectedOffice = dataProvider.userOffice else { return }
-        let infoViewController = InfoViewController()
-        infoViewController.dataProvider = dataProvider
-        infoViewController.selectedOfficeData = selectedOffice
-        infoViewController.infoType = .office
-        infoViewController.selectedOfficeUIUpdateDelegate = self
-        infoViewController.title = selectedOffice.officeName
-        self.navigationController?.pushViewController(infoViewController, animated: true)
-    }
-    
-    private func openGTTeamScreen() {
-        let contactsViewController = GTTeamViewController()
-        contactsViewController.dataProvider = dataProvider
-        self.navigationController?.pushViewController(contactsViewController, animated: true)
-    }*/
     
     deinit {
     }

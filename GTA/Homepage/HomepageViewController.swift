@@ -78,6 +78,9 @@ class HomepageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
+            loadNewsData()
+        }
         if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
             emergencyOutageNotificationReceived()
         }
@@ -210,6 +213,22 @@ class HomepageViewController: UIViewController {
             return issueReason && prodAlertsStatus && summary
         }
         return false
+    }
+    
+    private func loadNewsData() {
+        if dataProvider.newsDataIsEmpty {
+            for newsTab in newsTabs {
+                newsTab.dataLoadingStarted()
+            }
+        }
+        dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                for newsTab in self.newsTabs {
+                    newsTab.dataLoadingFinished(errorCode: errorCode, error: error, isFromCache: isFromCache)
+                }
+            }
+        }
     }
     
     private var emergencyOutageLoaded: Bool = false {
