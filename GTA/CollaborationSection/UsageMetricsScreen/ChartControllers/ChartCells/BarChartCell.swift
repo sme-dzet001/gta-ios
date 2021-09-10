@@ -99,8 +99,8 @@ class BarChartCell: UITableViewCell, VerticalBarChartDataChangedDelegate {
         barChartView.legendRenderer.computeLegend(data: barChartView.data!)
         barChartView.legend.verticalAlignment = .bottom
         if count >= 4 {
-            let space = ((barChartView.frame.width - barChartView.legend.neededWidth) / CGFloat(4)) - 12
-            barChartView.legend.xEntrySpace = space > 0 ? space : barChartView.legend.xEntrySpace
+            //let space = ((barChartView.frame.width - barChartView.legend.neededWidth) / CGFloat(4)) - 12
+            barChartView.legend.xEntrySpace = 12//space > 0 ? space : barChartView.legend.xEntrySpace
         }
         barChartView.legend.yEntrySpace = 5
         barChartView.legend.orientation = .horizontal
