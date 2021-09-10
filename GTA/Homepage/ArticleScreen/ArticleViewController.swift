@@ -107,7 +107,7 @@ class ArticleViewController: UIViewController {
             let yValue = gestureStartPoint.y > velocity.y ?  gestureStartPoint.y - velocity.y : gestureStartPoint.y + velocity.y
             let direction: UICollectionView.ScrollPosition = gestureStartPoint.x > velocity.x ? .left : .right
             if xValue > yValue {
-                appearanceDelegate?.needScrollToDirection(direction)
+                //appearanceDelegate?.needScrollToDirection(direction)
                 articleTextView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
             }
         }
@@ -136,7 +136,7 @@ class ArticleViewController: UIViewController {
     }
     
     func panModalWillDismiss() {
-        appearanceDelegate?.panModalDidDismiss()
+        //appearanceDelegate?.panModalDidDismiss()
     }
     
     private func setParagraphStyle() {
@@ -225,7 +225,7 @@ extension ArticleViewController: PanModalPresentable {
     }
     
     var panModalBackgroundColor: UIColor {
-        return .clear
+        return UIColor(hex: 0x000000, alpha: 0.4)
     }
    
 }

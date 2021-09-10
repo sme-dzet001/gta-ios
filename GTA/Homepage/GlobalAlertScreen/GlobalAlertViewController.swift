@@ -12,9 +12,17 @@ class GlobalAlertViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+    var isProdAlert: Bool = false
+    var productionAlertId: String? = nil
     var dataProvider: HomeDataProvider?
     var alertData: GlobalAlertRow? {
         return dataProvider?.globalAlertsData
+    }
+    var prodAlertData: ProductionAlertsRow? {
+        if productionAlertId != nil {
+            return dataProvider?.activeProductionGlobalAlert
+        }
+        return dataProvider?.productionGlobalAlertsData
     }
     private var dataSource: [[String : String]] = []
     
@@ -38,8 +46,18 @@ class GlobalAlertViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNeedsStatusBarAppearanceUpdate()
+        errorLabel.text = "No data available"
         setUpTableView()
-        loadGlobalAlertsData()
+        if isProdAlert {
+            loadProductionGlobalAlertsData()
+        } else {
+            loadGlobalAlertsData()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        dataProvider?.forceUpdateAlertDetails = false
     }
     
     private func loadGlobalAlertsData() {
@@ -59,6 +77,25 @@ class GlobalAlertViewController: UIViewController {
         }
     }
     
+    private func loadProductionGlobalAlertsData() {
+        if let forceUpdateAlertDetails = dataProvider?.forceUpdateAlertDetails, forceUpdateAlertDetails {
+            loadGlobalAlertsInProgress = true
+            dataProvider?.getGlobalProductionIgnoringCache(alertID: productionAlertId, completion: {[weak self] dataWasChanged, errorCode, error in
+                DispatchQueue.main.async {
+                    self?.dataProvider?.forceUpdateAlertDetails = false
+                    if let alert = self?.prodAlertData, !alert.isExpired {
+                        self?.setUpDataSource()
+                    } else {
+                        self?.errorLabel.text = "Global Production Alert has been closed"
+                    }
+                    self?.loadGlobalAlertsInProgress = false
+                }
+            })
+        } else {
+            setUpDataSource()
+        }
+    }
+    
     private func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -68,6 +105,39 @@ class GlobalAlertViewController: UIViewController {
     }
     
     private func setUpDataSource() {
+        dataSource = []
+        if isProdAlert {
+            setUpProductionAlertsDataSource()
+        } else {
+            setUpGlobalAlertsDataSource()
+        }
+    }
+    
+    private func setUpProductionAlertsDataSource() {
+        if let issueReason = prodAlertData?.issueReason {
+            dataSource.append(["Maintenance Reason" : issueReason])
+        }
+        if let start = prodAlertData?.startDateString {
+            dataSource.append(["Notification Date" : start.getFormattedDateStringForMyTickets()])
+        }
+        if let duration = prodAlertData?.duration, prodAlertData?.status != .closed {
+            dataSource.append(["Maintenance Duration" : duration])
+        }
+        if let end = prodAlertData?.closeDateString, prodAlertData?.status == .closed {
+            dataSource.append(["Close Date" : end.getFormattedDateStringForMyTickets()])
+        }
+        if let summary = prodAlertData?.description {
+            dataSource.append(["Summary" : summary])
+        }
+        if let jiraTicket = prodAlertData?.sourceJiraIssue {
+            dataSource.append(["Original Source Jira Issue" : jiraTicket])
+        }
+        if let closeComment = prodAlertData?.lastComment, prodAlertData?.status == .closed {
+            dataSource.append(["Close Comment" : closeComment])
+        }
+    }
+    
+    private func setUpGlobalAlertsDataSource() {
         if let start = alertData?.notificationDate {
             dataSource.append(["Notification Date" : start])
         }
@@ -120,7 +190,6 @@ class GlobalAlertViewController: UIViewController {
             errorLabel.textColor = .black
             errorLabel.adjustsFontSizeToFitWidth = true
             errorLabel.minimumScaleFactor = 0.7
-            errorLabel.text = "No data available"
         } else {
             errorLabel.removeFromSuperview()
         }
@@ -144,6 +213,7 @@ extension GlobalAlertViewController: UITableViewDataSource, UITableViewDelegate 
             return 0
         }
         if dataSource.count == 0 {
+            setActivityIndicator(false)
             setErrorLabel(true)
             return 0
         }
@@ -155,16 +225,7 @@ extension GlobalAlertViewController: UITableViewDataSource, UITableViewDelegate 
         default:
             return dataSource.count
         }
-        //return dataSource.count
     }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerView = GlobalAlertDetailsHeader.instanceFromNib()
-//        headerView.alertNumberLabel.text = alertData?.ticketNumber
-//        headerView.alertTitleLabel.text = alertData?.alertTitle
-//        headerView.setStatus(alertData?.status)
-//        return headerView
-//    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 1
@@ -173,19 +234,15 @@ extension GlobalAlertViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertDetailsHeaderCell", for: indexPath) as? GlobalAlertDetailsHeaderCell
-            cell?.alertNumberLabel.text = alertData?.ticketNumber
-            cell?.alertTitleLabel.text = alertData?.alertTitle
-            cell?.setStatus(alertData?.status)
+            cell?.alertNumberLabel.text = !isProdAlert ? alertData?.ticketNumber : prodAlertData?.ticketNumber
+            cell?.alertTitleLabel.text = !isProdAlert ? alertData?.alertTitle : prodAlertData?.summary
+            cell?.setStatus(!isProdAlert ? alertData?.status : prodAlertData?.status)
             return cell ?? UITableViewCell()
         }
         guard dataSource.count > indexPath.row, let key = dataSource[indexPath.row].keys.first else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertDetailsCell", for: indexPath) as? GlobalAlertDetailsCell
         cell?.titleLabel.text = key
         cell?.descriptionLabel.text = dataSource[indexPath.row][key]
-//        let htmlBody = dataProvider?.formNewsBody(from: text)
-//        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
-//            htmlBody?.setFontFace(font: neededFont)
-//        }
         return cell ?? UITableViewCell()
     }
     
@@ -209,7 +266,7 @@ extension GlobalAlertViewController: PanModalPresentable {
     }
     
     var panModalBackgroundColor: UIColor {
-        return .clear
+        return UIColor(hex: 0x000000, alpha: 0.4)
     }
     
     var topOffset: CGFloat {

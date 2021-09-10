@@ -95,16 +95,15 @@ extension UILabel {
         if numberOfLines != 3 {
             numberOfLines = 3
         }
-        self.font = UIFont(name: "SFProText-Regular", size: 16) ?? self.font
         guard let text = self.text, !text.isEmptyOrWhitespace() else { return }
         let readMoreAttributed = NSMutableAttributedString(string: readMoreText, attributes: [NSAttributedString.Key.font : font as Any, NSAttributedString.Key.foregroundColor: UIColor.gray])
         let lengthForVisibleString = vissibleTextLength
         if vissibleTextLength >= self.text!.count, let _ = self.attributedText {
-            self.text = text
-            let mutAttr = NSMutableAttributedString(attributedString: self.attributedText!)
-            mutAttr.mutableString.append("... ")
-            mutAttr.append(readMoreAttributed)
-            self.attributedText = mutAttr
+            //self.text = text
+//            let mutAttr = NSMutableAttributedString(attributedString: self.attributedText!)
+//            mutAttr.mutableString.append("... ")
+//            mutAttr.append(readMoreAttributed)
+//            self.attributedText = mutAttr
             return
         }
         let mutableString = NSMutableString(string: self.attributedText?.string ?? "")
@@ -130,7 +129,6 @@ extension UILabel {
     }
 
     var vissibleTextLength: Int {
-        let font: UIFont = UIFont(name: "SFProText-Regular", size: 16) ?? self.font
         let mode: NSLineBreakMode = self.lineBreakMode
         let labelWidth: CGFloat = self.frame.size.width
         let labelHeight: CGFloat = self.frame.size.height
@@ -140,7 +138,7 @@ extension UILabel {
         let attributedText = self.attributedText!// NSAttributedString(string: self.text!, attributes: attributes as? [NSAttributedString.Key : Any])
         let boundingRect: CGRect = attributedText.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
 
-        //if boundingRect.size.height > labelHeight {
+        if (self.text?.count ?? 0) > 110 {
             var index: Int = 0
             var prev: Int = 0
             let characterSet = CharacterSet.whitespacesAndNewlines
@@ -155,8 +153,8 @@ extension UILabel {
         let isNeedCoef = !UIDevice.current.name.lowercased().contains("pro max")
         let coefficient = isNeedCoef ? Int(Double(index - prev) / 1.9) : 0
             return prev + coefficient
-        //}
-        //return self.attributedText!.string.count
+        }
+        return self.attributedText!.string.count
     }
     
 }
@@ -606,6 +604,16 @@ extension String {
         return ceil(size.height)
     }
     
+    func width(height: CGFloat, font: UIFont) -> CGFloat {
+        let textSize = CGSize(width: .greatestFiniteMagnitude, height: height)
+        
+        let size = self.boundingRect(with: textSize,
+                                     options: .usesLineFragmentOrigin,
+                                     attributes: [NSAttributedString.Key.font : font],
+                                     context: nil)
+        return ceil(size.width)
+    }
+    
     func getFormattedDateStringForMyTickets() -> String {
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.ticketDateFormat
@@ -735,6 +743,7 @@ extension NSAttributedString {
         return ceil(rect.size.height)
     }
 }
+
 extension NSMutableAttributedString {
     // method to change attr string font without removing other attribures
     func setFontFace(font: UIFont, color: UIColor? = nil) {
@@ -745,10 +754,10 @@ extension NSMutableAttributedString {
         ) { (value, range, stop) in
 
             if let f = value as? UIFont,
-              let newFontDescriptor = f.fontDescriptor
+               let face = font.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.face) as? String, let newFontDescriptor = f.fontDescriptor
                 .withFamily(font.familyName)
-                .withSymbolicTraits(f.fontDescriptor.symbolicTraits) {
-
+                .withSymbolicTraits(f.fontDescriptor.symbolicTraits)?
+                .withFace(face) {
                 let newFont = UIFont(
                     descriptor: newFontDescriptor,
                     size: font.pointSize
@@ -919,6 +928,13 @@ extension UNNotification {
         get {
             guard let pushType = pushType else { return false }
             return pushType == Constants.pushTypeProductionAlert
+        }
+    }
+    
+    var isGlobalProductionAlert: Bool {
+        get {
+            guard let pushType = pushType else { return false }
+            return pushType == Constants.pushTypeGlobalProductionAlert
         }
     }
 }

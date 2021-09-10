@@ -27,7 +27,6 @@ class MyAppsDataProvider {
     }
     
     private var refreshTimer: Timer?
-    private var cachedReportData: Data?
     private(set) var tipsAndTricksData = [String : [QuickHelpRow]]()
     private(set) var appContactsData: [String : AppContactsData?] = [:]
     
@@ -46,7 +45,7 @@ class MyAppsDataProvider {
     // MARK: - Apps Status related methods
     
     func getMyAppsStatus(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "getMyAppsStatusQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "getMyAppsStatusQueue", qos: .userInteractive)
         queue.async {[weak self] in
             self?.getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
                 let code = cachedError == nil ? 200 : 0
@@ -109,7 +108,7 @@ class MyAppsDataProvider {
     }
     
     private func processMyApps(isFromCache: Bool = true, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "processMyAppsQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "processMyAppsQueue", qos: .userInteractive)
         queue.async {[weak self] in
             var myAppsResponse: MyAppsResponse?
             var retErr = error
@@ -137,7 +136,7 @@ class MyAppsDataProvider {
     // MARK: - All Apps related methods
     
     func getAllApps(completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "getAllAppsQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "getAllAppsQueue", qos: .userInteractive)
         queue.async {[weak self] in
             self?.getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
                 let code = cachedError == nil ? 200 : 0
@@ -204,7 +203,7 @@ class MyAppsDataProvider {
     }
     
     private func processAllApps(_ reportData: ReportDataResponse?, _ isFromCache: Bool, _ allAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "processAllAppsQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "processAllAppsQueue", qos: .userInteractive)
         queue.async {[weak self] in
             var allAppsResponse: AllAppsResponse?
             var retErr = error
@@ -237,7 +236,7 @@ class MyAppsDataProvider {
     // MARK: - App Details related methods
     
     func getAppDetailsData(for app: String?, completion: ((_ responseData: AppDetailsData?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "getAppDetailsDataQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "getAppDetailsDataQueue", qos: .userInteractive)
         queue.async {[weak self] in
             self?.getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
                 let code = cachedError == nil ? 200 : 0
@@ -286,7 +285,7 @@ class MyAppsDataProvider {
     }
     
     private func processAppDetails(_ reportData: ReportDataResponse?, _ appDetailsDataResponse: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ appDetailsData: AppDetailsData?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "processAppDetailsQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "processAppDetailsQueue", qos: .userInteractive)
         queue.async {[weak self] in
             var appDetailsData: AppDetailsData?
             var retErr = error
@@ -310,7 +309,7 @@ class MyAppsDataProvider {
     // MARK: - App Contacts related methods
     
     func getAppContactsData(for app: String?, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "getAppContactsDataQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "getAppContactsDataQueue", qos: .userInteractive)
         queue.async {[weak self] in
             self?.getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
                 let code = cachedError == nil ? 200 : 0
@@ -361,7 +360,7 @@ class MyAppsDataProvider {
     }
     
     private func processAppContacts(appName: String, _ reportData: ReportDataResponse?, _ appContactsDataResponse: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "processAppContactsQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "processAppContactsQueue", qos: .userInteractive)
         queue.async {[weak self] in
             var appContactsData: AppContactsData?
             var retErr = error
@@ -392,7 +391,7 @@ class MyAppsDataProvider {
     // MARK: - App Tips and Tricks related methods
     
     func getAppTipsAndTricks(for app: String?, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "getAppTipsAndTricksQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "getAppTipsAndTricksQueue", qos: .userInteractive)
         queue.async {[weak self] in
             self?.getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
                 let code = cachedError == nil ? 200 : 0
@@ -449,7 +448,7 @@ class MyAppsDataProvider {
     }
     
     private func handleAppTipsAndTricks(appName: String, _ reportData: ReportDataResponse?, _ fromCache: Bool, _ tipsAndTricksData: Data?, _ errorCode: Int, _ error: Error?, completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "handleAppTipsAndTricksQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "handleAppTipsAndTricksQueue", qos: .userInteractive)
         queue.async {[weak self] in
             var tipsAndTricksResponse: AppsTipsAndTricksResponse?
             var retErr = error
@@ -549,13 +548,15 @@ class MyAppsDataProvider {
     
     func activateStatusRefresh(completion: @escaping ((_ isNeedToRefreshStatus: Bool) -> Void)) {
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) {[weak self] (_) in
-            self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-                self?.cacheData(reportResponse, path: .getSectionReport)
-                if let cachedReport = self?.parseSectionReport(data: self?.cachedReportData), let serverReport = self?.parseSectionReport(data: reportResponse) {
-                    completion(serverReport != cachedReport)
-                } else {
-                    completion(true)
-                }
+            self?.getCachedResponse(for: .getSectionReport, completion: { cacheReport, _ in
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, _, _) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let cachedReport = self?.parseSectionReport(data: cacheReport), let serverReport = self?.parseSectionReport(data: reportResponse) {
+                        completion(serverReport != cachedReport)
+                    } else {
+                        completion(true)
+                    }
+                })
             })
         }
     }
@@ -568,7 +569,7 @@ class MyAppsDataProvider {
     // MARK: - Production alerts related methods
     
     func getProductionAlerts(completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "getProductionAlertsQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "getProductionAlertsQueue", qos: .userInteractive)
         queue.async {[weak self] in
             self?.getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
                 let code = cachedError == nil ? 200 : 0
@@ -614,7 +615,7 @@ class MyAppsDataProvider {
     }
     
     private func processProductionAlerts(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "processProductionAlertsQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "processProductionAlertsQueue", qos: .userInteractive)
         queue.async {[weak self] in
             var prodAlertsResponse: ProductionAlertsResponse?
             var retErr = error
@@ -644,7 +645,7 @@ class MyAppsDataProvider {
     }
     
     private func setProductAlerts(from response: ProductionAlertsResponse?, _ completion: @escaping ((_ alerts: [String : [ProductionAlertsRow]] ) -> Void)) {
-        let queue = DispatchQueue(label: "dictionary-writer-queue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "dictionary-writer-queue", qos: .userInteractive)
         let columns = response?.meta?.widgetsDataSource?.params?.columns ?? []
         let indexes = getDataIndexes(columns: columns)
         var alerts: [String : [ProductionAlertsRow]] = [:]
@@ -671,7 +672,7 @@ class MyAppsDataProvider {
     }
     
     func getProductionAlert(for app: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "getProductionAlertFor\(app)Queue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "getProductionAlertFor\(app)Queue", qos: .userInteractive)
         queue.async {[weak self] in
             self?.getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
                 let code = cachedError == nil ? 200 : 0
@@ -693,7 +694,7 @@ class MyAppsDataProvider {
     }
     
     func getProductionAlertIgnoringCache(for app: String, completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "getProductionAlertFor\(app)Queue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "getProductionAlertFor\(app)Queue", qos: .userInteractive)
         queue.async {[weak self] in
             self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                 self?.cacheData(reportResponse, path: .getSectionReport)
@@ -740,7 +741,7 @@ class MyAppsDataProvider {
     }
     
     private func processAppProductionAlerts(appName: String, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "processAppProductionAlertsQueue", qos: .userInteractive, attributes: .concurrent)
+        let queue = DispatchQueue(label: "processAppProductionAlertsQueue", qos: .userInteractive)
         queue.async {[weak self] in
             var prodAlertsResponse: ProductionAlertsResponse?
             var retErr = error

@@ -266,7 +266,11 @@ struct GlobalAlertRow: Codable, Equatable {
     }
     
     var isExpired: Bool {
+        #if GTADev
+        let isDateExpired = (Date().timeIntervalSince1970 - closeDate.timeIntervalSince1970) >= 600
+        #else
         let isDateExpired = (Date().timeIntervalSince1970 - closeDate.timeIntervalSince1970) >= 3600
+        #endif
         return status == .closed && isDateExpired
     }
     

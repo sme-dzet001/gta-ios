@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Light.ttf">
+            <string>SFProText-Light</string>
+        </array>
+        <array key="SF-Pro-Text-Medium.otf">
+            <string>SFProText-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NewsTableViewCell" rowHeight="435" id="KGk-i7-Jjw" customClass="NewsTableViewCell" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="333" height="435"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="333" height="435"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gWX-uU-T2L">
+                        <rect key="frame" x="24" y="24" width="285" height="184"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="184" id="mcm-Mf-h2x"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="16"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How Sony Music uses data to connect artists with fans" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GzM-zy-SQe">
+                        <rect key="frame" x="24" y="224" width="285" height="57.5"/>
+                        <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="24"/>
+                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wed Nov 11th, 2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4MB-aX-ivV">
+                        <rect key="frame" x="24" y="281.5" width="135.5" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="Cos-zJ-KTw"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="14"/>
+                        <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forbes Content Studio Forbes Staff Content Merketing" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="job-fo-JOe">
+                        <rect key="frame" x="24" y="321.5" width="285" height="38.5"/>
+                        <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="16"/>
+                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="job-fo-JOe" secondAttribute="trailing" constant="24" id="2MO-AV-ZQ4"/>
+                    <constraint firstItem="4MB-aX-ivV" firstAttribute="top" secondItem="GzM-zy-SQe" secondAttribute="bottom" id="97n-nK-4aI"/>
+                    <constraint firstItem="job-fo-JOe" firstAttribute="top" secondItem="4MB-aX-ivV" secondAttribute="bottom" constant="16" id="D1L-Vk-T2w"/>
+                    <constraint firstItem="GzM-zy-SQe" firstAttribute="top" secondItem="gWX-uU-T2L" secondAttribute="bottom" constant="16" id="Lzg-HP-5Ev"/>
+                    <constraint firstAttribute="trailing" secondItem="gWX-uU-T2L" secondAttribute="trailing" constant="24" id="bXb-hR-GNl"/>
+                    <constraint firstItem="4MB-aX-ivV" firstAttribute="leading" secondItem="GzM-zy-SQe" secondAttribute="leading" id="eZM-Rm-KS3"/>
+                    <constraint firstItem="gWX-uU-T2L" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="i7U-46-M3v"/>
+                    <constraint firstItem="GzM-zy-SQe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="kdl-7a-WFH"/>
+                    <constraint firstItem="gWX-uU-T2L" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="rB5-14-NY5"/>
+                    <constraint firstAttribute="trailing" secondItem="GzM-zy-SQe" secondAttribute="trailing" constant="24" id="vFt-ld-5PS"/>
+                    <constraint firstItem="job-fo-JOe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="zVj-R0-ZM1"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="byLabel" destination="job-fo-JOe" id="qbQ-6j-00D"/>
+                <outlet property="dateLabel" destination="4MB-aX-ivV" id="bw4-fh-Y3K"/>
+                <outlet property="pictureView" destination="gWX-uU-T2L" id="qyk-9i-RSe"/>
+                <outlet property="titleLabel" destination="GzM-zy-SQe" id="nB4-6N-Bh7"/>
+            </connections>
+            <point key="canvasLocation" x="147.10144927536234" y="83.370535714285708"/>
+        </tableViewCell>
+    </objects>
+</document>

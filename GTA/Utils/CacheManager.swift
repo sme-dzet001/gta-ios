@@ -23,7 +23,15 @@ class CacheManager {
     
     private var cacheFolderPath: String = ""
     
-    private var cachePassword: String?
+    private var cachePassword: String {
+        var cachePassword = KeychainManager.getCachePassword()
+        if (cachePassword == nil) {
+            let cachePasswordData = RNCryptor.randomData(ofLength: 32)
+            cachePassword = cachePasswordData.base64EncodedString(options: .lineLength64Characters)
+            _ = KeychainManager.saveCachePassword(cachePassword: cachePassword!)
+        }
+        return cachePassword!
+    }
     
     static let maxBufferSize: Int = 160000
     
@@ -39,13 +47,6 @@ class CacheManager {
         let cacheFolderURL = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent(CacheManagerConstants.cacheFolderName, isDirectory: true)
         cacheFolderPath = cacheFolderURL.path
         try? fm.createDirectory(at: cacheFolderURL, withIntermediateDirectories: true, attributes: nil)
-        
-        cachePassword = KeychainManager.getCachePassword()
-        if (cachePassword == nil) {
-            let cachePasswordData = RNCryptor.randomData(ofLength: 32)
-            cachePassword = cachePasswordData.base64EncodedString(options: .lineLength64Characters)
-            _ = KeychainManager.saveCachePassword(cachePassword: cachePassword!)
-        }
     }
     
     enum path {
@@ -76,6 +77,7 @@ class CacheManager {
         case getAppsProductionAlerts
         case getAppProductionAlerts(appName: String)
         case getCollaborationMetrics(appGroup: String, appName: String)
+        case getGlobalProductionAlerts
         
         var endpoint: String {
             switch self {
@@ -106,6 +108,7 @@ class CacheManager {
             case .getAppsProductionAlerts: return "/v3/widgets/app_alerts/data"
             case .getAppProductionAlerts(let appName): return "/v3/widgets/app_alerts/\(appName)/data"
             case .getCollaborationMetrics(let appGroup, let appName): return "/v3/widgets/collaboration_metrics/\(appGroup)/\(appName)/data"
+            case .getGlobalProductionAlerts: return "/v3/widgets/global_production_alerts/data"
             }
         }
     }
@@ -156,7 +159,7 @@ class CacheManager {
     
     private func writeCache(responseData: Data, path: String, completion: @escaping ((_ error: Error?) -> Void)) {
         var err: Error? = nil
-        let encryptedData = RNCryptor.encrypt(data: responseData, withPassword: cachePassword!)
+        let encryptedData = RNCryptor.encrypt(data: responseData, withPassword: cachePassword)
         cacheQueue.async {
             do {
                 try encryptedData.write(to: URL(fileURLWithPath: path))
@@ -294,24 +297,25 @@ class CacheManager {
                 return
             }
             self.getCachePath(requestURI: requestURI, formatVersion: formatVersion, createIfNotExists: false) { [weak self] (path: String?, err: Error?) in
-                DispatchQueue(label: "getCachedResponseQueue", qos: .userInteractive, attributes: .concurrent).async {
+                DispatchQueue(label: "getCachedResponseQueue", qos: .userInteractive).async {
+                    guard let self = self else { return }
                 cachedResponseError = err
                 if path != nil {
-                    let cacheFolderURL = URL(fileURLWithPath: (self?.cacheFolderPath ?? ""))
+                    let cacheFolderURL = URL(fileURLWithPath: (self.cacheFolderPath ?? ""))
                     let fullURL = cacheFolderURL.appendingPathComponent(path!)
                     do {
                         let encryptedResponseData = try Data(contentsOf: fullURL)
-                        responseData = try RNCryptor.decrypt(data: encryptedResponseData, withPassword: self?.cachePassword ?? "")
+                        responseData = try RNCryptor.decrypt(data: encryptedResponseData, withPassword: self.cachePassword)
                     } catch {
                         cachedResponseError = error
                     }
                     if responseData == nil {
-                        self?.deleteCache(path: fullURL.path, completion: { (error: Error?) in
+                        self.deleteCache(path: fullURL.path, completion: { (error: Error?) in
                         })
                     }
                 }
                 if responseData == nil {
-                    self?.deleteCacheMetadata(requestURI: requestURI, completion: { (error: Error?) in
+                    self.deleteCacheMetadata(requestURI: requestURI, completion: { (error: Error?) in
                     })
                 }
                 if cachedResponseError == nil && responseData == nil {

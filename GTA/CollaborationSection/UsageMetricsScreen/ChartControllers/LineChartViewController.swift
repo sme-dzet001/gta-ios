@@ -75,11 +75,11 @@ class LineChartViewController: UIViewController {
     
     func updateBlurViews() {
         blurViewLeft.isHidden = !(chartScrollView.contentOffset.x > 0)
-        blurViewRight.isHidden = !(ceil(Double(chartScrollView.contentOffset.x)) < floor(Double(chartViewWidth.constant - (UIScreen.main.bounds.width - chartScrollViewLeading.constant + chartScrollViewTrailing.constant))))
+        blurViewRight.isHidden = !(ceil(Double(chartScrollView.contentOffset.x)) < floor(Double(chartViewWidth.constant - chartScrollView.bounds.size.width)))
     }
     
     func updateScrollView() {
-        chartScrollView.contentOffset = CGPoint(x: chartViewWidth.constant - (UIScreen.main.bounds.width - chartScrollViewLeading.constant + chartScrollViewTrailing.constant), y: 0)
+        chartScrollView.contentOffset = CGPoint(x: chartViewWidth.constant - chartScrollView.bounds.size.width, y: 0)
     }
     
     func updateLabels() {

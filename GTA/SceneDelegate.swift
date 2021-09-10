@@ -79,7 +79,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         if let _ = KeychainManager.getToken() {
             let isUserLoggedIn = UserDefaults.standard.bool(forKey: "userLoggedIn")
             if tokenIsExpired || !isUserLoggedIn {
-                removeAllData()
+                removeAllData(delete: UserDefaults.standard.bool(forKey: Constants.isNeedLogOut))
                 if !isUserLoggedIn {
                     tokenIsExpired = false
                 }
@@ -89,7 +89,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                 if let aDate = UserDefaults.standard.value(forKey: "lastActivityDate") as? Date {
                     lastActivityDate = aDate
                 }
-                if lastActivityDate.addingTimeInterval(1200) > Date(),  let _ = KeychainManager.getPin(), isAuthentificationPassed ?? false {
+                if lastActivityDate.addingTimeInterval(1200) > Date(),  let _ = KeychainManager.getPin(), !(isAuthentificationScreenShown ?? true), isAuthentificationPassed ?? false {
                     if let navController = self.window?.rootViewController as? UINavigationController, navController.rootViewController is UITabBarController {
                         return
                     }
@@ -105,7 +105,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                     if !authScreenShown {
                         return
                     }
-                    removeAllData()
+                    removeAllData(delete: UserDefaults.standard.bool(forKey: Constants.isNeedLogOut))
                     startLoginFlow(sessionExpired: tokenIsExpired)
                     return
                 }
@@ -117,10 +117,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         }
     }
     
-    private func removeAllData() {
+    private func removeAllData(delete: Bool = true) {
         KeychainManager.deletePushNotificationTokenSent()
         KeychainManager.deleteUsername()
-        KeychainManager.deleteToken()
+        if delete {
+            KeychainManager.deleteToken()
+        }
         KeychainManager.deleteTokenExpirationDate()
         KeychainManager.deletePinData()
         CacheManager().clearCache()

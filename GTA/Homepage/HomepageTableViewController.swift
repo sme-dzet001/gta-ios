@@ -11,55 +11,32 @@ protocol HomepageMainDelegate: AnyObject {
     func navigateToOfficeStatus()
 }
 
-class HomepageTableViewController: UITableViewController {
+class HomepageTableViewController: UIViewController {
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var blurView: UIView!
+    
+    weak var newsShowDelegate: NewsShowDelegate?
     
     var dataProvider: HomeDataProvider?
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
-        
-    weak var showModalDelegate: ShowGlobalAlertModalDelegate?
+    
     var dataSource: [HomepageCellData] = []
     private var lastUpdateDate: Date?
-    private var emergencyOutageLoaded: Bool = false {
-        didSet {
-            DispatchQueue.main.async {
-                if self.navigationController?.topViewController is HomepageViewController, self.emergencyOutageLoaded {
-                    UIApplication.shared.applicationIconBadgeNumber = 0
-                }
-            }
-        }
-    }
      
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
         tableView.accessibilityIdentifier = "HomeScreenTableView"
-        NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if emergencyOutageLoaded {
-            emergencyOutageLoaded = false
-            UIApplication.shared.applicationIconBadgeNumber = 0
-        }
-        getGlobalAlerts()
-        dataProvider?.officeSelectionDelegate = self
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
-            loadSpecialAlertsData()
-            if officeLoadingIsEnabled { loadOfficesData() }
-        } else {
-            // reloading office cell (because office could be changed on office selection screen)
-            if officeLoadingIsEnabled {
-                if tableView.dataHasChanged {
-                    tableView.reloadData()
-                } else {
-                    UIView.performWithoutAnimation {
-                        tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
-                    }
-                }
-            }
+            loadNewsData()
         }
     }
     
@@ -87,12 +64,49 @@ class HomepageTableViewController: UITableViewController {
         }
     }
     
+    private func addBlurToViewIfNeeded() {
+        if let gradientMaskLayer = blurView.layer.mask, gradientMaskLayer.name == "grad" {
+            return
+        }
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.name = "grad"
+        gradientMaskLayer.frame = blurView.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradientMaskLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+        blurView.layer.mask = gradientMaskLayer
+    }
+    
     private func setUpTableView() {
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
-        tableView.register(UINib(nibName: "OfficeStatusCell", bundle: nil), forCellReuseIdentifier: "OfficeStatusCell")
-        tableView.register(UINib(nibName: "GTTeamCell", bundle: nil), forCellReuseIdentifier: "GTTeamCell")
-        tableView.register(UINib(nibName: "GlobalAlertCell", bundle: nil), forCellReuseIdentifier: "GlobalAlertCell")
+        tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
+    }
+    
+    private func loadNewsData() {
+        guard let dataProvider = dataProvider else { return }
+        if dataProvider.newsDataIsEmpty {
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            errorLabel.isHidden = true
+        }
+        dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                self?.activityIndicator.isHidden = true
+                if error == nil && errorCode == 200 {
+                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
+                    self?.errorLabel.isHidden = true
+                    self?.tableView.reloadData()
+                } else {
+                    let isNoData = dataProvider.newsDataIsEmpty
+                    if isNoData {
+                        self?.tableView.reloadData()
+                    }
+                    self?.errorLabel.isHidden = !isNoData
+                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                }
+            }
+        }
     }
     
     private func loadSpecialAlertsData() {
@@ -105,7 +119,7 @@ class HomepageTableViewController: UITableViewController {
                     if let dataHasChanged = self?.tableView.dataHasChanged, dataHasChanged || !doubleCheck {
                         self?.tableView.reloadData()
                     } else {
-                        self?.tableView.reloadSections(IndexSet(integersIn: 1...1), with: .none)
+                        self?.tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
                     }
                 } else {
                     //self?.displayError(errorMessage: "Error was happened!")
@@ -114,14 +128,14 @@ class HomepageTableViewController: UITableViewController {
         }
     }
     
-    private func loadOfficesData() {
+    /*private func loadOfficesData() {
         var forceOpenOfficeSelectionScreen = false
         officeLoadingError = nil
         if tableView.dataHasChanged {
             tableView.reloadData()
         } else {
             UIView.performWithoutAnimation {
-                tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
+                tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
             }
         }
         dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error, isFromCache) in
@@ -144,7 +158,7 @@ class HomepageTableViewController: UITableViewController {
                                 self?.tableView.reloadData()
                             } else {
                                 UIView.performWithoutAnimation {
-                                    self?.tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
+                                    self?.tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
                                 }
                             }
                             if forceOpenOfficeSelectionScreen {
@@ -156,7 +170,7 @@ class HomepageTableViewController: UITableViewController {
                                 self?.tableView.reloadData()
                             } else {
                                 UIView.performWithoutAnimation {
-                                    self?.tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
+                                    self?.tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
                                 }
                             }
                         }
@@ -169,56 +183,12 @@ class HomepageTableViewController: UITableViewController {
                         self?.tableView.reloadData()
                     } else {
                         UIView.performWithoutAnimation {
-                            self?.tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
+                            self?.tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
                         }
                     }
                 }
             }
         })
-    }
-    
-    @objc private func getGlobalAlerts() {
-        dataProvider?.getGlobalAlerts(completion: {[weak self] isFromCache, dataWasChanged, errorCode, error in
-            DispatchQueue.main.async {
-                if error == nil && errorCode == 200 {
-                    self?.emergencyOutageLoaded = dataWasChanged && !isFromCache
-                    if self?.tableView.dataHasChanged == true {
-                        self?.tableView.reloadData()
-                    } else {
-                        UIView.performWithoutAnimation {
-                            self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
-                        }
-                    }
-                    if let data = self?.dataProvider?.globalAlertsData {
-                        switch data.status {
-                        case .inProgress:
-                            self?.tabBarController?.addAlertItemBadge(atIndex: 0)
-                        default:
-                            self?.tabBarController?.removeItemBadge(atIndex: 0)
-                        }
-                    }
-                } else {
-                    //self?.displayError(errorMessage: "Error was happened!")
-                }
-            }
-        })
-    }
-    
-    @objc private func getGlobalAlertsIgnoringCache() {
-        dataProvider?.getGlobalAlertsIgnoringCache {[weak self] _, dataWasChanged, errorCode, error in
-            DispatchQueue.main.async {
-                if dataWasChanged, error == nil {
-                    self?.emergencyOutageLoaded = true
-                    if self?.tableView.dataHasChanged == true {
-                        self?.tableView.reloadData()
-                    } else {
-                        UIView.performWithoutAnimation {
-                            self?.tableView.reloadSections(IndexSet(integersIn: 0...0), with: .none)
-                        }
-                    }
-                }
-            }
-        }
     }
     
     private func openOfficeSelectionModalScreen() {
@@ -269,146 +239,73 @@ class HomepageTableViewController: UITableViewController {
         let contactsViewController = GTTeamViewController()
         contactsViewController.dataProvider = dataProvider
         self.navigationController?.pushViewController(contactsViewController, animated: true)
-    }
+    }*/
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
 }
 
-extension HomepageTableViewController {
+extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegate {
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-//        case 0:
-//            let alert = dataProvider?.globalAlertsData
-//            if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
-//                return 0
-//            }
-//            return 1
-        case 1:
-            return dataProvider?.alertsData.count ?? 0
-        default:
-            return 1
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if tableView.contentOffset.y > 0 {
+            addBlurToViewIfNeeded()
+            blurView.isHidden = false
+        } else {
+            blurView.isHidden = true
         }
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0:
-            let alert = dataProvider?.globalAlertsData
-            if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
-                return 0
-            }
-            return 80
-        case 1, 2:
-            return 80
-        default:
-            return UITableView.automaticDimension
-        }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "GlobalAlertCell", for: indexPath) as? GlobalAlertCell
-            guard let alert = dataProvider?.globalAlertsData else { return UITableViewCell() }
-            guard !alert.isExpired else { return UITableViewCell() }
-            cell?.alertLabel.text = alert.alertTitle ?? "Emergency Outage"
-            if alert.status == .closed {
-                cell?.setAlertOff()
-            } else {
-                cell?.setAlertOn()
-            }
-            return cell ?? UITableViewCell()
-        } else if indexPath.section == 1 {
-            let data = dataProvider?.alertsData ?? []
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
-            cell?.separator.isHidden = false
-            cell?.iconImageView.image = UIImage(named: "info_icon")
-            cell?.mainLabel.text = data[indexPath.row].alertTitle
-            cell?.mainLabel.textColor = .black
-            if let date = data[indexPath.row].alertDate?.getFormattedDateStringForMyTickets() { //dataProvider?.formatDateString(dateString: data[indexPath.row].alertDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss") {
-                cell?.descriptionLabel.text = date
-            } else {
-                cell?.descriptionLabel.text = nil
-                cell?.setMainLabelAtCenter()
-            }
-            cell?.mainLabel.accessibilityIdentifier = "HomeScreenAlertTitleLabel"
-            return cell ?? UITableViewCell()
-        } else if indexPath.section == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "GTTeamCell", for: indexPath) as? GTTeamCell
-            return cell ?? UITableViewCell()
-        } else if indexPath.section == 3 {
-            let data = dataProvider?.userOffice
-            if let officeData = data {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
-                cell?.officeStatusLabel.text = officeData.officeName
-                cell?.officeAddressLabel.text = officeData.officeLocation?.replacingOccurrences(of: "\u{00A0}", with: " ")
-                cell?.officeAddressLabel.isHidden = officeData.officeLocation?.isEmpty ?? true
-                cell?.officeNumberLabel.text = officeData.officePhone
-                cell?.officeNumberLabel.isHidden = officeData.officePhone?.isEmpty ?? true
-                cell?.officeEmailLabel.text = officeData.officeEmail
-                cell?.officeEmailLabel.isHidden = officeData.officeEmail?.isEmpty ?? true
-                cell?.officeErrorLabel.isHidden = true
-                cell?.separator.isHidden = false
-                cell?.arrowImage.isHidden = false
-                cell?.officeStatusLabel.accessibilityIdentifier = "HomeScreenOfficeTitleLabel"
-                cell?.officeAddressLabel.accessibilityIdentifier = "HomeScreenOfficeAddressLabel"
-                return cell ?? UITableViewCell()
-            } else {
-                if let errorStr = officeLoadingError {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell
-                    cell?.officeStatusLabel.text = " "
-                    cell?.officeAddressLabel.text = " "
-                    cell?.officeAddressLabel.isHidden = false
-                    cell?.officeNumberLabel.text = " "
-                    cell?.officeNumberLabel.isHidden = false
-                    cell?.officeEmailLabel.text = " "
-                    cell?.officeEmailLabel.isHidden = false
-                    cell?.officeErrorLabel.text = errorStr
-                    cell?.officeErrorLabel.isHidden = false
-                    cell?.separator.isHidden = false
-                    cell?.arrowImage.isHidden = true
-                    return cell ?? UITableViewCell()
-                } else {
-                    let loadingCell = createLoadingCell(withBottomSeparator: true, verticalOffset: 54)
-                    return loadingCell
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataProvider?.newsData.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 372
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let dataProvider = dataProvider else { return UITableViewCell() }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell", for: indexPath) as? NewsTableViewCell
+        let cellDataSource = dataProvider.newsData[indexPath.row]
+        let imageURL = dataProvider.formImageURL(from: cellDataSource.posterUrl)
+        cell?.pictureView.accessibilityIdentifier = "HomeScreenCollectionImageView"
+        let url = URL(string: imageURL)
+        cell?.pictureView.kf.indicatorType = .activity
+        cell?.pictureView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+            switch result {
+            case .success(let resData):
+                cell?.pictureView.image = resData.image
+            case .failure(let error):
+                if !error.isNotCurrentTask {
+                    cell?.pictureView.image = nil
                 }
             }
-        } else  {
-            let data = dataSource[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell
-            cell?.separator.isHidden = false
-            cell?.iconImageView.image = UIImage(named: data.image ?? "")?.withRenderingMode(data.enabled ? .alwaysOriginal : .alwaysTemplate)
-            cell?.iconImageView.tintColor = data.enabled ? nil : UIColor(hex: 0x9B9B9B)
-            cell?.mainLabel.text = data.mainText
-            cell?.descriptionLabel.text = data.additionalText
-            cell?.mainLabel.textColor = data.enabled ? UIColor.black : UIColor(hex: 0x9B9B9B)
-            return cell ?? UITableViewCell()
-        }
+        })
+        cell?.titleLabel.text = cellDataSource.newsTitle
+        cell?.byLabel.text = cellDataSource.newsAuthor
+        let newsDate = cellDataSource.newsDate
+        cell?.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
+        cell?.titleLabel.accessibilityIdentifier = "HomeScreenCollectionTitleLabel"
+        cell?.dateLabel.accessibilityIdentifier = "HomeScreenCollectionDateLabel"
+        return cell ?? UITableViewCell()
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            showModalDelegate?.showGlobalAlertModal()
-        case 1:
-            openAlertScreen(for: indexPath)
-        case 2:
-            openGTTeamScreen()
-        default:
-            openOfficeScreen(for: indexPath)
-        }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let dataProvider = dataProvider, dataProvider.newsData.count > indexPath.row else { return }
+        let newsBody = dataProvider.newsData[indexPath.row].newsBody
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        newsShowDelegate?.showArticleViewController(with: newsBody)
     }
     
 }
 
-extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDelegate {
+/*extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDelegate {
     func officeWasSelected() {
         officeLoadingIsEnabled = false
         updateUIWithSelectedOffice()
@@ -431,12 +328,12 @@ extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUI
                 self.tableView.reloadData()
             } else {
                 UIView.performWithoutAnimation {
-                    self.tableView.reloadSections(IndexSet(integersIn: 3...3), with: .none)
+                    self.tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
                 }
             }
         }
     }
-}
+}*/
 
 struct HomepageCellData {
     var mainText: String?
