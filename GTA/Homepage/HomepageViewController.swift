@@ -8,6 +8,7 @@
 import UIKit
 import AdvancedPageControl
 import PanModal
+import Parchment
 
 enum FilterTabType : String {
     case all = "All"
@@ -19,40 +20,25 @@ enum FilterTabType : String {
 class HomepageViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var filterTabs: UICollectionView!
     @IBOutlet weak var emergencyOutageBannerView: GlobalAlertBannerView!
     @IBOutlet weak var globalProductionAlertBannerView: GlobalAlertBannerView!
     @IBOutlet weak var emergencyOutageBannerViewHeight: NSLayoutConstraint!
     @IBOutlet weak var globalProductionAlertBannerViewHeight: NSLayoutConstraint!
     
+    private var newsTabs: [HomepageTableViewController] = []
+    
     private var dataProvider: HomeDataProvider = HomeDataProvider()
     private var lastUpdateDate: Date?
-    
-    var homepageTableVC: HomepageTableViewController?
     
     private var presentedVC: ArticleViewController?
     
     private var filterTabTypes : [FilterTabType] = [.all, .news, .specialAlerts, .teamsNews]
     
-    private var selectedFilterTab: FilterTabType = .all
-    
-    @objc private func onSwipe(_ gesture: UISwipeGestureRecognizer) {
-        var selectedFilterTabIdx = filterTabTypes.firstIndex(of: selectedFilterTab) ?? 0
-        if gesture.direction == .right && selectedFilterTabIdx > 0 {
-            selectedFilterTabIdx -= 1
-        }
-        if gesture.direction == .left && selectedFilterTabIdx < (filterTabTypes.count - 1) {
-            selectedFilterTabIdx += 1
-        }
-        filterTabs.selectItem(at: IndexPath(item: selectedFilterTabIdx, section: 0), animated: true, scrollPosition: .centeredHorizontally)
-        selectedFilterTab = filterTabTypes[selectedFilterTabIdx]
-    }
-    
     private var filterTabItemWidths : [CGFloat] {
         var result: [CGFloat] = []
         guard let font: UIFont = UIFont(name: "SFProText-Medium", size: 14) else { return result }
         for filterTabType in filterTabTypes {
-            let itemWidth = filterTabType.rawValue.width(height: self.filterTabs.frame.height, font: font) + 50
+            let itemWidth = filterTabType.rawValue.width(height: 40, font: font) + 50
             result.append(itemWidth)
         }
         let sumWidth = result.reduce(0, +)
@@ -82,17 +68,8 @@ class HomepageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpFilterTabs()
         setUpBannerViews()
         setNeedsStatusBarAppearanceUpdate()
-        
-        let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(onSwipe(_:)))
-        swipeGestureLeft.direction = [.left]
-        view.addGestureRecognizer(swipeGestureLeft)
-        
-        let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(onSwipe(_:)))
-        swipeGestureRight.direction = [.right]
-        view.addGestureRecognizer(swipeGestureRight)
         
         NotificationCenter.default.addObserver(self, selector: #selector(getAllAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
@@ -120,17 +97,6 @@ class HomepageViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
-    }
-    
-    private func setUpFilterTabs() {
-        filterTabs.dataSource = self
-        filterTabs.delegate = self
-        if let layout = filterTabs.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.scrollDirection = .horizontal
-        }
-        filterTabs.register(UINib(nibName: "HomepageFilterTabsCollectionCell", bundle: nil), forCellWithReuseIdentifier: "HomepageFilterTabsCollectionCell")
-        
-        filterTabs.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .left)
     }
     
     private func setUpBannerViews() {
@@ -207,9 +173,29 @@ class HomepageViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedTable" {
-            homepageTableVC = segue.destination as? HomepageTableViewController
-            homepageTableVC?.dataProvider = dataProvider
-            homepageTableVC?.newsShowDelegate = self
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
+            if let allNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let promotedNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let specialAlertsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let applicationNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController {
+                newsTabs = [allNewsViewController, promotedNewsViewController, specialAlertsViewController, applicationNewsViewController]
+            }
+            
+            for newsTab in newsTabs {
+                newsTab.dataProvider = dataProvider
+                newsTab.newsShowDelegate = self
+            }
+            
+            let pagingVC = segue.destination as? PagingViewController
+            pagingVC?.dataSource = self
+            pagingVC?.register(PagingTitleCell.self, for: PagingIndexItem.self)
+            pagingVC?.indicatorColor = UIColor(hex: 0xCC0000)
+            pagingVC?.selectedTextColor = .black
+            pagingVC?.borderOptions = .hidden
+            pagingVC?.indicatorOptions = .visible(height: 2, zIndex: Int.max, spacing: .zero, insets: .zero)
+            if let filterTabFont = UIFont(name: "SFProText-Medium", size: 14) {
+                pagingVC?.font = filterTabFont
+                pagingVC?.selectedFont = filterTabFont
+            }
+            pagingVC?.menuItemSize = .selfSizing(estimatedWidth: 80, height: 40)
+            pagingVC?.menuInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         }
     }
     
@@ -400,6 +386,22 @@ class HomepageViewController: UIViewController {
     }
 }
 
+extension HomepageViewController: PagingViewControllerDataSource {
+    func numberOfViewControllers(in pagingViewController: PagingViewController) -> Int {
+        return newsTabs.count
+    }
+    
+    func pagingViewController(_: PagingViewController, viewControllerAt index: Int) -> UIViewController {
+        return newsTabs[index]
+    }
+    
+    func pagingViewController(_: PagingViewController, pagingItemAt index: Int) -> PagingItem {
+        return PagingIndexItem(index: index, title: filterTabTypes[index].rawValue)
+    }
+    
+    
+}
+
 extension HomepageViewController: DismissAlertDelegate {
     func closeAlertDidPressed() {
         let alert = UIAlertController(title: "Confirm closing", message: "Notification will appear again when the outage starts", preferredStyle: .alert)
@@ -411,36 +413,6 @@ extension HomepageViewController: DismissAlertDelegate {
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
-    }
-}
-
-extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filterTabTypes.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomepageFilterTabsCollectionCell", for: indexPath) as? HomepageFilterTabsCollectionCell {
-            cell.titleLabel.text = filterTabTypes[indexPath.item].rawValue
-            return cell
-        } else {
-            return UICollectionViewCell()
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        filterTabs.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        selectedFilterTab = filterTabTypes[indexPath.item]
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemWidth = filterTabItemWidths[indexPath.item]
-        return CGSize(width: itemWidth, height: self.filterTabs.frame.height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
     }
 }
 
