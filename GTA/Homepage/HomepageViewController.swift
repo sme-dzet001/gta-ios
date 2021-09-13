@@ -49,6 +49,54 @@ class HomepageViewController: UIViewController {
         return result
     }
     
+    private var isEmergencyOutageBannerVisible: Bool {
+        let alert = dataProvider.globalAlertsData
+        if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
+            return false
+        }
+        return true
+    }
+    
+    private var isGlobalProductionAlertBannerVisible: Bool {
+        let alert = dataProvider.productionGlobalAlertsData
+        if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open || dismissDidPressed {
+            return false
+        }
+        return true
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
+    private var dismissDidPressed: Bool {
+        if let value = UserDefaults.standard.value(forKey: "ClosedProdAlert") as? [String : String?] {
+            let issueReason = value["issueReason"] == self.dataProvider.productionGlobalAlertsData?.issueReason
+            let prodAlertsStatus = value["prodAlertsStatus"] == self.dataProvider.productionGlobalAlertsData?.prodAlertsStatus.rawValue
+            let summary = value["summary"] == self.dataProvider.productionGlobalAlertsData?.summary
+            return issueReason && prodAlertsStatus && summary
+        }
+        return false
+    }
+    
+    private var emergencyOutageLoaded: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                if self.navigationController?.topViewController is HomepageViewController, self.emergencyOutageLoaded {
+                    UIApplication.shared.applicationIconBadgeNumber = 0
+                }
+            }
+        }
+    }
+    
+    private var hasActiveGlobalProdAlerts: Bool {
+        guard let data = dataProvider.productionGlobalAlertsData else { return false }
+        guard data.prodAlertsStatus == .activeAlert || data.prodAlertsStatus == .closed else { return false }
+        let eventStarted = data.startDate.timeIntervalSince1970 >= Date().timeIntervalSince1970
+        let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
+        return eventStarted || eventFinished
+    }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         commonInit()
@@ -146,26 +194,6 @@ class HomepageViewController: UIViewController {
         globalProductionAlertBannerView.setAlertBannerForGlobalProdAlert(prodAlertsStatus: alert.prodAlertsStatus)
     }
     
-    private var isEmergencyOutageBannerVisible: Bool {
-        let alert = dataProvider.globalAlertsData
-        if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open {
-            return false
-        }
-        return true
-    }
-    
-    private var isGlobalProductionAlertBannerVisible: Bool {
-        let alert = dataProvider.productionGlobalAlertsData
-        if alert == nil || (alert?.isExpired ?? true) || alert?.status == .open || dismissDidPressed {
-            return false
-        }
-        return true
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     @IBAction func emergencyOutageBannerPressed(_ sender: Any) {
         showGlobalAlertModal(isProdAlert: false, productionAlertId: nil)
     }
@@ -205,16 +233,6 @@ class HomepageViewController: UIViewController {
     @IBAction func unwindToHomePage(segue: UIStoryboardSegue) {
     }
     
-    private var dismissDidPressed: Bool {
-        if let value = UserDefaults.standard.value(forKey: "ClosedProdAlert") as? [String : String?] {
-            let issueReason = value["issueReason"] == self.dataProvider.productionGlobalAlertsData?.issueReason
-            let prodAlertsStatus = value["prodAlertsStatus"] == self.dataProvider.productionGlobalAlertsData?.prodAlertsStatus.rawValue
-            let summary = value["summary"] == self.dataProvider.productionGlobalAlertsData?.summary
-            return issueReason && prodAlertsStatus && summary
-        }
-        return false
-    }
-    
     private func loadNewsData() {
         if dataProvider.newsDataIsEmpty {
             for newsTab in newsTabs {
@@ -229,24 +247,6 @@ class HomepageViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    private var emergencyOutageLoaded: Bool = false {
-        didSet {
-            DispatchQueue.main.async {
-                if self.navigationController?.topViewController is HomepageViewController, self.emergencyOutageLoaded {
-                    UIApplication.shared.applicationIconBadgeNumber = 0
-                }
-            }
-        }
-    }
-    
-    private var hasActiveGlobalProdAlerts: Bool {
-        guard let data = dataProvider.productionGlobalAlertsData else { return false }
-        guard data.prodAlertsStatus == .activeAlert || data.prodAlertsStatus == .closed else { return false }
-        let eventStarted = data.startDate.timeIntervalSince1970 >= Date().timeIntervalSince1970
-        let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
-        return eventStarted || eventFinished
     }
     
     @objc private func getAllAlerts() {
