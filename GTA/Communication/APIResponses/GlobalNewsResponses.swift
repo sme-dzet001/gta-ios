@@ -301,3 +301,80 @@ enum GlobalAlertStatus {
     case closed
 }
 
+// MARK: - News Feed Response
+
+struct NewsFeedResponse: Codable {
+    var meta: ResponseMetaData?
+    var data: NewsFeedData?
+}
+
+struct NewsFeedData: Codable, Equatable {
+    var rows: [NewsFeedRow?]?
+}
+
+struct NewsFeedRow: Codable, Equatable {
+    var values: [QuantumValue?]?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case values
+    }
+    
+    var category: NewsFeedCategory {
+        switch categoryStringValue.lowercased() {
+        case "news":
+            return .news
+        case "special alerts":
+            return .specialAlerts
+        default:
+            return .none
+        }
+    }
+    
+    private var categoryStringValue: String {
+        guard let valuesArr = values, let index = indexes["category"], valuesArr.count > index else { return "" }
+        return valuesArr[index]?.stringValue ?? ""
+    }
+    
+    var articleId: Int? {
+        guard let valuesArr = values, let index = indexes["article id"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.intValue
+    }
+    
+    var headline: String? {
+        guard let valuesArr = values, let index = indexes["headline"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var subHeadline: String? {
+        guard let valuesArr = values, let index = indexes["sub headline"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var imagePath: String? {
+        guard let valuesArr = values, let index = indexes["banner"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var postDate: String? {
+        guard let valuesArr = values, let index = indexes["post date"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var byLine: String? {
+        guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var newsBody: String? {
+        guard let valuesArr = values, let index = indexes["body"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+}
+
+enum NewsFeedCategory {
+    case news
+    case specialAlerts
+    case none
+}

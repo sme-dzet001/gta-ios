@@ -13,7 +13,7 @@ enum FilterTabType : String {
     case all = "All"
     case news = "News"
     case specialAlerts = "Special Alerts"
-    case teamsNews = "Teams News"
+    //case teamsNews = "Teams News"
 }
 
 class HomepageViewController: UIViewController {
@@ -32,7 +32,7 @@ class HomepageViewController: UIViewController {
     
     private var presentedVC: ArticleViewController?
     
-    private var filterTabTypes : [FilterTabType] = [.all, .news, .specialAlerts, .teamsNews]
+    private var filterTabTypes : [FilterTabType] = [.all, .news, .specialAlerts]
     
     private var selectedFilterTab: FilterTabType = .all
     
@@ -209,6 +209,7 @@ class HomepageViewController: UIViewController {
         if segue.identifier == "embedTable" {
             homepageTableVC = segue.destination as? HomepageTableViewController
             homepageTableVC?.dataProvider = dataProvider
+            homepageTableVC?.selectedFilterTab = selectedFilterTab
             homepageTableVC?.newsShowDelegate = self
         }
     }
@@ -432,6 +433,7 @@ extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         filterTabs.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         selectedFilterTab = filterTabTypes[indexPath.item]
+        homepageTableVC?.selectedFilterTab = selectedFilterTab
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

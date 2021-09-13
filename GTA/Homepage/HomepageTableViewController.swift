@@ -23,6 +23,11 @@ class HomepageTableViewController: UIViewController {
     var dataProvider: HomeDataProvider?
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
+    var selectedFilterTab: FilterTabType = .all {
+        didSet {
+            self.tableView?.reloadData()
+        }
+    }
     
     var dataSource: [HomepageCellData] = []
     private var lastUpdateDate: Date?
@@ -36,7 +41,7 @@ class HomepageTableViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
-            loadNewsData()
+            loadNewsFeedData()
         }
     }
     
@@ -82,6 +87,33 @@ class HomepageTableViewController: UIViewController {
         tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
     }
     
+    private func loadNewsFeedData() {
+        guard let dataProvider = dataProvider else { return }
+        if dataProvider.allNewsFeedData.isEmpty {
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            errorLabel.isHidden = true
+        }
+        dataProvider.getNewsFeedData { [weak self] (isFromCache, dataWasChanged, errorCode, error) in
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+                self?.activityIndicator.isHidden = true
+                if error == nil && errorCode == 200 {
+                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
+                    self?.errorLabel.isHidden = true
+                    self?.tableView.reloadData()
+                } else {
+                    let isNoData = dataProvider.allNewsFeedData.isEmpty
+                    if isNoData {
+                        self?.tableView.reloadData()
+                    }
+                    self?.errorLabel.isHidden = !isNoData
+                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                }
+            }
+        }
+    }
+    /*
     private func loadNewsData() {
         guard let dataProvider = dataProvider else { return }
         if dataProvider.newsDataIsEmpty {
@@ -128,7 +160,7 @@ class HomepageTableViewController: UIViewController {
         }
     }
     
-    /*private func loadOfficesData() {
+    private func loadOfficesData() {
         var forceOpenOfficeSelectionScreen = false
         officeLoadingError = nil
         if tableView.dataHasChanged {
@@ -262,7 +294,15 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataProvider?.newsData.count ?? 0
+        //return dataProvider?.newsData.count ?? 0
+        switch selectedFilterTab {
+        case .all:
+            return dataProvider?.allNewsFeedData.count ?? 0
+        case .news:
+            return dataProvider?.newsFeedData.count ?? 0
+        case .specialAlerts:
+            return dataProvider?.specialAlertsData.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -272,8 +312,19 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let dataProvider = dataProvider else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell", for: indexPath) as? NewsTableViewCell
-        let cellDataSource = dataProvider.newsData[indexPath.row]
-        let imageURL = dataProvider.formImageURL(from: cellDataSource.posterUrl)
+        var cellDataSource: NewsFeedRow
+        switch selectedFilterTab {
+        case .all:
+            guard dataProvider.allNewsFeedData.count > indexPath.row else { return UITableViewCell() }
+            cellDataSource = dataProvider.allNewsFeedData[indexPath.row]
+        case .news:
+            guard dataProvider.newsFeedData.count > indexPath.row else { return UITableViewCell() }
+            cellDataSource = dataProvider.newsFeedData[indexPath.row]
+        case .specialAlerts:
+            guard dataProvider.specialAlertsData.count > indexPath.row else { return UITableViewCell() }
+            cellDataSource = dataProvider.specialAlertsData[indexPath.row]
+        }
+        let imageURL = dataProvider.formImageURL(from: cellDataSource.imagePath)
         cell?.pictureView.accessibilityIdentifier = "HomeScreenCollectionImageView"
         let url = URL(string: imageURL)
         cell?.pictureView.kf.indicatorType = .activity
@@ -287,9 +338,9 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
                 }
             }
         })
-        cell?.titleLabel.text = cellDataSource.newsTitle
-        cell?.byLabel.text = cellDataSource.newsAuthor
-        let newsDate = cellDataSource.newsDate
+        cell?.titleLabel.text = cellDataSource.headline
+        cell?.byLabel.text = cellDataSource.byLine
+        let newsDate = cellDataSource.postDate
         cell?.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
         cell?.titleLabel.accessibilityIdentifier = "HomeScreenCollectionTitleLabel"
         cell?.dateLabel.accessibilityIdentifier = "HomeScreenCollectionDateLabel"
@@ -297,8 +348,19 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let dataProvider = dataProvider, dataProvider.newsData.count > indexPath.row else { return }
-        let newsBody = dataProvider.newsData[indexPath.row].newsBody
+        guard let dataProvider = dataProvider else { return }
+        var newsBody: String?
+        switch selectedFilterTab {
+        case .all:
+            guard dataProvider.allNewsFeedData.count > indexPath.row else { return }
+            newsBody = dataProvider.allNewsFeedData[indexPath.row].newsBody
+        case .news:
+            guard dataProvider.newsFeedData.count > indexPath.row else { return }
+            newsBody = dataProvider.newsFeedData[indexPath.row].newsBody
+        case .specialAlerts:
+            guard dataProvider.specialAlertsData.count > indexPath.row else { return }
+            newsBody = dataProvider.specialAlertsData[indexPath.row].newsBody
+        }
         tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         newsShowDelegate?.showArticleViewController(with: newsBody)
     }
