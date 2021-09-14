@@ -204,13 +204,15 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIView()
-        footerView.backgroundColor = UIColor(hex: 0xF7F7FA)
-        return footerView
+        let navigationButtonFooter = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.15) + 24 ))
+        let separatorFooter = UIView()
+        separatorFooter.backgroundColor = UIColor(hex: 0xF7F7FA)
+        return section == 0 ? separatorFooter : navigationButtonFooter
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return section == 0 ? 10 : 0
+        let footerHeight = (tableView.frame.width * 0.15) + 24
+        return section == 0 ? 10 : footerHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

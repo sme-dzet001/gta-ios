@@ -90,6 +90,16 @@ extension GTTeamViewController: UITableViewDelegate, UITableViewDataSource {
         return self.appContactsData?.data?.rows?.count ?? 0
     }
     
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.15) + 24 ))
+        return footer
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let footerHeight = (tableView.frame.width * 0.15) + 24
+        return footerHeight
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard (appContactsData?.data?.rows?.count ?? 0) > indexPath.row else { return UITableViewCell() }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "AppContactCell", for: indexPath) as? AppContactCell {

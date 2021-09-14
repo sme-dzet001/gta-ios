@@ -45,16 +45,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6E-mf-B2I">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="782"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <connections>
                                     <segue destination="2fU-G9-hR4" kind="embed" identifier="embedTabBar" id="Dqu-Bu-QHW"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NxS-vk-sP5">
-                                <rect key="frame" x="342" y="790" width="48" height="48"/>
+                                <rect key="frame" x="328" y="776" width="62" height="62"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="CB3-68-aeQ"/>
-                                    <constraint firstAttribute="width" constant="48" id="TzM-Hs-Psd"/>
+                                    <constraint firstAttribute="width" secondItem="NxS-vk-sP5" secondAttribute="height" multiplier="1:1" id="SPB-JA-Y5i"/>
                                 </constraints>
                                 <state key="normal" image="menu_button"/>
                                 <connections>
@@ -66,9 +65,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="v6E-mf-B2I" firstAttribute="top" secondItem="VeZ-MP-YJj" secondAttribute="top" id="0pj-2v-YV5"/>
-                            <constraint firstItem="NxS-vk-sP5" firstAttribute="top" secondItem="v6E-mf-B2I" secondAttribute="bottom" constant="8" id="6Zl-MW-71a"/>
                             <constraint firstItem="v6E-mf-B2I" firstAttribute="leading" secondItem="82B-ax-9f3" secondAttribute="leading" id="JZX-uJ-vI3"/>
                             <constraint firstItem="82B-ax-9f3" firstAttribute="trailing" secondItem="NxS-vk-sP5" secondAttribute="trailing" constant="24" id="eAo-Yt-a1H"/>
+                            <constraint firstItem="NxS-vk-sP5" firstAttribute="width" secondItem="v6E-mf-B2I" secondAttribute="width" multiplier="0.15" id="haR-4Y-o5W"/>
+                            <constraint firstAttribute="bottom" secondItem="v6E-mf-B2I" secondAttribute="bottom" id="kyU-Kr-0vg"/>
                             <constraint firstItem="82B-ax-9f3" firstAttribute="trailing" secondItem="v6E-mf-B2I" secondAttribute="trailing" id="uDn-DR-3RU"/>
                             <constraint firstItem="82B-ax-9f3" firstAttribute="bottom" secondItem="NxS-vk-sP5" secondAttribute="bottom" constant="24" id="zIl-LL-tVN"/>
                         </constraints>
@@ -368,7 +368,7 @@
         <image name="help" width="24" height="24"/>
         <image name="helpdesk_tab_icon" width="24" height="24"/>
         <image name="homepage_tab_icon" width="24" height="24"/>
-        <image name="menu_button" width="48" height="48"/>
+        <image name="menu_button" width="120" height="120"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
