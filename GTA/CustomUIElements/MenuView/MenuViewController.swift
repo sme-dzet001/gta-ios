@@ -6,11 +6,11 @@
 //
 
 import UIKit
-import WebKit
 
 protocol TabBarChangeIndexDelegate {
     func changeToIndex(index: Int)
     func closeButtonPressed()
+    func logoutButtonPressed()
 }
 
 class MenuViewController: UIViewController {
@@ -40,7 +40,6 @@ class MenuViewController: UIViewController {
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
     private var lastUpdateDate: Date?
-    private var usmLogoutWebView: WKWebView!
     
     let defaultCellHeight: CGFloat = 48
     let lineCellHeight:CGFloat = 40
@@ -56,10 +55,6 @@ class MenuViewController: UIViewController {
         tableView.register(UINib(nibName: "OfficeStatusCell", bundle: nil), forCellReuseIdentifier: "OfficeStatusCell")
         
         dataProvider.officeSelectionDelegate = self
-        usmLogoutWebView = WKWebView(frame: CGRect.zero)
-        view.addSubview(usmLogoutWebView)
-        usmLogoutWebView.isHidden = true
-        usmLogoutWebView.navigationDelegate = self
         
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             if officeLoadingIsEnabled { loadOfficesData() }
@@ -157,31 +152,6 @@ class MenuViewController: UIViewController {
             }
         })
     }
-    
-    private func logoutAlert() {
-        let alert = UIAlertController(title: "Confirm Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (_) in
-            if Reachability.isConnectedToNetwork() {
-                self?.sendLogoutRequest()
-            } else {
-                self?.errorLogout()
-            }
-        }
-        okAction.accessibilityIdentifier = "GeneralScreenAlertOKButton"
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        cancelAction.accessibilityIdentifier = "GeneralScreenAlertCancelButton"
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true)
-    }
-    
-    private func sendLogoutRequest() {
-        guard let accessToken = KeychainManager.getToken() else { return }
-        let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
-        guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
-        let logoutRequest = URLRequest(url: logoutURL)
-        usmLogoutWebView.load(logoutRequest)
-    }
 }
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -276,8 +246,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            if indexPath.row == menuItems.count - 1 {
-                logoutAlert()
+            if indexPath.row == menuItems.count - 1 { //Logout
+                delegate?.logoutButtonPressed()
+                closeAction(closeButton)
                 return
             }
             delegate?.changeToIndex(index: indexPath.row)
@@ -314,49 +285,6 @@ extension MenuViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDel
         DispatchQueue.main.async {
             self.officeLoadingError = nil
             self.tableView.reloadData()
-        }
-    }
-}
-
-extension MenuViewController: WKNavigationDelegate {
-    
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        errorLogout()
-    }
-    
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        errorLogout()
-    }
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-        decisionHandler(.allow)
-    }
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        logout()
-    }
-    
-    private func errorLogout() {
-        UserDefaults.standard.setValue(true, forKey: Constants.isNeedLogOut)
-        logout(deleteToken: false)
-    }
-    
-    private func logout(deleteToken: Bool = true) {
-        DispatchQueue.main.async {
-            UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
-            UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
-            KeychainManager.deleteUsername()
-            if deleteToken {
-                KeychainManager.deleteToken()
-            }
-            KeychainManager.deletePushNotificationTokenSent()
-            KeychainManager.deleteTokenExpirationDate()
-            CacheManager().clearCache()
-            KeychainManager.deletePinData()
-            ImageCacheManager().removeCachedData()
-            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
-                sceneDelegate.startLoginFlow()
-            }
         }
     }
 }

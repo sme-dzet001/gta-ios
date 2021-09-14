@@ -7,12 +7,14 @@
 
 import UIKit
 import Foundation
+import WebKit
 
 class MainViewController: UIViewController {
 
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var containerView: UIView!
     
+    private var usmLogoutWebView: WKWebView!
     let menuViewController = MenuViewController()
     var backgroundView: UIView?
     var tabBar: UITabBarController?
@@ -27,6 +29,10 @@ class MainViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         navigationController?.delegate = self
+        usmLogoutWebView = WKWebView(frame: CGRect.zero)
+        view.addSubview(usmLogoutWebView)
+        usmLogoutWebView.isHidden = true
+        usmLogoutWebView.navigationDelegate = self
         configureMenuButton()
     }
     
@@ -93,6 +99,31 @@ class MainViewController: UIViewController {
         menuButton.layer.cornerRadius = menuButton.frame.width / 2
     }
     
+    private func logoutAlert() {
+        let alert = UIAlertController(title: "Confirm Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] (_) in
+            if Reachability.isConnectedToNetwork() {
+                self?.sendLogoutRequest()
+            } else {
+                self?.errorLogout()
+            }
+        }
+        okAction.accessibilityIdentifier = "GeneralScreenAlertOKButton"
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        cancelAction.accessibilityIdentifier = "GeneralScreenAlertCancelButton"
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true)
+    }
+    
+    private func sendLogoutRequest() {
+        guard let accessToken = KeychainManager.getToken() else { return }
+        let nonceStr = String(format: "%.6f", NSDate.now.timeIntervalSince1970)
+        guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
+        let logoutRequest = URLRequest(url: logoutURL)
+        usmLogoutWebView.load(logoutRequest)
+    }
+    
 }
 
 extension MainViewController: UIPopoverPresentationControllerDelegate {
@@ -121,11 +152,60 @@ extension MainViewController: UINavigationControllerDelegate {
 }
 
 extension MainViewController: TabBarChangeIndexDelegate {
+    func logoutButtonPressed() {
+        DispatchQueue.main.async { [weak self] in
+            self?.logoutAlert()
+        }
+    }
+    
     func closeButtonPressed() {
         clearBackground()
     }
     
     func changeToIndex(index: Int) {
         selectedTabIdx = index
+    }
+}
+
+extension MainViewController: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        errorLogout()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        errorLogout()
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+        decisionHandler(.allow)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        logout()
+    }
+    
+    private func errorLogout() {
+        UserDefaults.standard.setValue(true, forKey: Constants.isNeedLogOut)
+        logout(deleteToken: false)
+    }
+    
+    private func logout(deleteToken: Bool = true) {
+        DispatchQueue.main.async {
+            UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
+            UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
+            KeychainManager.deleteUsername()
+            if deleteToken {
+                KeychainManager.deleteToken()
+            }
+            KeychainManager.deletePushNotificationTokenSent()
+            KeychainManager.deleteTokenExpirationDate()
+            CacheManager().clearCache()
+            KeychainManager.deletePinData()
+            ImageCacheManager().removeCachedData()
+            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+                sceneDelegate.startLoginFlow()
+            }
+        }
     }
 }
