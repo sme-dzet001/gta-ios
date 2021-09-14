@@ -154,6 +154,8 @@ class AppsViewController: UIViewController {
                         self.tableView.reloadData()
                     }
                     self.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: count > 0 ? "\(count)" : nil)
+                    guard let mainVC = self.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
+                    mainVC.menuViewController.productionAlertBadges = count
                 }
             }
         }

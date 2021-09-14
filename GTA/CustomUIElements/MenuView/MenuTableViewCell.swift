@@ -12,11 +12,14 @@ class MenuTableViewCell: UITableViewCell {
     @IBOutlet weak var menuImage: UIImageView!
     @IBOutlet weak var menuLabel: UILabel!
     @IBOutlet weak var badgeLabel: UILabel!
+    @IBOutlet weak var badgeImageView: UIImageView!
     
     var badgeNumber = 0 {
         didSet {
-            guard badgeNumber > 0 else {return}
-            badgeLabel.isHidden = false
+            guard badgeNumber > 0  else { return badgeLabel.isHidden = true }
+            badgeLabel.isHidden = badgeNumber > 0 ? false : true
+            badgeLabel.text = "\(badgeNumber)"
+            badgeImageView.isHidden = !badgeLabel.isHidden
         }
     }
     

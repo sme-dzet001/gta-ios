@@ -132,6 +132,8 @@ class ProductionAlertsViewController: UIViewController {
             UserDefaults.standard.setValue(summary, forKey: summary.lowercased())
         }
         self.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: badgeCount > 0 ? "\(badgeCount)" : nil)
+        guard let mainVC = self.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
+        mainVC.menuViewController.productionAlertBadges = badgeCount
     }
     
     @objc private func updateActiveProductionAlertStatus(notification: NSNotification) {

@@ -44,6 +44,9 @@ class MenuViewController: UIViewController {
     let defaultCellHeight: CGFloat = 48
     let lineCellHeight:CGFloat = 40
     
+    var globalAlertsBadges = 0
+    var productionAlertBadges = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -182,6 +185,13 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.section {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell") as? MenuTableViewCell else { return UITableViewCell() }
+            if indexPath.row == 0, globalAlertsBadges > 0 {
+                cell.badgeImageView.image = UIImage(named: "global_alert_badge")
+            }
+            if indexPath.row == 2, productionAlertBadges > 0 {
+                cell.badgeNumber = productionAlertBadges
+            }
+            
             cell.menuLabel.text = menuItems[indexPath.row].name
             cell.menuImage.image = menuItems[indexPath.row].image?.withRenderingMode(.alwaysTemplate)
             cell.menuLabel.textColor = .black

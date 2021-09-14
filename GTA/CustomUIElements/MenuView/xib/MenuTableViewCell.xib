@@ -31,7 +31,7 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KHO-n3-Nv5">
                         <rect key="frame" x="44" y="10" width="16" height="16"/>
-                        <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="16" id="euh-Ex-M0a"/>
                             <constraint firstAttribute="height" constant="16" id="ywh-ao-g8Z"/>
@@ -40,20 +40,28 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gFZ-4O-gAU">
+                        <rect key="frame" x="44" y="10" width="16" height="16"/>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="gFZ-4O-gAU" firstAttribute="leading" secondItem="KHO-n3-Nv5" secondAttribute="leading" id="5JS-Mk-LpQ"/>
+                    <constraint firstItem="gFZ-4O-gAU" firstAttribute="top" secondItem="KHO-n3-Nv5" secondAttribute="top" id="G8g-lt-OcQ"/>
                     <constraint firstItem="ua6-9x-hIS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="HrX-v1-vdW"/>
                     <constraint firstItem="KHO-n3-Nv5" firstAttribute="top" secondItem="ua6-9x-hIS" secondAttribute="top" id="JMl-xf-jZ6"/>
                     <constraint firstItem="KHO-n3-Nv5" firstAttribute="trailing" secondItem="ua6-9x-hIS" secondAttribute="trailing" id="ML7-Rg-vTF"/>
                     <constraint firstAttribute="bottom" secondItem="ua6-9x-hIS" secondAttribute="bottom" constant="10" id="NQo-Ej-RBF"/>
                     <constraint firstItem="d16-iV-FP9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PZ1-Pe-Z5a"/>
+                    <constraint firstItem="gFZ-4O-gAU" firstAttribute="trailing" secondItem="KHO-n3-Nv5" secondAttribute="trailing" id="QaV-U6-bAG"/>
                     <constraint firstItem="ua6-9x-hIS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="SzE-IF-A9K"/>
+                    <constraint firstItem="gFZ-4O-gAU" firstAttribute="bottom" secondItem="KHO-n3-Nv5" secondAttribute="bottom" id="WHN-1E-oIe"/>
                     <constraint firstAttribute="trailing" secondItem="d16-iV-FP9" secondAttribute="trailing" constant="16" id="ZgT-mN-rbU"/>
                     <constraint firstItem="d16-iV-FP9" firstAttribute="leading" secondItem="ua6-9x-hIS" secondAttribute="trailing" constant="32" id="yC5-wz-4Fu"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="badgeImageView" destination="gFZ-4O-gAU" id="X7d-tk-Khg"/>
                 <outlet property="badgeLabel" destination="KHO-n3-Nv5" id="rt3-4m-IAW"/>
                 <outlet property="menuImage" destination="ua6-9x-hIS" id="LaH-P9-0oC"/>
                 <outlet property="menuLabel" destination="d16-iV-FP9" id="9mS-Ho-XWS"/>
