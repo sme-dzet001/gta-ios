@@ -506,8 +506,7 @@ class HomeDataProvider {
                 response.data?.rows?[index]?.indexes = indexes
             }
         }
-        var rows = response.data?.rows?.filter({$0?.category == .news})
-        rows = rows?.sorted(by: {($1?.articleId ?? 0) > ($0?.articleId ?? 0)})
+        let rows = response.data?.rows?.filter({$0?.category == .news})
         let dataWasChanged = (rows ?? []) != newsFeedData
         newsFeedData = rows?.compactMap({$0}) ?? []
         specialAlertsData = response.data?.rows?.filter({$0?.category == .specialAlerts}).compactMap({$0}) ?? []

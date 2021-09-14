@@ -363,7 +363,8 @@ struct NewsFeedRow: Codable, Equatable {
     
     var byLine: String? {
         guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
+        let byLine = valuesArr[index]?.stringValue?.replacingOccurrences(of: "\\n", with: "\n")
+        return byLine
     }
     
     var newsBody: String? {
