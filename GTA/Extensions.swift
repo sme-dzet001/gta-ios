@@ -748,45 +748,41 @@ extension NSMutableAttributedString {
     // method to change attr string font without removing other attribures
     func setFontFace(font: UIFont, color: UIColor? = nil) {
         beginEditing()
-        self.enumerateAttribute(
-            .font,
-            in: NSRange(location: 0, length: self.length)
-        ) { (value, range, stop) in
-
-            if let f = value as? UIFont,
-               let face = font.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.face) as? String, let newFontDescriptor = f.fontDescriptor
-                .withFamily(font.familyName)
-                .withSymbolicTraits(f.fontDescriptor.symbolicTraits)?
-                .withFace(face) {
-                let newFont = UIFont(
-                    descriptor: newFontDescriptor,
-                    size: font.pointSize
-                )
+        self.enumerateAttribute(.font, in: NSRange(location: 0, length: self.length)) { (value, range, stop) in
+            if let f = value as? UIFont, let newFontDescriptor = getFontDescriptor(oldFont: f, newFont: font) {
+                let newFont = UIFont(descriptor: newFontDescriptor, size: font.pointSize)
                 removeAttribute(.font, range: range)
                 addAttribute(.font, value: newFont, range: range)
                 if let color = color {
-                    removeAttribute(
-                        .foregroundColor,
-                        range: range
-                    )
-                    addAttribute(
-                        .foregroundColor,
-                        value: color,
-                        range: range
-                    )
+                    removeAttribute(.foregroundColor, range: range)
+                    addAttribute(.foregroundColor, value: color, range: range)
                 }
-            } else if let f = value as? UIFont, f.fontName.lowercased().contains("italic") {
-                removeAttribute(.font, range: range)
-                if f.fontName.lowercased().contains("bolditalic") {
-                    if let font = UIFont(name: "SF Pro Text Italic Bold", size: 16) {
-                        addAttribute(.font, value: (font as Any), range: range)
-                    }
-                } else if let font = UIFont(name: "SF Pro Text Italic", size: 16) {
-                    addAttribute(.font, value: (font as Any), range: range)
-                }
-            }
+            } //else if let f = value as? UIFont, f.fontName.lowercased().contains("italic") {
+                //addItalicFontToText(font: f, range: range)
+            //}
         }
         endEditing()
+    }
+    
+    private func getFontDescriptor(oldFont: UIFont, newFont: UIFont) -> UIFontDescriptor? {
+        guard let face = oldFont.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.face) as? String else { return nil }
+        let newFontDescriptor = oldFont.fontDescriptor
+         .withFamily(newFont.familyName)
+         .withSymbolicTraits(oldFont.fontDescriptor.symbolicTraits)?
+         .withFace(face)
+        return newFontDescriptor
+    }
+    
+    // Need to save after refactoring for a few weeks
+    private func addItalicFontToText(font: UIFont, range: NSRange) {
+        removeAttribute(.font, range: range)
+        if font.fontName.lowercased().contains("bolditalic") {
+            if let font = UIFont(name: "SF Pro Text Italic Bold", size: 16) {
+                addAttribute(.font, value: (font as Any), range: range)
+            }
+        } else if let font = UIFont(name: "SF Pro Text Italic", size: 16) {
+            addAttribute(.font, value: (font as Any), range: range)
+        }
     }
     
     // method to change attr string paragraph style without removing other paragraph attribures

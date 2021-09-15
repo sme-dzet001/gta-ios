@@ -96,7 +96,7 @@ class WhatsNewCell: UITableViewCell {
         descriptionLabel.sizeToFit()
         self.layoutIfNeeded()
         descriptionLabel.attributedText = fullText
-        descriptionLabel.addReadMoreString("more")
+        //descriptionLabel.addReadMoreString("more")
     }
     
 }
