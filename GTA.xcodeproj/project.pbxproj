@@ -73,6 +73,13 @@
 		541F3AC526E906EF007F7C43 /* OfficeOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541F3AC026E906EF007F7C43 /* OfficeOverviewViewController.swift */; };
 		541F3AC626E906EF007F7C43 /* OfficeOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541F3AC026E906EF007F7C43 /* OfficeOverviewViewController.swift */; };
 		541F3AC726E906EF007F7C43 /* OfficeOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541F3AC026E906EF007F7C43 /* OfficeOverviewViewController.swift */; };
+		5472472226F20F1A000EE3F3 /* CircleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472472126F20F1A000EE3F3 /* CircleTransition.swift */; };
+		5472472326F20F1A000EE3F3 /* CircleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472472126F20F1A000EE3F3 /* CircleTransition.swift */; };
+		5472472426F20F1A000EE3F3 /* CircleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472472126F20F1A000EE3F3 /* CircleTransition.swift */; };
+		5472472526F20F1A000EE3F3 /* CircleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472472126F20F1A000EE3F3 /* CircleTransition.swift */; };
+		5472472626F20F1A000EE3F3 /* CircleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472472126F20F1A000EE3F3 /* CircleTransition.swift */; };
+		5472472726F20F1A000EE3F3 /* CircleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472472126F20F1A000EE3F3 /* CircleTransition.swift */; };
+		5472472826F20F1A000EE3F3 /* CircleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472472126F20F1A000EE3F3 /* CircleTransition.swift */; };
 		54D59C1A2695CCD80037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
 		54D59C1B2695CCD80037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
 		54D59C1E2695DFF60037A9B1 /* TeamChatUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */; };
@@ -1765,6 +1772,7 @@
 		5405382226E8E60500388BF3 /* GTTeamDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTTeamDataProvider.swift; sourceTree = "<group>"; };
 		541F3AB826E8FE8E007F7C43 /* OfficeStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OfficeStoryboard.storyboard; sourceTree = "<group>"; };
 		541F3AC026E906EF007F7C43 /* OfficeOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeOverviewViewController.swift; sourceTree = "<group>"; };
+		5472472126F20F1A000EE3F3 /* CircleTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleTransition.swift; sourceTree = "<group>"; };
 		54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChatUsersViewController.swift; sourceTree = "<group>"; };
 		54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamChatUsersViewController.xib; sourceTree = "<group>"; };
 		5F85A9BFD7B4F3349DA0E61A /* Pods_GTATests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTATests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2266,6 +2274,7 @@
 				659A5AB0255401EA00E13B77 /* AppDelegate.swift */,
 				659A5AB2255401EA00E13B77 /* SceneDelegate.swift */,
 				65D1A29225549A0600D71965 /* MainViewController.swift */,
+				5472472126F20F1A000EE3F3 /* CircleTransition.swift */,
 				9F8AEAE2255EB86000B62072 /* CustomUIElements */,
 				65D2905425682E45001B658A /* Login */,
 				6583BC8A2559AD4300C80673 /* Homepage */,
@@ -4715,6 +4724,7 @@
 				65437C812665387600B2F38A /* Office365AppCell.swift in Sources */,
 				65437C822665387600B2F38A /* WhatsNewMoreViewController.swift in Sources */,
 				65437C832665387600B2F38A /* AboutHeaderCell.swift in Sources */,
+				5472472826F20F1A000EE3F3 /* CircleTransition.swift in Sources */,
 				65437C842665387600B2F38A /* OfficeSelectionCell.swift in Sources */,
 				65437C852665387600B2F38A /* SecondSendMessageView.swift in Sources */,
 				9F30283E2681D42F009A3096 /* ProductionAlertsResponses.swift in Sources */,
@@ -4862,6 +4872,7 @@
 				65437E4F266539BF00B2F38A /* AboutHeaderCell.swift in Sources */,
 				65437E50266539BF00B2F38A /* WhatsNewMoreViewController.swift in Sources */,
 				65437E51266539BF00B2F38A /* SendMessageView.swift in Sources */,
+				5472472626F20F1A000EE3F3 /* CircleTransition.swift in Sources */,
 				65437E52266539BF00B2F38A /* OfficeSelectionCell.swift in Sources */,
 				65437E53266539BF00B2F38A /* StatsBarView.swift in Sources */,
 				9F30283C2681D42F009A3096 /* ProductionAlertsResponses.swift in Sources */,
@@ -5009,6 +5020,7 @@
 				65437FBC2665568000B2F38A /* Office365AppCell.swift in Sources */,
 				65437FBD2665568000B2F38A /* WhatsNewMoreViewController.swift in Sources */,
 				65437FBE2665568000B2F38A /* AboutHeaderCell.swift in Sources */,
+				5472472726F20F1A000EE3F3 /* CircleTransition.swift in Sources */,
 				65437FBF2665568000B2F38A /* OfficeSelectionCell.swift in Sources */,
 				65437FC02665568000B2F38A /* SecondSendMessageView.swift in Sources */,
 				9F30283D2681D42F009A3096 /* ProductionAlertsResponses.swift in Sources */,
@@ -5156,6 +5168,7 @@
 				9FA8E90D25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
 				9F643573261B5D3F000D94A4 /* WhatsNewMoreViewController.swift in Sources */,
 				9FF0545C25680ED30071E596 /* SendMessageView.swift in Sources */,
+				5472472226F20F1A000EE3F3 /* CircleTransition.swift in Sources */,
 				C9EFDA2F25A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				C9DFD4B725659C1100BF1740 /* StatsBarView.swift in Sources */,
 				9F3028382681D42F009A3096 /* ProductionAlertsResponses.swift in Sources */,
@@ -5247,6 +5260,7 @@
 				9F30283B2681D42F009A3096 /* ProductionAlertsResponses.swift in Sources */,
 				9F33F64E260A3C4000470A47 /* HelpDeskHeader.swift in Sources */,
 				9F33F64F260A3C4000470A47 /* HelpDeskResponses.swift in Sources */,
+				5472472526F20F1A000EE3F3 /* CircleTransition.swift in Sources */,
 				9F3028092681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				9F33F650260A3C4000470A47 /* APIRequest.swift in Sources */,
 				9F33F651260A3C4000470A47 /* MyTicketsViewController.swift in Sources */,
@@ -5467,6 +5481,7 @@
 				9F35862B25FD37BF0003658D /* Office365AppCell.swift in Sources */,
 				9F643574261B5D3F000D94A4 /* WhatsNewMoreViewController.swift in Sources */,
 				9FA8E90E25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
+				5472472326F20F1A000EE3F3 /* CircleTransition.swift in Sources */,
 				C9EFDA3025A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				9FF0547425681FC60071E596 /* SecondSendMessageView.swift in Sources */,
 				9F3028392681D42F009A3096 /* ProductionAlertsResponses.swift in Sources */,
@@ -5614,6 +5629,7 @@
 				9F35862C25FD37BF0003658D /* Office365AppCell.swift in Sources */,
 				9F643575261B5D40000D94A4 /* WhatsNewMoreViewController.swift in Sources */,
 				9FA8E90F25B056D5007D3B9F /* AboutHeaderCell.swift in Sources */,
+				5472472426F20F1A000EE3F3 /* CircleTransition.swift in Sources */,
 				C9EFDA3125A5E2E200F57817 /* OfficeSelectionCell.swift in Sources */,
 				9FF0547525681FC60071E596 /* SecondSendMessageView.swift in Sources */,
 				9F30283A2681D42F009A3096 /* ProductionAlertsResponses.swift in Sources */,
