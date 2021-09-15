@@ -154,6 +154,8 @@ class AppsViewController: UIViewController {
                         self.tableView.reloadData()
                     }
                     self.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: count > 0 ? "\(count)" : nil)
+                    guard let mainVC = self.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
+                    mainVC.menuViewController.productionAlertBadges = count
                 }
             }
         }
@@ -340,6 +342,16 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             return 80
         }
         return 60
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
+        return footer
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let footerHeight = (tableView.frame.width * 0.133) + 24
+        return footerHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

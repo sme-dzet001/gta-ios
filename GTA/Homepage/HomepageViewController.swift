@@ -122,6 +122,7 @@ class HomepageViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(getAllAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalProductionAlertsIgnoringCache), name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
+        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -260,12 +261,15 @@ class HomepageViewController: UIViewController {
                 if error == nil && errorCode == 200 {
                     self?.emergencyOutageLoaded = dataWasChanged && !isFromCache
                     self?.updateBannerViews()
+                    guard let mainVC = self?.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
                     if let data = self?.dataProvider.globalAlertsData {
                         switch data.status {
                         case .inProgress:
+                            mainVC.menuViewController.globalAlertsBadges = 1
                             self?.tabBarController?.addAlertItemBadge(atIndex: 0)
                         default:
                             if let self = self, !self.hasActiveGlobalProdAlerts {
+                                mainVC.menuViewController.globalAlertsBadges = 0
                                 self.tabBarController?.removeItemBadge(atIndex: 0)
                             }
                         }
@@ -314,6 +318,8 @@ class HomepageViewController: UIViewController {
                             let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
                             if eventStarted || eventFinished {
                                 self?.tabBarController?.addAlertItemBadge(atIndex: 0)
+                                guard let mainVC = self?.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
+                                mainVC.menuViewController.globalAlertsBadges = 1
                             }
                         default:
                             return
@@ -391,6 +397,8 @@ class HomepageViewController: UIViewController {
         dataProvider.getProductionAlerts {[weak self] _, _, count in
             DispatchQueue.main.async {
                 self?.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: count > 0 ? "\(count)" : nil)
+                guard let mainVC = self?.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
+                mainVC.menuViewController.productionAlertBadges = count
             }
         }
     }
