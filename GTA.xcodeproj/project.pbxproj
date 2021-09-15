@@ -2273,7 +2273,7 @@
 				9F895AD6255C22D6004489C6 /* MyAppsSection */,
 				6547566825FA4AE6002C45C4 /* CollaborationSection */,
 				65D14CB7256DA832004DFA70 /* GeneralSection */,
-				9F3AC8F92645A2CA004074C8 /*  GTTeamTab */,
+				9F3AC8F92645A2CA004074C8 /* GTTeamTab */,
 				541F3AB726E8FDF5007F7C43 /* OfficesTab */,
 				659A5AB6255401EA00E13B77 /* Main.storyboard */,
 				659A5AE9255404BB00E13B77 /* Supporting Files */,
@@ -2596,7 +2596,7 @@
 			path = Office365Cells;
 			sourceTree = "<group>";
 		};
-		9F3AC8F92645A2CA004074C8 /*  GTTeamTab */ = {
+		9F3AC8F92645A2CA004074C8 /* GTTeamTab */ = {
 			isa = PBXGroup;
 			children = (
 				9F3AC9042645B140004074C8 /* cells */,
@@ -2604,7 +2604,7 @@
 				5405382226E8E60500388BF3 /* GTTeamDataProvider.swift */,
 				5405381A26E8DE3D00388BF3 /* GTTeamStoryboard.storyboard */,
 			);
-			path = " GTTeamTab";
+			path = GTTeamTab;
 			sourceTree = "<group>";
 		};
 		9F3AC9042645B140004074C8 /* cells */ = {

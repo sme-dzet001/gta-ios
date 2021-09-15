@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol TabBarChangeIndexDelegate {
+protocol TabBarChangeIndexDelegate: AnyObject {
     func changeToIndex(index: Int)
     func closeButtonPressed()
     func logoutButtonPressed()
@@ -32,9 +32,9 @@ class MenuViewController: UIViewController {
         MenuItems(name: "Global Technology Team", image: UIImage(named: "team_contacts_icon")),
         MenuItems(name: "Logout", image: UIImage(named: "logout")),
     ]
-    var delegate: TabBarChangeIndexDelegate?
     var dataProvider = MenuViewControllerDataProvider()
     var selectedTabIdx: Int?
+    weak var delegate: TabBarChangeIndexDelegate?
     weak var tabBar: UITabBarController?
     
     var officeLoadingError: String?
