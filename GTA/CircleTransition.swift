@@ -8,7 +8,7 @@
 import UIKit
 
 class CircularTransition: NSObject {
-    enum CircleTransitionMode: Int {
+    enum CircleTransitionMode {
         case present, dismiss, pop
     }
     
@@ -34,19 +34,7 @@ extension CircularTransition: UIViewControllerAnimatedTransitioning {
         if transitionMode == .present {
             if let presentedView = transitionContext.view(forKey: UITransitionContextViewKey.to) {
                 let viewCenter = presentedView.center
-                let viewSize = presentedView.frame.size
-                
-                circle = UIView()
-                circle.frame = frameForCircle(viewCenter: viewCenter, viewSize: viewSize, startPoint: startingPoint)
-                circle.layer.cornerRadius = circle.frame.size.height / 2
-                circle.center = startingPoint
-                circle.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
-                containerView.addSubview(circle)
-                
-                presentedView.center = startingPoint
-                presentedView.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
-                presentedView.alpha = 0
-                containerView.addSubview(presentedView)
+                presentConfiguration(presentedView: presentedView, containerView: containerView)
                 
                 UIView.animate(withDuration: duration, animations: {
                     self.circle.transform = CGAffineTransform.identity
@@ -63,11 +51,8 @@ extension CircularTransition: UIViewControllerAnimatedTransitioning {
             if let returningView = transitionContext.view(forKey: transitionModeKey) {
                 let viewCenter = returningView.center
                 let viewSize = returningView.frame.size
+                popConfiguration(viewSize: viewSize, viewCenter: viewCenter)
                 
-                circle.frame = frameForCircle(viewCenter: viewCenter, viewSize: viewSize, startPoint: startingPoint)
-                circle.layer.cornerRadius = circle.frame.size.height / 2
-                circle.center = startingPoint
-               
                 UIView.animate(withDuration: duration, animations: {
                     self.circle.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
                     returningView.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
@@ -98,5 +83,25 @@ extension CircularTransition: UIViewControllerAnimatedTransitioning {
         let size = CGSize(width: offsetVector, height: offsetVector)
         
         return CGRect(origin: .zero, size: size)
+    }
+    
+    private func presentConfiguration(presentedView: UIView, containerView: UIView) {
+        circle = UIView()
+        circle.frame = frameForCircle(viewCenter: presentedView.center, viewSize: presentedView.frame.size, startPoint: startingPoint)
+        circle.layer.cornerRadius = circle.frame.size.height / 2
+        circle.center = startingPoint
+        circle.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
+        containerView.addSubview(circle)
+        
+        presentedView.center = startingPoint
+        presentedView.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
+        presentedView.alpha = 0
+        containerView.addSubview(presentedView)
+    }
+    
+    private func popConfiguration(viewSize: CGSize, viewCenter: CGPoint) {
+        circle.frame = frameForCircle(viewCenter: viewCenter, viewSize: viewSize, startPoint: startingPoint)
+        circle.layer.cornerRadius = circle.frame.size.height / 2
+        circle.center = startingPoint
     }
 }
