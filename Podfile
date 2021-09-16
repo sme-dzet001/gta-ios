@@ -13,6 +13,7 @@ def shared_pods
   pod 'Kingfisher'
   pod 'SDWebImage'
   pod 'Charts'
+  pod 'Parchment', '~> 3.0'
 end
 
 target 'GTA' do

@@ -24,6 +24,7 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var byLineHeight: NSLayoutConstraint?
     
     var dataProvider: HomeDataProvider?
+    var officeDataProvider: MenuViewControllerDataProvider?
     weak var selectedOfficeUIUpdateDelegate: SelectedOfficeUIUpdateDelegate?
     var infoType: infoType = .info
     var selectedOfficeData: OfficeRow?
@@ -49,7 +50,7 @@ class InfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUpConstraints()
-        dataProvider?.officeSelectionDelegate = self
+        officeDataProvider?.officeSelectionDelegate = self
         updateTitleLabel.isHidden = infoType == .office
         officeStatusLabel.isHidden = true//infoType != .office
         officeStatusLabel.layer.cornerRadius = 5
@@ -70,7 +71,6 @@ class InfoViewController: UIViewController {
             }
             self.blurView.isHidden = false
             addBlurToView()
-            self.tabBarController?.tabBar.isHidden = true
         }
         
     }
@@ -82,7 +82,6 @@ class InfoViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.tabBarController?.tabBar.isHidden = false
     }
     
     private func setAccessibilityIdentifiers() {
@@ -260,7 +259,7 @@ extension InfoViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == officeDataSoure.count - 1 {
             let officeLocation = OfficeLocationViewController()
             officeLocation.title = "Select Sony Music Office Region"
-            officeLocation.dataProvider = dataProvider
+            officeLocation.dataProvider = officeDataProvider
             let panModalNavigationController = PanModalNavigationController(rootViewController: officeLocation)
             panModalNavigationController.setNavigationBarHidden(true, animated: true)
             presentPanModal(panModalNavigationController)
@@ -311,12 +310,12 @@ extension InfoViewController: OfficeSelectionDelegate {
     func officeWasSelected() {
         self.selectedOfficeUIUpdateDelegate?.updateUIWithNewSelectedOffice()
         updateUIWithSelectedOffice()
-        dataProvider?.getCurrentOffice()
+        officeDataProvider?.getCurrentOffice()
     }
     
     private func updateUIWithSelectedOffice() {
         DispatchQueue.main.async {
-            self.selectedOfficeData = self.dataProvider?.userOffice
+            self.selectedOfficeData = self.officeDataProvider?.userOffice
             self.title = self.selectedOfficeData?.officeName
             self.infoLabel.text = self.title
             self.setDataSource()

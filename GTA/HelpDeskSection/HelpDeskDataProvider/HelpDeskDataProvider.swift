@@ -247,9 +247,10 @@ class HelpDeskDataProvider {
     }
     
     func formQuickHelpAnswerBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
-        guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
-        
-        let res = NSMutableAttributedString(attributedString: htmlAttrString)
+        guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), var htmlBodyString = String(data: data, encoding: .utf8) else { return nil }
+        htmlBodyString = htmlBodyString.replacingOccurrences(of: "\r\n", with: "\n")
+        guard let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
+        var res = NSMutableAttributedString(attributedString: htmlAttrString)
         
         guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return res }
         
@@ -272,7 +273,18 @@ class HelpDeskDataProvider {
         })
         var range = (res.string as NSString).range(of: "\n", options: .backwards)
         while range.length > 0 {
-            res.deleteCharacters(in: range)
+            if res.string.count - 1 == range.location {
+                res.deleteCharacters(in: range)
+            } else {
+                let previousLocation = range.location
+                let newRes = res
+                newRes.deleteCharacters(in: range)
+                let newRange = (newRes.string as NSString).range(of: "\n", options: .backwards)
+                if previousLocation - newRange.location == 1 {
+                    res = newRes
+                    break
+                }
+            }
             range = (res.string as NSString).range(of: "\n", options: .backwards)
         }
         return res
