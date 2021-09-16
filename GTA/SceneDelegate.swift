@@ -79,7 +79,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         if let _ = KeychainManager.getToken() {
             let isUserLoggedIn = UserDefaults.standard.bool(forKey: "userLoggedIn")
             if tokenIsExpired || !isUserLoggedIn {
-                removeAllData(delete: UserDefaults.standard.bool(forKey: Constants.isNeedLogOut))
+                if UserDefaults.standard.value(forKey: "lastActivityDate") == nil {
+                    removeAllData(delete: true)
+                }
                 if !isUserLoggedIn {
                     tokenIsExpired = false
                 }
