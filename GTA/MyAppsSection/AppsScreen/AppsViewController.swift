@@ -350,6 +350,8 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard section == tableView.numberOfSections - 1 else { return 0 }
+        
         let footerHeight = (tableView.frame.width * 0.133) + 24
         return footerHeight
     }
