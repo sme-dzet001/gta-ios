@@ -24,14 +24,10 @@ class HomepageTableViewController: UIViewController {
     var dataProvider: HomeDataProvider?
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
-    var selectedFilterTab: FilterTabType = .all {
-        didSet {
-            self.tableView?.reloadData()
-        }
-    }
+    var selectedFilterTab: FilterTabType = .all
     
     var dataSource: [HomepageCellData] = []
-    private var lastUpdateDate: Date?
+    //private var lastUpdateDate: Date?
      
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +38,8 @@ class HomepageTableViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         dataLoadingStarted()
-        if let dataProvider = dataProvider, !dataProvider.newsDataIsEmpty {
+        let dataSource = getDataSource()
+        if !dataSource.isEmpty {
             activityIndicator.stopAnimating()
             activityIndicator.isHidden = true
             tableView.reloadData()
@@ -97,26 +94,25 @@ class HomepageTableViewController: UIViewController {
     }
     
     func dataLoadingStarted() {
-        guard let dataProvider = dataProvider else { return }
         guard isViewLoaded else { return }
-        if dataProvider.newsDataIsEmpty {
+        let dataSource = getDataSource()
+        if dataSource.isEmpty {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
             errorLabel.isHidden = true
         }
     }
     
-    func dataLoadingFinished(errorCode: Int, error: Error?, isFromCache: Bool) {
-        guard let dataProvider = dataProvider else { return }
+    func dataLoadingFinished(dataWasChanged: Bool, errorCode: Int, error: Error?, isFromCache: Bool) {
         guard isViewLoaded else { return }
         activityIndicator.stopAnimating()
         activityIndicator.isHidden = true
         if error == nil && errorCode == 200 {
-            lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : lastUpdateDate
             errorLabel.isHidden = true
-            tableView.reloadData()
+            if dataWasChanged { tableView.reloadData() }
         } else {
-            let isNoData = dataProvider.newsDataIsEmpty
+            let dataSource = getDataSource()
+            let isNoData = dataSource.isEmpty
             if isNoData {
                 tableView.reloadData()
             }
@@ -125,6 +121,7 @@ class HomepageTableViewController: UIViewController {
         }
     }
     
+    /*
     private func loadSpecialAlertsData() {
         let numberOfRows = tableView.numberOfRows(inSection: 1)
         dataProvider?.getSpecialAlertsData { [weak self] (errorCode, error, isFromCache) in
@@ -206,7 +203,7 @@ class HomepageTableViewController: UIViewController {
             }
         }
     }
-    
+    */
     deinit {
     }
 

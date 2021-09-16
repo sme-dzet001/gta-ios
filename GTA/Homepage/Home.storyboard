@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -288,8 +288,8 @@
                                     <constraint firstAttribute="height" constant="40" id="oRM-Vm-o11"/>
                                 </constraints>
                             </view>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSh-Km-a9E">
-                                <rect key="frame" x="188.5" y="443.5" width="37.5" height="19"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSh-Km-a9E">
+                                <rect key="frame" x="24" y="443.5" width="366" height="19.5"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -302,8 +302,8 @@
                         <viewLayoutGuide key="safeArea" id="AvB-xH-pt6"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="DSh-Km-a9E" firstAttribute="leading" secondItem="AvB-xH-pt6" secondAttribute="leading" constant="24" id="Aau-Ap-H66"/>
                             <constraint firstItem="lz7-we-12N" firstAttribute="top" secondItem="iap-8y-9vM" secondAttribute="top" id="FPl-R1-aqf"/>
-                            <constraint firstItem="DSh-Km-a9E" firstAttribute="centerX" secondItem="AvB-xH-pt6" secondAttribute="centerX" id="LD4-BU-tPh"/>
                             <constraint firstItem="fyJ-ht-meb" firstAttribute="centerY" secondItem="AvB-xH-pt6" secondAttribute="centerY" id="Lg1-gT-OMD"/>
                             <constraint firstItem="lz7-we-12N" firstAttribute="leading" secondItem="iap-8y-9vM" secondAttribute="leading" id="V3O-ej-cHb"/>
                             <constraint firstItem="lz7-we-12N" firstAttribute="trailing" secondItem="iap-8y-9vM" secondAttribute="trailing" id="XBw-qd-hpf"/>
@@ -311,6 +311,7 @@
                             <constraint firstItem="n4G-BQ-duz" firstAttribute="bottom" secondItem="iap-8y-9vM" secondAttribute="bottom" id="Yli-Lv-VvH"/>
                             <constraint firstItem="n4G-BQ-duz" firstAttribute="trailing" secondItem="iap-8y-9vM" secondAttribute="trailing" id="gMZ-bI-U0g"/>
                             <constraint firstItem="fyJ-ht-meb" firstAttribute="centerX" secondItem="AvB-xH-pt6" secondAttribute="centerX" id="hFK-hL-siS"/>
+                            <constraint firstItem="AvB-xH-pt6" firstAttribute="trailing" secondItem="DSh-Km-a9E" secondAttribute="trailing" constant="24" id="hyr-rG-Ciu"/>
                             <constraint firstItem="DSh-Km-a9E" firstAttribute="centerY" secondItem="AvB-xH-pt6" secondAttribute="centerY" id="vBG-ud-uKi"/>
                             <constraint firstItem="n4G-BQ-duz" firstAttribute="top" secondItem="iap-8y-9vM" secondAttribute="top" id="zFJ-ic-L6u"/>
                         </constraints>

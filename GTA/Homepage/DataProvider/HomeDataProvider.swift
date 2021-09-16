@@ -23,6 +23,7 @@ class HomeDataProvider {
     private(set) var activeProductionGlobalAlert: ProductionAlertsRow?
     private(set) var newsFeedData: [NewsFeedRow] = []
     private(set) var specialAlertsData: [NewsFeedRow] = []
+    private(set) var getNewsFeedInProgress: Bool = false
     private var selectedOfficeId: Int?
     
     var forceUpdateAlertDetails: Bool = false
@@ -436,15 +437,18 @@ class HomeDataProvider {
     // MARK: - News feed related methods
     
     func getNewsFeedData(completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getNewsFeedInProgress = true
         getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
             self?.processNewsFeedSectionReport(data, code, cachedError, true, { (_, dataWasChanged, code, error) in
                 if error == nil {
+                    self?.getNewsFeedInProgress = false
                     completion?(true, dataWasChanged, code, cachedError)
                 }
                 self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
                     self?.cacheData(reportResponse, path: .getSectionReport)
                     if let _ = error {
+                        self?.getNewsFeedInProgress = false
                         completion?(false, false, errorCode, ResponseError.generate(error: error))
                     } else {
                         self?.processNewsFeedSectionReport(reportResponse, errorCode, error, false, completion)
@@ -495,6 +499,7 @@ class HomeDataProvider {
         if let _ = newsFeedResponse {
             dataWasChanged = fillNewsFeedData(with: newsFeedResponse!)
         }
+        if !isFromCache { self.getNewsFeedInProgress = false }
         completion?(isFromCache, dataWasChanged, errorCode, retErr)
     }
     

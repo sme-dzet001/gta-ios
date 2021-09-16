@@ -32,7 +32,7 @@ class HomepageViewController: UIViewController {
     
     private var presentedVC: ArticleViewController?
     
-    private var filterTabTypes : [FilterTabType] = [.all, .news, .specialAlerts, .teamsNews]
+    private var filterTabTypes : [FilterTabType] = [.all, .news, .specialAlerts]
     
     private var filterTabItemWidths : [CGFloat] {
         var result: [CGFloat] = []
@@ -127,9 +127,7 @@ class HomepageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
-            loadNewsData()
-        }
+        loadNewsData()
         if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
             emergencyOutageNotificationReceived()
         }
@@ -206,8 +204,10 @@ class HomepageViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedTable" {
             let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
-            if let allNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let promotedNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let specialAlertsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let applicationNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController {
-                newsTabs = [allNewsViewController, promotedNewsViewController, specialAlertsViewController, applicationNewsViewController]
+            if let allNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let promotedNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let specialAlertsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController {//}, let applicationNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController {
+                promotedNewsViewController.selectedFilterTab = .news
+                specialAlertsViewController.selectedFilterTab = .specialAlerts
+                newsTabs = [allNewsViewController, promotedNewsViewController, specialAlertsViewController]//, applicationNewsViewController]
             }
             
             for newsTab in newsTabs {
@@ -217,6 +217,7 @@ class HomepageViewController: UIViewController {
             
             let pagingVC = segue.destination as? PagingViewController
             pagingVC?.dataSource = self
+            pagingVC?.delegate = self
             pagingVC?.register(PagingTitleCell.self, for: PagingIndexItem.self)
             pagingVC?.indicatorColor = UIColor(hex: 0xCC0000)
             pagingVC?.selectedTextColor = .black
@@ -235,39 +236,16 @@ class HomepageViewController: UIViewController {
     }
     
     private func loadNewsData() {
-        if dataProvider.newsDataIsEmpty {
-            for newsTab in newsTabs {
-                newsTab.dataLoadingStarted()
-            }
-        }
-        dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                for newsTab in self.newsTabs {
-                    newsTab.dataLoadingFinished(errorCode: errorCode, error: error, isFromCache: isFromCache)
-                }
-            }
-        }
-        if dataProvider.allNewsFeedData.isEmpty {
-            activityIndicator.isHidden = false
-            activityIndicator.startAnimating()
-            errorLabel.isHidden = true
-        }
+        guard lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() else { return }
+        guard !dataProvider.getNewsFeedInProgress else { return }
         dataProvider.getNewsFeedData { [weak self] (isFromCache, dataWasChanged, errorCode, error) in
             DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
-                self?.activityIndicator.isHidden = true
+                guard let self = self else { return }
                 if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                    self?.errorLabel.isHidden = true
-                    self?.tableView.reloadData()
-                } else {
-                    let isNoData = dataProvider.allNewsFeedData.isEmpty
-                    if isNoData {
-                        self?.tableView.reloadData()
-                    }
-                    self?.errorLabel.isHidden = !isNoData
-                    self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                    self.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self.lastUpdateDate
+                }
+                for newsTab in self.newsTabs {
+                    newsTab.dataLoadingFinished(dataWasChanged: dataWasChanged, errorCode: errorCode, error: error, isFromCache: isFromCache)
                 }
             }
         }
@@ -436,7 +414,7 @@ class HomepageViewController: UIViewController {
     }
 }
 
-extension HomepageViewController: PagingViewControllerDataSource {
+extension HomepageViewController: PagingViewControllerDataSource, PagingViewControllerDelegate {
     func numberOfViewControllers(in pagingViewController: PagingViewController) -> Int {
         return newsTabs.count
     }
@@ -447,6 +425,10 @@ extension HomepageViewController: PagingViewControllerDataSource {
     
     func pagingViewController(_: PagingViewController, pagingItemAt index: Int) -> PagingItem {
         return PagingIndexItem(index: index, title: filterTabTypes[index].rawValue)
+    }
+    
+    func pagingViewController(_ pagingViewController: PagingViewController, didSelectItem pagingItem: PagingItem) {
+        loadNewsData()
     }
     
     
@@ -463,37 +445,6 @@ extension HomepageViewController: DismissAlertDelegate {
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
-    }
-}
-
-extension HomepageViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filterTabTypes.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomepageFilterTabsCollectionCell", for: indexPath) as? HomepageFilterTabsCollectionCell {
-            cell.titleLabel.text = filterTabTypes[indexPath.item].rawValue
-            return cell
-        } else {
-            return UICollectionViewCell()
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        filterTabs.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        selectedFilterTab = filterTabTypes[indexPath.item]
-        homepageTableVC?.selectedFilterTab = selectedFilterTab
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemWidth = filterTabItemWidths[indexPath.item]
-        return CGSize(width: itemWidth, height: self.filterTabs.frame.height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
     }
 }
 
