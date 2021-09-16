@@ -186,15 +186,17 @@ extension MainViewController: WKNavigationDelegate {
 
 extension MainViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let point = CGPoint(x: menuButton.frame.maxX, y: menuButton.frame.maxY)
         transition.transitionMode = .present
-        transition.startingPoint = menuButton.center
+        transition.startingPoint = point
         
         return transition
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let point = CGPoint(x: menuButton.frame.maxX, y: menuButton.frame.maxY)
         transition.transitionMode = .dismiss
-        transition.startingPoint = menuButton.center
+        transition.startingPoint = point
         
         return transition
     }

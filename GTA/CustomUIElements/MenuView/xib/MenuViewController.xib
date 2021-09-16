@@ -11,7 +11,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MenuViewController" customModule="GTA" customModuleProvider="target">
             <connections>
-                <outlet property="redAnimationView" destination="aXJ-yz-sjd" id="87v-GO-FSg"/>
                 <outlet property="tableView" destination="KKd-tE-8Ex" id="iEl-XM-E9z"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -28,21 +27,13 @@
                         <constraint firstAttribute="height" constant="510" id="v5R-l3-pfY"/>
                     </constraints>
                 </tableView>
-                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aXJ-yz-sjd">
-                    <rect key="frame" x="16" y="336" width="382" height="510"/>
-                    <color key="backgroundColor" systemColor="systemRedColor"/>
-                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="KKd-tE-8Ex" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="OsP-tI-Xsz"/>
-                <constraint firstItem="aXJ-yz-sjd" firstAttribute="trailing" secondItem="KKd-tE-8Ex" secondAttribute="trailing" id="PKT-cE-oTI"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="KKd-tE-8Ex" secondAttribute="trailing" constant="16" id="POR-XU-FeG"/>
-                <constraint firstItem="aXJ-yz-sjd" firstAttribute="bottom" secondItem="KKd-tE-8Ex" secondAttribute="bottom" id="TPh-Z6-7rx"/>
-                <constraint firstItem="aXJ-yz-sjd" firstAttribute="top" secondItem="KKd-tE-8Ex" secondAttribute="top" id="aHa-MZ-50q"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="KKd-tE-8Ex" secondAttribute="bottom" constant="16" id="b8a-Rr-jbg"/>
-                <constraint firstItem="aXJ-yz-sjd" firstAttribute="leading" secondItem="KKd-tE-8Ex" secondAttribute="leading" id="ym9-Zu-IRO"/>
             </constraints>
             <point key="canvasLocation" x="31.884057971014496" y="70.982142857142847"/>
         </view>
@@ -50,9 +41,6 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

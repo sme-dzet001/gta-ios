@@ -20,7 +20,6 @@ class MenuViewController: UIViewController {
         var image: UIImage?
     }
     
-    @IBOutlet weak var redAnimationView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     let menuItems: [MenuItems] = [
@@ -56,11 +55,10 @@ class MenuViewController: UIViewController {
         
         tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: "MenuTableViewCell")
         tableView.register(UINib(nibName: "OfficeStatusCell", bundle: nil), forCellReuseIdentifier: "OfficeStatusCell")
-        
         tableView.cornerRadius = 25
         
         dataProvider.officeSelectionDelegate = self
-        redAnimationView.alpha = 1
+        
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
             if officeLoadingIsEnabled { loadOfficesData() }
         } else {
@@ -68,21 +66,6 @@ class MenuViewController: UIViewController {
             if officeLoadingIsEnabled {
                 tableView.reloadData()
             }
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        UIView.animate(withDuration: 0.3) {
-            self.redAnimationView.alpha = 1
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
-        
-        redAnimationView.alpha = 1
-        UIView.animate(withDuration: 0.3) {
-            self.redAnimationView.alpha = 0
         }
     }
     
