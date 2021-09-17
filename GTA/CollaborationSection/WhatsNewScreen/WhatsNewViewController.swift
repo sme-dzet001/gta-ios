@@ -146,6 +146,16 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         return cell ?? UITableViewCell()
     }
         
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
+        return footer
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let footerHeight = (tableView.frame.width * 0.133) + 24
+        return footerHeight
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard (dataProvider?.collaborationNewsData.count ?? 0) > indexPath.row else { return }
 //        let whatsNewMoreScreen = WhatsNewMoreViewController()

@@ -41,7 +41,6 @@ class CollaborationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
         addErrorLabel(errorLabel)
         getCollaborationDetails()
         self.navigationController?.setNavigationBarSeparator(with: UIColor(hex: 0xF2F2F7))
@@ -211,6 +210,16 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return indexPath.row == 0 ? UITableView.automaticDimension : 80
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
+        return footer
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let footerHeight = (tableView.frame.width * 0.133) + 24
+        return footerHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
