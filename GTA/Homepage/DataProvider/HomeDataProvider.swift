@@ -21,11 +21,20 @@ class HomeDataProvider {
     private(set) var globalAlertsData: GlobalAlertRow?
     private(set) var productionGlobalAlertsData: ProductionAlertsRow?
     private(set) var activeProductionGlobalAlert: ProductionAlertsRow?
+    private(set) var newsFeedData: [NewsFeedRow] = []
+    private(set) var specialAlertsData: [NewsFeedRow] = []
+    private(set) var getNewsFeedInProgress: Bool = false
     private var selectedOfficeId: Int?
     
     var forceUpdateAlertDetails: Bool = false
     
     weak var officeSelectionDelegate: OfficeSelectionDelegate?
+    
+    var allNewsFeedData: [NewsFeedRow] {
+        var allData = newsFeedData
+        allData.append(contentsOf: specialAlertsData)
+        return allData
+    }
     
     var newsDataIsEmpty: Bool {
         return newsData.isEmpty
@@ -423,6 +432,90 @@ class HomeDataProvider {
             }
             completion?(errorCode, error)
         }
+    }
+    
+    // MARK: - News feed related methods
+    
+    func getNewsFeedData(completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        getNewsFeedInProgress = true
+        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
+            let code = cachedError == nil ? 200 : 0
+            self?.processNewsFeedSectionReport(data, code, cachedError, true, { (_, dataWasChanged, code, error) in
+                if error == nil {
+                    self?.getNewsFeedInProgress = false
+                    completion?(true, dataWasChanged, code, cachedError)
+                }
+                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
+                    self?.cacheData(reportResponse, path: .getSectionReport)
+                    if let _ = error {
+                        self?.getNewsFeedInProgress = false
+                        completion?(false, false, errorCode, ResponseError.generate(error: error))
+                    } else {
+                        self?.processNewsFeedSectionReport(reportResponse, errorCode, error, false, completion)
+                    }
+                })
+            })
+        }
+    }
+    
+    private func processNewsFeedSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let reportData = parseSectionReport(data: reportResponse)
+        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.newsFeed.rawValue }?.generationNumber
+        if let generationNumber = generationNumber, generationNumber != 0 {
+            if isFromCache {
+                getCachedResponse(for: .getNewsFeed) {[weak self] (data, error) in
+                    self?.processNewsFeedData(reportData, data, isFromCache, 200, error, completion)
+                }
+                return
+            }
+            apiManager.getNewsFeedData(generationNumber: generationNumber) { [weak self] (response, errorCode, error) in
+                if let _ = error {
+                    completion?(false, true, 0, ResponseError.generate(error: error))
+                    return
+                }
+                self?.cacheData(response, path: .getNewsFeed)
+                self?.processNewsFeedData(reportData, response, isFromCache, errorCode, error, completion)
+            }
+        } else {
+            if error != nil || generationNumber == 0 {
+                completion?(isFromCache, false, 0, generationNumber == 0 ? ResponseError.noDataAvailable: ResponseError.generate(error: error))
+                return
+            }
+            completion?(isFromCache, false, 0, error)
+        }
+    }
+    
+    private func processNewsFeedData(_ reportData: ReportDataResponse?, _ response: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        var newsFeedResponse: NewsFeedResponse?
+        var retErr = error
+        if let responseData = response {
+            do {
+                newsFeedResponse = try DataParser.parse(data: responseData)
+            } catch {
+                retErr = ResponseError.parsingError
+            }
+        }
+        var dataWasChanged: Bool = false
+        if let _ = newsFeedResponse {
+            dataWasChanged = fillNewsFeedData(with: newsFeedResponse!)
+        }
+        if !isFromCache { self.getNewsFeedInProgress = false }
+        completion?(isFromCache, dataWasChanged, errorCode, retErr)
+    }
+    
+    private func fillNewsFeedData(with data: NewsFeedResponse) -> Bool {
+        let indexes = getDataIndexes(columns: data.meta?.widgetsDataSource?.params?.columns)
+        var response: NewsFeedResponse = data
+        if let rows = response.data?.rows {
+            for (index, _) in rows.enumerated() {
+                response.data?.rows?[index]?.indexes = indexes
+            }
+        }
+        let rows = response.data?.rows?.filter({$0?.category == .news})
+        let dataWasChanged = (rows ?? []) != newsFeedData
+        newsFeedData = rows?.compactMap({$0}) ?? []
+        specialAlertsData = response.data?.rows?.filter({$0?.category == .specialAlerts}).compactMap({$0}) ?? []
+        return dataWasChanged
     }
     
     // MARK: - Global Alerts related methods

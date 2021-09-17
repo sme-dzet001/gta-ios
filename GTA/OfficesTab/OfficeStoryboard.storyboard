@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Medium.otf">
+            <string>SFProDisplay-Medium</string>
+        </array>
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Medium.otf">
+            <string>SFProText-Medium</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Office Overview View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="OfficeOverviewViewController" id="Y6W-OH-hqX" customClass="OfficeOverviewViewController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Xd9-FL-qzW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="office" translatesAutoresizingMaskIntoConstraints="NO" id="cxL-9q-ohi">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="339.5"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iV7-ue-BEY">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="339.5"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                            </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CLOSED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVM-PV-4Yf">
+                                <rect key="frame" x="30" y="153.5" width="50" height="16"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="ME4-EI-jg3"/>
+                                    <constraint firstAttribute="width" secondItem="PVM-PV-4Yf" secondAttribute="height" multiplier="25:8" id="WEK-2Q-dad"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="10"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Office Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5z-Ur-AIQ">
+                                <rect key="frame" x="30" y="189.5" width="354" height="28"/>
+                                <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0Q4-kP-S9P">
+                                <rect key="frame" x="0.0" y="329.5" width="414" height="566.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AQl-6u-Frb">
+                                <rect key="frame" x="0.0" y="852" width="414" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="gZB-KU-y3O"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Office" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opQ-9b-J1D">
+                                <rect key="frame" x="180.5" y="49" width="53" height="23.5"/>
+                                <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="qHa-rt-z2w"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="iV7-ue-BEY" firstAttribute="trailing" secondItem="cxL-9q-ohi" secondAttribute="trailing" id="2Ve-Sl-Ucs"/>
+                            <constraint firstItem="B5z-Ur-AIQ" firstAttribute="leading" secondItem="qHa-rt-z2w" secondAttribute="leading" constant="30" id="5TR-iK-nY3"/>
+                            <constraint firstItem="iV7-ue-BEY" firstAttribute="top" secondItem="cxL-9q-ohi" secondAttribute="top" id="8id-gE-BJV"/>
+                            <constraint firstItem="qHa-rt-z2w" firstAttribute="trailing" secondItem="B5z-Ur-AIQ" secondAttribute="trailing" constant="30" id="9QK-ru-wfc"/>
+                            <constraint firstItem="cxL-9q-ohi" firstAttribute="leading" secondItem="qHa-rt-z2w" secondAttribute="leading" id="ETH-tC-KiQ"/>
+                            <constraint firstItem="cxL-9q-ohi" firstAttribute="top" secondItem="Xd9-FL-qzW" secondAttribute="top" id="EaF-n7-5gx"/>
+                            <constraint firstItem="B5z-Ur-AIQ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="opQ-9b-J1D" secondAttribute="bottom" constant="8" id="IlS-Ap-2wo"/>
+                            <constraint firstItem="qHa-rt-z2w" firstAttribute="trailing" secondItem="cxL-9q-ohi" secondAttribute="trailing" id="JCv-Iz-H4u"/>
+                            <constraint firstItem="B5z-Ur-AIQ" firstAttribute="top" secondItem="PVM-PV-4Yf" secondAttribute="bottom" constant="20" id="PEL-UE-VWO"/>
+                            <constraint firstItem="qHa-rt-z2w" firstAttribute="trailing" secondItem="0Q4-kP-S9P" secondAttribute="trailing" id="PPA-Po-u0z"/>
+                            <constraint firstAttribute="bottom" secondItem="AQl-6u-Frb" secondAttribute="bottom" id="QFH-Xg-Ddt"/>
+                            <constraint firstItem="qHa-rt-z2w" firstAttribute="trailing" secondItem="AQl-6u-Frb" secondAttribute="trailing" id="RrZ-NX-2St"/>
+                            <constraint firstItem="opQ-9b-J1D" firstAttribute="top" secondItem="qHa-rt-z2w" secondAttribute="top" constant="5" id="Tyh-cf-8Hg"/>
+                            <constraint firstItem="opQ-9b-J1D" firstAttribute="centerX" secondItem="iV7-ue-BEY" secondAttribute="centerX" id="Wea-et-cMp"/>
+                            <constraint firstItem="0Q4-kP-S9P" firstAttribute="leading" secondItem="qHa-rt-z2w" secondAttribute="leading" id="aAl-7Y-jSt"/>
+                            <constraint firstItem="iV7-ue-BEY" firstAttribute="bottom" secondItem="cxL-9q-ohi" secondAttribute="bottom" id="abj-FN-eku"/>
+                            <constraint firstItem="PVM-PV-4Yf" firstAttribute="leading" secondItem="B5z-Ur-AIQ" secondAttribute="leading" id="d3z-7w-Erg"/>
+                            <constraint firstItem="0Q4-kP-S9P" firstAttribute="top" secondItem="cxL-9q-ohi" secondAttribute="bottom" constant="-10" id="jgm-YL-p5f"/>
+                            <constraint firstAttribute="bottom" secondItem="0Q4-kP-S9P" secondAttribute="bottom" id="lSY-45-ADR"/>
+                            <constraint firstItem="cxL-9q-ohi" firstAttribute="height" secondItem="qHa-rt-z2w" secondAttribute="width" multiplier="0.82" id="p4G-ET-EVV"/>
+                            <constraint firstItem="B5z-Ur-AIQ" firstAttribute="centerY" secondItem="cxL-9q-ohi" secondAttribute="centerY" multiplier="1.2" id="s0Y-k1-OFs"/>
+                            <constraint firstItem="AQl-6u-Frb" firstAttribute="leading" secondItem="qHa-rt-z2w" secondAttribute="leading" id="t5L-ld-QuK"/>
+                            <constraint firstItem="iV7-ue-BEY" firstAttribute="leading" secondItem="cxL-9q-ohi" secondAttribute="leading" id="tbM-Jx-Zrf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="headerImageView" destination="cxL-9q-ohi" id="DaT-Vr-dzN"/>
+                        <outlet property="infoLabel" destination="B5z-Ur-AIQ" id="APs-Mj-cv9"/>
+                        <outlet property="officeStatusLabel" destination="PVM-PV-4Yf" id="LWo-ac-Yth"/>
+                        <outlet property="tableView" destination="0Q4-kP-S9P" id="tMA-2F-mtV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="46" y="56"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="office" width="271" height="256"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
