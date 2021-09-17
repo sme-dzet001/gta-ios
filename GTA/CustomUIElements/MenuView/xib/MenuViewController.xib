@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MenuViewController" customModule="GTA" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundView" destination="YEO-zn-33y" id="Fpn-Ex-oXZ"/>
                 <outlet property="tableView" destination="KKd-tE-8Ex" id="iEl-XM-E9z"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,11 +21,15 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YEO-zn-33y">
+                    <rect key="frame" x="16" y="326" width="382" height="520"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KKd-tE-8Ex">
-                    <rect key="frame" x="16" y="336" width="382" height="510"/>
+                    <rect key="frame" x="16" y="326" width="382" height="520"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="510" id="v5R-l3-pfY"/>
+                        <constraint firstAttribute="height" constant="520" id="v5R-l3-pfY"/>
                     </constraints>
                 </tableView>
             </subviews>
@@ -34,6 +39,10 @@
                 <constraint firstItem="KKd-tE-8Ex" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="OsP-tI-Xsz"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="KKd-tE-8Ex" secondAttribute="trailing" constant="16" id="POR-XU-FeG"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="KKd-tE-8Ex" secondAttribute="bottom" constant="16" id="b8a-Rr-jbg"/>
+                <constraint firstItem="YEO-zn-33y" firstAttribute="leading" secondItem="KKd-tE-8Ex" secondAttribute="leading" id="dmu-2w-7g4"/>
+                <constraint firstItem="YEO-zn-33y" firstAttribute="top" secondItem="KKd-tE-8Ex" secondAttribute="top" id="gzM-H2-c89"/>
+                <constraint firstItem="YEO-zn-33y" firstAttribute="bottom" secondItem="KKd-tE-8Ex" secondAttribute="bottom" id="j0A-vH-WX3"/>
+                <constraint firstItem="YEO-zn-33y" firstAttribute="trailing" secondItem="KKd-tE-8Ex" secondAttribute="trailing" id="v3X-52-b8E"/>
             </constraints>
             <point key="canvasLocation" x="31.884057971014496" y="70.982142857142847"/>
         </view>

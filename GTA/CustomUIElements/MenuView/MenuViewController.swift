@@ -21,6 +21,7 @@ class MenuViewController: UIViewController {
     }
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var backgroundView: UIView!
     
     let menuItems: [MenuItems] = [
         MenuItems(name: "Home", image: UIImage(named: "homepage_tab_icon")),
@@ -46,6 +47,8 @@ class MenuViewController: UIViewController {
     var globalAlertsBadges = 0
     var productionAlertBadges = 0
     
+    let redColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -56,6 +59,7 @@ class MenuViewController: UIViewController {
         tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: "MenuTableViewCell")
         tableView.register(UINib(nibName: "OfficeStatusCell", bundle: nil), forCellReuseIdentifier: "OfficeStatusCell")
         tableView.cornerRadius = 25
+        backgroundView.cornerRadius = 25
         
         dataProvider.officeSelectionDelegate = self
         
@@ -67,6 +71,19 @@ class MenuViewController: UIViewController {
                 tableView.reloadData()
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.alpha = 0
+        UIView.animate(withDuration: 0.1, delay: 0.2, animations: {
+            self.tableView.alpha = 1
+        }, completion: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.tableView.alpha = 0
+        }, completion: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -180,11 +197,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 34))
-        let button = UIButton(frame: CGRect(x: tableView.frame.size.width - 50, y: 2, width: 30, height: 30))
-        button.setImage(UIImage(named: "white_close_icon"), for: .normal)
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
+        let button = UIButton(frame: CGRect(x: tableView.frame.size.width - 50, y: 2, width: 40, height: 40))
+        button.setImage(UIImage(named: "close_icon_bold"), for: .normal)
         button.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
-        button.tintColor = .red
         view.addSubview(button)
         
         return view
@@ -197,7 +213,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         guard section == 2 else { return 0 }
-        return 32
+        return 40
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -226,8 +242,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             cell.menuImage.tintColor = .black
             
             guard let index = selectedTabIdx, index <= menuItems.count - 2, index == indexPath.row else { return cell }
-            cell.menuLabel.textColor = .red
-            cell.menuImage.tintColor = .red
+            cell.menuLabel.textColor = redColor
+            cell.menuImage.tintColor = redColor
             
             return cell
         case 1:
@@ -253,8 +269,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.officeLabel.textColor = .black
                 cell.officeStatusLabel.textColor = .black
                 guard let index = selectedTabIdx, index > menuItems.count - 2 else { return cell }
-                cell.officeLabel.textColor = .red
-                cell.officeStatusLabel.textColor = .red
+                cell.officeLabel.textColor = redColor
+                cell.officeStatusLabel.textColor = redColor
                 
                 return cell
             } else {
@@ -270,8 +286,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.officeLabel.textColor = .black
                     
                     guard let index = selectedTabIdx, index > menuItems.count - 2 else { return cell }
-                    cell.officeLabel.textColor = .red
-                    cell.officeStatusLabel.textColor = .red
+                    cell.officeLabel.textColor = redColor
+                    cell.officeStatusLabel.textColor = redColor
                     
                     return cell
                 } else {

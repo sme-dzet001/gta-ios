@@ -61,6 +61,7 @@ class MainViewController: UIViewController {
         menuViewController.transitioningDelegate = self
         menuViewController.tabBar = tabBar
         menuViewController.modalPresentationStyle = .overCurrentContext
+        menuViewController.view.frame = self.view.bounds
     }
     
     private func addBackground() {
@@ -190,6 +191,10 @@ extension MainViewController: UIViewControllerTransitioningDelegate {
         transition.transitionMode = .present
         transition.startingPoint = point
         
+        UIView.animate(withDuration: 0.1, animations: {
+            self.menuButton.alpha = 0
+        })
+        
         return transition
     }
     
@@ -197,6 +202,10 @@ extension MainViewController: UIViewControllerTransitioningDelegate {
         let point = CGPoint(x: menuButton.frame.maxX, y: menuButton.frame.maxY)
         transition.transitionMode = .dismiss
         transition.startingPoint = point
+        
+        UIView.animate(withDuration: 0.1, delay: 0.2, animations: {
+            self.menuButton.alpha = 1
+        })
         
         return transition
     }

@@ -19,7 +19,6 @@ class CircularTransition: NSObject {
         }
     }
     var transitionMode: CircleTransitionMode = .present
-    var circleColor = UIColor.red
     var duration  = 0.3
 }
 
@@ -39,7 +38,6 @@ extension CircularTransition: UIViewControllerAnimatedTransitioning {
                 UIView.animate(withDuration: duration, animations: {
                     self.circle.transform = CGAffineTransform.identity
                     presentedView.transform = CGAffineTransform.identity
-                    presentedView.alpha = 1
                     presentedView.center = viewCenter
                 }) { success in
                     transitionContext.completeTransition(success)
@@ -57,7 +55,6 @@ extension CircularTransition: UIViewControllerAnimatedTransitioning {
                     self.circle.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
                     returningView.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
                     returningView.center = self.startingPoint
-                    returningView.alpha = 0
                     
                     if self.transitionMode == .pop {
                         containerView.insertSubview(returningView, belowSubview: returningView)
@@ -95,7 +92,6 @@ extension CircularTransition: UIViewControllerAnimatedTransitioning {
         
         presentedView.center = startingPoint
         presentedView.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
-        presentedView.alpha = 0
         containerView.addSubview(presentedView)
     }
     
