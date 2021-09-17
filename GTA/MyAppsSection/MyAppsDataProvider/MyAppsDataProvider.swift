@@ -12,9 +12,7 @@ class MyAppsDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
-    private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     var appsData: [AppsDataSource] = []
-    //private var appImageData: [String : Data?] = [:]
     var allAppsData: AllAppsResponse? {
         didSet {
             appsData = self.crateGeneralResponse() ?? []
@@ -336,9 +334,7 @@ class MyAppsDataProvider {
             let contactsPath = app ?? ""
             if fromCache {
                 getCachedResponse(for: .getAppContacts(contactsPath: contactsPath)) {[weak self] (data, error) in
-//                    if let _ = data, error == nil {
                     self?.processAppContacts(appName: contactsPath, reportData, data, true, errorCode, error, completion)
-                    //}
                 }
                 return
             }
@@ -880,7 +876,3 @@ class MyAppsDataProvider {
     }
     
 }
-
-//protocol AppImageDelegate: class {
-//    func setImage(with data: Data?, for appName: String?, error: Error?)
-//}

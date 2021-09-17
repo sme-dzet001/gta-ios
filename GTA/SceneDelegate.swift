@@ -128,7 +128,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         KeychainManager.deleteTokenExpirationDate()
         KeychainManager.deletePinData()
         CacheManager().clearCache()
-        ImageCacheManager().removeCachedData()
         UserDefaults.standard.removeObject(forKey: "NumberOfNews")
     }
 

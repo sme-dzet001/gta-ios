@@ -144,7 +144,6 @@ class HomepageViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalProductionAlertNotificationReceived), object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
     }

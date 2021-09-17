@@ -20,7 +20,6 @@ class GeneralViewController: UIViewController {
         super.viewDidLoad()
         setUpNavigationBar()
         setUpTableView()
-        // Do any additional setup after loading the view.
         usmLogoutWebView = WKWebView(frame: CGRect.zero)
         view.addSubview(usmLogoutWebView)
         usmLogoutWebView.isHidden = true
@@ -131,7 +130,6 @@ extension GeneralViewController: WKNavigationDelegate {
             KeychainManager.deleteTokenExpirationDate()
             CacheManager().clearCache()
             KeychainManager.deletePinData()
-            ImageCacheManager().removeCachedData()
             if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
                 sceneDelegate.startLoginFlow()
             }

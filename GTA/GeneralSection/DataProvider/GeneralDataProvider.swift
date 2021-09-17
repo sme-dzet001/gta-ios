@@ -14,9 +14,7 @@ class GeneralDataProvider {
     
     private var selectedOfficeId: Int?
     private var needToGetDataFromServer: Bool = false
-    //private(set) var allowEmergencyOutageNotifications: Bool = true
-    //private(set) var allowProductionAlertsNotifications: Bool = true
-    
+ 
     func getCurrentPreferences(completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         if !needToGetDataFromServer {
             getCachedResponse(for: .getCurrentPreferences) {[weak self] (data, cacheError) in
@@ -77,12 +75,6 @@ class GeneralDataProvider {
         }
         apiManager.setCurrentPreferences(preferences: preferences) {(response, errorCode, error) in
             if let _ = response, errorCode == 200, error == nil {
-//                if notificationsType == .emergencyOutageNotifications {
-//                    self?.allowEmergencyOutageNotifications = notificationsState
-//                } else {
-//                    self?.allowProductionAlertsNotifications = notificationsState
-//                }
-//                //Preferences.allowEmergencyOutageNotifications = nottificationsState
             } else {
                 if notificationsType == .emergencyOutageNotifications {
                     Preferences.allowEmergencyOutageNotifications = !notificationsState

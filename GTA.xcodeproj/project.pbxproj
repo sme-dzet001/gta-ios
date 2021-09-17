@@ -144,7 +144,6 @@
 		65437C462665387600B2F38A /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
 		65437C472665387600B2F38A /* MyTicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9705B7A2566CE4E007A7F68 /* MyTicketsViewController.swift */; };
 		65437C482665387600B2F38A /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
-		65437C492665387600B2F38A /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
 		65437C4A2665387600B2F38A /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */; };
 		65437C4B2665387600B2F38A /* GlobalAlertDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C824D2657CE02004407B4 /* GlobalAlertDetailsCell.swift */; };
 		65437C4C2665387600B2F38A /* CollaborationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860325FD219C0003658D /* CollaborationHeader.swift */; };
@@ -183,7 +182,6 @@
 		65437C6D2665387600B2F38A /* MyAppsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164B7257FA817001507BF /* MyAppsDataProvider.swift */; };
 		65437C6E2665387600B2F38A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
 		65437C6F2665387600B2F38A /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC93D264D3E3D004074C8 /* GeneralCell.swift */; };
-		65437C702665387600B2F38A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		65437C712665387600B2F38A /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D269E2577AF74002CC2C2 /* LoginDataProvider.swift */; };
 		65437C722665387600B2F38A /* SwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC954264D4790004074C8 /* SwitcherCell.swift */; };
 		65437C732665387600B2F38A /* CollaborationCounterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6435C9261F2077000D94A4 /* CollaborationCounterCell.swift */; };
@@ -294,7 +292,6 @@
 		65437CE02665387600B2F38A /* GeneralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC93E264D3E3D004074C8 /* GeneralCell.xib */; };
 		65437CE12665387600B2F38A /* NewTicketViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1502631A46900BA753D /* NewTicketViewController.xib */; };
 		65437CE22665387600B2F38A /* OfficeStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0DD256557EE00BCD38F /* OfficeStatusCell.xib */; };
-		65437CE32665387600B2F38A /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		65437CE42665387600B2F38A /* GlobalAlertCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2C824C2657CE02004407B4 /* GlobalAlertCell.xib */; };
 		65437CE52665387600B2F38A /* ServiceDeskContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9D035DD2579B68D0068441F /* ServiceDeskContactCell.xib */; };
 		65437CE62665387600B2F38A /* QuickHelpCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2C52576686500F9146A /* QuickHelpCell.xib */; };
@@ -340,11 +337,9 @@
 		65437E14266539BF00B2F38A /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
 		65437E15266539BF00B2F38A /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */; };
 		65437E16266539BF00B2F38A /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
-		65437E17266539BF00B2F38A /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
 		65437E18266539BF00B2F38A /* CollaborationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860325FD219C0003658D /* CollaborationHeader.swift */; };
 		65437E19266539BF00B2F38A /* GlobalAlertDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C824D2657CE02004407B4 /* GlobalAlertDetailsCell.swift */; };
 		65437E1A266539BF00B2F38A /* QuickHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C993A2AC2576664300F9146A /* QuickHelpViewController.swift */; };
-		65437E1B266539BF00B2F38A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		65437E1C266539BF00B2F38A /* MyAppsResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164AE257FA7D9001507BF /* MyAppsResponses.swift */; };
 		65437E1D266539BF00B2F38A /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93FCF0425648FA0001E86F6 /* AboutViewController.swift */; };
 		65437E1E266539BF00B2F38A /* HomepageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */; };
@@ -459,7 +454,6 @@
 		65437E90266539BF00B2F38A /* MyTicketsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9705B7B2566CE4E007A7F68 /* MyTicketsViewController.xib */; };
 		65437E91266539BF00B2F38A /* SecondSendMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */; };
 		65437E92266539BF00B2F38A /* SF-Pro-Text-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F36D4322562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf */; };
-		65437E93266539BF00B2F38A /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		65437E94266539BF00B2F38A /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 659A5AEA255404F100E13B77 /* SF-Pro-Display-Medium.otf */; };
 		65437E95266539BF00B2F38A /* AboutHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E90C25B056D5007D3B9F /* AboutHeaderCell.xib */; };
 		65437E96266539BF00B2F38A /* SystemStatusHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B3C255C3383004489C6 /* SystemStatusHeader.xib */; };
@@ -537,7 +531,6 @@
 		65437F812665568000B2F38A /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
 		65437F822665568000B2F38A /* MyTicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9705B7A2566CE4E007A7F68 /* MyTicketsViewController.swift */; };
 		65437F832665568000B2F38A /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
-		65437F842665568000B2F38A /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
 		65437F852665568000B2F38A /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */; };
 		65437F862665568000B2F38A /* GlobalAlertDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C824D2657CE02004407B4 /* GlobalAlertDetailsCell.swift */; };
 		65437F872665568000B2F38A /* CollaborationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860325FD219C0003658D /* CollaborationHeader.swift */; };
@@ -576,7 +569,6 @@
 		65437FA82665568000B2F38A /* MyAppsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164B7257FA817001507BF /* MyAppsDataProvider.swift */; };
 		65437FA92665568000B2F38A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
 		65437FAA2665568000B2F38A /* GeneralCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC93D264D3E3D004074C8 /* GeneralCell.swift */; };
-		65437FAB2665568000B2F38A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		65437FAC2665568000B2F38A /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D269E2577AF74002CC2C2 /* LoginDataProvider.swift */; };
 		65437FAD2665568000B2F38A /* SwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC954264D4790004074C8 /* SwitcherCell.swift */; };
 		65437FAE2665568000B2F38A /* CollaborationCounterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6435C9261F2077000D94A4 /* CollaborationCounterCell.swift */; };
@@ -680,7 +672,6 @@
 		654380152665568000B2F38A /* QuickHelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2AD2576664300F9146A /* QuickHelpViewController.xib */; };
 		654380162665568000B2F38A /* WhatsNewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F643561261B1E88000D94A4 /* WhatsNewCell.xib */; };
 		654380172665568000B2F38A /* OfficeStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0DD256557EE00BCD38F /* OfficeStatusCell.xib */; };
-		654380182665568000B2F38A /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		654380192665568000B2F38A /* ServiceDeskContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9D035DD2579B68D0068441F /* ServiceDeskContactCell.xib */; };
 		6543801A2665568000B2F38A /* QuickHelpCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2C52576686500F9146A /* QuickHelpCell.xib */; };
 		6543801B2665568000B2F38A /* NewTicketViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB9C1502631A46900BA753D /* NewTicketViewController.xib */; };
@@ -999,7 +990,6 @@
 		9F33F650260A3C4000470A47 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F753AA1259B862000AE6EC2 /* APIRequest.swift */; };
 		9F33F651260A3C4000470A47 /* MyTicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9705B7A2566CE4E007A7F68 /* MyTicketsViewController.swift */; };
 		9F33F652260A3C4000470A47 /* CollaborationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F982D25F90D0600BCC37F /* CollaborationResponses.swift */; };
-		9F33F653260A3C4000470A47 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
 		9F33F654260A3C4000470A47 /* InfoArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */; };
 		9F33F655260A3C4000470A47 /* CollaborationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35860325FD219C0003658D /* CollaborationHeader.swift */; };
 		9F33F656260A3C4000470A47 /* QuickHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C993A2AC2576664300F9146A /* QuickHelpViewController.swift */; };
@@ -1033,7 +1023,6 @@
 		9F33F672260A3C4000470A47 /* HelpDeskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91F70892562FEC5002F17B1 /* HelpDeskCell.swift */; };
 		9F33F673260A3C4000470A47 /* MyAppsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8164B7257FA817001507BF /* MyAppsDataProvider.swift */; };
 		9F33F674260A3C4000470A47 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659A5AB2255401EA00E13B77 /* SceneDelegate.swift */; };
-		9F33F675260A3C4000470A47 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		9F33F676260A3C4000470A47 /* LoginDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0D269E2577AF74002CC2C2 /* LoginDataProvider.swift */; };
 		9F33F677260A3C4000470A47 /* LoginUSMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBAF4852577D65E00B43F96 /* LoginUSMViewController.swift */; };
 		9F33F678260A3C4000470A47 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65398BCB256D4C5E0039C24E /* Utils.swift */; };
@@ -1115,7 +1104,6 @@
 		9F33F6C8260A3C4000470A47 /* HelpReportScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F895B69255D3D27004489C6 /* HelpReportScreenViewController.xib */; };
 		9F33F6C9260A3C4000470A47 /* QuickHelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2AD2576664300F9146A /* QuickHelpViewController.xib */; };
 		9F33F6CA260A3C4000470A47 /* OfficeStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F78D0DD256557EE00BCD38F /* OfficeStatusCell.xib */; };
-		9F33F6CB260A3C4000470A47 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		9F33F6CC260A3C4000470A47 /* ServiceDeskContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9D035DD2579B68D0068441F /* ServiceDeskContactCell.xib */; };
 		9F33F6CD260A3C4000470A47 /* QuickHelpCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C993A2C52576686500F9146A /* QuickHelpCell.xib */; };
 		9F33F6CF260A3C4000470A47 /* OfficeLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0CA54C2566875F00275B25 /* OfficeLocationViewController.xib */; };
@@ -1294,9 +1282,6 @@
 		9F6435DB261F22F6000D94A4 /* SF-Pro-Text-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F6435D9261F22F5000D94A4 /* SF-Pro-Text-Bold.ttf */; };
 		9F6435DC261F22F6000D94A4 /* SF-Pro-Text-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F6435D9261F22F5000D94A4 /* SF-Pro-Text-Bold.ttf */; };
 		9F6435DD261F22F6000D94A4 /* SF-Pro-Text-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F6435D9261F22F5000D94A4 /* SF-Pro-Text-Bold.ttf */; };
-		9F6FD63E25B1ABC300A32377 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
-		9F6FD63F25B1ABC300A32377 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
-		9F6FD64025B1ABC300A32377 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */; };
 		9F7392CF2631D1BD007882EB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7392CE2631D1BD007882EB /* Constants.swift */; };
 		9F7392D02631D1BD007882EB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7392CE2631D1BD007882EB /* Constants.swift */; };
 		9F7392D12631D1BD007882EB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7392CE2631D1BD007882EB /* Constants.swift */; };
@@ -1573,8 +1558,6 @@
 		9FFB81A626A1E26A00674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
 		9FFB81A726A1E26B00674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
 		9FFB81A826A1E26C00674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
-		9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
-		9FFD5F102565A1F900B6A65C /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		B91515CADDA8F4D79221D7D3 /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */; };
 		C907E0C025D437BF00FB0B55 /* AppContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */; };
 		C907E0C125D437BF00FB0B55 /* AppContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */; };
@@ -1684,8 +1667,6 @@
 		C9D035E12579B68D0068441F /* ServiceDeskContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9D035DD2579B68D0068441F /* ServiceDeskContactCell.xib */; };
 		C9D035E22579B68D0068441F /* ServiceDeskContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9D035DD2579B68D0068441F /* ServiceDeskContactCell.xib */; };
 		C9D035E32579B68D0068441F /* ServiceDeskContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9D035DD2579B68D0068441F /* ServiceDeskContactCell.xib */; };
-		C9D859392567FE850025F544 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
-		C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */; };
 		C9DFD47C2565721F00BF1740 /* MetricStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */; };
 		C9DFD47D2565721F00BF1740 /* MetricStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */; };
 		C9DFD47E2565721F00BF1740 /* MetricStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD47A2565721F00BF1740 /* MetricStatsCell.swift */; };
@@ -1728,8 +1709,6 @@
 		C9EFDA3225A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
 		C9EFDA3325A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
 		C9EFDA3425A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9EFDA2E25A5E2E200F57817 /* OfficeSelectionCell.xib */; };
-		C9EFEBC4256D1F4800112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
-		C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */; };
 		DFAAD1A54637CE612A28E656 /* Pods_GTA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA50956AA53DEAF0E40A50B2 /* Pods_GTA.framework */; };
 		E3FC81827C497B70A6BE2619 /* Pods_QA_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BE0E1440AA8E1F11335BEA /* Pods_QA_GTAStage.framework */; };
 		F46C590F1188F7704A82EC84 /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 516A9D75A0DF6F32B4AB3539 /* Pods_GTADev.framework */; };
@@ -1910,7 +1889,6 @@
 		9F6435C9261F2077000D94A4 /* CollaborationCounterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollaborationCounterCell.swift; sourceTree = "<group>"; };
 		9F6435CA261F2077000D94A4 /* CollaborationCounterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollaborationCounterCell.xib; sourceTree = "<group>"; };
 		9F6435D9261F22F5000D94A4 /* SF-Pro-Text-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.ttf"; sourceTree = "<group>"; };
-		9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		9F7392CE2631D1BD007882EB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9F753AA1259B862000AE6EC2 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		9F78CFCB25640A1800BCD38F /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1984,8 +1962,6 @@
 		9FF0546525681F4A0071E596 /* SecondTicketDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecondTicketDetailsViewController.xib; sourceTree = "<group>"; };
 		9FF0547225681FC60071E596 /* SecondSendMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondSendMessageView.swift; sourceTree = "<group>"; };
 		9FF0548025681FCD0071E596 /* SecondSendMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondSendMessageView.xib; sourceTree = "<group>"; };
-		9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
-		9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
 		C050026C351D2A066387E69F /* Pods-GTA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.debug.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.debug.xcconfig"; sourceTree = "<group>"; };
 		C5BE0E1440AA8E1F11335BEA /* Pods_QA_GTAStage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QA_GTAStage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContactsViewController.swift; sourceTree = "<group>"; };
@@ -2373,7 +2349,6 @@
 				9F9D9CE825891E1800DC4231 /* DataParser.swift */,
 				659C595A25924106007953A7 /* CacheManager.swift */,
 				C9EFD9E1259DDC6900F57817 /* UserLocationManager.swift */,
-				9F6FD63D25B1ABC300A32377 /* ImageCacheManager.swift */,
 				9F35867625FFBAC40003658D /* ErrorHandler.swift */,
 				9F2C8240265534A5004407B4 /* Preferences.swift */,
 				9FC12E0726691FC90029D387 /* Reachability.swift */,
@@ -2405,8 +2380,6 @@
 			children = (
 				9F1620CE2566BB32003AFE68 /* InfoScreenCells */,
 				9F1620C02566BAF7003AFE68 /* PanModalNavigationController.swift */,
-				9FFD5F0D2565A1F800B6A65C /* InfoViewController.swift */,
-				9FFD5F0E2565A1F800B6A65C /* InfoViewController.xib */,
 			);
 			path = InfoScreen;
 			sourceTree = "<group>";
@@ -3612,7 +3585,6 @@
 				9F3028282681D228009A3096 /* ProductionAlertsDetails.xib in Resources */,
 				65437CE12665387600B2F38A /* NewTicketViewController.xib in Resources */,
 				65437CE22665387600B2F38A /* OfficeStatusCell.xib in Resources */,
-				65437CE32665387600B2F38A /* InfoViewController.xib in Resources */,
 				65437CE42665387600B2F38A /* GlobalAlertCell.xib in Resources */,
 				54D59C292695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				9FA4DC922684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
@@ -3680,7 +3652,6 @@
 				65437E90266539BF00B2F38A /* MyTicketsViewController.xib in Resources */,
 				65437E91266539BF00B2F38A /* SecondSendMessageView.xib in Resources */,
 				65437E92266539BF00B2F38A /* SF-Pro-Text-Semibold.ttf in Resources */,
-				65437E93266539BF00B2F38A /* InfoViewController.xib in Resources */,
 				65437E94266539BF00B2F38A /* SF-Pro-Display-Medium.otf in Resources */,
 				65437E95266539BF00B2F38A /* AboutHeaderCell.xib in Resources */,
 				9FD5E14826A84A3B00DB94B7 /* ActiveUsersViewController.xib in Resources */,
@@ -3824,7 +3795,6 @@
 				654380162665568000B2F38A /* WhatsNewCell.xib in Resources */,
 				654380172665568000B2F38A /* OfficeStatusCell.xib in Resources */,
 				9F30285F2681E68C009A3096 /* AlertPopoverViewController.xib in Resources */,
-				654380182665568000B2F38A /* InfoViewController.xib in Resources */,
 				654380192665568000B2F38A /* ServiceDeskContactCell.xib in Resources */,
 				9F3028272681D228009A3096 /* ProductionAlertsDetails.xib in Resources */,
 				6543801A2665568000B2F38A /* QuickHelpCell.xib in Resources */,
@@ -3902,7 +3872,6 @@
 				C9705B7F2566CE4E007A7F68 /* MyTicketsViewController.xib in Resources */,
 				9FF0548125681FCD0071E596 /* SecondSendMessageView.xib in Resources */,
 				9F36D4332562A4A1000EE0F1 /* SF-Pro-Text-Semibold.ttf in Resources */,
-				9FFD5F102565A1F900B6A65C /* InfoViewController.xib in Resources */,
 				659A5AF0255404F100E13B77 /* SF-Pro-Display-Medium.otf in Resources */,
 				9FA8E91025B056D5007D3B9F /* AboutHeaderCell.xib in Resources */,
 				9FD5E14426A84A3B00DB94B7 /* ActiveUsersViewController.xib in Resources */,
@@ -4059,7 +4028,6 @@
 				9F643569261B1E88000D94A4 /* WhatsNewCell.xib in Resources */,
 				9F33F6C9260A3C4000470A47 /* QuickHelpViewController.xib in Resources */,
 				9F33F6CA260A3C4000470A47 /* OfficeStatusCell.xib in Resources */,
-				9F33F6CB260A3C4000470A47 /* InfoViewController.xib in Resources */,
 				9F33F6CC260A3C4000470A47 /* ServiceDeskContactCell.xib in Resources */,
 				9F1351B32670F3D400135FC5 /* MyTicketsFilterHeader.xib in Resources */,
 				9F33F6CD260A3C4000470A47 /* QuickHelpCell.xib in Resources */,
@@ -4173,7 +4141,6 @@
 				9F643567261B1E88000D94A4 /* WhatsNewCell.xib in Resources */,
 				9F78D0E2256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
 				9F30285B2681E68C009A3096 /* AlertPopoverViewController.xib in Resources */,
-				C9EFEBC4256D1F4800112B23 /* InfoViewController.xib in Resources */,
 				C9D035E22579B68D0068441F /* ServiceDeskContactCell.xib in Resources */,
 				9F3028232681D228009A3096 /* ProductionAlertsDetails.xib in Resources */,
 				C993A2CA2576686500F9146A /* QuickHelpCell.xib in Resources */,
@@ -4295,7 +4262,6 @@
 				9F3028242681D228009A3096 /* ProductionAlertsDetails.xib in Resources */,
 				9FB9C1572631A46900BA753D /* NewTicketViewController.xib in Resources */,
 				9F78D0E3256557EE00BCD38F /* OfficeStatusCell.xib in Resources */,
-				C9EFEBCA256D1F4900112B23 /* InfoViewController.xib in Resources */,
 				9F2C82622657CE02004407B4 /* GlobalAlertCell.xib in Resources */,
 				54D59C252695DFFF0037A9B1 /* TeamChatUsersViewController.xib in Resources */,
 				9FA4DC8E2684A885005BC46E /* SF-Pro-Text-Bold-Italic.ttf in Resources */,
@@ -4680,7 +4646,6 @@
 				65437C462665387600B2F38A /* APIRequest.swift in Sources */,
 				65437C472665387600B2F38A /* MyTicketsViewController.swift in Sources */,
 				65437C482665387600B2F38A /* CollaborationResponses.swift in Sources */,
-				65437C492665387600B2F38A /* ImageCacheManager.swift in Sources */,
 				65437C4A2665387600B2F38A /* InfoArticleCell.swift in Sources */,
 				65437C4B2665387600B2F38A /* GlobalAlertDetailsCell.swift in Sources */,
 				9F343A8D26A1CE2F0071362D /* BarChartCell.swift in Sources */,
@@ -4728,7 +4693,6 @@
 				65437C6D2665387600B2F38A /* MyAppsDataProvider.swift in Sources */,
 				65437C6E2665387600B2F38A /* SceneDelegate.swift in Sources */,
 				65437C6F2665387600B2F38A /* GeneralCell.swift in Sources */,
-				65437C702665387600B2F38A /* InfoViewController.swift in Sources */,
 				9F3028132681D228009A3096 /* AlertDetailsCell.swift in Sources */,
 				65437C712665387600B2F38A /* LoginDataProvider.swift in Sources */,
 				65437C722665387600B2F38A /* SwitcherCell.swift in Sources */,
@@ -4826,13 +4790,11 @@
 				65437E14266539BF00B2F38A /* APIRequest.swift in Sources */,
 				65437E15266539BF00B2F38A /* NewsCollectionViewCell.swift in Sources */,
 				65437E16266539BF00B2F38A /* CollaborationResponses.swift in Sources */,
-				65437E17266539BF00B2F38A /* ImageCacheManager.swift in Sources */,
 				65437E18266539BF00B2F38A /* CollaborationHeader.swift in Sources */,
 				65437E19266539BF00B2F38A /* GlobalAlertDetailsCell.swift in Sources */,
 				9F7B679B26F2403800756412 /* TipsAndTricksViewController.swift in Sources */,
 				9F343A8B26A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				65437E1A266539BF00B2F38A /* QuickHelpViewController.swift in Sources */,
-				65437E1B266539BF00B2F38A /* InfoViewController.swift in Sources */,
 				65437E1C266539BF00B2F38A /* MyAppsResponses.swift in Sources */,
 				65437E1D266539BF00B2F38A /* AboutViewController.swift in Sources */,
 				65437E1E266539BF00B2F38A /* HomepageTableViewController.swift in Sources */,
@@ -4974,7 +4936,6 @@
 				65437F812665568000B2F38A /* APIRequest.swift in Sources */,
 				65437F822665568000B2F38A /* MyTicketsViewController.swift in Sources */,
 				65437F832665568000B2F38A /* CollaborationResponses.swift in Sources */,
-				65437F842665568000B2F38A /* ImageCacheManager.swift in Sources */,
 				65437F852665568000B2F38A /* InfoArticleCell.swift in Sources */,
 				65437F862665568000B2F38A /* GlobalAlertDetailsCell.swift in Sources */,
 				9F343A8C26A1CE2F0071362D /* BarChartCell.swift in Sources */,
@@ -5022,7 +4983,6 @@
 				65437FA82665568000B2F38A /* MyAppsDataProvider.swift in Sources */,
 				65437FA92665568000B2F38A /* SceneDelegate.swift in Sources */,
 				65437FAA2665568000B2F38A /* GeneralCell.swift in Sources */,
-				65437FAB2665568000B2F38A /* InfoViewController.swift in Sources */,
 				9F3028122681D228009A3096 /* AlertDetailsCell.swift in Sources */,
 				65437FAC2665568000B2F38A /* LoginDataProvider.swift in Sources */,
 				65437FAD2665568000B2F38A /* SwitcherCell.swift in Sources */,
@@ -5120,13 +5080,11 @@
 				9F753AA2259B862000AE6EC2 /* APIRequest.swift in Sources */,
 				9F78CFCD25640A1800BCD38F /* NewsCollectionViewCell.swift in Sources */,
 				9F2F982E25F90D0600BCC37F /* CollaborationResponses.swift in Sources */,
-				9F6FD63E25B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9F35860D25FD219D0003658D /* CollaborationHeader.swift in Sources */,
 				9F2C82642657CE02004407B4 /* GlobalAlertDetailsCell.swift in Sources */,
 				9F7B679726F2403800756412 /* TipsAndTricksViewController.swift in Sources */,
 				9F343A8726A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				C993A2AE2576664300F9146A /* QuickHelpViewController.swift in Sources */,
-				9FFD5F0F2565A1F900B6A65C /* InfoViewController.swift in Sources */,
 				9F8164AF257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
 				C93FCF0625648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F36D4652562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
@@ -5289,7 +5247,6 @@
 				9F33F650260A3C4000470A47 /* APIRequest.swift in Sources */,
 				9F33F651260A3C4000470A47 /* MyTicketsViewController.swift in Sources */,
 				9F33F652260A3C4000470A47 /* CollaborationResponses.swift in Sources */,
-				9F33F653260A3C4000470A47 /* ImageCacheManager.swift in Sources */,
 				9F33F654260A3C4000470A47 /* InfoArticleCell.swift in Sources */,
 				9F33F655260A3C4000470A47 /* CollaborationHeader.swift in Sources */,
 				658BEF7C268FC63600D4FD2C /* LineChartViewController.swift in Sources */,
@@ -5335,7 +5292,6 @@
 				9F2C82532657CE02004407B4 /* GlobalAlertCell.swift in Sources */,
 				9F33F674260A3C4000470A47 /* SceneDelegate.swift in Sources */,
 				65FADE5D26546D1200B7A969 /* PushNotificationsManager.swift in Sources */,
-				9F33F675260A3C4000470A47 /* InfoViewController.swift in Sources */,
 				9F7B679026F2403800756412 /* TipsAndTricksTableViewCell.swift in Sources */,
 				9F33F676260A3C4000470A47 /* LoginDataProvider.swift in Sources */,
 				9F6435CE261F2077000D94A4 /* CollaborationCounterCell.swift in Sources */,
@@ -5433,7 +5389,6 @@
 				9F753AA3259B862000AE6EC2 /* APIRequest.swift in Sources */,
 				C9705B7D2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
 				9F2F982F25F90D0600BCC37F /* CollaborationResponses.swift in Sources */,
-				9F6FD63F25B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9F1620DB2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				9F2C82652657CE02004407B4 /* GlobalAlertDetailsCell.swift in Sources */,
 				9F7B679826F2403800756412 /* TipsAndTricksViewController.swift in Sources */,
@@ -5483,7 +5438,6 @@
 				9F8164B9257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
 				9F3AC940264D3E3D004074C8 /* GeneralCell.swift in Sources */,
-				C9D859392567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F30280E2681D228009A3096 /* AlertDetailsCell.swift in Sources */,
 				9F0D26A02577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9F3AC957264D4790004074C8 /* SwitcherCell.swift in Sources */,
@@ -5581,7 +5535,6 @@
 				9F753AA4259B862000AE6EC2 /* APIRequest.swift in Sources */,
 				C9705B7E2566CE4E007A7F68 /* MyTicketsViewController.swift in Sources */,
 				9F2F983025F90D0600BCC37F /* CollaborationResponses.swift in Sources */,
-				9F6FD64025B1ABC300A32377 /* ImageCacheManager.swift in Sources */,
 				9F1620DC2566BB32003AFE68 /* InfoArticleCell.swift in Sources */,
 				9F2C82662657CE02004407B4 /* GlobalAlertDetailsCell.swift in Sources */,
 				9F7B679926F2403800756412 /* TipsAndTricksViewController.swift in Sources */,
@@ -5631,7 +5584,6 @@
 				9F8164BA257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
 				9F3AC941264D3E3D004074C8 /* GeneralCell.swift in Sources */,
-				C9D8593A2567FE850025F544 /* InfoViewController.swift in Sources */,
 				9F30280F2681D228009A3096 /* AlertDetailsCell.swift in Sources */,
 				9F0D26A12577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9F3AC958264D4790004074C8 /* SwitcherCell.swift in Sources */,
