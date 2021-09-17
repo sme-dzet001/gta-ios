@@ -191,7 +191,7 @@ class AuthViewController: UIViewController {
     private func authentificatePassed() {
         delegate?.isAuthentificationPassed = true
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarController")
+        let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
         let navController = UINavigationController(rootViewController: mainViewController)
         navController.isNavigationBarHidden = true
         navController.isToolbarHidden = true

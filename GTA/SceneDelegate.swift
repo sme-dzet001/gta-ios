@@ -96,7 +96,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                         return
                     }
                     let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let mainViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarController")
+                    let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
                     let navController = UINavigationController(rootViewController: mainViewController)
                     navController.isNavigationBarHidden = true
                     navController.isToolbarHidden = true
