@@ -511,9 +511,12 @@ class HomeDataProvider {
                 response.data?.rows?[index]?.indexes = indexes
             }
         }
-        let rows = response.data?.rows?.filter({$0?.category == .news})
-        let dataWasChanged = (rows ?? []) != newsFeedData
-        newsFeedData = rows?.compactMap({$0}) ?? []
+        let rows = response.data?.rows?.filter({$0?.category == .news}).compactMap({$0})
+        var allNews = rows?.filter({$0.isPostDateExist == true}).sorted(by: {$1.newsDate! < $0.newsDate!}) ?? []
+        let newsWithoutDate = rows?.filter({$0.isPostDateExist == false}).sorted(by: {($1.articleId ?? 0) > ($0.articleId ?? 0)}) ?? []
+        allNews.append(contentsOf: newsWithoutDate)
+        let dataWasChanged = allNews != newsFeedData
+        newsFeedData = allNews
         specialAlertsData = response.data?.rows?.filter({$0?.category == .specialAlerts}).compactMap({$0}) ?? []
         return dataWasChanged
     }
