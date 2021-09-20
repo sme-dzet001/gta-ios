@@ -33,7 +33,6 @@ class WhatsNewMoreViewController: UIViewController {
         super.viewWillAppear(animated)
         self.blurView.isHidden = false
         addBlurToView()
-        self.tabBarController?.tabBar.isHidden = true
         setLabelsText()
         if let url = dataSource?.imageUrl, !url.isEmptyOrWhitespace() {
             setImage()
@@ -121,7 +120,6 @@ class WhatsNewMoreViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        self.tabBarController?.tabBar.isHidden = false
     }
 
     @IBAction func backButtonPressed(_ sender: Any) {

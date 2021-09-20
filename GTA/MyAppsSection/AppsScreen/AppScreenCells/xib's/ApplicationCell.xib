@@ -78,8 +78,8 @@
                             <constraint firstAttribute="width" constant="58" id="o7Q-am-r06"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AOMA" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="idg-Oi-FFL">
-                        <rect key="frame" x="93" y="37.5" width="47.5" height="19.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AOMA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="idg-Oi-FFL">
+                        <rect key="frame" x="93" y="37.5" width="163" height="19.5"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -115,6 +115,7 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="qy5-ES-diR" firstAttribute="leading" secondItem="idg-Oi-FFL" secondAttribute="trailing" constant="8" id="2ba-dU-n3O"/>
                     <constraint firstItem="LOz-S9-XeL" firstAttribute="width" secondItem="LOz-S9-XeL" secondAttribute="height" multiplier="1:1" id="3g3-tR-WTJ"/>
                     <constraint firstItem="0ZE-SM-vhB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="3tg-DO-8Zp"/>
                     <constraint firstItem="7bn-Nu-co3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4i9-CA-8Tq"/>
