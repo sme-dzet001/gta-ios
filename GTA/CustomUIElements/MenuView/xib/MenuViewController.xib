@@ -22,14 +22,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YEO-zn-33y">
-                    <rect key="frame" x="16" y="326" width="382" height="520"/>
+                    <rect key="frame" x="16" y="316" width="382" height="530"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KKd-tE-8Ex">
-                    <rect key="frame" x="16" y="326" width="382" height="520"/>
+                    <rect key="frame" x="16" y="316" width="382" height="530"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="520" id="v5R-l3-pfY"/>
+                        <constraint firstAttribute="height" constant="530" id="v5R-l3-pfY"/>
                     </constraints>
                 </tableView>
             </subviews>
