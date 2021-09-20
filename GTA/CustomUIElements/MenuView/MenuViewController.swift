@@ -258,25 +258,21 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             let data = dataProvider.userOffice
             if let officeData = data {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell else { return UITableViewCell() }
-                cell.officeStatusLabel.text = officeData.officeName
+                cell.officeLabel.text = "Office: " + (officeData.officeName ?? "")
                 cell.officeAddressLabel.text = officeData.officeLocation?.replacingOccurrences(of: "\u{00A0}", with: " ")
                 cell.officeAddressLabel.isHidden = officeData.officeLocation?.isEmpty ?? true
                 cell.officeNumberLabel.text = officeData.officePhone
                 cell.officeNumberLabel.isHidden = officeData.officePhone?.isEmpty ?? true
                 cell.officeErrorLabel.isHidden = true
-                cell.officeStatusLabel.accessibilityIdentifier = "HomeScreenOfficeTitleLabel"
                 cell.officeAddressLabel.accessibilityIdentifier = "HomeScreenOfficeAddressLabel"
                 cell.officeLabel.textColor = .black
-                cell.officeStatusLabel.textColor = .black
                 guard let index = selectedTabIdx, index > menuItems.count - 2 else { return cell }
                 cell.officeLabel.textColor = redColor
-                cell.officeStatusLabel.textColor = redColor
                 
                 return cell
             } else {
                 if let errorStr = officeLoadingError {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell else { return UITableViewCell() }
-                    cell.officeStatusLabel.text = " "
                     cell.officeAddressLabel.text = " "
                     cell.officeAddressLabel.isHidden = false
                     cell.officeNumberLabel.text = " "
@@ -287,7 +283,6 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     guard let index = selectedTabIdx, index > menuItems.count - 2 else { return cell }
                     cell.officeLabel.textColor = redColor
-                    cell.officeStatusLabel.textColor = redColor
                     
                     return cell
                 } else {
