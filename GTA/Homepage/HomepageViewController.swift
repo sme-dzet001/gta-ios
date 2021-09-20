@@ -14,7 +14,7 @@ enum FilterTabType : String {
     case all = "All"
     case news = "News"
     case specialAlerts = "Special Alerts"
-    case teamsNews = "Teams News"
+    //case teamsNews = "Teams News"
 }
 
 class HomepageViewController: UIViewController {
@@ -32,7 +32,7 @@ class HomepageViewController: UIViewController {
     
     private var presentedVC: ArticleViewController?
     
-    private var filterTabTypes : [FilterTabType] = [.all, .news, .specialAlerts, .teamsNews]
+    private var filterTabTypes : [FilterTabType] = [.all, .news, .specialAlerts]
     
     private var filterTabItemWidths : [CGFloat] {
         var result: [CGFloat] = []
@@ -122,13 +122,12 @@ class HomepageViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(getAllAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalProductionAlertsIgnoringCache), name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
+        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
-            loadNewsData()
-        }
+        loadNewsData()
         if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
             emergencyOutageNotificationReceived()
         }
@@ -205,8 +204,10 @@ class HomepageViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedTable" {
             let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
-            if let allNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let promotedNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let specialAlertsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let applicationNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController {
-                newsTabs = [allNewsViewController, promotedNewsViewController, specialAlertsViewController, applicationNewsViewController]
+            if let allNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let promotedNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let specialAlertsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController {//}, let applicationNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController {
+                promotedNewsViewController.selectedFilterTab = .news
+                specialAlertsViewController.selectedFilterTab = .specialAlerts
+                newsTabs = [allNewsViewController, promotedNewsViewController, specialAlertsViewController]//, applicationNewsViewController]
             }
             
             for newsTab in newsTabs {
@@ -216,6 +217,7 @@ class HomepageViewController: UIViewController {
             
             let pagingVC = segue.destination as? PagingViewController
             pagingVC?.dataSource = self
+            pagingVC?.delegate = self
             pagingVC?.register(PagingTitleCell.self, for: PagingIndexItem.self)
             pagingVC?.indicatorColor = UIColor(hex: 0xCC0000)
             pagingVC?.selectedTextColor = .black
@@ -234,16 +236,16 @@ class HomepageViewController: UIViewController {
     }
     
     private func loadNewsData() {
-        if dataProvider.newsDataIsEmpty {
-            for newsTab in newsTabs {
-                newsTab.dataLoadingStarted()
-            }
-        }
-        dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
+        guard lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() else { return }
+        guard !dataProvider.getNewsFeedInProgress else { return }
+        dataProvider.getNewsFeedData { [weak self] (isFromCache, dataWasChanged, errorCode, error) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
+                if error == nil && errorCode == 200 {
+                    self.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self.lastUpdateDate
+                }
                 for newsTab in self.newsTabs {
-                    newsTab.dataLoadingFinished(errorCode: errorCode, error: error, isFromCache: isFromCache)
+                    newsTab.dataLoadingFinished(dataWasChanged: dataWasChanged, errorCode: errorCode, error: error, isFromCache: isFromCache)
                 }
             }
         }
@@ -260,12 +262,15 @@ class HomepageViewController: UIViewController {
                 if error == nil && errorCode == 200 {
                     self?.emergencyOutageLoaded = dataWasChanged && !isFromCache
                     self?.updateBannerViews()
+                    guard let mainVC = self?.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
                     if let data = self?.dataProvider.globalAlertsData {
                         switch data.status {
                         case .inProgress:
+                            mainVC.menuViewController.globalAlertsBadges = 1
                             self?.tabBarController?.addAlertItemBadge(atIndex: 0)
                         default:
                             if let self = self, !self.hasActiveGlobalProdAlerts {
+                                mainVC.menuViewController.globalAlertsBadges = 0
                                 self.tabBarController?.removeItemBadge(atIndex: 0)
                             }
                         }
@@ -314,6 +319,8 @@ class HomepageViewController: UIViewController {
                             let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
                             if eventStarted || eventFinished {
                                 self?.tabBarController?.addAlertItemBadge(atIndex: 0)
+                                guard let mainVC = self?.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
+                                mainVC.menuViewController.globalAlertsBadges = 1
                             }
                         default:
                             return
@@ -391,6 +398,8 @@ class HomepageViewController: UIViewController {
         dataProvider.getProductionAlerts {[weak self] _, _, count in
             DispatchQueue.main.async {
                 self?.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: count > 0 ? "\(count)" : nil)
+                guard let mainVC = self?.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
+                mainVC.menuViewController.productionAlertBadges = count
             }
         }
     }
@@ -405,7 +414,7 @@ class HomepageViewController: UIViewController {
     }
 }
 
-extension HomepageViewController: PagingViewControllerDataSource {
+extension HomepageViewController: PagingViewControllerDataSource, PagingViewControllerDelegate {
     func numberOfViewControllers(in pagingViewController: PagingViewController) -> Int {
         return newsTabs.count
     }
@@ -416,6 +425,10 @@ extension HomepageViewController: PagingViewControllerDataSource {
     
     func pagingViewController(_: PagingViewController, pagingItemAt index: Int) -> PagingItem {
         return PagingIndexItem(index: index, title: filterTabTypes[index].rawValue)
+    }
+    
+    func pagingViewController(_ pagingViewController: PagingViewController, didSelectItem pagingItem: PagingItem) {
+        loadNewsData()
     }
     
     

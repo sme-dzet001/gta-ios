@@ -123,10 +123,8 @@ public class KeychainManager: NSObject {
         if status == errSecSuccess {
             if let retrievedData = dataTypeRef as? Data {
                 guard let res = String(data: retrievedData, encoding: .utf8) else { return nil }
-                if let expirationDate = Utils.stringToDate(from: res, dateFormat: "dd.MM.yyyy HH:mm:ss") {
-                    return expirationDate
-                } else {
-                    return Utils.stringToDate(from: res, dateFormat: "dd.MM.yyyy h:mm:ss a")
+                if let timeIntervalSince1970 = Double(res) {//Utils.stringToDate(from: res, dateFormat: "dd.MM.yyyy HH:mm:ss") {
+                    return Date(timeIntervalSince1970: timeIntervalSince1970)
                 }
             }
         } else {
@@ -135,9 +133,9 @@ public class KeychainManager: NSObject {
         return nil
     }
     
-    class func saveTokenExpirationDate(tokenExpirationDate: Date) -> OSStatus?{
+    class func saveTokenExpirationDate(tokenExpirationDate: Double) -> OSStatus?{
         deleteTokenExpirationDate()
-        let tokenExpirationDateString = Utils.dateToString(from: tokenExpirationDate, dateFormat: "dd.MM.yyyy HH:mm:ss")
+        let tokenExpirationDateString = "\(tokenExpirationDate)"//Utils.dateToString(from: tokenExpirationDate, dateFormat: "dd.MM.yyyy HH:mm:ss")
         guard let dataToStore = tokenExpirationDateString.data(using: .utf8) else { return nil }
         let query = [
             kSecClass as String             : kSecClassGenericPassword as String,

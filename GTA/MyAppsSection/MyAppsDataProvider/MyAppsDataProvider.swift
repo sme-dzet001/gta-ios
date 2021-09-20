@@ -616,7 +616,7 @@ class MyAppsDataProvider {
     
     private func processProductionAlerts(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
         let queue = DispatchQueue(label: "processProductionAlertsQueue", qos: .userInteractive)
-        queue.async {[weak self] in
+        queue.async(flags: .barrier) {[weak self] in
             var prodAlertsResponse: ProductionAlertsResponse?
             var retErr = error
             if let responseData = myAppsDataResponse {
@@ -650,7 +650,7 @@ class MyAppsDataProvider {
         let indexes = getDataIndexes(columns: columns)
         var alerts: [String : [ProductionAlertsRow]] = [:]
         var data = response?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
-        queue.async {
+        queue.async(flags: .barrier) {
             for key in data.keys {
                 for (index, _) in (data[key]?.data?.rows ?? []).enumerated() {
                     data[key]?.data?.rows?[index]?.indexes = indexes

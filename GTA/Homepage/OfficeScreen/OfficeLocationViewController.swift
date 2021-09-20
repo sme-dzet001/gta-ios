@@ -40,7 +40,7 @@ class OfficeLocationViewController: UIViewController {
     var forceOfficeSelection = false
     var selectedRegionName: String?
     var regionSelectionIsOn: Bool = true
-    var dataProvider: HomeDataProvider?
+    var dataProvider: MenuViewControllerDataProvider?
     var regionDataSource: [Hardcode] = []
     var officeDataSource: [Hardcode] = []
     private var heightObserver: NSKeyValueObservation?
