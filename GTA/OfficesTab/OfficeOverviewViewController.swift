@@ -20,6 +20,10 @@ class OfficeOverviewViewController: UIViewController {
     var selectedOfficeData: OfficeRow?
     var officeDataSoure: [Hardcode] = []
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -37,7 +37,7 @@ class MainViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return tabBar?.selectedViewController?.preferredStatusBarStyle ?? .default
     }
     
     // MARK: - Navigation
