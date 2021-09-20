@@ -39,7 +39,7 @@ class HomepageTableViewController: UIViewController {
         super.viewWillAppear(animated)
         dataLoadingStarted()
         let dataSource = getDataSource()
-        if !dataSource.isEmpty {
+        if !dataSource.isEmpty && tableView.dataHasChanged {
             activityIndicator.stopAnimating()
             activityIndicator.isHidden = true
             tableView.reloadData()
