@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Udk-yr-ScC">
-                                <rect key="frame" x="0.0" y="80" width="414" height="694"/>
+                                <rect key="frame" x="0.0" y="80" width="414" height="728"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="emg-U7-4qg" id="Kig-J7-Cza"/>
@@ -44,7 +44,7 @@
                             <constraint firstItem="5pQ-Oy-a9O" firstAttribute="centerX" secondItem="hnm-gk-3gF" secondAttribute="centerX" id="HFO-tl-Cbq"/>
                             <constraint firstItem="VQY-2b-btO" firstAttribute="trailing" secondItem="Udk-yr-ScC" secondAttribute="trailing" id="ND0-dx-5wA"/>
                             <constraint firstItem="Udk-yr-ScC" firstAttribute="top" secondItem="dgO-Iy-sSg" secondAttribute="bottom" id="Uz3-Nm-DPt"/>
-                            <constraint firstItem="VQY-2b-btO" firstAttribute="bottom" secondItem="Udk-yr-ScC" secondAttribute="bottom" id="dtK-HT-WFT"/>
+                            <constraint firstAttribute="bottom" secondItem="Udk-yr-ScC" secondAttribute="bottom" id="dtK-HT-WFT"/>
                             <constraint firstItem="5pQ-Oy-a9O" firstAttribute="centerY" secondItem="hnm-gk-3gF" secondAttribute="centerY" id="ohs-eq-db1"/>
                             <constraint firstItem="Udk-yr-ScC" firstAttribute="leading" secondItem="VQY-2b-btO" secondAttribute="leading" id="qcC-Mh-bQL"/>
                             <constraint firstItem="dgO-Iy-sSg" firstAttribute="top" secondItem="VQY-2b-btO" secondAttribute="top" id="riG-Nr-BwO"/>
