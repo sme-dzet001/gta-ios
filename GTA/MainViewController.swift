@@ -86,11 +86,11 @@ class MainViewController: UIViewController {
     }
     
     private func configureMenuButton() {
-        menuButton.layer.shadowColor = UIColor.lightGray.cgColor
+        menuButton.layer.shadowColor = UIColor.black.cgColor
         menuButton.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
         menuButton.layer.masksToBounds = false
         menuButton.layer.shadowRadius = 3
-        menuButton.layer.shadowOpacity = 0.5
+        menuButton.layer.shadowOpacity = 0.3
         menuButton.layer.cornerRadius = menuButton.frame.width / 2
     }
     
