@@ -42,7 +42,7 @@ class HomepageTableViewController: UIViewController {
         if !dataSource.isEmpty {
             activityIndicator.stopAnimating()
             activityIndicator.isHidden = true
-            tableView.reloadData()
+            //tableView.reloadData()
         }
     }
     
@@ -95,6 +95,8 @@ class HomepageTableViewController: UIViewController {
     
     func dataLoadingStarted() {
         guard isViewLoaded else { return }
+        guard let _ = dataProvider else { return }
+        guard dataProvider!.getNewsFeedInProgress else { return }
         let dataSource = getDataSource()
         if dataSource.isEmpty {
             activityIndicator.isHidden = false
