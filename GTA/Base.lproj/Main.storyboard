@@ -52,6 +52,7 @@
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NxS-vk-sP5">
                                 <rect key="frame" x="335" y="783" width="55" height="55"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="NxS-vk-sP5" secondAttribute="height" multiplier="1:1" id="SPB-JA-Y5i"/>
                                 </constraints>
@@ -368,7 +369,7 @@
         <image name="help" width="24" height="24"/>
         <image name="helpdesk_tab_icon" width="24" height="24"/>
         <image name="homepage_tab_icon" width="24" height="24"/>
-        <image name="menu_button" width="120" height="120"/>
+        <image name="menu_button" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
