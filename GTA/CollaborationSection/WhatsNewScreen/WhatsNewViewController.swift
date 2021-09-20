@@ -104,13 +104,13 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         let text = getDescriptionText(for: indexPath)
         cell?.delegate = self
         cell?.fullText = text
-//        if !expandedRowsIndex.contains(indexPath.row) {
-//            cell?.setCollapse()
-//        } else {
+        if !expandedRowsIndex.contains(indexPath.row) {
+            cell?.setCollapse()
+        } else {
             cell?.descriptionLabel.attributedText = text
-//            cell?.descriptionLabel.numberOfLines = 0
-//            cell?.descriptionLabel.sizeToFit()
-//        }
+            cell?.descriptionLabel.numberOfLines = 0
+            cell?.descriptionLabel.sizeToFit()
+        }
         cell?.imageUrl = cellDataSource?.imageUrl
         let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl) ?? ""
         let url = URL(string: imageURL)
