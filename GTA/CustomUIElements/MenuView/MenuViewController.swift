@@ -229,17 +229,19 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.section {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell") as? MenuTableViewCell else { return UITableViewCell() }
-            if indexPath.row == 0, globalAlertsBadges > 0 {
-                cell.badgeImageView.image = UIImage(named: "global_alert_badge")
-            }
-            if indexPath.row == 2, productionAlertBadges > 0 {
-                cell.badgeNumber = productionAlertBadges
-            }
             
             cell.menuLabel.text = menuItems[indexPath.row].name
             cell.menuImage.image = menuItems[indexPath.row].image?.withRenderingMode(.alwaysTemplate)
             cell.menuLabel.textColor = .black
             cell.menuImage.tintColor = .black
+            
+            if indexPath.row == 0, globalAlertsBadges > 0 {
+                cell.badgeImageView.isHidden = false
+                cell.badgeImageView.image = UIImage(named: "global_alert_badge")
+            }
+            if indexPath.row == 2, productionAlertBadges > 0 {
+                cell.badgeNumber = productionAlertBadges
+            }
             
             guard let index = selectedTabIdx, index <= menuItems.count - 2, index == indexPath.row else { return cell }
             cell.menuLabel.textColor = redColor
