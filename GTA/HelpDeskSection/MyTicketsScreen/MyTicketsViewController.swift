@@ -34,6 +34,7 @@ class MyTicketsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel, isGSD: true)
+        self.myTicketsData = self.generateDataSource()
         getMyTickets()
     }
     
