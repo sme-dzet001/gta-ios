@@ -50,17 +50,19 @@ class MyTicketsViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    self?.showNoDataErrorLabelIfNeeded()
                     if dataWasChanged {
                         self?.myTicketsData = self?.generateDataSource()
                         self?.tableView.reloadData()
                     }
+                    self?.showNoDataErrorLabelIfNeeded()
                 } else {
                     if let myTickets = self?.myTicketsData, myTickets.isEmpty {
                         self?.myTicketsData = self?.generateDataSource()
                         self?.tableView.reloadData()
                     }
-                    self?.handleErrorLabel(error: error)
+                    if (self?.myTicketsData ?? []).isEmpty {
+                        self?.handleErrorLabel(error: error)
+                    }
                 }
             }
         })
