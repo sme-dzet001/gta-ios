@@ -477,6 +477,7 @@ class HomeDataProvider {
                 self?.processNewsFeedData(reportData, response, isFromCache, errorCode, error, completion)
             }
         } else {
+            if !isFromCache { self.getNewsFeedInProgress = false }
             if error != nil || generationNumber == 0 {
                 completion?(isFromCache, false, 0, generationNumber == 0 ? ResponseError.noDataAvailable: ResponseError.generate(error: error))
                 return
