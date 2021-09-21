@@ -234,6 +234,11 @@ extension WhatsNewViewController : TappedLabelDelegate {
         if !expandedRowsIndex.contains(cellIndex.row) {
             expandedRowsIndex.append(cellIndex.row)
         }
+        if cell.bounds.height > self.tableView.frame.height {
+            self.tableView.scrollToRow(at: cellIndex, at: .top, animated: true)
+        } else {
+            self.tableView.scrollToRow(at: cellIndex, at: .none, animated: true)
+        }
         UIView.setAnimationsEnabled(true)
     }
     

@@ -21,6 +21,7 @@ class MenuViewController: UIViewController {
     }
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var backgroundView: UIView!
     
     let menuItems: [MenuItems] = [
@@ -40,9 +41,6 @@ class MenuViewController: UIViewController {
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
     private var lastUpdateDate: Date?
-    
-    let defaultCellHeight: CGFloat = 48
-    let lineCellHeight:CGFloat = 40
     
     var globalAlertsBadges = 0
     var productionAlertBadges = 0
@@ -71,9 +69,17 @@ class MenuViewController: UIViewController {
                 tableView.reloadData()
             }
         }
+        if UIDevice.current.iPhone5_se {
+            tableViewHeightConstraint?.constant = 490
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setTableViewHeight()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        setTableViewHeight()
         tableView.alpha = 0
         UIView.animate(withDuration: 0.1, delay: 0.2, animations: {
             self.tableView.alpha = 1
@@ -88,6 +94,12 @@ class MenuViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         closeAction()
+    }
+    
+    private func setTableViewHeight() {
+        tableView.setNeedsLayout()
+        tableView.layoutIfNeeded()
+        tableViewHeightConstraint.constant = tableView.contentSize.height
     }
     
     private func openGTTeamScreen() {
@@ -137,6 +149,7 @@ class MenuViewController: UIViewController {
     private func loadOfficesData() {
         var forceOpenOfficeSelectionScreen = false
         officeLoadingError = nil
+        setTableViewHeight()
         tableView.reloadData()
         dataProvider.getCurrentOffice(completion: { [weak self] (errorCode, error, isFromCache) in
             if error == nil && errorCode == 200 {
@@ -154,12 +167,14 @@ class MenuViewController: UIViewController {
                             } else {
                                 self?.officeLoadingError = nil
                             }
+                            self?.setTableViewHeight()
                             self?.tableView.reloadData()
                             if forceOpenOfficeSelectionScreen {
                                 self?.openOfficeSelectionModalScreen()
                             }
                         } else {
                             self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                            self?.setTableViewHeight()
                             self?.tableView.reloadData()
                         }
                     }
@@ -167,6 +182,7 @@ class MenuViewController: UIViewController {
             } else {
                 DispatchQueue.main.async {
                     self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+                    self?.setTableViewHeight()
                     self?.tableView.reloadData()
                 }
             }
@@ -175,17 +191,25 @@ class MenuViewController: UIViewController {
 }
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return defaultCellHeight
+            if UIDevice.current.iPhone5_se {
+                return 40
+            }
+            return 48
         case 1:
-            return lineCellHeight
-        default:
+            if UIDevice.current.iPhone5_se {
+                return 30
+            }
+            return 40
+        case 2:
             return UITableView.automaticDimension
+        default:
+            return 50
         }
     }
     
@@ -196,24 +220,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         return view
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50))
-        let button = UIButton(frame: CGRect(x: tableView.frame.size.width - 50, y: 4, width: 40, height: 40))
-        button.setImage(UIImage(named: "close_icon_bold"), for: .normal)
-        button.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
-        view.addSubview(button)
-        
-        return view
-    }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard section == 0 else { return 0 }
         return 16
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        guard section == 2 else { return 0 }
-        return 50
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -256,7 +265,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             grayView.backgroundColor = .systemGray6
             
             return cell
-        default:
+        case 2:
             let data = dataProvider.userOffice
             if let officeData = data {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell else { return UITableViewCell() }
@@ -292,6 +301,14 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     return loadingCell
                 }
             }
+        default:
+            let cell = UITableViewCell()
+            let button = UIButton(frame: CGRect(x: tableView.frame.size.width - 50, y: 2, width: 40, height: 40))
+            button.setImage(UIImage(named: "close_icon_bold"), for: .normal)
+            button.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
+            cell.contentView.addSubview(button)
+            
+            return cell
         }
     }
     
@@ -338,6 +355,7 @@ extension MenuViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDel
     private func updateUIWithSelectedOffice() {
         DispatchQueue.main.async {
             self.officeLoadingError = nil
+            self.setTableViewHeight()
             self.tableView.reloadData()
         }
     }

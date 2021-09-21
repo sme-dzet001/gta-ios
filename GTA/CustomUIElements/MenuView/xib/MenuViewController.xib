@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="backgroundView" destination="YEO-zn-33y" id="Fpn-Ex-oXZ"/>
                 <outlet property="tableView" destination="KKd-tE-8Ex" id="iEl-XM-E9z"/>
+                <outlet property="tableViewHeightConstraint" destination="v5R-l3-pfY" id="gfL-Hs-vUG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
