@@ -92,7 +92,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                     lastActivityDate = aDate
                 }
                 if lastActivityDate.addingTimeInterval(1200) > Date(),  let _ = KeychainManager.getPin(), !(isAuthentificationScreenShown ?? true), isAuthentificationPassed ?? false {
-                    if let navController = self.window?.rootViewController as? UINavigationController, navController.rootViewController is UITabBarController {
+                    if let navController = self.window?.rootViewController as? UINavigationController, navController.rootViewController is MainViewController {
                         return
                     }
                     let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

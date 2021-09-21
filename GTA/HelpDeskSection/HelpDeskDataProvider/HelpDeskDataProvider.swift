@@ -470,8 +470,6 @@ class HelpDeskDataProvider {
         let userEmail = KeychainManager.getUsername() ?? ""
         getCachedResponse(for: .getGSDTickets(userEmail: userEmail)) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-           // if cachedError == nil {
-                //self?.processMyTickets(data, code, cachedError, completion)
             self?.processMyTickets(data, code, cachedError, {[weak self] code, error, dataWasChanged in
                 if error == nil, code == 200 {
                     completion?(code, error, dataWasChanged)
@@ -485,8 +483,6 @@ class HelpDeskDataProvider {
                     }
                 })
             })
-                //completion?(code, cachedError, true)
-            //}
         }
     }
     
