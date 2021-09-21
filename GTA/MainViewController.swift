@@ -23,7 +23,7 @@ class MainViewController: UIViewController {
             tabBar?.selectedIndex = selectedTabIdx
         }
     }
-    
+    var transition = CircularTransition()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,6 +34,7 @@ class MainViewController: UIViewController {
         usmLogoutWebView.isHidden = true
         usmLogoutWebView.navigationDelegate = self
         configureMenuButton()
+        configureMenuVC()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -50,23 +51,17 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func menuButtonAction(_ sender: UIButton) {
-        showPopoverMenu()
+        addBackground()
+        menuViewController.selectedTabIdx = selectedTabIdx
+        present(menuViewController, animated: true, completion: nil)
     }
  
-    private func showPopoverMenu() {
+    private func configureMenuVC() {
         menuViewController.delegate = self
+        menuViewController.transitioningDelegate = self
         menuViewController.tabBar = tabBar
-        menuViewController.selectedTabIdx = selectedTabIdx
-        menuViewController.modalPresentationStyle = .popover
-//        let height = CGFloat(menuViewController.menuItems.count) * menuViewController.defaultCellHeight + menuViewController.lineCellHeight
-        menuViewController.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 530)
-        if let popoverPresentationController = menuViewController.popoverPresentationController {
-            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirection(rawValue:0)
-            popoverPresentationController.sourceView = self.view
-            popoverPresentationController.sourceRect = menuButton.frame
-            popoverPresentationController.delegate = self
-            present(menuViewController, animated: true, completion: nil)
-        }
+        menuViewController.modalPresentationStyle = .overCurrentContext
+        menuViewController.view.frame = self.view.bounds
     }
     
     private func addBackground() {
@@ -122,26 +117,6 @@ class MainViewController: UIViewController {
         guard let logoutURL = URL(string: "\(USMSettings.usmLogoutURL)?token=\(accessToken)&state=\(Utils.stateStr(nonceStr))") else { return }
         let logoutRequest = URLRequest(url: logoutURL)
         usmLogoutWebView.load(logoutRequest)
-    }
-    
-}
-
-extension MainViewController: UIPopoverPresentationControllerDelegate {
-    
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
-
-    func presentationController(_ presentationController: UIPresentationController, willPresentWithAdaptiveStyle style: UIModalPresentationStyle, transitionCoordinator: UIViewControllerTransitionCoordinator?) {
-        addBackground()
-    }
-    
-    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
-        clearBackground()
-    }
-    
-    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
-        return true
     }
 }
 
@@ -207,5 +182,29 @@ extension MainViewController: WKNavigationDelegate {
                 sceneDelegate.startLoginFlow()
             }
         }
+    }
+}
+
+extension MainViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .present
+        transition.startingPoint = menuButton.center
+        
+        UIView.animate(withDuration: 0.1, animations: {
+            self.menuButton.alpha = 0
+        })
+        
+        return transition
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .dismiss
+        transition.startingPoint = menuButton.center
+        
+        UIView.animate(withDuration: 0.1, delay: 0.2, animations: {
+            self.menuButton.alpha = 1
+        })
+        
+        return transition
     }
 }
