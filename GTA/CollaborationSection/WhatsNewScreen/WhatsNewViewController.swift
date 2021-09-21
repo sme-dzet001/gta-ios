@@ -222,10 +222,9 @@ extension WhatsNewViewController : TappedLabelDelegate {
         if !tableView.dataHasChanged {
             UIView.setAnimationsEnabled(false)
             self.dispatchGroup.enter()
-            self.tableView.beginUpdates()
             cell.descriptionLabel.attributedText = self.getDescriptionText(for: cellIndex)
             cell.descriptionLabel.numberOfLines = 0
-            self.tableView.endUpdates()
+            self.tableView.reloadData()
             self.dispatchGroup.leave()
         } else {
             tableView.reloadData()

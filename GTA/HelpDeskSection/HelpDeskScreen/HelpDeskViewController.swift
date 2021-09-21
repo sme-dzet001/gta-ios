@@ -205,6 +205,10 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.0001
+    }
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let separatorFooter = UIView()
         separatorFooter.backgroundColor = UIColor(hex: 0xF7F7FA)

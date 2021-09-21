@@ -304,6 +304,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             let cell = UITableViewCell()
             let button = UIButton(frame: CGRect(x: tableView.frame.size.width - 50, y: 2, width: 40, height: 40))
+            cell.selectionStyle = .none
             button.setImage(UIImage(named: "close_icon_bold"), for: .normal)
             button.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
             cell.contentView.addSubview(button)
