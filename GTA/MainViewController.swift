@@ -12,6 +12,8 @@ import WebKit
 class MainViewController: UIViewController {
 
     @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var menuButtonRightConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var containerView: UIView!
     
     private var usmLogoutWebView: WKWebView!
@@ -98,6 +100,8 @@ class MainViewController: UIViewController {
     }
     
     private func configureMenuButton() {
+        menuButton.layoutIfNeeded()
+        menuButtonRightConstraint.constant = UIDevice.current.hasNotch ? 24 : 34
         menuButton.layer.shadowColor = UIColor.black.cgColor
         menuButton.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
         menuButton.layer.masksToBounds = false

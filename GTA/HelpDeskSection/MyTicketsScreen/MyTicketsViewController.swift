@@ -112,8 +112,9 @@ class MyTicketsViewController: UIViewController {
     
     private func setUpTableView() {
         //tableView.rowHeight = 260//300//158
+        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.register(UINib(nibName: "TicketCell", bundle: nil), forCellReuseIdentifier: "TicketCell")
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + 24, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
     }
     
     @objc private func backPressed() {

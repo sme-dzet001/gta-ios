@@ -22,11 +22,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YEO-zn-33y">
-                    <rect key="frame" x="16" y="316" width="382" height="530"/>
+                    <rect key="frame" x="16" y="332" width="382" height="530"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KKd-tE-8Ex">
-                    <rect key="frame" x="16" y="316" width="382" height="530"/>
+                    <rect key="frame" x="16" y="332" width="382" height="530"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="530" id="v5R-l3-pfY"/>
@@ -38,7 +38,7 @@
             <constraints>
                 <constraint firstItem="KKd-tE-8Ex" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="OsP-tI-Xsz"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="KKd-tE-8Ex" secondAttribute="trailing" constant="16" id="POR-XU-FeG"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="KKd-tE-8Ex" secondAttribute="bottom" constant="16" id="b8a-Rr-jbg"/>
+                <constraint firstAttribute="bottom" secondItem="KKd-tE-8Ex" secondAttribute="bottom" constant="34" id="b8a-Rr-jbg"/>
                 <constraint firstItem="YEO-zn-33y" firstAttribute="leading" secondItem="KKd-tE-8Ex" secondAttribute="leading" id="dmu-2w-7g4"/>
                 <constraint firstItem="YEO-zn-33y" firstAttribute="top" secondItem="KKd-tE-8Ex" secondAttribute="top" id="gzM-H2-c89"/>
                 <constraint firstItem="YEO-zn-33y" firstAttribute="bottom" secondItem="KKd-tE-8Ex" secondAttribute="bottom" id="j0A-vH-WX3"/>

@@ -89,9 +89,10 @@ class HomepageTableViewController: UIViewController {
     }
     
     private func setUpTableView() {
+        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + 24, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
     }
     
     func dataLoadingStarted() {

@@ -177,8 +177,9 @@ class QuickHelpViewController: UIViewController {
     }
     
     private func setUpTableView() {
+        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.register(UINib(nibName: "QuickHelpCell", bundle: nil), forCellReuseIdentifier: "QuickHelpCell")
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + 24, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
     }
     
     private func getHelpData() -> [QuickHelpDataProtocol] {

@@ -115,13 +115,14 @@ class UsageMetricsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         addObservers()
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.barTintColor = .white
         
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + 24, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
         tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
         setUpTextField()
         setUpNavigationItem()
