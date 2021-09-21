@@ -20,15 +20,15 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qvi-9F-Lei">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qvi-9F-Lei">
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="Qvi-9F-Lei" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="0M8-AR-5e6"/>
+                <constraint firstItem="Qvi-9F-Lei" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="0M8-AR-5e6"/>
                 <constraint firstItem="Qvi-9F-Lei" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bfe-YS-jRu"/>
                 <constraint firstItem="Qvi-9F-Lei" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="kJZ-av-8ce"/>
                 <constraint firstItem="Qvi-9F-Lei" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="trd-8O-bhj"/>

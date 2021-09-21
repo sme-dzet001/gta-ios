@@ -114,7 +114,9 @@ class MyTicketsViewController: UIViewController {
     
     private func setUpTableView() {
         //tableView.rowHeight = 260//300//158
+        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.register(UINib(nibName: "TicketCell", bundle: nil), forCellReuseIdentifier: "TicketCell")
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
     }
     
     @objc private func backPressed() {
@@ -229,16 +231,6 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 75
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
-        return footer
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return footerHeight
     }
 }
 

@@ -51,7 +51,8 @@
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NxS-vk-sP5">
-                                <rect key="frame" x="335" y="783" width="55" height="55"/>
+                                <rect key="frame" x="335" y="807" width="55" height="55"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="NxS-vk-sP5" secondAttribute="height" multiplier="1:1" id="SPB-JA-Y5i"/>
                                 </constraints>
@@ -70,12 +71,13 @@
                             <constraint firstItem="NxS-vk-sP5" firstAttribute="width" secondItem="v6E-mf-B2I" secondAttribute="width" multiplier="0.133" id="haR-4Y-o5W"/>
                             <constraint firstAttribute="bottom" secondItem="v6E-mf-B2I" secondAttribute="bottom" id="kyU-Kr-0vg"/>
                             <constraint firstItem="82B-ax-9f3" firstAttribute="trailing" secondItem="v6E-mf-B2I" secondAttribute="trailing" id="uDn-DR-3RU"/>
-                            <constraint firstItem="82B-ax-9f3" firstAttribute="bottom" secondItem="NxS-vk-sP5" secondAttribute="bottom" constant="24" id="zIl-LL-tVN"/>
+                            <constraint firstAttribute="bottom" secondItem="NxS-vk-sP5" secondAttribute="bottom" constant="34" id="zIl-LL-tVN"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="containerView" destination="v6E-mf-B2I" id="hW7-g9-opW"/>
                         <outlet property="menuButton" destination="NxS-vk-sP5" id="QRO-Xf-mEk"/>
+                        <outlet property="menuButtonRightConstraint" destination="eAo-Yt-a1H" id="1Ig-5o-KjV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rzj-kO-kAi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -106,13 +108,13 @@
                                 <state key="normal" image="help"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Sony Music Global Technology" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cg-mN-F74">
-                                <rect key="frame" x="24" y="124" width="366" height="76.5"/>
+                                <rect key="frame" x="24" y="124" width="366" height="75"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Xr-Ki-8uN">
-                                <rect key="frame" x="24" y="346.5" width="366" height="38.5"/>
+                                <rect key="frame" x="24" y="347.5" width="366" height="37.5"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -358,7 +360,7 @@
     </scenes>
     <designables>
         <designable name="JCo-dS-SrK">
-            <size key="intrinsicContentSize" width="40.5" height="21"/>
+            <size key="intrinsicContentSize" width="39.5" height="20.5"/>
         </designable>
     </designables>
     <resources>
@@ -368,7 +370,7 @@
         <image name="help" width="24" height="24"/>
         <image name="helpdesk_tab_icon" width="24" height="24"/>
         <image name="homepage_tab_icon" width="24" height="24"/>
-        <image name="menu_button" width="120" height="120"/>
+        <image name="menu_button" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

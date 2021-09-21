@@ -27,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rsC-w4-xne">
-                    <rect key="frame" x="0.0" y="122" width="414" height="740"/>
+                    <rect key="frame" x="0.0" y="122" width="414" height="774"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="eoW-dP-ljl"/>
@@ -89,7 +89,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vm3-IQ-P3l" secondAttribute="trailing" id="PON-u7-OYa"/>
                 <constraint firstItem="vm3-IQ-P3l" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="sHp-SX-Cpm"/>
                 <constraint firstItem="rsC-w4-xne" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="t5p-ea-hof"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="rsC-w4-xne" secondAttribute="bottom" id="vPL-DQ-RMR"/>
+                <constraint firstAttribute="bottom" secondItem="rsC-w4-xne" secondAttribute="bottom" id="vPL-DQ-RMR"/>
                 <constraint firstItem="rsC-w4-xne" firstAttribute="top" secondItem="vm3-IQ-P3l" secondAttribute="bottom" id="yZ0-oh-rlz"/>
                 <constraint firstItem="vm3-IQ-P3l" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ywM-wx-Mko"/>
             </constraints>

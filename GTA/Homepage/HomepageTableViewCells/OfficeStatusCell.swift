@@ -10,7 +10,6 @@ import UIKit
 class OfficeStatusCell: UITableViewCell {
 
     @IBOutlet weak var officeLabel: UILabel!
-    @IBOutlet weak var officeStatusLabel: UILabel!
     @IBOutlet weak var officeAddressLabel: UILabel!
     @IBOutlet weak var officeNumberLabel: UILabel!
     @IBOutlet weak var officeErrorLabel: UILabel!

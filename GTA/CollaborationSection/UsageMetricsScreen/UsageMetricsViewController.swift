@@ -115,12 +115,14 @@ class UsageMetricsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         addObservers()
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.barTintColor = .white
         
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
         tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
         setUpTextField()
         setUpNavigationItem()
@@ -299,16 +301,6 @@ class UsageMetricsViewController: UIViewController {
 extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return charts.count
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
-        return footer
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return footerHeight
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

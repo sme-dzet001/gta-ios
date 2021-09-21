@@ -159,9 +159,11 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     }
 
     private func setUpTableView() {
+        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
         tableView.register(UINib(nibName: "SystemUpdatesCell", bundle: nil), forCellReuseIdentifier: "SystemUpdatesCell")
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "ProductionAlertCounterCell", bundle: nil), forCellReuseIdentifier: "ProductionAlertCounterCell")
@@ -336,16 +338,6 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             return 380
         }
         return 60
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
-        return footer
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return footerHeight
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

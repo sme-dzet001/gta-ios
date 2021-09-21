@@ -36,7 +36,7 @@ class HomepageTableViewController: UIViewController {
         super.viewWillAppear(animated)
         dataLoadingStarted()
         let dataSource = getDataSource()
-        if !dataSource.isEmpty {
+        if !dataSource.isEmpty && tableView.dataHasChanged {
             activityIndicator.stopAnimating()
             activityIndicator.isHidden = true
             //tableView.reloadData()
@@ -86,8 +86,10 @@ class HomepageTableViewController: UIViewController {
     }
     
     private func setUpTableView() {
+        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
     }
     
     func dataLoadingStarted() {
@@ -138,16 +140,6 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
-        return footer
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return footerHeight
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -231,8 +223,14 @@ extension HomepageTableViewController : TappedLabelDelegate {
         guard dataSource.count > cellIndex.row else { return }
         if cell.fullText?.length ?? 0 <= 600 {
             guard !expandedRowsIndex.contains(cellIndex.row) else { return }
+            
             expandedRowsIndex.append(cellIndex.row)
             tableView.reloadData()
+            if cell.bounds.height > self.tableView.frame.height {
+                self.tableView.scrollToRow(at: cellIndex, at: .top, animated: true)
+            } else {
+                self.tableView.scrollToRow(at: cellIndex, at: .none, animated: true)
+            }
         } else {
             newsShowDelegate?.showArticleViewController(with: dataSource[cellIndex.row].newsBody)
         }

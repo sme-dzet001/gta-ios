@@ -12,6 +12,8 @@ import WebKit
 class MainViewController: UIViewController {
 
     @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var menuButtonRightConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var containerView: UIView!
     
     private var usmLogoutWebView: WKWebView!
@@ -37,8 +39,20 @@ class MainViewController: UIViewController {
         configureMenuVC()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if menuButton.cornerRadius != menuButton.frame.height / 2 {
+            menuButton.cornerRadius = menuButton.frame.height / 2
+        }
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return tabBar?.selectedViewController?.preferredStatusBarStyle ?? .default
     }
     
     // MARK: - Navigation
@@ -86,11 +100,13 @@ class MainViewController: UIViewController {
     }
     
     private func configureMenuButton() {
-        menuButton.layer.shadowColor = UIColor.lightGray.cgColor
+        menuButton.layoutIfNeeded()
+        menuButtonRightConstraint.constant = UIDevice.current.hasNotch ? 24 : 34
+        menuButton.layer.shadowColor = UIColor.black.cgColor
         menuButton.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
         menuButton.layer.masksToBounds = false
         menuButton.layer.shadowRadius = 3
-        menuButton.layer.shadowOpacity = 0.5
+        menuButton.layer.shadowOpacity = 0.3
         menuButton.layer.cornerRadius = menuButton.frame.width / 2
     }
     

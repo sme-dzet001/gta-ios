@@ -123,7 +123,9 @@ class HelpDeskViewController: UIViewController {
     }
 
     private func setUpTableView() {
+        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.rowHeight = 80
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
         tableView.register(UINib(nibName: "HelpDeskCell", bundle: nil), forCellReuseIdentifier: "HelpDeskCell")
         tableView.register(UINib(nibName: "HelpDeskContactOptionCell", bundle: nil), forCellReuseIdentifier: "HelpDeskContactOptionCell")
         tableView.accessibilityIdentifier = "ServiceDeskTableView"
@@ -203,16 +205,18 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.0001
+    }
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let navigationButtonFooter = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
         let separatorFooter = UIView()
         separatorFooter.backgroundColor = UIColor(hex: 0xF7F7FA)
-        return section == 0 ? separatorFooter : navigationButtonFooter
+        return separatorFooter
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return section == 0 ? 10 : footerHeight
+        return 10
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

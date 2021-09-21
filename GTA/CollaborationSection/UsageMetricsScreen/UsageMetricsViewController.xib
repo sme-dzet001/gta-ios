@@ -60,7 +60,7 @@
                 <constraint firstItem="AS4-Kq-hCp" firstAttribute="top" secondItem="Fxr-Bq-3Gw" secondAttribute="bottom" constant="5" id="J7V-hv-xer"/>
                 <constraint firstItem="Fxr-Bq-3Gw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="24" id="Z7b-sO-IJ2"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="AS4-Kq-hCp" secondAttribute="trailing" id="u1O-OZ-IcR"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="AS4-Kq-hCp" secondAttribute="bottom" constant="-34" id="xow-wL-L9K"/>
+                <constraint firstAttribute="bottom" secondItem="AS4-Kq-hCp" secondAttribute="bottom" id="xow-wL-L9K"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="46.875"/>
         </view>
