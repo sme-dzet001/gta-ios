@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "Frame 1341.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "Frame 1341-2.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "Frame 1341-3.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "menu.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

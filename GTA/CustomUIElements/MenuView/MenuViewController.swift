@@ -197,8 +197,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
-        let button = UIButton(frame: CGRect(x: tableView.frame.size.width - 50, y: 2, width: 40, height: 40))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50))
+        let button = UIButton(frame: CGRect(x: tableView.frame.size.width - 50, y: 4, width: 40, height: 40))
         button.setImage(UIImage(named: "close_icon_bold"), for: .normal)
         button.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
         view.addSubview(button)
@@ -213,7 +213,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         guard section == 2 else { return 0 }
-        return 40
+        return 50
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

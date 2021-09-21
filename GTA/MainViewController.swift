@@ -37,6 +37,18 @@ class MainViewController: UIViewController {
         configureMenuVC()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if menuButton.cornerRadius != menuButton.frame.height / 2 {
+            menuButton.cornerRadius = menuButton.frame.height / 2
+        }
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return tabBar?.selectedViewController?.preferredStatusBarStyle ?? .default
     }
