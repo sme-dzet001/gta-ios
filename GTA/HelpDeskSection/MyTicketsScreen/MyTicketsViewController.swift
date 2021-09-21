@@ -19,9 +19,7 @@ class MyTicketsViewController: UIViewController {
     var dataProvider: HelpDeskDataProvider?
     private var isKeyboardShow: Bool = false
     
-    private var myTicketsData: [GSDTickets]? {
-        return generateDataSource()
-    }
+    private var myTicketsData: [GSDTickets]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +34,7 @@ class MyTicketsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel, isGSD: true)
+        self.myTicketsData = self.generateDataSource()
         getMyTickets()
     }
     
@@ -52,9 +51,13 @@ class MyTicketsViewController: UIViewController {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     self?.showNoDataErrorLabelIfNeeded()
-                    if dataWasChanged { self?.tableView.reloadData() }
+                    if dataWasChanged {
+                        self?.myTicketsData = self?.generateDataSource()
+                        self?.tableView.reloadData()
+                    }
                 } else {
                     if let myTickets = self?.myTicketsData, myTickets.isEmpty {
+                        self?.myTicketsData = self?.generateDataSource()
                         self?.tableView.reloadData()
                     }
                     self?.handleErrorLabel(error: error)
@@ -261,6 +264,7 @@ extension MyTicketsViewController: FilterSortingSelectionDelegate {
     func filterTypeDidSelect(_ selectedType: FilterType) {
         guard Preferences.ticketsFilterType != selectedType else { return }
         Preferences.ticketsFilterType = selectedType
+        myTicketsData = generateDataSource()
         tableView.reloadData()
         showNoDataErrorLabelIfNeeded()
     }
@@ -268,6 +272,7 @@ extension MyTicketsViewController: FilterSortingSelectionDelegate {
     func sortingTypeDidSelect(_ selectedType: SortType) {
         guard Preferences.ticketsSortingType != selectedType else { return }
         Preferences.ticketsSortingType = selectedType
+        myTicketsData = generateDataSource()
         tableView.reloadData()
         showNoDataErrorLabelIfNeeded()
     }

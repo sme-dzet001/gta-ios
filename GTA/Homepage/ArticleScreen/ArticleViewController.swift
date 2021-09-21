@@ -68,6 +68,7 @@ class ArticleViewController: UIViewController {
         super.viewWillAppear(animated)
         addBlurToView()
         addHeightObservation()
+        //addGesture()
         configureBlurViewPosition(isInitial: true)
         if view.window?.safeAreaInsets.top ?? 0 <= 24 {
             articleTextViewBottom?.constant = 15
@@ -186,10 +187,6 @@ extension ArticleViewController: PanModalPresentable {
         } else {
             return 0
         }
-    }
-    
-    var allowsTapToDismiss: Bool {
-        return false
     }
     
     var cornerRadius: CGFloat {

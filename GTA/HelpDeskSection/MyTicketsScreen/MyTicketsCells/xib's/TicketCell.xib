@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,8 +22,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="400" height="526"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ticket Subject" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLH-DT-8m0">
-                        <rect key="frame" x="24" y="24" width="108.5" height="19.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ticket Subject" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLH-DT-8m0">
+                        <rect key="frame" x="24" y="24" width="352" height="19.5"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -161,6 +161,7 @@
                     <constraint firstItem="jCB-oe-rYg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="TdV-AE-lS7"/>
                     <constraint firstItem="jCB-oe-rYg" firstAttribute="top" secondItem="Lfq-jI-ua7" secondAttribute="bottom" constant="15" id="UF0-OK-viA"/>
                     <constraint firstAttribute="trailing" secondItem="jCB-oe-rYg" secondAttribute="trailing" id="V2b-OS-es0"/>
+                    <constraint firstAttribute="trailing" secondItem="FLH-DT-8m0" secondAttribute="trailing" constant="24" id="e7b-5V-bif"/>
                     <constraint firstAttribute="trailing" secondItem="Lfq-jI-ua7" secondAttribute="trailing" constant="24" id="jO9-AH-C8W"/>
                     <constraint firstAttribute="bottom" secondItem="jCB-oe-rYg" secondAttribute="bottom" id="p81-dC-cUZ"/>
                     <constraint firstItem="FLH-DT-8m0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="sVt-i4-n6i"/>
