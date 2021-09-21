@@ -228,7 +228,9 @@ class HomepageViewController: UIViewController {
                 pagingVC?.selectedFont = filterTabFont
             }
             pagingVC?.menuItemSize = .selfSizing(estimatedWidth: 80, height: 40)
-            pagingVC?.menuInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+            //pagingVC?.menuInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+            pagingVC?.menuItemLabelSpacing = 15
+            pagingVC?.menuHorizontalAlignment = .center
         }
     }
     
