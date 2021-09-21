@@ -100,17 +100,6 @@ class MenuViewController: UIViewController {
         dismiss(animated: true, completion: nil)
         delegate?.closeButtonPressed()
     }
- 
-    private func openOfficeScreen() {
-        let selectedOffice = dataProvider.userOffice
-        let infoViewController = InfoViewController()
-        infoViewController.officeDataProvider = dataProvider
-        infoViewController.selectedOfficeData = selectedOffice
-        infoViewController.infoType = .office
-        infoViewController.selectedOfficeUIUpdateDelegate = self
-        infoViewController.title = selectedOffice?.officeName
-        self.navigationController?.pushViewController(infoViewController, animated: true)
-    }
 
     private func openOfficeSelectionModalScreen() {
         let officeLocation = OfficeLocationViewController()
