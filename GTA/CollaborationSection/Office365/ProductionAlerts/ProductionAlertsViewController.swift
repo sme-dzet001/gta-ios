@@ -9,6 +9,9 @@ import UIKit
 
 class ProductionAlertsViewController: UIViewController {
 
+    @IBOutlet weak var titleStackView: UIStackView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var blurView: UIView!
     
@@ -34,8 +37,9 @@ class ProductionAlertsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         getProductionAlerts()
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -45,9 +49,20 @@ class ProductionAlertsViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.updateActiveProductionAlertStatus), object: nil)
+    }
+    
+    @IBAction func backNavigationAction(_ sender: UIButton) {
+        dataProvider?.forceUpdateProductionAlerts = false
+        dataProvider?.activeProductionAlertId = nil
+        dataProvider?.activeProductionAlertAppName = nil
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc private func getProductionAlerts() {
@@ -81,18 +96,14 @@ class ProductionAlertsViewController: UIViewController {
     }
     
     private func setUpNavigationItem() {
-        navigationController?.navigationBar.barTintColor = UIColor.white
-        let tlabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        tlabel.text = "\(appName ?? "") Production Alerts"
-        tlabel.textColor = UIColor.black
-        tlabel.textAlignment = .center
-        tlabel.font = UIFont(name: "SFProDisplay-Medium", size: 20.0)
-        tlabel.backgroundColor = UIColor.clear
-        tlabel.minimumScaleFactor = 0.6
-        tlabel.adjustsFontSizeToFitWidth = true
-        self.navigationItem.titleView = tlabel
-        self.navigationItem.title = "Production Alerts"
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
+        titleLabel.text = appName ?? ""
+        subTitleLabel.text = "Production Alerts"
+        titleLabel.accessibilityIdentifier = "ProductionAlertsViewControllerTitle"
+        subTitleLabel.accessibilityIdentifier = "ProductionAlertsViewControllerSubtitle"
+        if UIDevice.current.iPhone7_8 || UIDevice.current.iPhone5_se {
+            titleStackView.spacing = 5
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func setUpTableView() {
@@ -143,14 +154,6 @@ class ProductionAlertsViewController: UIViewController {
         let alertData = dataProvider?.alertsData[appName ?? ""]?[row]
         readAlertAndUpdateTabCount(alert: alertData)
     }
-    
-    @objc private func backPressed() {
-        dataProvider?.forceUpdateProductionAlerts = false
-        dataProvider?.activeProductionAlertId = nil
-        dataProvider?.activeProductionAlertAppName = nil
-        self.navigationController?.popViewController(animated: true)
-    }
-
 }
 
 extension ProductionAlertsViewController: UITableViewDataSource, UITableViewDelegate {
