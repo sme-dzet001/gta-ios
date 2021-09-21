@@ -54,9 +54,7 @@ class NotificationSettingsViewController: UIViewController {
                 self?.isNotificationAuthorized = true
             }
             DispatchQueue.main.async {
-                //self?.delegate?.notificationStateUpdatedDelegate(state: self?.isEmergencySwitchOn ?? false, type: .emergencyOutageNotifications)
                 self?.tableView.reloadData()
-               // self?.delegate?.notificationStateUpdatedDelegate(isNotificationAuthorized: self?.isNotificationAuthorized ?? false)
             }
         }
     }
@@ -110,14 +108,6 @@ extension NotificationSettingsViewController: UITableViewDelegate, UITableViewDa
         }
         cell?.switchControl.switchStateChangedDelegate = self
         delegate = cell
-//        if indexPath.row == 0 {
-//            cell?.label.text = "Emergency Outage Notifications"
-//            cell?.switchControl.isOn = isNotificationAuthorized ? Preferences.allowEmergencyOutageNotifications : false
-//            cell?.switchControl.switchStateChangedDelegate = self
-//            delegate = cell
-//        } else {
-//            cell?.label.text = "Production Alerts Notifications"
-//        }
         return cell ?? UITableViewCell()
     }
     

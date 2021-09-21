@@ -12,11 +12,10 @@ class HelpDeskDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
-    private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     
     private(set) var quickHelpData = [QuickHelpRow]()
     private(set) var teamContactsData = [TeamContactsRow]()
-    private(set) var myTickets: [GSDTickets]?// = [GSDMyTicketsRow]()
+    private(set) var myTickets: [GSDTickets]?
     private var refreshTimer: Timer?
     
     var quickHelpDataIsEmpty: Bool {

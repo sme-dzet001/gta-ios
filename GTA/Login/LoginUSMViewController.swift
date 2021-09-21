@@ -162,7 +162,6 @@ extension LoginUSMViewController: WKNavigationDelegate {
             KeychainManager.deleteToken()
             KeychainManager.deleteTokenExpirationDate()
             CacheManager().clearCache()
-            ImageCacheManager().removeCachedData()
             UserDefaults.standard.set(false, forKey: "userLoggedIn")
             usmWebView.isHidden = false
             //loadUsmLogon()

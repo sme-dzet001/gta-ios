@@ -25,10 +25,7 @@ class HomepageTableViewController: UIViewController {
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
     var selectedFilterTab: FilterTabType = .all
-    
-    var dataSource: [HomepageCellData] = []
-    //private var lastUpdateDate: Date?
-     
+         
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
@@ -123,89 +120,6 @@ class HomepageTableViewController: UIViewController {
         }
     }
     
-    /*
-    private func loadSpecialAlertsData() {
-        let numberOfRows = tableView.numberOfRows(inSection: 1)
-        dataProvider?.getSpecialAlertsData { [weak self] (errorCode, error, isFromCache) in
-            DispatchQueue.main.async {
-                if error == nil && errorCode == 200 {
-                    self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                    let doubleCheck = numberOfRows == self?.dataProvider?.alertsData.count
-                    if let dataHasChanged = self?.tableView.dataHasChanged, dataHasChanged || !doubleCheck {
-                        self?.tableView.reloadData()
-                    } else {
-                        self?.tableView.reloadSections(IndexSet(integersIn: 2...2), with: .none)
-                    }
-                } else {
-                    //self?.displayError(errorMessage: "Error was happened!")
-                }
-            }
-        }
-    }
-    
-    private func loadOfficesData() {
-        var forceOpenOfficeSelectionScreen = false
-        officeLoadingError = nil
-        if tableView.dataHasChanged {
-            tableView.reloadData()
-        } else {
-            UIView.performWithoutAnimation {
-                tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
-            }
-        }
-        dataProvider?.getCurrentOffice(completion: { [weak self] (errorCode, error, isFromCache) in
-            if error == nil && errorCode == 200 {
-                self?.dataProvider?.getAllOfficesData { [weak self] (errorCode, error) in
-                    DispatchQueue.main.async {
-                        if error == nil && errorCode == 200 {
-                            self?.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                            if self?.dataProvider?.allOfficesDataIsEmpty == true {
-                                self?.officeLoadingError = "No data available"
-                                self?.lastUpdateDate = nil
-                            } else if self?.dataProvider?.userOffice == nil {
-                                self?.officeLoadingError = "Not Selected"
-                                self?.lastUpdateDate = nil
-                                forceOpenOfficeSelectionScreen = true
-                            } else {
-                                self?.officeLoadingError = nil
-                            }
-                            if self?.tableView.dataHasChanged == true {
-                                self?.tableView.reloadData()
-                            } else {
-                                UIView.performWithoutAnimation {
-                                    self?.tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
-                                }
-                            }
-                            if forceOpenOfficeSelectionScreen {
-                                self?.openOfficeSelectionModalScreen()
-                            }
-                        } else {
-                            self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                            if self?.tableView.dataHasChanged == true {
-                                self?.tableView.reloadData()
-                            } else {
-                                UIView.performWithoutAnimation {
-                                    self?.tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                    if self?.tableView.dataHasChanged == true {
-                        self?.tableView.reloadData()
-                    } else {
-                        UIView.performWithoutAnimation {
-                            self?.tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
-                        }
-                    }
-                }
-            }
-        }
-    }
-    */
     deinit {
     }
 
@@ -286,24 +200,6 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
         return cell ?? UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard let dataProvider = dataProvider else { return }
-//        var newsBody: String?
-//        switch selectedFilterTab {
-//        case .all:
-//            guard dataProvider.allNewsFeedData.count > indexPath.row else { return }
-//            newsBody = dataProvider.allNewsFeedData[indexPath.row].newsBody
-//        case .news:
-//            guard dataProvider.newsFeedData.count > indexPath.row else { return }
-//            newsBody = dataProvider.newsFeedData[indexPath.row].newsBody
-//        case .specialAlerts:
-//            guard dataProvider.specialAlertsData.count > indexPath.row else { return }
-//            newsBody = dataProvider.specialAlertsData[indexPath.row].newsBody
-//        }
-//        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-//        newsShowDelegate?.showArticleViewController(with: newsBody)
-    }
-    
     private func getDataSource() -> [NewsFeedRow] {
         switch selectedFilterTab {
         case .all:
@@ -335,27 +231,8 @@ extension HomepageTableViewController : TappedLabelDelegate {
         guard dataSource.count > cellIndex.row else { return }
         if cell.fullText?.length ?? 0 <= 600 {
             guard !expandedRowsIndex.contains(cellIndex.row) else { return }
-            
-            /*
-            if !tableView.dataHasChanged {
-                let oldOffset = self.tableView.contentOffset.y
-                UIView.setAnimationsEnabled(false)
-                self.tableView.beginUpdates()
-                let bodyDecoded = dataProvider?.formNewsBody(from: dataSource[cellIndex.row].newsBody)
-                //bodyDecoded?.setFontFace(font: UIFont(name: "SFProText-Light", size: 16)!)
-                //cell.bodyLabel.attributedText = bodyDecoded
-                cell.bodyLabel.numberOfLines = 0
-                //self.tableView.contentOffset.y = oldOffset
-                self.tableView.endUpdates()
-            } else {
-                tableView.reloadData()
-                return
-            }
-     */
             expandedRowsIndex.append(cellIndex.row)
-            //cell.bodyLabel.numberOfLines = 0
             tableView.reloadData()
-            //UIView.setAnimationsEnabled(true)
         } else {
             newsShowDelegate?.showArticleViewController(with: dataSource[cellIndex.row].newsBody)
         }
@@ -368,54 +245,6 @@ extension HomepageTableViewController : TappedLabelDelegate {
             displayError(errorMessage: "Something went wrong", title: nil)
         }
     }
-}
-
-/*extension HomepageTableViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDelegate {
-    func officeWasSelected() {
-        officeLoadingIsEnabled = false
-        updateUIWithSelectedOffice()
-        dataProvider?.getCurrentOffice(completion: { [weak self] (_, _, _) in
-            self?.officeLoadingIsEnabled = true
-        })
-    }
-    
-    func updateUIWithNewSelectedOffice() {
-        DispatchQueue.main.async {
-            self.officeLoadingIsEnabled = true
-            self.loadOfficesData()
-        }
-    }
-    
-    private func updateUIWithSelectedOffice() {
-        DispatchQueue.main.async {
-            self.officeLoadingError = nil
-            if self.tableView.dataHasChanged {
-                self.tableView.reloadData()
-            } else {
-                UIView.performWithoutAnimation {
-                    self.tableView.reloadSections(IndexSet(integersIn: 4...4), with: .none)
-                }
-            }
-        }
-    }
-}*/
-
-struct HomepageCellData {
-    var mainText: String?
-    var additionalText: String? = nil
-    var image: String? = nil
-    var infoType: infoType = .info
-    
-    var enabled: Bool {
-        return infoType != .returnToWork
-    }
-}
-
-enum infoType {
-    case office
-    case info
-    case deskFinder
-    case returnToWork
 }
 
 protocol SelectedOfficeUIUpdateDelegate: AnyObject {

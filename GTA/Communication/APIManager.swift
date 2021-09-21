@@ -28,8 +28,6 @@ class APIManager: NSObject, URLSessionDelegate {
         case validateToken
         case prolongSession
         case getSectionReport
-        case getGlobalNews(generationNumber: Int)
-        case getSpecialAlerts(generationNumber: Int)
         case getAllOffices(generationNumber: Int)
         case getCurrentPreferences
         case setCurrentPreferences
@@ -62,8 +60,6 @@ class APIManager: NSObject, URLSessionDelegate {
             switch self {
                 case .validateToken, .prolongSession, .getCurrentPreferences, .setCurrentPreferences: return "/v1/me"
                 case .getSectionReport: return "/v3/reports/"
-                case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)/detailed"
-                case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)/detailed"
                 case .getAllOffices(let generationNumber): return "/v3/widgets/all_offices/data/\(generationNumber)/detailed"
                 case .getHelpDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)/detailed"
                 case .getQuickHelpData(let generationNumber): return "/v3/widgets/gsd_quick_help/data/\(generationNumber)/detailed"
@@ -133,16 +129,6 @@ class APIManager: NSObject, URLSessionDelegate {
     }
     
     //MARK: - Homescreen methods
-    
-    func getGlobalNews(generationNumber: Int, completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
-    }
-    
-    func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
-    }
     
     func getGlobalAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]

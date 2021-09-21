@@ -260,16 +260,6 @@ extension CollaborationViewController: UITableViewDelegate, UITableViewDataSourc
     }
 }
 
-extension CollaborationViewController: AppSuiteIconDelegate {
-    func appSuiteIconChanged(with data: Data?, status: LoadingStatus) {
-        DispatchQueue.main.async {
-            if let _ = data {
-                self.headerTitleView.headerImageView.image = UIImage(data: data!)
-            }
-        }
-    }
-}
-
 struct CollaborationCellData: ContactsCellDataProtocol {
     var imageName: String?
     var cellTitle: String?

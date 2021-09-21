@@ -15,7 +15,6 @@ class GTTeamViewController: UIViewController {
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
     var dataProvider = GTTeamDataProvider()
-    //private var lastUpdateDate: Date?
     private var appContactsData: GTTeamResponse? {
         return dataProvider.GTTeamContactsData
     }
@@ -30,9 +29,7 @@ class GTTeamViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         addErrorLabel(errorLabel)
         navigationController?.navigationBar.barTintColor = UIColor.white
-       // if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
         loadContactsData()
-        //}
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,8 +53,6 @@ class GTTeamViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    //self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                    //self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
                     self?.tableView.alpha = 1
                     if dataWasChanged { self?.tableView.reloadData() }
