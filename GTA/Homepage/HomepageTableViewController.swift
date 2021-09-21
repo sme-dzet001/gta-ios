@@ -91,6 +91,7 @@ class HomepageTableViewController: UIViewController {
     private func setUpTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + 24, right: 0)
     }
     
     func dataLoadingStarted() {
@@ -224,16 +225,6 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
         return 1
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
-        return footer
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return footerHeight
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //return dataProvider?.newsData.count ?? 0
         return getDataSource().count
@@ -334,26 +325,13 @@ extension HomepageTableViewController : TappedLabelDelegate {
         if cell.fullText?.length ?? 0 <= 600 {
             guard !expandedRowsIndex.contains(cellIndex.row) else { return }
             
-            /*
-            if !tableView.dataHasChanged {
-                let oldOffset = self.tableView.contentOffset.y
-                UIView.setAnimationsEnabled(false)
-                self.tableView.beginUpdates()
-                let bodyDecoded = dataProvider?.formNewsBody(from: dataSource[cellIndex.row].newsBody)
-                //bodyDecoded?.setFontFace(font: UIFont(name: "SFProText-Light", size: 16)!)
-                //cell.bodyLabel.attributedText = bodyDecoded
-                cell.bodyLabel.numberOfLines = 0
-                //self.tableView.contentOffset.y = oldOffset
-                self.tableView.endUpdates()
-            } else {
-                tableView.reloadData()
-                return
-            }
-     */
             expandedRowsIndex.append(cellIndex.row)
-            //cell.bodyLabel.numberOfLines = 0
             tableView.reloadData()
-            //UIView.setAnimationsEnabled(true)
+            if cell.bounds.height > self.tableView.frame.height {
+                self.tableView.scrollToRow(at: cellIndex, at: .top, animated: true)
+            } else {
+                self.tableView.scrollToRow(at: cellIndex, at: .none, animated: true)
+            }
         } else {
             newsShowDelegate?.showArticleViewController(with: dataSource[cellIndex.row].newsBody)
         }

@@ -51,6 +51,7 @@ class TipsAndTricksViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + 24, right: 0)
         tableView.register(UINib(nibName: "TipsAndTricksTableViewCell", bundle: nil), forCellReuseIdentifier: "TipsAndTricksTableViewCell")
     }
     
@@ -212,6 +213,11 @@ extension TipsAndTricksViewController : TappedLabelDelegate {
         }
         if !expandedRowsIndex.contains(cellIndex.row) {
             expandedRowsIndex.append(cellIndex.row)
+        }
+        if cell.bounds.height > self.tableView.frame.height {
+            self.tableView.scrollToRow(at: cellIndex, at: .top, animated: true)
+        } else {
+            self.tableView.scrollToRow(at: cellIndex, at: .none, animated: true)
         }
         UIView.setAnimationsEnabled(true)
     }
