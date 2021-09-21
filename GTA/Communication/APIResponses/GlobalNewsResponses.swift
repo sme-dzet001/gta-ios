@@ -256,6 +256,22 @@ struct NewsFeedRow: Codable, Equatable {
         return valuesArr[index]?.stringValue
     }
     
+    var newsDate: Date? {
+        guard let dateString = postDate else { return nil }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = String.dateFormatWithoutTimeZone
+        var date: Date? = nil
+        if let formattedDate = dateFormatter.date(from: dateString) {
+            date = formattedDate
+        } else {
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            if let formattedDate = dateFormatter.date(from: dateString) {
+                date = formattedDate
+            }
+        }
+        return date
+    }
+    
     var byLine: String? {
         guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
         let byLine = valuesArr[index]?.stringValue?.replacingOccurrences(of: "\\n", with: "\n")
@@ -265,6 +281,11 @@ struct NewsFeedRow: Codable, Equatable {
     var newsBody: String? {
         guard let valuesArr = values, let index = indexes["body"], valuesArr.count > index else { return nil }
         return valuesArr[index]?.stringValue
+    }
+    
+    var isPostDateExist: Bool {
+        guard let _ = newsDate else { return false }
+        return true
     }
     
 }

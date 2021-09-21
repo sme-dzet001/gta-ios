@@ -22,12 +22,9 @@ class HomeDataProvider {
     private(set) var getNewsFeedInProgress: Bool = false
     
     var forceUpdateAlertDetails: Bool = false
-        
-    var allNewsFeedData: [NewsFeedRow] {
-        var allData = newsFeedData
-        allData.append(contentsOf: specialAlertsData)
-        return allData
-    }
+    
+    
+    var allNewsFeedData: [NewsFeedRow] = []
     
     func formImageURL(from imagePath: String?) -> String {
         guard let imagePath = imagePath else { return "" }
@@ -152,10 +149,14 @@ class HomeDataProvider {
                 response.data?.rows?[index]?.indexes = indexes
             }
         }
-        let rows = response.data?.rows?.filter({$0?.category == .news})
-        let dataWasChanged = (rows ?? []) != newsFeedData
-        newsFeedData = rows?.compactMap({$0}) ?? []
-        specialAlertsData = response.data?.rows?.filter({$0?.category == .specialAlerts}).compactMap({$0}) ?? []
+        let rows = response.data?.rows?.compactMap({$0})
+        var allNews = rows?.filter({$0.isPostDateExist == true}).sorted(by: {$1.newsDate! < $0.newsDate!}) ?? []
+        let newsWithoutDate = rows?.filter({$0.isPostDateExist == false}).sorted(by: {($1.articleId ?? 0) < ($0.articleId ?? 0)}) ?? []
+        allNews.append(contentsOf: newsWithoutDate)
+        let dataWasChanged = allNews != allNewsFeedData
+        allNewsFeedData = allNews
+        newsFeedData = allNews.filter({$0.category == .news})
+        specialAlertsData = allNews.filter({$0.category == .specialAlerts})
         return dataWasChanged
     }
     

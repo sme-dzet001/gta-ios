@@ -87,19 +87,20 @@ class BarChartCell: UITableViewCell, VerticalBarChartDataChangedDelegate {
     }
     
     private func setUpChartLegend(for count: Int, labels: [String]) {
-        var entrys = [LegendEntry]()
+        var entries = [LegendEntry]()
         let colors = getBarColors(for: count)
         for index in 0..<count where labels.count > index {
-            entrys.append(LegendEntry(label: labels[index], form: .circle, formSize: 12, formLineWidth: 0, formLineDashPhase: 0, formLineDashLengths: nil, formColor: colors[index]))
+            entries.append(LegendEntry(label: labels[index], form: .circle, formSize: 12, formLineWidth: 0, formLineDashPhase: 0, formLineDashLengths: nil, formColor: colors[index]))
         }
-        barChartView.legend.setCustom(entries: entrys)
+        barChartView.legend.setCustom(entries: entries)
         barChartView.legend.font = UIFont(name: "SFProText-Regular", size: 10) ?? barChartView.leftAxis.labelFont
         barChartView.legend.textColor = UIColor(hex: 0xAEAEB2)
         
         barChartView.legendRenderer.computeLegend(data: barChartView.data!)
         barChartView.legend.verticalAlignment = .bottom
         if count >= 4 {
-            barChartView.legend.xEntrySpace = ((barChartView.frame.width - barChartView.legend.neededWidth) / CGFloat(count)) - 12
+            //let space = ((barChartView.frame.width - barChartView.legend.neededWidth) / CGFloat(4)) - 12
+            barChartView.legend.xEntrySpace = 12//space > 0 ? space : barChartView.legend.xEntrySpace
         }
         barChartView.legend.yEntrySpace = 5
         barChartView.legend.orientation = .horizontal

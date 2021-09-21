@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MenuViewController" customModule="GTA" customModuleProvider="target">
             <connections>
-                <outlet property="closeButton" destination="vz5-Sk-Z7j" id="Sck-90-XG2"/>
+                <outlet property="backgroundView" destination="YEO-zn-33y" id="Fpn-Ex-oXZ"/>
                 <outlet property="tableView" destination="KKd-tE-8Ex" id="iEl-XM-E9z"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,37 +21,33 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YEO-zn-33y">
+                    <rect key="frame" x="16" y="316" width="382" height="530"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KKd-tE-8Ex">
-                    <rect key="frame" x="0.0" y="60" width="414" height="754"/>
-                </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vz5-Sk-Z7j">
-                    <rect key="frame" x="366" y="814" width="24" height="24"/>
+                    <rect key="frame" x="16" y="316" width="382" height="530"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="24" id="9sQ-bR-ewX"/>
-                        <constraint firstAttribute="width" constant="24" id="f0t-YK-Itm"/>
+                        <constraint firstAttribute="height" constant="530" id="v5R-l3-pfY"/>
                     </constraints>
-                    <color key="tintColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                    <state key="normal" image="xmark" catalog="system"/>
-                    <connections>
-                        <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="yRE-xy-dwe"/>
-                    </connections>
-                </button>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="vz5-Sk-Z7j" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-24" id="1zl-LM-Q8m"/>
-                <constraint firstItem="KKd-tE-8Ex" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="6Bk-op-y0S"/>
-                <constraint firstItem="KKd-tE-8Ex" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="OsP-tI-Xsz"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="KKd-tE-8Ex" secondAttribute="trailing" id="POR-XU-FeG"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vz5-Sk-Z7j" secondAttribute="trailing" constant="24" id="ffW-tG-cfd"/>
-                <constraint firstItem="vz5-Sk-Z7j" firstAttribute="top" secondItem="KKd-tE-8Ex" secondAttribute="bottom" id="hv5-gh-DwE"/>
+                <constraint firstItem="KKd-tE-8Ex" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="OsP-tI-Xsz"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="KKd-tE-8Ex" secondAttribute="trailing" constant="16" id="POR-XU-FeG"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="KKd-tE-8Ex" secondAttribute="bottom" constant="16" id="b8a-Rr-jbg"/>
+                <constraint firstItem="YEO-zn-33y" firstAttribute="leading" secondItem="KKd-tE-8Ex" secondAttribute="leading" id="dmu-2w-7g4"/>
+                <constraint firstItem="YEO-zn-33y" firstAttribute="top" secondItem="KKd-tE-8Ex" secondAttribute="top" id="gzM-H2-c89"/>
+                <constraint firstItem="YEO-zn-33y" firstAttribute="bottom" secondItem="KKd-tE-8Ex" secondAttribute="bottom" id="j0A-vH-WX3"/>
+                <constraint firstItem="YEO-zn-33y" firstAttribute="trailing" secondItem="KKd-tE-8Ex" secondAttribute="trailing" id="v3X-52-b8E"/>
             </constraints>
             <point key="canvasLocation" x="31.884057971014496" y="70.982142857142847"/>
         </view>
     </objects>
     <resources>
-        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

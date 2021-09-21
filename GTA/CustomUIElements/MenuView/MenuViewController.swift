@@ -20,8 +20,8 @@ class MenuViewController: UIViewController {
         var image: UIImage?
     }
     
-    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var backgroundView: UIView!
     
     let menuItems: [MenuItems] = [
         MenuItems(name: "Home", image: UIImage(named: "homepage_tab_icon")),
@@ -47,6 +47,8 @@ class MenuViewController: UIViewController {
     var globalAlertsBadges = 0
     var productionAlertBadges = 0
     
+    let redColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -56,6 +58,8 @@ class MenuViewController: UIViewController {
         
         tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: "MenuTableViewCell")
         tableView.register(UINib(nibName: "OfficeStatusCell", bundle: nil), forCellReuseIdentifier: "OfficeStatusCell")
+        tableView.cornerRadius = 25
+        backgroundView.cornerRadius = 25
         
         dataProvider.officeSelectionDelegate = self
         
@@ -70,18 +74,42 @@ class MenuViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
+        tableView.alpha = 0
+        UIView.animate(withDuration: 0.1, delay: 0.2, animations: {
+            self.tableView.alpha = 1
+        }, completion: nil)
     }
     
-    @IBAction func closeAction(_ sender: UIButton) {
-        delegate?.closeButtonPressed()
-        self.dismiss(animated: true, completion: nil)
+    override func viewWillDisappear(_ animated: Bool) {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.tableView.alpha = 0
+        }, completion: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        closeAction()
     }
     
     private func openGTTeamScreen() {
         let contactsViewController = GTTeamViewController()
         //contactsViewController.dataProvider = dataProvider
         self.navigationController?.pushViewController(contactsViewController, animated: true)
+    }
+    
+    @objc func closeAction() {
+        dismiss(animated: true, completion: nil)
+        delegate?.closeButtonPressed()
+    }
+ 
+    private func openOfficeScreen() {
+        let selectedOffice = dataProvider.userOffice
+        let infoViewController = InfoViewController()
+        infoViewController.officeDataProvider = dataProvider
+        infoViewController.selectedOfficeData = selectedOffice
+        infoViewController.infoType = .office
+        infoViewController.selectedOfficeUIUpdateDelegate = self
+        infoViewController.title = selectedOffice?.officeName
+        self.navigationController?.pushViewController(infoViewController, animated: true)
     }
 
     private func openOfficeSelectionModalScreen() {
@@ -161,6 +189,33 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 16))
+        view.backgroundColor = .white
+        
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50))
+        let button = UIButton(frame: CGRect(x: tableView.frame.size.width - 50, y: 4, width: 40, height: 40))
+        button.setImage(UIImage(named: "close_icon_bold"), for: .normal)
+        button.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
+        view.addSubview(button)
+        
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard section == 0 else { return 0 }
+        return 16
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard section == 2 else { return 0 }
+        return 50
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -187,8 +242,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             cell.menuImage.tintColor = .black
             
             guard let index = selectedTabIdx, index <= menuItems.count - 2, index == indexPath.row else { return cell }
-            cell.menuLabel.textColor = .red
-            cell.menuImage.tintColor = .red
+            cell.menuLabel.textColor = redColor
+            cell.menuImage.tintColor = redColor
             
             return cell
         case 1:
@@ -214,8 +269,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.officeLabel.textColor = .black
                 cell.officeStatusLabel.textColor = .black
                 guard let index = selectedTabIdx, index > menuItems.count - 2 else { return cell }
-                cell.officeLabel.textColor = .red
-                cell.officeStatusLabel.textColor = .red
+                cell.officeLabel.textColor = redColor
+                cell.officeStatusLabel.textColor = redColor
                 
                 return cell
             } else {
@@ -231,8 +286,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.officeLabel.textColor = .black
                     
                     guard let index = selectedTabIdx, index > menuItems.count - 2 else { return cell }
-                    cell.officeLabel.textColor = .red
-                    cell.officeStatusLabel.textColor = .red
+                    cell.officeLabel.textColor = redColor
+                    cell.officeStatusLabel.textColor = redColor
                     
                     return cell
                 } else {
@@ -247,9 +302,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             if indexPath.row == menuItems.count - 1 { //Logout
                 delegate?.logoutButtonPressed()
-                closeAction(closeButton)
+                closeAction()
                 return
             }
+            selectedTabIdx = indexPath.row
             delegate?.changeToIndex(index: indexPath.row)
         } else if indexPath.section == 2 {
             if let office = tabBar?.viewControllers?.first(where: { $0 is OfficeOverviewViewController }) as? OfficeOverviewViewController {
@@ -258,9 +314,11 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 office.selectedOfficeUIUpdateDelegate = self
                 office.title = dataProvider.userOffice?.officeName
             }
+            selectedTabIdx = menuItems.count - 1
             delegate?.changeToIndex(index: menuItems.count - 1)
         }
-        closeAction(closeButton)
+        tableView.reloadData()
+        closeAction()
     }
 }
 
