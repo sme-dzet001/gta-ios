@@ -22,8 +22,6 @@ class MainViewController: UIViewController {
     var tabBar: UITabBarController?
     var selectedTabIdx = 0 {
         didSet {
-            let controller = tabBar?.viewControllers?[selectedTabIdx] as? UINavigationController
-            controller?.popToRootViewController(animated: true)
             tabBar?.selectedIndex = selectedTabIdx
         }
     }
