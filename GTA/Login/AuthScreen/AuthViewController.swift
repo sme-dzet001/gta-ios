@@ -28,6 +28,7 @@ class AuthViewController: UIViewController {
     private var usmLogoutWebView: WKWebView!
     private var continueButtonY: CGFloat?
     weak var delegate: AuthentificationPassed?
+    weak var loginDelegate: LoginSaverDelegate?
     private var dataProvider: LoginDataProvider = LoginDataProvider()
     
     var isSignUp: Bool = KeychainManager.getPin() == nil
@@ -42,6 +43,10 @@ class AuthViewController: UIViewController {
             box.backwardDelegate = self
             box.accessibilityIdentifier = "PinCodeScreenPinBox\(index)"
         }
+
+        let loginVC = navigationController?.viewControllers.first(where: { $0 is LoginViewController }) as? LoginViewController
+        loginDelegate = loginVC
+        
         setAccessibilityIdentifiers()
     }
     
@@ -189,6 +194,7 @@ class AuthViewController: UIViewController {
     }
     
     private func authentificatePassed() {
+        loginDelegate?.saveLoginMail()
         delegate?.isAuthentificationPassed = true
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
@@ -374,4 +380,8 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
 protocol AuthentificationPassed: AnyObject {
     var isAuthentificationPassed: Bool? {get set}
     var isAuthentificationScreenShown: Bool? {get set}
+}
+
+protocol LoginSaverDelegate: AnyObject {
+    func saveLoginMail()
 }
