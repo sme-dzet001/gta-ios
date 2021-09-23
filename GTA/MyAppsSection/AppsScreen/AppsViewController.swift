@@ -50,6 +50,7 @@ class AppsViewController: UIViewController {
         //self.dataProvider.appImageDelegate = self
         setUpNavigationItem()
         setAccessibilityIdentifiers()
+        setUpUIElementsForNewVersion()
     }
     
     override func viewWillAppear(_ animated: Bool) {

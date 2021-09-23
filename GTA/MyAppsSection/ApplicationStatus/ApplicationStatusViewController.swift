@@ -69,6 +69,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         }
         tableView.reloadData()
         self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
+        setUpNavigationBarForStatusScreen()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -76,6 +77,11 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         if dataProvider?.activeProductionAlertId != nil {
             showProductionAlertScreen()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setUpUIElementsForNewVersion()
     }
     
     private func getMyApps() {
