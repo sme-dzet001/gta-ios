@@ -36,10 +36,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         //UIApplication.shared.applicationIconBadgeNumber = 0
-        UIView.animate(withDuration: 0.3) {
-            self.appSwitcherView?.alpha = 0
-        } completion: { (_) in
-            self.appSwitcherView?.removeFromSuperview()
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.appSwitcherView?.alpha = 0
+        } completion: { [weak self] _ in
+            self?.appSwitcherView?.removeFromSuperview()
         }
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
