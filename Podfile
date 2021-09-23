@@ -40,3 +40,14 @@ target 'GTATests' do
 target 'GTAUITests' do
    # Pods for testing
 end
+
+#Avoid Xcode warnings about deployment target in pod projects
+post_install do |postinstaller|
+  postinstaller.pods_project.targets.each do |target|
+    target.build_configurations.each do |buildconfig|
+      if buildconfig.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] < '13.0'
+        buildconfig.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      end
+    end
+  end
+end
