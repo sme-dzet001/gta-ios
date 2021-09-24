@@ -385,7 +385,7 @@ class HomeDataProvider {
     
     private func processProductionAlerts(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
         let queue = DispatchQueue(label: "HomeTabProcessProductionAlertsQueue", qos: .userInteractive)
-        queue.async {
+        queue.async(flags: .barrier) { [weak self] in
             var prodAlertsResponse: ProductionAlertsResponse?
             var retErr = error
             if let responseData = myAppsDataResponse {
@@ -401,9 +401,9 @@ class HomeDataProvider {
             if data.values.isEmpty {
                 retErr = ResponseError.noDataAvailable
             }
-            let indexes = self.getDataIndexes(columns: prodAlertsResponse?.meta?.widgetsDataSource?.params?.columns)
-            let count = self.getProductionAlertsCount(alertData: data, indexes: indexes)
-            completion?(errorCode, retErr, count)
+            let indexes = self?.getDataIndexes(columns: prodAlertsResponse?.meta?.widgetsDataSource?.params?.columns)
+            let count = self?.getProductionAlertsCount(alertData: data, indexes: indexes ?? [:])
+            completion?(errorCode, retErr, count ?? 0)
         }
         
     }
