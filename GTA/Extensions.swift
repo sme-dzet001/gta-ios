@@ -506,9 +506,9 @@ extension UIViewController {
             let appearance = UINavigationBarAppearance()
             appearance.configureWithOpaqueBackground()
             appearance.backgroundColor = UIColor(hex: 0xF7F7FA)
-            appearance.shadowImage = UIColor(hex: 0xF2F2F7).as1ptImage()
+            appearance.shadowColor = UIColor(hex: 0xF2F2F7)
             self.navigationController?.navigationBar.standardAppearance = appearance
-            self.navigationController?.navigationBar.scrollEdgeAppearance = self.navigationController?.navigationBar.standardAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
         }
     }
     
@@ -517,7 +517,7 @@ extension UIViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .white
-        appearance.shadowImage = UIColor(hex: 0xF2F2F7).as1ptImage()
+        appearance.shadowColor = UIColor(hex: 0xF2F2F7)
         self.navigationController?.navigationBar.standardAppearance = appearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
@@ -526,7 +526,7 @@ extension UIViewController {
     private func setUpTabBarForNewVersion() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(hex: 0xF7F7FA, alpha: 1)
+        appearance.backgroundColor = UIColor(hex: 0xF7F7FA)
         updateTabBarItemAppearance(appearance: appearance.compactInlineLayoutAppearance)
         updateTabBarItemAppearance(appearance: appearance.inlineLayoutAppearance)
         updateTabBarItemAppearance(appearance: appearance.stackedLayoutAppearance)
