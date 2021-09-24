@@ -495,6 +495,53 @@ extension UIViewController {
         return center
     }
     
+    func setUpUIElementsForNewVersion() {
+        if #available(iOS 15.0, *) {
+            setUpNavigationBarForNewVersion()
+        }
+    }
+    
+    func setUpNavigationBarForStatusScreen() {
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = UIColor(hex: 0xF7F7FA)
+            appearance.shadowImage = UIColor(hex: 0xF2F2F7).as1ptImage()
+            self.navigationController?.navigationBar.standardAppearance = appearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = self.navigationController?.navigationBar.standardAppearance
+        }
+    }
+    
+    @available(iOS 15.0, *)
+    private func setUpNavigationBarForNewVersion() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        appearance.shadowImage = UIColor(hex: 0xF2F2F7).as1ptImage()
+        self.navigationController?.navigationBar.standardAppearance = appearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    @available(iOS 15.0, *)
+    private func setUpTabBarForNewVersion() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(hex: 0xF7F7FA, alpha: 1)
+        updateTabBarItemAppearance(appearance: appearance.compactInlineLayoutAppearance)
+        updateTabBarItemAppearance(appearance: appearance.inlineLayoutAppearance)
+        updateTabBarItemAppearance(appearance: appearance.stackedLayoutAppearance)
+        self.tabBarController?.tabBar.isTranslucent = false
+        self.tabBarController?.tabBar.standardAppearance = appearance
+        self.tabBarController?.tabBar.scrollEdgeAppearance = appearance
+    }
+    
+    @available(iOS 15.0, *)
+    private func updateTabBarItemAppearance(appearance: UITabBarItemAppearance) {
+        let unselectedItemTintColor: UIColor = .black
+        appearance.normal.iconColor = unselectedItemTintColor
+        appearance.normal.titleTextAttributes = [.foregroundColor : UIColor.black]
+    }
+    
 }
 
 extension String {

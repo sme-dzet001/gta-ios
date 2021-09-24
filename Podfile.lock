@@ -39,7 +39,7 @@ PODS:
     - GoogleUtilities/Environment
   - GoogleUtilities/UserDefaults (7.5.2):
     - GoogleUtilities/Logger
-  - Kingfisher (6.3.1)
+  - Kingfisher (7.0.0)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -59,7 +59,7 @@ DEPENDENCIES:
   - Firebase/Crashlytics
   - Kingfisher
   - PanModal
-  - Parchment (~> 3.0)
+  - Parchment
   - RNCryptor
   - SDWebImage
 
@@ -92,7 +92,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: ede6fb72bb6337914e5888b399271259d0c4910c
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
-  Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
+  Kingfisher: 5efc54fec3980f92354898532e562cc17f31efb4
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   Parchment: 466a1cfb6151780db8acb4bbedc2d9c6bfa1e2ff
@@ -100,6 +100,6 @@ SPEC CHECKSUMS:
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
 
-PODFILE CHECKSUM: 792aa8ad5cdeaab1f10bf91f9c655eb1390216e8
+PODFILE CHECKSUM: 176a234c5290f98b66b5d8e36ab1e65e3d8d32ca
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.11.2

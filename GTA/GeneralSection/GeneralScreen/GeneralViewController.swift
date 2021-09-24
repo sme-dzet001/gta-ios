@@ -30,6 +30,7 @@ class GeneralViewController: UIViewController {
         let build = dictionary["CFBundleVersion"] as! String
         softwareVersionLabel.text = String(format: "Version \(version) (\(build))")
         setAccessibilityIdentifiers()
+        setUpUIElementsForNewVersion()
     }
     
     override func viewWillAppear(_ animated: Bool) {
