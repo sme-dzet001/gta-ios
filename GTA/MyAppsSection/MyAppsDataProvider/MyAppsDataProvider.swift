@@ -39,6 +39,9 @@ class MyAppsDataProvider {
     var forceUpdateProductionAlerts: Bool = false
     
     private(set) var alertsData: [String : [ProductionAlertsRow]] = [:]
+    
+    private var processProductionAlertsQueue = DispatchQueue(label: "processProductionAlertsQueue", qos: .userInteractive)
+    private var setProductAlertsQueue = DispatchQueue(label: "dictionary-writer-queue", qos: .userInteractive)
             
     // MARK: - Apps Status related methods
     
@@ -611,8 +614,7 @@ class MyAppsDataProvider {
     }
     
     private func processProductionAlerts(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "processProductionAlertsQueue", qos: .userInteractive)
-        queue.async(flags: .barrier) {[weak self] in
+        processProductionAlertsQueue.async(flags: .barrier) {[weak self] in
             var prodAlertsResponse: ProductionAlertsResponse?
             var retErr = error
             if let responseData = myAppsDataResponse {
@@ -641,12 +643,11 @@ class MyAppsDataProvider {
     }
     
     private func setProductAlerts(from response: ProductionAlertsResponse?, _ completion: @escaping ((_ alerts: [String : [ProductionAlertsRow]] ) -> Void)) {
-        let queue = DispatchQueue(label: "dictionary-writer-queue", qos: .userInteractive)
         let columns = response?.meta?.widgetsDataSource?.params?.columns ?? []
         let indexes = getDataIndexes(columns: columns)
         var alerts: [String : [ProductionAlertsRow]] = [:]
         var data = response?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
-        queue.async(flags: .barrier) {
+        setProductAlertsQueue.async(flags: .barrier) {
             for key in data.keys {
                 for (index, _) in (data[key]?.data?.rows ?? []).enumerated() {
                     data[key]?.data?.rows?[index]?.indexes = indexes
