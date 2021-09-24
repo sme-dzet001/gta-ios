@@ -148,6 +148,7 @@ struct GlobalAlertRow: Codable, Equatable {
         guard let valuesArr = values, let index = indexes["start date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.locale = Locale(identifier: "en_US_POSIX")
         dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatterPrint.date(from: dateString) ?? Date()
     }
@@ -156,6 +157,7 @@ struct GlobalAlertRow: Codable, Equatable {
         guard let valuesArr = values, let index = indexes["close date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.locale = Locale(identifier: "en_US_POSIX")
         dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatterPrint.date(from: dateString) ?? Date()
     }
@@ -260,6 +262,7 @@ struct NewsFeedRow: Codable, Equatable {
         guard let dateString = postDate else { return nil }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         var date: Date? = nil
         if let formattedDate = dateFormatter.date(from: dateString) {
             date = formattedDate

@@ -130,7 +130,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     //MARK: - Homescreen methods
     
-    func getGlobalAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getGlobalAlerts(generationNumber: Int, completion: ((_ alertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         makeRequest(endpoint: .getGlobalOutage(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
