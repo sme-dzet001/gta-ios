@@ -170,6 +170,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.iconImageView.image = resData.image
                 case .failure(let error):
                     if !error.isNotCurrentTask {
+                        cell.iconImageView.image = UIImage(named: "empty_app_icon")
                         cell.showFirstCharFrom(self.appTitle)
                     }
                 }
