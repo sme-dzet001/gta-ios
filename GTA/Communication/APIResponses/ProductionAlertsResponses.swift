@@ -89,6 +89,7 @@ struct ProductionAlertsRow: Codable, Equatable {
         guard let valuesArr = values, let index = indexes["start_date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.locale = Locale(identifier: "en_US_POSIX")
         dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatterPrint.date(from: dateString) ?? Date()
     }
@@ -96,6 +97,7 @@ struct ProductionAlertsRow: Codable, Equatable {
         guard let valuesArr = values, let index = indexes["closed_date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.locale = Locale(identifier: "en_US_POSIX")
         dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatterPrint.date(from: dateString) ?? Date()
     }

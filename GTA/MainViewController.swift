@@ -26,6 +26,10 @@ class MainViewController: UIViewController {
         }
     }
     var transition = CircularTransition()
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return tabBar?.selectedViewController?.preferredStatusBarStyle ?? .default
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,10 +53,6 @@ class MainViewController: UIViewController {
         if menuButton.cornerRadius != menuButton.frame.height / 2 {
             menuButton.cornerRadius = menuButton.frame.height / 2
         }
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return tabBar?.selectedViewController?.preferredStatusBarStyle ?? .default
     }
     
     // MARK: - Navigation

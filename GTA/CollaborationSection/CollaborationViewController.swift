@@ -37,6 +37,7 @@ class CollaborationViewController: UIViewController {
         setUpHardCodeData()
         setUpHeaderView()
         setAccessibilityIdentifiers()
+        setUpUIElementsForNewVersion()
     }
     
     override func viewWillAppear(_ animated: Bool) {

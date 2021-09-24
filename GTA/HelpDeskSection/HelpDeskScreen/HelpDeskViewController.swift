@@ -33,6 +33,7 @@ class HelpDeskViewController: UIViewController {
         setUpTableView()
         //setHelpDeskCellsData()
         navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+        setUpUIElementsForNewVersion()
     }
     
     override func viewWillAppear(_ animated: Bool) {
