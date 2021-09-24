@@ -108,6 +108,7 @@ class HomeDataProvider {
             }
             apiManager.getNewsFeedData(generationNumber: generationNumber) { [weak self] (response, errorCode, error) in
                 if let _ = error {
+                    self?.getNewsFeedInProgress = false
                     completion?(false, true, 0, ResponseError.generate(error: error))
                     return
                 }
