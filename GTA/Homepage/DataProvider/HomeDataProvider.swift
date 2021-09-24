@@ -20,9 +20,9 @@ class HomeDataProvider {
     private(set) var newsFeedData: [NewsFeedRow] = []
     private(set) var specialAlertsData: [NewsFeedRow] = []
     private(set) var getNewsFeedInProgress: Bool = false
+    private var processProductionAlertsQueue = DispatchQueue(label: "HomeTabProcessProductionAlertsQueue", qos: .userInteractive)
     
     var forceUpdateAlertDetails: Bool = false
-    
     
     var allNewsFeedData: [NewsFeedRow] = []
     
@@ -384,8 +384,7 @@ class HomeDataProvider {
     }
     
     private func processProductionAlerts(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "HomeTabProcessProductionAlertsQueue", qos: .userInteractive)
-        queue.async(flags: .barrier) { [weak self] in
+        processProductionAlertsQueue.async(flags: .barrier) { [weak self] in
             var prodAlertsResponse: ProductionAlertsResponse?
             var retErr = error
             if let responseData = myAppsDataResponse {
