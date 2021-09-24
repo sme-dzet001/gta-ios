@@ -59,6 +59,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         getProductionAlerts()
         getMyApps()
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
