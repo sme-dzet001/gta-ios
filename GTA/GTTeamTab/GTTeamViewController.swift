@@ -32,11 +32,6 @@ class GTTeamViewController: UIViewController {
         loadContactsData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
     private func setUpTableView() {
         let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.delegate = self
