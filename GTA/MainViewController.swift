@@ -150,7 +150,7 @@ extension MainViewController: TabBarChangeIndexDelegate {
     }
     
     func changeToIndex(index: Int) {
-        tabBar?.selectedIndex = menuViewController.selectedTabIdx ?? 0
+        tabBar?.selectedIndex = index
     }
 }
 
