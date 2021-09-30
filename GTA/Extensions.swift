@@ -240,6 +240,12 @@ extension UINavigationController {
 }
 
 extension UITableView {
+    
+    var menuButtonContentInset: UIEdgeInsets {
+        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
+        return UIEdgeInsets(top: 0, left: 0, bottom: (self.frame.width * 0.133) + additionalSeparator, right: 0)
+    }
+    
     var dataHasChanged: Bool {
         guard let dataSource = dataSource else { return false }
         let sections = dataSource.numberOfSections?(in: self) ?? 0

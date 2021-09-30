@@ -111,7 +111,6 @@ struct AppsDataSource {
     var sectionName: String?
     var description: String?
     var cellData: [AppInfo]
-    var metricsData: MetricsData? = nil
 }
 
 enum SystemStatus {

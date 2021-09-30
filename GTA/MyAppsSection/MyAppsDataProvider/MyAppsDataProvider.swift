@@ -825,8 +825,8 @@ class MyAppsDataProvider {
         guard let allAppsInfo = allAppsData?.myAppsStatus else { return nil }
         guard !allAppsInfo.isEmpty else { return nil }
         var response = allAppsInfo
-        var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
-        var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
+        var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [])
+        var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [])
         for (index, info) in allAppsData!.myAppsStatus.enumerated() {
             let appNameIndex = myAppsStatusData?.indexes["app name"] ?? 0
             response[index].appImage = formImageURL(from: response[index].appImage)
