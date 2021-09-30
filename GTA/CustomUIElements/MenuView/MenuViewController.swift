@@ -34,7 +34,12 @@ class MenuViewController: UIViewController {
         MenuItems(name: "Logout", image: UIImage(named: "logout")),
     ]
     var dataProvider = MenuViewControllerDataProvider()
-    var selectedTabIdx: Int?
+    var selectedTabIdx: Int? {
+        didSet {
+            guard oldValue != selectedTabIdx else { return }
+            tableView.reloadData()
+        }
+    }
     weak var delegate: TabBarChangeIndexDelegate?
     weak var tabBar: UITabBarController?
     
