@@ -42,8 +42,16 @@ class MenuViewController: UIViewController {
     var officeLoadingIsEnabled = true
     private var lastUpdateDate: Date?
     
-    var globalAlertsBadges = 0
-    var productionAlertBadges = 0
+    var globalAlertsBadges = 0 {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    var productionAlertBadges = 0 {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     let redColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
     
