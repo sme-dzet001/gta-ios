@@ -150,7 +150,17 @@ extension MainViewController: TabBarChangeIndexDelegate {
     }
     
     func changeToIndex(index: Int) {
+        let isSameIndex = tabBar?.selectedIndex == index
         tabBar?.selectedIndex = index
+        guard isSameIndex else { return }
+        if index == 4 {
+            let generalVC = tabBar?.moreNavigationController.viewControllers.first(where: {$0 is GeneralViewController})
+            guard let _ = generalVC else { return }
+            tabBar?.moreNavigationController.popToViewController(generalVC!, animated: true)
+            return
+        }
+        let controller = tabBar?.viewControllers?[index] as? UINavigationController
+        controller?.popToRootViewController(animated: true)
     }
 }
 

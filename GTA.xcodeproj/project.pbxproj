@@ -2108,7 +2108,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		540537E726E7AA0900388BF3 /* MenuView */ = {
+		540537E726E7AA0900388BF3 /* MenuViewController */ = {
 			isa = PBXGroup;
 			children = (
 				5405381226E8C65600388BF3 /* MenuViewControllerDataProvider.swift */,
@@ -2116,7 +2116,7 @@
 				5405380926E8BADC00388BF3 /* xib */,
 				540537F926E7C1BB00388BF3 /* MenuTableViewCell.swift */,
 			);
-			path = MenuView;
+			path = MenuViewController;
 			sourceTree = "<group>";
 		};
 		5405380926E8BADC00388BF3 /* xib */ = {
@@ -2251,6 +2251,7 @@
 				542905972705EBBE00AEE784 /* CustomTabBarController.swift */,
 				5472472126F20F1A000EE3F3 /* CircleTransition.swift */,
 				9F8AEAE2255EB86000B62072 /* CustomUIElements */,
+				540537E726E7AA0900388BF3 /* MenuViewController */,
 				65D2905425682E45001B658A /* Login */,
 				6583BC8A2559AD4300C80673 /* Homepage */,
 				C91F70962562FECD002F17B1 /* HelpDeskSection */,
@@ -2955,7 +2956,6 @@
 		9F8AEAE2255EB86000B62072 /* CustomUIElements */ = {
 			isa = PBXGroup;
 			children = (
-				540537E726E7AA0900388BF3 /* MenuView */,
 				9F2C82702657F1E1004407B4 /* CustomUISwitch.swift */,
 				9F895B7A255D8810004489C6 /* CustomTextField.swift */,
 				9F8AEAE3255EB88500B62072 /* CustomTextView.swift */,
