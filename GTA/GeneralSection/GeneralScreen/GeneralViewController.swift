@@ -32,8 +32,8 @@ class GeneralViewController: UIViewController {
         softwareVersionLabel.text = String(format: "Version \(version) (\(build))")
         setAccessibilityIdentifiers()
         setUpUIElementsForNewVersion()
-        let bc = softwareVersionBottomConstraint.constant + ((view.frame.width * 0.133) / 2) - (softwareVersionLabel.frame.height / 2)
-        softwareVersionBottomConstraint.constant = bc
+        let bottomConstraint = softwareVersionBottomConstraint.constant + ((view.frame.width * 0.133) / 2) - (softwareVersionLabel.frame.height / 2)
+        softwareVersionBottomConstraint.constant = bottomConstraint
     }
     
     override func viewWillAppear(_ animated: Bool) {
