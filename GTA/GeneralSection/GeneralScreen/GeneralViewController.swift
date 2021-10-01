@@ -12,6 +12,7 @@ class GeneralViewController: UIViewController {
     
     private var usmLogoutWebView: WKWebView!
     @IBOutlet weak var softwareVersionLabel: UILabel!
+    @IBOutlet weak var softwareVersionBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     
     var dataProvider: GeneralDataProvider = GeneralDataProvider()
@@ -31,6 +32,8 @@ class GeneralViewController: UIViewController {
         softwareVersionLabel.text = String(format: "Version \(version) (\(build))")
         setAccessibilityIdentifiers()
         setUpUIElementsForNewVersion()
+        let bc = softwareVersionBottomConstraint.constant + ((view.frame.width * 0.133) / 2) - (softwareVersionLabel.frame.height / 2)
+        softwareVersionBottomConstraint.constant = bc
     }
     
     override func viewWillAppear(_ animated: Bool) {

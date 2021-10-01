@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -43,13 +43,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2n-JI-FYY">
-                                <rect key="frame" x="182.5" y="819" width="49.5" height="17"/>
+                                <rect key="frame" x="182.5" y="845" width="49.5" height="17"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PXs-FG-dLY">
-                                <rect key="frame" x="0.0" y="88" width="414" height="731"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="757"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -58,7 +58,7 @@
                         <constraints>
                             <constraint firstItem="z2n-JI-FYY" firstAttribute="top" secondItem="PXs-FG-dLY" secondAttribute="bottom" id="4ui-DU-wgU"/>
                             <constraint firstItem="z2n-JI-FYY" firstAttribute="centerX" secondItem="cfr-DX-9oL" secondAttribute="centerX" id="7fE-bu-Hgf"/>
-                            <constraint firstItem="cfr-DX-9oL" firstAttribute="bottom" secondItem="z2n-JI-FYY" secondAttribute="bottom" constant="26" id="cYw-g2-KHc"/>
+                            <constraint firstAttribute="bottom" secondItem="z2n-JI-FYY" secondAttribute="bottom" constant="34" id="cYw-g2-KHc"/>
                             <constraint firstItem="cfr-DX-9oL" firstAttribute="trailing" secondItem="PXs-FG-dLY" secondAttribute="trailing" id="dYD-GI-p6C"/>
                             <constraint firstItem="PXs-FG-dLY" firstAttribute="top" secondItem="cfr-DX-9oL" secondAttribute="top" id="mRk-8C-i6X"/>
                             <constraint firstItem="PXs-FG-dLY" firstAttribute="leading" secondItem="cfr-DX-9oL" secondAttribute="leading" id="uAK-rt-yGu"/>
@@ -67,6 +67,7 @@
                     <tabBarItem key="tabBarItem" title="General" image="general_tab_icon" id="Qxm-Lv-eWB"/>
                     <navigationItem key="navigationItem" title="General" id="fBw-xW-eUd"/>
                     <connections>
+                        <outlet property="softwareVersionBottomConstraint" destination="cYw-g2-KHc" id="7ZV-OF-cH1"/>
                         <outlet property="softwareVersionLabel" destination="z2n-JI-FYY" id="kij-dP-n04"/>
                         <outlet property="tableView" destination="PXs-FG-dLY" id="AzL-E5-9Zs"/>
                     </connections>
