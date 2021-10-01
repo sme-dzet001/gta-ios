@@ -141,7 +141,7 @@ class GlobalAlertViewController: UIViewController {
         if let start = alertData?.notificationDate {
             dataSource.append(["Notification Date" : start])
         }
-        if let duration = alertData?.estimatedDuration, alertData?.status != .closed {
+        if let duration = alertData?.estimatedDuration {
             dataSource.append(["Estimated Duration" : duration])
         }
         if let end = alertData?.endDate, alertData?.status == .closed {
