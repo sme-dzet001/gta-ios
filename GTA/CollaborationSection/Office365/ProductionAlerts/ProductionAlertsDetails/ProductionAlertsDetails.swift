@@ -179,7 +179,7 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
             return createLoadingCell(withBottomSeparator: false)
         }
         guard dataSource.count > indexPath.row, let key = dataSource[indexPath.row].keys.first else {
-            guard let error = lastError else { return createErrorCell(with: "Oops, something went wrong") }
+            guard let error = lastError else { return createErrorCell(with: "No data available") }
             let errorText = ErrorHandler.getErrorMessage(for: error)
             return createErrorCell(with: errorText)
         }
