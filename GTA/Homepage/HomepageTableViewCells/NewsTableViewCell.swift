@@ -23,7 +23,7 @@ class NewsTableViewCell: UITableViewCell {
         self.bodyLabel.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(showMoreDidTapped(gesture:)))
         tap.cancelsTouchesInView = false
-        self.bodyLabel.addGestureRecognizer(tap)
+        self.addGestureRecognizer(tap)
     }
     
     @objc private func showMoreDidTapped(gesture: UITapGestureRecognizer) {
