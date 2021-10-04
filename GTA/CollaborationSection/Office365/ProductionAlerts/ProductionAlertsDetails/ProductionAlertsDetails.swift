@@ -180,8 +180,7 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
         }
         guard dataSource.count > indexPath.row, let key = dataSource[indexPath.row].keys.first else {
             guard let error = lastError else { return createErrorCell(with: "No data available") }
-            let errorText = ErrorHandler.getErrorMessage(for: error)
-            return createErrorCell(with: errorText)
+            return createErrorCell(with: error.localizedDescription)
         }
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AlertDetailsHeaderCell", for: indexPath) as? AlertDetailsHeaderCell
