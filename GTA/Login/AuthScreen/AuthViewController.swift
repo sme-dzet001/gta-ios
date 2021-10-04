@@ -138,10 +138,13 @@ class AuthViewController: UIViewController {
         let context = LAContext()
         var error: NSError?
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Authenticate with Biometrics"
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) {
-                [weak self] success, authenticationError in
-                self?.checkAuthentification(isSuccess: success, error: authenticationError as NSError?)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                let reason = "Authenticate with Biometrics"
+                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
+                    DispatchQueue.main.async {
+                        self?.checkAuthentification(isSuccess: success, error: authenticationError as NSError?)
+                    }
+                }
             }
         }
     }
