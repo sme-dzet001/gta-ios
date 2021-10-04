@@ -61,6 +61,8 @@ class MainViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedTabBar" {
             tabBar = segue.destination as? UITabBarController
+            tabBar?.setSelectedTabAccordingToPendingAlert()
+            tabBar?.hidesBottomBarWhenPushed = true
         }
     }
     
