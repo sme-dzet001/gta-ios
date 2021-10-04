@@ -16,7 +16,7 @@ class ProductionAlertsDetails: UIViewController {
     var dataProvider: MyAppsDataProvider?
     
     var alertData: ProductionAlertsRow?
-    private var lastError: NSError?
+    private var lastError: ResponseError?
     private var dataSource: [[String : String]] = []
     private var heightObserver: NSKeyValueObservation?
     
@@ -57,7 +57,7 @@ class ProductionAlertsDetails: UIViewController {
                                 NotificationCenter.default.post(name: Notification.Name(NotificationsNames.updateActiveProductionAlertStatus), object: nil, userInfo: ["alertId" : activeProductionAlertId])
                             }
                         }
-                        self?.lastError = error as NSError?
+                        self?.lastError = error as? ResponseError
                         self?.dataProvider?.forceUpdateProductionAlerts = false
                         self?.dataProvider?.activeProductionAlertId = nil
                         self?.dataProvider?.activeProductionAlertAppName = nil
