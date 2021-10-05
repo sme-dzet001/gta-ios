@@ -210,6 +210,7 @@ class HomepageViewController: UIViewController {
             }
             
             for newsTab in newsTabs {
+                newsTab.loadViewIfNeeded()
                 newsTab.dataProvider = dataProvider
                 newsTab.newsShowDelegate = self
             }
