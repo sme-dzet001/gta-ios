@@ -40,28 +40,12 @@ class UsageMetricsViewController: UIViewController {
         return dataProvider?.chartsPosition ?? []
     }
     
-    private lazy var activeUsersVC: ActiveUsersViewController = {
-        let activeUsersVC = ActiveUsersViewController(nibName: "ActiveUsersViewController", bundle: nil)
-        activeUsersVC.chartData = dataProvider?.activeUsersLineChartData
-        activeUsersDataChangedDelegate = activeUsersVC
-        return activeUsersVC
-    }()
-    
-    private lazy var teamsByFunctionsVC: TeamsByFunctionsViewController = {
-        let teamsByFunctionsVC = TeamsByFunctionsViewController(nibName: "TeamsByFunctionsViewController", bundle: nil)
-        teamsByFunctionsVC.chartsData = dataProvider?.teamsByFunctionsLineChartData
-        teamsByFunctionsDataChangedDelegate = teamsByFunctionsVC
-        return teamsByFunctionsVC
-    }()
-    
-    private lazy var teamChatUsersVC: TeamChatUsersViewController = {
-        let teamChatUsersVC = TeamChatUsersViewController()
-        teamChatUsersVC.chartData = dataProvider?.horizontalChartData
-        horizontallBarChartDataChangedDelegate = teamChatUsersVC
-        return teamChatUsersVC
-    }()
+    var activeUsersVC: ActiveUsersViewController?
+    var teamsByFunctionsVC: TeamsByFunctionsViewController?
+    var teamChatUsersVC: TeamChatUsersViewController?
     
     private lazy var activeUsersChartCell: UITableViewCell = {
+        guard let activeUsersVC = activeUsersVC else { return UITableViewCell() }
         let cell = UITableViewCell()
         activeUsersVC.view.translatesAutoresizingMaskIntoConstraints = false
         cell.contentView.addSubview(activeUsersVC.view)
@@ -76,6 +60,7 @@ class UsageMetricsViewController: UIViewController {
     }()
     
     private lazy var teamsByFunctionsChartCell: UITableViewCell = {
+        guard let teamsByFunctionsVC = teamsByFunctionsVC else { return UITableViewCell() }
         let cell = UITableViewCell()
         teamsByFunctionsVC.view.translatesAutoresizingMaskIntoConstraints = false
         cell.contentView.addSubview(teamsByFunctionsVC.view)
@@ -90,6 +75,7 @@ class UsageMetricsViewController: UIViewController {
     }()
     
     private lazy var teamChatUsersChartCell: UITableViewCell = {
+        guard let teamChatUsersVC = teamChatUsersVC else { return UITableViewCell() }
         let cell = UITableViewCell()
         teamChatUsersVC.view.translatesAutoresizingMaskIntoConstraints = false
         cell.contentView.addSubview(teamChatUsersVC.view)
@@ -112,6 +98,26 @@ class UsageMetricsViewController: UIViewController {
         
     private var chartDimensionsDict: [Int : ChartDimensions] = [:]
 
+    private func installMetricsVC() {
+        let activeUsers = ActiveUsersViewController(nibName: "ActiveUsersViewController", bundle: nil)
+        activeUsers.chartData = dataProvider?.activeUsersLineChartData
+        activeUsersVC = activeUsers
+        activeUsersVC?.loadViewIfNeeded()
+        activeUsersDataChangedDelegate = activeUsersVC
+        
+        let teamsByFunctions = TeamsByFunctionsViewController(nibName: "TeamsByFunctionsViewController", bundle: nil)
+        teamsByFunctions.chartsData = dataProvider?.teamsByFunctionsLineChartData
+        teamsByFunctionsVC = teamsByFunctions
+        teamsByFunctionsVC?.loadViewIfNeeded()
+        teamsByFunctionsDataChangedDelegate = teamsByFunctionsVC
+        
+        let teamChatUsers = TeamChatUsersViewController()
+        teamChatUsers.chartData = dataProvider?.horizontalChartData
+        teamChatUsersVC = teamChatUsers
+        teamChatUsersVC?.loadViewIfNeeded()
+        horizontallBarChartDataChangedDelegate = teamChatUsersVC
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
@@ -125,6 +131,7 @@ class UsageMetricsViewController: UIViewController {
         tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
         setUpTextField()
         setUpNavigationItem()
+        installMetricsVC()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -199,6 +206,7 @@ class UsageMetricsViewController: UIViewController {
             DispatchQueue.main.async {
                 if error == nil {
                     self?.stopAnimation()
+                    self?.updateChartsData()
                     self?.reloadData()
                 } else if error != nil, !isFromCache {
                     self?.stopAnimation(with: error)
@@ -287,9 +295,9 @@ class UsageMetricsViewController: UIViewController {
     }
     
     deinit {
-        activeUsersVC.removeFromParent()
-        teamChatUsersVC.removeFromParent()
-        teamsByFunctionsVC.removeFromParent()
+        activeUsersVC?.removeFromParent()
+        teamChatUsersVC?.removeFromParent()
+        teamsByFunctionsVC?.removeFromParent()
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillHideNotification, object: nil)
