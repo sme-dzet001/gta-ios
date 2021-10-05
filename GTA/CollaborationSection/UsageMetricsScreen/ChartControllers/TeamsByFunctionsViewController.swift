@@ -100,6 +100,7 @@ extension TeamsByFunctionsViewController: ChartDimensions {
 
 extension TeamsByFunctionsViewController: TeamsByFunctionsDataChangedDelegate {
     func teamsByFunctionsDataChanged(newData: TeamsByFunctionsLineChartData?) {
+        guard chartsData != newData else { return }
         chartsData = newData
         updateData()
     }

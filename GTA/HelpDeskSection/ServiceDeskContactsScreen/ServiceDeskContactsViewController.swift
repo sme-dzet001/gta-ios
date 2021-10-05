@@ -49,9 +49,8 @@ class ServiceDeskContactsViewController: UIViewController {
     }
     
     private func setUpTableView() {
-        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
+        tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "ServiceDeskContactCell", bundle: nil), forCellReuseIdentifier: "ServiceDeskContactCell")
         tableView.accessibilityIdentifier = "ServiceDeskContactsTableView"
     }

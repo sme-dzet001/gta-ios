@@ -13,13 +13,11 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     
     private var dataSource: AboutDataSource?
     var appTitle: String?
-    //var dataProvider: MyAppsDataProvider?
     var details: AppDetailsData?
     var detailsDataResponseError: Error?
     var imageDataResponseError: Error?
     var appImageUrl: String = ""
     var isCollaborationDetails: Bool = false
-    //var collaborationDataProvider: CollaborationDataProvider?
     var collaborationDetails: CollaborationAppDetailsRow?
     private var appImageData: Data?
     private var errorLabel: UILabel = UILabel()
@@ -34,7 +32,6 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel)
-        //self.errorLabel.isHidden = detailsDataResponseError == nil
         if let _ = self.details {
             self.errorLabel.isHidden = true
         } else {
@@ -42,18 +39,12 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         }
         self.errorLabel.text = (detailsDataResponseError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
         configureDataSource()
-//        if isCollaborationDetails {
-//            getCollaborationAboutImageData()
-//        } else {
-//            getAppAboutImageData()
-//        }
         navigationController?.navigationBar.barTintColor = UIColor.white
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //detailsDataResponseError = nil
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
@@ -80,6 +71,7 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
     
     private func setUpTableView() {
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "AboutInfoCell", bundle: nil), forCellReuseIdentifier: "AboutInfoCell")
         tableView.register(UINib(nibName: "AboutSupportCell", bundle: nil), forCellReuseIdentifier: "AboutSupportCell")
         tableView.register(UINib(nibName: "AboutSupportPolicyCell", bundle: nil), forCellReuseIdentifier: "AboutSupportPolicyCell")
@@ -104,7 +96,6 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
             } else {
                 self.errorLabel.isHidden = error == nil
             }
-            //self.errorLabel.isHidden = error == nil && self.details != nil
             self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
             self.tableView.reloadData()
         }
@@ -118,12 +109,6 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         if let decription = !isCollaborationDetails ? details?.appDescription : collaborationDetails?.description {
             supportData.append(SupportData(title: decription, value: decription))
         }
-//        if let openAppUrl = collaborationDetails?.openAppUrl, let _ = URL(string: openAppUrl) {
-//            supportData.append(SupportData(title: "Open App", value: openAppUrl))
-//        }
-//        if let productPage = collaborationDetails?.productPageUrl, let _ = URL(string: productPage) {
-//            supportData.append(SupportData(title: "Product Page", value: productPage))
-//        }
         if let wikiUrlString = details?.appWikiUrl, let _ = URL(string: wikiUrlString) {
             supportData.append(SupportData(title: "Wiki URL", value: wikiUrlString))
         }
@@ -181,6 +166,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.iconImageView.image = resData.image
                 case .failure(let error):
                     if !error.isNotCurrentTask {
+                        cell.iconImageView.image = UIImage(named: "empty_app_icon")
                         cell.showFirstCharFrom(self.appTitle)
                     }
                 }

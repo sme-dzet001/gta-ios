@@ -89,9 +89,8 @@ class AppContactsViewController: UIViewController {
     }
     
     private func setUpTableView() {
-        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
+        tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "AppContactCell", bundle: nil), forCellReuseIdentifier: "AppContactCell")
     }
     
@@ -106,7 +105,6 @@ class AppContactsViewController: UIViewController {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                    //self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
                     self?.tableView.alpha = 1
                     if dataWasChanged { self?.tableView.reloadData() }
