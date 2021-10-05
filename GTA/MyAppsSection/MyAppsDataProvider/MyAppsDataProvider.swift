@@ -740,6 +740,12 @@ class MyAppsDataProvider {
     private func processAppProductionAlerts(appName: String, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let queue = DispatchQueue(label: "processAppProductionAlertsQueue", qos: .userInteractive)
         queue.async {[weak self] in
+            if let error = error {
+                let errorMessage = ResponseError.generate(error: error)
+                completion?(errorCode, errorMessage)
+                return
+            }
+            
             var prodAlertsResponse: ProductionAlertsResponse?
             var retErr = error
             if let responseData = myAppsDataResponse {
