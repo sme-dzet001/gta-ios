@@ -156,6 +156,8 @@ class MenuViewControllerDataProvider {
         }
     }
     
+    
+    
     private func processGetCurrentOffice(_ currentOfficeResponse: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool, _ completion: ((_ errorCode: Int, _ error: Error?, _ fromCache: Bool) -> Void)? = nil) {
         var userPreferencesResponse: UserPreferencesResponse?
         var retErr = error
