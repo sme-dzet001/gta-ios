@@ -68,6 +68,7 @@ class MainViewController: UIViewController {
  
     private func configureMenuVC() {
         menuViewController.delegate = self
+        menuViewController.chatBotDelegate = self
         menuViewController.transitioningDelegate = self
         menuViewController.tabBar = tabBar
         menuViewController.modalPresentationStyle = .overCurrentContext
@@ -233,5 +234,12 @@ extension MainViewController: UIViewControllerTransitioningDelegate {
 extension MainViewController: TabBarIndexChanged {
     func changeIndex(index: Int) {
         menuViewController.selectedTabIdx = index
+    }
+}
+
+extension MainViewController: ChatBotDelegate {
+    func showChatBot() {
+        let chatBotVC = ChatBotViewController()
+        presentPanModal(chatBotVC)
     }
 }

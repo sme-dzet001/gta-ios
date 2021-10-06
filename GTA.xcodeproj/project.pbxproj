@@ -814,6 +814,20 @@
 		9F1620DD2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
 		9F1620DE2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
 		9F1620DF2566BB32003AFE68 /* OfficeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */; };
+		9F1AFF77270C8F7300867B12 /* frame.html in Resources */ = {isa = PBXBuildFile; fileRef = 9F1AFF76270C8F7300867B12 /* frame.html */; };
+		9F1AFF78270C8F7300867B12 /* frame.html in Resources */ = {isa = PBXBuildFile; fileRef = 9F1AFF76270C8F7300867B12 /* frame.html */; };
+		9F1AFF79270C8F7300867B12 /* frame.html in Resources */ = {isa = PBXBuildFile; fileRef = 9F1AFF76270C8F7300867B12 /* frame.html */; };
+		9F1AFF7A270C8F7300867B12 /* frame.html in Resources */ = {isa = PBXBuildFile; fileRef = 9F1AFF76270C8F7300867B12 /* frame.html */; };
+		9F1AFF7B270C8F7300867B12 /* frame.html in Resources */ = {isa = PBXBuildFile; fileRef = 9F1AFF76270C8F7300867B12 /* frame.html */; };
+		9F1AFF7C270C8F7300867B12 /* frame.html in Resources */ = {isa = PBXBuildFile; fileRef = 9F1AFF76270C8F7300867B12 /* frame.html */; };
+		9F1AFF7D270C8F7300867B12 /* frame.html in Resources */ = {isa = PBXBuildFile; fileRef = 9F1AFF76270C8F7300867B12 /* frame.html */; };
+		9F1AFF7F270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1AFF7E270CA65A00867B12 /* ChatBotDataProvider.swift */; };
+		9F1AFF80270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1AFF7E270CA65A00867B12 /* ChatBotDataProvider.swift */; };
+		9F1AFF81270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1AFF7E270CA65A00867B12 /* ChatBotDataProvider.swift */; };
+		9F1AFF82270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1AFF7E270CA65A00867B12 /* ChatBotDataProvider.swift */; };
+		9F1AFF83270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1AFF7E270CA65A00867B12 /* ChatBotDataProvider.swift */; };
+		9F1AFF84270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1AFF7E270CA65A00867B12 /* ChatBotDataProvider.swift */; };
+		9F1AFF85270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1AFF7E270CA65A00867B12 /* ChatBotDataProvider.swift */; };
 		9F2C823C26552A29004407B4 /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
 		9F2C823D26552A29004407B4 /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
 		9F2C823E26552A29004407B4 /* GeneralDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */; };
@@ -1427,6 +1441,20 @@
 		9F8AEAE4255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
 		9F8AEAE5255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
 		9F8AEAE6255EB88500B62072 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AEAE3255EB88500B62072 /* CustomTextView.swift */; };
+		9F8E6320270C6CB4008A7180 /* ChatBotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8E631E270C6CB4008A7180 /* ChatBotViewController.swift */; };
+		9F8E6321270C6CB4008A7180 /* ChatBotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8E631E270C6CB4008A7180 /* ChatBotViewController.swift */; };
+		9F8E6322270C6CB5008A7180 /* ChatBotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8E631E270C6CB4008A7180 /* ChatBotViewController.swift */; };
+		9F8E6323270C6CB5008A7180 /* ChatBotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8E631E270C6CB4008A7180 /* ChatBotViewController.swift */; };
+		9F8E6324270C6CB5008A7180 /* ChatBotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8E631E270C6CB4008A7180 /* ChatBotViewController.swift */; };
+		9F8E6325270C6CB5008A7180 /* ChatBotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8E631E270C6CB4008A7180 /* ChatBotViewController.swift */; };
+		9F8E6326270C6CB5008A7180 /* ChatBotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8E631E270C6CB4008A7180 /* ChatBotViewController.swift */; };
+		9F8E6327270C6CB5008A7180 /* ChatBotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8E631F270C6CB4008A7180 /* ChatBotViewController.xib */; };
+		9F8E6328270C6CB5008A7180 /* ChatBotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8E631F270C6CB4008A7180 /* ChatBotViewController.xib */; };
+		9F8E6329270C6CB5008A7180 /* ChatBotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8E631F270C6CB4008A7180 /* ChatBotViewController.xib */; };
+		9F8E632A270C6CB5008A7180 /* ChatBotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8E631F270C6CB4008A7180 /* ChatBotViewController.xib */; };
+		9F8E632B270C6CB5008A7180 /* ChatBotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8E631F270C6CB4008A7180 /* ChatBotViewController.xib */; };
+		9F8E632C270C6CB5008A7180 /* ChatBotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8E631F270C6CB4008A7180 /* ChatBotViewController.xib */; };
+		9F8E632D270C6CB5008A7180 /* ChatBotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8E631F270C6CB4008A7180 /* ChatBotViewController.xib */; };
 		9F95D34526B946E600631363 /* GlobalProductionAlertsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F95D34426B946E600631363 /* GlobalProductionAlertsResponse.swift */; };
 		9F95D34626B946E700631363 /* GlobalProductionAlertsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F95D34426B946E600631363 /* GlobalProductionAlertsResponse.swift */; };
 		9F95D34726B946E700631363 /* GlobalProductionAlertsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F95D34426B946E600631363 /* GlobalProductionAlertsResponse.swift */; };
@@ -1800,6 +1828,8 @@
 		9F1620D12566BB32003AFE68 /* OfficeInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeInfoCell.xib; sourceTree = "<group>"; };
 		9F1620D22566BB32003AFE68 /* InfoArticleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoArticleCell.swift; sourceTree = "<group>"; };
 		9F1620D32566BB32003AFE68 /* OfficeInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficeInfoCell.swift; sourceTree = "<group>"; };
+		9F1AFF76270C8F7300867B12 /* frame.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = frame.html; sourceTree = "<group>"; };
+		9F1AFF7E270CA65A00867B12 /* ChatBotDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotDataProvider.swift; sourceTree = "<group>"; };
 		9F2C823B26552A29004407B4 /* GeneralDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDataProvider.swift; sourceTree = "<group>"; };
 		9F2C8240265534A5004407B4 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		9F2C82472657CE02004407B4 /* GlobalAlertCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalAlertCell.swift; sourceTree = "<group>"; };
@@ -1912,6 +1942,8 @@
 		9F895B69255D3D27004489C6 /* HelpReportScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpReportScreenViewController.xib; sourceTree = "<group>"; };
 		9F895B7A255D8810004489C6 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		9F8AEAE3255EB88500B62072 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
+		9F8E631E270C6CB4008A7180 /* ChatBotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotViewController.swift; sourceTree = "<group>"; };
+		9F8E631F270C6CB4008A7180 /* ChatBotViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatBotViewController.xib; sourceTree = "<group>"; };
 		9F95D34426B946E600631363 /* GlobalProductionAlertsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalProductionAlertsResponse.swift; sourceTree = "<group>"; };
 		9F9D9CB32588C59600DC4231 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		9F9D9CB42588C59600DC4231 /* AuthViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthViewController.xib; sourceTree = "<group>"; };
@@ -2218,6 +2250,7 @@
 				65D1A29225549A0600D71965 /* MainViewController.swift */,
 				542905972705EBBE00AEE784 /* CustomTabBarController.swift */,
 				5472472126F20F1A000EE3F3 /* CircleTransition.swift */,
+				9F8E632E270C739D008A7180 /* ChatBot */,
 				9F8AEAE2255EB86000B62072 /* CustomUIElements */,
 				540537E726E7AA0900388BF3 /* MenuViewController */,
 				65D2905425682E45001B658A /* Login */,
@@ -2259,6 +2292,7 @@
 		659A5AE9255404BB00E13B77 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9F8E6340270C8282008A7180 /* ChatBot */,
 				659A5AEC255404F100E13B77 /* SF-Pro-Display-Bold.otf */,
 				659A5AEA255404F100E13B77 /* SF-Pro-Display-Medium.otf */,
 				659A5AED255404F100E13B77 /* SF-Pro-Display-Regular.otf */,
@@ -2929,6 +2963,24 @@
 			path = CustomUIElements;
 			sourceTree = "<group>";
 		};
+		9F8E632E270C739D008A7180 /* ChatBot */ = {
+			isa = PBXGroup;
+			children = (
+				9F8E631E270C6CB4008A7180 /* ChatBotViewController.swift */,
+				9F8E631F270C6CB4008A7180 /* ChatBotViewController.xib */,
+				9F1AFF7E270CA65A00867B12 /* ChatBotDataProvider.swift */,
+			);
+			path = ChatBot;
+			sourceTree = "<group>";
+		};
+		9F8E6340270C8282008A7180 /* ChatBot */ = {
+			isa = PBXGroup;
+			children = (
+				9F1AFF76270C8F7300867B12 /* frame.html */,
+			);
+			path = ChatBot;
+			sourceTree = "<group>";
+		};
 		9F9D9CD92588FFAB00DC4231 /* AuthScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -3516,6 +3568,7 @@
 				65437CBD2665387600B2F38A /* SF-Pro-Text-Bold.ttf in Resources */,
 				65437CBE2665387600B2F38A /* Office365ViewController.xib in Resources */,
 				65437CBF2665387600B2F38A /* SF-Pro-Display-Light.ttf in Resources */,
+				9F8E632D270C6CB5008A7180 /* ChatBotViewController.xib in Resources */,
 				65437CC02665387600B2F38A /* ApplicationCell.xib in Resources */,
 				65437CC12665387600B2F38A /* SF-Pro-Text-Semibold.ttf in Resources */,
 				65437CC22665387600B2F38A /* HelpDeskHeader.xib in Resources */,
@@ -3539,6 +3592,7 @@
 				65437CCF2665387600B2F38A /* SF-Pro-Text-Medium.otf in Resources */,
 				65437CD02665387600B2F38A /* Collaboration.storyboard in Resources */,
 				6513C9DE269F145C0046817F /* TeamsByFunctionsViewController.xib in Resources */,
+				9F1AFF7D270C8F7300867B12 /* frame.html in Resources */,
 				65437CD12665387600B2F38A /* TicketDetailsMessageCell.xib in Resources */,
 				65437CD22665387600B2F38A /* Assets.xcassets in Resources */,
 				65437CD32665387600B2F38A /* ServiceDeskContactsViewController.xib in Resources */,
@@ -3661,6 +3715,8 @@
 				9F3028262681D228009A3096 /* ProductionAlertsDetails.xib in Resources */,
 				65437EAE266539BF00B2F38A /* NewTicketViewController.xib in Resources */,
 				65437EAF266539BF00B2F38A /* QuickHelpCell.xib in Resources */,
+				9F1AFF7B270C8F7300867B12 /* frame.html in Resources */,
+				9F8E632B270C6CB5008A7180 /* ChatBotViewController.xib in Resources */,
 				65437EB0266539BF00B2F38A /* GlobalAlertDetailsCell.xib in Resources */,
 				65437EB1266539BF00B2F38A /* SendMessageView.xib in Resources */,
 				65437EB2266539BF00B2F38A /* HelpDeskCell.xib in Resources */,
@@ -3732,6 +3788,7 @@
 				65437FFA2665568000B2F38A /* NotificationSettingsViewController.xib in Resources */,
 				65437FFB2665568000B2F38A /* SystemStatusHeader.xib in Resources */,
 				65437FFC2665568000B2F38A /* GTTeamCell.xib in Resources */,
+				9F8E632C270C6CB5008A7180 /* ChatBotViewController.xib in Resources */,
 				65437FFD2665568000B2F38A /* AboutSupportPolicyCell.xib in Resources */,
 				65437FFE2665568000B2F38A /* HelpDesk.storyboard in Resources */,
 				65437FFF2665568000B2F38A /* SF-Pro-Text-Light.ttf in Resources */,
@@ -3755,6 +3812,7 @@
 				6543800D2665568000B2F38A /* SF-Pro-Text-Italic.ttf in Resources */,
 				6543800E2665568000B2F38A /* AppsServiceAlertCell.xib in Resources */,
 				6543800F2665568000B2F38A /* AboutHeaderCell.xib in Resources */,
+				9F1AFF7C270C8F7300867B12 /* frame.html in Resources */,
 				654380102665568000B2F38A /* Office365AppCell.xib in Resources */,
 				654380112665568000B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
 				654380122665568000B2F38A /* Apps.storyboard in Resources */,
@@ -3877,6 +3935,8 @@
 				9F3028222681D228009A3096 /* ProductionAlertsDetails.xib in Resources */,
 				9FB9C1552631A46900BA753D /* NewTicketViewController.xib in Resources */,
 				C993A2C92576686500F9146A /* QuickHelpCell.xib in Resources */,
+				9F1AFF77270C8F7300867B12 /* frame.html in Resources */,
+				9F8E6327270C6CB5008A7180 /* ChatBotViewController.xib in Resources */,
 				9F2C825C2657CE02004407B4 /* GlobalAlertDetailsCell.xib in Resources */,
 				9FF0545325680EC90071E596 /* SendMessageView.xib in Resources */,
 				C91F708E2562FEC5002F17B1 /* HelpDeskCell.xib in Resources */,
@@ -3959,6 +4019,7 @@
 				9F33F6B0260A3C4000470A47 /* HelpDeskHeader.xib in Resources */,
 				540537F426E7AA6800388BF3 /* MenuViewController.xib in Resources */,
 				9F33F6B1260A3C4000470A47 /* ServiceDeskAboutCell.xib in Resources */,
+				9F1AFF7A270C8F7300867B12 /* frame.html in Resources */,
 				9F33F6B2260A3C4000470A47 /* (null) in Resources */,
 				9F33F6B3260A3C4000470A47 /* SF-Pro-Display-Medium.otf in Resources */,
 				9F33F6B4260A3C4000470A47 /* SystemStatusHeader.xib in Resources */,
@@ -3982,6 +4043,7 @@
 				658BEF4B268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
 				9F33F6C2260A3C4000470A47 /* AboutSupportCell.xib in Resources */,
 				9FA17E3426340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */,
+				9F8E632A270C6CB5008A7180 /* ChatBotViewController.xib in Resources */,
 				9F33F6C3260A3C4000470A47 /* HelpDeskCell.xib in Resources */,
 				9F33F6C4260A3C4000470A47 /* AppsServiceAlertCell.xib in Resources */,
 				9FA2C6A62628CFC900EC5BE3 /* Apps.storyboard in Resources */,
@@ -4110,6 +4172,8 @@
 				9F3028232681D228009A3096 /* ProductionAlertsDetails.xib in Resources */,
 				C993A2CA2576686500F9146A /* QuickHelpCell.xib in Resources */,
 				9FB9C1562631A46900BA753D /* NewTicketViewController.xib in Resources */,
+				9F1AFF78270C8F7300867B12 /* frame.html in Resources */,
+				9F8E6328270C6CB5008A7180 /* ChatBotViewController.xib in Resources */,
 				9F0CA5512566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
 				9F2C825D2657CE02004407B4 /* GlobalAlertDetailsCell.xib in Resources */,
 				C9424E0525642632003C247E /* MyDevicesViewController.xib in Resources */,
@@ -4219,6 +4283,8 @@
 				9F3027FA2681D228009A3096 /* AlertDetailsCell.xib in Resources */,
 				9F819ACA255C1646007C1739 /* SF-Pro-Display-Regular.otf in Resources */,
 				9F3028552681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
+				9F1AFF79270C8F7300867B12 /* frame.html in Resources */,
+				9F8E6329270C6CB5008A7180 /* ChatBotViewController.xib in Resources */,
 				9F895B6F255D3D27004489C6 /* HelpReportScreenViewController.xib in Resources */,
 				C993A2B32576664300F9146A /* QuickHelpViewController.xib in Resources */,
 				9F3AC945264D3E3D004074C8 /* GeneralCell.xib in Resources */,
@@ -4640,6 +4706,7 @@
 				9F95D34B26B946E700631363 /* GlobalProductionAlertsResponse.swift in Sources */,
 				65437C632665387600B2F38A /* ArticleViewController.swift in Sources */,
 				65437C642665387600B2F38A /* StatsBarChart.swift in Sources */,
+				9F8E6326270C6CB5008A7180 /* ChatBotViewController.swift in Sources */,
 				65437C652665387600B2F38A /* OfficesResponses.swift in Sources */,
 				5405382926E8E60500388BF3 /* GTTeamDataProvider.swift in Sources */,
 				65437C662665387600B2F38A /* AppDelegate.swift in Sources */,
@@ -4671,6 +4738,7 @@
 				65437C7D2665387600B2F38A /* NotificationSettingsViewController.swift in Sources */,
 				65437C7E2665387600B2F38A /* GlobalAlertViewController.swift in Sources */,
 				65437C7F2665387600B2F38A /* HomepageViewController.swift in Sources */,
+				9F1AFF85270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */,
 				65437C802665387600B2F38A /* CommonResponses.swift in Sources */,
 				65437C812665387600B2F38A /* Office365AppCell.swift in Sources */,
 				65437C822665387600B2F38A /* WhatsNewMoreViewController.swift in Sources */,
@@ -4745,6 +4813,7 @@
 				9FC12E0C26691FC90029D387 /* Reachability.swift in Sources */,
 				65437E0E266539BF00B2F38A /* SessionExpiredHandler.swift in Sources */,
 				65437E0F266539BF00B2F38A /* AppContactsViewController.swift in Sources */,
+				9F1AFF83270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */,
 				65437E11266539BF00B2F38A /* ApplicationStatusViewController.swift in Sources */,
 				65437E12266539BF00B2F38A /* HelpDeskHeader.swift in Sources */,
 				65437E13266539BF00B2F38A /* HelpDeskResponses.swift in Sources */,
@@ -4798,6 +4867,7 @@
 				65437E3A266539BF00B2F38A /* MyAppsDataProvider.swift in Sources */,
 				65437E3B266539BF00B2F38A /* Utils.swift in Sources */,
 				65437E3C266539BF00B2F38A /* AppsViewController.swift in Sources */,
+				9F8E6324270C6CB5008A7180 /* ChatBotViewController.swift in Sources */,
 				65437E3D266539BF00B2F38A /* GeneralCell.swift in Sources */,
 				65437E3E266539BF00B2F38A /* LoginDataProvider.swift in Sources */,
 				9F3028112681D228009A3096 /* AlertDetailsCell.swift in Sources */,
@@ -4930,6 +5000,7 @@
 				9F95D34A26B946E700631363 /* GlobalProductionAlertsResponse.swift in Sources */,
 				65437F9E2665568000B2F38A /* ArticleViewController.swift in Sources */,
 				65437F9F2665568000B2F38A /* StatsBarChart.swift in Sources */,
+				9F8E6325270C6CB5008A7180 /* ChatBotViewController.swift in Sources */,
 				65437FA02665568000B2F38A /* OfficesResponses.swift in Sources */,
 				5405382826E8E60500388BF3 /* GTTeamDataProvider.swift in Sources */,
 				65437FA12665568000B2F38A /* AppDelegate.swift in Sources */,
@@ -4961,6 +5032,7 @@
 				65437FB82665568000B2F38A /* NotificationSettingsViewController.swift in Sources */,
 				65437FB92665568000B2F38A /* GlobalAlertViewController.swift in Sources */,
 				65437FBA2665568000B2F38A /* HomepageViewController.swift in Sources */,
+				9F1AFF84270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */,
 				65437FBB2665568000B2F38A /* CommonResponses.swift in Sources */,
 				65437FBC2665568000B2F38A /* Office365AppCell.swift in Sources */,
 				65437FBD2665568000B2F38A /* WhatsNewMoreViewController.swift in Sources */,
@@ -5035,6 +5107,7 @@
 				9FC12E0826691FC90029D387 /* Reachability.swift in Sources */,
 				9F9D9CDB2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */,
 				C907E0C025D437BF00FB0B55 /* AppContactsViewController.swift in Sources */,
+				9F1AFF7F270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */,
 				9F895B0F255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA625756C0300315AAE /* HelpDeskHeader.swift in Sources */,
 				9F37C96F257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
@@ -5088,6 +5161,7 @@
 				9F8164B8257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				65398BCC256D4C5F0039C24E /* Utils.swift in Sources */,
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
+				9F8E6320270C6CB4008A7180 /* ChatBotViewController.swift in Sources */,
 				9F3AC93F264D3E3D004074C8 /* GeneralCell.swift in Sources */,
 				9F0D269F2577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9F30280D2681D228009A3096 /* AlertDetailsCell.swift in Sources */,
@@ -5266,9 +5340,11 @@
 				9F33F67B260A3C4000470A47 /* AppsViewController.swift in Sources */,
 				9FD5E13F26A84A2F00DB94B7 /* ActiveUsersViewController.swift in Sources */,
 				9F33F67C260A3C4000470A47 /* AnimatedCollectionViewLayout.swift in Sources */,
+				9F8E6323270C6CB5008A7180 /* ChatBotViewController.swift in Sources */,
 				9F33F67D260A3C4000470A47 /* ServiceDeskContactCell.swift in Sources */,
 				9F2C8244265534A5004407B4 /* Preferences.swift in Sources */,
 				9F33F67E260A3C4000470A47 /* HomepageViewController.swift in Sources */,
+				9F1AFF82270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */,
 				9F33F67F260A3C4000470A47 /* CommonResponses.swift in Sources */,
 				9F33F680260A3C4000470A47 /* Office365AppCell.swift in Sources */,
 				9F3028102681D228009A3096 /* AlertDetailsCell.swift in Sources */,
@@ -5344,6 +5420,7 @@
 				9FC12E0926691FC90029D387 /* Reachability.swift in Sources */,
 				9F9D9CDC2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */,
 				C907E0C125D437BF00FB0B55 /* AppContactsViewController.swift in Sources */,
+				9F1AFF80270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */,
 				9F895B10255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA725756C0300315AAE /* HelpDeskHeader.swift in Sources */,
 				9F37C970257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
@@ -5397,6 +5474,7 @@
 				C9766FAD2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708C2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F8164B9257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
+				9F8E6321270C6CB4008A7180 /* ChatBotViewController.swift in Sources */,
 				9F819A92255C1572007C1739 /* SceneDelegate.swift in Sources */,
 				9F3AC940264D3E3D004074C8 /* GeneralCell.swift in Sources */,
 				9F30280E2681D228009A3096 /* AlertDetailsCell.swift in Sources */,
@@ -5490,6 +5568,7 @@
 				9FC12E0A26691FC90029D387 /* Reachability.swift in Sources */,
 				9F9D9CDD2589006E00DC4231 /* SessionExpiredHandler.swift in Sources */,
 				C907E0C225D437BF00FB0B55 /* AppContactsViewController.swift in Sources */,
+				9F1AFF81270CA65A00867B12 /* ChatBotDataProvider.swift in Sources */,
 				9F895B11255C244D004489C6 /* ApplicationStatusViewController.swift in Sources */,
 				C9EC9EA825756C0300315AAE /* HelpDeskHeader.swift in Sources */,
 				9F37C971257929C0002284B6 /* HelpDeskResponses.swift in Sources */,
@@ -5543,6 +5622,7 @@
 				C9766FAE2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
 				C91F708D2562FEC5002F17B1 /* HelpDeskCell.swift in Sources */,
 				9F8164BA257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
+				9F8E6322270C6CB5008A7180 /* ChatBotViewController.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
 				9F3AC941264D3E3D004074C8 /* GeneralCell.swift in Sources */,
 				9F30280F2681D228009A3096 /* AlertDetailsCell.swift in Sources */,
