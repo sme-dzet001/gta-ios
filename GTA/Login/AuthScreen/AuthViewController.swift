@@ -96,7 +96,6 @@ class AuthViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
         delegate?.isAuthentificationScreenShown = false
-        hideKeyboard()
     }
 
     private func addWebViewIfNeeded() {
@@ -189,6 +188,7 @@ class AuthViewController: UIViewController {
     }
     
     private func authentificatePassed() {
+        hideKeyboard()
         delegate?.isAuthentificationPassed = true
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
@@ -203,11 +203,11 @@ class AuthViewController: UIViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
             guard keyboardSize.height > 0 else { return }
-            UIView.animate(withDuration: 0.3, animations: {
-                if self.isSignUp {
-                    self.handleKeyboardAppearanceForSignUp(overlay: keyboardSize.height)
+            UIView.animate(withDuration: 0.3, animations: {[weak self] in
+                if self?.isSignUp ?? false {
+                    self?.handleKeyboardAppearanceForSignUp(overlay: keyboardSize.height)
                 } else {
-                    self.handleKeyboardAppearanceForLogin(overlay: keyboardSize.height)
+                    self?.handleKeyboardAppearanceForLogin(overlay: keyboardSize.height)
                 }
             })
         }
@@ -235,9 +235,9 @@ class AuthViewController: UIViewController {
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.setDefaultElementsState()
-            self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.3, animations: {[weak self] in
+            self?.setDefaultElementsState()
+            self?.view.layoutIfNeeded()
         })
     }
     

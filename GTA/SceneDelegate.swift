@@ -145,7 +145,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
     }
     
     func hideContent() {
-        if let navController = window?.rootViewController as? UINavigationController, navController.rootViewController is UITabBarController {
+        if let navController = window?.rootViewController as? UINavigationController, navController.rootViewController is MainViewController {
             appSwitcherView = UIView()
             appSwitcherView?.frame = self.window!.bounds
             let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
