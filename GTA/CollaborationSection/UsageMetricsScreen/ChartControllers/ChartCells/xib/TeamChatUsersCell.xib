@@ -24,7 +24,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team chat user % by Country" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJA-x7-ZkK">
-                        <rect key="frame" x="52" y="35" width="241.5" height="24"/>
+                        <rect key="frame" x="24" y="35" width="241.5" height="24"/>
                         <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -37,19 +37,19 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VNt-vE-11A" customClass="HorizontalBarChartView" customModule="Charts">
-                        <rect key="frame" x="30" y="80" width="497" height="187"/>
+                        <rect key="frame" x="12" y="80" width="521" height="187"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="guH-K3-mkk" secondAttribute="bottom" id="0XF-NG-eLi"/>
-                    <constraint firstItem="hJA-x7-ZkK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="32" id="C6J-Lj-S4G"/>
                     <constraint firstItem="guH-K3-mkk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="EsB-hA-aps"/>
+                    <constraint firstItem="VNt-vE-11A" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="HOI-U9-cGe"/>
                     <constraint firstItem="guH-K3-mkk" firstAttribute="top" secondItem="VNt-vE-11A" secondAttribute="bottom" constant="40" id="HWB-wb-Ap9"/>
+                    <constraint firstItem="hJA-x7-ZkK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="JS8-tx-MPX"/>
                     <constraint firstItem="hJA-x7-ZkK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="24" id="QH3-ki-eAr"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="VNt-vE-11A" secondAttribute="trailing" constant="10" id="TSA-2y-Vfs"/>
-                    <constraint firstItem="VNt-vE-11A" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="Tex-8p-22R"/>
                     <constraint firstAttribute="trailingMargin" secondItem="guH-K3-mkk" secondAttribute="trailing" id="aGu-Mk-bkt"/>
+                    <constraint firstAttribute="trailing" secondItem="VNt-vE-11A" secondAttribute="trailing" constant="24" id="ony-2o-8ju"/>
                     <constraint firstItem="VNt-vE-11A" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="80" id="q7e-PW-zbH"/>
                 </constraints>
             </tableViewCellContentView>

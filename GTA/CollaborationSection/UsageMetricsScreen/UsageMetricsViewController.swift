@@ -12,12 +12,6 @@ protocol ChartDimensions: AnyObject {
     var optimalHeight: CGFloat { get }
 }
 
-class ChartTableView : UITableView, UIGestureRecognizerDelegate {
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-}
-
 class UsageMetricsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -35,26 +29,6 @@ class UsageMetricsViewController: UIViewController {
         return dataProvider?.chartsPosition ?? []
     }
     
-    private lazy var activeUsersVC: ActiveUsersViewController = {
-        let activeUsersVC = ActiveUsersViewController(nibName: "ActiveUsersViewController", bundle: nil)
-        activeUsersVC.chartData = dataProvider?.activeUsersLineChartData
-        return activeUsersVC
-    }()
-    
-    private lazy var activeUsersChartCell: UITableViewCell = {
-        let cell = UITableViewCell()
-        activeUsersVC.view.translatesAutoresizingMaskIntoConstraints = false
-        cell.contentView.addSubview(activeUsersVC.view)
-        NSLayoutConstraint.activate([
-            activeUsersVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-            activeUsersVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
-            activeUsersVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
-            activeUsersVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
-        ])
-        addChild(activeUsersVC)
-        return cell
-    }()
-    
     private var chartDimensionsDict: [Int : ChartDimensions] = [:]
 
     override func viewDidLoad() {
@@ -70,6 +44,7 @@ class UsageMetricsViewController: UIViewController {
         tableView.register(UINib(nibName: "ActiveUsersByFunctionCell", bundle: nil), forCellReuseIdentifier: "ActiveUsersByFunctionCell")
         tableView.register(UINib(nibName: "TeamChatUsersCell", bundle: nil), forCellReuseIdentifier: "TeamChatUsersCell")
         tableView.register(UINib(nibName: "TeamsByFunctionsTableViewCell", bundle: nil), forCellReuseIdentifier: "TeamsByFunctionsTableViewCell")
+        tableView.register(UINib(nibName: "ActiveUsersTableViewCell", bundle: nil), forCellReuseIdentifier: "ActiveUsersTableViewCell")
         setUpTextField()
         setUpNavigationItem()
     }
@@ -225,7 +200,6 @@ class UsageMetricsViewController: UIViewController {
     }
     
     deinit {
-        activeUsersVC.removeFromParent()
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillHideNotification, object: nil)
@@ -257,8 +231,11 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
         case is ChartStructure:
             guard let chart = data as? ChartStructure else { return UITableViewCell() }
             if chart.chartType == .line {
-                chartDimensionsDict[indexPath.row] = activeUsersVC
-                return activeUsersChartCell
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "ActiveUsersTableViewCell") as? ActiveUsersTableViewCell else { return UITableViewCell() }
+                chartDimensionsDict[indexPath.row] = cell
+                cell.chartData = dataProvider?.activeUsersLineChartData
+                cell.updateData()
+                return cell
             } else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "ActiveUsersByFunctionCell") as? ActiveUsersByFunctionCell else { return UITableViewCell() }
                 cell.setUpBarChartView(with: dataProvider?.verticalChartData)

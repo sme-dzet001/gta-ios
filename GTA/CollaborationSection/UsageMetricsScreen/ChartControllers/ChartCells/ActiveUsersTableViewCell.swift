@@ -1,36 +1,21 @@
 //
-//  ActiveUsersViewController.swift
+//  ActiveUsersTableViewCell.swift
 //  GTA
 //
-//  Created by Margarita N. Bock on 03.07.2021.
+//  Created by Артем Хрещенюк on 07.10.2021.
 //
 
 import UIKit
 import Charts
 
-//class ChartScrollView : UIScrollView, UIGestureRecognizerDelegate {
-//    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        return true
-//    }
-//}
-//
-//class LineChartXValueFormatter: NSObject, IAxisValueFormatter {
-//    var xLabels: [String] = []
-//
-//    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-//        let index = Int(value)
-//        guard index < xLabels.count else { return "" }
-//        return xLabels[index]
-//    }
-//}
+class ActiveUsersTableViewCell: UITableViewCell {
 
-class LineChartViewController: UIViewController {
-    
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var verticalAxisStackView: UIStackView!
     
     @IBOutlet weak var maxValueLabel: UILabel!
     @IBOutlet weak var percentLabel: UILabel!
+    @IBOutlet weak var chartTitleLabel: UILabel!
     
     @IBOutlet weak var blurViewLeft: UIView!
     @IBOutlet weak var blurViewRight: UIView!
@@ -42,17 +27,37 @@ class LineChartViewController: UIViewController {
     @IBOutlet weak var verticalAxisViewTop: NSLayoutConstraint!
     @IBOutlet weak var verticalAxisViewBottom: NSLayoutConstraint!
     
+    
     let chartViewGridWidth: CGFloat = 64
     let lineColor = UIColor(hex: 0x428DF7)
     let chartLineWidth: CGFloat = 2
     let chartLineCircleRadius: CGFloat = 8
+    var xValueFormatter: LineChartXValueFormatter {
+        let xValueFormatter = LineChartXValueFormatter()
+        xValueFormatter.xLabels = lineChartData.map( { ($0.period ?? "") } )
+        return xValueFormatter
+    }
+    var lineChartData: [(period: String?, value: Int?)] {
+        var data = [(period: String?, value: Int?)]()
+        let values = chartData?.values ?? []
+        let legends = chartData?.legends ?? []
+        for (index, value) in values.enumerated() where index < legends.count {
+            let legend = legends[index].getDateForUsageMetrics()
+            data.append((period: legend, value: Int(value)))
+        }
+        return data
+    }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var chartData: ChartStructure?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        chartScrollView.delegate = self
+    }
+    
+    func updateData() {
         configureChart()
-//        setupChartView()
-//        updateLabels()
-//        updateChartData()
+        chartTitleLabel.text = chartData?.title
     }
     
     // TODO: Need to find better name
@@ -64,13 +69,9 @@ class LineChartViewController: UIViewController {
         updateScrollView()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateScrollView()
-    }
     
-    var lineChartData: [(period: String?, value: Int?)] {
-        return []
+    override func layoutSubviews() {
+        updateScrollView()
     }
     
     func updateBlurViews() {
@@ -97,12 +98,6 @@ class LineChartViewController: UIViewController {
         if previousToLastValue != 0 {
             percentLabel.text = String(format: "%.1f", locale: Locale.current, Double(100) * lastValue / previousToLastValue).replacingOccurrences(of: ".0", with: "") + "%"
         }
-    }
-    
-    var xValueFormatter: LineChartXValueFormatter {
-        let xValueFormatter = LineChartXValueFormatter()
-        xValueFormatter.xLabels = lineChartData.map( { ($0.period ?? "") } )
-        return xValueFormatter
     }
     
     func setupChartView() {
@@ -211,7 +206,7 @@ class LineChartViewController: UIViewController {
     
     func setUpBlurViews(firstLabel: String, lastLabel: String) {
         let extraSizeRight = (lastLabel as NSString).size(withAttributes: [.font : ChartsFormatting.labelFont as Any])
-        chartScrollViewTrailing.constant = CGFloat(-40) + extraSizeRight.width / 2
+        chartScrollViewTrailing.constant = extraSizeRight.width
         chartView.extraRightOffset = extraSizeRight.width / 2
         
         let extraSizeLeft = (firstLabel as NSString).size(withAttributes: [.font : ChartsFormatting.labelFont as Any])
@@ -262,21 +257,17 @@ class LineChartViewController: UIViewController {
         chartView.xAxis.gridLineWidth = gridLineWidth
         chartView.leftAxis.gridLineWidth = gridLineWidth
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
 
-extension LineChartViewController: UIScrollViewDelegate {
+extension ActiveUsersTableViewCell: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateBlurViews()
+    }
+}
+
+extension ActiveUsersTableViewCell: ChartDimensions {
+    var optimalHeight: CGFloat {
+        return 294
     }
 }
