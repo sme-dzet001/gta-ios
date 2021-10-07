@@ -19,12 +19,7 @@ class MainViewController: UIViewController {
     private var usmLogoutWebView: WKWebView!
     let menuViewController = MenuViewController()
     var backgroundView: UIView?
-    var tabBar: UITabBarController?
-    var selectedTabIdx = 0 {
-        didSet {
-            tabBar?.selectedIndex = selectedTabIdx
-        }
-    }
+    var tabBar: CustomTabBarController?
     var transition = CircularTransition()
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return tabBar?.selectedViewController?.preferredStatusBarStyle ?? .default
@@ -60,15 +55,15 @@ class MainViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedTabBar" {
-            tabBar = segue.destination as? UITabBarController
-            tabBar?.setSelectedTabAccordingToPendingAlert()
+            tabBar = segue.destination as? CustomTabBarController
+            tabBar?.indexDelegate = self
             tabBar?.tabBar.isHidden = true
         }
     }
     
     @IBAction func menuButtonAction(_ sender: UIButton) {
         addBackground()
-        menuViewController.selectedTabIdx = selectedTabIdx
+        menuViewController.selectedTabIdx = tabBar?.selectedIndex
         present(menuViewController, animated: true, completion: nil)
     }
  
@@ -156,7 +151,17 @@ extension MainViewController: TabBarChangeIndexDelegate {
     }
     
     func changeToIndex(index: Int) {
-        selectedTabIdx = index
+        let isSameIndex = tabBar?.selectedIndex == index
+        tabBar?.selectedIndex = index
+        guard isSameIndex else { return }
+        if index == 4 {
+            let generalVC = tabBar?.moreNavigationController.viewControllers.first(where: {$0 is GeneralViewController})
+            guard let _ = generalVC else { return }
+            tabBar?.moreNavigationController.popToViewController(generalVC!, animated: true)
+            return
+        }
+        let controller = tabBar?.viewControllers?[index] as? UINavigationController
+        controller?.popToRootViewController(animated: true)
     }
 }
 
@@ -223,5 +228,11 @@ extension MainViewController: UIViewControllerTransitioningDelegate {
         })
         
         return transition
+    }
+}
+
+extension MainViewController: TabBarIndexChanged {
+    func changeIndex(index: Int) {
+        menuViewController.selectedTabIdx = index
     }
 }

@@ -34,7 +34,12 @@ class MenuViewController: UIViewController {
         MenuItems(name: "Logout", image: UIImage(named: "logout")),
     ]
     var dataProvider = MenuViewControllerDataProvider()
-    var selectedTabIdx: Int?
+    var selectedTabIdx: Int? {
+        didSet {
+            guard oldValue != selectedTabIdx else { return }
+            tableView.reloadData()
+        }
+    }
     weak var delegate: TabBarChangeIndexDelegate?
     weak var tabBar: UITabBarController?
     
@@ -68,15 +73,6 @@ class MenuViewController: UIViewController {
         backgroundView.cornerRadius = 25
         
         dataProvider.officeSelectionDelegate = self
-        
-        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
-            if officeLoadingIsEnabled { loadOfficesData() }
-        } else {
-            // reloading office cell (because office could be changed on office selection screen)
-            if officeLoadingIsEnabled {
-                tableView.reloadData()
-            }
-        }
         if UIDevice.current.iPhone5_se {
             tableViewHeightConstraint?.constant = 490
         }
@@ -92,6 +88,14 @@ class MenuViewController: UIViewController {
         UIView.animate(withDuration: 0.1, delay: 0.2, animations: {
             self.tableView.alpha = 1
         }, completion: nil)
+        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
+            if officeLoadingIsEnabled { loadOfficesData() }
+        } else {
+            // reloading office cell (because office could be changed on office selection screen)
+            if officeLoadingIsEnabled {
+                tableView.reloadData()
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -272,7 +276,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 if let errorStr = officeLoadingError {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: "OfficeStatusCell", for: indexPath) as? OfficeStatusCell else { return UITableViewCell() }
                     cell.officeAddressLabel.text = " "
-                    cell.officeAddressLabel.isHidden = false
+                    cell.officeAddressLabel.isHidden = true
                     cell.officeNumberLabel.text = " "
                     cell.officeNumberLabel.isHidden = false
                     cell.officeErrorLabel.text = errorStr
@@ -312,7 +316,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         } else if indexPath.section == 2 {
             if let office = tabBar?.viewControllers?.first(where: { $0 is OfficeOverviewViewController }) as? OfficeOverviewViewController {
                 office.officeDataProvider = dataProvider
-                office.selectedOfficeData = dataProvider.userOffice
+                //office.selectedOfficeData = dataProvider.userOffice
                 office.selectedOfficeUIUpdateDelegate = self
                 office.title = dataProvider.userOffice?.officeName
             }
