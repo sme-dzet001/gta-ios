@@ -2101,7 +2101,7 @@
 			isa = PBXGroup;
 			children = (
 				9FF6A11E26A88C4700EC5A7C /* ChartsDataStructures */,
-				658BEF76268FA7D800D4FD2C /* ChartControllers */,
+				9F343A48269C4DFB0071362D /* ChartCells */,
 				653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */,
 				658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */,
 			);
@@ -2147,15 +2147,6 @@
 				9F36D4642562C286000EE0F1 /* HomepageViewController.swift */,
 			);
 			path = Homepage;
-			sourceTree = "<group>";
-		};
-		658BEF76268FA7D800D4FD2C /* ChartControllers */ = {
-			isa = PBXGroup;
-			children = (
-				9F343A7526A1C3B10071362D /* xib */,
-				9F343A48269C4DFB0071362D /* ChartCells */,
-			);
-			path = ChartControllers;
 			sourceTree = "<group>";
 		};
 		659A5AA4255401EA00E13B77 = {
@@ -2509,13 +2500,6 @@
 				9F343A6C269DE3750071362D /* GoogleService-Info.plist */,
 			);
 			path = GTADev;
-			sourceTree = "<group>";
-		};
-		9F343A7526A1C3B10071362D /* xib */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = xib;
 			sourceTree = "<group>";
 		};
 		9F3585FF25FD219C0003658D /* CollaborationCustomHeader */ = {
