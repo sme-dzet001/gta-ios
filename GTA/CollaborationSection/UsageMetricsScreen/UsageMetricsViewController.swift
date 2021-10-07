@@ -55,25 +55,6 @@ class UsageMetricsViewController: UIViewController {
         return cell
     }()
     
-    private lazy var activeUsersByFuncChartCell: UITableViewCell = {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ActiveUsersByFunctionCell") as? ActiveUsersByFunctionCell else { return UITableViewCell() }
-        cell.setUpBarChartView(with: dataProvider?.verticalChartData)
-        return cell
-    }()
-    
-    private lazy var teamChatUsersChartCell: UITableViewCell = {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TeamChatUsersCell") as? TeamChatUsersCell else { return UITableViewCell() }
-        cell.chartData = dataProvider?.horizontalChartData
-        return cell
-    }()
-    
-    private lazy var teamsByFunctionsChartCell: UITableViewCell = {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TeamsByFunctionsTableViewCell") as? TeamsByFunctionsTableViewCell else { return UITableViewCell() }
-        cell.chartsData = dataProvider?.teamsByFunctionsLineChartData
-        cell.updateData()
-        return cell
-    }()
-        
     private var chartDimensionsDict: [Int : ChartDimensions] = [:]
 
     override func viewDidLoad() {
@@ -174,16 +155,6 @@ class UsageMetricsViewController: UIViewController {
         if let isChartDataEmpty = dataProvider?.isChartDataEmpty, isChartDataEmpty {
             return
         }
-        chartDimensionsDict[0] = activeUsersVC
-        if let barChartCell = activeUsersByFuncChartCell as? ActiveUsersByFunctionCell {
-            chartDimensionsDict[1] = barChartCell
-        }
-        if let teamChatUsersCell = teamChatUsersChartCell as? TeamChatUsersCell {
-            chartDimensionsDict[2] = teamChatUsersCell
-        }
-        if let teamByFunctionsCell = teamsByFunctionsChartCell as? TeamsByFunctionsTableViewCell {
-            chartDimensionsDict[3] = teamByFunctionsCell
-        }
         self.tableView.reloadData()
     }
     
@@ -279,26 +250,27 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
         let data = charts[indexPath.row]
         switch data {
         case is TeamsChatUserData:
-            if let teamChatUsersCell = teamChatUsersChartCell as? TeamChatUsersCell {
-                chartDimensionsDict[indexPath.row] = teamChatUsersCell
-            }
-            return teamChatUsersChartCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TeamChatUsersCell") as? TeamChatUsersCell else { return UITableViewCell() }
+            chartDimensionsDict[indexPath.row] = cell
+            cell.chartData = dataProvider?.horizontalChartData
+            return cell
         case is ChartStructure:
             guard let chart = data as? ChartStructure else { return UITableViewCell() }
             if chart.chartType == .line {
                 chartDimensionsDict[indexPath.row] = activeUsersVC
                 return activeUsersChartCell
             } else {
-                if let barChartCell = activeUsersByFuncChartCell as? ActiveUsersByFunctionCell {
-                    chartDimensionsDict[indexPath.row] = barChartCell
-                }
-                return activeUsersByFuncChartCell
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "ActiveUsersByFunctionCell") as? ActiveUsersByFunctionCell else { return UITableViewCell() }
+                cell.setUpBarChartView(with: dataProvider?.verticalChartData)
+                chartDimensionsDict[indexPath.row] = cell
+                return cell
             }
         case is TeamsByFunctionsLineChartData:
-            if let teamByFunctionsCell = teamsByFunctionsChartCell as? TeamsByFunctionsTableViewCell {
-                chartDimensionsDict[indexPath.row] = teamByFunctionsCell
-            }
-            return teamsByFunctionsChartCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TeamsByFunctionsTableViewCell") as? TeamsByFunctionsTableViewCell else { return UITableViewCell() }
+            chartDimensionsDict[indexPath.row] = cell
+            cell.chartsData = dataProvider?.teamsByFunctionsLineChartData
+            cell.updateData()
+            return cell
         default:
             return UITableViewCell()
         }

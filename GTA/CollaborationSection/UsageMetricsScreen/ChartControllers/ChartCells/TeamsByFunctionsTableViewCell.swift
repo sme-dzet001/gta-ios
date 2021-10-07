@@ -279,7 +279,7 @@ class TeamsByFunctionsTableViewCell: UITableViewCell {
     
     func setUpBlurViews(firstLabel: String, lastLabel: String) {
         let extraSizeRight = (lastLabel as NSString).size(withAttributes: [.font : ChartsFormatting.labelFont as Any])
-        chartScrollViewTrailing.constant = CGFloat(-40) + extraSizeRight.width / 2
+        chartScrollViewTrailing.constant = extraSizeRight.width
         chartView.extraRightOffset = extraSizeRight.width / 2
         
         let extraSizeLeft = (firstLabel as NSString).size(withAttributes: [.font : ChartsFormatting.labelFont as Any])
