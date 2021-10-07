@@ -62,7 +62,7 @@ class MainViewController: UIViewController {
         if segue.identifier == "embedTabBar" {
             tabBar = segue.destination as? UITabBarController
             tabBar?.setSelectedTabAccordingToPendingAlert()
-            tabBar?.hidesBottomBarWhenPushed = true
+            tabBar?.tabBar.isHidden = true
         }
     }
     
