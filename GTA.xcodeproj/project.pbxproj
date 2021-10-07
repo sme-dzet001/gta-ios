@@ -2250,7 +2250,6 @@
 				65D1A29225549A0600D71965 /* MainViewController.swift */,
 				542905972705EBBE00AEE784 /* CustomTabBarController.swift */,
 				5472472126F20F1A000EE3F3 /* CircleTransition.swift */,
-				9F8E632E270C739D008A7180 /* ChatBot */,
 				9F8AEAE2255EB86000B62072 /* CustomUIElements */,
 				540537E726E7AA0900388BF3 /* MenuViewController */,
 				65D2905425682E45001B658A /* Login */,
@@ -2261,6 +2260,7 @@
 				65D14CB7256DA832004DFA70 /* GeneralSection */,
 				9F3AC8F92645A2CA004074C8 /* GTTeamTab */,
 				541F3AB726E8FDF5007F7C43 /* OfficesTab */,
+				9F8E632E270C739D008A7180 /* ChatBot */,
 				659A5AB6255401EA00E13B77 /* Main.storyboard */,
 				659A5AE9255404BB00E13B77 /* Supporting Files */,
 				9FCFA2AE259E141300E893D2 /* Plists */,
@@ -2966,9 +2966,9 @@
 		9F8E632E270C739D008A7180 /* ChatBot */ = {
 			isa = PBXGroup;
 			children = (
+				9F1AFF7E270CA65A00867B12 /* ChatBotDataProvider.swift */,
 				9F8E631E270C6CB4008A7180 /* ChatBotViewController.swift */,
 				9F8E631F270C6CB4008A7180 /* ChatBotViewController.xib */,
-				9F1AFF7E270CA65A00867B12 /* ChatBotDataProvider.swift */,
 			);
 			path = ChatBot;
 			sourceTree = "<group>";
