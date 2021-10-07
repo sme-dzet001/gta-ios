@@ -10,6 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed {
     
     var window: UIWindow?
+    private var pinCodeWindow: UIWindow?
 
     var appIsInTray: Bool = false
     var appSwitcherView: UIView?
@@ -21,8 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
-        //showNeededScreen()
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        pinCodeWindow = UIWindow(windowScene: windowScene)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -91,7 +92,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                 if let aDate = UserDefaults.standard.value(forKey: "lastActivityDate") as? Date {
                     lastActivityDate = aDate
                 }
-                if lastActivityDate.addingTimeInterval(1200) > Date(),  let _ = KeychainManager.getPin(), !(isAuthentificationScreenShown ?? true), isAuthentificationPassed ?? false {
+                if lastActivityDate.addingTimeInterval(1) > Date(),  let _ = KeychainManager.getPin(), !(isAuthentificationScreenShown ?? true), isAuthentificationPassed ?? false {
                     if let navController = self.window?.rootViewController as? UINavigationController, navController.rootViewController is MainViewController {
                         return
                     }
@@ -100,7 +101,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                     let navController = UINavigationController(rootViewController: mainViewController)
                     navController.isNavigationBarHidden = true
                     navController.isToolbarHidden = true
-                    self.window?.rootViewController = navController
+                    //self.window?.rootViewController = navController
                     return
                 } else if KeychainManager.getPin() == nil {
                     let authScreenShown = isAuthentificationScreenShown ?? false
@@ -113,9 +114,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                 }
                 let authVC = AuthViewController()
                 authVC.isSignUp = false
+                authVC.appKeyWindow = window
                 authVC.delegate = self
-                window?.rootViewController = authVC
+                pinCodeWindow?.frame = UIScreen.main.bounds
+                pinCodeWindow?.windowLevel = UIWindow.Level.statusBar + 1
+                pinCodeWindow?.rootViewController = authVC
+                pinCodeWindow?.makeKeyAndVisible()
             }
+        } else {
+            startLoginFlow()
         }
     }
     

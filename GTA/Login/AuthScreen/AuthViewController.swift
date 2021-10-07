@@ -29,7 +29,7 @@ class AuthViewController: UIViewController {
     private var continueButtonY: CGFloat?
     weak var delegate: AuthentificationPassed?
     private var dataProvider: LoginDataProvider = LoginDataProvider()
-    
+    var appKeyWindow: UIWindow?
     var isSignUp: Bool = KeychainManager.getPin() == nil
     
     override func viewDidLoad() {
@@ -190,6 +190,11 @@ class AuthViewController: UIViewController {
     private func authentificatePassed() {
         hideKeyboard()
         delegate?.isAuthentificationPassed = true
+        if let navController = self.appKeyWindow?.rootViewController as? UINavigationController, navController.rootViewController is MainViewController, !isSignUp {
+            appKeyWindow?.windowLevel = UIWindow.Level.statusBar + 1
+            appKeyWindow?.makeKeyAndVisible()
+            return
+        }
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
         let navController = UINavigationController(rootViewController: mainViewController)
