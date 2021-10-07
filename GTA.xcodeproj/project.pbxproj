@@ -58,6 +58,34 @@
 		5405382726E8E60500388BF3 /* GTTeamDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5405382226E8E60500388BF3 /* GTTeamDataProvider.swift */; };
 		5405382826E8E60500388BF3 /* GTTeamDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5405382226E8E60500388BF3 /* GTTeamDataProvider.swift */; };
 		5405382926E8E60500388BF3 /* GTTeamDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5405382226E8E60500388BF3 /* GTTeamDataProvider.swift */; };
+		540767FF270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540767FD270F3D97005EFD65 /* NewsScreenViewController.swift */; };
+		54076800270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540767FD270F3D97005EFD65 /* NewsScreenViewController.swift */; };
+		54076801270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540767FD270F3D97005EFD65 /* NewsScreenViewController.swift */; };
+		54076802270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540767FD270F3D97005EFD65 /* NewsScreenViewController.swift */; };
+		54076803270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540767FD270F3D97005EFD65 /* NewsScreenViewController.swift */; };
+		54076804270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540767FD270F3D97005EFD65 /* NewsScreenViewController.swift */; };
+		54076805270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540767FD270F3D97005EFD65 /* NewsScreenViewController.swift */; };
+		54076806270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */; };
+		54076807270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */; };
+		54076808270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */; };
+		54076809270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */; };
+		5407680A270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */; };
+		5407680B270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */; };
+		5407680C270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */; };
+		54076810270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
+		54076811270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
+		54076812270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
+		54076813270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
+		54076814270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
+		54076815270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
+		54076816270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
+		54076817270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
+		54076818270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
+		54076819270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
+		5407681A270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
+		5407681B270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
+		5407681C270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
+		5407681D270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
 		541F3AB926E8FE8E007F7C43 /* OfficeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 541F3AB826E8FE8E007F7C43 /* OfficeStoryboard.storyboard */; };
 		541F3ABA26E8FE8E007F7C43 /* OfficeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 541F3AB826E8FE8E007F7C43 /* OfficeStoryboard.storyboard */; };
 		541F3ABB26E8FE8E007F7C43 /* OfficeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 541F3AB826E8FE8E007F7C43 /* OfficeStoryboard.storyboard */; };
@@ -1727,6 +1755,10 @@
 		5405381226E8C65600388BF3 /* MenuViewControllerDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewControllerDataProvider.swift; sourceTree = "<group>"; };
 		5405381A26E8DE3D00388BF3 /* GTTeamStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GTTeamStoryboard.storyboard; sourceTree = "<group>"; };
 		5405382226E8E60500388BF3 /* GTTeamDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTTeamDataProvider.swift; sourceTree = "<group>"; };
+		540767FD270F3D97005EFD65 /* NewsScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsScreenViewController.swift; sourceTree = "<group>"; };
+		540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsScreenViewController.xib; sourceTree = "<group>"; };
+		5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsScreenTableViewCell.swift; sourceTree = "<group>"; };
+		5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsScreenTableViewCell.xib; sourceTree = "<group>"; };
 		541F3AB826E8FE8E007F7C43 /* OfficeStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OfficeStoryboard.storyboard; sourceTree = "<group>"; };
 		541F3AC026E906EF007F7C43 /* OfficeOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeOverviewViewController.swift; sourceTree = "<group>"; };
 		542905972705EBBE00AEE784 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
@@ -2096,6 +2128,33 @@
 			path = xib;
 			sourceTree = "<group>";
 		};
+		540767FC270F3D61005EFD65 /* NewsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				5407680D270F44AE005EFD65 /* Cells */,
+				540767FD270F3D97005EFD65 /* NewsScreenViewController.swift */,
+				540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */,
+			);
+			path = NewsScreen;
+			sourceTree = "<group>";
+		};
+		5407680D270F44AE005EFD65 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */,
+				5407681E270F450A005EFD65 /* xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		5407681E270F450A005EFD65 /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */,
+			);
+			path = xib;
+			sourceTree = "<group>";
+		};
 		541F3AB726E8FDF5007F7C43 /* OfficesTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -2150,6 +2209,7 @@
 				9F2C82452657CE02004407B4 /* GlobalAlertScreen */,
 				9F78CFCA256409D500BCD38F /* HomepageCollectionViewCell */,
 				9FB59FA62576AB4900E14D7E /* CollectionViewLayout */,
+				540767FC270F3D61005EFD65 /* NewsScreen */,
 				65D1A2A02554BE3700D71965 /* Home.storyboard */,
 				9F36D4632562C286000EE0F1 /* HomepageTableViewController.swift */,
 				9F36D4642562C286000EE0F1 /* HomepageViewController.swift */,
@@ -3542,6 +3602,7 @@
 				65437CD12665387600B2F38A /* TicketDetailsMessageCell.xib in Resources */,
 				65437CD22665387600B2F38A /* Assets.xcassets in Resources */,
 				65437CD32665387600B2F38A /* ServiceDeskContactsViewController.xib in Resources */,
+				5407680C270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */,
 				65437CD42665387600B2F38A /* SF-Pro-Text-Regular.otf in Resources */,
 				65437CD62665387600B2F38A /* ServiceDeskAboutViewController.xib in Resources */,
 				65437CD72665387600B2F38A /* GlobalAlertDetailsCell.xib in Resources */,
@@ -3551,6 +3612,7 @@
 				9F343A9526A1CE3C0071362D /* BarChartCell.xib in Resources */,
 				65437CDB2665387600B2F38A /* HelpDeskCell.xib in Resources */,
 				65437CDC2665387600B2F38A /* AppsServiceAlertCell.xib in Resources */,
+				5407681D270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
 				9F3027FE2681D228009A3096 /* AlertDetailsCell.xib in Resources */,
 				65437CDD2665387600B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
 				9F3028592681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
@@ -3638,6 +3700,7 @@
 				65437E9A266539BF00B2F38A /* SF-Pro-Display-Bold.otf in Resources */,
 				65437E9B266539BF00B2F38A /* WhatsNewMoreViewController.xib in Resources */,
 				65437E9C266539BF00B2F38A /* ServiceDeskContactsViewController.xib in Resources */,
+				5407680A270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */,
 				6500C65126DFB91200151F1D /* NewsTableViewCell.xib in Resources */,
 				65437E9D266539BF00B2F38A /* CollaborationHeader.xib in Resources */,
 				65437E9E266539BF00B2F38A /* LaunchScreen.storyboard in Resources */,
@@ -3696,6 +3759,7 @@
 				65437EC8266539BF00B2F38A /* TicketCell.xib in Resources */,
 				9F3028572681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
 				65437EC9266539BF00B2F38A /* GeneralScreen.storyboard in Resources */,
+				5407681B270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
 				65437ECA266539BF00B2F38A /* GoogleService-Info.plist in Resources */,
 				5405380626E7C1BB00388BF3 /* MenuTableViewCell.xib in Resources */,
 				65437ECC266539BF00B2F38A /* AboutViewController.xib in Resources */,
@@ -3758,6 +3822,7 @@
 				654380102665568000B2F38A /* Office365AppCell.xib in Resources */,
 				654380112665568000B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
 				654380122665568000B2F38A /* Apps.storyboard in Resources */,
+				5407680B270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */,
 				654380132665568000B2F38A /* HelpReportScreenViewController.xib in Resources */,
 				654380142665568000B2F38A /* SwitcherCell.xib in Resources */,
 				654380152665568000B2F38A /* QuickHelpViewController.xib in Resources */,
@@ -3767,6 +3832,7 @@
 				654380172665568000B2F38A /* OfficeStatusCell.xib in Resources */,
 				9F30285F2681E68C009A3096 /* AlertPopoverViewController.xib in Resources */,
 				654380192665568000B2F38A /* ServiceDeskContactCell.xib in Resources */,
+				5407681C270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
 				9F3028272681D228009A3096 /* ProductionAlertsDetails.xib in Resources */,
 				6543801A2665568000B2F38A /* QuickHelpCell.xib in Resources */,
 				6543801B2665568000B2F38A /* NewTicketViewController.xib in Resources */,
@@ -3854,6 +3920,7 @@
 				659A5AF2255404F100E13B77 /* SF-Pro-Display-Bold.otf in Resources */,
 				9F643577261B5D40000D94A4 /* WhatsNewMoreViewController.xib in Resources */,
 				C9766FAF2576394500E9E697 /* ServiceDeskContactsViewController.xib in Resources */,
+				54076806270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */,
 				6500C64D26DFB91200151F1D /* NewsTableViewCell.xib in Resources */,
 				9F35860725FD219D0003658D /* CollaborationHeader.xib in Resources */,
 				659A5ABD255401ED00E13B77 /* LaunchScreen.storyboard in Resources */,
@@ -3912,6 +3979,7 @@
 				C962D82B2566D21100727949 /* TicketCell.xib in Resources */,
 				9F3028532681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
 				9F3AC938264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
+				54076817270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
 				9F825FF525ED5612002A4560 /* GoogleService-Info.plist in Resources */,
 				5405380226E7C1BB00388BF3 /* MenuTableViewCell.xib in Resources */,
 				C93FCF0925648FA0001E86F6 /* AboutViewController.xib in Resources */,
@@ -3980,6 +4048,7 @@
 				9F33F6BF260A3C4000470A47 /* SF-Pro-Text-Regular.otf in Resources */,
 				9F33F6C1260A3C4000470A47 /* CollaborationHeader.xib in Resources */,
 				658BEF4B268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
+				5407681A270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
 				9F33F6C2260A3C4000470A47 /* AboutSupportCell.xib in Resources */,
 				9FA17E3426340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */,
 				9F33F6C3260A3C4000470A47 /* HelpDeskCell.xib in Resources */,
@@ -4017,6 +4086,7 @@
 				9F7B679526F2403800756412 /* TipsAndTricksViewController.xib in Resources */,
 				9F3028252681D228009A3096 /* ProductionAlertsDetails.xib in Resources */,
 				9F3027FB2681D228009A3096 /* AlertDetailsCell.xib in Resources */,
+				54076809270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */,
 				9F3027F42681D228009A3096 /* ProductionAlertCell.xib in Resources */,
 				6500C65026DFB91200151F1D /* NewsTableViewCell.xib in Resources */,
 				9F33F6D9260A3C4000470A47 /* Collaboration.storyboard in Resources */,
@@ -4087,6 +4157,7 @@
 				C9766FB02576394500E9E697 /* ServiceDeskContactsViewController.xib in Resources */,
 				9F819A9F255C1572007C1739 /* SF-Pro-Text-Regular.otf in Resources */,
 				9F643578261B5D40000D94A4 /* WhatsNewMoreViewController.xib in Resources */,
+				54076807270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */,
 				6500C64E26DFB91200151F1D /* NewsTableViewCell.xib in Resources */,
 				9F35860825FD219D0003658D /* CollaborationHeader.xib in Resources */,
 				9FE173D325914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
@@ -4145,6 +4216,7 @@
 				9F3028542681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
 				9F3AC939264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
 				C962D82C2566D21100727949 /* TicketCell.xib in Resources */,
+				54076818270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
 				5405380326E7C1BB00388BF3 /* MenuTableViewCell.xib in Resources */,
 				C93FCF0A25648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				9F1620D52566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
@@ -4196,6 +4268,7 @@
 				9FF0545525680EC90071E596 /* SendMessageView.xib in Resources */,
 				9F819AC6255C1646007C1739 /* LaunchScreen.storyboard in Resources */,
 				9F3AC95C264D4790004074C8 /* SwitcherCell.xib in Resources */,
+				54076808270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */,
 				9F3AC90E2645B17A004074C8 /* GTTeamCell.xib in Resources */,
 				9F3028012681D228009A3096 /* ProductionAlertCounterCell.xib in Resources */,
 				6500C64F26DFB91200151F1D /* NewsTableViewCell.xib in Resources */,
@@ -4254,6 +4327,7 @@
 				C962D82D2566D21100727949 /* TicketCell.xib in Resources */,
 				C93FCF0B25648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				9F6435D1261F2077000D94A4 /* CollaborationCounterCell.xib in Resources */,
+				54076819270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
 				5405380426E7C1BB00388BF3 /* MenuTableViewCell.xib in Resources */,
 				9F35860925FD219D0003658D /* CollaborationHeader.xib in Resources */,
 				9F1620D62566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
@@ -4596,7 +4670,9 @@
 				65437C3C2665387600B2F38A /* CollaborationDataProvider.swift in Sources */,
 				65437C3D2665387600B2F38A /* Preferences.swift in Sources */,
 				65437C3E2665387600B2F38A /* AppContactCell.swift in Sources */,
+				54076816270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
 				5405381926E8C65600388BF3 /* MenuViewControllerDataProvider.swift in Sources */,
+				54076805270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */,
 				65437C3F2665387600B2F38A /* HelpDeskDataProvider.swift in Sources */,
 				9FC12E0E26691FC90029D387 /* Reachability.swift in Sources */,
 				65437C402665387600B2F38A /* SessionExpiredHandler.swift in Sources */,
@@ -4789,6 +4865,7 @@
 				5405382726E8E60500388BF3 /* GTTeamDataProvider.swift in Sources */,
 				65437E34266539BF00B2F38A /* SceneDelegate.swift in Sources */,
 				65437E35266539BF00B2F38A /* GTA.xcdatamodeld in Sources */,
+				54076803270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */,
 				65437E36266539BF00B2F38A /* ServiceDeskAboutViewController.swift in Sources */,
 				9F30280A2681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				65437E37266539BF00B2F38A /* ServiceDeskContactsViewController.swift in Sources */,
@@ -4855,6 +4932,7 @@
 				65437E6A266539BF00B2F38A /* AboutSupportCell.swift in Sources */,
 				6500C64A26DFB91200151F1D /* NewsTableViewCell.swift in Sources */,
 				65437E6B266539BF00B2F38A /* APIManager.swift in Sources */,
+				54076814270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
 				65437E6C266539BF00B2F38A /* HelpDeskViewController.swift in Sources */,
 				65437E6D266539BF00B2F38A /* OfficeStatusCell.swift in Sources */,
 				65437E6E266539BF00B2F38A /* PanModalNavigationController.swift in Sources */,
@@ -4886,7 +4964,9 @@
 				65437F772665568000B2F38A /* CollaborationDataProvider.swift in Sources */,
 				65437F782665568000B2F38A /* Preferences.swift in Sources */,
 				65437F792665568000B2F38A /* AppContactCell.swift in Sources */,
+				54076815270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
 				5405381826E8C65600388BF3 /* MenuViewControllerDataProvider.swift in Sources */,
+				54076804270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */,
 				65437F7A2665568000B2F38A /* HelpDeskDataProvider.swift in Sources */,
 				9FC12E0D26691FC90029D387 /* Reachability.swift in Sources */,
 				65437F7B2665568000B2F38A /* SessionExpiredHandler.swift in Sources */,
@@ -5079,6 +5159,7 @@
 				5405382326E8E60500388BF3 /* GTTeamDataProvider.swift in Sources */,
 				659A5AB3255401EA00E13B77 /* SceneDelegate.swift in Sources */,
 				6563C2782592AD1500AA6168 /* GTA.xcdatamodeld in Sources */,
+				540767FF270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */,
 				C960A0E525B08B52004A9C65 /* ServiceDeskAboutViewController.swift in Sources */,
 				9F3028062681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				C9766FAC2576394500E9E697 /* ServiceDeskContactsViewController.swift in Sources */,
@@ -5145,6 +5226,7 @@
 				9FE173CF25914D3F00E2C481 /* AboutSupportCell.swift in Sources */,
 				6500C64626DFB91200151F1D /* NewsTableViewCell.swift in Sources */,
 				65D29083256C0DA6001B658A /* APIManager.swift in Sources */,
+				54076810270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
 				C91F707C2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F78D0DE256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
@@ -5208,6 +5290,7 @@
 				9F3028092681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				9F33F650260A3C4000470A47 /* APIRequest.swift in Sources */,
 				9F33F651260A3C4000470A47 /* MyTicketsViewController.swift in Sources */,
+				54076802270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */,
 				9F33F652260A3C4000470A47 /* CollaborationResponses.swift in Sources */,
 				9F33F654260A3C4000470A47 /* InfoArticleCell.swift in Sources */,
 				9F33F655260A3C4000470A47 /* CollaborationHeader.swift in Sources */,
@@ -5305,6 +5388,7 @@
 				9F33F692260A3C4000470A47 /* AboutSupportPolicyCell.swift in Sources */,
 				9F33F693260A3C4000470A47 /* AboutSupportCell.swift in Sources */,
 				5405381626E8C65600388BF3 /* MenuViewControllerDataProvider.swift in Sources */,
+				54076813270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
 				9F33F694260A3C4000470A47 /* HelpDeskViewController.swift in Sources */,
 				9F33F695260A3C4000470A47 /* APIManager.swift in Sources */,
 				9F33F696260A3C4000470A47 /* OfficeStatusCell.swift in Sources */,
@@ -5388,6 +5472,7 @@
 				9F7B678E26F2403800756412 /* TipsAndTricksTableViewCell.swift in Sources */,
 				C99AEEBA259A3CAB005BD447 /* OfficesResponses.swift in Sources */,
 				5405382426E8E60500388BF3 /* GTTeamDataProvider.swift in Sources */,
+				54076800270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */,
 				9F819A91255C1572007C1739 /* AppDelegate.swift in Sources */,
 				6563C2792592AD1500AA6168 /* GTA.xcdatamodeld in Sources */,
 				9F3028072681D228009A3096 /* ProductionAlertCell.swift in Sources */,
@@ -5454,6 +5539,7 @@
 				9FE173D025914D3F00E2C481 /* AboutSupportCell.swift in Sources */,
 				6500C64726DFB91200151F1D /* NewsTableViewCell.swift in Sources */,
 				C91F707D2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
+				54076811270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
 				65D2908E256C0DBC001B658A /* APIManager.swift in Sources */,
 				9F78D0DF256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C22566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
@@ -5534,6 +5620,7 @@
 				9F7B678F26F2403800756412 /* TipsAndTricksTableViewCell.swift in Sources */,
 				C99AEEBB259A3CAB005BD447 /* OfficesResponses.swift in Sources */,
 				5405382526E8E60500388BF3 /* GTTeamDataProvider.swift in Sources */,
+				54076801270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */,
 				9F819ABB255C1646007C1739 /* AppDelegate.swift in Sources */,
 				6563C27A2592AD1500AA6168 /* GTA.xcdatamodeld in Sources */,
 				9F3028082681D228009A3096 /* ProductionAlertCell.swift in Sources */,
@@ -5600,6 +5687,7 @@
 				9FE173D125914D3F00E2C481 /* AboutSupportCell.swift in Sources */,
 				6500C64826DFB91200151F1D /* NewsTableViewCell.swift in Sources */,
 				C91F707E2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
+				54076812270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
 				65D29094256C0DBD001B658A /* APIManager.swift in Sources */,
 				9F78D0E0256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C32566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,

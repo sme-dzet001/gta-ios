@@ -463,7 +463,9 @@ extension HomepageViewController: NewsShowDelegate {
         } else {
             articleViewController.articleText = text
         }
-        presentPanModal(articleViewController)
+        //presentPanModal(articleViewController)
+        let newsViewController = NewsScreenViewController(nibName: "NewsScreenViewController", bundle: nil)
+        navigationController?.pushViewController(newsViewController, animated: true)
     }
 }
 
