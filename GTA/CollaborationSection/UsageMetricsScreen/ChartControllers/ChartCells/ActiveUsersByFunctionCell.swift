@@ -8,7 +8,7 @@
 import UIKit
 import Charts
 
-class BarChartCell: UITableViewCell, VerticalBarChartDataChangedDelegate {
+class ActiveUsersByFunctionCell: UITableViewCell, VerticalBarChartDataChangedDelegate {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var barChartView: BarChartView!
@@ -130,7 +130,7 @@ class BarChartCell: UITableViewCell, VerticalBarChartDataChangedDelegate {
     }
 }
 
-extension BarChartCell: ChartDimensions {
+extension ActiveUsersByFunctionCell: ChartDimensions {
     var optimalHeight: CGFloat {
         return 294 + barChartView.legend.neededHeight
     }

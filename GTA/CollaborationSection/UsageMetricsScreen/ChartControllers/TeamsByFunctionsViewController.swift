@@ -8,40 +8,6 @@
 import UIKit
 import Charts
 
-class ChartDataSourceSelectionButton: UIButton {
-    var selectedBgView = UIView()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    func commonInit() {
-        addSubview(selectedBgView)
-        selectedBgView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            selectedBgView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 3),
-            selectedBgView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -3),
-            selectedBgView.topAnchor.constraint(equalTo: topAnchor, constant: 3),
-            selectedBgView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3)
-        ])
-        selectedBgView.backgroundColor = .white
-        selectedBgView.cornerRadius = 8
-        selectedBgView.isHidden = true
-    }
-    
-    var isActive: Bool = false {
-        didSet {
-            selectedBgView.isHidden = !isActive
-        }
-    }
-}
-
 class TeamsByFunctionsViewController: LineChartViewController {
     
     @IBOutlet var selectorBtns: [ChartDataSourceSelectionButton]!

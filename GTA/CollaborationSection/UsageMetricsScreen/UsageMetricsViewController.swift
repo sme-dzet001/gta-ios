@@ -20,7 +20,7 @@ class ChartTableView : UITableView, UIGestureRecognizerDelegate {
 
 class UsageMetricsViewController: UIViewController {
     
-    @IBOutlet weak var tableView: ChartTableView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var appTextField: CustomTextField!
     
     private let pickerView = UIPickerView()
@@ -28,11 +28,6 @@ class UsageMetricsViewController: UIViewController {
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
     var dataProvider: CollaborationDataProvider?
-    
-    weak var teamsByFunctionsDataChangedDelegate: TeamsByFunctionsDataChangedDelegate?
-    weak var verticalBarChartDataChangedDelegate: VerticalBarChartDataChangedDelegate?
-    weak var horizontallBarChartDataChangedDelegate: HorizontallBarChartDataChangedDelegate?
-    weak var activeUsersDataChangedDelegate: ActiveUsersDataChangedDelegate?
     
     private var isKeyboardShow: Bool = false
     
@@ -43,22 +38,7 @@ class UsageMetricsViewController: UIViewController {
     private lazy var activeUsersVC: ActiveUsersViewController = {
         let activeUsersVC = ActiveUsersViewController(nibName: "ActiveUsersViewController", bundle: nil)
         activeUsersVC.chartData = dataProvider?.activeUsersLineChartData
-        activeUsersDataChangedDelegate = activeUsersVC
         return activeUsersVC
-    }()
-    
-    private lazy var teamsByFunctionsVC: TeamsByFunctionsViewController = {
-        let teamsByFunctionsVC = TeamsByFunctionsViewController(nibName: "TeamsByFunctionsViewController", bundle: nil)
-        teamsByFunctionsVC.chartsData = dataProvider?.teamsByFunctionsLineChartData
-        teamsByFunctionsDataChangedDelegate = teamsByFunctionsVC
-        return teamsByFunctionsVC
-    }()
-    
-    private lazy var teamChatUsersVC: TeamChatUsersViewController = {
-        let teamChatUsersVC = TeamChatUsersViewController()
-        teamChatUsersVC.chartData = dataProvider?.horizontalChartData
-        horizontallBarChartDataChangedDelegate = teamChatUsersVC
-        return teamChatUsersVC
     }()
     
     private lazy var activeUsersChartCell: UITableViewCell = {
@@ -75,38 +55,22 @@ class UsageMetricsViewController: UIViewController {
         return cell
     }()
     
-    private lazy var teamsByFunctionsChartCell: UITableViewCell = {
-        let cell = UITableViewCell()
-        teamsByFunctionsVC.view.translatesAutoresizingMaskIntoConstraints = false
-        cell.contentView.addSubview(teamsByFunctionsVC.view)
-        NSLayoutConstraint.activate([
-            teamsByFunctionsVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-            teamsByFunctionsVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
-            teamsByFunctionsVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
-            teamsByFunctionsVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
-        ])
-        addChild(teamsByFunctionsVC)
+    private lazy var activeUsersByFuncChartCell: UITableViewCell = {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ActiveUsersByFunctionCell") as? ActiveUsersByFunctionCell else { return UITableViewCell() }
+        cell.setUpBarChartView(with: dataProvider?.verticalChartData)
         return cell
     }()
     
     private lazy var teamChatUsersChartCell: UITableViewCell = {
-        let cell = UITableViewCell()
-        teamChatUsersVC.view.translatesAutoresizingMaskIntoConstraints = false
-        cell.contentView.addSubview(teamChatUsersVC.view)
-        NSLayoutConstraint.activate([
-            teamChatUsersVC.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor),
-            teamChatUsersVC.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
-            teamChatUsersVC.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
-            teamChatUsersVC.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
-        ])
-        addChild(teamChatUsersVC)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TeamChatUsersCell") as? TeamChatUsersCell else { return UITableViewCell() }
+        cell.chartData = dataProvider?.horizontalChartData
         return cell
     }()
     
-    private lazy var activeUsersByFuncChartCell: UITableViewCell = {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BarChartCell") as? BarChartCell else { return UITableViewCell() }
-        cell.setUpBarChartView(with: dataProvider?.verticalChartData)
-        verticalBarChartDataChangedDelegate = cell
+    private lazy var teamsByFunctionsChartCell: UITableViewCell = {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TeamsByFunctionsTableViewCell") as? TeamsByFunctionsTableViewCell else { return UITableViewCell() }
+        cell.chartsData = dataProvider?.teamsByFunctionsLineChartData
+        cell.updateData()
         return cell
     }()
         
@@ -122,7 +86,9 @@ class UsageMetricsViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = .white
         
         tableView.contentInset = tableView.menuButtonContentInset
-        tableView.register(UINib(nibName: "BarChartCell", bundle: nil), forCellReuseIdentifier: "BarChartCell")
+        tableView.register(UINib(nibName: "ActiveUsersByFunctionCell", bundle: nil), forCellReuseIdentifier: "ActiveUsersByFunctionCell")
+        tableView.register(UINib(nibName: "TeamChatUsersCell", bundle: nil), forCellReuseIdentifier: "TeamChatUsersCell")
+        tableView.register(UINib(nibName: "TeamsByFunctionsTableViewCell", bundle: nil), forCellReuseIdentifier: "TeamsByFunctionsTableViewCell")
         setUpTextField()
         setUpNavigationItem()
     }
@@ -187,10 +153,7 @@ class UsageMetricsViewController: UIViewController {
         dataProvider?.getMetricsDataForApp(app)
         setTextFieldText(app)
         dataProvider?.selectedApp = app
-        activeUsersDataChangedDelegate?.activeUsersDataChanged(newData: dataProvider?.activeUsersLineChartData)
-        teamsByFunctionsDataChangedDelegate?.teamsByFunctionsDataChanged(newData: dataProvider?.teamsByFunctionsLineChartData)
-        verticalBarChartDataChangedDelegate?.setUpBarChartView(with: dataProvider?.verticalChartData)
-        horizontallBarChartDataChangedDelegate?.verticalBarChartDataChanged(newData: dataProvider?.horizontalChartData)
+        tableView.reloadData()
     }
     
     @objc private func getChartsData() {
@@ -212,11 +175,15 @@ class UsageMetricsViewController: UIViewController {
             return
         }
         chartDimensionsDict[0] = activeUsersVC
-        if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
+        if let barChartCell = activeUsersByFuncChartCell as? ActiveUsersByFunctionCell {
             chartDimensionsDict[1] = barChartCell
         }
-        chartDimensionsDict[2] = teamChatUsersVC
-        chartDimensionsDict[3] = teamsByFunctionsVC
+        if let teamChatUsersCell = teamChatUsersChartCell as? TeamChatUsersCell {
+            chartDimensionsDict[2] = teamChatUsersCell
+        }
+        if let teamByFunctionsCell = teamsByFunctionsChartCell as? TeamsByFunctionsTableViewCell {
+            chartDimensionsDict[3] = teamByFunctionsCell
+        }
         self.tableView.reloadData()
     }
     
@@ -288,8 +255,6 @@ class UsageMetricsViewController: UIViewController {
     
     deinit {
         activeUsersVC.removeFromParent()
-        teamChatUsersVC.removeFromParent()
-        teamsByFunctionsVC.removeFromParent()
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillHideNotification, object: nil)
@@ -314,7 +279,9 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
         let data = charts[indexPath.row]
         switch data {
         case is TeamsChatUserData:
-            chartDimensionsDict[indexPath.row] = teamChatUsersVC
+            if let teamChatUsersCell = teamChatUsersChartCell as? TeamChatUsersCell {
+                chartDimensionsDict[indexPath.row] = teamChatUsersCell
+            }
             return teamChatUsersChartCell
         case is ChartStructure:
             guard let chart = data as? ChartStructure else { return UITableViewCell() }
@@ -322,13 +289,15 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
                 chartDimensionsDict[indexPath.row] = activeUsersVC
                 return activeUsersChartCell
             } else {
-                if let barChartCell = activeUsersByFuncChartCell as? BarChartCell {
+                if let barChartCell = activeUsersByFuncChartCell as? ActiveUsersByFunctionCell {
                     chartDimensionsDict[indexPath.row] = barChartCell
                 }
                 return activeUsersByFuncChartCell
             }
         case is TeamsByFunctionsLineChartData:
-            chartDimensionsDict[indexPath.row] = teamsByFunctionsVC
+            if let teamByFunctionsCell = teamsByFunctionsChartCell as? TeamsByFunctionsTableViewCell {
+                chartDimensionsDict[indexPath.row] = teamByFunctionsCell
+            }
             return teamsByFunctionsChartCell
         default:
             return UITableViewCell()

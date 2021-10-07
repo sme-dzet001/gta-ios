@@ -1,30 +1,66 @@
 //
-//  ActiveUsersViewController.swift
+//  TeamsByFunctionsTableViewCell.swift
 //  GTA
 //
-//  Created by Margarita N. Bock on 03.07.2021.
+//  Created by Артем Хрещенюк on 06.10.2021.
 //
 
 import UIKit
 import Charts
 
-//class ChartScrollView : UIScrollView, UIGestureRecognizerDelegate {
-//    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        return true
-//    }
-//}
-//
-//class LineChartXValueFormatter: NSObject, IAxisValueFormatter {
-//    var xLabels: [String] = []
-//
-//    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-//        let index = Int(value)
-//        guard index < xLabels.count else { return "" }
-//        return xLabels[index]
-//    }
-//}
+class ChartScrollView : UIScrollView, UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
 
-class LineChartViewController: UIViewController {
+class LineChartXValueFormatter: NSObject, IAxisValueFormatter {
+    var xLabels: [String] = []
+    
+    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        let index = Int(value)
+        guard index < xLabels.count else { return "" }
+        return xLabels[index]
+    }
+}
+
+
+class ChartDataSourceSelectionButton: UIButton {
+    var selectedBgView = UIView()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    func commonInit() {
+        addSubview(selectedBgView)
+        selectedBgView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            selectedBgView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 3),
+            selectedBgView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -3),
+            selectedBgView.topAnchor.constraint(equalTo: topAnchor, constant: 3),
+            selectedBgView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3)
+        ])
+        selectedBgView.backgroundColor = .white
+        selectedBgView.cornerRadius = 8
+        selectedBgView.isHidden = true
+    }
+    
+    var isActive: Bool = false {
+        didSet {
+            selectedBgView.isHidden = !isActive
+        }
+    }
+}
+
+
+class TeamsByFunctionsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var verticalAxisStackView: UIStackView!
@@ -42,20 +78,57 @@ class LineChartViewController: UIViewController {
     @IBOutlet weak var verticalAxisViewTop: NSLayoutConstraint!
     @IBOutlet weak var verticalAxisViewBottom: NSLayoutConstraint!
     
+    @IBOutlet var selectorBtns: [ChartDataSourceSelectionButton]!
+    @IBOutlet weak var titleLabel: UILabel!
+    
     let chartViewGridWidth: CGFloat = 64
     let lineColor = UIColor(hex: 0x428DF7)
     let chartLineWidth: CGFloat = 2
     let chartLineCircleRadius: CGFloat = 8
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureChart()
-//        setupChartView()
-//        updateLabels()
-//        updateChartData()
+    var chartsData: TeamsByFunctionsLineChartData? 
+    var dataSourceIdx: Int = 0 {
+        didSet {
+            updateLabels()
+            updateChartData()
+            updateSelectorBtns()
+        }
+    }
+    var lineChartData: [(period: String?, value: Int?)] {
+        let count = chartsData?.data?.count ?? 0
+        guard count > dataSourceIdx else { return [(period: String?, value: Int?)]() }
+        let values = chartsData?.data?[dataSourceIdx] ?? []
+        return values.map({ return (period: $0.formattedLegend, value: $0.value) })
     }
     
-    // TODO: Need to find better name
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        chartScrollView.delegate = self
+    }
+    
+    func updateData() {
+        configureChart()
+        dataSourceIdx = 0
+        titleLabel.text = chartsData?.title
+    }
+    
+    @IBAction func dataSourceSelectorBtnTapped(_ sender: ChartDataSourceSelectionButton) {
+        dataSourceIdx = sender.tag - 500
+    }
+    
+    func updateSelectorBtns() {
+        for (index, selectorBtn) in selectorBtns.enumerated() {
+            selectorBtn.isActive = (selectorBtn.tag - 500) == dataSourceIdx
+            if (chartsData?.data?.count ?? 0) > index {
+                let buttonTitle = (chartsData?.data?[index] ?? []).compactMap({$0.chartSubtitle}).first
+                selectorBtn.setTitle(buttonTitle, for: .normal)
+                selectorBtn.isHidden = false
+            } else {
+                selectorBtn.isHidden = true
+            }
+        }
+    }
+    
     func configureChart(isFirstTime: Bool = true) {
         setupChartView()
         updateLabels()
@@ -64,13 +137,8 @@ class LineChartViewController: UIViewController {
         updateScrollView()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func layoutSubviews() {
         updateScrollView()
-    }
-    
-    var lineChartData: [(period: String?, value: Int?)] {
-        return []
     }
     
     func updateBlurViews() {
@@ -262,21 +330,18 @@ class LineChartViewController: UIViewController {
         chartView.xAxis.gridLineWidth = gridLineWidth
         chartView.leftAxis.gridLineWidth = gridLineWidth
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
 
-extension LineChartViewController: UIScrollViewDelegate {
+extension TeamsByFunctionsTableViewCell: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateBlurViews()
     }
 }
+
+extension TeamsByFunctionsTableViewCell: ChartDimensions {
+    var optimalHeight: CGFloat {
+        return 370
+    }
+}
+

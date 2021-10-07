@@ -1,34 +1,28 @@
 //
-//  TeamChatUsersViewController.swift
+//  TeamChatUsersCell.swift
 //  GTA
 //
-//  Created by Артем Хрещенюк on 07.07.2021.
+//  Created by Артем Хрещенюк on 06.10.2021.
 //
 
-import Foundation
 import UIKit
 import Charts
 
-class TeamChatUsersViewController: UIViewController {
+class TeamChatUsersCell: UITableViewCell {
 
     @IBOutlet weak var chartView: HorizontalBarChartView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    var chartData: TeamsChatUserData?
+    var chartData: TeamsChatUserData? {
+        didSet {
+            updateChartData()
+        }
+    }
     var gridView = UIView()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func awakeFromNib() {
+        super.awakeFromNib()
         updateChartData()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-       // addGridView()
     }
     
     func updateChartData() {
@@ -113,7 +107,7 @@ class TeamChatUsersViewController: UIViewController {
     }
 }
 
-extension TeamChatUsersViewController {
+extension TeamChatUsersCell {
     func procentFormatter() -> NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .percent
@@ -127,7 +121,7 @@ extension TeamChatUsersViewController {
     }
 }
 // Grid functions
-extension TeamChatUsersViewController {
+extension TeamChatUsersCell {
     
     private func setGridView() -> UIView {
         let gv = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -153,14 +147,14 @@ extension TeamChatUsersViewController {
  
 }
 
-extension TeamChatUsersViewController: ChartDimensions {
+extension TeamChatUsersCell: ChartDimensions {
     var optimalHeight: CGFloat {
         let linesCount = chartData?.data?.count ?? 0
         return 170 + CGFloat(linesCount) * ChartsFormatting.horizontalBarOptimalHeight
     }
 }
 
-extension TeamChatUsersViewController: HorizontallBarChartDataChangedDelegate {
+extension TeamChatUsersCell: HorizontallBarChartDataChangedDelegate {
     func verticalBarChartDataChanged(newData: TeamsChatUserData?) {
         chartData = newData
         updateChartData()
