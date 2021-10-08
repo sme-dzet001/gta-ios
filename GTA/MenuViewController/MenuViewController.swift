@@ -168,8 +168,8 @@ class MenuViewController: UIViewController {
                             } else {
                                 self?.officeLoadingError = nil
                             }
-                            self?.setTableViewHeight()
                             self?.tableView.reloadData()
+                            self?.setTableViewHeight()
                             if forceOpenOfficeSelectionScreen {
                                 self?.openOfficeSelectionModalScreen()
                             }
@@ -288,7 +288,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     return cell
                 } else {
-                    let loadingCell = createLoadingCell(withBottomSeparator: true, verticalOffset: 54)
+                    let loadingCell = createLoadingCell(withBottomSeparator: false, verticalOffset: 54)
                     return loadingCell
                 }
             }
