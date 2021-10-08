@@ -36,7 +36,7 @@ class MenuViewController: UIViewController {
     var dataProvider = MenuViewControllerDataProvider()
     var selectedTabIdx: Int? {
         didSet {
-            guard oldValue != selectedTabIdx else { return }
+            guard oldValue != selectedTabIdx, let _ = tableView else { return }
             tableView.reloadData()
         }
     }

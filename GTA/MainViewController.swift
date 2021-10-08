@@ -58,6 +58,7 @@ class MainViewController: UIViewController {
             tabBar = segue.destination as? CustomTabBarController
             tabBar?.indexDelegate = self
             tabBar?.tabBar.isHidden = true
+            tabBar?.setSelectedTabAccordingToPendingAlert()
         }
     }
     
