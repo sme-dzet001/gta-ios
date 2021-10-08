@@ -29,7 +29,7 @@ class ChatBotViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
         setAccessibilityIdentifiers()
         NotificationCenter.default.addObserver(self, selector: #selector(dismissModal), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -113,14 +113,18 @@ class ChatBotViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        let fff = CGPoint(x: webView.scrollView.contentOffset.x, y: webView.scrollView.contentSize.height)
-        webView.scrollView.contentOffset = fff
-        panModalTransition(to: .longForm)
+    @objc func keyboardDidShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
+            guard keyboardSize.height > 0 else { return }
+        
+            let offset = CGPoint(x: webView.scrollView.contentOffset.x, y: keyboardSize.height)
+            panModalTransition(to: .longForm)
+            webView.scrollView.setContentOffset(offset, animated: true)
+        }
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
 }
