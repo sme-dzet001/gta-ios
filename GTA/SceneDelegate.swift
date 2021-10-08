@@ -92,16 +92,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                 if let aDate = UserDefaults.standard.value(forKey: "lastActivityDate") as? Date {
                     lastActivityDate = aDate
                 }
-                if lastActivityDate.addingTimeInterval(1) > Date(),  let _ = KeychainManager.getPin(), !(isAuthentificationScreenShown ?? true), isAuthentificationPassed ?? false {
+                if lastActivityDate.addingTimeInterval(1200) > Date(),  let _ = KeychainManager.getPin(), !(isAuthentificationScreenShown ?? true), isAuthentificationPassed ?? false {
                     if let navController = self.window?.rootViewController as? UINavigationController, navController.rootViewController is MainViewController {
                         return
                     }
-                    let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
-                    let navController = UINavigationController(rootViewController: mainViewController)
-                    navController.isNavigationBarHidden = true
-                    navController.isToolbarHidden = true
-                    //self.window?.rootViewController = navController
+                    setUpMainWindow()
                     return
                 } else if KeychainManager.getPin() == nil {
                     let authScreenShown = isAuthentificationScreenShown ?? false
@@ -112,18 +107,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                     startLoginFlow(sessionExpired: tokenIsExpired)
                     return
                 }
-                let authVC = AuthViewController()
-                authVC.isSignUp = false
-                authVC.appKeyWindow = window
-                authVC.delegate = self
-                pinCodeWindow?.frame = UIScreen.main.bounds
-                pinCodeWindow?.windowLevel = UIWindow.Level.statusBar + 1
-                pinCodeWindow?.rootViewController = authVC
-                pinCodeWindow?.makeKeyAndVisible()
+                showAuthScreen()
             }
         } else {
             startLoginFlow()
         }
+    }
+    
+    private func showAuthScreen() {
+        setUpMainWindow()
+        let authVC = AuthViewController()
+        authVC.isSignUp = false
+        authVC.appKeyWindow = window
+        authVC.delegate = self
+        pinCodeWindow?.frame = UIScreen.main.bounds
+        pinCodeWindow?.windowLevel = UIWindow.Level.statusBar + 1
+        pinCodeWindow?.rootViewController = authVC
+        pinCodeWindow?.makeKeyAndVisible()
+    }
+    
+    private func setUpMainWindow() {
+        let windowController = window?.rootViewController as? UINavigationController
+        guard let _ = windowController, windowController!.rootViewController is LoginViewController else { return }
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
+        let navController = UINavigationController(rootViewController: mainViewController)
+        navController.isNavigationBarHidden = true
+        navController.isToolbarHidden = true
+        self.window?.rootViewController = navController
     }
     
     private func removeAllData(delete: Bool = true) {
@@ -148,7 +159,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         let navController = UINavigationController(rootViewController: loginViewController as UIViewController)
         navController.isNavigationBarHidden = true
         navController.isToolbarHidden = true
+        window?.windowLevel = UIWindow.Level.statusBar + 1
         window?.rootViewController = navController
+        window?.makeKeyAndVisible()
     }
     
     func hideContent() {
