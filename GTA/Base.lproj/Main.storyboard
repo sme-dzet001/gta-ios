@@ -251,7 +251,7 @@
             <objects>
                 <tabBarController storyboardIdentifier="TabBarController" id="2fU-G9-hR4" customClass="CustomTabBarController" customModule="GTA" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="ogV-gh-BnP"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HsF-tP-v1d">
+                    <tabBar key="tabBar" hidden="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HsF-tP-v1d">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
