@@ -451,7 +451,7 @@ extension HomepageViewController: DismissAlertDelegate {
 }
 
 extension HomepageViewController: NewsShowDelegate {
-    func showArticleViewController(with text: String?) {
+    func showArticleViewController(with text: String?, typeOfNews: Int) {
         let articleViewController = ArticleViewController()
         presentedVC = articleViewController
         let htmlBody = dataProvider.formNewsBody(from: text)
@@ -465,12 +465,13 @@ extension HomepageViewController: NewsShowDelegate {
         }
         //presentPanModal(articleViewController)
         let newsViewController = NewsScreenViewController(nibName: "NewsScreenViewController", bundle: nil)
+        newsViewController.newsData = typeOfNews == 1 ? newsViewController.newsDataOne : newsViewController.newsDataTwo //TODO: delete
         navigationController?.pushViewController(newsViewController, animated: true)
     }
 }
 
 protocol NewsShowDelegate: AnyObject {
-    func showArticleViewController(with text: String?)
+    func showArticleViewController(with text: String?, typeOfNews: Int) //TODO: delete typeOfNews
 }
 
 protocol PanModalAppearanceDelegate: AnyObject {

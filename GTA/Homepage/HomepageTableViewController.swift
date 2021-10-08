@@ -219,6 +219,8 @@ extension HomepageTableViewController : TappedLabelDelegate {
         guard let cell = cell as? NewsTableViewCell else { return }
         guard let cellIndex = tableView.indexPath(for: cell) else { return }
         let dataSource = getDataSource()
+        let typeOfNews = (cellIndex.row + 1) % 2
+        print("typeOfNews: \(typeOfNews)")
         guard dataSource.count > cellIndex.row else { return }
         if cell.fullText?.length ?? 0 <= 600 {
             guard !expandedRowsIndex.contains(cellIndex.row) else { return }
@@ -231,7 +233,7 @@ extension HomepageTableViewController : TappedLabelDelegate {
                 self.tableView.scrollToRow(at: cellIndex, at: .none, animated: true)
             }
         } else {
-            newsShowDelegate?.showArticleViewController(with: dataSource[cellIndex.row].newsBody)
+            newsShowDelegate?.showArticleViewController(with: dataSource[cellIndex.row].newsBody, typeOfNews: typeOfNews)
         }
     }
     

@@ -9,10 +9,11 @@ import UIKit
 
 class NewsScreenTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var imageStackView: UIStackView!
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -20,10 +21,19 @@ class NewsScreenTableViewCell: UITableViewCell {
         subtitleLabel.setLineHeight(lineHeight: 10)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func setupCell(_ data: NewsData) {
+        titleLabel.text = data.title
+        subtitleLabel.text = data.text
+        imageStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        if let images = data.images {
+            for image in images {
+                let imageView = UIImageView()
+                imageView.contentMode = .scaleAspectFit
+                imageView.image = image
+                imageStackView.addArrangedSubview(imageView)
+            }
+        }
     }
     
 }
