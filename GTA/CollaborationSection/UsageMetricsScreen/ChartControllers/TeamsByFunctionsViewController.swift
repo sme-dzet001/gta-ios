@@ -102,6 +102,7 @@ extension TeamsByFunctionsViewController: TeamsByFunctionsDataChangedDelegate {
     func teamsByFunctionsDataChanged(newData: TeamsByFunctionsLineChartData?) {
         guard chartsData != newData else { return }
         chartsData = newData
+        configureChart(isFirstTime: false)
         updateData()
     }
     
