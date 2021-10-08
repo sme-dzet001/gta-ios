@@ -40,11 +40,7 @@ class UsageMetricsViewController: UIViewController {
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.barTintColor = .white
         
-        tableView.contentInset = tableView.menuButtonContentInset
-        tableView.register(UINib(nibName: "ActiveUsersByFunctionCell", bundle: nil), forCellReuseIdentifier: "ActiveUsersByFunctionCell")
-        tableView.register(UINib(nibName: "TeamChatUsersCell", bundle: nil), forCellReuseIdentifier: "TeamChatUsersCell")
-        tableView.register(UINib(nibName: "TeamsByFunctionsTableViewCell", bundle: nil), forCellReuseIdentifier: "TeamsByFunctionsTableViewCell")
-        tableView.register(UINib(nibName: "ActiveUsersTableViewCell", bundle: nil), forCellReuseIdentifier: "ActiveUsersTableViewCell")
+        setUpTableView()
         setUpTextField()
         setUpNavigationItem()
     }
@@ -55,18 +51,18 @@ class UsageMetricsViewController: UIViewController {
         getChartsData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     private func addObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIApplication.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIApplication.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func setUpTableView() {
+        tableView.contentInset = tableView.menuButtonContentInset
+        tableView.register(UINib(nibName: "ActiveUsersByFunctionCell", bundle: nil), forCellReuseIdentifier: "ActiveUsersByFunctionCell")
+        tableView.register(UINib(nibName: "TeamChatUsersCell", bundle: nil), forCellReuseIdentifier: "TeamChatUsersCell")
+        tableView.register(UINib(nibName: "TeamsByFunctionsTableViewCell", bundle: nil), forCellReuseIdentifier: "TeamsByFunctionsTableViewCell")
+        tableView.register(UINib(nibName: "ActiveUsersTableViewCell", bundle: nil), forCellReuseIdentifier: "ActiveUsersTableViewCell")
     }
     
     @objc private func didBecomeActive() {

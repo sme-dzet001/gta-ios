@@ -2101,7 +2101,7 @@
 			isa = PBXGroup;
 			children = (
 				9FF6A11E26A88C4700EC5A7C /* ChartsDataStructures */,
-				658BEF76268FA7D800D4FD2C /* ChartControllers */,
+				9F343A48269C4DFB0071362D /* ChartCells */,
 				653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */,
 				658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */,
 			);
