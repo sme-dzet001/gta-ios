@@ -468,20 +468,23 @@ class HomeDataProvider {
     
     private func processGlobalProductionAlerts(alertID: String? = nil, _ reportData: ReportDataResponse?, _ globalProductionAlertsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var prodAlertsResponse: GlobalProductionAlertsResponse?
-        var retErr = error
+        var retErr = error != nil ? ResponseError.generate(error: error) : nil
         if let responseData = globalProductionAlertsResponse {
             do {
                 prodAlertsResponse = try DataParser.parse(data: responseData)
             } catch {
-                retErr = ResponseError.parsingError
+                retErr = retErr == nil ? ResponseError.parsingError : retErr
             }
         } else {
-            retErr = ResponseError.commonError
+            retErr = retErr == nil ? ResponseError.commonError : retErr
         }
-        if let data = prodAlertsResponse?.data?.rows, data.isEmpty {
+        if let data = prodAlertsResponse?.data?.rows, data.isEmpty, retErr == nil {
             retErr = ResponseError.noDataAvailable
         }
-        let dataWasChanged = fillGlobalProductionAlertsData(alertID: alertID, prodAlertsResponse)
+        var dataWasChanged = false
+        if retErr == nil {
+            dataWasChanged = fillGlobalProductionAlertsData(alertID: alertID, prodAlertsResponse)
+        }
         completion?(dataWasChanged, errorCode, retErr)
     }
     
