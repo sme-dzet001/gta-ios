@@ -94,6 +94,7 @@ class TeamsByFunctionsTableViewCell: UITableViewCell {
             updateSelectorBtns()
         }
     }
+
     var lineChartData: [(period: String?, value: Int?)] {
         let count = chartsData?.data?.count ?? 0
         guard count > dataSourceIdx else { return [(period: String?, value: Int?)]() }
@@ -101,19 +102,26 @@ class TeamsByFunctionsTableViewCell: UITableViewCell {
         return values.map({ return (period: $0.formattedLegend, value: $0.value) })
     }
     
+    override func layoutIfNeeded() {
+        updateLabels()
+        updateChartData()
+        updateSelectorBtns()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         chartScrollView.delegate = self
     }
     
+    
     func updateData() {
         configureChart()
-        dataSourceIdx = 0
         titleLabel.text = chartsData?.title
     }
     
     @IBAction func dataSourceSelectorBtnTapped(_ sender: ChartDataSourceSelectionButton) {
         dataSourceIdx = sender.tag - 500
+        chartScrollView.stopDecelerating()
     }
     
     func updateSelectorBtns() {

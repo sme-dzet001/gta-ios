@@ -2152,7 +2152,6 @@
 		658BEF76268FA7D800D4FD2C /* ChartControllers */ = {
 			isa = PBXGroup;
 			children = (
-				9F343A7526A1C3B10071362D /* xib */,
 				9F343A48269C4DFB0071362D /* ChartCells */,
 			);
 			path = ChartControllers;
@@ -2509,13 +2508,6 @@
 				9F343A6C269DE3750071362D /* GoogleService-Info.plist */,
 			);
 			path = GTADev;
-			sourceTree = "<group>";
-		};
-		9F343A7526A1C3B10071362D /* xib */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = xib;
 			sourceTree = "<group>";
 		};
 		9F3585FF25FD219C0003658D /* CollaborationCustomHeader */ = {

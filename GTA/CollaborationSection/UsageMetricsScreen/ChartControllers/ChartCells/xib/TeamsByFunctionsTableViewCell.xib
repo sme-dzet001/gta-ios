@@ -27,13 +27,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPc-XT-1Xe" userLabel="Data Source Selector View">
-                        <rect key="frame" x="44" y="80" width="521" height="40"/>
+                        <rect key="frame" x="24" y="80" width="561" height="40"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Vkw-is-fg7">
-                                <rect key="frame" x="0.0" y="0.0" width="521" height="40"/>
+                                <rect key="frame" x="0.0" y="0.0" width="561" height="40"/>
                                 <subviews>
                                     <button opaque="NO" tag="500" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxr-Wc-2ZL" customClass="ChartDataSourceSelectionButton" customModule="GTA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="130.5" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="140.5" height="40"/>
                                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
                                         <state key="normal" title="Meetings">
                                             <color key="titleColor" red="0.05881185085" green="0.058830253780000001" blue="0.058810673649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -44,7 +44,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="501" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUq-fh-BMI" customClass="ChartDataSourceSelectionButton" customModule="GTA" customModuleProvider="target">
-                                        <rect key="frame" x="130.5" y="0.0" width="130" height="40"/>
+                                        <rect key="frame" x="140.5" y="0.0" width="140" height="40"/>
                                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
                                         <state key="normal" title="Calls">
                                             <color key="titleColor" red="0.05881185085" green="0.058830253780000001" blue="0.058810673649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -55,7 +55,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="502" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TLV-ci-VzW" customClass="ChartDataSourceSelectionButton" customModule="GTA" customModuleProvider="target">
-                                        <rect key="frame" x="260.5" y="0.0" width="130.5" height="40"/>
+                                        <rect key="frame" x="280.5" y="0.0" width="140.5" height="40"/>
                                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
                                         <state key="normal" title="Private Chat">
                                             <color key="titleColor" red="0.05881185085" green="0.058830253780000001" blue="0.058810673649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -66,7 +66,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="503" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fph-Uk-Uf5" customClass="ChartDataSourceSelectionButton" customModule="GTA" customModuleProvider="target">
-                                        <rect key="frame" x="391" y="0.0" width="130" height="40"/>
+                                        <rect key="frame" x="421" y="0.0" width="140" height="40"/>
                                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
                                         <state key="normal" title="Team Chat">
                                             <color key="titleColor" red="0.05881185085" green="0.058830253780000001" blue="0.058810673649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -189,9 +189,9 @@
                     </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="gPc-XT-1Xe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="5bx-Ta-I2h"/>
                     <constraint firstItem="d8r-0q-ooy" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" constant="-210" id="7OW-KD-Alb"/>
                     <constraint firstItem="ROn-hZ-P1z" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="AGP-iG-mZM"/>
-                    <constraint firstItem="gPc-XT-1Xe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="AeH-6w-zfF"/>
                     <constraint firstItem="gPc-XT-1Xe" firstAttribute="top" secondItem="ROn-hZ-P1z" secondAttribute="bottom" constant="24" id="BSh-NM-ODl"/>
                     <constraint firstItem="qSb-91-lL4" firstAttribute="trailing" secondItem="d8r-0q-ooy" secondAttribute="trailing" id="CoP-3U-lAz"/>
                     <constraint firstItem="FLn-XU-LQk" firstAttribute="bottom" secondItem="d8r-0q-ooy" secondAttribute="bottom" id="Col-eT-2wW"/>
@@ -207,11 +207,11 @@
                     <constraint firstItem="AG9-eG-aLN" firstAttribute="top" secondItem="d8r-0q-ooy" secondAttribute="top" id="RNF-Gh-zHI"/>
                     <constraint firstItem="AG9-eG-aLN" firstAttribute="leading" secondItem="FLn-XU-LQk" secondAttribute="trailing" id="W4x-Rm-CSj"/>
                     <constraint firstItem="FLn-XU-LQk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Xkl-DQ-7FN"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="gPc-XT-1Xe" secondAttribute="trailing" constant="24" id="Y4n-MT-yYU"/>
                     <constraint firstAttribute="centerXWithinMargins" secondItem="Zo6-Lr-dOQ" secondAttribute="trailing" constant="4" id="aEH-sk-QEP"/>
                     <constraint firstAttribute="trailing" secondItem="Fal-kn-ls1" secondAttribute="trailing" id="dKf-Ob-LKX"/>
                     <constraint firstItem="qSb-91-lL4" firstAttribute="bottom" secondItem="FLn-XU-LQk" secondAttribute="bottom" id="fAd-nO-1be"/>
                     <constraint firstAttribute="bottom" secondItem="Fal-kn-ls1" secondAttribute="bottom" id="hnp-R5-2fk"/>
+                    <constraint firstAttribute="trailing" secondItem="gPc-XT-1Xe" secondAttribute="trailing" constant="24" id="sK0-QW-4iB"/>
                     <constraint firstItem="a0g-vF-aB4" firstAttribute="leading" secondItem="Zo6-Lr-dOQ" secondAttribute="trailing" constant="8" id="yZs-la-4hZ"/>
                 </constraints>
             </tableViewCellContentView>

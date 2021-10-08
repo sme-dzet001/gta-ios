@@ -1024,3 +1024,10 @@ extension Double {
       return floor(value / toNearest) * toNearest
     }
 }
+
+extension UIScrollView  {
+    func stopDecelerating() {
+        let contentOffset = self.contentOffset
+        self.setContentOffset(contentOffset, animated: false)
+    }
+}
