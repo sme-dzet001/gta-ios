@@ -121,7 +121,6 @@ class HomepageViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalProductionAlertsIgnoringCache), name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
-        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
