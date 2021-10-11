@@ -9,14 +9,25 @@ import UIKit
 
 class NewsScreenViewController: UIViewController {
 
+    @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var headerView: UIView!
     
     @IBOutlet weak var newsbackgroundImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var titleConstraints: [NSLayoutConstraint]!
+    
     @IBOutlet weak var subtitleLabel: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
+    
+    var maxHeaderHeight: CGFloat = 340 //0 (1.08)
+    var minHeaderHeight: CGFloat = 140 //250 (1.08)
+    
+    var maxSideTitleConstraint: CGFloat = 70
+    var minSideTitleConstraint: CGFloat = 36
+    
+    var previousScrollOffset: CGFloat = 0
     
     var newsData: [NewsData]?
     let newsDataOne: [NewsData] = [
@@ -39,6 +50,8 @@ class NewsScreenViewController: UIViewController {
         NewsData(title: nil, text: "We welcome everyone to try out the new Real Time Trends section of the Artist Portal by downloading the app or through the browser as seen below.  SME users can simply login with their email and network password.", images: [UIImage(named: "newsImage13")!])
     ]
     
+    var heightMultiplier = 0.47
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,6 +59,11 @@ class NewsScreenViewController: UIViewController {
         backButton.setTitle("", for: .normal)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        self.headerHeightConstraint.constant = self.maxHeaderHeight
+        updateHeader()
+    }
+    
     @IBAction func backButtonAction(_ sender: UIButton) {
 
     }
@@ -79,7 +97,103 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
+        let absoluteTop: CGFloat = 0;
+        let absoluteBottom: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height;
+        
+        let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
+        let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
+        
+        if canAnimateHeader(scrollView) {
+            var newHeight = self.headerHeightConstraint.constant
+            if isScrollingDown {
+                newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
+            } else if isScrollingUp, scrollView.contentOffset.y < self.minHeaderHeight {
+                print(scrollView.contentOffset.y)
+                newHeight = min(self.maxHeaderHeight, self.headerHeightConstraint.constant + abs(scrollDiff))
+            }
+            
+            if newHeight != self.headerHeightConstraint.constant {
+                self.headerHeightConstraint.constant = newHeight
+                self.setScrollPosition(position: self.previousScrollOffset)
+            }
+            
+            self.previousScrollOffset = scrollView.contentOffset.y
+            self.updateHeader()
+        }
+    }
     
+    func canAnimateHeader(_ scrollView: UIScrollView) -> Bool {
+        // Calculate the size of the scrollView when header is collapsed
+        let scrollViewMaxHeight = scrollView.frame.height + self.headerHeightConstraint.constant - minHeaderHeight
+        
+        // Make sure that when header is collapsed, there is still room to scroll
+        return scrollView.contentSize.height > scrollViewMaxHeight
+    }
+    
+    func setScrollPosition(position: CGFloat) {
+        self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: position)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        scrollViewDidStopScrolling()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            scrollViewDidStopScrolling()
+        }
+    }
+    
+    func scrollViewDidStopScrolling() {
+        let range = self.maxHeaderHeight - self.minHeaderHeight
+        let midPoint = self.minHeaderHeight + (range / 2)
+        
+        if self.headerHeightConstraint.constant > midPoint {
+            expandHeader()
+        } else {
+            collapseHeader()
+        }
+    }
+    
+    func collapseHeader() {
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.headerHeightConstraint.constant = self.minHeaderHeight
+            // Manipulate UI elements within the header here
+            self.updateHeader()
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func expandHeader() {
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.headerHeightConstraint.constant = self.maxHeaderHeight
+            // Manipulate UI elements within the header here
+            self.updateHeader()
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    
+}
+
+//Header
+extension NewsScreenViewController {
+    func updateHeader() {
+        let range = self.maxHeaderHeight - self.minHeaderHeight
+        let openAmount = self.headerHeightConstraint.constant - self.minHeaderHeight
+        let percentage = openAmount / range
+        
+        let constraintRange = maxSideTitleConstraint * (1 - percentage)
+        for i in titleConstraints {
+            i.constant = max(constraintRange, minSideTitleConstraint)
+        }
+        self.titleLabel.numberOfLines = percentage > 0.2 ? 0 : 1
+        self.subtitleLabel.alpha = percentage
+    }
 }
 
 struct NewsData {

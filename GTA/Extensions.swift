@@ -135,8 +135,7 @@ extension UILabel {
         let sizeConstraint = CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude)
 
         let attributes: [AnyHashable: Any] = [NSAttributedString.Key.font: font]
-        let attributedText = self.attributedText!// NSAttributedString(string: self.text!, attributes: attributes as? [NSAttributedString.Key : Any])
-        let boundingRect: CGRect = attributedText.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
+        let attributedText = self.attributedText!// NSAttributedString(string: self.text!, attributes: attributes as? [NSAttributedString.Key : Any]5        let boundingRect: CGRect = attributedText.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
 
         if (self.text?.count ?? 0) > 110 {
             var index: Int = 0

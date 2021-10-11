@@ -12,12 +12,15 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewsScreenViewController" customModule="GTA" customModuleProvider="target">
             <connections>
                 <outlet property="backButton" destination="2cb-Rw-Whj" id="IHz-PS-w5q"/>
+                <outlet property="headerHeightConstraint" destination="Mog-mW-LWT" id="1EU-Xy-BQl"/>
                 <outlet property="headerView" destination="7RY-Wt-vnf" id="X1Z-u6-Fg0"/>
                 <outlet property="newsbackgroundImage" destination="EiQ-e5-ROi" id="VPe-vD-9L1"/>
                 <outlet property="subtitleLabel" destination="258-TV-1Px" id="ves-X7-rYD"/>
                 <outlet property="tableView" destination="5Ob-nD-Rtp" id="iWg-zK-cQd"/>
                 <outlet property="titleLabel" destination="4Au-hc-m7b" id="x4k-no-qeg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outletCollection property="titleConstraints" destination="brt-SB-OVe" collectionClass="NSMutableArray" id="Zp5-Wc-vGn"/>
+                <outletCollection property="titleConstraints" destination="0CU-o5-eMz" collectionClass="NSMutableArray" id="bWf-b2-CSZ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -26,13 +29,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7RY-Wt-vnf">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="391"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="340"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newsHardcoreImage" translatesAutoresizingMaskIntoConstraints="NO" id="EiQ-e5-ROi" userLabel="backroundImage">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="391"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="340"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How Sony Music uses data to connect artists with fans" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Au-hc-m7b">
-                            <rect key="frame" x="32" y="183" width="350" height="57.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How Sony Music uses data to connect artists with fans" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="4Au-hc-m7b">
+                            <rect key="frame" x="32" y="141.5" width="350" height="57.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -50,7 +53,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="258-TV-1Px">
-                            <rect key="frame" x="32" y="244.5" width="350" height="50.5"/>
+                            <rect key="frame" x="32" y="203" width="350" height="50.5"/>
                             <attributedString key="attributedText">
                                 <fragment content="Forbes Content Studio Forbes Staff Forbes Content Merketing">
                                     <attributes>
@@ -72,8 +75,8 @@
                         <constraint firstItem="258-TV-1Px" firstAttribute="top" secondItem="4Au-hc-m7b" secondAttribute="bottom" constant="4" id="6vl-Oo-A2P"/>
                         <constraint firstAttribute="bottom" secondItem="EiQ-e5-ROi" secondAttribute="bottom" id="71p-LN-akp"/>
                         <constraint firstAttribute="trailing" secondItem="EiQ-e5-ROi" secondAttribute="trailing" id="FEd-I2-8cf"/>
-                        <constraint firstAttribute="width" secondItem="7RY-Wt-vnf" secondAttribute="height" multiplier="1.0588" id="KVN-z0-3EY"/>
-                        <constraint firstItem="4Au-hc-m7b" firstAttribute="centerY" secondItem="EiQ-e5-ROi" secondAttribute="centerY" constant="16" id="Tkj-UC-2UK"/>
+                        <constraint firstAttribute="height" constant="340" id="Mog-mW-LWT"/>
+                        <constraint firstItem="4Au-hc-m7b" firstAttribute="centerY" secondItem="EiQ-e5-ROi" secondAttribute="centerY" id="Tkj-UC-2UK"/>
                         <constraint firstItem="4Au-hc-m7b" firstAttribute="leading" secondItem="7RY-Wt-vnf" secondAttribute="leading" constant="32" id="brt-SB-OVe"/>
                         <constraint firstItem="EiQ-e5-ROi" firstAttribute="leading" secondItem="7RY-Wt-vnf" secondAttribute="leading" id="kYf-Bw-mX9"/>
                         <constraint firstItem="EiQ-e5-ROi" firstAttribute="top" secondItem="7RY-Wt-vnf" secondAttribute="top" id="nmD-oK-f0z"/>
@@ -81,7 +84,7 @@
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="5Ob-nD-Rtp">
-                    <rect key="frame" x="0.0" y="375" width="414" height="521"/>
+                    <rect key="frame" x="0.0" y="324" width="414" height="572"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
             </subviews>
