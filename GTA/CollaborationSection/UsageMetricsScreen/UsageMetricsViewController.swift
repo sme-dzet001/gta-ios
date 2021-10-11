@@ -106,6 +106,7 @@ class UsageMetricsViewController: UIViewController {
         dataProvider?.getMetricsDataForApp(app)
         setTextFieldText(app)
         dataProvider?.selectedApp = app
+        self.chartPositions = [:]
         tableView.reloadData()
     }
     
