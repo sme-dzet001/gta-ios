@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UsageMetricsViewController" customModule="GTA" customModuleProvider="target">
             <connections>
                 <outlet property="appTextField" destination="Fxr-Bq-3Gw" id="GkS-wX-Gqo"/>
+                <outlet property="headerSeparator" destination="4Wr-9Y-uZq" id="cCQ-vS-2SG"/>
                 <outlet property="tableView" destination="AS4-Kq-hCp" id="tvV-TA-59Z"/>
                 <outlet property="view" destination="iN0-l3-epB" id="vtc-h4-MtR"/>
             </connections>
@@ -22,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="294" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AS4-Kq-hCp" customClass="ChartTableView" customModule="GTA" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="119" width="414" height="777"/>
+                    <rect key="frame" x="0.0" y="118" width="414" height="778"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="2c7-rY-yBS"/>
@@ -30,7 +31,7 @@
                     </connections>
                 </tableView>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fxr-Bq-3Gw" customClass="CustomTextField" customModule="GTA" customModuleProvider="target">
-                    <rect key="frame" x="24" y="68" width="366" height="46"/>
+                    <rect key="frame" x="24" y="67" width="366" height="46"/>
                     <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="L85-sv-s0G"/>
@@ -50,6 +51,13 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </textField>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Wr-9Y-uZq">
+                    <rect key="frame" x="0.0" y="44" width="414" height="1"/>
+                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="bZi-ho-NCK"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -58,8 +66,11 @@
                 <constraint firstItem="AS4-Kq-hCp" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="7c1-ev-fgv"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Fxr-Bq-3Gw" secondAttribute="trailing" constant="24" id="FWi-Tg-5PB"/>
                 <constraint firstItem="AS4-Kq-hCp" firstAttribute="top" secondItem="Fxr-Bq-3Gw" secondAttribute="bottom" constant="5" id="J7V-hv-xer"/>
-                <constraint firstItem="Fxr-Bq-3Gw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="24" id="Z7b-sO-IJ2"/>
+                <constraint firstItem="Fxr-Bq-3Gw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="23" id="Z7b-sO-IJ2"/>
+                <constraint firstItem="4Wr-9Y-uZq" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="aoU-hm-TT3"/>
+                <constraint firstItem="4Wr-9Y-uZq" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="l83-79-mMZ"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="AS4-Kq-hCp" secondAttribute="trailing" id="u1O-OZ-IcR"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="4Wr-9Y-uZq" secondAttribute="trailing" id="xKY-hr-tZi"/>
                 <constraint firstAttribute="bottom" secondItem="AS4-Kq-hCp" secondAttribute="bottom" id="xow-wL-L9K"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="46.875"/>

@@ -22,6 +22,7 @@ class UsageMetricsViewController: UIViewController {
     
     @IBOutlet weak var tableView: ChartTableView!
     @IBOutlet weak var appTextField: CustomTextField!
+    @IBOutlet weak var headerSeparator: UIView!
     
     private let pickerView = UIPickerView()
     
@@ -280,6 +281,9 @@ class UsageMetricsViewController: UIViewController {
         tlabel.adjustsFontSizeToFitWidth = true
         self.navigationItem.titleView = tlabel
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     @objc private func backPressed() {

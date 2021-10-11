@@ -10,7 +10,7 @@ import UIKit
 class ServiceDeskAboutViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    //@IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var headerSeparator: UIView!
     
     private var errorLabel: UILabel = UILabel()
     var dataProvider: HelpDeskDataProvider?
@@ -45,6 +45,9 @@ class ServiceDeskAboutViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
         navigationItem.leftBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         navigationItem.leftBarButtonItem?.accessibilityIdentifier = "ServiceDeskAboutBackButton"
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     private func setUpTableView() {

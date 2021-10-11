@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,6 +17,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyTicketsViewController" customModule="GTA" customModuleProvider="target">
             <connections>
                 <outlet property="createTicketView" destination="vm3-IQ-P3l" id="Lgp-xs-3bH"/>
+                <outlet property="headerSeparator" destination="C6L-Go-fsN" id="khi-gj-VBp"/>
                 <outlet property="tableView" destination="rsC-w4-xne" id="0YD-vF-i9h"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -27,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rsC-w4-xne">
-                    <rect key="frame" x="0.0" y="122" width="414" height="774"/>
+                    <rect key="frame" x="0.0" y="123" width="414" height="773"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="eoW-dP-ljl"/>
@@ -35,7 +36,7 @@
                     </connections>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vm3-IQ-P3l">
-                    <rect key="frame" x="0.0" y="44" width="414" height="78"/>
+                    <rect key="frame" x="0.0" y="45" width="414" height="78"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="raise_icon" translatesAutoresizingMaskIntoConstraints="NO" id="h4P-6Z-sOM">
                             <rect key="frame" x="20" y="27" width="24" height="24"/>
@@ -81,13 +82,23 @@
                         <constraint firstItem="rRb-8s-Frg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Vqx-2Z-TlI" secondAttribute="trailing" constant="8" id="xmk-sB-h0G"/>
                     </constraints>
                 </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C6L-Go-fsN">
+                    <rect key="frame" x="0.0" y="44" width="414" height="1"/>
+                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="DTi-TQ-Byo"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="rsC-w4-xne" secondAttribute="trailing" id="3Ka-fh-ldn"/>
+                <constraint firstItem="C6L-Go-fsN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9vK-AC-Hzz"/>
+                <constraint firstItem="C6L-Go-fsN" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="KlW-SH-o52"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vm3-IQ-P3l" secondAttribute="trailing" id="PON-u7-OYa"/>
-                <constraint firstItem="vm3-IQ-P3l" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="sHp-SX-Cpm"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="C6L-Go-fsN" secondAttribute="trailing" id="o4Q-hM-GJ2"/>
+                <constraint firstItem="vm3-IQ-P3l" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="1" id="sHp-SX-Cpm"/>
                 <constraint firstItem="rsC-w4-xne" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="t5p-ea-hof"/>
                 <constraint firstAttribute="bottom" secondItem="rsC-w4-xne" secondAttribute="bottom" id="vPL-DQ-RMR"/>
                 <constraint firstItem="rsC-w4-xne" firstAttribute="top" secondItem="vm3-IQ-P3l" secondAttribute="bottom" id="yZ0-oh-rlz"/>

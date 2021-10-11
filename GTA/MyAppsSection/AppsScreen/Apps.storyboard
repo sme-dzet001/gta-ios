@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,25 +39,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WA0-Vn-0kX">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="1" width="414" height="807"/>
                                 <connections>
                                     <outlet property="dataSource" destination="6tU-3l-7Lu" id="SGG-Xy-f2O"/>
                                     <outlet property="delegate" destination="6tU-3l-7Lu" id="3Cm-aj-C0x"/>
                                 </connections>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pFm-Oh-She">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="Wkj-eA-lM0"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="D08-q8-5U9"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="pFm-Oh-She" firstAttribute="leading" secondItem="D08-q8-5U9" secondAttribute="leading" id="0B9-hB-Mos"/>
                             <constraint firstItem="D08-q8-5U9" firstAttribute="trailing" secondItem="WA0-Vn-0kX" secondAttribute="trailing" id="4td-3y-9Bx"/>
+                            <constraint firstItem="pFm-Oh-She" firstAttribute="top" secondItem="D08-q8-5U9" secondAttribute="top" id="69i-4I-ub8"/>
                             <constraint firstItem="WA0-Vn-0kX" firstAttribute="leading" secondItem="D08-q8-5U9" secondAttribute="leading" id="IME-oB-Dbx"/>
                             <constraint firstAttribute="bottom" secondItem="WA0-Vn-0kX" secondAttribute="bottom" id="VAQ-EQ-QLI"/>
-                            <constraint firstItem="WA0-Vn-0kX" firstAttribute="top" secondItem="D08-q8-5U9" secondAttribute="top" id="qFT-8c-28U"/>
+                            <constraint firstItem="D08-q8-5U9" firstAttribute="trailing" secondItem="pFm-Oh-She" secondAttribute="trailing" id="eoN-Ah-3ch"/>
+                            <constraint firstItem="WA0-Vn-0kX" firstAttribute="top" secondItem="D08-q8-5U9" secondAttribute="top" constant="1" id="qFT-8c-28U"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Apps" image="apps_tab_icon" id="D1p-Ql-HEx"/>
                     <navigationItem key="navigationItem" title="My Apps" id="iQl-xL-XYf"/>
                     <connections>
+                        <outlet property="headerSeparator" destination="pFm-Oh-She" id="K4j-55-xHD"/>
                         <outlet property="tableView" destination="WA0-Vn-0kX" id="H7F-Re-K1L"/>
                     </connections>
                 </viewController>

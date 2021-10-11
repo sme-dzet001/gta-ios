@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -49,24 +49,35 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PXs-FG-dLY">
-                                <rect key="frame" x="0.0" y="88" width="414" height="731"/>
+                                <rect key="frame" x="0.0" y="89" width="414" height="730"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ukq-bG-UX1">
+                                <rect key="frame" x="0.0" y="88" width="414" height="1"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="ryb-ms-vZW"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cfr-DX-9oL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="z2n-JI-FYY" firstAttribute="top" secondItem="PXs-FG-dLY" secondAttribute="bottom" id="4ui-DU-wgU"/>
                             <constraint firstItem="z2n-JI-FYY" firstAttribute="centerX" secondItem="cfr-DX-9oL" secondAttribute="centerX" id="7fE-bu-Hgf"/>
+                            <constraint firstItem="ukq-bG-UX1" firstAttribute="top" secondItem="cfr-DX-9oL" secondAttribute="top" id="7nM-i7-3NQ"/>
+                            <constraint firstItem="cfr-DX-9oL" firstAttribute="trailing" secondItem="ukq-bG-UX1" secondAttribute="trailing" id="SaE-vd-XXf"/>
                             <constraint firstItem="cfr-DX-9oL" firstAttribute="bottom" secondItem="z2n-JI-FYY" secondAttribute="bottom" constant="26" id="cYw-g2-KHc"/>
                             <constraint firstItem="cfr-DX-9oL" firstAttribute="trailing" secondItem="PXs-FG-dLY" secondAttribute="trailing" id="dYD-GI-p6C"/>
-                            <constraint firstItem="PXs-FG-dLY" firstAttribute="top" secondItem="cfr-DX-9oL" secondAttribute="top" id="mRk-8C-i6X"/>
+                            <constraint firstItem="ukq-bG-UX1" firstAttribute="leading" secondItem="cfr-DX-9oL" secondAttribute="leading" id="haW-RT-LxF"/>
+                            <constraint firstItem="PXs-FG-dLY" firstAttribute="top" secondItem="cfr-DX-9oL" secondAttribute="top" constant="1" id="mRk-8C-i6X"/>
                             <constraint firstItem="PXs-FG-dLY" firstAttribute="leading" secondItem="cfr-DX-9oL" secondAttribute="leading" id="uAK-rt-yGu"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="General" image="general_tab_icon" id="Qxm-Lv-eWB"/>
                     <navigationItem key="navigationItem" title="General" id="fBw-xW-eUd"/>
                     <connections>
+                        <outlet property="headerSeparator" destination="ukq-bG-UX1" id="zjR-2n-F8Q"/>
                         <outlet property="softwareVersionLabel" destination="z2n-JI-FYY" id="kij-dP-n04"/>
                         <outlet property="tableView" destination="PXs-FG-dLY" id="AzL-E5-9Zs"/>
                     </connections>
