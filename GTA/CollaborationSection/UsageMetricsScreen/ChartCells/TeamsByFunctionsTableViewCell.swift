@@ -92,6 +92,7 @@ class TeamsByFunctionsTableViewCell: UITableViewCell {
             updateLabels()
             updateChartData()
             updateSelectorBtns()
+            defaultScrollPosition()
         }
     }
 
