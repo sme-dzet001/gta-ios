@@ -30,6 +30,7 @@ class UsageMetricsViewController: UIViewController {
     }
     
     private var chartDimensionsDict: [Int : ChartDimensions] = [:]
+    private var chartPositions = [Int: CGPoint]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +95,7 @@ class UsageMetricsViewController: UIViewController {
     
     @objc private func doneAction() {
         updateChartsData()
-        reloadData()
+        tableView.reloadData()
         view.endEditing(true)
     }
     
@@ -109,12 +110,12 @@ class UsageMetricsViewController: UIViewController {
     }
     
     @objc private func getChartsData() {
-        startAnimation()
+        startAnimationIfNeeded()
         dataProvider?.getUsageMetrics {[weak self] isFromCache, dataWasChanged, errorCode, error in
+            guard dataWasChanged else { return }
             DispatchQueue.main.async {
                 if error == nil {
                     self?.stopAnimation()
-                    self?.reloadData()
                 } else if error != nil, !isFromCache {
                     self?.stopAnimation(with: error)
                 }
@@ -122,27 +123,31 @@ class UsageMetricsViewController: UIViewController {
         }
     }
     
-    private func reloadData() {
-        if let isChartDataEmpty = dataProvider?.isChartDataEmpty, isChartDataEmpty {
-            return
+    private func startAnimationIfNeeded() {
+        if let isChartDataEmpty = self.dataProvider?.isChartDataEmpty, isChartDataEmpty {
+            self.errorLabel.isHidden = true
+            self.tableView.alpha = 0
+            self.appTextField.alpha = 0
+            self.addLoadingIndicator(activityIndicator)
+            self.activityIndicator.startAnimating()
+        } else {
+            let selectedApp = self.dataProvider?.selectedApp ?? ""
+            self.setTextFieldText(selectedApp)
         }
-        self.tableView.reloadData()
-    }
-    
-    private func startAnimation() {
-        self.errorLabel.isHidden = true
-        self.tableView.alpha = 0
-        self.appTextField.alpha = 0
-        self.addLoadingIndicator(activityIndicator)
-        self.activityIndicator.startAnimating()
+        
     }
     
     private func stopAnimation(with error: Error? = nil) {
+        var responseError = error
         DispatchQueue.main.async {
+            if error == nil, let isChartDataEmpty = self.dataProvider?.isChartDataEmpty, isChartDataEmpty {
+                responseError = ResponseError.noDataAvailable
+            }
+            self.chartPositions = [:]
             self.tableView.reloadData()
-            self.errorLabel.isHidden = error == nil
-            self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-            self.tableView.alpha = error == nil ? 1 : 0
+            self.errorLabel.isHidden = responseError == nil
+            self.errorLabel.text = (responseError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+            self.tableView.alpha = responseError == nil ? 1 : 0
             let selectedApp = self.dataProvider?.selectedApp ?? ""
             self.setTextFieldText(selectedApp)
             let row = self.dataProvider?.availableApps.firstIndex(of: selectedApp) ?? 0
@@ -246,6 +251,27 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
             return cell
         default:
             return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let activeUsersTableViewCell = cell as? ActiveUsersTableViewCell {
+            activeUsersTableViewCell.setScrollPosition(to: chartPositions[0])
+            
+        }
+        if let teamsByFunctionsTableViewCell = cell as? TeamsByFunctionsTableViewCell {
+            teamsByFunctionsTableViewCell.setScrollPosition(to: chartPositions[1])
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let activeUsersTableViewCell = cell as? ActiveUsersTableViewCell {
+            chartPositions[0] = activeUsersTableViewCell.chartScrollView.contentOffset
+        }
+        
+        if let teamsByFunctionsTableViewCell = cell as? TeamsByFunctionsTableViewCell {
+            chartPositions[1] = teamsByFunctionsTableViewCell.chartScrollView.contentOffset
         }
     }
     

@@ -61,17 +61,10 @@ class ActiveUsersTableViewCell: UITableViewCell {
     }
     
     // TODO: Need to find better name
-    func configureChart(isFirstTime: Bool = true) {
+    func configureChart() {
         setupChartView()
         updateLabels()
         updateChartData()
-        guard !isFirstTime else { return }
-        updateScrollView()
-    }
-    
-    
-    override func layoutSubviews() {
-        updateScrollView()
     }
     
     func updateBlurViews() {
@@ -79,8 +72,17 @@ class ActiveUsersTableViewCell: UITableViewCell {
         blurViewRight.isHidden = !(ceil(Double(chartScrollView.contentOffset.x)) < floor(Double(chartViewWidth.constant - chartScrollView.bounds.size.width)))
     }
     
-    func updateScrollView() {
+    func defaultScrollPosition() {
+        layoutIfNeeded()
         chartScrollView.contentOffset = CGPoint(x: chartViewWidth.constant - chartScrollView.bounds.size.width, y: 0)
+    }
+    
+    func setScrollPosition(to point: CGPoint?) {
+        if let point = point {
+            chartScrollView.contentOffset = point
+        } else {
+            defaultScrollPosition()
+        }
     }
     
     func updateLabels() {

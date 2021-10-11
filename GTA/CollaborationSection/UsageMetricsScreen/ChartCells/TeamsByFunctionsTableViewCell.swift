@@ -102,12 +102,6 @@ class TeamsByFunctionsTableViewCell: UITableViewCell {
         return values.map({ return (period: $0.formattedLegend, value: $0.value) })
     }
     
-    override func layoutIfNeeded() {
-        updateLabels()
-        updateChartData()
-        updateSelectorBtns()
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         chartScrollView.delegate = self
@@ -137,16 +131,11 @@ class TeamsByFunctionsTableViewCell: UITableViewCell {
         }
     }
     
-    func configureChart(isFirstTime: Bool = true) {
+    func configureChart() {
         setupChartView()
         updateLabels()
         updateChartData()
-        guard !isFirstTime else { return }
-        updateScrollView()
-    }
-    
-    override func layoutSubviews() {
-        updateScrollView()
+        updateSelectorBtns()
     }
     
     func updateBlurViews() {
@@ -154,8 +143,17 @@ class TeamsByFunctionsTableViewCell: UITableViewCell {
         blurViewRight.isHidden = !(ceil(Double(chartScrollView.contentOffset.x)) < floor(Double(chartViewWidth.constant - chartScrollView.bounds.size.width)))
     }
     
-    func updateScrollView() {
+    func defaultScrollPosition() {
+        layoutIfNeeded()
         chartScrollView.contentOffset = CGPoint(x: chartViewWidth.constant - chartScrollView.bounds.size.width, y: 0)
+    }
+    
+    func setScrollPosition(to point: CGPoint?) {
+        if let point = point {
+            chartScrollView.contentOffset = point
+        } else {
+            defaultScrollPosition()
+        }
     }
     
     func updateLabels() {
