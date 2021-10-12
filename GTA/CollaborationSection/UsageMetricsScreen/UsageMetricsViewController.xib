@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UsageMetricsViewController" customModule="GTA" customModuleProvider="target">
             <connections>
                 <outlet property="appTextField" destination="Fxr-Bq-3Gw" id="GkS-wX-Gqo"/>
+                <outlet property="headerSeparator" destination="7Jx-TN-B2M" id="NZc-Ld-2fd"/>
                 <outlet property="tableView" destination="AS4-Kq-hCp" id="tvV-TA-59Z"/>
                 <outlet property="view" destination="iN0-l3-epB" id="vtc-h4-MtR"/>
             </connections>

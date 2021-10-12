@@ -15,8 +15,8 @@ protocol ChartDimensions: AnyObject {
 class UsageMetricsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var appTextField: CustomTextField!
     @IBOutlet weak var headerSeparator: UIView!
+    @IBOutlet weak var appTextField: CustomTextField!
     
     private let pickerView = UIPickerView()
     
@@ -45,7 +45,6 @@ class UsageMetricsViewController: UIViewController {
         setUpTableView()
         setUpTextField()
         setUpNavigationItem()
-        installMetricsVC()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,8 +118,6 @@ class UsageMetricsViewController: UIViewController {
             DispatchQueue.main.async {
                 if error == nil {
                     self?.stopAnimation()
-                    self?.updateChartsData()
-                    self?.reloadData()
                 } else if error != nil, !isFromCache {
                     self?.stopAnimation(with: error)
                 }
@@ -158,6 +155,7 @@ class UsageMetricsViewController: UIViewController {
             let row = self.dataProvider?.availableApps.firstIndex(of: selectedApp) ?? 0
             self.pickerView.selectRow(row, inComponent: 0, animated: false)
             self.appTextField.alpha = self.tableView.alpha
+            self.appTextField.setIconForPicker(for: self.view.frame.width, isCharts: true)
             self.activityIndicator.removeFromSuperview()
         }
     }
@@ -209,9 +207,6 @@ class UsageMetricsViewController: UIViewController {
     }
     
     deinit {
-        activeUsersVC?.removeFromParent()
-        teamChatUsersVC?.removeFromParent()
-        teamsByFunctionsVC?.removeFromParent()
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillHideNotification, object: nil)
@@ -326,3 +321,4 @@ protocol HorizontallBarChartDataChangedDelegate: AnyObject {
 protocol ActiveUsersDataChangedDelegate: AnyObject {
     func activeUsersDataChanged(newData: ChartStructure?)
 }
+
