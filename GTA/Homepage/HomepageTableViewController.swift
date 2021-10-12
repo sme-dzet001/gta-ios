@@ -29,6 +29,7 @@ class HomepageTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
+        blurView.addBlurToView()
         tableView.accessibilityIdentifier = "HomeScreenTableView"
     }
     
@@ -70,19 +71,6 @@ class HomepageTableViewController: UIViewController {
         default:
             return ""
         }
-    }
-    
-    private func addBlurToViewIfNeeded() {
-        if let gradientMaskLayer = blurView.layer.mask, gradientMaskLayer.name == "grad" {
-            return
-        }
-        let gradientMaskLayer = CAGradientLayer()
-        gradientMaskLayer.name = "grad"
-        gradientMaskLayer.frame = blurView.bounds
-        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
-        gradientMaskLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
-        gradientMaskLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
-        blurView.layer.mask = gradientMaskLayer
     }
     
     private func setUpTableView() {
@@ -129,12 +117,7 @@ class HomepageTableViewController: UIViewController {
 extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if tableView.contentOffset.y > 0 {
-            addBlurToViewIfNeeded()
-            blurView.isHidden = false
-        } else {
-            blurView.isHidden = true
-        }
+        self.blurView.alpha = min(scrollView.contentOffset.y, 1)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

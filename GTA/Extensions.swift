@@ -228,6 +228,19 @@ extension UIView {
         gradient.name = "grad"
         self.layer.insertSublayer(gradient, at: 0)
     }
+    
+    func addBlurToView() {
+        if let gradientMaskLayer = self.layer.mask, gradientMaskLayer.name == "grad" {
+            return
+        }
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.name = "grad"
+        gradientMaskLayer.frame = self.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradientMaskLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+        self.layer.mask = gradientMaskLayer
+    }
 }
 
 extension UINavigationController {

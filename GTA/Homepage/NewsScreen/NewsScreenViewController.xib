@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewsScreenViewController" customModule="GTA" customModuleProvider="target">
             <connections>
                 <outlet property="backButton" destination="2cb-Rw-Whj" id="IHz-PS-w5q"/>
+                <outlet property="blurView" destination="M0r-qr-SA8" id="3DK-2W-jaF"/>
                 <outlet property="headerHeightConstraint" destination="Mog-mW-LWT" id="1EU-Xy-BQl"/>
                 <outlet property="headerView" destination="7RY-Wt-vnf" id="X1Z-u6-Fg0"/>
                 <outlet property="newsbackgroundImage" destination="EiQ-e5-ROi" id="VPe-vD-9L1"/>
@@ -87,12 +88,22 @@
                     <rect key="frame" x="0.0" y="324" width="414" height="572"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M0r-qr-SA8">
+                    <rect key="frame" x="0.0" y="324" width="414" height="40"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="SSs-ys-FLv"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="M0r-qr-SA8" firstAttribute="top" secondItem="5Ob-nD-Rtp" secondAttribute="top" id="8cP-5L-01k"/>
                 <constraint firstItem="5Ob-nD-Rtp" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="8xn-cs-b5L"/>
+                <constraint firstItem="M0r-qr-SA8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="RIq-Jy-al3"/>
                 <constraint firstItem="5Ob-nD-Rtp" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Rbl-yS-JyO"/>
+                <constraint firstItem="M0r-qr-SA8" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="XC9-4e-Qtn"/>
                 <constraint firstItem="7RY-Wt-vnf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Y3w-uM-D0R"/>
                 <constraint firstItem="7RY-Wt-vnf" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="ZWQ-OP-Dmm"/>
                 <constraint firstAttribute="bottom" secondItem="5Ob-nD-Rtp" secondAttribute="bottom" id="d1K-Mr-gxa"/>

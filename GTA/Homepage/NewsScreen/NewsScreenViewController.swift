@@ -20,6 +20,7 @@ class NewsScreenViewController: UIViewController {
     @IBOutlet weak var subtitleLabel: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var blurView: UIView!
     
     var maxHeaderHeight: CGFloat = 340 //0 (1.08)
     var minHeaderHeight: CGFloat = 140 //250 (1.08)
@@ -56,6 +57,7 @@ class NewsScreenViewController: UIViewController {
         super.viewDidLoad()
         
         setupTableView()
+        setupBlurView()
         backButton.setTitle("", for: .normal)
     }
 
@@ -75,6 +77,13 @@ class NewsScreenViewController: UIViewController {
         tableView.layer.cornerRadius = 16
         tableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
+    
+    private func setupBlurView() {
+        blurView.layer.cornerRadius = 16
+        blurView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        blurView.addBlurToView()
+    }
+    
     
 }
 
@@ -109,8 +118,7 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
             var newHeight = self.headerHeightConstraint.constant
             if isScrollingDown {
                 newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
-            } else if isScrollingUp, scrollView.contentOffset.y < self.minHeaderHeight {
-                print(scrollView.contentOffset.y)
+            } else if isScrollingUp, scrollView.contentOffset.y <= CGPoint.zero.y {
                 newHeight = min(self.maxHeaderHeight, self.headerHeightConstraint.constant + abs(scrollDiff))
             }
             
@@ -119,6 +127,7 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
                 self.setScrollPosition(position: self.previousScrollOffset)
             }
             
+            self.blurView.alpha = min(scrollView.contentOffset.y, 1)
             self.previousScrollOffset = scrollView.contentOffset.y
             self.updateHeader()
         }
