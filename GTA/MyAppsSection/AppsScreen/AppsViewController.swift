@@ -11,8 +11,7 @@ import Kingfisher
 class AppsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    
-   // var dataSource: [AppsDataSource] = []
+    @IBOutlet weak var headerSeparator: UIView!
     
     private var dataProvider: MyAppsDataProvider = MyAppsDataProvider()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -59,6 +58,9 @@ class AppsViewController: UIViewController {
         addErrorLabel(errorLabel)
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
         startAnimation()
         if allAppsLastUpdateDate == nil || Date() >= allAppsLastUpdateDate ?? Date() {
             self.getAllApps()

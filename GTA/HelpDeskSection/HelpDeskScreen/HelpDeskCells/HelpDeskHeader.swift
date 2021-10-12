@@ -36,9 +36,6 @@ class HelpDeskHeader: UIView {
         statusView.isHidden = statusData.status == .none
         statusLabel.isHidden = statusData.status == .none
         hoursOfOperationLabel.isHidden = statusData.hoursOfOperation == nil
-        if #available(iOS 15.0, *) {
-            separatorHeight?.constant = 0.5
-        }
     }
 
 }

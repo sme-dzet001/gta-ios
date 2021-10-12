@@ -36,7 +36,7 @@ class MenuViewController: UIViewController {
     var dataProvider = MenuViewControllerDataProvider()
     var selectedTabIdx: Int? {
         didSet {
-            guard oldValue != selectedTabIdx else { return }
+            guard oldValue != selectedTabIdx, let _ = tableView else { return }
             tableView.reloadData()
         }
     }
@@ -168,8 +168,8 @@ class MenuViewController: UIViewController {
                             } else {
                                 self?.officeLoadingError = nil
                             }
-                            self?.setTableViewHeight()
                             self?.tableView.reloadData()
+                            self?.setTableViewHeight()
                             if forceOpenOfficeSelectionScreen {
                                 self?.openOfficeSelectionModalScreen()
                             }
@@ -288,7 +288,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     return cell
                 } else {
-                    let loadingCell = createLoadingCell(withBottomSeparator: true, verticalOffset: 54)
+                    let loadingCell = createLoadingCell(withBottomSeparator: false, verticalOffset: 54)
                     return loadingCell
                 }
             }

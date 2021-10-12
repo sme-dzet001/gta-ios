@@ -119,10 +119,8 @@ class HomepageViewController: UIViewController {
         setUpBannerViews()
         setNeedsStatusBarAppearanceUpdate()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(getAllAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalProductionAlertsIgnoringCache), name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
-        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,7 +133,7 @@ class HomepageViewController: UIViewController {
             navigateToGlobalProdAlert(withAlertInfo: productionAlertInfo)
         }
         updateBannerViews()
-        getAllAlerts()
+        getAllAlertsWithCache()
         getProductionAlertsCount()
     }
     
@@ -253,9 +251,14 @@ class HomepageViewController: UIViewController {
         }
     }
     
-    @objc private func getAllAlerts() {
+    @objc private func getAllAlertsWithCache() {
         getGlobalAlerts()
         getGlobalProductionAlerts()
+    }
+    
+    @objc private func getAllAlertsIgnoringCache() {
+        getGlobalAlertsIgnoringCache()
+        getGlobalProductionAlertsIgnoringCache()
     }
     
     @objc private func getGlobalAlerts() {
@@ -393,6 +396,7 @@ class HomepageViewController: UIViewController {
         if let productionAlertInfo = UserDefaults.standard.object(forKey: "globalProductionAlertNotificationReceived") as? [String : Any] {
             navigateToGlobalProdAlert(withAlertInfo: productionAlertInfo)
         }
+        getAllAlertsIgnoringCache()
         getProductionAlertsCount()
     }
     

@@ -11,6 +11,7 @@ import SDWebImage
 class WhatsNewViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     var dataProvider: CollaborationDataProvider?
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -76,6 +77,9 @@ class WhatsNewViewController: UIViewController {
     private func setUpNavigationItem() {
         navigationItem.title = "What’s New"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     @objc private func backPressed() {

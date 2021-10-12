@@ -16,6 +16,7 @@ class UsageMetricsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var appTextField: CustomTextField!
+    @IBOutlet weak var headerSeparator: UIView!
     
     private let pickerView = UIPickerView()
     
@@ -44,6 +45,7 @@ class UsageMetricsViewController: UIViewController {
         setUpTableView()
         setUpTextField()
         setUpNavigationItem()
+        installMetricsVC()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -117,6 +119,8 @@ class UsageMetricsViewController: UIViewController {
             DispatchQueue.main.async {
                 if error == nil {
                     self?.stopAnimation()
+                    self?.updateChartsData()
+                    self?.reloadData()
                 } else if error != nil, !isFromCache {
                     self?.stopAnimation(with: error)
                 }
@@ -187,6 +191,9 @@ class UsageMetricsViewController: UIViewController {
         tlabel.adjustsFontSizeToFitWidth = true
         self.navigationItem.titleView = tlabel
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     @objc private func backPressed() {
@@ -202,6 +209,9 @@ class UsageMetricsViewController: UIViewController {
     }
     
     deinit {
+        activeUsersVC?.removeFromParent()
+        teamChatUsersVC?.removeFromParent()
+        teamsByFunctionsVC?.removeFromParent()
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.keyboardWillHideNotification, object: nil)

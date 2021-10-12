@@ -14,6 +14,7 @@ class AppContactsViewController: UIViewController {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var titleStackView: UIStackView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
@@ -86,6 +87,9 @@ class AppContactsViewController: UIViewController {
         self.navigationItem.titleView?.accessibilityIdentifier = "AppContactsTitle"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
         self.navigationItem.leftBarButtonItem?.accessibilityIdentifier = "AppContactsBackButton"
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     private func setUpTableView() {
