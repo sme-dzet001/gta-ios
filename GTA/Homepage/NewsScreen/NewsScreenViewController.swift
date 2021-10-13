@@ -15,6 +15,8 @@ class NewsScreenViewController: UIViewController {
     
     @IBOutlet weak var newsbackgroundImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var smallTitleLabel: UILabel!
+    @IBOutlet weak var titleTopConstraint: NSLayoutConstraint!
     @IBOutlet var titleConstraints: [NSLayoutConstraint]!
     
     @IBOutlet weak var subtitleLabel: UILabel!
@@ -22,15 +24,19 @@ class NewsScreenViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var blurView: UIView!
     
-    var maxHeaderHeight: CGFloat = 340 //0 (1.08)
-    var minHeaderHeight: CGFloat = 140 //250 (1.08)
+    var maxHeaderHeight: CGFloat = 340
+    var minHeaderHeight: CGFloat = 120
     
-    var maxSideTitleConstraint: CGFloat = 70
-    var minSideTitleConstraint: CGFloat = 36
+    var maxSideTitleConstraint: CGFloat = 60
+    var minSideTitleConstraint: CGFloat = 32
     
     var previousScrollOffset: CGFloat = 0
-    
+    var headerData: HeaderData?
     var newsData: [NewsData]?
+    
+    let headerDataOne = HeaderData(title: "How Sony Music uses data to connect artists with fans", subtitle: "Forbes Content Studio Forbes Staff Forbes Content Merketing")
+    let headerDataTwo = HeaderData(title: "Real time Trends", subtitle: "Forbes Content Studio Forbes Staff Forbes Content Merketing")
+    
     let newsDataOne: [NewsData] = [
         NewsData(title: "New Side-by-side and Reporter Presenter modes with desktop and window sharing", text: "Two new presenter modes are now coming available. Reporter places content as a visual aid above your shoulder like a news story. Side-by-side displays your video feed next to your content. You can now select a mode that fits your needs and promotes a more engaging presentation and consumption experience.", images: [UIImage(named: "newsImage1")!]),
         NewsData(title: "Spam Notification in Call Toast", text: "The spam call notification feature automatically evaluates incoming calls and identifies probable spam calls as “spam likely” in the call toast.  Users still have the option to answer or reject the call, and all “spam likely” calls (regardless of whether they were answered or rejected) will also be reflected in the call history list.", images: [UIImage(named: "newsImage2")!]),
@@ -64,10 +70,13 @@ class NewsScreenViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.headerHeightConstraint.constant = self.maxHeaderHeight
         updateHeader()
+        titleLabel.text = headerData?.title
+        smallTitleLabel.text = headerData?.title
+        subtitleLabel.text = headerData?.subtitle
     }
     
     @IBAction func backButtonAction(_ sender: UIButton) {
-
+        navigationController?.popViewController(animated: true)
     }
     
     private func setupTableView() {
@@ -76,6 +85,7 @@ class NewsScreenViewController: UIViewController {
         tableView.register(UINib(nibName: "NewsScreenTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsScreenTableViewCell")
         tableView.layer.cornerRadius = 16
         tableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        tableView.contentInset = tableView.menuButtonContentInset
     }
     
     private func setupBlurView() {
@@ -196,12 +206,19 @@ extension NewsScreenViewController {
         let openAmount = self.headerHeightConstraint.constant - self.minHeaderHeight
         let percentage = openAmount / range
         
-        let constraintRange = maxSideTitleConstraint * (1 - percentage)
+        let constraintRange = maxSideTitleConstraint * (1 - (max(percentage - 0.1, 0) / 0.9))
         for i in titleConstraints {
             i.constant = max(constraintRange, minSideTitleConstraint)
+            let a = max(min((percentage / 0.6) * minSideTitleConstraint, maxSideTitleConstraint), minSideTitleConstraint)
         }
-        self.titleLabel.numberOfLines = percentage > 0.2 ? 0 : 1
-        self.subtitleLabel.alpha = percentage
+        //min(max((percentage) * 24, 20), 24 //fontsize
+        let titleFont = UIFont.systemFont(ofSize: 20 + percentage * 4)
+        self.titleTopConstraint.constant = max(percentage * 100, 14)
+        self.smallTitleLabel.alpha = 1 - max(percentage - 0.4, 0) / 0.6
+        self.smallTitleLabel.font = titleFont
+        self.titleLabel.alpha = max(percentage - 0.4, 0) / 0.6
+        self.titleLabel.font = titleFont
+        self.subtitleLabel.alpha = max(percentage - 0.4, 0) / 0.6
     }
 }
 
@@ -209,4 +226,9 @@ struct NewsData {
     var title: String?
     var text: String?
     var images: [UIImage]?
+}
+
+struct HeaderData {
+    var title: String?
+    var subtitle: String?
 }

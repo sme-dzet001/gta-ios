@@ -465,7 +465,10 @@ extension HomepageViewController: NewsShowDelegate {
         }
         //presentPanModal(articleViewController)
         let newsViewController = NewsScreenViewController(nibName: "NewsScreenViewController", bundle: nil)
-        newsViewController.newsData = typeOfNews == 1 ? newsViewController.newsDataOne : newsViewController.newsDataTwo //TODO: delete
+        let newsData = typeOfNews == 1 ? newsViewController.newsDataOne : newsViewController.newsDataTwo
+        let headerData = typeOfNews == 1 ? newsViewController.headerDataOne : newsViewController.headerDataTwo
+        newsViewController.newsData = newsData
+        newsViewController.headerData = headerData
         navigationController?.pushViewController(newsViewController, animated: true)
     }
 }
