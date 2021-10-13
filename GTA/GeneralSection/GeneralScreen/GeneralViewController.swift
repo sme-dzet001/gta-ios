@@ -13,6 +13,7 @@ class GeneralViewController: UIViewController {
     private var usmLogoutWebView: WKWebView!
     @IBOutlet weak var softwareVersionLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     var dataProvider: GeneralDataProvider = GeneralDataProvider()
     
@@ -56,6 +57,9 @@ class GeneralViewController: UIViewController {
     private func setUpNavigationBar() {
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     private func setAccessibilityIdentifiers() {
