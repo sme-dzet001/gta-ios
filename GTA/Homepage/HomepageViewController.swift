@@ -153,41 +153,41 @@ class HomepageViewController: UIViewController {
 
     private func updateBannerViews() {
         if isEmergencyOutageBannerVisible {
-            emergencyOutageBannerView.isHidden = false
-            emergencyOutageBannerViewHeight.constant = 72
+            emergencyOutageBannerView?.isHidden = false
+            emergencyOutageBannerViewHeight?.constant = 72
             populateEmergencyOutageBanner()
         } else {
-            emergencyOutageBannerView.isHidden = true
-            emergencyOutageBannerViewHeight.constant = 0
+            emergencyOutageBannerView?.isHidden = true
+            emergencyOutageBannerViewHeight?.constant = 0
         }
         
         if isGlobalProductionAlertBannerVisible {
-            globalProductionAlertBannerView.isHidden = false
-            globalProductionAlertBannerViewHeight.constant = 72
+            globalProductionAlertBannerView?.isHidden = false
+            globalProductionAlertBannerViewHeight?.constant = 72
             populateGlobalProductionAlertBanner()
         } else {
-            globalProductionAlertBannerView.isHidden = true
-            globalProductionAlertBannerViewHeight.constant = 0
+            globalProductionAlertBannerView?.isHidden = true
+            globalProductionAlertBannerViewHeight?.constant = 0
         }
     }
     
     private func populateEmergencyOutageBanner() {
         guard let alert = dataProvider.globalAlertsData else { return }
-        emergencyOutageBannerView.alertLabel.text = "Emergency Outage: \(alert.alertTitle ?? "")"
+        emergencyOutageBannerView?.alertLabel.text = "Emergency Outage: \(alert.alertTitle ?? "")"
         if alert.status == .closed {
-            emergencyOutageBannerView.setAlertOff()
+            emergencyOutageBannerView?.setAlertOff()
         } else {
-            emergencyOutageBannerView.setAlertOn()
+            emergencyOutageBannerView?.setAlertOn()
         }
     }
     
     private func populateGlobalProductionAlertBanner() {
         guard let alert = dataProvider.productionGlobalAlertsData else { return }
         guard !alert.isExpired else { return }
-        globalProductionAlertBannerView.alertLabel.text = "Production Alert: \(alert.summary ?? "")"
-        globalProductionAlertBannerView.closeButton.isHidden = false
-        globalProductionAlertBannerView.delegate = self
-        globalProductionAlertBannerView.setAlertBannerForGlobalProdAlert(prodAlertsStatus: alert.prodAlertsStatus)
+        globalProductionAlertBannerView?.alertLabel.text = "Production Alert: \(alert.summary ?? "")"
+        globalProductionAlertBannerView?.closeButton.isHidden = false
+        globalProductionAlertBannerView?.delegate = self
+        globalProductionAlertBannerView?.setAlertBannerForGlobalProdAlert(prodAlertsStatus: alert.prodAlertsStatus)
     }
     
     @IBAction func emergencyOutageBannerPressed(_ sender: Any) {
