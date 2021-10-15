@@ -39,6 +39,7 @@ PODS:
     - GoogleUtilities/Environment
   - GoogleUtilities/UserDefaults (7.5.2):
     - GoogleUtilities/Logger
+  - Hero (1.6.1)
   - Kingfisher (7.0.0)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -57,6 +58,7 @@ DEPENDENCIES:
   - AdvancedPageControl
   - Charts
   - Firebase/Crashlytics
+  - Hero
   - Kingfisher
   - PanModal
   - Parchment
@@ -74,6 +76,7 @@ SPEC REPOS:
     - FirebaseInstallations
     - GoogleDataTransport
     - GoogleUtilities
+    - Hero
     - Kingfisher
     - nanopb
     - PanModal
@@ -92,6 +95,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: ede6fb72bb6337914e5888b399271259d0c4910c
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
+  Hero: 215865ba3ae41dd9bb08cd6c60a645529c6fc94b
   Kingfisher: 5efc54fec3980f92354898532e562cc17f31efb4
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
@@ -100,6 +104,6 @@ SPEC CHECKSUMS:
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
 
-PODFILE CHECKSUM: 176a234c5290f98b66b5d8e36ab1e65e3d8d32ca
+PODFILE CHECKSUM: 3466d487188e9f6122dd02246c2410ec65a3dfeb
 
 COCOAPODS: 1.11.2

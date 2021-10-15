@@ -241,6 +241,12 @@ extension UIView {
         gradientMaskLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
         self.layer.mask = gradientMaskLayer
     }
+    
+    func screenshot() -> UIImage {
+        return UIGraphicsImageRenderer(size: bounds.size).image { _ in
+          drawHierarchy(in: CGRect(origin: .zero, size: bounds.size), afterScreenUpdates: true)
+        }
+      }
 }
 
 extension UINavigationController {

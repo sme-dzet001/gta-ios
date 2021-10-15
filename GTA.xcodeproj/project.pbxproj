@@ -107,6 +107,20 @@
 		5429059C2705EBBF00AEE784 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542905972705EBBE00AEE784 /* CustomTabBarController.swift */; };
 		5429059D2705EBBF00AEE784 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542905972705EBBE00AEE784 /* CustomTabBarController.swift */; };
 		5429059E2705EBBF00AEE784 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542905972705EBBE00AEE784 /* CustomTabBarController.swift */; };
+		543592D72719887600019111 /* ImageZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543592D52719887600019111 /* ImageZoomViewController.swift */; };
+		543592D82719887600019111 /* ImageZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543592D52719887600019111 /* ImageZoomViewController.swift */; };
+		543592D92719887600019111 /* ImageZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543592D52719887600019111 /* ImageZoomViewController.swift */; };
+		543592DA2719887600019111 /* ImageZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543592D52719887600019111 /* ImageZoomViewController.swift */; };
+		543592DB2719887600019111 /* ImageZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543592D52719887600019111 /* ImageZoomViewController.swift */; };
+		543592DC2719887600019111 /* ImageZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543592D52719887600019111 /* ImageZoomViewController.swift */; };
+		543592DD2719887600019111 /* ImageZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543592D52719887600019111 /* ImageZoomViewController.swift */; };
+		543592DE2719887600019111 /* ImageZoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 543592D62719887600019111 /* ImageZoomViewController.xib */; };
+		543592DF2719887600019111 /* ImageZoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 543592D62719887600019111 /* ImageZoomViewController.xib */; };
+		543592E02719887600019111 /* ImageZoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 543592D62719887600019111 /* ImageZoomViewController.xib */; };
+		543592E12719887600019111 /* ImageZoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 543592D62719887600019111 /* ImageZoomViewController.xib */; };
+		543592E22719887600019111 /* ImageZoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 543592D62719887600019111 /* ImageZoomViewController.xib */; };
+		543592E32719887600019111 /* ImageZoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 543592D62719887600019111 /* ImageZoomViewController.xib */; };
+		543592E42719887600019111 /* ImageZoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 543592D62719887600019111 /* ImageZoomViewController.xib */; };
 		5472472226F20F1A000EE3F3 /* CircleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472472126F20F1A000EE3F3 /* CircleTransition.swift */; };
 		5472472326F20F1A000EE3F3 /* CircleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472472126F20F1A000EE3F3 /* CircleTransition.swift */; };
 		5472472426F20F1A000EE3F3 /* CircleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472472126F20F1A000EE3F3 /* CircleTransition.swift */; };
@@ -1762,6 +1776,8 @@
 		541F3AB826E8FE8E007F7C43 /* OfficeStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OfficeStoryboard.storyboard; sourceTree = "<group>"; };
 		541F3AC026E906EF007F7C43 /* OfficeOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeOverviewViewController.swift; sourceTree = "<group>"; };
 		542905972705EBBE00AEE784 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
+		543592D52719887600019111 /* ImageZoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageZoomViewController.swift; sourceTree = "<group>"; };
+		543592D62719887600019111 /* ImageZoomViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageZoomViewController.xib; sourceTree = "<group>"; };
 		5472472126F20F1A000EE3F3 /* CircleTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleTransition.swift; sourceTree = "<group>"; };
 		54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChatUsersViewController.swift; sourceTree = "<group>"; };
 		54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamChatUsersViewController.xib; sourceTree = "<group>"; };
@@ -2134,6 +2150,8 @@
 				5407680D270F44AE005EFD65 /* Cells */,
 				540767FD270F3D97005EFD65 /* NewsScreenViewController.swift */,
 				540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */,
+				543592D52719887600019111 /* ImageZoomViewController.swift */,
+				543592D62719887600019111 /* ImageZoomViewController.xib */,
 			);
 			path = NewsScreen;
 			sourceTree = "<group>";
@@ -3592,6 +3610,7 @@
 				65437CCB2665387600B2F38A /* LaunchScreen.storyboard in Resources */,
 				65437CCC2665387600B2F38A /* SwitcherCell.xib in Resources */,
 				65437CCD2665387600B2F38A /* GTTeamCell.xib in Resources */,
+				543592E42719887600019111 /* ImageZoomViewController.xib in Resources */,
 				9F3028052681D228009A3096 /* ProductionAlertCounterCell.xib in Resources */,
 				6500C65326DFB91200151F1D /* NewsTableViewCell.xib in Resources */,
 				9F3027F02681D228009A3096 /* AlertDetailsHeaderCell.xib in Resources */,
@@ -3673,6 +3692,7 @@
 				65437E83266539BF00B2F38A /* OfficeSelectionCell.xib in Resources */,
 				65437E84266539BF00B2F38A /* OfficeLocationViewController.xib in Resources */,
 				65437E85266539BF00B2F38A /* OfficeInfoCell.xib in Resources */,
+				543592E22719887600019111 /* ImageZoomViewController.xib in Resources */,
 				65437E86266539BF00B2F38A /* AuthViewController.xib in Resources */,
 				65437E87266539BF00B2F38A /* ApplicationStatusViewController.xib in Resources */,
 				9F3028342681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
@@ -3812,6 +3832,7 @@
 				654380072665568000B2F38A /* SF-Pro-Text-Regular.otf in Resources */,
 				654380082665568000B2F38A /* WhatsNewMoreViewController.xib in Resources */,
 				6500C65226DFB91200151F1D /* NewsTableViewCell.xib in Resources */,
+				543592E32719887600019111 /* ImageZoomViewController.xib in Resources */,
 				6543800A2665568000B2F38A /* CollaborationHeader.xib in Resources */,
 				6543800B2665568000B2F38A /* AboutSupportCell.xib in Resources */,
 				6543800C2665568000B2F38A /* HelpDeskCell.xib in Resources */,
@@ -3893,6 +3914,7 @@
 				C9EFDA3225A5E2E200F57817 /* OfficeSelectionCell.xib in Resources */,
 				9F0CA5502566875F00275B25 /* OfficeLocationViewController.xib in Resources */,
 				9F1620D72566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
+				543592DE2719887600019111 /* ImageZoomViewController.xib in Resources */,
 				9F9D9CB82588C59600DC4231 /* AuthViewController.xib in Resources */,
 				9F895B12255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
 				9F3028302681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
@@ -4067,6 +4089,7 @@
 				9F33F6CC260A3C4000470A47 /* ServiceDeskContactCell.xib in Resources */,
 				9F1351B32670F3D400135FC5 /* MyTicketsFilterHeader.xib in Resources */,
 				9F33F6CD260A3C4000470A47 /* QuickHelpCell.xib in Resources */,
+				543592E12719887600019111 /* ImageZoomViewController.xib in Resources */,
 				9F3AC946264D3E3D004074C8 /* GeneralCell.xib in Resources */,
 				9F33F6CF260A3C4000470A47 /* OfficeLocationViewController.xib in Resources */,
 				9F33F6D1260A3C4000470A47 /* MyDevicesViewController.xib in Resources */,
@@ -4130,6 +4153,7 @@
 				9F819A98255C1572007C1739 /* Home.storyboard in Resources */,
 				9F9D9CB92588C59600DC4231 /* AuthViewController.xib in Resources */,
 				9F895B13255C244D004489C6 /* ApplicationStatusViewController.xib in Resources */,
+				543592DF2719887600019111 /* ImageZoomViewController.xib in Resources */,
 				9F36D43D2562A939000EE0F1 /* SF-Pro-Display-Light.ttf in Resources */,
 				9F895AEB255C22D7004489C6 /* ApplicationCell.xib in Resources */,
 				9F3028312681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
@@ -4241,6 +4265,7 @@
 				9F819AC1255C1646007C1739 /* SF-Pro-Display-Thin.otf in Resources */,
 				9F44AE2125EFBD0500A0EDA4 /* AppTipsAndTricksViewController.xib in Resources */,
 				9F2C825A2657CE02004407B4 /* GlobalAlertDetailsHeaderCell.xib in Resources */,
+				543592E02719887600019111 /* ImageZoomViewController.xib in Resources */,
 				9F1620D92566BB32003AFE68 /* OfficeInfoCell.xib in Resources */,
 				9F3028322681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
 				9F3AC94F264D44E7004074C8 /* NotificationSettingsViewController.xib in Resources */,
@@ -4773,6 +4798,7 @@
 				5429059E2705EBBF00AEE784 /* CustomTabBarController.swift in Sources */,
 				65437C932665387600B2F38A /* NoCommentsCell.swift in Sources */,
 				65437C942665387600B2F38A /* NetworkManager.swift in Sources */,
+				543592DD2719887600019111 /* ImageZoomViewController.swift in Sources */,
 				9F30282F2681D228009A3096 /* ProductionAlertsViewController.swift in Sources */,
 				65437C952665387600B2F38A /* MainViewController.swift in Sources */,
 				65437C962665387600B2F38A /* TicketDescriptionCell.swift in Sources */,
@@ -4833,6 +4859,7 @@
 				9F7B679B26F2403800756412 /* TipsAndTricksViewController.swift in Sources */,
 				9F343A8B26A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				65437E1A266539BF00B2F38A /* QuickHelpViewController.swift in Sources */,
+				543592DB2719887600019111 /* ImageZoomViewController.swift in Sources */,
 				65437E1C266539BF00B2F38A /* MyAppsResponses.swift in Sources */,
 				65437E1D266539BF00B2F38A /* AboutViewController.swift in Sources */,
 				65437E1E266539BF00B2F38A /* HomepageTableViewController.swift in Sources */,
@@ -5067,6 +5094,7 @@
 				5429059D2705EBBF00AEE784 /* CustomTabBarController.swift in Sources */,
 				65437FCE2665568000B2F38A /* NoCommentsCell.swift in Sources */,
 				65437FCF2665568000B2F38A /* NetworkManager.swift in Sources */,
+				543592DC2719887600019111 /* ImageZoomViewController.swift in Sources */,
 				9F30282E2681D228009A3096 /* ProductionAlertsViewController.swift in Sources */,
 				65437FD02665568000B2F38A /* MainViewController.swift in Sources */,
 				65437FD12665568000B2F38A /* TicketDescriptionCell.swift in Sources */,
@@ -5127,6 +5155,7 @@
 				9F7B679726F2403800756412 /* TipsAndTricksViewController.swift in Sources */,
 				9F343A8726A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				C993A2AE2576664300F9146A /* QuickHelpViewController.swift in Sources */,
+				543592D72719887600019111 /* ImageZoomViewController.swift in Sources */,
 				9F8164AF257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
 				C93FCF0625648FA0001E86F6 /* AboutViewController.swift in Sources */,
 				9F36D4652562C286000EE0F1 /* HomepageTableViewController.swift in Sources */,
@@ -5360,6 +5389,7 @@
 				540537ED26E7AA6800388BF3 /* MenuViewController.swift in Sources */,
 				9F643576261B5D40000D94A4 /* WhatsNewMoreViewController.swift in Sources */,
 				9F33F681260A3C4000470A47 /* AboutHeaderCell.swift in Sources */,
+				543592DA2719887600019111 /* ImageZoomViewController.swift in Sources */,
 				9F33F682260A3C4000470A47 /* (null) in Sources */,
 				9F33F683260A3C4000470A47 /* OfficeSelectionCell.swift in Sources */,
 				9F33F684260A3C4000470A47 /* SecondSendMessageView.swift in Sources */,
@@ -5440,6 +5470,7 @@
 				9F7B679826F2403800756412 /* TipsAndTricksViewController.swift in Sources */,
 				9F343A8826A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				9F35860E25FD219D0003658D /* CollaborationHeader.swift in Sources */,
+				543592D82719887600019111 /* ImageZoomViewController.swift in Sources */,
 				C993A2AF2576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9F5B105E2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
 				9F8164B0257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
@@ -5588,6 +5619,7 @@
 				9F7B679926F2403800756412 /* TipsAndTricksViewController.swift in Sources */,
 				9F343A8926A1CE2F0071362D /* BarChartCell.swift in Sources */,
 				9F35860F25FD219D0003658D /* CollaborationHeader.swift in Sources */,
+				543592D92719887600019111 /* ImageZoomViewController.swift in Sources */,
 				C993A2B02576664300F9146A /* QuickHelpViewController.swift in Sources */,
 				9F5B105F2567BE48000A3CFD /* TicketDetailsViewController.swift in Sources */,
 				9F8164B1257FA7D9001507BF /* MyAppsResponses.swift in Sources */,
