@@ -18,7 +18,6 @@ class HomepageTableViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var blurView: UIView!
     
-    private var expandedRowsIndex = [Int]()
     weak var newsShowDelegate: NewsShowDelegate?
     
     var dataProvider: HomeDataProvider?
@@ -42,11 +41,6 @@ class HomepageTableViewController: UIViewController {
             activityIndicator.isHidden = true
             //tableView.reloadData()
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        expandedRowsIndex = []
     }
     
     private func setAccessibilityIdentifiers() {
@@ -158,17 +152,12 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
         cell?.byLabel.attributedText = getByLineText(byLine: cellDataSource.byLine)
         let newsDate = cellDataSource.postDate
         cell?.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
-        let bodyDecoded = dataProvider.formNewsBody(from: cellDataSource.newsBody)
+        let bodyText = cellDataSource.newsContent?.first(where: { $0.type == "text" })?.body
+        let bodyDecoded = dataProvider.formNewsBody(from: bodyText)
         bodyDecoded?.setFontFace(font: UIFont(name: "SFProText-Light", size: 16)!)
         cell?.bodyLabel.attributedText = bodyDecoded
         cell?.fullText = bodyDecoded
-        if !expandedRowsIndex.contains(indexPath.row) {
-            cell?.setCollapse()
-        } else {
-            cell?.bodyLabel.attributedText = bodyDecoded
-            cell?.bodyLabel.numberOfLines = 0
-            cell?.bodyLabel.sizeToFit()
-        }
+        cell?.setCollapse()
         cell?.titleLabel.accessibilityIdentifier = "HomeScreenCollectionTitleLabel"
         cell?.dateLabel.accessibilityIdentifier = "HomeScreenCollectionDateLabel"
         return cell ?? UITableViewCell()
@@ -202,22 +191,8 @@ extension HomepageTableViewController : TappedLabelDelegate {
         guard let cell = cell as? NewsTableViewCell else { return }
         guard let cellIndex = tableView.indexPath(for: cell) else { return }
         let dataSource = getDataSource()
-        let typeOfNews = (cellIndex.row + 1) % 2
-        print("typeOfNews: \(typeOfNews)")
-        guard dataSource.count > cellIndex.row else { return }
-        if cell.fullText?.length ?? 0 <= 600 {
-            guard !expandedRowsIndex.contains(cellIndex.row) else { return }
-            
-            expandedRowsIndex.append(cellIndex.row)
-            tableView.reloadData()
-            if cell.bounds.height > self.tableView.frame.height {
-                self.tableView.scrollToRow(at: cellIndex, at: .top, animated: true)
-            } else {
-                self.tableView.scrollToRow(at: cellIndex, at: .none, animated: true)
-            }
-        } else {
-            newsShowDelegate?.showArticleViewController(with: dataSource[cellIndex.row].newsBody, typeOfNews: typeOfNews)
-        }
+        let newsContent = dataSource[cellIndex.row]
+        newsShowDelegate?.showArticleViewController(with: newsContent)
     }
     
     func openUrl(_ url: URL) {

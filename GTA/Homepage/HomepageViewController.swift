@@ -451,30 +451,15 @@ extension HomepageViewController: DismissAlertDelegate {
 }
 
 extension HomepageViewController: NewsShowDelegate {
-    func showArticleViewController(with text: String?, typeOfNews: Int) {
-        let articleViewController = ArticleViewController()
-        presentedVC = articleViewController
-        let htmlBody = dataProvider.formNewsBody(from: text)
-        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
-            htmlBody?.setFontFace(font: neededFont)
-        }
-        if let _ = htmlBody {
-            articleViewController.attributedArticleText = htmlBody
-        } else {
-            articleViewController.articleText = text
-        }
-        //presentPanModal(articleViewController)
+    func showArticleViewController(with content: NewsFeedRow) {
         let newsViewController = NewsScreenViewController(nibName: "NewsScreenViewController", bundle: nil)
-        let newsData = typeOfNews == 1 ? newsViewController.newsDataOne : newsViewController.newsDataTwo
-        let headerData = typeOfNews == 1 ? newsViewController.headerDataOne : newsViewController.headerDataTwo
-        newsViewController.newsData = newsData
-        newsViewController.headerData = headerData
+        newsViewController.newsData = content
         navigationController?.pushViewController(newsViewController, animated: true)
     }
 }
 
 protocol NewsShowDelegate: AnyObject {
-    func showArticleViewController(with text: String?, typeOfNews: Int) //TODO: delete typeOfNews
+    func showArticleViewController(with content: NewsFeedRow)
 }
 
 protocol PanModalAppearanceDelegate: AnyObject {

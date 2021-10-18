@@ -25,6 +25,8 @@ class NewsScreenViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var blurView: UIView!
     
+    var newsData: NewsFeedRow?
+    
     var maxHeaderHeight: CGFloat = 340
     var minHeaderHeight: CGFloat = 120
     
@@ -32,32 +34,6 @@ class NewsScreenViewController: UIViewController {
     var minSideTitleConstraint: CGFloat = 32
     
     var previousScrollOffset: CGFloat = 0
-    var headerData: HeaderData?
-    var newsData: [NewsData]?
-    
-    let headerDataOne = HeaderData(title: "How Sony Music uses data to connect artists with fans", subtitle: "Forbes Content Studio Forbes Staff Forbes Content Merketing")
-    let headerDataTwo = HeaderData(title: "Real time Trends", subtitle: "Forbes Content Studio Forbes Staff Forbes Content Merketing")
-    
-    let newsDataOne: [NewsData] = [
-        NewsData(title: "New Side-by-side and Reporter Presenter modes with desktop and window sharing", text: "Two new presenter modes are now coming available. Reporter places content as a visual aid above your shoulder like a news story. Side-by-side displays your video feed next to your content. You can now select a mode that fits your needs and promotes a more engaging presentation and consumption experience.", images: ["newsImage1"]),
-        NewsData(title: "Spam Notification in Call Toast", text: "The spam call notification feature automatically evaluates incoming calls and identifies probable spam calls as “spam likely” in the call toast.  Users still have the option to answer or reject the call, and all “spam likely” calls (regardless of whether they were answered or rejected) will also be reflected in the call history list.", images: ["newsImage2"]),
-        NewsData(title: "Music Mode for Teams", text: "Teams’ high fidelity music mode enables a richer sounding experience for audio through the pc’s microphone input.  Users will have the option to turn off echo cancellation, noise suppression, and gain control. The improved fidelity is best experienced through professional microphones and headphones or high-quality external loudspeakers (Bluetooth headsets will not provide the best quality sound reproduction). Teams settings must be enabled before joining a call or meeting.  An eighth note symbol will appear in the control bar to toggle music mode on and off. This setting is perfect for live musical performances and other times when transmitting high quality music to an online audience.  Audio generated from a sound source other than that of the microphone, for instance playing an audio or video stream, will not benefit from this feature.", images: ["newsImage3"]),
-        NewsData(title: "New default settings when opening Office files", text: "This new feature allows users to set a default of browser, desktop or Teams when opening Office files (Word, Excel, and Power Point) that are shared in Teams. The desktop setting can be selected if the user has Office version 16 or newer installed and activated.", images: ["newsImage4"]),
-        NewsData(title: "Breakout rooms: Pre-meeting room creation and participant assignment", text: "The ability for meeting organizers to pre-create rooms ahead of a meeting start and perform participant assignment tasks (both auto and manual) in advance. This is rolling out on desktop only.", images: ["newsImage5"]),
-        NewsData(title: "SharePoint Collapsible Sections", text: "This new feature will allow users to create rich, information-dense SharePoint pages. You’ll have the ability to show page sections in an accordion view (collapsed or expanded) or as tabs. The accordion view will be collapsed by default but can be set to show expanded.", images: ["newsImage6"]),
-        NewsData(title: "Chat Bubbles", text: "Chat has become a lively space for conversation and idea-sharing and offers an option for people to participate in the discussion without having to jump in verbally. With chat bubbles, meeting participants can follow chat on the main screen of a meeting.", images: ["newsImage7"]),
-        NewsData(title: "Teams: Lock Meetings", text: "In the Teams meetings desktop app experience, organizers can choose to lock their meetings to prevent subsequent join attempts. Anyone attempting to join a lock meeting from any device will be informed that the meeting is locked. ", images: nil),
-        NewsData(title: "Forms: Split sending and sharing entry point", text: "To remove the confusion between collecting response from others and collaborating with others, we decouple entry point of sending and sharing into separate paths.", images: nil),
-        NewsData(title: "Streams: New Stream hub page", text: "You can now find the recordings of your meetings and of the ones that have been shared with you using the new 'Stream' hub experience.  'Stream (Classic)' is being retired next year.", images: nil),
-        NewsData(title: "Microsoft Forms new App 'Polls' in Teams", text: "Forms will release a more discoverable app named 'Polls' in Teams. Adding polls to Teams chats/meetings via this new “Polls” app will be the same experience as before (via the Forms app), but now it’s under a new app name and Teams-branded icon.", images: nil)
-    ]
-    
-    let newsDataTwo: [NewsData] = [
-        NewsData(title: nil, text: "In an effort towards consolidation and efficiency, the old Artist 360 application is now integrated into the Artist Portal as Real Time Trends.The Artist Portal is a desktop and mobile application used by our artists and artist managers to review Real Time Earnings, perform Real Time Advances and Cash-Outs, and to view consumption metrics through Real Time Trends. The Real Time Trends module of the Artist Portal is now open to all internal users on both mobile and desktop allowing instant access to high level stats on all Sony Music repertoire. Real Time Trends makes it easy for users to gain valuable insights into an artist's overall performance by making data available from more than 20+ Top Global Partners (and more to come!). There are daily, weekly, and all-time sales metrics on an artist, album, and track level.  For partners that provide more detailed reporting, we are able to expose metrics related to source of stream and playlist activity.  Lastly, to make searching more manageable, multiple versions of the same track are automatically combined to consolidate sales metrics on an overall song level.", images: ["newsImage8", "newsImage9"]),
-        NewsData(title: "The following are mobile screenshots to illustrate some of the more popular features:", text: nil, images: ["newsImage10", "newsImage11", "newsImage12"]),
-        NewsData(title: nil, text: "We welcome everyone to try out the new Real Time Trends section of the Artist Portal by downloading the app or through the browser as seen below.  SME users can simply login with their email and network password.", images: ["newsImage13"])
-    ]
-    
     var tableViewPosition: CGPoint?
     
     override func viewDidLoad() {
@@ -71,14 +47,16 @@ class NewsScreenViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
 //        self.headerHeightConstraint.constant = self.maxHeaderHeight
         updateHeader()
-        titleLabel.text = headerData?.title
-        smallTitleLabel.text = headerData?.title
-        subtitleLabel.text = headerData?.subtitle
+        titleLabel.text = newsData?.headline
+        smallTitleLabel.text = newsData?.headline
+        subtitleLabel.text = newsData?.byLine
         if let position = tableViewPosition {
             tableView.setContentOffset(position, animated: false)
         } else {
             self.headerHeightConstraint.constant = self.maxHeaderHeight
         }
+        print(newsData?.newsContent)
+        
     }
     
     @IBAction func backButtonAction(_ sender: UIButton) {
@@ -88,7 +66,8 @@ class NewsScreenViewController: UIViewController {
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "NewsScreenTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsScreenTableViewCell")
+        tableView.register(UINib(nibName: "TextTableViewCell", bundle: nil), forCellReuseIdentifier: "TextTableViewCell")
+        tableView.register(UINib(nibName: "ImageTableViewCell", bundle: nil), forCellReuseIdentifier: "ImageTableViewCell")
         tableView.layer.cornerRadius = 16
         tableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         tableView.contentInset = tableView.menuButtonContentInset
@@ -110,17 +89,32 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsData?.count ?? 0
+        return newsData?.newsContent?.count ?? 0
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsScreenTableViewCell", for: indexPath) as? NewsScreenTableViewCell, let data = newsData else { return UITableViewCell() }
-        cell.delegate = self
-        cell.titleLabelTopConstraint.constant = indexPath.row == 0 ? 40 : 20
-        cell.setupCell(data[indexPath.row])
+        guard let newsContent = newsData?.newsContent else { return UITableViewCell() }
+        //print(newsContent[indexPath.row].type?.lowercased())
+        switch newsContent[indexPath.row].type?.lowercased() {
+        case "text":
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TextTableViewCell") as? TextTableViewCell else { return UITableViewCell() }
+            let decodedText = formNewsBody(from: newsContent[indexPath.row].body)
+            decodedText?.setFontFace(font: UIFont(name: "SFProText-Light", size: 16)!)
+            cell.newsTextLabel.attributedText = decodedText
+            return cell
+        case "image":
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "ImageTableViewCell") as? ImageTableViewCell else { return UITableViewCell() }
+            cell.delegate = self
+            //cell.setupCell(data[indexPath.row])
+            return cell
+        default:
+            return UITableViewCell()
+        }
         
-        return cell
+        //cell.titleLabelTopConstraint.constant = indexPath.row == 0 ? 40 : 20
+        //cell.setupCell(data[indexPath.row])
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -131,6 +125,8 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
         let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
         tableViewPosition = scrollView.contentOffset
+        
+        print(scrollView.contentOffset.y)
         
         if canAnimateHeader(scrollView) {
             var newHeight = self.headerHeightConstraint.constant
@@ -208,6 +204,24 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         })
     }
     
+    func formNewsBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
+        guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
+        
+        let res = NSMutableAttributedString(attributedString: htmlAttrString)
+        res.trimCharactersInSet(.whitespacesAndNewlines)
+        guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return res }
+        
+        let wholeRange = NSRange(res.string.startIndex..., in: res.string)
+        let matches = (mailRegex.matches(in: res.string, options: [], range: wholeRange))
+        for match in matches {
+            guard let mailLinkRange = Range(match.range, in: res.string) else { continue }
+            let mailLinkStr = res.string[mailLinkRange]
+            if let linkUrl = URL(string: "mailto:\(mailLinkStr)") {
+                res.addAttribute(.link, value: linkUrl, range: match.range)
+            }
+        }
+        return res
+    }
     
 }
 
@@ -250,15 +264,4 @@ extension NewsScreenViewController: ImageViewDidTappedDelegate {
             imageView.alpha = 1
         })
     }
-}
-
-struct NewsData {
-    var title: String?
-    var text: String?
-    var images: [String]?
-}
-
-struct HeaderData {
-    var title: String?
-    var subtitle: String?
 }

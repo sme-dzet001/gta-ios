@@ -77,7 +77,7 @@ class NewsTableViewCell: UITableViewCell {
         self.layoutIfNeeded()
         DispatchQueue.main.async { [weak self] in
             self?.bodyLabel.attributedText = self?.fullText
-            self?.bodyLabel.addReadMoreString("more")
+            self?.bodyLabel.addReadMoreString("")
         }
     }
     

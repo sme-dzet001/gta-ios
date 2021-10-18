@@ -72,20 +72,20 @@
 		5407680A270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */; };
 		5407680B270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */; };
 		5407680C270F3D97005EFD65 /* NewsScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */; };
-		54076810270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
-		54076811270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
-		54076812270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
-		54076813270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
-		54076814270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
-		54076815270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
-		54076816270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */; };
-		54076817270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
-		54076818270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
-		54076819270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
-		5407681A270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
-		5407681B270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
-		5407681C270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
-		5407681D270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */; };
+		54076810270F44E0005EFD65 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* TextTableViewCell.swift */; };
+		54076811270F44E0005EFD65 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* TextTableViewCell.swift */; };
+		54076812270F44E0005EFD65 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* TextTableViewCell.swift */; };
+		54076813270F44E0005EFD65 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* TextTableViewCell.swift */; };
+		54076814270F44E0005EFD65 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* TextTableViewCell.swift */; };
+		54076815270F44E0005EFD65 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* TextTableViewCell.swift */; };
+		54076816270F44E0005EFD65 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5407680E270F44E0005EFD65 /* TextTableViewCell.swift */; };
+		54076817270F44E0005EFD65 /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* TextTableViewCell.xib */; };
+		54076818270F44E0005EFD65 /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* TextTableViewCell.xib */; };
+		54076819270F44E0005EFD65 /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* TextTableViewCell.xib */; };
+		5407681A270F44E0005EFD65 /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* TextTableViewCell.xib */; };
+		5407681B270F44E0005EFD65 /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* TextTableViewCell.xib */; };
+		5407681C270F44E0005EFD65 /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* TextTableViewCell.xib */; };
+		5407681D270F44E0005EFD65 /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5407680F270F44E0005EFD65 /* TextTableViewCell.xib */; };
 		541F3AB926E8FE8E007F7C43 /* OfficeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 541F3AB826E8FE8E007F7C43 /* OfficeStoryboard.storyboard */; };
 		541F3ABA26E8FE8E007F7C43 /* OfficeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 541F3AB826E8FE8E007F7C43 /* OfficeStoryboard.storyboard */; };
 		541F3ABB26E8FE8E007F7C43 /* OfficeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 541F3AB826E8FE8E007F7C43 /* OfficeStoryboard.storyboard */; };
@@ -142,6 +142,20 @@
 		54D59C272695E0000037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
 		54D59C282695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
 		54D59C292695E0010037A9B1 /* TeamChatUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */; };
+		54E63B17271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E63B15271DCE7D0085A426 /* ImageTableViewCell.swift */; };
+		54E63B18271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E63B15271DCE7D0085A426 /* ImageTableViewCell.swift */; };
+		54E63B19271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E63B15271DCE7D0085A426 /* ImageTableViewCell.swift */; };
+		54E63B1A271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E63B15271DCE7D0085A426 /* ImageTableViewCell.swift */; };
+		54E63B1B271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E63B15271DCE7D0085A426 /* ImageTableViewCell.swift */; };
+		54E63B1C271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E63B15271DCE7D0085A426 /* ImageTableViewCell.swift */; };
+		54E63B1D271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E63B15271DCE7D0085A426 /* ImageTableViewCell.swift */; };
+		54E63B1E271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54E63B16271DCE7D0085A426 /* ImageTableViewCell.xib */; };
+		54E63B1F271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54E63B16271DCE7D0085A426 /* ImageTableViewCell.xib */; };
+		54E63B20271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54E63B16271DCE7D0085A426 /* ImageTableViewCell.xib */; };
+		54E63B21271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54E63B16271DCE7D0085A426 /* ImageTableViewCell.xib */; };
+		54E63B22271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54E63B16271DCE7D0085A426 /* ImageTableViewCell.xib */; };
+		54E63B23271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54E63B16271DCE7D0085A426 /* ImageTableViewCell.xib */; };
+		54E63B24271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54E63B16271DCE7D0085A426 /* ImageTableViewCell.xib */; };
 		58D7B4AC563A1A5901FDDBD1 /* Pods_GTADev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 995D94A7DD850D2D7D882234 /* Pods_GTADev.framework */; };
 		6500C64626DFB91200151F1D /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6500C64426DFB91100151F1D /* NewsTableViewCell.swift */; };
 		6500C64726DFB91200151F1D /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6500C64426DFB91100151F1D /* NewsTableViewCell.swift */; };
@@ -1771,8 +1785,8 @@
 		5405382226E8E60500388BF3 /* GTTeamDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTTeamDataProvider.swift; sourceTree = "<group>"; };
 		540767FD270F3D97005EFD65 /* NewsScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsScreenViewController.swift; sourceTree = "<group>"; };
 		540767FE270F3D97005EFD65 /* NewsScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsScreenViewController.xib; sourceTree = "<group>"; };
-		5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsScreenTableViewCell.swift; sourceTree = "<group>"; };
-		5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsScreenTableViewCell.xib; sourceTree = "<group>"; };
+		5407680E270F44E0005EFD65 /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
+		5407680F270F44E0005EFD65 /* TextTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextTableViewCell.xib; sourceTree = "<group>"; };
 		541F3AB826E8FE8E007F7C43 /* OfficeStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OfficeStoryboard.storyboard; sourceTree = "<group>"; };
 		541F3AC026E906EF007F7C43 /* OfficeOverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeOverviewViewController.swift; sourceTree = "<group>"; };
 		542905972705EBBE00AEE784 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
@@ -1781,6 +1795,8 @@
 		5472472126F20F1A000EE3F3 /* CircleTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleTransition.swift; sourceTree = "<group>"; };
 		54D59C182695CCD80037A9B1 /* TeamChatUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChatUsersViewController.swift; sourceTree = "<group>"; };
 		54D59C192695CCD80037A9B1 /* TeamChatUsersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamChatUsersViewController.xib; sourceTree = "<group>"; };
+		54E63B15271DCE7D0085A426 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
+		54E63B16271DCE7D0085A426 /* ImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageTableViewCell.xib; sourceTree = "<group>"; };
 		566D87B0CEE28611BB4AC3E8 /* Pods-GTAUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAUITests.release.xcconfig"; path = "Target Support Files/Pods-GTAUITests/Pods-GTAUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5FDD37814F08F4B2C816AAEE /* Pods-GTA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTA.release.xcconfig"; path = "Target Support Files/Pods-GTA/Pods-GTA.release.xcconfig"; sourceTree = "<group>"; };
 		6500C64426DFB91100151F1D /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
@@ -2159,7 +2175,8 @@
 		5407680D270F44AE005EFD65 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				5407680E270F44E0005EFD65 /* NewsScreenTableViewCell.swift */,
+				5407680E270F44E0005EFD65 /* TextTableViewCell.swift */,
+				54E63B15271DCE7D0085A426 /* ImageTableViewCell.swift */,
 				5407681E270F450A005EFD65 /* xib */,
 			);
 			path = Cells;
@@ -2168,7 +2185,8 @@
 		5407681E270F450A005EFD65 /* xib */ = {
 			isa = PBXGroup;
 			children = (
-				5407680F270F44E0005EFD65 /* NewsScreenTableViewCell.xib */,
+				5407680F270F44E0005EFD65 /* TextTableViewCell.xib */,
+				54E63B16271DCE7D0085A426 /* ImageTableViewCell.xib */,
 			);
 			path = xib;
 			sourceTree = "<group>";
@@ -3629,9 +3647,10 @@
 				65437CD92665387600B2F38A /* GlobalAlertViewController.xib in Resources */,
 				65437CDA2665387600B2F38A /* AboutSupportCell.xib in Resources */,
 				9F343A9526A1CE3C0071362D /* BarChartCell.xib in Resources */,
+				54E63B24271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */,
 				65437CDB2665387600B2F38A /* HelpDeskCell.xib in Resources */,
 				65437CDC2665387600B2F38A /* AppsServiceAlertCell.xib in Resources */,
-				5407681D270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
+				5407681D270F44E0005EFD65 /* TextTableViewCell.xib in Resources */,
 				9F3027FE2681D228009A3096 /* AlertDetailsCell.xib in Resources */,
 				65437CDD2665387600B2F38A /* SF-Pro-Display-Regular.otf in Resources */,
 				9F3028592681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
@@ -3777,9 +3796,10 @@
 				65437EC6266539BF00B2F38A /* Main.storyboard in Resources */,
 				65437EC7266539BF00B2F38A /* NewsCollectionViewCell.xib in Resources */,
 				65437EC8266539BF00B2F38A /* TicketCell.xib in Resources */,
+				54E63B22271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */,
 				9F3028572681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
 				65437EC9266539BF00B2F38A /* GeneralScreen.storyboard in Resources */,
-				5407681B270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
+				5407681B270F44E0005EFD65 /* TextTableViewCell.xib in Resources */,
 				65437ECA266539BF00B2F38A /* GoogleService-Info.plist in Resources */,
 				5405380626E7C1BB00388BF3 /* MenuTableViewCell.xib in Resources */,
 				65437ECC266539BF00B2F38A /* AboutViewController.xib in Resources */,
@@ -3851,9 +3871,10 @@
 				9F343A9426A1CE3C0071362D /* BarChartCell.xib in Resources */,
 				654380162665568000B2F38A /* WhatsNewCell.xib in Resources */,
 				654380172665568000B2F38A /* OfficeStatusCell.xib in Resources */,
+				54E63B23271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */,
 				9F30285F2681E68C009A3096 /* AlertPopoverViewController.xib in Resources */,
 				654380192665568000B2F38A /* ServiceDeskContactCell.xib in Resources */,
-				5407681C270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
+				5407681C270F44E0005EFD65 /* TextTableViewCell.xib in Resources */,
 				9F3028272681D228009A3096 /* ProductionAlertsDetails.xib in Resources */,
 				6543801A2665568000B2F38A /* QuickHelpCell.xib in Resources */,
 				6543801B2665568000B2F38A /* NewTicketViewController.xib in Resources */,
@@ -3999,9 +4020,10 @@
 				659A5AB8255401EA00E13B77 /* Main.storyboard in Resources */,
 				9F78CFE82564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
 				C962D82B2566D21100727949 /* TicketCell.xib in Resources */,
+				54E63B1E271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */,
 				9F3028532681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
 				9F3AC938264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
-				54076817270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
+				54076817270F44E0005EFD65 /* TextTableViewCell.xib in Resources */,
 				9F825FF525ED5612002A4560 /* GoogleService-Info.plist in Resources */,
 				5405380226E7C1BB00388BF3 /* MenuTableViewCell.xib in Resources */,
 				C93FCF0925648FA0001E86F6 /* AboutViewController.xib in Resources */,
@@ -4070,7 +4092,7 @@
 				9F33F6BF260A3C4000470A47 /* SF-Pro-Text-Regular.otf in Resources */,
 				9F33F6C1260A3C4000470A47 /* CollaborationHeader.xib in Resources */,
 				658BEF4B268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
-				5407681A270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
+				5407681A270F44E0005EFD65 /* TextTableViewCell.xib in Resources */,
 				9F33F6C2260A3C4000470A47 /* AboutSupportCell.xib in Resources */,
 				9FA17E3426340E3500CC78D3 /* SF-Pro-Text-Italic.ttf in Resources */,
 				9F33F6C3260A3C4000470A47 /* HelpDeskCell.xib in Resources */,
@@ -4134,6 +4156,7 @@
 				9FB9C1582631A46900BA753D /* NewTicketViewController.xib in Resources */,
 				9F33F6E4260A3C4000470A47 /* InfoArticleCell.xib in Resources */,
 				9F2C825F2657CE02004407B4 /* GlobalAlertDetailsCell.xib in Resources */,
+				54E63B21271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */,
 				9F33F6E5260A3C4000470A47 /* AboutInfoCell.xib in Resources */,
 				9F33F6E6260A3C4000470A47 /* CollaborationHeaderCell.xib in Resources */,
 				9F3028022681D228009A3096 /* ProductionAlertCounterCell.xib in Resources */,
@@ -4238,9 +4261,10 @@
 				9F78CFE92564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
 				C960A0E925B08B52004A9C65 /* ServiceDeskAboutViewController.xib in Resources */,
 				9F3028542681E68C009A3096 /* AlertPopoverCell.xib in Resources */,
+				54E63B1F271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */,
 				9F3AC939264D371A004074C8 /* GeneralScreen.storyboard in Resources */,
 				C962D82C2566D21100727949 /* TicketCell.xib in Resources */,
-				54076818270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
+				54076818270F44E0005EFD65 /* TextTableViewCell.xib in Resources */,
 				5405380326E7C1BB00388BF3 /* MenuTableViewCell.xib in Resources */,
 				C93FCF0A25648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				9F1620D52566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
@@ -4350,9 +4374,10 @@
 				658BEF4A268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
 				9F803249260A666900ED6224 /* TicketDescriptionCell.xib in Resources */,
 				C962D82D2566D21100727949 /* TicketCell.xib in Resources */,
+				54E63B20271DCE7D0085A426 /* ImageTableViewCell.xib in Resources */,
 				C93FCF0B25648FA0001E86F6 /* AboutViewController.xib in Resources */,
 				9F6435D1261F2077000D94A4 /* CollaborationCounterCell.xib in Resources */,
-				54076819270F44E0005EFD65 /* NewsScreenTableViewCell.xib in Resources */,
+				54076819270F44E0005EFD65 /* TextTableViewCell.xib in Resources */,
 				5405380426E7C1BB00388BF3 /* MenuTableViewCell.xib in Resources */,
 				9F35860925FD219D0003658D /* CollaborationHeader.xib in Resources */,
 				9F1620D62566BB32003AFE68 /* InfoArticleCell.xib in Resources */,
@@ -4695,7 +4720,7 @@
 				65437C3C2665387600B2F38A /* CollaborationDataProvider.swift in Sources */,
 				65437C3D2665387600B2F38A /* Preferences.swift in Sources */,
 				65437C3E2665387600B2F38A /* AppContactCell.swift in Sources */,
-				54076816270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
+				54076816270F44E0005EFD65 /* TextTableViewCell.swift in Sources */,
 				5405381926E8C65600388BF3 /* MenuViewControllerDataProvider.swift in Sources */,
 				54076805270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */,
 				65437C3F2665387600B2F38A /* HelpDeskDataProvider.swift in Sources */,
@@ -4826,6 +4851,7 @@
 				65437CA72665387600B2F38A /* CustomUISwitch.swift in Sources */,
 				65437CA82665387600B2F38A /* AppsServiceAlertCell.swift in Sources */,
 				65437CA92665387600B2F38A /* CacheManager.swift in Sources */,
+				54E63B1D271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */,
 				54D59C232695DFF90037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				65437CAB2665387600B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437CAC2665387600B2F38A /* CustomTextField.swift in Sources */,
@@ -4885,6 +4911,7 @@
 				65437E2E266539BF00B2F38A /* HelpDeskContactOptionCell.swift in Sources */,
 				65437E2F266539BF00B2F38A /* StatsBarChart.swift in Sources */,
 				65437E30266539BF00B2F38A /* AppDelegate.swift in Sources */,
+				54E63B1B271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */,
 				9F95D34926B946E700631363 /* GlobalProductionAlertsResponse.swift in Sources */,
 				65437E32266539BF00B2F38A /* OfficesResponses.swift in Sources */,
 				9F7B679126F2403800756412 /* TipsAndTricksTableViewCell.swift in Sources */,
@@ -4959,7 +4986,7 @@
 				65437E6A266539BF00B2F38A /* AboutSupportCell.swift in Sources */,
 				6500C64A26DFB91200151F1D /* NewsTableViewCell.swift in Sources */,
 				65437E6B266539BF00B2F38A /* APIManager.swift in Sources */,
-				54076814270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
+				54076814270F44E0005EFD65 /* TextTableViewCell.swift in Sources */,
 				65437E6C266539BF00B2F38A /* HelpDeskViewController.swift in Sources */,
 				65437E6D266539BF00B2F38A /* OfficeStatusCell.swift in Sources */,
 				65437E6E266539BF00B2F38A /* PanModalNavigationController.swift in Sources */,
@@ -4991,7 +5018,7 @@
 				65437F772665568000B2F38A /* CollaborationDataProvider.swift in Sources */,
 				65437F782665568000B2F38A /* Preferences.swift in Sources */,
 				65437F792665568000B2F38A /* AppContactCell.swift in Sources */,
-				54076815270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
+				54076815270F44E0005EFD65 /* TextTableViewCell.swift in Sources */,
 				5405381826E8C65600388BF3 /* MenuViewControllerDataProvider.swift in Sources */,
 				54076804270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */,
 				65437F7A2665568000B2F38A /* HelpDeskDataProvider.swift in Sources */,
@@ -5122,6 +5149,7 @@
 				65437FE22665568000B2F38A /* CustomUISwitch.swift in Sources */,
 				65437FE32665568000B2F38A /* AppsServiceAlertCell.swift in Sources */,
 				65437FE42665568000B2F38A /* CacheManager.swift in Sources */,
+				54E63B1C271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */,
 				54D59C222695DFF80037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				65437FE62665568000B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437FE72665568000B2F38A /* CustomTextField.swift in Sources */,
@@ -5181,6 +5209,7 @@
 				C9EC9E9925756BA400315AAE /* HelpDeskContactOptionCell.swift in Sources */,
 				C9DFD4AE25659BE400BF1740 /* StatsBarChart.swift in Sources */,
 				659A5AB1255401EA00E13B77 /* AppDelegate.swift in Sources */,
+				54E63B17271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */,
 				9F95D34526B946E600631363 /* GlobalProductionAlertsResponse.swift in Sources */,
 				C99AEEB9259A3CAB005BD447 /* OfficesResponses.swift in Sources */,
 				9F7B678D26F2403800756412 /* TipsAndTricksTableViewCell.swift in Sources */,
@@ -5255,7 +5284,7 @@
 				9FE173CF25914D3F00E2C481 /* AboutSupportCell.swift in Sources */,
 				6500C64626DFB91200151F1D /* NewsTableViewCell.swift in Sources */,
 				65D29083256C0DA6001B658A /* APIManager.swift in Sources */,
-				54076810270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
+				54076810270F44E0005EFD65 /* TextTableViewCell.swift in Sources */,
 				C91F707C2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
 				9F78D0DE256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C12566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
@@ -5356,6 +5385,7 @@
 				9F33F66B260A3C4000470A47 /* StatsBarChart.swift in Sources */,
 				9F33F66C260A3C4000470A47 /* OfficesResponses.swift in Sources */,
 				9F33F66D260A3C4000470A47 /* AppDelegate.swift in Sources */,
+				54E63B1A271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */,
 				9F33F66F260A3C4000470A47 /* GTA.xcdatamodeld in Sources */,
 				6500C70A26DFDE5100151F1D /* GlobalAlertBannerView.swift in Sources */,
 				9F33F670260A3C4000470A47 /* ServiceDeskAboutViewController.swift in Sources */,
@@ -5418,7 +5448,7 @@
 				9F33F692260A3C4000470A47 /* AboutSupportPolicyCell.swift in Sources */,
 				9F33F693260A3C4000470A47 /* AboutSupportCell.swift in Sources */,
 				5405381626E8C65600388BF3 /* MenuViewControllerDataProvider.swift in Sources */,
-				54076813270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
+				54076813270F44E0005EFD65 /* TextTableViewCell.swift in Sources */,
 				9F33F694260A3C4000470A47 /* HelpDeskViewController.swift in Sources */,
 				9F33F695260A3C4000470A47 /* APIManager.swift in Sources */,
 				9F33F696260A3C4000470A47 /* OfficeStatusCell.swift in Sources */,
@@ -5496,6 +5526,7 @@
 				9F819A90255C1572007C1739 /* LoginViewController.swift in Sources */,
 				9F35867825FFBAC40003658D /* ErrorHandler.swift in Sources */,
 				C9EC9E9A25756BA400315AAE /* HelpDeskContactOptionCell.swift in Sources */,
+				54E63B18271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */,
 				9FF0546725681F4A0071E596 /* SecondTicketDetailsViewController.swift in Sources */,
 				9F95D34626B946E700631363 /* GlobalProductionAlertsResponse.swift in Sources */,
 				9F78D07C256530CD00BCD38F /* ArticleViewController.swift in Sources */,
@@ -5570,7 +5601,7 @@
 				9FE173D025914D3F00E2C481 /* AboutSupportCell.swift in Sources */,
 				6500C64726DFB91200151F1D /* NewsTableViewCell.swift in Sources */,
 				C91F707D2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
-				54076811270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
+				54076811270F44E0005EFD65 /* TextTableViewCell.swift in Sources */,
 				65D2908E256C0DBC001B658A /* APIManager.swift in Sources */,
 				9F78D0DF256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C22566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
@@ -5645,6 +5676,7 @@
 				9F819ABA255C1646007C1739 /* LoginViewController.swift in Sources */,
 				9F35867925FFBAC40003658D /* ErrorHandler.swift in Sources */,
 				C9EC9E9B25756BA400315AAE /* HelpDeskContactOptionCell.swift in Sources */,
+				54E63B19271DCE7D0085A426 /* ImageTableViewCell.swift in Sources */,
 				9FF0546825681F4A0071E596 /* SecondTicketDetailsViewController.swift in Sources */,
 				9F95D34726B946E700631363 /* GlobalProductionAlertsResponse.swift in Sources */,
 				9F78D07D256530CD00BCD38F /* ArticleViewController.swift in Sources */,
@@ -5719,7 +5751,7 @@
 				9FE173D125914D3F00E2C481 /* AboutSupportCell.swift in Sources */,
 				6500C64826DFB91200151F1D /* NewsTableViewCell.swift in Sources */,
 				C91F707E2562FE98002F17B1 /* HelpDeskViewController.swift in Sources */,
-				54076812270F44E0005EFD65 /* NewsScreenTableViewCell.swift in Sources */,
+				54076812270F44E0005EFD65 /* TextTableViewCell.swift in Sources */,
 				65D29094256C0DBD001B658A /* APIManager.swift in Sources */,
 				9F78D0E0256557EE00BCD38F /* OfficeStatusCell.swift in Sources */,
 				9F1620C32566BAF7003AFE68 /* PanModalNavigationController.swift in Sources */,
