@@ -1,6 +1,6 @@
 import Foundation
 
 public enum PagingNavigationOrientation {
-  case vertical
-  case horizontal
+    case vertical
+    case horizontal
 }
