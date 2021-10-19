@@ -144,7 +144,8 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
                 cell?.pictureView.image = resData.image
             case .failure(let error):
                 if !error.isNotCurrentTask {
-                    cell?.pictureView.image = nil
+                    guard let defaultImage = UIImage(named: "whatsNewPlaceholder") else { return }
+                    cell?.pictureView.image = defaultImage
                 }
             }
         })

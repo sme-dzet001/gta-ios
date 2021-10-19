@@ -34,7 +34,6 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="newsTextLabel" destination="zoc-K1-OZe" id="ojd-42-7Tk"/>
-                <outlet property="titleLabelTopConstraint" destination="a7a-Yc-K7i" id="UrC-xq-f0E"/>
             </connections>
             <point key="canvasLocation" x="251.44927536231887" y="99.441964285714278"/>
         </tableViewCell>

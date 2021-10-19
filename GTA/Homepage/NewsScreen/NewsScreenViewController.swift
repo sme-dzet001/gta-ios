@@ -71,6 +71,8 @@ class NewsScreenViewController: UIViewController {
         tableView.layer.cornerRadius = 16
         tableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         tableView.contentInset = tableView.menuButtonContentInset
+        let header = UITableViewHeaderFooterView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 20))
+        tableView.tableHeaderView = header
     }
     
     private func setupBlurView() {
@@ -109,10 +111,6 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         default:
             return UITableViewCell()
         }
-        
-        //cell.titleLabelTopConstraint.constant = indexPath.row == 0 ? 40 : 20
-        //cell.setupCell(data[indexPath.row])
-        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -123,8 +121,6 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
         let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
         tableViewPosition = scrollView.contentOffset
-        
-        print(scrollView.contentOffset.y)
         
         if canAnimateHeader(scrollView) {
             var newHeight = self.headerHeightConstraint.constant

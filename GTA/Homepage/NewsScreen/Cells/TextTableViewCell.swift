@@ -14,7 +14,6 @@ protocol ImageViewDidTappedDelegate: AnyObject {
 
 class TextTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var newsTextLabel: UILabel!
     
     override func awakeFromNib() {

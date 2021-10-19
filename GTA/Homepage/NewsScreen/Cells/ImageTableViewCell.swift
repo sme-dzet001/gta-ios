@@ -9,14 +9,26 @@ import UIKit
 
 class ImageTableViewCell: UITableViewCell {
 
+    
     @IBOutlet weak var newsImageView: UIImageView!
     
-    weak var delegate: ImageViewDidTappedDelegate?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    internal var aspectConstraint : NSLayoutConstraint? {
+        didSet {
+            if oldValue != nil {
+                newsImageView.removeConstraint(oldValue!)
+            }
+            if aspectConstraint != nil {
+                newsImageView.addConstraint(aspectConstraint!)
+            }
+        }
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        aspectConstraint = nil
+    }
+    
+    weak var delegate: ImageViewDidTappedDelegate?
 
     func setupCell(imagePath: String?) {
         let imageURL = formImageURL(from: imagePath)
@@ -26,10 +38,11 @@ class ImageTableViewCell: UITableViewCell {
         newsImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { [weak self] (result) in
             switch result {
             case .success(let resData):
-                self?.newsImageView.image = resData.image
+                self?.setImageViewHeight(image: resData.image)
             case .failure(let error):
                 if !error.isNotCurrentTask {
-                    self?.newsImageView.image = nil
+                    guard let defaultImage = UIImage(named: "whatsNewPlaceholder") else { return }
+                    self?.setImageViewHeight(image: defaultImage)
                 }
             }
         })
@@ -40,7 +53,7 @@ class ImageTableViewCell: UITableViewCell {
         newsImageView.isUserInteractionEnabled = true
     }
     
-    private func formImageURL(from imagePath: String?) -> String {
+    func formImageURL(from imagePath: String?) -> String {
         let apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
         guard let imagePath = imagePath else { return "" }
         guard !imagePath.contains("https://") else  { return imagePath }
@@ -54,4 +67,13 @@ class ImageTableViewCell: UITableViewCell {
         delegate?.imageViewDidTapped(imageView: tappedImage)
     }
     
+    private func setImageViewHeight(image: UIImage) {
+        let aspect = image.size.width / image.size.height
+        
+        let constraint = NSLayoutConstraint(item: newsImageView, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: newsImageView, attribute: NSLayoutConstraint.Attribute.height, multiplier: aspect, constant: 0.0)
+        constraint.priority = UILayoutPriority(999)
+        
+        aspectConstraint = constraint
+        newsImageView.image = image
+    }
 }
