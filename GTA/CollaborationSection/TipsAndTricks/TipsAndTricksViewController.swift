@@ -10,6 +10,7 @@ import UIKit
 class TipsAndTricksViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     var dataProvider: CollaborationDataProvider?
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -58,6 +59,9 @@ class TipsAndTricksViewController: UIViewController {
     private func setUpNavigationItem() {
         navigationItem.title = "Tips & Tricks"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     private func loadCollaborationTipsAndTricks() {

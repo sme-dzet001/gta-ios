@@ -553,7 +553,7 @@ extension UIViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .white
-        appearance.shadowColor = UIColor(hex: 0xF2F2F7)
+        appearance.shadowColor = .clear//UIColor(hex: 0xF2F2F7)
         self.navigationController?.navigationBar.standardAppearance = appearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
@@ -1052,5 +1052,12 @@ extension Double {
     
     private func roundDown(_ value: Double, toNearest: Double) -> Double {
       return floor(value / toNearest) * toNearest
+    }
+}
+
+extension UIScrollView  {
+    func stopDecelerating() {
+        let contentOffset = self.contentOffset
+        self.setContentOffset(contentOffset, animated: false)
     }
 }

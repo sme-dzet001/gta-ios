@@ -43,6 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func dismissPanModalIfPresented(completion: @escaping (() -> Void)) {
         if let panModal = getTopViewController() as? PanModalPresentable {
             (panModal as? UIViewController)?.dismiss(animated: true, completion: completion)
+        } else if let menuVC = getTopViewController() as? MenuViewController {
+            menuVC.closeAction()
+            completion()
         } else {
             completion()
         }

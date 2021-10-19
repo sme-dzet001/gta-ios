@@ -119,10 +119,8 @@ class HomepageViewController: UIViewController {
         setUpBannerViews()
         setNeedsStatusBarAppearanceUpdate()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(getAllAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalProductionAlertsIgnoringCache), name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
-        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,7 +133,7 @@ class HomepageViewController: UIViewController {
             navigateToGlobalProdAlert(withAlertInfo: productionAlertInfo)
         }
         updateBannerViews()
-        getAllAlerts()
+        getAllAlertsWithCache()
         getProductionAlertsCount()
     }
     
@@ -155,41 +153,41 @@ class HomepageViewController: UIViewController {
 
     private func updateBannerViews() {
         if isEmergencyOutageBannerVisible {
-            emergencyOutageBannerView.isHidden = false
-            emergencyOutageBannerViewHeight.constant = 72
+            emergencyOutageBannerView?.isHidden = false
+            emergencyOutageBannerViewHeight?.constant = 72
             populateEmergencyOutageBanner()
         } else {
-            emergencyOutageBannerView.isHidden = true
-            emergencyOutageBannerViewHeight.constant = 0
+            emergencyOutageBannerView?.isHidden = true
+            emergencyOutageBannerViewHeight?.constant = 0
         }
         
         if isGlobalProductionAlertBannerVisible {
-            globalProductionAlertBannerView.isHidden = false
-            globalProductionAlertBannerViewHeight.constant = 72
+            globalProductionAlertBannerView?.isHidden = false
+            globalProductionAlertBannerViewHeight?.constant = 72
             populateGlobalProductionAlertBanner()
         } else {
-            globalProductionAlertBannerView.isHidden = true
-            globalProductionAlertBannerViewHeight.constant = 0
+            globalProductionAlertBannerView?.isHidden = true
+            globalProductionAlertBannerViewHeight?.constant = 0
         }
     }
     
     private func populateEmergencyOutageBanner() {
         guard let alert = dataProvider.globalAlertsData else { return }
-        emergencyOutageBannerView.alertLabel.text = "Emergency Outage: \(alert.alertTitle ?? "")"
+        emergencyOutageBannerView?.alertLabel.text = "Emergency Outage: \(alert.alertTitle ?? "")"
         if alert.status == .closed {
-            emergencyOutageBannerView.setAlertOff()
+            emergencyOutageBannerView?.setAlertOff()
         } else {
-            emergencyOutageBannerView.setAlertOn()
+            emergencyOutageBannerView?.setAlertOn()
         }
     }
     
     private func populateGlobalProductionAlertBanner() {
         guard let alert = dataProvider.productionGlobalAlertsData else { return }
         guard !alert.isExpired else { return }
-        globalProductionAlertBannerView.alertLabel.text = "Production Alert: \(alert.summary ?? "")"
-        globalProductionAlertBannerView.closeButton.isHidden = false
-        globalProductionAlertBannerView.delegate = self
-        globalProductionAlertBannerView.setAlertBannerForGlobalProdAlert(prodAlertsStatus: alert.prodAlertsStatus)
+        globalProductionAlertBannerView?.alertLabel.text = "Production Alert: \(alert.summary ?? "")"
+        globalProductionAlertBannerView?.closeButton.isHidden = false
+        globalProductionAlertBannerView?.delegate = self
+        globalProductionAlertBannerView?.setAlertBannerForGlobalProdAlert(prodAlertsStatus: alert.prodAlertsStatus)
     }
     
     @IBAction func emergencyOutageBannerPressed(_ sender: Any) {
@@ -253,9 +251,14 @@ class HomepageViewController: UIViewController {
         }
     }
     
-    @objc private func getAllAlerts() {
+    @objc private func getAllAlertsWithCache() {
         getGlobalAlerts()
         getGlobalProductionAlerts()
+    }
+    
+    @objc private func getAllAlertsIgnoringCache() {
+        getGlobalAlertsIgnoringCache()
+        getGlobalProductionAlertsIgnoringCache()
     }
     
     @objc private func getGlobalAlerts() {
@@ -393,6 +396,7 @@ class HomepageViewController: UIViewController {
         if let productionAlertInfo = UserDefaults.standard.object(forKey: "globalProductionAlertNotificationReceived") as? [String : Any] {
             navigateToGlobalProdAlert(withAlertInfo: productionAlertInfo)
         }
+        getAllAlertsIgnoringCache()
         getProductionAlertsCount()
     }
     
