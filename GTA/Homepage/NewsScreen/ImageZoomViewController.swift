@@ -52,7 +52,8 @@ class ImageZoomViewController: UIViewController {
     }
     
     private func menuButton(enable: Bool) {
-        guard let mainVC = self.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
+        guard let tabBar = self.tabBarController?.navigationController else { return }
+        guard let mainVC = tabBar.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
         mainVC.menuButton.alpha = enable ? 1 : 0
     }
     

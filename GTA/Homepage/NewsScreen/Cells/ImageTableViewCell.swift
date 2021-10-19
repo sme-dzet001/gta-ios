@@ -41,7 +41,7 @@ class ImageTableViewCell: UITableViewCell {
                 self?.setImageViewHeight(image: resData.image)
             case .failure(let error):
                 if !error.isNotCurrentTask {
-                    guard let defaultImage = UIImage(named: "whatsNewPlaceholder") else { return }
+                    guard let defaultImage = UIImage(named: DefaultImageNames.whatsNewPlaceholder) else { return }
                     self?.setImageViewHeight(image: defaultImage)
                 }
             }
@@ -73,7 +73,8 @@ class ImageTableViewCell: UITableViewCell {
         let constraint = NSLayoutConstraint(item: newsImageView, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: newsImageView, attribute: NSLayoutConstraint.Attribute.height, multiplier: aspect, constant: 0.0)
         constraint.priority = UILayoutPriority(999)
         
-        aspectConstraint = constraint
         newsImageView.image = image
+        aspectConstraint = constraint
+        layoutIfNeeded()
     }
 }

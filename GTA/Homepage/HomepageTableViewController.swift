@@ -144,7 +144,7 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
                 cell?.pictureView.image = resData.image
             case .failure(let error):
                 if !error.isNotCurrentTask {
-                    guard let defaultImage = UIImage(named: "whatsNewPlaceholder") else { return }
+                    guard let defaultImage = UIImage(named: DefaultImageNames.whatsNewPlaceholder) else { return }
                     cell?.pictureView.image = defaultImage
                 }
             }
@@ -153,7 +153,7 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
         cell?.byLabel.attributedText = getByLineText(byLine: cellDataSource.byLine)
         let newsDate = cellDataSource.postDate
         cell?.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
-        let bodyText = cellDataSource.newsContent?.first(where: { $0.type == "text" })?.body
+        let bodyText = cellDataSource.newsContent?.first(where: { $0.type == .text })?.body
         let bodyDecoded = dataProvider.formNewsBody(from: bodyText)
         bodyDecoded?.setFontFace(font: UIFont(name: "SFProText-Light", size: 16)!)
         cell?.bodyLabel.attributedText = bodyDecoded

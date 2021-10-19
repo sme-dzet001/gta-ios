@@ -211,7 +211,12 @@ struct NewsFeedData: Codable, Equatable {
 
 struct NewsContentData: Codable, Equatable {
     var body: String?
-    var type: String?
+    var type: NewsDataTypes?
+    
+    enum NewsDataTypes: String, Codable, Equatable {
+        case text = "text"
+        case image = "image"
+    }
 }
 
 struct NewsFeedRow: Codable, Equatable {

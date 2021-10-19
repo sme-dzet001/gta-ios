@@ -45,7 +45,6 @@ class NewsScreenViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-//        self.headerHeightConstraint.constant = self.maxHeaderHeight
         updateHeader()
         titleLabel.text = newsData?.headline
         smallTitleLabel.text = newsData?.headline
@@ -80,8 +79,6 @@ class NewsScreenViewController: UIViewController {
         blurView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         blurView.addBlurToView()
     }
-    
-    
 }
 
 extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
@@ -97,8 +94,7 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let newsContent = newsData?.newsContent else { return UITableViewCell() }
-        //print(newsContent[indexPath.row].type?.lowercased())
-        switch newsContent[indexPath.row].type?.lowercased() {
+        switch newsContent[indexPath.row].type?.rawValue.lowercased() {
         case "text":
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TextTableViewCell") as? TextTableViewCell else { return UITableViewCell() }
             cell.setupCell(text: newsContent[indexPath.row].body)
@@ -200,7 +196,7 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
-//Header
+//MARK: Header
 extension NewsScreenViewController {
     func updateHeader() {
         let range = self.maxHeaderHeight - self.minHeaderHeight
@@ -210,9 +206,7 @@ extension NewsScreenViewController {
         let constraintRange = maxSideTitleConstraint * (1 - (max(percentage - 0.1, 0) / 0.9))
         for i in titleConstraints {
             i.constant = max(constraintRange, minSideTitleConstraint)
-            let a = max(min((percentage / 0.6) * minSideTitleConstraint, maxSideTitleConstraint), minSideTitleConstraint)
         }
-        //min(max((percentage) * 24, 20), 24 //fontsize
         let titleFont = UIFont.systemFont(ofSize: 20 + percentage * 4)
         self.titleTopConstraint.constant = max(percentage * 100, 14)
         self.smallTitleLabel.alpha = 1 - max(percentage - 0.4, 0) / 0.6
