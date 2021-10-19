@@ -99,14 +99,12 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         switch newsContent[indexPath.row].type?.lowercased() {
         case "text":
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TextTableViewCell") as? TextTableViewCell else { return UITableViewCell() }
-            let decodedText = formNewsBody(from: newsContent[indexPath.row].body)
-            decodedText?.setFontFace(font: UIFont(name: "SFProText-Light", size: 16)!)
-            cell.newsTextLabel.attributedText = decodedText
+            cell.setupCell(text: newsContent[indexPath.row].body)
             return cell
         case "image":
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ImageTableViewCell") as? ImageTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            //cell.setupCell(data[indexPath.row])
+            cell.setupCell(imagePath: newsContent[indexPath.row].body)
             return cell
         default:
             return UITableViewCell()
@@ -202,25 +200,6 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
             self.updateHeader()
             self.view.layoutIfNeeded()
         })
-    }
-    
-    func formNewsBody(from base64EncodedText: String?) -> NSMutableAttributedString? {
-        guard let encodedText = base64EncodedText, let data = Data(base64Encoded: encodedText), let htmlBodyString = String(data: data, encoding: .utf8), let htmlAttrString = htmlBodyString.htmlToAttributedString else { return nil }
-        
-        let res = NSMutableAttributedString(attributedString: htmlAttrString)
-        res.trimCharactersInSet(.whitespacesAndNewlines)
-        guard let mailRegex = try? NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", options: []) else { return res }
-        
-        let wholeRange = NSRange(res.string.startIndex..., in: res.string)
-        let matches = (mailRegex.matches(in: res.string, options: [], range: wholeRange))
-        for match in matches {
-            guard let mailLinkRange = Range(match.range, in: res.string) else { continue }
-            let mailLinkStr = res.string[mailLinkRange]
-            if let linkUrl = URL(string: "mailto:\(mailLinkStr)") {
-                res.addAttribute(.link, value: linkUrl, range: match.range)
-            }
-        }
-        return res
     }
     
 }
