@@ -36,6 +36,10 @@ class NewsScreenViewController: UIViewController {
     var previousScrollOffset: CGFloat = 0
     var tableViewPosition: CGPoint?
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,7 +49,9 @@ class NewsScreenViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barStyle = .black
         updateHeader()
+        downloadHeaderImage()
         titleLabel.text = newsData?.headline
         smallTitleLabel.text = newsData?.headline
         subtitleLabel.text = newsData?.byLine
@@ -54,8 +60,6 @@ class NewsScreenViewController: UIViewController {
         } else {
             self.headerHeightConstraint.constant = self.maxHeaderHeight
         }
-        print(newsData?.newsContent)
-        
     }
     
     @IBAction func backButtonAction(_ sender: UIButton) {
@@ -79,6 +83,31 @@ class NewsScreenViewController: UIViewController {
         blurView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         blurView.addBlurToView()
     }
+    
+    func formImageURL(from imagePath: String?) -> String {
+        let apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
+        guard let imagePath = imagePath else { return "" }
+        guard !imagePath.contains("https://") else  { return imagePath }
+        let imageURL = apiManager.baseUrl + "/" + imagePath.replacingOccurrences(of: "assets/", with: "assets/\(KeychainManager.getToken() ?? "")/")
+        return imageURL
+    }
+    
+    private func downloadHeaderImage() {
+        let imageURL = formImageURL(from: newsData?.imagePath)
+        let url = URL(string: imageURL)
+        newsbackgroundImage.kf.indicatorType = .activity
+        newsbackgroundImage.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { (result) in
+            switch result {
+            case .success(let resData):
+                self.newsbackgroundImage.image = resData.image
+            case .failure(let error):
+                if !error.isNotCurrentTask {
+                    self.newsbackgroundImage.image = UIImage(named: "newsHardcoreImage")
+                }
+            }
+        })
+    }
+    
 }
 
 extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
@@ -97,6 +126,7 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         switch newsContent[indexPath.row].type?.rawValue.lowercased() {
         case "text":
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TextTableViewCell") as? TextTableViewCell else { return UITableViewCell() }
+            cell.delegate = self
             cell.setupCell(text: newsContent[indexPath.row].body)
             return cell
         case "image":
@@ -208,7 +238,7 @@ extension NewsScreenViewController {
             i.constant = max(constraintRange, minSideTitleConstraint)
         }
         let titleFont = UIFont.systemFont(ofSize: 20 + percentage * 4)
-        self.titleTopConstraint.constant = max(percentage * 100, 14)
+        self.titleTopConstraint.constant = max(percentage * 100, 10)
         self.smallTitleLabel.alpha = 1 - max(percentage - 0.4, 0) / 0.6
         self.smallTitleLabel.font = titleFont
         self.titleLabel.alpha = max(percentage - 0.4, 0) / 0.6
@@ -217,7 +247,20 @@ extension NewsScreenViewController {
     }
 }
 
-extension NewsScreenViewController: ImageViewDidTappedDelegate {
+//MARK: Cells delegates
+extension NewsScreenViewController: ImageViewDidTappedDelegate, TappedLabelDelegate {
+    func moreButtonDidTapped(in cell: UITableViewCell) {
+        return
+    }
+    
+    func openUrl(_ url: URL) {
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            displayError(errorMessage: "Something went wrong", title: nil)
+        }
+    }
+    
     func imageViewDidTapped(imageView: UIImageView) {
         let zoomScreen = ImageZoomViewController()
         zoomScreen.hero.isEnabled = true

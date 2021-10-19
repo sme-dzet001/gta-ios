@@ -22,20 +22,12 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GLI-7l-o3e" userLabel="SnapshotImage">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oW0-ZG-q0C" userLabel="BackgroundView">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                    <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GLI-7l-o3e" userLabel="SnapshotImage">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        </imageView>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="GLI-7l-o3e" firstAttribute="leading" secondItem="oW0-ZG-q0C" secondAttribute="leading" id="0Ln-Ha-fFD"/>
-                        <constraint firstAttribute="bottom" secondItem="GLI-7l-o3e" secondAttribute="bottom" id="LKY-Rb-jqP"/>
-                        <constraint firstAttribute="trailing" secondItem="GLI-7l-o3e" secondAttribute="trailing" id="UUw-Tu-zoZ"/>
-                        <constraint firstItem="GLI-7l-o3e" firstAttribute="top" secondItem="oW0-ZG-q0C" secondAttribute="top" id="wZd-XA-ket"/>
-                    </constraints>
+                    <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2U6-ga-w30">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -57,15 +49,15 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfC-kd-CYm">
-                            <rect key="frame" x="348" y="46" width="50" height="50"/>
+                            <rect key="frame" x="363" y="61" width="35" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="50" id="3oU-8f-BAz"/>
-                                <constraint firstAttribute="height" constant="50" id="TUh-Zx-Guv"/>
+                                <constraint firstAttribute="width" constant="35" id="3oU-8f-BAz"/>
+                                <constraint firstAttribute="height" constant="35" id="TUh-Zx-Guv"/>
                             </constraints>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
-                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25" scale="large" weight="medium"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="18" scale="large" weight="medium"/>
                             </buttonConfiguration>
                             <connections>
                                 <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="tDK-G5-iHE"/>
@@ -83,12 +75,16 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="GLI-7l-o3e" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="0fa-HV-7fK"/>
                 <constraint firstItem="5ub-0P-bUT" firstAttribute="leading" secondItem="oW0-ZG-q0C" secondAttribute="leading" id="27E-kf-xYd"/>
+                <constraint firstItem="GLI-7l-o3e" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="BxG-SQ-Maj"/>
                 <constraint firstItem="oW0-ZG-q0C" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="EoX-SR-w1J"/>
                 <constraint firstAttribute="bottom" secondItem="oW0-ZG-q0C" secondAttribute="bottom" id="Ihd-6T-TcA"/>
                 <constraint firstAttribute="bottom" secondItem="2U6-ga-w30" secondAttribute="bottom" id="K1O-wJ-GZg"/>
+                <constraint firstAttribute="bottom" secondItem="GLI-7l-o3e" secondAttribute="bottom" id="LnT-zS-6LH"/>
                 <constraint firstItem="oW0-ZG-q0C" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="N3m-Yt-aX4"/>
                 <constraint firstItem="dCb-CL-5eu" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="Szn-CI-YdG"/>
+                <constraint firstItem="GLI-7l-o3e" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="c05-FS-Ws4"/>
                 <constraint firstItem="2U6-ga-w30" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="dF0-k3-TDO"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="oW0-ZG-q0C" secondAttribute="trailing" id="ded-JJ-vqr"/>
                 <constraint firstItem="5ub-0P-bUT" firstAttribute="top" secondItem="oW0-ZG-q0C" secondAttribute="top" id="go3-6D-2PW"/>
