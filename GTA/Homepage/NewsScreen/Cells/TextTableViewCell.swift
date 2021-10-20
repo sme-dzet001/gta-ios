@@ -8,10 +8,6 @@
 import UIKit
 import Hero
 
-protocol ImageViewDidTappedDelegate: AnyObject {
-    func imageViewDidTapped(imageView: UIImageView)
-}
-
 class TextTableViewCell: UITableViewCell {
     
     @IBOutlet weak var newsTextLabel: UILabel!

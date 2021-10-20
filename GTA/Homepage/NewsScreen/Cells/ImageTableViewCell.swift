@@ -6,6 +6,11 @@
 //
 
 import UIKit
+import Kingfisher
+
+protocol ImageViewDidTappedDelegate: AnyObject {
+    func imageViewDidTapped(imageView: UIImageView)
+}
 
 class ImageTableViewCell: UITableViewCell {
 
@@ -37,9 +42,11 @@ class ImageTableViewCell: UITableViewCell {
         let imageURL = formImageURL(from: imagePath)
         let url = URL(string: imageURL)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-        
-        newsImageView.kf.indicatorType = .activity
-        newsImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { [weak self] (result) in
+        if !ImageCache.default.isCached(forKey: imageURL) {
+            aspectConstraint = defaultHeightConstraint
+        }
+        self.newsImageView.kf.indicatorType = .activity
+        self.newsImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { [weak self] (result) in
             switch result {
             case .success(let resData):
                 self?.setImageViewHeight(image: resData.image, completion: completion)
