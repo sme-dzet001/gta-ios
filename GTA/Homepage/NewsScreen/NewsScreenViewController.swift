@@ -132,7 +132,13 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         case "image":
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ImageTableViewCell") as? ImageTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.setupCell(imagePath: newsContent[indexPath.row].body)
+            cell.setupCell(imagePath: newsContent[indexPath.row].body, completion: {
+                cell.setNeedsLayout()
+                UIView.performWithoutAnimation {
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
+                }
+            })
             return cell
         default:
             return UITableViewCell()

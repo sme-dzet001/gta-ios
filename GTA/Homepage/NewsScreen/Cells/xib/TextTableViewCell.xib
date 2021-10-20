@@ -18,14 +18,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Side-by-side and Reporter Presenter modes with desktop and window sharing" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoc-K1-OZe">
-                        <rect key="frame" x="32" y="20" width="413" height="61"/>
+                        <rect key="frame" x="32" y="16" width="413" height="65"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="zoc-K1-OZe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="a7a-Yc-K7i"/>
+                    <constraint firstItem="zoc-K1-OZe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="a7a-Yc-K7i"/>
                     <constraint firstAttribute="trailing" secondItem="zoc-K1-OZe" secondAttribute="trailing" constant="32" id="h0N-Tj-wA5"/>
                     <constraint firstAttribute="bottom" secondItem="zoc-K1-OZe" secondAttribute="bottom" constant="16" id="pXp-aq-3vf"/>
                     <constraint firstItem="zoc-K1-OZe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="v0b-9R-mHB"/>

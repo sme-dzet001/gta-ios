@@ -9,8 +9,10 @@ import UIKit
 
 class ImageTableViewCell: UITableViewCell {
 
-    
     @IBOutlet weak var newsImageView: UIImageView!
+    
+    weak var delegate: ImageViewDidTappedDelegate?
+    lazy var defaultHeightConstraint = NSLayoutConstraint(item: newsImageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 160)
     
     internal var aspectConstraint : NSLayoutConstraint? {
         didSet {
@@ -18,31 +20,34 @@ class ImageTableViewCell: UITableViewCell {
                 newsImageView.removeConstraint(oldValue!)
             }
             if aspectConstraint != nil {
+                aspectConstraint?.priority = UILayoutPriority(999)
                 newsImageView.addConstraint(aspectConstraint!)
             }
         }
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         aspectConstraint = nil
     }
     
-    weak var delegate: ImageViewDidTappedDelegate?
 
-    func setupCell(imagePath: String?) {
+    func setupCell(imagePath: String?, completion: @escaping () -> ()) {
         let imageURL = formImageURL(from: imagePath)
         let url = URL(string: imageURL)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        aspectConstraint = defaultHeightConstraint
         newsImageView.kf.indicatorType = .activity
         newsImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { [weak self] (result) in
             switch result {
             case .success(let resData):
                 self?.setImageViewHeight(image: resData.image)
+                completion()
             case .failure(let error):
                 if !error.isNotCurrentTask {
                     guard let defaultImage = UIImage(named: DefaultImageNames.whatsNewPlaceholder) else { return }
                     self?.setImageViewHeight(image: defaultImage)
+                    completion()
                 }
             }
         })
@@ -68,13 +73,14 @@ class ImageTableViewCell: UITableViewCell {
     }
     
     private func setImageViewHeight(image: UIImage) {
+        
+        let height = image.size.height * (UIScreen.main.bounds.width / image.size.width)
         let aspect = image.size.width / image.size.height
         
-        let constraint = NSLayoutConstraint(item: newsImageView, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: newsImageView, attribute: NSLayoutConstraint.Attribute.height, multiplier: aspect, constant: 0.0)
-        constraint.priority = UILayoutPriority(999)
-        
-        newsImageView.image = image
-        aspectConstraint = constraint
-        layoutIfNeeded()
+        if height > 250 {
+            aspectConstraint = NSLayoutConstraint(item: newsImageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250)
+        } else {
+            aspectConstraint = NSLayoutConstraint(item: newsImageView, attribute: .width, relatedBy: .equal, toItem: newsImageView, attribute: .height, multiplier: aspect, constant: 0.0)
+        }
     }
 }
