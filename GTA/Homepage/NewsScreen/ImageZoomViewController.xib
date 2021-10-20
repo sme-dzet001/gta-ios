@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageZoomViewController" customModule="GTA" customModuleProvider="target">
             <connections>
-                <outlet property="closeButton" destination="sfC-kd-CYm" id="XRd-cd-69M"/>
+                <outlet property="closeButton" destination="SyX-UY-yVt" id="cAH-1F-Gze"/>
                 <outlet property="scrollView" destination="2U6-ga-w30" id="4ep-h3-VXr"/>
                 <outlet property="snapshotImage" destination="GLI-7l-o3e" id="kOe-OJ-WBi"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -47,30 +47,24 @@
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ub-0P-bUT" userLabel="HeaderView">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfC-kd-CYm">
-                            <rect key="frame" x="363" y="61" width="35" height="35"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="35" id="3oU-8f-BAz"/>
-                                <constraint firstAttribute="height" constant="35" id="TUh-Zx-Guv"/>
-                            </constraints>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
-                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="18" scale="large" weight="medium"/>
-                            </buttonConfiguration>
-                            <connections>
-                                <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="tDK-G5-iHE"/>
-                            </connections>
-                        </button>
-                    </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="sfC-kd-CYm" secondAttribute="bottom" constant="8" id="f2J-H8-2gA"/>
-                        <constraint firstAttribute="trailing" secondItem="sfC-kd-CYm" secondAttribute="trailing" constant="16" id="j9D-Fm-Hti"/>
                         <constraint firstAttribute="height" constant="104" id="yZK-QJ-3gr"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SyX-UY-yVt">
+                    <rect key="frame" x="372" y="52" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="UZL-yb-L4o"/>
+                        <constraint firstAttribute="height" constant="30" id="nRs-N4-0fg"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="white_close_icon"/>
+                    <connections>
+                        <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="Y8P-aO-Efe"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -81,9 +75,11 @@
                 <constraint firstItem="oW0-ZG-q0C" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="EoX-SR-w1J"/>
                 <constraint firstAttribute="bottom" secondItem="oW0-ZG-q0C" secondAttribute="bottom" id="Ihd-6T-TcA"/>
                 <constraint firstAttribute="bottom" secondItem="2U6-ga-w30" secondAttribute="bottom" id="K1O-wJ-GZg"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="SyX-UY-yVt" secondAttribute="trailing" constant="12" id="LXK-oC-OUH"/>
                 <constraint firstAttribute="bottom" secondItem="GLI-7l-o3e" secondAttribute="bottom" id="LnT-zS-6LH"/>
                 <constraint firstItem="oW0-ZG-q0C" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="N3m-Yt-aX4"/>
                 <constraint firstItem="dCb-CL-5eu" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="Szn-CI-YdG"/>
+                <constraint firstItem="SyX-UY-yVt" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="YS8-FU-v6F"/>
                 <constraint firstItem="GLI-7l-o3e" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="c05-FS-Ws4"/>
                 <constraint firstItem="2U6-ga-w30" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="dF0-k3-TDO"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="oW0-ZG-q0C" secondAttribute="trailing" id="ded-JJ-vqr"/>
@@ -97,6 +93,6 @@
         </view>
     </objects>
     <resources>
-        <image name="xmark" catalog="system" width="128" height="113"/>
+        <image name="white_close_icon" width="24" height="24"/>
     </resources>
 </document>

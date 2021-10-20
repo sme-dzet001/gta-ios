@@ -13,7 +13,7 @@ class ImageTableViewCell: UITableViewCell {
     
     weak var delegate: ImageViewDidTappedDelegate?
     lazy var defaultHeightConstraint = NSLayoutConstraint(item: newsImageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 160)
-    
+
     internal var aspectConstraint : NSLayoutConstraint? {
         didSet {
             if oldValue != nil {
@@ -29,25 +29,24 @@ class ImageTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         aspectConstraint = nil
+        newsImageView.kf.cancelDownloadTask()
+        newsImageView.image = nil
     }
     
-
     func setupCell(imagePath: String?, completion: @escaping () -> ()) {
         let imageURL = formImageURL(from: imagePath)
         let url = URL(string: imageURL)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-        aspectConstraint = defaultHeightConstraint
+        
         newsImageView.kf.indicatorType = .activity
         newsImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { [weak self] (result) in
             switch result {
             case .success(let resData):
-                self?.setImageViewHeight(image: resData.image)
-                completion()
+                self?.setImageViewHeight(image: resData.image, completion: completion)
             case .failure(let error):
                 if !error.isNotCurrentTask {
                     guard let defaultImage = UIImage(named: DefaultImageNames.whatsNewPlaceholder) else { return }
-                    self?.setImageViewHeight(image: defaultImage)
-                    completion()
+                    self?.setImageViewHeight(image: defaultImage, completion: completion)
                 }
             }
         })
@@ -72,8 +71,7 @@ class ImageTableViewCell: UITableViewCell {
         delegate?.imageViewDidTapped(imageView: tappedImage)
     }
     
-    private func setImageViewHeight(image: UIImage) {
-        
+    private func setImageViewHeight(image: UIImage, completion: @escaping () -> ()) {
         let height = image.size.height * (UIScreen.main.bounds.width / image.size.width)
         let aspect = image.size.width / image.size.height
         
@@ -82,5 +80,6 @@ class ImageTableViewCell: UITableViewCell {
         } else {
             aspectConstraint = NSLayoutConstraint(item: newsImageView, attribute: .width, relatedBy: .equal, toItem: newsImageView, attribute: .height, multiplier: aspect, constant: 0.0)
         }
+        completion()
     }
 }
