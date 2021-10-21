@@ -240,6 +240,7 @@ extension MainViewController: TabBarIndexChanged {
 extension MainViewController: ChatBotDelegate {
     func showChatBot() {
         let chatBotVC = ChatBotViewController()
-        presentPanModal(chatBotVC)
+        chatBotVC.modalPresentationStyle = .currentContext
+        present(chatBotVC, animated: true, completion: nil)
     }
 }

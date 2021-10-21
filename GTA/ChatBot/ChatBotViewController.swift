@@ -6,14 +6,12 @@
 //
 
 import UIKit
-import PanModal
 import WebKit
 
 class ChatBotViewController: UIViewController {
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var webViewHeight: NSLayoutConstraint!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
@@ -57,16 +55,16 @@ class ChatBotViewController: UIViewController {
     
     private func addHeightObservation() {
         heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
-            let yPos = (self?.position ?? 2) / 2
-            self?.activityIndicator.center.y = yPos
-            self?.errorLabel.center.y = yPos
+            //let yPos = (self?.position ?? 2) / 2
+            //self?.activityIndicator.center.y = yPos
+            //self?.errorLabel.center.y = yPos
         })
     }
     
     private func setWebViewHeightForShortForm() {
         let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
         let shortHeight = coefficient - (view.window?.safeAreaInsets.bottom ?? 0)
-        webViewHeight.constant = shortHeight - 69
+        //webViewHeight.constant = shortHeight - 69
     }
     
     private func getChatBotToken() {
@@ -118,7 +116,6 @@ class ChatBotViewController: UIViewController {
             guard keyboardSize.height > 0 else { return }
         
             let offset = CGPoint(x: webView.scrollView.contentOffset.x, y: keyboardSize.height)
-            panModalTransition(to: .longForm)
             webView.scrollView.setContentOffset(offset, animated: true)
         }
     }
@@ -127,58 +124,6 @@ class ChatBotViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
     }
-}
-
-extension ChatBotViewController: PanModalPresentable {
-    var position: CGFloat {
-        return UIScreen.main.bounds.height - (self.presentationController?.presentedView?.frame.origin.y ?? 0.0)
-    }
-    
-    var panScrollable: UIScrollView? {
-        return nil
-    }
-    
-    var showDragIndicator: Bool {
-        return false
-    }
-    
-    var longFormHeight: PanModalHeight {
-        return .maxHeight
-    }
-    
-    var shortFormHeight: PanModalHeight {
-        guard !UIDevice.current.iPhone5_se else { return .maxHeight }
-        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
-        return PanModalHeight.contentHeight(coefficient - (view.window?.safeAreaInsets.bottom ?? 0))
-    }
-    
-    var topOffset: CGFloat {
-        if let keyWindow = UIWindow.key {
-            return keyWindow.safeAreaInsets.top
-        } else {
-            return 0
-        }
-    }
-    
-    var cornerRadius: CGFloat {
-        return 20
-    }
-    
-    var panModalBackgroundColor: UIColor {
-        return UIColor(hex: 0x000000, alpha: 0.4)
-    }
-    
-    func willTransition(to state: PanModalPresentationController.PresentationState) {
-        switch state {
-        case .longForm:
-            webViewHeight.constant = self.view.frame.height - 69
-        default:
-            self.view.endEditing(true)
-            setWebViewHeightForShortForm()
-        }
-        self.view.layoutIfNeeded()
-    }
-   
 }
 
 extension ChatBotViewController: WKNavigationDelegate {
