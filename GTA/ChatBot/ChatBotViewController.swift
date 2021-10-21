@@ -32,8 +32,6 @@ class ChatBotViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        addHeightObservation()
-        setWebViewHeightForShortForm()
         setUpActivityIndicator()
         addErrorLabel(errorLabel)
         webView.navigationDelegate = self
@@ -51,20 +49,6 @@ class ChatBotViewController: UIViewController {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.center = CGPoint(x: self.view.center.x, y: self.webView.center.y)
         activityIndicator.startAnimating()
-    }
-    
-    private func addHeightObservation() {
-        heightObserver = self.presentationController?.presentedView?.observe(\.frame, changeHandler: { [weak self] (_, _) in
-            //let yPos = (self?.position ?? 2) / 2
-            //self?.activityIndicator.center.y = yPos
-            //self?.errorLabel.center.y = yPos
-        })
-    }
-    
-    private func setWebViewHeightForShortForm() {
-        let coefficient = (UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 0.82)) + 10
-        let shortHeight = coefficient - (view.window?.safeAreaInsets.bottom ?? 0)
-        //webViewHeight.constant = shortHeight - 69
     }
     
     private func getChatBotToken() {
