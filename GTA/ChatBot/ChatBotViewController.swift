@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import CryptoKit
 
 class ChatBotViewController: UIViewController {
     
@@ -17,6 +18,7 @@ class ChatBotViewController: UIViewController {
     private var errorLabel: UILabel = UILabel()
     private var dataProvider: ChatBotDataProvider = ChatBotDataProvider()
     private var heightObserver: NSKeyValueObservation?
+    private var canReloadWebView = true
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -52,10 +54,12 @@ class ChatBotViewController: UIViewController {
     }
     
     private func getChatBotToken() {
-        dataProvider.getChatBotToken {[weak self] token, errorCode, error in
+        let username = KeychainManager.getUsername() ?? ""
+        let md5Username = username.MD5
+        dataProvider.getChatBotToken(userMail: md5Username) {[weak self] token, errorCode, error in
             DispatchQueue.main.async {
                 if errorCode == 200 && error == nil {
-                    self?.setTokenAndLoadChatBot(token)
+                    self?.setTokenAndLoadChatBot(token, md5Username)
                 } else {
                     self?.setErrorLabel(for: error)
                 }
@@ -63,15 +67,18 @@ class ChatBotViewController: UIViewController {
         }
     }
     
-    private func setTokenAndLoadChatBot(_ token: String?) {
-        guard let _ = token, let path = Bundle.main.path(forResource: "frame", ofType: "html") else { return }
+    private func setTokenAndLoadChatBot(_ token: String?, _ mail: String?) {
+        guard let token = token, let userID = mail, let path = Bundle.main.path(forResource: "frame", ofType: "html") else { return }
         do {
-            let strHTMLContent = try String(contentsOfFile: path) as NSString
-            let startRange = strHTMLContent.range(of: "token: '", options: .backwards)
-            let location = startRange.location + startRange.length
-            let neededRange = NSMakeRange(location, 0)
-            let htmlString = strHTMLContent.replacingCharacters(in: neededRange, with: token!)
-            self.webView.loadHTMLString(htmlString, baseURL: nil)
+            let parameters = ["token: '" : token, "userID: '" : userID]
+            var htmlContent = try String(contentsOfFile: path) as NSString
+            for (key, value) in parameters {
+                let startRange = htmlContent.range(of: key, options: .backwards)
+                let location = startRange.location + startRange.length
+                let neededRange = NSMakeRange(location, 0)
+                htmlContent = htmlContent.replacingCharacters(in: neededRange, with: value) as NSString
+            }
+            self.webView.loadHTMLString(htmlContent as String, baseURL: nil)
         } catch {
             self.setErrorLabel()
         }
@@ -114,6 +121,11 @@ extension ChatBotViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         activityIndicator.stopAnimating()
+        if canReloadWebView {
+            canReloadWebView = !canReloadWebView
+            getChatBotToken()
+            return
+        }
         self.setErrorLabel(for: ResponseError.generate(error: error))
     }
     

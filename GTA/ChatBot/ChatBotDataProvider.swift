@@ -11,8 +11,8 @@ class ChatBotDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     
-    func getChatBotToken(completion: ((_ token: String?, _ errorCode: Int, _ error: ResponseError?) -> Void)? = nil) {
-        apiManager.getChatBotToken {[weak self] data, errorCode, error in
+    func getChatBotToken(userMail: String, completion: ((_ token: String?, _ errorCode: Int, _ error: ResponseError?) -> Void)? = nil) {
+        apiManager.getChatBotToken(userEmail: userMail) {[weak self] data, errorCode, error in
             self?.handleChatBotToken(data: data, errorCode: errorCode, error: error, completion: completion)
         }
     }
@@ -35,5 +35,7 @@ class ChatBotDataProvider {
 }
 
 struct TokenData: Codable {
+    var conversationId: String?
     var token: String?
+    var expires_in : Int?
 }

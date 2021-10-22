@@ -307,9 +307,9 @@ class APIManager: NSObject, URLSessionDelegate {
     
     //MARK: - Chat Bot methods
     
-    func getChatBotToken(completion: ((_ data: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getChatBotToken(userEmail: String, completion: ((_ data: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Authorization": "Bearer GM4125ZB1RE.6GcweKnmIfPrwjWzEUIhx3kW7rxN5yRut7PLOfU9_WY", "Content-Type": "application/x-www-form-urlencoded"]
-        let requestBodyParams = ["user.id": "dl_test-user1"]
+        let requestBodyParams = ["user.id": "\(userEmail)"]
         self.makeRequest(endpoint: .getChatBotToken, method: "POST", headers: requestHeaders, requestBodyParams: requestBodyParams, completion: completion)
     }
     
@@ -342,11 +342,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, completion: RequestCompletion = nil) {
         
-        var url = baseUrl
-        if endpoint.endpoint.contains("https") {
-            url = ""
-        }
-        
+        let url = endpoint.endpoint.contains("https") ? "" : baseUrl
         let apiRequest = APIRequest(baseUrl: url, endpoint: endpoint.endpoint, headers: headers, params: params, requestBodyParams: requestBodyParams, requestBodyJSONParams: requestBodyJSONParams)
         guard let requestUrl = apiRequest.requestUrl else {
             completion?(nil, 0, ResponseError.commonError)
