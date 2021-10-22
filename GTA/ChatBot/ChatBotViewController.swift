@@ -13,8 +13,8 @@ class ChatBotViewController: UIViewController {
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
     private var dataProvider: ChatBotDataProvider = ChatBotDataProvider()
     private var heightObserver: NSKeyValueObservation?
@@ -34,10 +34,16 @@ class ChatBotViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setUpActivityIndicator()
-        addErrorLabel(errorLabel)
-        webView.navigationDelegate = self
-        getChatBotToken()
+        
+        if Reachability.isConnectedToNetwork() {
+            setUpActivityIndicator()
+            addErrorLabel(errorLabel)
+            webView.navigationDelegate = self
+            getChatBotToken()
+        } else {
+            setErrorLabel(for: .commonError)
+        }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -47,9 +53,7 @@ class ChatBotViewController: UIViewController {
     }
     
     private func setUpActivityIndicator() {
-        self.view.addSubview(activityIndicator)
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.center = CGPoint(x: self.view.center.x, y: self.webView.center.y)
         activityIndicator.startAnimating()
     }
     

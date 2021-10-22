@@ -16,6 +16,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatBotViewController" customModule="GTA" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="VDm-Qi-PTI" id="DQI-IF-MoU"/>
                 <outlet property="closeButton" destination="XQ8-Vc-JYX" id="3pu-Xj-m0A"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="e3X-NB-TzR" id="BxQ-6j-ATP"/>
@@ -27,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQ8-Vc-JYX">
-                    <rect key="frame" x="359" y="59.5" width="25" height="25"/>
+                    <rect key="frame" x="359" y="51.5" width="25" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="twQ-DB-Aga"/>
                     </constraints>
@@ -37,7 +38,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jjw-g7-NPH">
-                    <rect key="frame" x="9" y="100" width="396" height="1"/>
+                    <rect key="frame" x="9" y="92" width="396" height="1"/>
                     <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="3Hd-T7-t5V"/>
@@ -47,19 +48,22 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How Do I?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="52o-dv-q9x">
-                    <rect key="frame" x="65" y="60" width="284" height="24"/>
+                    <rect key="frame" x="65" y="52" width="284" height="24"/>
                     <fontDescription key="fontDescription" name="SFProDisplay-Medium" family="SF Pro Display" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <wkWebView contentMode="scaleToFill" allowsLinkPreview="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3X-NB-TzR">
-                    <rect key="frame" x="0.0" y="101" width="414" height="795"/>
+                    <rect key="frame" x="0.0" y="93" width="414" height="803"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <wkWebViewConfiguration key="configuration" allowsAirPlayForMediaPlayback="NO" allowsPictureInPictureMediaPlayback="NO">
                         <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                         <wkPreferences key="preferences" javaScriptCanOpenWindowsAutomatically="YES"/>
                     </wkWebViewConfiguration>
                 </wkWebView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="VDm-Qi-PTI">
+                    <rect key="frame" x="197" y="484.5" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -71,7 +75,9 @@
                 <constraint firstItem="Jjw-g7-NPH" firstAttribute="top" secondItem="52o-dv-q9x" secondAttribute="bottom" constant="16" id="HWJ-ya-WSd"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="e3X-NB-TzR" secondAttribute="trailing" id="LOS-JB-gcm"/>
                 <constraint firstItem="e3X-NB-TzR" firstAttribute="top" secondItem="Jjw-g7-NPH" secondAttribute="bottom" id="MsW-Wh-mau"/>
-                <constraint firstItem="52o-dv-q9x" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="X4f-Q1-Pev"/>
+                <constraint firstItem="VDm-Qi-PTI" firstAttribute="centerX" secondItem="e3X-NB-TzR" secondAttribute="centerX" id="QCT-gv-rib"/>
+                <constraint firstItem="52o-dv-q9x" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="X4f-Q1-Pev"/>
+                <constraint firstItem="VDm-Qi-PTI" firstAttribute="centerY" secondItem="e3X-NB-TzR" secondAttribute="centerY" id="X8y-wj-Xld"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Jjw-g7-NPH" secondAttribute="trailing" constant="9" id="jAd-Is-1V1"/>
                 <constraint firstItem="XQ8-Vc-JYX" firstAttribute="centerY" secondItem="52o-dv-q9x" secondAttribute="centerY" id="kRC-nk-4nl"/>
                 <constraint firstItem="XQ8-Vc-JYX" firstAttribute="width" secondItem="XQ8-Vc-JYX" secondAttribute="height" multiplier="1:1" id="mZb-kH-Wnz"/>
