@@ -75,7 +75,6 @@ class LoginViewController: UIViewController {
             showAlert(title: "Enter a valid email address", message: "")
             return
         }
-        UserDefaults.standard.setValue(emailText, forKey: "lastUserEmail")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let usmLoginScreen = storyboard.instantiateViewController(withIdentifier: "LoginUSMViewController") as? LoginUSMViewController {
             usmLoginScreen.emailAddress = emailText
@@ -149,3 +148,12 @@ extension LoginViewController: ShowErrorAlertDelegate {
         present(alert, animated: true)
     }
 }
+
+extension LoginViewController: LoginSaverDelegate {
+    func saveLoginMail() {
+        let emailText = String(emailTextField.text?.split(separator: " ").first ?? "")
+        UserDefaults.standard.setValue(emailText, forKey: "lastUserEmail")
+        
+    }
+}
+
