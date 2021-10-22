@@ -330,7 +330,12 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         }
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.separator.isHidden = false
-            let isDisabled = indexPath.row < 4 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty || appDetailsData == nil)
+            var isDisabled = false
+            if indexPath.row < 2 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty || appDetailsData == nil) {
+                isDisabled = true
+            } else if indexPath.row < 4 && appDetailsData == nil {
+                isDisabled = true
+            }
             cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, error: indexPath.row == 3 ? nil : detailsDataResponseError)
             cell.iconImageView.accessibilityIdentifier = "AppsStatusDescription"
             cell.descriptionLabel.accessibilityIdentifier = "AppsStatusSubtitleLabel"
