@@ -21,7 +21,7 @@ class ChatBotViewController: UIViewController {
     private var canReloadWebView = true
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .darkContent
     }
         
     override func viewDidLoad() {
