@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    private func getTopViewController() -> UIViewController? {
+    func getTopViewController() -> UIViewController? {
         let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
         var topVC: UIViewController?
         if var VC = keyWindow?.rootViewController {

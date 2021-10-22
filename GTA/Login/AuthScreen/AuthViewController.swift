@@ -30,7 +30,7 @@ class AuthViewController: UIViewController {
     weak var delegate: AuthentificationPassed?
     weak var loginDelegate: LoginSaverDelegate?
     private var dataProvider: LoginDataProvider = LoginDataProvider()
-    
+    var appKeyWindow: UIWindow?
     var isSignUp: Bool = KeychainManager.getPin() == nil
     
     override func viewDidLoad() {
@@ -97,6 +97,10 @@ class AuthViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        screenWillHide()
+    }
+    
+    private func screenWillHide() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
@@ -200,11 +204,18 @@ class AuthViewController: UIViewController {
         hideKeyboard()
         loginDelegate?.saveLoginMail()
         delegate?.isAuthentificationPassed = true
+        if let navController = self.appKeyWindow?.rootViewController as? UINavigationController, navController.rootViewController is MainViewController, !isSignUp {
+            appKeyWindow?.windowLevel = UIWindow.Level.statusBar + 1
+            screenWillHide()
+            appKeyWindow?.makeKeyAndVisible()
+            return
+        }
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
         let navController = UINavigationController(rootViewController: mainViewController)
         navController.isNavigationBarHidden = true
         navController.isToolbarHidden = true
+        screenWillHide()
         self.view.window?.rootViewController = navController
     }
     
