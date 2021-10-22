@@ -10,6 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed {
     
     var window: UIWindow?
+    private var pinCodeWindow: UIWindow?
 
     var appIsInTray: Bool = false
     var appSwitcherView: UIView?
@@ -21,8 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
-        //showNeededScreen()
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        pinCodeWindow = UIWindow(windowScene: windowScene)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -71,6 +72,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         appIsInTray = true
     }
     
+    private func getTopVC() -> UIViewController? {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            return appDelegate.getTopViewController()
+        }
+        return self.window?.rootViewController
+    }
+    
     private func showNeededScreen() {
         var tokenIsExpired = true
         if let tokenExpirationDate = KeychainManager.getTokenExpirationDate(), Date() < tokenExpirationDate {
@@ -95,12 +103,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                     if let navController = self.window?.rootViewController as? UINavigationController, navController.rootViewController is MainViewController {
                         return
                     }
-                    let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
-                    let navController = UINavigationController(rootViewController: mainViewController)
-                    navController.isNavigationBarHidden = true
-                    navController.isToolbarHidden = true
-                    self.window?.rootViewController = navController
+                    setUpMainWindow()
                     return
                 } else if KeychainManager.getPin() == nil {
                     let authScreenShown = isAuthentificationScreenShown ?? false
@@ -111,12 +114,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                     startLoginFlow(sessionExpired: tokenIsExpired)
                     return
                 }
-                let authVC = AuthViewController()
-                authVC.isSignUp = false
-                authVC.delegate = self
-                window?.rootViewController = authVC
+                showAuthScreen()
             }
+        } else if getTopVC() is LoginUSMViewController {
+            return
+        } else {
+            startLoginFlow()
         }
+    }
+    
+    private func showAuthScreen() {
+        setUpMainWindow()
+        let authVC = AuthViewController()
+        authVC.isSignUp = false
+        authVC.appKeyWindow = window
+        authVC.delegate = self
+        pinCodeWindow?.frame = UIScreen.main.bounds
+        pinCodeWindow?.windowLevel = UIWindow.Level.statusBar + 1
+        pinCodeWindow?.rootViewController = authVC
+        pinCodeWindow?.makeKeyAndVisible()
+    }
+    
+    private func setUpMainWindow() {
+        let windowController = window?.rootViewController as? UINavigationController
+        guard let _ = windowController, windowController!.rootViewController is LoginViewController else { return }
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
+        let navController = UINavigationController(rootViewController: mainViewController)
+        navController.isNavigationBarHidden = true
+        navController.isToolbarHidden = true
+        self.window?.rootViewController = navController
     }
     
     private func removeAllData(delete: Bool = true) {
@@ -141,7 +168,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         let navController = UINavigationController(rootViewController: loginViewController as UIViewController)
         navController.isNavigationBarHidden = true
         navController.isToolbarHidden = true
+        window?.windowLevel = UIWindow.Level.statusBar + 1
         window?.rootViewController = navController
+        window?.makeKeyAndVisible()
     }
     
     func hideContent() {

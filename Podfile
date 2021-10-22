@@ -14,6 +14,7 @@ def shared_pods
   pod 'SDWebImage'
   pod 'Charts'
   pod 'Parchment'
+  pod 'Hero' 
 end
 
 target 'GTA' do

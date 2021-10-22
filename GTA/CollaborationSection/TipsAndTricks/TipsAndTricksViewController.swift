@@ -10,6 +10,7 @@ import UIKit
 class TipsAndTricksViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     var dataProvider: CollaborationDataProvider?
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -58,6 +59,9 @@ class TipsAndTricksViewController: UIViewController {
     private func setUpNavigationItem() {
         navigationItem.title = "Tips & Tricks"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     private func loadCollaborationTipsAndTricks() {
@@ -139,13 +143,13 @@ extension TipsAndTricksViewController: UITableViewDelegate, UITableViewDataSourc
         let imageURL = dataProvider?.formImageURL(from: cellDataSource?.banner) ?? ""
         let url = URL(string: imageURL)
         if imageURL.isEmptyOrWhitespace() {
-            cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+            cell?.mainImageView.image = UIImage(named: DefaultImageNames.whatsNewPlaceholder)
         } else if let url = url, imageURL.contains(".gif") {
             cell?.activityIndicator.startAnimating()
             cell?.mainImageView.sd_setImage(with: url, placeholderImage: nil, options: .refreshCached, completed: { img, err, cacheType, _ in
                 if let _ = err, (err! as NSError).code != 2002 {
                     cell?.activityIndicator.stopAnimating()
-                    cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+                    cell?.mainImageView.image = UIImage(named: DefaultImageNames.whatsNewPlaceholder)
                 } else if let _ = img {
                     cell?.activityIndicator.stopAnimating()
                 }
@@ -162,7 +166,7 @@ extension TipsAndTricksViewController: UITableViewDelegate, UITableViewDataSourc
                     }
                 case .failure(let error):
                     if !error.isNotCurrentTask {
-                        cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+                        cell?.mainImageView.image = UIImage(named: DefaultImageNames.whatsNewPlaceholder)
                     }
                 }
             })

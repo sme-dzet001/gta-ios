@@ -136,8 +136,6 @@ extension UILabel {
         let sizeConstraint = CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude)
 
         let attributes: [AnyHashable: Any] = [NSAttributedString.Key.font: font]
-        let attributedText = self.attributedText!// NSAttributedString(string: self.text!, attributes: attributes as? [NSAttributedString.Key : Any])
-        let boundingRect: CGRect = attributedText.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
 
         if (self.text?.count ?? 0) > 110 {
             var index: Int = 0
@@ -156,6 +154,18 @@ extension UILabel {
             return prev + coefficient
         }
         return self.attributedText!.string.count
+    }
+    
+    func setLineHeight(lineHeight: CGFloat) {
+        let text = self.text
+        if let text = text {
+            let attributeString = NSMutableAttributedString(string: text)
+            let style = NSMutableParagraphStyle()
+            
+            style.lineSpacing = lineHeight
+            attributeString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSMakeRange(0, attributeString.length))
+            self.attributedText = attributeString
+        }
     }
     
 }
@@ -218,6 +228,25 @@ extension UIView {
         gradient.name = "grad"
         self.layer.insertSublayer(gradient, at: 0)
     }
+    
+    func addBlurToView() {
+        if let gradientMaskLayer = self.layer.mask, gradientMaskLayer.name == "grad" {
+            return
+        }
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.name = "grad"
+        gradientMaskLayer.frame = self.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradientMaskLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+        self.layer.mask = gradientMaskLayer
+    }
+    
+    func screenshot() -> UIImage {
+        return UIGraphicsImageRenderer(size: bounds.size).image { _ in
+          drawHierarchy(in: CGRect(origin: .zero, size: bounds.size), afterScreenUpdates: true)
+        }
+      }
 }
 
 extension UINavigationController {
@@ -524,7 +553,7 @@ extension UIViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .white
-        appearance.shadowColor = UIColor(hex: 0xF2F2F7)
+        appearance.shadowColor = .clear//UIColor(hex: 0xF2F2F7)
         self.navigationController?.navigationBar.standardAppearance = appearance
         self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
@@ -1027,5 +1056,12 @@ extension Double {
     
     private func roundDown(_ value: Double, toNearest: Double) -> Double {
       return floor(value / toNearest) * toNearest
+    }
+}
+
+extension UIScrollView  {
+    func stopDecelerating() {
+        let contentOffset = self.contentOffset
+        self.setContentOffset(contentOffset, animated: false)
     }
 }

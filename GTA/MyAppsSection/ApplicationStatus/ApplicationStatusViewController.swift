@@ -18,6 +18,7 @@ enum MetricsPeriod {
 class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var lastUpdateDate: Date?
@@ -162,6 +163,9 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         self.navigationItem.titleView?.accessibilityIdentifier = "AppsStatusTitleLabel"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
         self.navigationItem.leftBarButtonItem?.accessibilityIdentifier = "AppsStatusBackButton"
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
 
     private func setUpTableView() {

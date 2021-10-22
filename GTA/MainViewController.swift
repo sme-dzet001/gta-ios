@@ -57,6 +57,8 @@ class MainViewController: UIViewController {
         if segue.identifier == "embedTabBar" {
             tabBar = segue.destination as? CustomTabBarController
             tabBar?.indexDelegate = self
+            tabBar?.tabBar.isHidden = true
+            tabBar?.setSelectedTabAccordingToPendingAlert()
         }
     }
     

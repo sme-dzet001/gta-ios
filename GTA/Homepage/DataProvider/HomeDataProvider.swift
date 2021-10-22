@@ -76,61 +76,40 @@ class HomeDataProvider {
     
     func getNewsFeedData(completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         getNewsFeedInProgress = true
-        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
-            let code = cachedError == nil ? 200 : 0
-            self?.processNewsFeedSectionReport(data, code, cachedError, true, { (_, dataWasChanged, code, error) in
-                if error == nil {
-                    self?.getNewsFeedInProgress = false
-                    completion?(true, dataWasChanged, code, cachedError)
-                }
-                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-                    self?.cacheData(reportResponse, path: .getSectionReport)
-                    if let _ = error {
+        if allNewsFeedData.isEmpty {
+            getCachedResponse(for: .getNewsFeed) {[weak self] (data, cachedError) in
+                let code = cachedError == nil ? 200 : 0
+                self?.handleNewsFeedData(data, true, code, cachedError, { isFromCache, dataWasChanged, errorCode, error in
+                    if error == nil {
                         self?.getNewsFeedInProgress = false
-                        completion?(false, false, errorCode, ResponseError.generate(error: error))
-                    } else {
-                        self?.processNewsFeedSectionReport(reportResponse, errorCode, error, false, completion)
+                        completion?(true, dataWasChanged, code, cachedError)
                     }
+                    self?.getNewsFeedDataFromServer(completion: completion)
                 })
-            })
-        }
-    }
-    
-    private func processNewsFeedSectionReport(_ reportResponse: Data?, _ errorCode: Int, _ error: Error?, _ isFromCache: Bool, _ completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let reportData = parseSectionReport(data: reportResponse)
-        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.globalNews.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.newsFeed.rawValue }?.generationNumber
-        if let generationNumber = generationNumber, generationNumber != 0 {
-            if isFromCache {
-                getCachedResponse(for: .getNewsFeed) {[weak self] (data, error) in
-                    self?.processNewsFeedData(reportData, data, isFromCache, 200, error, completion)
-                }
-                return
-            }
-            apiManager.getNewsFeedData(generationNumber: generationNumber) { [weak self] (response, errorCode, error) in
-                if let _ = error {
-                    self?.getNewsFeedInProgress = false
-                    completion?(false, true, 0, ResponseError.generate(error: error))
-                    return
-                }
-                self?.cacheData(response, path: .getNewsFeed)
-                self?.processNewsFeedData(reportData, response, isFromCache, errorCode, error, completion)
             }
         } else {
-            if !isFromCache { self.getNewsFeedInProgress = false }
-            if error != nil || generationNumber == 0 {
-                completion?(isFromCache, false, 0, generationNumber == 0 ? ResponseError.noDataAvailable: ResponseError.generate(error: error))
-                return
-            }
-            completion?(isFromCache, false, 0, error)
+            getNewsFeedDataFromServer(completion: completion)
         }
     }
     
-    private func processNewsFeedData(_ reportData: ReportDataResponse?, _ response: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    private func getNewsFeedDataFromServer(completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        apiManager.getNewsFeedData { [weak self] newsData, errorCode, error in
+            if let _ = error {
+                self?.getNewsFeedInProgress = false
+                completion?(false, false, errorCode, ResponseError.generate(error: error))
+            } else {
+                self?.handleNewsFeedData(newsData, false, errorCode, error, completion)
+            }
+        }
+    }
+    
+    private func handleNewsFeedData(_ response: Data?, _ isFromCache: Bool, _ errorCode: Int, _ error: Error?, _ completion: ((_ isFromCache: Bool, _ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var newsFeedResponse: NewsFeedResponse?
         var retErr = error
         if let responseData = response {
             do {
                 newsFeedResponse = try DataParser.parse(data: responseData)
+                self.cacheData(responseData, path: .getNewsFeed)
             } catch {
                 retErr = ResponseError.parsingError
             }
@@ -468,20 +447,23 @@ class HomeDataProvider {
     
     private func processGlobalProductionAlerts(alertID: String? = nil, _ reportData: ReportDataResponse?, _ globalProductionAlertsResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         var prodAlertsResponse: GlobalProductionAlertsResponse?
-        var retErr = error
+        var retErr = error != nil ? ResponseError.generate(error: error) : nil
         if let responseData = globalProductionAlertsResponse {
             do {
                 prodAlertsResponse = try DataParser.parse(data: responseData)
             } catch {
-                retErr = ResponseError.parsingError
+                retErr = retErr == nil ? ResponseError.parsingError : retErr
             }
         } else {
-            retErr = ResponseError.commonError
+            retErr = retErr == nil ? ResponseError.commonError : retErr
         }
-        if let data = prodAlertsResponse?.data?.rows, data.isEmpty {
+        if let data = prodAlertsResponse?.data?.rows, data.isEmpty, retErr == nil {
             retErr = ResponseError.noDataAvailable
         }
-        let dataWasChanged = fillGlobalProductionAlertsData(alertID: alertID, prodAlertsResponse)
+        var dataWasChanged = false
+        if retErr == nil {
+            dataWasChanged = fillGlobalProductionAlertsData(alertID: alertID, prodAlertsResponse)
+        }
         completion?(dataWasChanged, errorCode, retErr)
     }
     
