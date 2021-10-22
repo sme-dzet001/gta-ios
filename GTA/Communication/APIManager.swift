@@ -54,7 +54,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getProductionAlerts(generationNumber: Int)
         case getCollaborationMetrics(generationNumber: Int)
         case getGlobalProductionAlerts(generationNumber: Int)
-        case getNewsFeed(generationNumber: Int)
+        case getNewsFeed
         
         var endpoint: String {
             switch self {
@@ -85,7 +85,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getProductionAlerts(let generationNumber): return "/v3/widgets/production_alerts/data/\(generationNumber)/detailed"
                 case .getCollaborationMetrics(let generationNumber): return "/v3/widgets/collaboration_metrics/data/\(generationNumber)/detailed"
                 case .getGlobalProductionAlerts(let generationNumber): return "/v3/widgets/global_production_alerts/data/\(generationNumber)/detailed"
-                case .getNewsFeed(let generationNumber): return "/v3/widgets/news_feed/data/\(generationNumber)/detailed"
+                case .getNewsFeed: return "/v3/widgets/news_feed_v2/data/0/detailed"
             }
         }
     }
@@ -151,9 +151,9 @@ class APIManager: NSObject, URLSessionDelegate {
         makeRequest(endpoint: .setCurrentPreferences, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
     }
     
-    func getNewsFeedData(generationNumber: Int, completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getNewsFeedData(completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getNewsFeed(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+        makeRequest(endpoint: .getNewsFeed, method: "POST", headers: requestHeaders, completion: completion)
     }
     
     func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ response: URLResponse?, _ error: Error?) -> Void)) {

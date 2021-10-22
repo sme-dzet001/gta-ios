@@ -125,6 +125,7 @@ class HomepageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.barStyle = .default
         loadNewsData()
         if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
             emergencyOutageNotificationReceived()
@@ -455,24 +456,15 @@ extension HomepageViewController: DismissAlertDelegate {
 }
 
 extension HomepageViewController: NewsShowDelegate {
-    func showArticleViewController(with text: String?) {
-        let articleViewController = ArticleViewController()
-        presentedVC = articleViewController
-        let htmlBody = dataProvider.formNewsBody(from: text)
-        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
-            htmlBody?.setFontFace(font: neededFont)
-        }
-        if let _ = htmlBody {
-            articleViewController.attributedArticleText = htmlBody
-        } else {
-            articleViewController.articleText = text
-        }
-        presentPanModal(articleViewController)
+    func showArticleViewController(with content: NewsFeedRow) {
+        let newsViewController = NewsScreenViewController(nibName: "NewsScreenViewController", bundle: nil)
+        newsViewController.newsData = content
+        navigationController?.pushViewController(newsViewController, animated: true)
     }
 }
 
 protocol NewsShowDelegate: AnyObject {
-    func showArticleViewController(with text: String?)
+    func showArticleViewController(with content: NewsFeedRow)
 }
 
 protocol PanModalAppearanceDelegate: AnyObject {
