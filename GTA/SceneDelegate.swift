@@ -72,6 +72,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
         appIsInTray = true
     }
     
+    private func getTopVC() -> UIViewController? {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            return appDelegate.getTopViewController()
+        }
+        return self.window?.rootViewController
+    }
+    
     private func showNeededScreen() {
         var tokenIsExpired = true
         if let tokenExpirationDate = KeychainManager.getTokenExpirationDate(), Date() < tokenExpirationDate {
@@ -109,6 +116,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
                 }
                 showAuthScreen()
             }
+        } else if getTopVC() is LoginUSMViewController {
+            return
         } else {
             startLoginFlow()
         }

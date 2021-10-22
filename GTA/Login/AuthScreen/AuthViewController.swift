@@ -97,6 +97,10 @@ class AuthViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        screenWillHide()
+    }
+    
+    private func screenWillHide() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
@@ -202,6 +206,7 @@ class AuthViewController: UIViewController {
         delegate?.isAuthentificationPassed = true
         if let navController = self.appKeyWindow?.rootViewController as? UINavigationController, navController.rootViewController is MainViewController, !isSignUp {
             appKeyWindow?.windowLevel = UIWindow.Level.statusBar + 1
+            screenWillHide()
             appKeyWindow?.makeKeyAndVisible()
             return
         }
@@ -210,6 +215,7 @@ class AuthViewController: UIViewController {
         let navController = UINavigationController(rootViewController: mainViewController)
         navController.isNavigationBarHidden = true
         navController.isToolbarHidden = true
+        screenWillHide()
         self.view.window?.rootViewController = navController
     }
     
