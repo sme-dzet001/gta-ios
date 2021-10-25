@@ -269,17 +269,11 @@ extension NewsScreenViewController: ImageViewDidTappedDelegate, TappedLabelDeleg
     
     func imageViewDidTapped(imageView: UIImageView) {
         let zoomScreen = ImageZoomViewController()
+        zoomScreen.modalPresentationStyle = .overFullScreen
         zoomScreen.hero.isEnabled = true
         zoomScreen.backgroundImage = view.screenshot()
         zoomScreen.image = imageView.image
         zoomScreen.imageID = imageView.restorationIdentifier
-        
-        navigationController?.hero.isEnabled = true
-        navigationController?.heroNavigationAnimationType = .fade
-        navigationController?.pushViewController(zoomScreen, animated: true)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            imageView.alpha = 1
-        })
+        present(zoomScreen, animated: true, completion: nil)
     }
 }

@@ -12,7 +12,6 @@ class ImageZoomViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var zoomImage: UIImageView!
-    @IBOutlet weak var snapshotImage: UIImageView!
     @IBOutlet weak var closeButton: UIButton!
     
     var imageID: String?
@@ -23,32 +22,20 @@ class ImageZoomViewController: UIViewController {
         super.viewDidLoad()
         
         closeButton.setTitle("", for: .normal)
-        snapshotImage.image = backgroundImage
         
         zoomImage.image = image
         zoomImage.heroID = imageID
         setupScrollView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        menuButton(enable: false)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        menuButton(enable: true)
-    }
-    
     @IBAction func closeAction(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     private func setupScrollView() {
         scrollView.delegate = self
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 6.0
-//        scrollView.decelerationRate = UIScrollView.DecelerationRate.fast
-//        scrollView.alwaysBounceVertical = true
-//        scrollView.alwaysBounceHorizontal = true
     }
     
     private func menuButton(enable: Bool) {

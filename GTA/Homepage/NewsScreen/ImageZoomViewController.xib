@@ -12,7 +12,6 @@
             <connections>
                 <outlet property="closeButton" destination="SyX-UY-yVt" id="cAH-1F-Gze"/>
                 <outlet property="scrollView" destination="2U6-ga-w30" id="4ep-h3-VXr"/>
-                <outlet property="snapshotImage" destination="GLI-7l-o3e" id="kOe-OJ-WBi"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="zoomImage" destination="dCb-CL-5eu" id="Jwc-Rl-AtF"/>
             </connections>
@@ -22,9 +21,6 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GLI-7l-o3e" userLabel="SnapshotImage">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oW0-ZG-q0C" userLabel="BackgroundView">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -69,18 +65,14 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="GLI-7l-o3e" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="0fa-HV-7fK"/>
                 <constraint firstItem="5ub-0P-bUT" firstAttribute="leading" secondItem="oW0-ZG-q0C" secondAttribute="leading" id="27E-kf-xYd"/>
-                <constraint firstItem="GLI-7l-o3e" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="BxG-SQ-Maj"/>
                 <constraint firstItem="oW0-ZG-q0C" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="EoX-SR-w1J"/>
                 <constraint firstAttribute="bottom" secondItem="oW0-ZG-q0C" secondAttribute="bottom" id="Ihd-6T-TcA"/>
                 <constraint firstAttribute="bottom" secondItem="2U6-ga-w30" secondAttribute="bottom" id="K1O-wJ-GZg"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="SyX-UY-yVt" secondAttribute="trailing" constant="12" id="LXK-oC-OUH"/>
-                <constraint firstAttribute="bottom" secondItem="GLI-7l-o3e" secondAttribute="bottom" id="LnT-zS-6LH"/>
                 <constraint firstItem="oW0-ZG-q0C" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="N3m-Yt-aX4"/>
                 <constraint firstItem="dCb-CL-5eu" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="Szn-CI-YdG"/>
                 <constraint firstItem="SyX-UY-yVt" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="YS8-FU-v6F"/>
-                <constraint firstItem="GLI-7l-o3e" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="c05-FS-Ws4"/>
                 <constraint firstItem="2U6-ga-w30" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="dF0-k3-TDO"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="oW0-ZG-q0C" secondAttribute="trailing" id="ded-JJ-vqr"/>
                 <constraint firstItem="5ub-0P-bUT" firstAttribute="top" secondItem="oW0-ZG-q0C" secondAttribute="top" id="go3-6D-2PW"/>
