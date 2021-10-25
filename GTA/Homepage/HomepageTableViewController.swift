@@ -29,7 +29,6 @@ class HomepageTableViewController: UIViewController {
         super.viewDidLoad()
         setUpTableView()
         blurView.addBlurToView()
-        tableView.accessibilityIdentifier = "HomeScreenTableView"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,6 +70,7 @@ class HomepageTableViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
         tableView.contentInset = tableView.menuButtonContentInset
+        tableView.accessibilityIdentifier = "HomeScreenTableView"
     }
     
     func dataLoadingStarted() {
