@@ -55,6 +55,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case getCollaborationMetrics(generationNumber: Int)
         case getGlobalProductionAlerts(generationNumber: Int)
         case getNewsFeed
+        case getChatBotToken
         
         var endpoint: String {
             switch self {
@@ -86,6 +87,7 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getCollaborationMetrics(let generationNumber): return "/v3/widgets/collaboration_metrics/data/\(generationNumber)/detailed"
                 case .getGlobalProductionAlerts(let generationNumber): return "/v3/widgets/global_production_alerts/data/\(generationNumber)/detailed"
                 case .getNewsFeed: return "/v3/widgets/news_feed_v2/data/0/detailed"
+                case .getChatBotToken: return "https://directline.botframework.com/v3/directline/tokens/generate"
             }
         }
     }
@@ -303,6 +305,14 @@ class APIManager: NSObject, URLSessionDelegate {
         self.makeRequest(endpoint: .getCollaborationMetrics(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyParams: requestBodyParams, completion: completion)
     }
     
+    //MARK: - Chat Bot methods
+    
+    func getChatBotToken(userEmail: String, completion: ((_ data: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Authorization": "Bearer GM4125ZB1RE.6GcweKnmIfPrwjWzEUIhx3kW7rxN5yRut7PLOfU9_WY", "Content-Type": "application/x-www-form-urlencoded"]
+        let requestBodyParams = ["user.id": "\(userEmail)"]
+        self.makeRequest(endpoint: .getChatBotToken, method: "POST", headers: requestHeaders, requestBodyParams: requestBodyParams, completion: completion)
+    }
+    
     //MARK: - Push notifications
     
     func sendPushNotificationsToken(completion: ((_ tokenData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
@@ -332,7 +342,8 @@ class APIManager: NSObject, URLSessionDelegate {
     
     private func makeRequest(endpoint: requestEndpoint, method: String, headers: [String: String] = [:], params: [String: String] = [:], requestBodyParams: [String: String]? = nil, requestBodyJSONParams: Any? = nil, timeout: Double = 30, completion: RequestCompletion = nil) {
         
-        let apiRequest = APIRequest(baseUrl: baseUrl, endpoint: endpoint.endpoint, headers: headers, params: params, requestBodyParams: requestBodyParams, requestBodyJSONParams: requestBodyJSONParams)
+        let url = endpoint.endpoint.contains("https") ? "" : baseUrl
+        let apiRequest = APIRequest(baseUrl: url, endpoint: endpoint.endpoint, headers: headers, params: params, requestBodyParams: requestBodyParams, requestBodyJSONParams: requestBodyJSONParams)
         guard let requestUrl = apiRequest.requestUrl else {
             completion?(nil, 0, ResponseError.commonError)
             return
