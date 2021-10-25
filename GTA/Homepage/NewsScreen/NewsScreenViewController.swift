@@ -173,6 +173,10 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        expandHeader()
+    }
+    
     func canAnimateHeader(_ scrollView: UIScrollView) -> Bool {
         // Calculate the size of the scrollView when header is collapsed
         let scrollViewMaxHeight = scrollView.frame.height + self.headerHeightConstraint.constant - minHeaderHeight
