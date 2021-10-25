@@ -74,7 +74,7 @@ class NewsScreenViewController: UIViewController {
         tableView.layer.cornerRadius = 16
         tableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         tableView.contentInset = tableView.menuButtonContentInset
-        let header = UITableViewHeaderFooterView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 20))
+        let header = UITableViewHeaderFooterView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 28))
         tableView.tableHeaderView = header
     }
     
