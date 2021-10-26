@@ -74,7 +74,6 @@ class ImageTableViewCell: UITableViewCell {
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         guard let tappedImage = tapGestureRecognizer.view as? UIImageView else { return }
-        tappedImage.alpha = 0
         delegate?.imageViewDidTapped(imageView: tappedImage)
     }
     

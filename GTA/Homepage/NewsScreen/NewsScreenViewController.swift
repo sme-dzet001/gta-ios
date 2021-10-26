@@ -74,7 +74,7 @@ class NewsScreenViewController: UIViewController {
         tableView.layer.cornerRadius = 16
         tableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         tableView.contentInset = tableView.menuButtonContentInset
-        let header = UITableViewHeaderFooterView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 20))
+        let header = UITableViewHeaderFooterView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 28))
         tableView.tableHeaderView = header
     }
     
@@ -173,6 +173,10 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        expandHeader()
+    }
+    
     func canAnimateHeader(_ scrollView: UIScrollView) -> Bool {
         // Calculate the size of the scrollView when header is collapsed
         let scrollViewMaxHeight = scrollView.frame.height + self.headerHeightConstraint.constant - minHeaderHeight
@@ -269,17 +273,11 @@ extension NewsScreenViewController: ImageViewDidTappedDelegate, TappedLabelDeleg
     
     func imageViewDidTapped(imageView: UIImageView) {
         let zoomScreen = ImageZoomViewController()
+        zoomScreen.modalPresentationStyle = .overFullScreen
         zoomScreen.hero.isEnabled = true
         zoomScreen.backgroundImage = view.screenshot()
         zoomScreen.image = imageView.image
         zoomScreen.imageID = imageView.restorationIdentifier
-        
-        navigationController?.hero.isEnabled = true
-        navigationController?.heroNavigationAnimationType = .fade
-        navigationController?.pushViewController(zoomScreen, animated: true)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            imageView.alpha = 1
-        })
+        present(zoomScreen, animated: true, completion: nil)
     }
 }

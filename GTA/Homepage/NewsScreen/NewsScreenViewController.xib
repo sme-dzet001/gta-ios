@@ -108,10 +108,10 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M0r-qr-SA8">
-                    <rect key="frame" x="0.0" y="324" width="414" height="40"/>
+                    <rect key="frame" x="0.0" y="324" width="414" height="28"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="40" id="SSs-ys-FLv"/>
+                        <constraint firstAttribute="height" constant="28" id="SSs-ys-FLv"/>
                     </constraints>
                 </view>
             </subviews>
