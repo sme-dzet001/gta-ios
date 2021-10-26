@@ -34,7 +34,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHQ-gu-uWt">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHQ-gu-uWt">
                         <rect key="frame" x="320" y="5" width="181.5" height="77"/>
                         <string key="text">GRPS/MMT/Gold Downtime.
 Weds 10th Feb, 2020 6am
@@ -58,8 +58,8 @@ EST/12pm CEST</string>
                     <constraint firstAttribute="trailing" secondItem="IyW-bg-Ycp" secondAttribute="trailing" constant="24" id="Bpt-sB-7Ze"/>
                     <constraint firstItem="IyW-bg-Ycp" firstAttribute="top" secondItem="kRp-7X-R7e" secondAttribute="top" constant="5" id="FRG-Ua-DRD"/>
                     <constraint firstItem="aHC-1l-m0K" firstAttribute="top" secondItem="kRp-7X-R7e" secondAttribute="top" constant="5" id="Jds-3n-cog"/>
-                    <constraint firstItem="FHQ-gu-uWt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aHC-1l-m0K" secondAttribute="trailing" constant="3" id="PU0-Zg-1wR"/>
-                    <constraint firstItem="IyW-bg-Ycp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHQ-gu-uWt" secondAttribute="trailing" constant="3" id="Poa-fX-oxy"/>
+                    <constraint firstItem="FHQ-gu-uWt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aHC-1l-m0K" secondAttribute="trailing" constant="12" id="PU0-Zg-1wR"/>
+                    <constraint firstItem="IyW-bg-Ycp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHQ-gu-uWt" secondAttribute="trailing" constant="12" id="Poa-fX-oxy"/>
                     <constraint firstItem="FHQ-gu-uWt" firstAttribute="top" secondItem="kRp-7X-R7e" secondAttribute="top" constant="5" id="TQZ-XT-CDR"/>
                     <constraint firstItem="FHQ-gu-uWt" firstAttribute="centerX" secondItem="kRp-7X-R7e" secondAttribute="centerX" id="Vll-0M-U3o"/>
                     <constraint firstItem="aHC-1l-m0K" firstAttribute="leading" secondItem="kRp-7X-R7e" secondAttribute="leading" constant="24" id="hir-vM-I9R"/>

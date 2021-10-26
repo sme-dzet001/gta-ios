@@ -31,7 +31,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1wp-C2-kSN">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1wp-C2-kSN">
                         <rect key="frame" x="373.5" y="5" width="28.5" height="24"/>
                         <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="14"/>
                         <nil key="textColor"/>
@@ -48,11 +48,11 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="1wp-C2-kSN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KBD-pZ-CYg" secondAttribute="trailing" constant="5" id="167-aK-TtR"/>
+                    <constraint firstItem="1wp-C2-kSN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KBD-pZ-CYg" secondAttribute="trailing" constant="12" id="167-aK-TtR"/>
                     <constraint firstItem="1wp-C2-kSN" firstAttribute="centerX" secondItem="ybQ-Ma-JOn" secondAttribute="centerX" id="7Kb-aY-84G"/>
                     <constraint firstAttribute="trailing" secondItem="dwB-LI-ADK" secondAttribute="trailing" constant="24" id="7Q5-vp-hgL"/>
                     <constraint firstAttribute="bottom" secondItem="1wp-C2-kSN" secondAttribute="bottom" constant="10" id="NZh-33-drO"/>
-                    <constraint firstItem="dwB-LI-ADK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1wp-C2-kSN" secondAttribute="trailing" constant="3" id="RFp-Eq-ncd"/>
+                    <constraint firstItem="dwB-LI-ADK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1wp-C2-kSN" secondAttribute="trailing" constant="12" id="RFp-Eq-ncd"/>
                     <constraint firstItem="KBD-pZ-CYg" firstAttribute="leading" secondItem="ybQ-Ma-JOn" secondAttribute="leading" constant="24" id="TDK-gg-f36"/>
                     <constraint firstItem="dwB-LI-ADK" firstAttribute="top" secondItem="ybQ-Ma-JOn" secondAttribute="top" constant="5" id="hQS-yU-9OU"/>
                     <constraint firstItem="KBD-pZ-CYg" firstAttribute="top" secondItem="ybQ-Ma-JOn" secondAttribute="top" constant="5" id="mqJ-EF-QDX"/>
