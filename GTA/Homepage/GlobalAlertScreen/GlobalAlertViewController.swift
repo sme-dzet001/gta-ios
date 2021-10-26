@@ -80,6 +80,7 @@ class GlobalAlertViewController: UIViewController {
     private func loadProductionGlobalAlertsData() {
         if let forceUpdateAlertDetails = dataProvider?.forceUpdateAlertDetails, forceUpdateAlertDetails {
             loadGlobalAlertsInProgress = true
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
             dataProvider?.getGlobalProductionIgnoringCache(alertID: productionAlertId, completion: {[weak self] dataWasChanged, errorCode, error in
                 DispatchQueue.main.async {
                     self?.dataProvider?.forceUpdateAlertDetails = false

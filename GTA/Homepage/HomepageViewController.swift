@@ -291,7 +291,7 @@ class HomepageViewController: UIViewController {
     @objc private func getGlobalAlertsIgnoringCache() {
         dataProvider.getGlobalAlertsIgnoringCache {[weak self] _, dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
-                if dataWasChanged, error == nil {
+                if error == nil {
                     self?.emergencyOutageLoaded = true
                     self?.updateBannerViews()
                 }
