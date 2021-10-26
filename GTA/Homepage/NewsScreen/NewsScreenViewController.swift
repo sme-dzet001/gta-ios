@@ -247,9 +247,9 @@ extension NewsScreenViewController {
         self.titleTopConstraint.constant = max(percentage * 100, 10)
         self.smallTitleLabel.alpha = 1 - max(percentage - 0.4, 0) / 0.6
         self.smallTitleLabel.font = titleFont
-        self.titleLabel.alpha = max(percentage - 0.4, 0) / 0.6
+        self.titleLabel.alpha = max(percentage - 0.5, 0) / 0.5
         self.titleLabel.font = titleFont
-        self.subtitleLabel.alpha = max(percentage - 0.4, 0) / 0.6
+        self.subtitleLabel.alpha = max(percentage - 0.5, 0) / 0.5
     }
 }
 
