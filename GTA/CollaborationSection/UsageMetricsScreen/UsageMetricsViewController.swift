@@ -96,7 +96,7 @@ class UsageMetricsViewController: UIViewController {
     
     @objc private func doneAction() {
         updateChartsData()
-        tableView.reloadData()
+        tableView.reloadRowsInSectionSafely(section: 0)
         view.endEditing(true)
     }
     
@@ -108,7 +108,7 @@ class UsageMetricsViewController: UIViewController {
         setTextFieldText(app)
         dataProvider?.selectedApp = app
         self.chartPositions = [:]
-        tableView.reloadData()
+        tableView.reloadRowsInSectionSafely(section: 0)
     }
     
     @objc private func getChartsData() {
@@ -141,22 +141,23 @@ class UsageMetricsViewController: UIViewController {
     
     private func stopAnimation(with error: Error? = nil) {
         var responseError = error
-        DispatchQueue.main.async {
-            if error == nil, let isChartDataEmpty = self.dataProvider?.isChartDataEmpty, isChartDataEmpty {
+        DispatchQueue.main.async { [weak self] in
+            if error == nil, let isChartDataEmpty = self?.dataProvider?.isChartDataEmpty, isChartDataEmpty {
                 responseError = ResponseError.noDataAvailable
             }
-            self.chartPositions = [:]
-            self.tableView.reloadData()
-            self.errorLabel.isHidden = responseError == nil
-            self.errorLabel.text = (responseError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-            self.tableView.alpha = responseError == nil ? 1 : 0
-            let selectedApp = self.dataProvider?.selectedApp ?? ""
-            self.setTextFieldText(selectedApp)
-            let row = self.dataProvider?.availableApps.firstIndex(of: selectedApp) ?? 0
-            self.pickerView.selectRow(row, inComponent: 0, animated: false)
-            self.appTextField.alpha = self.tableView.alpha
-            self.appTextField.setIconForPicker(for: self.view.frame.width, isCharts: true)
-            self.activityIndicator.removeFromSuperview()
+            let width = self?.view.frame.width ?? UIScreen.main.bounds.width
+            self?.chartPositions = [:]
+            self?.tableView.reloadRowsInSectionSafely(section: 0)
+            self?.errorLabel.isHidden = responseError == nil
+            self?.errorLabel.text = (responseError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+            self?.tableView.alpha = responseError == nil ? 1 : 0
+            let selectedApp = self?.dataProvider?.selectedApp ?? ""
+            self?.setTextFieldText(selectedApp)
+            let row = self?.dataProvider?.availableApps.firstIndex(of: selectedApp) ?? 0
+            self?.pickerView.selectRow(row, inComponent: 0, animated: false)
+            self?.appTextField.alpha = self?.tableView.alpha ?? 1
+            self?.appTextField.setIconForPicker(for: width, isCharts: true)
+            self?.activityIndicator.removeFromSuperview()
         }
     }
     
@@ -234,6 +235,7 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TeamChatUsersCell") as? TeamChatUsersCell else { return UITableViewCell() }
             chartDimensionsDict[indexPath.row] = cell
             cell.chartData = dataProvider?.horizontalChartData
+            cell.updateChartData()
             return cell
         case is ChartStructure:
             guard let chart = data as? ChartStructure else { return UITableViewCell() }

@@ -110,8 +110,10 @@ class TeamsByFunctionsTableViewCell: UITableViewCell {
     
     
     func updateData() {
-        configureChart()
-        titleLabel.text = chartsData?.title
+        DispatchQueue.main.async { [weak self] in
+            self?.configureChart()
+            self?.titleLabel.text = self?.chartsData?.title
+        }
     }
     
     @IBAction func dataSourceSelectorBtnTapped(_ sender: ChartDataSourceSelectionButton) {
