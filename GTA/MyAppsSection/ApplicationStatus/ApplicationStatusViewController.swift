@@ -331,12 +331,12 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.separator.isHidden = false
             var isDisabled = false
-            if indexPath.row < 2 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty || appDetailsData == nil) {
+            if indexPath.row < (productionAlertsSectionAvailable ? 3 : 2) && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty || appDetailsData == nil) {
                 isDisabled = true
-            } else if indexPath.row < 3, (appDetailsData?.appSupportPolicy == nil || appDetailsData?.appSupportPolicy == nil || appDetailsData?.appWikiUrl == nil || appDetailsData?.appJiraSupportUrl == nil) {
+            } else if indexPath.row == (productionAlertsSectionAvailable ? 3 : 2), (appDetailsData?.appSupportPolicy == nil && appDetailsData?.appDescription == nil && appDetailsData?.appWikiUrl == nil && appDetailsData?.appJiraSupportUrl == nil) {
                 isDisabled = true
             }
-            cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, index: indexPath.row, error: indexPath.row == 3 ? nil : detailsDataResponseError)
+            cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, index: indexPath.row, alerts: productionAlertsSectionAvailable, error: indexPath.row == 3 ? nil : detailsDataResponseError)
             cell.iconImageView.accessibilityIdentifier = "AppsStatusDescription"
             cell.descriptionLabel.accessibilityIdentifier = "AppsStatusSubtitleLabel"
             cell.mainLabel.accessibilityIdentifier = "AppsStatusTitleLabel"
@@ -362,7 +362,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         }
         let commandBase = productionAlertsSectionAvailable ? 3 : 2
         if indexPath.row == commandBase, (appDetailsData != nil) {
-            if appDetailsData?.appSupportPolicy != nil || appDetailsData?.appSupportPolicy != nil || appDetailsData?.appWikiUrl != nil || appDetailsData?.appJiraSupportUrl != nil {
+            if appDetailsData?.appSupportPolicy != nil || appDetailsData?.appDescription != nil || appDetailsData?.appWikiUrl != nil || appDetailsData?.appJiraSupportUrl != nil {
                 showAboutScreen()
             }
         } else if indexPath.row == commandBase + 1 {

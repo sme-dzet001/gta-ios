@@ -22,7 +22,7 @@ class AppsServiceAlertCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func setUpCell(with data: AppInfo, isNeedCornerRadius: Bool = false, isDisabled: Bool = false, index: Int, error: Error? = nil) {
+    func setUpCell(with data: AppInfo, isNeedCornerRadius: Bool = false, isDisabled: Bool = false, index: Int, alerts: Bool,error: Error? = nil) {
         var spacing: CGFloat = 8
         descriptionLabel.text = data.app_name
         mainLabel.text = data.app_title
@@ -35,8 +35,9 @@ class AppsServiceAlertCell: UITableViewCell {
             self.parentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         }
         if isDisabled {
-            descriptionLabel.text = index < 2 ? "No email" : nil
-            spacing = index < 2 ? 8 : 0
+            let neededIndex = alerts ? 3 : 2
+            descriptionLabel.text = index < neededIndex ? "No email" : nil
+            spacing = index < neededIndex ? 8 : 0
         }
         if let downloadError = error as? ResponseError, isDisabled {
             descriptionLabel.text = downloadError.localizedDescription
