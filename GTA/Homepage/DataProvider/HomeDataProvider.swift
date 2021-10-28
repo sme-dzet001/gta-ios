@@ -131,9 +131,15 @@ class HomeDataProvider {
             }
         }
         let rows = response.data?.rows?.compactMap({$0})
-        var allNews = rows?.filter({$0.isPostDateExist == true}).sorted(by: {$1.newsDate! < $0.newsDate!}) ?? []
-        let newsWithoutDate = rows?.filter({$0.isPostDateExist == false}).sorted(by: {($1.articleId ?? 0) < ($0.articleId ?? 0)}) ?? []
-        allNews.append(contentsOf: newsWithoutDate)
+        let allNews = rows?.sorted {
+            if $0.newsDate == $1.newsDate {
+                return $0.articleId ?? 0 > $1.articleId ?? 0
+            }
+            if let firstDate = $0.newsDate, let secondDate = $1.newsDate {
+                return firstDate > secondDate
+            }
+            return false
+        } ?? []
         let dataWasChanged = allNews != allNewsFeedData
         allNewsFeedData = allNews
         newsFeedData = allNews.filter({$0.category == .news})
