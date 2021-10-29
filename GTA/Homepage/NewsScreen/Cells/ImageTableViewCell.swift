@@ -35,17 +35,25 @@ class ImageTableViewCell: UITableViewCell {
         super.prepareForReuse()
         aspectConstraint = nil
         newsImageView.kf.cancelDownloadTask()
-        newsImageView.image = nil
+        //newsImageView.image = nil
     }
     
     func setupCell(imagePath: String?) {
-        defaultHeightConstraint = newsImageView.heightAnchor.constraint(equalToConstant: 160)
         let imageURL = formImageURL(from: imagePath)
         let url = URL(string: imageURL)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-        //if !ImageCache.default.isCached(forKey: imageURL) {
-            aspectConstraint = defaultHeightConstraint
-        //}
+        newsImageView.alpha = 1
+        newsImageView.restorationIdentifier = imagePath
+        newsImageView.heroID = imagePath
+        defaultHeightConstraint = newsImageView.heightAnchor.constraint(equalToConstant: 160)
+        aspectConstraint = defaultHeightConstraint
+        guard Reachability.isConnectedToNetwork() || ImageCache.default.isCached(forKey: imageURL) else { return }
+        newsImageView.addGestureRecognizer(tapGestureRecognizer)
+        newsImageView.isUserInteractionEnabled = true
+        setImage(url: url)
+    }
+    
+    private func setImage(url: URL?) {
         self.newsImageView.kf.indicatorType = .activity
         self.newsImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { [weak self] (result) in
             switch result {
@@ -54,15 +62,11 @@ class ImageTableViewCell: UITableViewCell {
             case .failure(let error):
                 if !error.isNotCurrentTask {
                     guard let defaultImage = UIImage(named: DefaultImageNames.whatsNewPlaceholder) else { return }
+                    self?.newsImageView.image = defaultImage
                     self?.setImageViewHeight(image: defaultImage)
                 }
             }
         })
-        newsImageView.alpha = 1
-        newsImageView.restorationIdentifier = imagePath
-        newsImageView.heroID = imagePath
-        newsImageView.addGestureRecognizer(tapGestureRecognizer)
-        newsImageView.isUserInteractionEnabled = true
     }
     
     func formImageURL(from imagePath: String?) -> String {
