@@ -24,24 +24,28 @@ class ChatBotDataProvider {
     
     private func handleChatBotToken(data: Data?, errorCode: Int, error: Error?, completion: ((_ token: String?, _ errorCode: Int, _ error: ResponseError?) -> Void)? = nil) {
         var retErr = error != nil ? ResponseError.generate(error: error) : nil
-        var tokenData: TokenData? = nil
-        if let _ = data {
+        var tokenData: TokenResponse? = nil
+        if let data = data {
             do {
-                tokenData = try DataParser.parse(data: data!)
+                tokenData = try DataParser.parse(data: data)
             } catch {
                 retErr = retErr == nil ? ResponseError.parsingError : retErr
             }
-            if let token = tokenData?.token {
+            if let token = tokenData?.data?.token {
                 let expirationDate = Date().addingTimeInterval(TimeInterval(1800))
                 let _ = KeychainManager.saveChatBotToken(token: token)
                 let _ = KeychainManager.saveChatBotTokenExpirationDate(tokenExpirationDate: expirationDate.timeIntervalSince1970)
             }
-            completion?(tokenData?.token, errorCode, retErr)
+            completion?(tokenData?.data?.token, errorCode, retErr)
         } else {
             completion?(nil, 0, retErr)
         }
     }
     
+}
+
+struct TokenResponse: Codable {
+    var data: TokenData?
 }
 
 struct TokenData: Codable {
