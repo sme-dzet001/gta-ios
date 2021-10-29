@@ -34,7 +34,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7RY-Wt-vnf">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="340"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newsHardcoreImage" translatesAutoresizingMaskIntoConstraints="NO" id="EiQ-e5-ROi" userLabel="backroundImage">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whatsNewPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="EiQ-e5-ROi" userLabel="backroundImage">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="340"/>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HR6-C4-tD5">
@@ -136,7 +136,7 @@
     </objects>
     <resources>
         <image name="back_icon" width="24" height="24"/>
-        <image name="newsHardcoreImage" width="360" height="340"/>
+        <image name="whatsNewPlaceholder" width="605" height="512"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

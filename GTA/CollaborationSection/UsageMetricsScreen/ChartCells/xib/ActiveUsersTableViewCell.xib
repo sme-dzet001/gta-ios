@@ -27,10 +27,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OXg-F4-Ni3">
-                        <rect key="frame" x="602.5" y="43" width="55.5" height="24"/>
+                        <rect key="frame" x="601.5" y="43" width="56.5" height="24"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="96.3%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3b6-QU-Atz">
-                                <rect key="frame" x="10" y="5" width="35.5" height="14"/>
+                                <rect key="frame" x="10" y="5" width="36.5" height="14"/>
                                 <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
                                 <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -50,40 +50,17 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Active Users" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOP-24-JOR">
-                        <rect key="frame" x="24" y="32" width="113" height="46"/>
+                        <rect key="frame" x="24" y="32" width="105.5" height="46"/>
                         <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 569" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVO-3k-vHf">
-                        <rect key="frame" x="554" y="45.5" width="40.5" height="19"/>
+                        <rect key="frame" x="547.5" y="45.5" width="46" height="19"/>
                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BsJ-AY-HrL">
-                        <rect key="frame" x="0.0" y="837" width="702" height="8"/>
-                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="8" id="k6q-G5-VYe"/>
-                        </constraints>
-                    </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SMX-D2-blm" userLabel="Custom Vertical Axis View">
-                        <rect key="frame" x="0.0" y="80" width="40" height="731"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="mk6-H0-zZM">
-                                <rect key="frame" x="0.0" y="0.0" width="40" height="731"/>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="mk6-H0-zZM" firstAttribute="leading" secondItem="SMX-D2-blm" secondAttribute="leading" id="ROq-mC-6vK"/>
-                            <constraint firstAttribute="bottom" secondItem="mk6-H0-zZM" secondAttribute="bottom" id="SVZ-ho-YUn"/>
-                            <constraint firstAttribute="trailing" secondItem="mk6-H0-zZM" secondAttribute="trailing" id="bWH-hL-g1B"/>
-                            <constraint firstAttribute="width" constant="40" id="eBu-HV-V06"/>
-                            <constraint firstItem="mk6-H0-zZM" firstAttribute="top" secondItem="SMX-D2-blm" secondAttribute="top" id="pjf-dM-5Th"/>
-                        </constraints>
-                    </view>
                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Qm-ZN-8gF" customClass="ChartScrollView" customModule="GTA" customModuleProvider="target">
                         <rect key="frame" x="50" y="80" width="612" height="731"/>
                         <subviews>
@@ -118,6 +95,29 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="A1l-KI-77r"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BsJ-AY-HrL">
+                        <rect key="frame" x="0.0" y="837" width="702" height="8"/>
+                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="k6q-G5-VYe"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SMX-D2-blm" userLabel="Custom Vertical Axis View">
+                        <rect key="frame" x="0.0" y="80" width="40" height="731"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="mk6-H0-zZM">
+                                <rect key="frame" x="0.0" y="0.0" width="40" height="731"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="mk6-H0-zZM" firstAttribute="leading" secondItem="SMX-D2-blm" secondAttribute="leading" id="ROq-mC-6vK"/>
+                            <constraint firstAttribute="bottom" secondItem="mk6-H0-zZM" secondAttribute="bottom" id="SVZ-ho-YUn"/>
+                            <constraint firstAttribute="trailing" secondItem="mk6-H0-zZM" secondAttribute="trailing" id="bWH-hL-g1B"/>
+                            <constraint firstAttribute="width" constant="40" id="eBu-HV-V06"/>
+                            <constraint firstItem="mk6-H0-zZM" firstAttribute="top" secondItem="SMX-D2-blm" secondAttribute="top" id="pjf-dM-5Th"/>
                         </constraints>
                     </view>
                 </subviews>

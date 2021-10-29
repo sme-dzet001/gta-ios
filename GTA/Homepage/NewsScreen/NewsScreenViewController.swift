@@ -26,7 +26,7 @@ class NewsScreenViewController: UIViewController {
     @IBOutlet weak var blurView: UIView!
     
     var newsData: NewsFeedRow?
-    
+    var shouldUpdateCell = true
     var maxHeaderHeight: CGFloat = 340
     var minHeaderHeight: CGFloat = 120
     
@@ -254,6 +254,8 @@ extension NewsScreenViewController {
 //MARK: Cells delegates
 extension NewsScreenViewController: ImageCellDelegate, TappedLabelDelegate {
     func updateTableView() {
+        guard shouldUpdateCell else { return }
+        shouldUpdateCell = !shouldUpdateCell
         tableView.reloadData()
     }
     

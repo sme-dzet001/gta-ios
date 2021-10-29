@@ -18,7 +18,6 @@ class ImageTableViewCell: UITableViewCell {
     @IBOutlet weak var newsImageView: UIImageView!
     
     weak var delegate: ImageCellDelegate?
-    var shouldUpdateCell = true
     var defaultHeightConstraint = NSLayoutConstraint()
     var aspectConstraint : NSLayoutConstraint? {
         didSet {
@@ -83,9 +82,6 @@ class ImageTableViewCell: UITableViewCell {
         let height = image.size.height * (UIScreen.main.bounds.width / image.size.width)
         defaultHeightConstraint.constant = height > 250 ? 250 : height
         aspectConstraint = defaultHeightConstraint
-        if shouldUpdateCell {
-            shouldUpdateCell = !shouldUpdateCell
-            delegate?.updateTableView()
-        }
+        delegate?.updateTableView()
     }
 }
