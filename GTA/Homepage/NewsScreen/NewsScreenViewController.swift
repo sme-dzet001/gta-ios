@@ -132,13 +132,7 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         case "image":
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ImageTableViewCell") as? ImageTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.setupCell(imagePath: newsContent[indexPath.row].body, completion: {
-                cell.setNeedsLayout()
-                UIView.performWithoutAnimation {
-                    tableView.beginUpdates()
-                    tableView.endUpdates()
-                }
-            })
+            cell.setupCell(imagePath: newsContent[indexPath.row].body)
             return cell
         default:
             return UITableViewCell()
@@ -258,7 +252,11 @@ extension NewsScreenViewController {
 }
 
 //MARK: Cells delegates
-extension NewsScreenViewController: ImageViewDidTappedDelegate, TappedLabelDelegate {
+extension NewsScreenViewController: ImageCellDelegate, TappedLabelDelegate {
+    func updateTableView() {
+        tableView.reloadData()
+    }
+    
     func moreButtonDidTapped(in cell: UITableViewCell) {
         return
     }

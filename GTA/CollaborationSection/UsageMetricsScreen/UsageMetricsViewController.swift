@@ -43,12 +43,12 @@ class UsageMetricsViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = .white
         
         setUpTableView()
-        setUpTextField()
         setUpNavigationItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setUpTextField()
         addErrorLabel(errorLabel)
         getChartsData()
     }
@@ -176,7 +176,8 @@ class UsageMetricsViewController: UIViewController {
         let secondPart = NSAttributedString(string: text, attributes: secondPartAttributes)
         firstPart.append(secondPart)
         appTextField.attributedText = firstPart
-        appTextField.setIconForPicker(for: self.view.frame.width, isCharts: true)
+        let width = view.frame.width ?? UIScreen.main.bounds.width
+        appTextField.setIconForPicker(for: width, isCharts: true)
     }
     
     private func setUpNavigationItem() {
