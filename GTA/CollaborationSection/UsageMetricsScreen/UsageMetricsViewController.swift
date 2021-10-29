@@ -17,6 +17,7 @@ class UsageMetricsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerSeparator: UIView!
     @IBOutlet weak var appTextField: CustomTextField!
+    @IBOutlet weak var textFieldArrow: UIImageView!
     
     private let pickerView = UIPickerView()
     
@@ -130,6 +131,7 @@ class UsageMetricsViewController: UIViewController {
             self.errorLabel.isHidden = true
             self.tableView.alpha = 0
             self.appTextField.alpha = 0
+            self.textFieldArrow.alpha = 0
             self.addLoadingIndicator(activityIndicator)
             self.activityIndicator.startAnimating()
         } else {
@@ -145,7 +147,6 @@ class UsageMetricsViewController: UIViewController {
             if error == nil, let isChartDataEmpty = self?.dataProvider?.isChartDataEmpty, isChartDataEmpty {
                 responseError = ResponseError.noDataAvailable
             }
-            let width = self?.view.frame.width ?? UIScreen.main.bounds.width
             self?.chartPositions = [:]
             self?.tableView.reloadRowsInSectionSafely(section: 0)
             self?.errorLabel.isHidden = responseError == nil
@@ -156,7 +157,7 @@ class UsageMetricsViewController: UIViewController {
             let row = self?.dataProvider?.availableApps.firstIndex(of: selectedApp) ?? 0
             self?.pickerView.selectRow(row, inComponent: 0, animated: false)
             self?.appTextField.alpha = self?.tableView.alpha ?? 1
-            self?.appTextField.setIconForPicker(for: width, isCharts: true)
+            self?.textFieldArrow.alpha = self?.tableView.alpha ?? 1
             self?.activityIndicator.removeFromSuperview()
         }
     }
@@ -176,8 +177,6 @@ class UsageMetricsViewController: UIViewController {
         let secondPart = NSAttributedString(string: text, attributes: secondPartAttributes)
         firstPart.append(secondPart)
         appTextField.attributedText = firstPart
-        let width = view.frame.width ?? UIScreen.main.bounds.width
-        appTextField.setIconForPicker(for: width, isCharts: true)
     }
     
     private func setUpNavigationItem() {

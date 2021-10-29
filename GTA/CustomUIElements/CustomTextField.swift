@@ -138,18 +138,11 @@ open class CustomTextField: UITextField {
         let _ = becomeFirstResponder()
     }
     
-    func setIconForPicker(for width: CGFloat, isCharts: Bool = false) {
-        var icon: UIImage?
-        let yPoint = (self.frame.height - (!isCharts ? 40 : 25)) / 2
-        let xPoint = !isCharts ? width - 110 : self.frame.width - 40
-        var imageFrame: CGRect
-        if isCharts {
-            imageFrame = CGRect(x: xPoint, y: yPoint, width: 25, height: 25)
-            icon = UIImage(named: "chart_appList_icon")
-        } else {
-            imageFrame = CGRect(x: xPoint, y: yPoint, width: 40, height: 40)
-            icon = UIImage(named: "down_arrow")
-        }
+    func setIconForPicker(for width: CGFloat) {
+        let icon = UIImage(named: "down_arrow")
+        let yPoint = (self.frame.height - 40) / 2
+        let xPoint = width - 110
+        let imageFrame = CGRect(x: xPoint, y: yPoint, width: 40, height: 40)
         let imageView = UIImageView(frame: imageFrame)
         imageView.image = icon
         self.addSubview(imageView)
