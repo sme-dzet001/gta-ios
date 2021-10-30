@@ -102,7 +102,8 @@ class NewsScreenViewController: UIViewController {
                 self.newsbackgroundImage.image = resData.image
             case .failure(let error):
                 if !error.isNotCurrentTask {
-                    self.newsbackgroundImage.image = UIImage(named: "newsHardcoreImage")
+                    guard let defaultImage = UIImage(named: DefaultImageNames.whatsNewPlaceholder) else { return }
+                    self.newsbackgroundImage.image = defaultImage
                 }
             }
         })
@@ -275,7 +276,6 @@ extension NewsScreenViewController: ImageCellDelegate, TappedLabelDelegate {
         let zoomScreen = ImageZoomViewController()
         zoomScreen.modalPresentationStyle = .overFullScreen
         zoomScreen.hero.isEnabled = true
-        zoomScreen.backgroundImage = view.screenshot()
         zoomScreen.image = imageView.image
         zoomScreen.imageID = imageView.restorationIdentifier
         present(zoomScreen, animated: true, completion: nil)

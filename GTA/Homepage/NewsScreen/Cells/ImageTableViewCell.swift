@@ -18,7 +18,6 @@ class ImageTableViewCell: UITableViewCell {
     @IBOutlet weak var newsImageView: UIImageView!
     
     weak var delegate: ImageCellDelegate?
-    var defaultHeightConstraint = NSLayoutConstraint()
     var aspectConstraint : NSLayoutConstraint? {
         didSet {
             if oldValue != nil {
@@ -35,35 +34,45 @@ class ImageTableViewCell: UITableViewCell {
         super.prepareForReuse()
         aspectConstraint = nil
         newsImageView.kf.cancelDownloadTask()
-        //newsImageView.image = nil
     }
     
     func setupCell(imagePath: String?) {
         let imageURL = formImageURL(from: imagePath)
         let url = URL(string: imageURL)
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-        newsImageView.alpha = 1
-        newsImageView.restorationIdentifier = imagePath
-        newsImageView.heroID = imagePath
-        defaultHeightConstraint = newsImageView.heightAnchor.constraint(equalToConstant: 160)
-        aspectConstraint = defaultHeightConstraint
-        guard Reachability.isConnectedToNetwork() || ImageCache.default.isCached(forKey: imageURL) else { return }
-        newsImageView.addGestureRecognizer(tapGestureRecognizer)
-        newsImageView.isUserInteractionEnabled = true
-        setImage(url: url)
+        let imageIsCached = ImageCache.default.isCached(forKey: imageURL)
+        
+        imageViewConfiguration(path: imagePath)
+        aspectConstraint = newsImageView.heightAnchor.constraint(equalToConstant: 184)
+        if Reachability.isConnectedToNetwork() || imageIsCached {
+            setImage(url: url, cached: imageIsCached)
+        } else {
+            guard let defaultImage = UIImage(named: DefaultImageNames.whatsNewPlaceholder) else { return }
+            newsImageView.contentMode = .scaleAspectFill
+            newsImageView.image = defaultImage
+        }
     }
     
-    private func setImage(url: URL?) {
-        self.newsImageView.kf.indicatorType = .activity
-        self.newsImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { [weak self] (result) in
+    private func imageViewConfiguration(path: String?) {
+        newsImageView.layer.cornerRadius = 16
+        newsImageView.layer.masksToBounds = true
+        newsImageView.alpha = 1
+        newsImageView.restorationIdentifier = path
+        newsImageView.heroID = path
+    }
+    
+    private func setImage(url: URL?, cached: Bool) {
+        newsImageView.kf.indicatorType = .activity
+        newsImageView.kf.setImage(with: url, placeholder: nil, options: nil, completionHandler: { [weak self] (result) in
             switch result {
             case .success(let resData):
-                self?.setImageViewHeight(image: resData.image)
+                self?.newsImageView.contentMode = .scaleAspectFit
+                self?.updateImageView(image: resData.image)
             case .failure(let error):
                 if !error.isNotCurrentTask {
                     guard let defaultImage = UIImage(named: DefaultImageNames.whatsNewPlaceholder) else { return }
+                    self?.newsImageView.contentMode = .scaleAspectFill
                     self?.newsImageView.image = defaultImage
-                    self?.setImageViewHeight(image: defaultImage)
+                    self?.updateImageView(image: defaultImage)
                 }
             }
         })
@@ -77,15 +86,17 @@ class ImageTableViewCell: UITableViewCell {
         return imageURL
     }
     
-    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+    @objc private func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         guard let tappedImage = tapGestureRecognizer.view as? UIImageView else { return }
         delegate?.imageViewDidTapped(imageView: tappedImage)
     }
     
-    private func setImageViewHeight(image: UIImage) {
+    private func updateImageView(image: UIImage) {
         let height = image.size.height * (UIScreen.main.bounds.width / image.size.width)
-        defaultHeightConstraint.constant = height > 250 ? 250 : height
-        aspectConstraint = defaultHeightConstraint
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        newsImageView.addGestureRecognizer(tapGestureRecognizer)
+        newsImageView.isUserInteractionEnabled = true
+        aspectConstraint?.constant = height > 250 ? 250 : height
         delegate?.updateTableView()
     }
 }
