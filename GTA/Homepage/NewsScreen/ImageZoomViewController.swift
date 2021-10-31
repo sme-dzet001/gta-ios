@@ -16,12 +16,14 @@ class ImageZoomViewController: UIViewController {
     
     var imageID: String?
     var image: UIImage?
-    var backgroundImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         closeButton.setTitle("", for: .normal)
+        
+        zoomImage.layer.cornerRadius = 16
+        zoomImage.layer.masksToBounds = true
         
         zoomImage.image = image
         zoomImage.heroID = imageID

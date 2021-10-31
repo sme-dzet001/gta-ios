@@ -26,7 +26,7 @@ class NewsScreenViewController: UIViewController {
     @IBOutlet weak var blurView: UIView!
     
     var newsData: NewsFeedRow?
-    
+    var shouldUpdateCell = true
     var maxHeaderHeight: CGFloat = 340
     var minHeaderHeight: CGFloat = 120
     
@@ -102,7 +102,8 @@ class NewsScreenViewController: UIViewController {
                 self.newsbackgroundImage.image = resData.image
             case .failure(let error):
                 if !error.isNotCurrentTask {
-                    self.newsbackgroundImage.image = UIImage(named: "newsHardcoreImage")
+                    guard let defaultImage = UIImage(named: DefaultImageNames.whatsNewPlaceholder) else { return }
+                    self.newsbackgroundImage.image = defaultImage
                 }
             }
         })
@@ -132,13 +133,7 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
         case "image":
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ImageTableViewCell") as? ImageTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.setupCell(imagePath: newsContent[indexPath.row].body, completion: {
-                cell.setNeedsLayout()
-                UIView.performWithoutAnimation {
-                    tableView.beginUpdates()
-                    tableView.endUpdates()
-                }
-            })
+            cell.setupCell(imagePath: newsContent[indexPath.row].body)
             return cell
         default:
             return UITableViewCell()
@@ -258,7 +253,13 @@ extension NewsScreenViewController {
 }
 
 //MARK: Cells delegates
-extension NewsScreenViewController: ImageViewDidTappedDelegate, TappedLabelDelegate {
+extension NewsScreenViewController: ImageCellDelegate, TappedLabelDelegate {
+    func updateTableView() {
+        guard shouldUpdateCell else { return }
+        shouldUpdateCell = !shouldUpdateCell
+        tableView.reloadData()
+    }
+    
     func moreButtonDidTapped(in cell: UITableViewCell) {
         return
     }
@@ -275,7 +276,6 @@ extension NewsScreenViewController: ImageViewDidTappedDelegate, TappedLabelDeleg
         let zoomScreen = ImageZoomViewController()
         zoomScreen.modalPresentationStyle = .overFullScreen
         zoomScreen.hero.isEnabled = true
-        zoomScreen.backgroundImage = view.screenshot()
         zoomScreen.image = imageView.image
         zoomScreen.imageID = imageView.restorationIdentifier
         present(zoomScreen, animated: true, completion: nil)

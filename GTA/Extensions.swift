@@ -289,6 +289,55 @@ extension UITableView {
         }
         return false
     }
+    
+    func reloadRowsInSectionSafely(section: Int) {
+        var oldRowsIndexPathesArray: [IndexPath] = []
+        for row in 0..<numberOfRows(inSection: section) {
+            let indexPath = IndexPath(row: row, section: section)
+            oldRowsIndexPathesArray.append(indexPath)
+        }
+        let oldRowsCount = oldRowsIndexPathesArray.count
+        
+        let newRowsCount = dataSource!.tableView(self, numberOfRowsInSection: section)
+        if newRowsCount == oldRowsCount {
+            if dataHasChanged {
+                reloadData()
+            } else {
+                UIView.performWithoutAnimation {
+                    reloadRows(at: oldRowsIndexPathesArray, with: .none)
+                }
+            }
+        } else if newRowsCount > oldRowsCount {
+            var newRowsIndexPathesArray: [IndexPath] = []
+            for row in oldRowsCount..<newRowsCount {
+                let indexPath = IndexPath(row: row, section: section)
+                newRowsIndexPathesArray.append(indexPath)
+            }
+            UIView.performWithoutAnimation {
+                beginUpdates()
+                reloadRows(at: oldRowsIndexPathesArray, with: .none)
+                insertRows(at: newRowsIndexPathesArray, with: .none)
+                endUpdates()
+            }
+        } else if newRowsCount < oldRowsCount {
+            var deletedRowsIndexPathesArray: [IndexPath] = []
+            for row in newRowsCount..<oldRowsCount {
+                let indexPath = IndexPath(row: row, section: section)
+                deletedRowsIndexPathesArray.append(indexPath)
+            }
+            var reloadedRowsIndexPathesArray: [IndexPath] = []
+            for row in 0..<newRowsCount {
+                let indexPath = IndexPath(row: row, section: section)
+                reloadedRowsIndexPathesArray.append(indexPath)
+            }
+            UIView.performWithoutAnimation {
+                beginUpdates()
+                reloadRows(at: reloadedRowsIndexPathesArray, with: .none)
+                deleteRows(at: deletedRowsIndexPathesArray, with: .none)
+                endUpdates()
+            }
+        }
+    }
 }
 
 fileprivate let tabBarItemTag: Int = 10090

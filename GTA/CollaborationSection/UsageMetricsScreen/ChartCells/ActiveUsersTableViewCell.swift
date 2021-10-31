@@ -56,8 +56,10 @@ class ActiveUsersTableViewCell: UITableViewCell {
     }
     
     func updateData() {
-        configureChart()
-        chartTitleLabel.text = chartData?.title
+        DispatchQueue.main.async { [weak self] in
+            self?.configureChart()
+            self?.chartTitleLabel.text = self?.chartData?.title
+        }
     }
     
     // TODO: Need to find better name

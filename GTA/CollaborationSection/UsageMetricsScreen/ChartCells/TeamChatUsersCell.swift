@@ -13,11 +13,7 @@ class TeamChatUsersCell: UITableViewCell {
     @IBOutlet weak var chartView: HorizontalBarChartView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    var chartData: TeamsChatUserData? {
-        didSet {
-            updateChartData()
-        }
-    }
+    var chartData: TeamsChatUserData? 
     var gridView = UIView()
     
     override func awakeFromNib() {
@@ -26,29 +22,16 @@ class TeamChatUsersCell: UITableViewCell {
     }
     
     func updateChartData() {
-        titleLabel.text = chartData?.title
-        guard let activeUsersData = chartData?.data?.sorted(by: {$0.percent ?? 0 < $1.percent ?? 0}), !activeUsersData.isEmpty else { return }
-        let chartValues = activeUsersData.enumerated().map { (index, dataEntry) -> BarChartDataEntry in
-            return BarChartDataEntry(x: Double(index), y: dataEntry.percent ?? 0)
+        DispatchQueue.main.async { [weak self] in
+            self?.titleLabel.text = self?.chartData?.title
+            guard let activeUsersData = self?.chartData?.data?.sorted(by: {$0.percent ?? 0 < $1.percent ?? 0}), !activeUsersData.isEmpty else { return }
+            let chartValues = activeUsersData.enumerated().map { (index, dataEntry) -> BarChartDataEntry in
+                return BarChartDataEntry(x: Double(index), y: dataEntry.percent ?? 0)
+            }
+            
+            self?.setChartView(activeUsersData)
+            self?.setData(chartValues)
         }
-        
-        setChartView(activeUsersData)
-        setData(chartValues)
-    }
-    
-    func addGridView() {
-        guard let linesCount = chartData?.data?.count, linesCount > 1 else {return}
-        gridView = setGridView()
-        chartView.addSubview(gridView)
-        gridView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            gridView.leadingAnchor.constraint(equalTo: chartView.leadingAnchor, constant: chartView.xAxis.labelWidth + chartView.minOffset),
-            gridView.trailingAnchor.constraint(equalTo: chartView.trailingAnchor, constant: -40),
-            gridView.topAnchor.constraint(equalTo: chartView.topAnchor, constant: 10),
-            gridView.bottomAnchor.constraint(equalTo: chartView.bottomAnchor, constant: -10)
-        ])
-        gridView.layoutIfNeeded()
-        setHorizontalLines(linesCount: linesCount - 1, lineHeight: ChartsFormatting.gridLineWidth)
     }
     
     private func setData(_ values: [BarChartDataEntry]) {
@@ -119,32 +102,6 @@ extension TeamChatUsersCell {
         
         return formatter
     }
-}
-// Grid functions
-extension TeamChatUsersCell {
-    
-    private func setGridView() -> UIView {
-        let gv = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        gv.borderWidth = ChartsFormatting.gridLineWidth
-        gv.borderColor = ChartsFormatting.gridColor
-        gv.backgroundColor = .clear
-        
-        return gv
-    }
-    
-    private func setHorizontalLines(linesCount: Int, lineHeight: CGFloat = 1) {
-        guard linesCount > 1 else { return }
-        let containerHeight = gridView.frame.height
-        let containerWidth = gridView.frame.width
-        let linesSpacing = (containerHeight - CGFloat(linesCount + 1) * lineHeight) / (CGFloat(linesCount) + 1)
-        
-        for i in 1..<linesCount + 1 {
-            let lineView = UIView(frame: CGRect(x: 0, y: (linesSpacing + lineHeight) * CGFloat(i), width: containerWidth, height: lineHeight))
-            lineView.backgroundColor = ChartsFormatting.gridColor
-            gridView.addSubview(lineView)
-        }
-    }
- 
 }
 
 extension TeamChatUsersCell: ChartDimensions {
