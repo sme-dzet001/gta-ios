@@ -33,6 +33,7 @@ class HelpDeskViewController: UIViewController {
         setUpTableView()
         //setHelpDeskCellsData()
         navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+        setUpUIElementsForNewVersion()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,6 +125,7 @@ class HelpDeskViewController: UIViewController {
 
     private func setUpTableView() {
         tableView.rowHeight = 80
+        tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "HelpDeskCell", bundle: nil), forCellReuseIdentifier: "HelpDeskCell")
         tableView.register(UINib(nibName: "HelpDeskContactOptionCell", bundle: nil), forCellReuseIdentifier: "HelpDeskContactOptionCell")
         tableView.accessibilityIdentifier = "ServiceDeskTableView"
@@ -203,16 +205,18 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.0001
+    }
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let navigationButtonFooter = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
         let separatorFooter = UIView()
         separatorFooter.backgroundColor = UIColor(hex: 0xF7F7FA)
-        return section == 0 ? separatorFooter : navigationButtonFooter
+        return separatorFooter
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return section == 0 ? 10 : footerHeight
+        return 10
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

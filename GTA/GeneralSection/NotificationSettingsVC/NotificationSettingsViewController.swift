@@ -10,6 +10,7 @@ import UIKit
 class NotificationSettingsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     var dataProvider: GeneralDataProvider?
     weak var delegate: NotificationStateUpdatedDelegate?
@@ -32,6 +33,7 @@ class NotificationSettingsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         getNotificationsData()
     }
     
@@ -54,9 +56,7 @@ class NotificationSettingsViewController: UIViewController {
                 self?.isNotificationAuthorized = true
             }
             DispatchQueue.main.async {
-                //self?.delegate?.notificationStateUpdatedDelegate(state: self?.isEmergencySwitchOn ?? false, type: .emergencyOutageNotifications)
                 self?.tableView.reloadData()
-               // self?.delegate?.notificationStateUpdatedDelegate(isNotificationAuthorized: self?.isNotificationAuthorized ?? false)
             }
         }
     }
@@ -78,6 +78,9 @@ class NotificationSettingsViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
         navigationItem.leftBarButtonItem?.tintColor = .black
         navigationItem.leftBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     @objc private func backPressed() {
@@ -110,14 +113,6 @@ extension NotificationSettingsViewController: UITableViewDelegate, UITableViewDa
         }
         cell?.switchControl.switchStateChangedDelegate = self
         delegate = cell
-//        if indexPath.row == 0 {
-//            cell?.label.text = "Emergency Outage Notifications"
-//            cell?.switchControl.isOn = isNotificationAuthorized ? Preferences.allowEmergencyOutageNotifications : false
-//            cell?.switchControl.switchStateChangedDelegate = self
-//            delegate = cell
-//        } else {
-//            cell?.label.text = "Production Alerts Notifications"
-//        }
         return cell ?? UITableViewCell()
     }
     

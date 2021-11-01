@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ActiveUsersByFunctionCell" rowHeight="189" id="KGk-i7-Jjw" userLabel="ActiveUsersByFunctionCell" customClass="ActiveUsersByFunctionCell" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="189"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="189"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Active Users by Functions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2U-hE-kNu">
+                        <rect key="frame" x="24" y="32" width="216.5" height="24"/>
+                        <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2t-6B-ZhQ" customClass="BarChartView" customModule="Charts">
+                        <rect key="frame" x="20" y="80" width="280" height="75"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r2o-Xg-UVG">
+                        <rect key="frame" x="0.0" y="181" width="320" height="8"/>
+                        <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="XMv-do-IYe"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="O2t-6B-ZhQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="0K8-5g-Dgs"/>
+                    <constraint firstItem="r2o-Xg-UVG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="8Zh-FD-H0m"/>
+                    <constraint firstAttribute="trailing" secondItem="O2t-6B-ZhQ" secondAttribute="trailing" constant="20" id="EDQ-fr-6vf"/>
+                    <constraint firstItem="O2t-6B-ZhQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="80" id="Kiv-YD-Og7"/>
+                    <constraint firstItem="M2U-hE-kNu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="32" id="QLs-Sq-uQb"/>
+                    <constraint firstAttribute="bottom" secondItem="r2o-Xg-UVG" secondAttribute="bottom" id="ZJw-p6-caX"/>
+                    <constraint firstItem="M2U-hE-kNu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="btD-Bv-zur"/>
+                    <constraint firstAttribute="trailing" secondItem="r2o-Xg-UVG" secondAttribute="trailing" id="hbw-de-ymi"/>
+                    <constraint firstItem="r2o-Xg-UVG" firstAttribute="top" secondItem="O2t-6B-ZhQ" secondAttribute="bottom" constant="26" id="qyz-xN-D4m"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="barChartView" destination="O2t-6B-ZhQ" id="838-7f-LJb"/>
+                <outlet property="titleLabel" destination="M2U-hE-kNu" id="Yqt-pE-Csx"/>
+            </connections>
+            <point key="canvasLocation" x="63.768115942028992" y="116.18303571428571"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

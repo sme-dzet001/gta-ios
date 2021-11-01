@@ -13,15 +13,14 @@ class MyTicketsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var createTicketView: UIView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: HelpDeskDataProvider?
     private var isKeyboardShow: Bool = false
     
-    private var myTicketsData: [GSDTickets]? {
-        return generateDataSource()
-    }
+    private var myTicketsData: [GSDTickets]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +35,7 @@ class MyTicketsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addErrorLabel(errorLabel, isGSD: true)
+        self.myTicketsData = self.generateDataSource()
         getMyTickets()
     }
     
@@ -51,13 +51,19 @@ class MyTicketsViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    self?.showNoDataErrorLabelIfNeeded()
-                    if dataWasChanged { self?.tableView.reloadData() }
-                } else {
-                    if let myTickets = self?.myTicketsData, myTickets.isEmpty {
+                    if dataWasChanged {
+                        self?.myTicketsData = self?.generateDataSource()
                         self?.tableView.reloadData()
                     }
-                    self?.handleErrorLabel(error: error)
+                    self?.showNoDataErrorLabelIfNeeded()
+                } else {
+                    if let myTickets = self?.myTicketsData, myTickets.isEmpty {
+                        self?.myTicketsData = self?.generateDataSource()
+                        self?.tableView.reloadData()
+                    }
+                    if (self?.myTicketsData ?? []).isEmpty {
+                        self?.handleErrorLabel(error: error)
+                    }
                 }
             }
         })
@@ -103,13 +109,15 @@ class MyTicketsViewController: UIViewController {
         navigationItem.title = "My Tickets"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
         navigationItem.leftBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-       // navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_icon"), style: .plain, target: self, action: #selector(searchPressed))
         navigationItem.rightBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     private func setUpTableView() {
-        //tableView.rowHeight = 260//300//158
         tableView.register(UINib(nibName: "TicketCell", bundle: nil), forCellReuseIdentifier: "TicketCell")
+        tableView.contentInset = tableView.menuButtonContentInset
     }
     
     @objc private func backPressed() {
@@ -225,16 +233,6 @@ extension MyTicketsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 75
     }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
-        return footer
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return footerHeight
-    }
 }
 
 extension MyTicketsViewController: SendEmailDelegate {
@@ -270,6 +268,7 @@ extension MyTicketsViewController: FilterSortingSelectionDelegate {
     func filterTypeDidSelect(_ selectedType: FilterType) {
         guard Preferences.ticketsFilterType != selectedType else { return }
         Preferences.ticketsFilterType = selectedType
+        myTicketsData = generateDataSource()
         tableView.reloadData()
         showNoDataErrorLabelIfNeeded()
     }
@@ -277,6 +276,7 @@ extension MyTicketsViewController: FilterSortingSelectionDelegate {
     func sortingTypeDidSelect(_ selectedType: SortType) {
         guard Preferences.ticketsSortingType != selectedType else { return }
         Preferences.ticketsSortingType = selectedType
+        myTicketsData = generateDataSource()
         tableView.reloadData()
         showNoDataErrorLabelIfNeeded()
     }

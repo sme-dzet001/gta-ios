@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServiceDeskContactsViewController" customModule="GTA" customModuleProvider="target">
             <connections>
+                <outlet property="headerSeparator" destination="7vZ-vE-c0a" id="BAI-u6-UdN"/>
                 <outlet property="tableView" destination="pCD-ER-464" id="DMO-cG-vzN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,21 +22,31 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pCD-ER-464">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="45" width="414" height="851"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="nKW-Lw-MPo"/>
                         <outlet property="delegate" destination="-1" id="m8I-3P-Ltx"/>
                     </connections>
                 </tableView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7vZ-vE-c0a">
+                    <rect key="frame" x="0.0" y="44" width="414" height="1"/>
+                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="mtx-cu-Ym4"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7vZ-vE-c0a" secondAttribute="trailing" id="2Pe-Wg-rvP"/>
+                <constraint firstItem="7vZ-vE-c0a" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="4Wn-si-YWr"/>
                 <constraint firstItem="pCD-ER-464" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="B6S-ov-xlt"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pCD-ER-464" secondAttribute="trailing" id="ia7-ES-ZBC"/>
-                <constraint firstItem="pCD-ER-464" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="nse-LB-RJP"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="pCD-ER-464" secondAttribute="bottom" id="svx-nI-hDn"/>
+                <constraint firstItem="pCD-ER-464" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="1" id="nse-LB-RJP"/>
+                <constraint firstItem="7vZ-vE-c0a" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="pa6-Ow-kSv"/>
+                <constraint firstAttribute="bottom" secondItem="pCD-ER-464" secondAttribute="bottom" id="svx-nI-hDn"/>
             </constraints>
             <point key="canvasLocation" x="139" y="67"/>
         </view>

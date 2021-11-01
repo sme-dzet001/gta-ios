@@ -14,7 +14,7 @@ enum FilterTabType : String {
     case all = "All"
     case news = "News"
     case specialAlerts = "Special Alerts"
-    case teamsNews = "Teams News"
+    //case teamsNews = "Teams News"
 }
 
 class HomepageViewController: UIViewController {
@@ -32,7 +32,7 @@ class HomepageViewController: UIViewController {
     
     private var presentedVC: ArticleViewController?
     
-    private var filterTabTypes : [FilterTabType] = [.all, .news, .specialAlerts, .teamsNews]
+    private var filterTabTypes : [FilterTabType] = [.all, .news, .specialAlerts]
     
     private var filterTabItemWidths : [CGFloat] {
         var result: [CGFloat] = []
@@ -119,17 +119,14 @@ class HomepageViewController: UIViewController {
         setUpBannerViews()
         setNeedsStatusBarAppearanceUpdate()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(getAllAlerts), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalAlertsIgnoringCache), name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(getGlobalProductionAlertsIgnoringCache), name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
-        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
-            loadNewsData()
-        }
+        navigationController?.navigationBar.barStyle = .default
+        loadNewsData()
         if UserDefaults.standard.bool(forKey: "emergencyOutageNotificationReceived") {
             emergencyOutageNotificationReceived()
         }
@@ -137,7 +134,7 @@ class HomepageViewController: UIViewController {
             navigateToGlobalProdAlert(withAlertInfo: productionAlertInfo)
         }
         updateBannerViews()
-        getAllAlerts()
+        getAllAlertsWithCache()
         getProductionAlertsCount()
     }
     
@@ -145,7 +142,6 @@ class HomepageViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalProductionAlertNotificationReceived), object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
@@ -158,41 +154,41 @@ class HomepageViewController: UIViewController {
 
     private func updateBannerViews() {
         if isEmergencyOutageBannerVisible {
-            emergencyOutageBannerView.isHidden = false
-            emergencyOutageBannerViewHeight.constant = 72
+            emergencyOutageBannerView?.isHidden = false
+            emergencyOutageBannerViewHeight?.constant = 72
             populateEmergencyOutageBanner()
         } else {
-            emergencyOutageBannerView.isHidden = true
-            emergencyOutageBannerViewHeight.constant = 0
+            emergencyOutageBannerView?.isHidden = true
+            emergencyOutageBannerViewHeight?.constant = 0
         }
         
         if isGlobalProductionAlertBannerVisible {
-            globalProductionAlertBannerView.isHidden = false
-            globalProductionAlertBannerViewHeight.constant = 72
+            globalProductionAlertBannerView?.isHidden = false
+            globalProductionAlertBannerViewHeight?.constant = 72
             populateGlobalProductionAlertBanner()
         } else {
-            globalProductionAlertBannerView.isHidden = true
-            globalProductionAlertBannerViewHeight.constant = 0
+            globalProductionAlertBannerView?.isHidden = true
+            globalProductionAlertBannerViewHeight?.constant = 0
         }
     }
     
     private func populateEmergencyOutageBanner() {
         guard let alert = dataProvider.globalAlertsData else { return }
-        emergencyOutageBannerView.alertLabel.text = "Emergency Outage: \(alert.alertTitle ?? "")"
+        emergencyOutageBannerView?.alertLabel.text = "Emergency Outage: \(alert.alertTitle ?? "")"
         if alert.status == .closed {
-            emergencyOutageBannerView.setAlertOff()
+            emergencyOutageBannerView?.setAlertOff()
         } else {
-            emergencyOutageBannerView.setAlertOn()
+            emergencyOutageBannerView?.setAlertOn()
         }
     }
     
     private func populateGlobalProductionAlertBanner() {
         guard let alert = dataProvider.productionGlobalAlertsData else { return }
         guard !alert.isExpired else { return }
-        globalProductionAlertBannerView.alertLabel.text = "Production Alert: \(alert.summary ?? "")"
-        globalProductionAlertBannerView.closeButton.isHidden = false
-        globalProductionAlertBannerView.delegate = self
-        globalProductionAlertBannerView.setAlertBannerForGlobalProdAlert(prodAlertsStatus: alert.prodAlertsStatus)
+        globalProductionAlertBannerView?.alertLabel.text = "Production Alert: \(alert.summary ?? "")"
+        globalProductionAlertBannerView?.closeButton.isHidden = false
+        globalProductionAlertBannerView?.delegate = self
+        globalProductionAlertBannerView?.setAlertBannerForGlobalProdAlert(prodAlertsStatus: alert.prodAlertsStatus)
     }
     
     @IBAction func emergencyOutageBannerPressed(_ sender: Any) {
@@ -206,17 +202,21 @@ class HomepageViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedTable" {
             let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
-            if let allNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let promotedNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let specialAlertsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let applicationNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController {
-                newsTabs = [allNewsViewController, promotedNewsViewController, specialAlertsViewController, applicationNewsViewController]
+            if let allNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let promotedNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController, let specialAlertsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController {//}, let applicationNewsViewController = storyBoard.instantiateViewController(withIdentifier: "HomepageTableViewController") as? HomepageTableViewController {
+                promotedNewsViewController.selectedFilterTab = .news
+                specialAlertsViewController.selectedFilterTab = .specialAlerts
+                newsTabs = [allNewsViewController, promotedNewsViewController, specialAlertsViewController]//, applicationNewsViewController]
             }
             
             for newsTab in newsTabs {
+                newsTab.loadViewIfNeeded()
                 newsTab.dataProvider = dataProvider
                 newsTab.newsShowDelegate = self
             }
             
             let pagingVC = segue.destination as? PagingViewController
             pagingVC?.dataSource = self
+            pagingVC?.delegate = self
             pagingVC?.register(PagingTitleCell.self, for: PagingIndexItem.self)
             pagingVC?.indicatorColor = UIColor(hex: 0xCC0000)
             pagingVC?.selectedTextColor = .black
@@ -227,7 +227,9 @@ class HomepageViewController: UIViewController {
                 pagingVC?.selectedFont = filterTabFont
             }
             pagingVC?.menuItemSize = .selfSizing(estimatedWidth: 80, height: 40)
-            pagingVC?.menuInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+            //pagingVC?.menuInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+            pagingVC?.menuItemLabelSpacing = 15
+            pagingVC?.menuHorizontalAlignment = .center
         }
     }
     
@@ -235,24 +237,29 @@ class HomepageViewController: UIViewController {
     }
     
     private func loadNewsData() {
-        if dataProvider.newsDataIsEmpty {
-            for newsTab in newsTabs {
-                newsTab.dataLoadingStarted()
-            }
-        }
-        dataProvider.getGlobalNewsData { [weak self] (errorCode, error, isFromCache) in
+        guard lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() else { return }
+        guard !dataProvider.getNewsFeedInProgress else { return }
+        dataProvider.getNewsFeedData { [weak self] (isFromCache, dataWasChanged, errorCode, error) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
+                if error == nil && errorCode == 200 {
+                    self.lastUpdateDate = !isFromCache ? Date().addingTimeInterval(60) : self.lastUpdateDate
+                }
                 for newsTab in self.newsTabs {
-                    newsTab.dataLoadingFinished(errorCode: errorCode, error: error, isFromCache: isFromCache)
+                    newsTab.dataLoadingFinished(dataWasChanged: dataWasChanged, errorCode: errorCode, error: error, isFromCache: isFromCache)
                 }
             }
         }
     }
     
-    @objc private func getAllAlerts() {
+    @objc private func getAllAlertsWithCache() {
         getGlobalAlerts()
         getGlobalProductionAlerts()
+    }
+    
+    @objc private func getAllAlertsIgnoringCache() {
+        getGlobalAlertsIgnoringCache()
+        getGlobalProductionAlertsIgnoringCache()
     }
     
     @objc private func getGlobalAlerts() {
@@ -284,7 +291,7 @@ class HomepageViewController: UIViewController {
     @objc private func getGlobalAlertsIgnoringCache() {
         dataProvider.getGlobalAlertsIgnoringCache {[weak self] _, dataWasChanged, errorCode, error in
             DispatchQueue.main.async {
-                if dataWasChanged, error == nil {
+                if error == nil {
                     self?.emergencyOutageLoaded = true
                     self?.updateBannerViews()
                 }
@@ -390,6 +397,7 @@ class HomepageViewController: UIViewController {
         if let productionAlertInfo = UserDefaults.standard.object(forKey: "globalProductionAlertNotificationReceived") as? [String : Any] {
             navigateToGlobalProdAlert(withAlertInfo: productionAlertInfo)
         }
+        getAllAlertsIgnoringCache()
         getProductionAlertsCount()
     }
     
@@ -413,7 +421,7 @@ class HomepageViewController: UIViewController {
     }
 }
 
-extension HomepageViewController: PagingViewControllerDataSource {
+extension HomepageViewController: PagingViewControllerDataSource, PagingViewControllerDelegate {
     func numberOfViewControllers(in pagingViewController: PagingViewController) -> Int {
         return newsTabs.count
     }
@@ -424,6 +432,10 @@ extension HomepageViewController: PagingViewControllerDataSource {
     
     func pagingViewController(_: PagingViewController, pagingItemAt index: Int) -> PagingItem {
         return PagingIndexItem(index: index, title: filterTabTypes[index].rawValue)
+    }
+    
+    func pagingViewController(_ pagingViewController: PagingViewController, didSelectItem pagingItem: PagingItem) {
+        loadNewsData()
     }
     
     
@@ -444,24 +456,15 @@ extension HomepageViewController: DismissAlertDelegate {
 }
 
 extension HomepageViewController: NewsShowDelegate {
-    func showArticleViewController(with text: String?) {
-        let articleViewController = ArticleViewController()
-        presentedVC = articleViewController
-        let htmlBody = dataProvider.formNewsBody(from: text)
-        if let neededFont = UIFont(name: "SFProText-Light", size: 16) {
-            htmlBody?.setFontFace(font: neededFont)
-        }
-        if let _ = htmlBody {
-            articleViewController.attributedArticleText = htmlBody
-        } else {
-            articleViewController.articleText = text
-        }
-        presentPanModal(articleViewController)
+    func showArticleViewController(with content: NewsFeedRow) {
+        let newsViewController = NewsScreenViewController(nibName: "NewsScreenViewController", bundle: nil)
+        newsViewController.newsData = content
+        navigationController?.pushViewController(newsViewController, animated: true)
     }
 }
 
 protocol NewsShowDelegate: AnyObject {
-    func showArticleViewController(with text: String?)
+    func showArticleViewController(with content: NewsFeedRow)
 }
 
 protocol PanModalAppearanceDelegate: AnyObject {

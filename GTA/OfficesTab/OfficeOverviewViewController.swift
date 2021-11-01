@@ -17,13 +17,17 @@ class OfficeOverviewViewController: UIViewController {
     var officeDataProvider: MenuViewControllerDataProvider?
     weak var selectedOfficeUIUpdateDelegate: SelectedOfficeUIUpdateDelegate?
     
-    var selectedOfficeData: OfficeRow?
-    var officeDataSoure: [Hardcode] = []
+    private var selectedOfficeData: OfficeRow? {
+        return officeDataProvider?.userOffice
+    }
+    var officeDataSoure: [OfficeScreenData] = []
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setDataSource()
         setUpTableView()
         setupHeaderImageView()
         setNeedsStatusBarAppearanceUpdate()
@@ -31,17 +35,34 @@ class OfficeOverviewViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
-        
+        setDataSource()
         officeDataProvider?.officeSelectionDelegate = self
-        officeStatusLabel.isHidden = true//infoType != .office
+        officeStatusLabel.isHidden = true
         officeStatusLabel.layer.cornerRadius = 5
         officeStatusLabel.layer.masksToBounds = true
         infoLabel.attributedText = addShadow(for: self.title)
+        getOfficeIfNeeded()
+    }
+    
+    private func getOfficeIfNeeded() {
+        guard selectedOfficeData == nil || (officeDataProvider?.allOfficesDataIsEmpty ?? true) else { return }
+        guard Reachability.isConnectedToNetwork() else { return }
+        officeDataProvider?.getCurrentOffice(completion: {[weak self] _, error, _ in
+            if error == nil {
+                self?.officeDataProvider?.getAllOfficesData(completion: { _, error in
+                    DispatchQueue.main.async {
+                        self?.infoLabel.attributedText = self?.addShadow(for: self?.officeDataProvider?.userOffice?.officeName)
+                        self?.setDataSource()
+                    }
+                })
+            }
+        })
     }
     
     private func setDataSource() {
-        officeDataSoure = [Hardcode(imageName: "phone_icon", text: selectedOfficeData?.officePhone ?? "", infoType: "phone"), Hardcode(imageName: "email_icon", text: selectedOfficeData?.officeEmail ?? "", infoType: "email"), Hardcode(imageName: "location", text: selectedOfficeData?.officeLocation ?? "", infoType: "location"), Hardcode(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a different Sony Music office")]
+        officeDataSoure = [OfficeScreenData(imageName: "phone_icon", text: selectedOfficeData?.officePhone ?? "", infoType: "phone"), OfficeScreenData(imageName: "email_icon", text: selectedOfficeData?.officeEmail ?? "", infoType: "email"), OfficeScreenData(imageName: "location", text: selectedOfficeData?.officeLocation ?? "", infoType: "location"), OfficeScreenData(imageName: "desk_finder", text: "Sony Offices", additionalText: "Select a different Sony Music office")]
         officeDataSoure.removeAll { $0.text.isEmpty }
+        tableView.reloadData()
     }
     
     private func setupHeaderImageView() {
@@ -156,11 +177,19 @@ extension OfficeOverviewViewController: OfficeSelectionDelegate {
     
     private func updateUIWithSelectedOffice() {
         DispatchQueue.main.async {
-            self.selectedOfficeData = self.officeDataProvider?.userOffice
+            //self.selectedOfficeData = self.officeDataProvider?.userOffice
             self.title = self.selectedOfficeData?.officeName
             self.infoLabel.text = self.title
             self.setDataSource()
             self.tableView.reloadData()
         }
     }
+}
+
+struct OfficeScreenData {
+    var imageName: String
+    var text: String
+    var additionalText: String? = nil
+    var officeId: Int? = nil
+    var infoType: String? = nil
 }

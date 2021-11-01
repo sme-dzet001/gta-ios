@@ -13,12 +13,10 @@ class CollaborationDataProvider {
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
     
-    private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     private(set) var tipsAndTricksData = [TipsAndTricksRow]()
     private(set) var collaborationNewsData = [CollaborationNewsRow]()
     private(set) var collaborationDetails: CollaborationDetailsResponse?
     private var appSuiteImage: Data?
-    weak var appSuiteIconDelegate: AppSuiteIconDelegate?
     private(set) var collaborationAppDetailsRows: [CollaborationAppDetailsRow]?
     private(set) var appContactsData: AppContactsData?
     private var receivedMetricsData: CollaborationMetricsResponse?
@@ -688,8 +686,4 @@ class CollaborationDataProvider {
         return res
     }
     
-}
-
-protocol AppSuiteIconDelegate: AnyObject {
-    func appSuiteIconChanged(with data: Data?, status: LoadingStatus)
 }

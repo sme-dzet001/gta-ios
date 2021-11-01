@@ -68,7 +68,7 @@ class ArticleViewController: UIViewController {
         super.viewWillAppear(animated)
         addBlurToView()
         addHeightObservation()
-        addGesture()
+        //addGesture()
         configureBlurViewPosition(isInitial: true)
         if view.window?.safeAreaInsets.top ?? 0 <= 24 {
             articleTextViewBottom?.constant = 15
@@ -81,13 +81,6 @@ class ArticleViewController: UIViewController {
         })
     }
     
-    private func addGesture() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(newsDidScroll))
-        panGesture.minimumNumberOfTouches = 1
-        panGesture.cancelsTouchesInView = false
-        presentationView?.addGestureRecognizer(panGesture)
-    }
-    
     override func viewDidLayoutSubviews() {
         configureBlurViewPosition()
     }
@@ -95,22 +88,6 @@ class ArticleViewController: UIViewController {
     private func setAccessibilityIdentifiers() {
         closeButton.accessibilityIdentifier = "ArticleCloseButton"
         articleTextView.accessibilityIdentifier = "ArticleTextView"
-    }
-    
-    @objc func newsDidScroll(gesture: UIPanGestureRecognizer) {
-        let velocity = gesture.velocity(in: presentationView)
-        if gesture.state == .began {
-            gestureStartPoint = velocity
-        } else if gesture.state == .changed {
-            gesture.state = .ended
-            let xValue = gestureStartPoint.x > velocity.x ?  gestureStartPoint.x - velocity.x : gestureStartPoint.x + velocity.x
-            let yValue = gestureStartPoint.y > velocity.y ?  gestureStartPoint.y - velocity.y : gestureStartPoint.y + velocity.y
-            let direction: UICollectionView.ScrollPosition = gestureStartPoint.x > velocity.x ? .left : .right
-            if xValue > yValue {
-                //appearanceDelegate?.needScrollToDirection(direction)
-                articleTextView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-            }
-        }
     }
     
     private func configureBlurViewPosition(isInitial: Bool = false) {
@@ -133,10 +110,6 @@ class ArticleViewController: UIViewController {
     
     @objc private func dismissModal() {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    func panModalWillDismiss() {
-        //appearanceDelegate?.panModalDidDismiss()
     }
     
     private func setParagraphStyle() {
@@ -214,10 +187,6 @@ extension ArticleViewController: PanModalPresentable {
         } else {
             return 0
         }
-    }
-    
-    var allowsTapToDismiss: Bool {
-        return false
     }
     
     var cornerRadius: CGFloat {

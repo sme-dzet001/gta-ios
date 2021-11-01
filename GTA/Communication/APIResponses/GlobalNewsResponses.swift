@@ -7,111 +7,6 @@
 
 import Foundation
 
-// MARK: - News Response
-
-struct GlobalNewsRow: Codable {
-    var values: [QuantumValue?]?
-    var indexes: [String : Int] = [:]
-    
-    enum CodingKeys: String, CodingKey {
-        case values = "values"
-    }
-    
-    var newsTitle: String? {
-        guard let valuesArr = values, let index = indexes["headline"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
-    }
-    
-    var newsSubtitle: String? {
-        guard let valuesArr = values, let index = indexes["sub headline"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
-    }
-    
-    var posterUrl: String? {
-        guard let valuesArr = values, let index = indexes["banner"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
-    }
-    
-    var newsDate: String? {
-        guard let valuesArr = values, let index = indexes["post date"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
-    }
-    
-    var newsAuthor: String? {
-        guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue?.replacingOccurrences(of: "\\n", with: "\n")
-    }
-    
-    var newsBody: String? {
-        guard let valuesArr = values, let index = indexes["body"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
-    }
-}
-
-struct GlobalNewsData: Codable {
-    var rows: [GlobalNewsRow?]?
-}
-
-struct GlobalNewsResponse: Codable {
-    var meta: ResponseMetaData?
-    var data: GlobalNewsData?
-}
-
-// MARK: - Special Alerts Response
-
-struct SpecialAlertRow: Codable {
-    var values: [QuantumValue?]?
-    var indexes: [String : Int] = [:]
-    
-    enum CodingKeys: String, CodingKey {
-        case values = "values"
-    }
-    
-    var alertTitle: String? {
-        guard let valuesArr = values, let index = indexes["alert title"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
-    }
-    
-    var alertHeadline: String? {
-        guard let valuesArr = values, let index = indexes["headline"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
-    }
-    
-    var alertSubHeadline: String? {
-        guard let valuesArr = values, let index = indexes["sub headline"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
-    }
-    
-    var posterUrl: String? {
-        guard let valuesArr = values, let index = indexes["banner"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
-    }
-    
-    var alertDate: String? {
-        guard let valuesArr = values, let index = indexes["post date"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
-    }
-    
-    var alertAuthor: String? {
-        guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue?.replacingOccurrences(of: "\\n", with: "\n")
-    }
-    
-    var alertBody: String? {
-        guard let valuesArr = values, let index = indexes["body"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
-    }
-}
-
-struct SpecialAlertsData: Codable {
-    var rows: [SpecialAlertRow?]?
-}
-
-struct SpecialAlertsResponse: Codable {
-    var meta: ResponseMetaData?
-    var data: SpecialAlertsData?
-}
-
 enum QuantumValue: Codable, Equatable {
     
     case int(Int), string(String), float(Float), bool(Bool)
@@ -253,6 +148,7 @@ struct GlobalAlertRow: Codable, Equatable {
         guard let valuesArr = values, let index = indexes["start date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.locale = Locale(identifier: "en_US_POSIX")
         dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatterPrint.date(from: dateString) ?? Date()
     }
@@ -261,6 +157,7 @@ struct GlobalAlertRow: Codable, Equatable {
         guard let valuesArr = values, let index = indexes["close date"], valuesArr.count > index, let dateString = valuesArr[index]?.stringValue else { return Date() }
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatterPrint.locale = Locale(identifier: "en_US_POSIX")
         dateFormatterPrint.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatterPrint.date(from: dateString) ?? Date()
     }
@@ -301,3 +198,119 @@ enum GlobalAlertStatus {
     case closed
 }
 
+// MARK: - News Feed Response
+
+struct NewsFeedResponse: Codable {
+    var meta: ResponseMetaData?
+    var data: NewsFeedData?
+}
+
+struct NewsFeedData: Codable, Equatable {
+    var rows: [NewsFeedRow?]?
+}
+
+struct NewsContentData: Codable, Equatable {
+    var body: String?
+    var type: NewsDataTypes?
+    
+    enum NewsDataTypes: String, Codable, Equatable {
+        case text = "text"
+        case image = "image"
+    }
+}
+
+struct NewsFeedRow: Codable, Equatable {
+    var values: [QuantumValue?]?
+    var indexes: [String : Int] = [:]
+    
+    enum CodingKeys: String, CodingKey {
+        case values
+    }
+    
+    var category: NewsFeedCategory {
+        switch categoryStringValue.lowercased() {
+        case "news":
+            return .news
+        case "special alerts":
+            return .specialAlerts
+        default:
+            return .none
+        }
+    }
+    
+    private var categoryStringValue: String {
+        guard let valuesArr = values, let index = indexes["category"], valuesArr.count > index else { return "" }
+        return valuesArr[index]?.stringValue ?? ""
+    }
+    
+    var articleId: Int? {
+        guard let valuesArr = values, let index = indexes["article id"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.intValue
+    }
+    
+    var headline: String? {
+        guard let valuesArr = values, let index = indexes["headline"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var subHeadline: String? {
+        guard let valuesArr = values, let index = indexes["sub headline"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var imagePath: String? {
+        guard let valuesArr = values, let index = indexes["banner"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var postDate: String? {
+        guard let valuesArr = values, let index = indexes["post date"], valuesArr.count > index else { return nil }
+        return valuesArr[index]?.stringValue
+    }
+    
+    var newsDate: Date? {
+        guard let dateString = postDate else { return nil }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = String.dateFormatWithoutTimeZone
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        var date: Date? = nil
+        if let formattedDate = dateFormatter.date(from: dateString) {
+            date = formattedDate
+        } else {
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            if let formattedDate = dateFormatter.date(from: dateString) {
+                date = formattedDate
+            }
+        }
+        return date
+    }
+    
+    var byLine: String? {
+        guard let valuesArr = values, let index = indexes["by line"], valuesArr.count > index else { return nil }
+        let byLine = valuesArr[index]?.stringValue?.replacingOccurrences(of: "\\n", with: "\n")
+        return byLine
+    }
+    
+    var newsContent: [NewsContentData]? {
+        guard let valuesArr = values, let index = indexes["content"], valuesArr.count > index else { return nil }
+        guard let jsonData = valuesArr[index]?.stringValue?.data(using: .utf8) else { return nil }
+        do {
+            return try DataParser.parse(data: jsonData)
+        } catch {
+            
+            return nil
+        }
+    }
+    
+    var isPostDateExist: Bool {
+        guard let _ = newsDate else { return false }
+        return true
+    }
+    
+}
+
+enum NewsFeedCategory {
+    case news
+    case specialAlerts
+    case none
+}

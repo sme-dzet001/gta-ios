@@ -11,8 +11,7 @@ import Kingfisher
 class AppsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    
-   // var dataSource: [AppsDataSource] = []
+    @IBOutlet weak var headerSeparator: UIView!
     
     private var dataProvider: MyAppsDataProvider = MyAppsDataProvider()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -50,6 +49,7 @@ class AppsViewController: UIViewController {
         //self.dataProvider.appImageDelegate = self
         setUpNavigationItem()
         setAccessibilityIdentifiers()
+        setUpUIElementsForNewVersion()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,6 +58,9 @@ class AppsViewController: UIViewController {
         addErrorLabel(errorLabel)
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
         startAnimation()
         if allAppsLastUpdateDate == nil || Date() >= allAppsLastUpdateDate ?? Date() {
             self.getAllApps()
@@ -191,6 +194,7 @@ class AppsViewController: UIViewController {
     
     private func setUpTableView() {
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "ApplicationCell", bundle: nil), forCellReuseIdentifier: "ApplicationCell")
     }
@@ -342,16 +346,6 @@ extension AppsViewController: UITableViewDelegate, UITableViewDataSource {
             return 80
         }
         return 60
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
-        return footer
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return footerHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

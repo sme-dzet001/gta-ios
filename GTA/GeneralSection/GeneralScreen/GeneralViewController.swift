@@ -12,7 +12,9 @@ class GeneralViewController: UIViewController {
     
     private var usmLogoutWebView: WKWebView!
     @IBOutlet weak var softwareVersionLabel: UILabel!
+    @IBOutlet weak var softwareVersionBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     var dataProvider: GeneralDataProvider = GeneralDataProvider()
     
@@ -20,7 +22,6 @@ class GeneralViewController: UIViewController {
         super.viewDidLoad()
         setUpNavigationBar()
         setUpTableView()
-        // Do any additional setup after loading the view.
         usmLogoutWebView = WKWebView(frame: CGRect.zero)
         view.addSubview(usmLogoutWebView)
         usmLogoutWebView.isHidden = true
@@ -31,6 +32,9 @@ class GeneralViewController: UIViewController {
         let build = dictionary["CFBundleVersion"] as! String
         softwareVersionLabel.text = String(format: "Version \(version) (\(build))")
         setAccessibilityIdentifiers()
+        setUpUIElementsForNewVersion()
+        let bottomConstraint = softwareVersionBottomConstraint.constant + ((view.frame.width * 0.133) / 2) - (softwareVersionLabel.frame.height / 2)
+        softwareVersionBottomConstraint.constant = bottomConstraint
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +60,9 @@ class GeneralViewController: UIViewController {
     private func setUpNavigationBar() {
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     private func setAccessibilityIdentifiers() {
@@ -131,7 +138,6 @@ extension GeneralViewController: WKNavigationDelegate {
             KeychainManager.deleteTokenExpirationDate()
             CacheManager().clearCache()
             KeychainManager.deletePinData()
-            ImageCacheManager().removeCachedData()
             if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
                 sceneDelegate.startLoginFlow()
             }

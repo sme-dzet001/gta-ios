@@ -12,9 +12,7 @@ class MyAppsDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
-    private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     var appsData: [AppsDataSource] = []
-    //private var appImageData: [String : Data?] = [:]
     var allAppsData: AllAppsResponse? {
         didSet {
             appsData = self.crateGeneralResponse() ?? []
@@ -41,6 +39,9 @@ class MyAppsDataProvider {
     var forceUpdateProductionAlerts: Bool = false
     
     private(set) var alertsData: [String : [ProductionAlertsRow]] = [:]
+    
+    private var processProductionAlertsQueue = DispatchQueue(label: "processProductionAlertsQueue", qos: .userInteractive)
+    private var setProductAlertsQueue = DispatchQueue(label: "dictionary-writer-queue", qos: .userInteractive)
             
     // MARK: - Apps Status related methods
     
@@ -336,9 +337,7 @@ class MyAppsDataProvider {
             let contactsPath = app ?? ""
             if fromCache {
                 getCachedResponse(for: .getAppContacts(contactsPath: contactsPath)) {[weak self] (data, error) in
-//                    if let _ = data, error == nil {
                     self?.processAppContacts(appName: contactsPath, reportData, data, true, errorCode, error, completion)
-                    //}
                 }
                 return
             }
@@ -615,8 +614,7 @@ class MyAppsDataProvider {
     }
     
     private func processProductionAlerts(_ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ dataWasChanged: Bool, _ errorCode: Int, _ error: Error?, _ count: Int) -> Void)? = nil) {
-        let queue = DispatchQueue(label: "processProductionAlertsQueue", qos: .userInteractive)
-        queue.async {[weak self] in
+        processProductionAlertsQueue.async(flags: .barrier) {[weak self] in
             var prodAlertsResponse: ProductionAlertsResponse?
             var retErr = error
             if let responseData = myAppsDataResponse {
@@ -645,12 +643,11 @@ class MyAppsDataProvider {
     }
     
     private func setProductAlerts(from response: ProductionAlertsResponse?, _ completion: @escaping ((_ alerts: [String : [ProductionAlertsRow]] ) -> Void)) {
-        let queue = DispatchQueue(label: "dictionary-writer-queue", qos: .userInteractive)
         let columns = response?.meta?.widgetsDataSource?.params?.columns ?? []
         let indexes = getDataIndexes(columns: columns)
         var alerts: [String : [ProductionAlertsRow]] = [:]
         var data = response?.data?[KeychainManager.getUsername() ?? ""] ?? [:]
-        queue.async {
+        setProductAlertsQueue.async(flags: .barrier) {
             for key in data.keys {
                 for (index, _) in (data[key]?.data?.rows ?? []).enumerated() {
                     data[key]?.data?.rows?[index]?.indexes = indexes
@@ -743,6 +740,12 @@ class MyAppsDataProvider {
     private func processAppProductionAlerts(appName: String, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let queue = DispatchQueue(label: "processAppProductionAlertsQueue", qos: .userInteractive)
         queue.async {[weak self] in
+            if let error = error {
+                let errorMessage = ResponseError.generate(error: error)
+                completion?(errorCode, errorMessage)
+                return
+            }
+            
             var prodAlertsResponse: ProductionAlertsResponse?
             var retErr = error
             if let responseData = myAppsDataResponse {
@@ -828,8 +831,8 @@ class MyAppsDataProvider {
         guard let allAppsInfo = allAppsData?.myAppsStatus else { return nil }
         guard !allAppsInfo.isEmpty else { return nil }
         var response = allAppsInfo
-        var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
-        var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
+        var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [])
+        var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [])
         for (index, info) in allAppsData!.myAppsStatus.enumerated() {
             let appNameIndex = myAppsStatusData?.indexes["app name"] ?? 0
             response[index].appImage = formImageURL(from: response[index].appImage)
@@ -880,7 +883,3 @@ class MyAppsDataProvider {
     }
     
 }
-
-//protocol AppImageDelegate: class {
-//    func setImage(with data: Data?, for appName: String?, error: Error?)
-//}

@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct TeamsByFunctionsLineChartData: MetricsPosition {
+struct TeamsByFunctionsLineChartData: MetricsPosition, Equatable {
     var title: String?
     var data: [[TeamsByFunctionsDataEntry]]?
     var position: Int?
 }
 
-struct TeamsByFunctionsDataEntry {
+struct TeamsByFunctionsDataEntry: Equatable {
     var refreshDate: String?
     var value: Int?
     

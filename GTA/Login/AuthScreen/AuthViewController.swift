@@ -28,8 +28,9 @@ class AuthViewController: UIViewController {
     private var usmLogoutWebView: WKWebView!
     private var continueButtonY: CGFloat?
     weak var delegate: AuthentificationPassed?
+    weak var loginDelegate: LoginSaverDelegate?
     private var dataProvider: LoginDataProvider = LoginDataProvider()
-    
+    var appKeyWindow: UIWindow?
     var isSignUp: Bool = KeychainManager.getPin() == nil
     
     override func viewDidLoad() {
@@ -42,6 +43,10 @@ class AuthViewController: UIViewController {
             box.backwardDelegate = self
             box.accessibilityIdentifier = "PinCodeScreenPinBox\(index)"
         }
+
+        let loginVC = navigationController?.viewControllers.first(where: { $0 is LoginViewController }) as? LoginViewController
+        loginDelegate = loginVC
+        
         setAccessibilityIdentifiers()
     }
     
@@ -92,11 +97,14 @@ class AuthViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        screenWillHide()
+    }
+    
+    private func screenWillHide() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
         delegate?.isAuthentificationScreenShown = false
-        hideKeyboard()
     }
 
     private func addWebViewIfNeeded() {
@@ -138,10 +146,14 @@ class AuthViewController: UIViewController {
         let context = LAContext()
         var error: NSError?
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Authenticate with Biometrics"
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) {
-                [weak self] success, authenticationError in
-                self?.checkAuthentification(isSuccess: success, error: authenticationError as NSError?)
+            let additionalTime = context.biometryType == .faceID ? 0.5 : 0
+            DispatchQueue.main.asyncAfter(deadline: .now() + additionalTime) { [weak self] in
+                let reason = "Authenticate with Biometrics"
+                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
+                    DispatchQueue.main.async {
+                        self?.checkAuthentification(isSuccess: success, error: authenticationError as NSError?)
+                    }
+                }
             }
         }
     }
@@ -189,24 +201,32 @@ class AuthViewController: UIViewController {
     }
     
     private func authentificatePassed() {
+        hideKeyboard()
+        loginDelegate?.saveLoginMail()
         delegate?.isAuthentificationPassed = true
+        if let navController = self.appKeyWindow?.rootViewController as? UINavigationController, navController.rootViewController is MainViewController, !isSignUp {
+            appKeyWindow?.windowLevel = UIWindow.Level.statusBar + 1
+            screenWillHide()
+            appKeyWindow?.makeKeyAndVisible()
+            return
+        }
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
         let navController = UINavigationController(rootViewController: mainViewController)
         navController.isNavigationBarHidden = true
         navController.isToolbarHidden = true
+        screenWillHide()
         self.view.window?.rootViewController = navController
-        (mainViewController as? UITabBarController)?.setSelectedTabAccordingToPendingAlert()
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
             guard keyboardSize.height > 0 else { return }
-            UIView.animate(withDuration: 0.3, animations: {
-                if self.isSignUp {
-                    self.handleKeyboardAppearanceForSignUp(overlay: keyboardSize.height)
+            UIView.animate(withDuration: 0.3, animations: {[weak self] in
+                if self?.isSignUp ?? false {
+                    self?.handleKeyboardAppearanceForSignUp(overlay: keyboardSize.height)
                 } else {
-                    self.handleKeyboardAppearanceForLogin(overlay: keyboardSize.height)
+                    self?.handleKeyboardAppearanceForLogin(overlay: keyboardSize.height)
                 }
             })
         }
@@ -234,9 +254,9 @@ class AuthViewController: UIViewController {
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.setDefaultElementsState()
-            self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.3, animations: {[weak self] in
+            self?.setDefaultElementsState()
+            self?.view.layoutIfNeeded()
         })
     }
     
@@ -290,7 +310,6 @@ extension AuthViewController: WKNavigationDelegate {
         KeychainManager.deleteTokenExpirationDate()
         CacheManager().clearCache()
         KeychainManager.deletePinData()
-        ImageCacheManager().removeCachedData()
         UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
         UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
         if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
@@ -375,4 +394,8 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
 protocol AuthentificationPassed: AnyObject {
     var isAuthentificationPassed: Bool? {get set}
     var isAuthentificationScreenShown: Bool? {get set}
+}
+
+protocol LoginSaverDelegate: AnyObject {
+    func saveLoginMail()
 }

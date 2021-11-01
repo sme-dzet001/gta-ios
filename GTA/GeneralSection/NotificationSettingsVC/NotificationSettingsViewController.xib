@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotificationSettingsViewController" customModule="GTA" customModuleProvider="target">
             <connections>
+                <outlet property="headerSeparator" destination="MlU-wu-Q8r" id="5ac-wR-QBV"/>
                 <outlet property="tableView" destination="6Cq-7O-NpO" id="T0p-cL-Nxw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,16 +22,26 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6Cq-7O-NpO">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="45" width="414" height="851"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MlU-wu-Q8r">
+                    <rect key="frame" x="0.0" y="44" width="414" height="1"/>
+                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="JyZ-fU-228"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="6Cq-7O-NpO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="BpI-vx-Wok"/>
+                <constraint firstItem="MlU-wu-Q8r" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8XQ-Pa-SPk"/>
+                <constraint firstItem="6Cq-7O-NpO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="1" id="BpI-vx-Wok"/>
                 <constraint firstItem="6Cq-7O-NpO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="FsB-eJ-VJm"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="6Cq-7O-NpO" secondAttribute="bottom" id="Xiw-Iv-wZF"/>
+                <constraint firstAttribute="bottom" secondItem="6Cq-7O-NpO" secondAttribute="bottom" id="Xiw-Iv-wZF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="MlU-wu-Q8r" secondAttribute="trailing" id="fiN-3d-zWb"/>
+                <constraint firstItem="MlU-wu-Q8r" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="mRn-Op-tuz"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6Cq-7O-NpO" secondAttribute="trailing" id="vCJ-Tf-a2z"/>
             </constraints>
             <point key="canvasLocation" x="129" y="81"/>

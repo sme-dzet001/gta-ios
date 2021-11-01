@@ -28,8 +28,6 @@ class APIManager: NSObject, URLSessionDelegate {
         case validateToken
         case prolongSession
         case getSectionReport
-        case getGlobalNews(generationNumber: Int)
-        case getSpecialAlerts(generationNumber: Int)
         case getAllOffices(generationNumber: Int)
         case getCurrentPreferences
         case setCurrentPreferences
@@ -56,13 +54,13 @@ class APIManager: NSObject, URLSessionDelegate {
         case getProductionAlerts(generationNumber: Int)
         case getCollaborationMetrics(generationNumber: Int)
         case getGlobalProductionAlerts(generationNumber: Int)
+        case getNewsFeed
+        case getChatBotToken
         
         var endpoint: String {
             switch self {
                 case .validateToken, .prolongSession, .getCurrentPreferences, .setCurrentPreferences: return "/v1/me"
                 case .getSectionReport: return "/v3/reports/"
-                case .getGlobalNews(let generationNumber): return "/v3/widgets/global_news/data/\(generationNumber)/detailed"
-                case .getSpecialAlerts(let generationNumber): return "/v3/widgets/special_alerts/data/\(generationNumber)/detailed"
                 case .getAllOffices(let generationNumber): return "/v3/widgets/all_offices/data/\(generationNumber)/detailed"
                 case .getHelpDeskData(let generationNumber): return "/v3/widgets/gsd_profile/data/\(generationNumber)/detailed"
                 case .getQuickHelpData(let generationNumber): return "/v3/widgets/gsd_quick_help/data/\(generationNumber)/detailed"
@@ -88,6 +86,8 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getProductionAlerts(let generationNumber): return "/v3/widgets/production_alerts/data/\(generationNumber)/detailed"
                 case .getCollaborationMetrics(let generationNumber): return "/v3/widgets/collaboration_metrics/data/\(generationNumber)/detailed"
                 case .getGlobalProductionAlerts(let generationNumber): return "/v3/widgets/global_production_alerts/data/\(generationNumber)/detailed"
+                case .getNewsFeed: return "/v3/widgets/news_feed_v2/data/0/detailed"
+                case .getChatBotToken: return "/v3/chatbot/generate_token"
             }
         }
     }
@@ -122,6 +122,7 @@ class APIManager: NSObject, URLSessionDelegate {
         case globalAlerts = "global_alerts"
         case collaborationMetrics = "collaboration_metrics"
         case globalProductionAlerts = "global_production_alerts"
+        case newsFeed = "news_feed"
     }
     
     init(accessToken: String?) {
@@ -131,17 +132,7 @@ class APIManager: NSObject, URLSessionDelegate {
     
     //MARK: - Homescreen methods
     
-    func getGlobalNews(generationNumber: Int, completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getGlobalNews(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
-    }
-    
-    func getSpecialAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
-        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getSpecialAlerts(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
-    }
-    
-    func getGlobalAlerts(generationNumber: Int, completion: ((_ specialAlertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getGlobalAlerts(generationNumber: Int, completion: ((_ alertsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
         makeRequest(endpoint: .getGlobalOutage(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
     }
@@ -160,6 +151,11 @@ class APIManager: NSObject, URLSessionDelegate {
         let requestHeaders = ["Content-Type": "application/x-www-form-urlencoded"]
         let bodyParams = ["preferences": preferences, "token": (accessToken ?? "")]
         makeRequest(endpoint: .setCurrentPreferences, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
+    }
+    
+    func getNewsFeedData(completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
+        makeRequest(endpoint: .getNewsFeed, method: "POST", headers: requestHeaders, completion: completion)
     }
     
     func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ response: URLResponse?, _ error: Error?) -> Void)) {
@@ -307,6 +303,14 @@ class APIManager: NSObject, URLSessionDelegate {
         let requestHeaders = ["Content-Type": "application/json; charset=UTF-8", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         let requestBodyParams = ["s1": appGroup, "s2": appName]
         self.makeRequest(endpoint: .getCollaborationMetrics(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyParams: requestBodyParams, completion: completion)
+    }
+    
+    //MARK: - Chat Bot methods
+    
+    func getChatBotToken(userEmail: String, completion: ((_ data: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? "", "Content-Type": "application/x-www-form-urlencoded"]
+        let requestBodyParams = ["user.id": "\(userEmail)"]
+        self.makeRequest(endpoint: .getChatBotToken, method: "POST", headers: requestHeaders, requestBodyParams: requestBodyParams, completion: completion)
     }
     
     //MARK: - Push notifications

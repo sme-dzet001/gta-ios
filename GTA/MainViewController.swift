@@ -12,16 +12,17 @@ import WebKit
 class MainViewController: UIViewController {
 
     @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var menuButtonRightConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var containerView: UIView!
     
     private var usmLogoutWebView: WKWebView!
     let menuViewController = MenuViewController()
     var backgroundView: UIView?
-    var tabBar: UITabBarController?
-    var selectedTabIdx = 0 {
-        didSet {
-            tabBar?.selectedIndex = selectedTabIdx
-        }
+    var tabBar: CustomTabBarController?
+    var transition = CircularTransition()
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return tabBar?.selectedViewController?.preferredStatusBarStyle ?? .default
     }
     
     override func viewDidLoad() {
@@ -34,10 +35,19 @@ class MainViewController: UIViewController {
         usmLogoutWebView.isHidden = true
         usmLogoutWebView.navigationDelegate = self
         configureMenuButton()
+        configureMenuVC()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if menuButton.cornerRadius != menuButton.frame.height / 2 {
+            menuButton.cornerRadius = menuButton.frame.height / 2
+        }
     }
     
     // MARK: - Navigation
@@ -45,28 +55,26 @@ class MainViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedTabBar" {
-            tabBar = segue.destination as? UITabBarController
+            tabBar = segue.destination as? CustomTabBarController
+            tabBar?.indexDelegate = self
+            tabBar?.tabBar.isHidden = true
+            tabBar?.setSelectedTabAccordingToPendingAlert()
         }
     }
     
     @IBAction func menuButtonAction(_ sender: UIButton) {
-        showPopoverMenu()
+        addBackground()
+        menuViewController.selectedTabIdx = tabBar?.selectedIndex
+        present(menuViewController, animated: true, completion: nil)
     }
  
-    private func showPopoverMenu() {
+    private func configureMenuVC() {
         menuViewController.delegate = self
+        menuViewController.chatBotDelegate = self
+        menuViewController.transitioningDelegate = self
         menuViewController.tabBar = tabBar
-        menuViewController.selectedTabIdx = selectedTabIdx
-        menuViewController.modalPresentationStyle = .popover
-//        let height = CGFloat(menuViewController.menuItems.count) * menuViewController.defaultCellHeight + menuViewController.lineCellHeight
-        menuViewController.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 530)
-        if let popoverPresentationController = menuViewController.popoverPresentationController {
-            popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirection(rawValue:0)
-            popoverPresentationController.sourceView = self.view
-            popoverPresentationController.sourceRect = menuButton.frame
-            popoverPresentationController.delegate = self
-            present(menuViewController, animated: true, completion: nil)
-        }
+        menuViewController.modalPresentationStyle = .overCurrentContext
+        menuViewController.view.frame = self.view.bounds
     }
     
     private func addBackground() {
@@ -91,11 +99,13 @@ class MainViewController: UIViewController {
     }
     
     private func configureMenuButton() {
-        menuButton.layer.shadowColor = UIColor.lightGray.cgColor
+        menuButton.layoutIfNeeded()
+        menuButtonRightConstraint.constant = UIDevice.current.hasNotch ? 24 : 34
+        menuButton.layer.shadowColor = UIColor.black.cgColor
         menuButton.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
         menuButton.layer.masksToBounds = false
         menuButton.layer.shadowRadius = 3
-        menuButton.layer.shadowOpacity = 0.5
+        menuButton.layer.shadowOpacity = 0.3
         menuButton.layer.cornerRadius = menuButton.frame.width / 2
     }
     
@@ -123,26 +133,6 @@ class MainViewController: UIViewController {
         let logoutRequest = URLRequest(url: logoutURL)
         usmLogoutWebView.load(logoutRequest)
     }
-    
-}
-
-extension MainViewController: UIPopoverPresentationControllerDelegate {
-    
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
-
-    func presentationController(_ presentationController: UIPresentationController, willPresentWithAdaptiveStyle style: UIModalPresentationStyle, transitionCoordinator: UIViewControllerTransitionCoordinator?) {
-        addBackground()
-    }
-    
-    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
-        clearBackground()
-    }
-    
-    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
-        return true
-    }
 }
 
 extension MainViewController: UINavigationControllerDelegate {
@@ -163,7 +153,17 @@ extension MainViewController: TabBarChangeIndexDelegate {
     }
     
     func changeToIndex(index: Int) {
-        selectedTabIdx = index
+        let isSameIndex = tabBar?.selectedIndex == index
+        tabBar?.selectedIndex = index
+        guard isSameIndex else { return }
+        if index == 4 {
+            let generalVC = tabBar?.moreNavigationController.viewControllers.first(where: {$0 is GeneralViewController})
+            guard let _ = generalVC else { return }
+            tabBar?.moreNavigationController.popToViewController(generalVC!, animated: true)
+            return
+        }
+        let controller = tabBar?.viewControllers?[index] as? UINavigationController
+        controller?.popToRootViewController(animated: true)
     }
 }
 
@@ -202,10 +202,47 @@ extension MainViewController: WKNavigationDelegate {
             KeychainManager.deleteTokenExpirationDate()
             CacheManager().clearCache()
             KeychainManager.deletePinData()
-            ImageCacheManager().removeCachedData()
             if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
                 sceneDelegate.startLoginFlow()
             }
         }
+    }
+}
+
+extension MainViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .present
+        transition.startingPoint = menuButton.center
+        
+        UIView.animate(withDuration: 0.1, animations: {
+            self.menuButton.alpha = 0
+        })
+        
+        return transition
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .dismiss
+        transition.startingPoint = menuButton.center
+        
+        UIView.animate(withDuration: 0.1, delay: 0.2, animations: {
+            self.menuButton.alpha = 1
+        })
+        
+        return transition
+    }
+}
+
+extension MainViewController: TabBarIndexChanged {
+    func changeIndex(index: Int) {
+        menuViewController.selectedTabIdx = index
+    }
+}
+
+extension MainViewController: ChatBotDelegate {
+    func showChatBot() {
+        let chatBotVC = ChatBotViewController()
+        chatBotVC.modalPresentationStyle = .currentContext
+        present(chatBotVC, animated: true, completion: nil)
     }
 }

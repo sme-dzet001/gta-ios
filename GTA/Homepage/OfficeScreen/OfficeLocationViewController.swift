@@ -41,8 +41,8 @@ class OfficeLocationViewController: UIViewController {
     var selectedRegionName: String?
     var regionSelectionIsOn: Bool = true
     var dataProvider: MenuViewControllerDataProvider?
-    var regionDataSource: [Hardcode] = []
-    var officeDataSource: [Hardcode] = []
+    var regionDataSource: [OfficeScreenData] = []
+    var officeDataSource: [OfficeScreenData] = []
     private var heightObserver: NSKeyValueObservation?
     
     override func viewDidLoad() {
@@ -99,10 +99,10 @@ class OfficeLocationViewController: UIViewController {
     }
     
     private func setDataSource() {
-        let regionsData = dataProvider?.getAllOfficeRegions().compactMap { Hardcode(imageName: "", text: $0) } ?? []
-        regionDataSource = [Hardcode(imageName: "", text: "Use My Current Location", additionalText: "Will select office based on your current location")] + regionsData
+        let regionsData = dataProvider?.getAllOfficeRegions().compactMap { OfficeScreenData(imageName: "", text: $0) } ?? []
+        regionDataSource = [OfficeScreenData(imageName: "", text: "Use My Current Location", additionalText: "Will select office based on your current location")] + regionsData
         if let regionName = selectedRegionName {
-            officeDataSource = dataProvider?.getOffices(for: regionName).compactMap { officeRow in Hardcode(imageName: "", text: officeRow.officeName ?? "", additionalText: officeRow.officeLocation ?? "", officeId: officeRow.officeId) } ?? []
+            officeDataSource = dataProvider?.getOffices(for: regionName).compactMap { officeRow in OfficeScreenData(imageName: "", text: officeRow.officeName ?? "", additionalText: officeRow.officeLocation ?? "", officeId: officeRow.officeId) } ?? []
         }
     }
     

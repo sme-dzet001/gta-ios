@@ -8,6 +8,7 @@
 
 import UIKit
 import CommonCrypto
+import CryptoKit
 
 extension UIColor {
     convenience init(hex: Int) {
@@ -135,8 +136,6 @@ extension UILabel {
         let sizeConstraint = CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude)
 
         let attributes: [AnyHashable: Any] = [NSAttributedString.Key.font: font]
-        let attributedText = self.attributedText!// NSAttributedString(string: self.text!, attributes: attributes as? [NSAttributedString.Key : Any])
-        let boundingRect: CGRect = attributedText.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
 
         if (self.text?.count ?? 0) > 110 {
             var index: Int = 0
@@ -155,6 +154,18 @@ extension UILabel {
             return prev + coefficient
         }
         return self.attributedText!.string.count
+    }
+    
+    func setLineHeight(lineHeight: CGFloat) {
+        let text = self.text
+        if let text = text {
+            let attributeString = NSMutableAttributedString(string: text)
+            let style = NSMutableParagraphStyle()
+            
+            style.lineSpacing = lineHeight
+            attributeString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSMakeRange(0, attributeString.length))
+            self.attributedText = attributeString
+        }
     }
     
 }
@@ -217,6 +228,25 @@ extension UIView {
         gradient.name = "grad"
         self.layer.insertSublayer(gradient, at: 0)
     }
+    
+    func addBlurToView() {
+        if let gradientMaskLayer = self.layer.mask, gradientMaskLayer.name == "grad" {
+            return
+        }
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.name = "grad"
+        gradientMaskLayer.frame = self.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradientMaskLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+        self.layer.mask = gradientMaskLayer
+    }
+    
+    func screenshot() -> UIImage {
+        return UIGraphicsImageRenderer(size: bounds.size).image { _ in
+          drawHierarchy(in: CGRect(origin: .zero, size: bounds.size), afterScreenUpdates: true)
+        }
+      }
 }
 
 extension UINavigationController {
@@ -240,6 +270,12 @@ extension UINavigationController {
 }
 
 extension UITableView {
+    
+    var menuButtonContentInset: UIEdgeInsets {
+        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
+        return UIEdgeInsets(top: 0, left: 0, bottom: (self.frame.width * 0.133) + additionalSeparator, right: 0)
+    }
+    
     var dataHasChanged: Bool {
         guard let dataSource = dataSource else { return false }
         let sections = dataSource.numberOfSections?(in: self) ?? 0
@@ -252,6 +288,55 @@ extension UITableView {
             }
         }
         return false
+    }
+    
+    func reloadRowsInSectionSafely(section: Int) {
+        var oldRowsIndexPathesArray: [IndexPath] = []
+        for row in 0..<numberOfRows(inSection: section) {
+            let indexPath = IndexPath(row: row, section: section)
+            oldRowsIndexPathesArray.append(indexPath)
+        }
+        let oldRowsCount = oldRowsIndexPathesArray.count
+        
+        let newRowsCount = dataSource!.tableView(self, numberOfRowsInSection: section)
+        if newRowsCount == oldRowsCount {
+            if dataHasChanged {
+                reloadData()
+            } else {
+                UIView.performWithoutAnimation {
+                    reloadRows(at: oldRowsIndexPathesArray, with: .none)
+                }
+            }
+        } else if newRowsCount > oldRowsCount {
+            var newRowsIndexPathesArray: [IndexPath] = []
+            for row in oldRowsCount..<newRowsCount {
+                let indexPath = IndexPath(row: row, section: section)
+                newRowsIndexPathesArray.append(indexPath)
+            }
+            UIView.performWithoutAnimation {
+                beginUpdates()
+                reloadRows(at: oldRowsIndexPathesArray, with: .none)
+                insertRows(at: newRowsIndexPathesArray, with: .none)
+                endUpdates()
+            }
+        } else if newRowsCount < oldRowsCount {
+            var deletedRowsIndexPathesArray: [IndexPath] = []
+            for row in newRowsCount..<oldRowsCount {
+                let indexPath = IndexPath(row: row, section: section)
+                deletedRowsIndexPathesArray.append(indexPath)
+            }
+            var reloadedRowsIndexPathesArray: [IndexPath] = []
+            for row in 0..<newRowsCount {
+                let indexPath = IndexPath(row: row, section: section)
+                reloadedRowsIndexPathesArray.append(indexPath)
+            }
+            UIView.performWithoutAnimation {
+                beginUpdates()
+                reloadRows(at: reloadedRowsIndexPathesArray, with: .none)
+                deleteRows(at: deletedRowsIndexPathesArray, with: .none)
+                endUpdates()
+            }
+        }
     }
 }
 
@@ -495,6 +580,53 @@ extension UIViewController {
         return center
     }
     
+    func setUpUIElementsForNewVersion() {
+        if #available(iOS 15.0, *) {
+            setUpNavigationBarForNewVersion()
+        }
+    }
+    
+    func setUpNavigationBarForStatusScreen() {
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = UIColor(hex: 0xF7F7FA)
+            appearance.shadowColor = UIColor(hex: 0xF2F2F7)
+            self.navigationController?.navigationBar.standardAppearance = appearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
+    }
+    
+    @available(iOS 15.0, *)
+    private func setUpNavigationBarForNewVersion() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        appearance.shadowColor = .clear//UIColor(hex: 0xF2F2F7)
+        self.navigationController?.navigationBar.standardAppearance = appearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    @available(iOS 15.0, *)
+    private func setUpTabBarForNewVersion() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(hex: 0xF7F7FA)
+        updateTabBarItemAppearance(appearance: appearance.compactInlineLayoutAppearance)
+        updateTabBarItemAppearance(appearance: appearance.inlineLayoutAppearance)
+        updateTabBarItemAppearance(appearance: appearance.stackedLayoutAppearance)
+        self.tabBarController?.tabBar.isTranslucent = false
+        self.tabBarController?.tabBar.standardAppearance = appearance
+        self.tabBarController?.tabBar.scrollEdgeAppearance = appearance
+    }
+    
+    @available(iOS 15.0, *)
+    private func updateTabBarItemAppearance(appearance: UITabBarItemAppearance) {
+        let unselectedItemTintColor: UIColor = .black
+        appearance.normal.iconColor = unselectedItemTintColor
+        appearance.normal.titleTextAttributes = [.foregroundColor : UIColor.black]
+    }
+    
 }
 
 extension String {
@@ -705,6 +837,10 @@ extension String {
         return "\(Int(value))"
     }
     
+    var MD5: String {
+        let computed = Insecure.MD5.hash(data: self.data(using: .utf8)!)
+        return computed.map { String(format: "%02hhx", $0) }.joined()
+    }
 }
 
 extension Date {
@@ -748,45 +884,41 @@ extension NSMutableAttributedString {
     // method to change attr string font without removing other attribures
     func setFontFace(font: UIFont, color: UIColor? = nil) {
         beginEditing()
-        self.enumerateAttribute(
-            .font,
-            in: NSRange(location: 0, length: self.length)
-        ) { (value, range, stop) in
-
-            if let f = value as? UIFont,
-               let face = font.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.face) as? String, let newFontDescriptor = f.fontDescriptor
-                .withFamily(font.familyName)
-                .withSymbolicTraits(f.fontDescriptor.symbolicTraits)?
-                .withFace(face) {
-                let newFont = UIFont(
-                    descriptor: newFontDescriptor,
-                    size: font.pointSize
-                )
+        self.enumerateAttribute(.font, in: NSRange(location: 0, length: self.length)) { (value, range, stop) in
+            if let f = value as? UIFont, let newFontDescriptor = getFontDescriptor(oldFont: f, newFont: font) {
+                let newFont = UIFont(descriptor: newFontDescriptor, size: font.pointSize)
                 removeAttribute(.font, range: range)
                 addAttribute(.font, value: newFont, range: range)
                 if let color = color {
-                    removeAttribute(
-                        .foregroundColor,
-                        range: range
-                    )
-                    addAttribute(
-                        .foregroundColor,
-                        value: color,
-                        range: range
-                    )
+                    removeAttribute(.foregroundColor, range: range)
+                    addAttribute(.foregroundColor, value: color, range: range)
                 }
-            } else if let f = value as? UIFont, f.fontName.lowercased().contains("italic") {
-                removeAttribute(.font, range: range)
-                if f.fontName.lowercased().contains("bolditalic") {
-                    if let font = UIFont(name: "SF Pro Text Italic Bold", size: 16) {
-                        addAttribute(.font, value: (font as Any), range: range)
-                    }
-                } else if let font = UIFont(name: "SF Pro Text Italic", size: 16) {
-                    addAttribute(.font, value: (font as Any), range: range)
-                }
-            }
+            } //else if let f = value as? UIFont, f.fontName.lowercased().contains("italic") {
+                //addItalicFontToText(font: f, range: range)
+            //}
         }
         endEditing()
+    }
+    
+    private func getFontDescriptor(oldFont: UIFont, newFont: UIFont) -> UIFontDescriptor? {
+        guard let face = oldFont.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.face) as? String else { return nil }
+        let newFontDescriptor = oldFont.fontDescriptor
+         .withFamily(newFont.familyName)
+         .withSymbolicTraits(oldFont.fontDescriptor.symbolicTraits)?
+         .withFace(face)
+        return newFontDescriptor
+    }
+    
+    // Need to save after refactoring for a few weeks
+    private func addItalicFontToText(font: UIFont, range: NSRange) {
+        removeAttribute(.font, range: range)
+        if font.fontName.lowercased().contains("bolditalic") {
+            if let font = UIFont(name: "SF Pro Text Italic Bold", size: 16) {
+                addAttribute(.font, value: (font as Any), range: range)
+            }
+        } else if let font = UIFont(name: "SF Pro Text Italic", size: 16) {
+            addAttribute(.font, value: (font as Any), range: range)
+        }
     }
     
     // method to change attr string paragraph style without removing other paragraph attribures
@@ -866,6 +998,15 @@ extension UIDevice {
     
     var iPad: Bool {
         return userInterfaceIdiom == .pad
+    }
+    
+    var hasNotch: Bool {
+        guard #available(iOS 11.0, *), let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first else { return false }
+        if UIDevice.current.orientation.isPortrait {
+            return window.safeAreaInsets.top >= 44
+        } else {
+            return window.safeAreaInsets.left > 0 || window.safeAreaInsets.right > 0
+        }
     }
 }
 
@@ -964,5 +1105,12 @@ extension Double {
     
     private func roundDown(_ value: Double, toNearest: Double) -> Double {
       return floor(value / toNearest) * toNearest
+    }
+}
+
+extension UIScrollView  {
+    func stopDecelerating() {
+        let contentOffset = self.contentOffset
+        self.setContentOffset(contentOffset, animated: false)
     }
 }

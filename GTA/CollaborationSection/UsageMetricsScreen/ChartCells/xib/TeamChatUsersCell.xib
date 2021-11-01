@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TeamChatUsersCell" rowHeight="326" id="KGk-i7-Jjw" customClass="TeamChatUsersCell" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="557" height="326"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="557" height="326"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team chat user % by Country" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJA-x7-ZkK">
+                        <rect key="frame" x="24" y="35" width="241.5" height="24"/>
+                        <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="guH-K3-mkk">
+                        <rect key="frame" x="20" y="307" width="517" height="8"/>
+                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="OUw-Uk-zLj"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VNt-vE-11A" customClass="HorizontalBarChartView" customModule="Charts">
+                        <rect key="frame" x="12" y="80" width="521" height="187"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="guH-K3-mkk" secondAttribute="bottom" id="0XF-NG-eLi"/>
+                    <constraint firstItem="guH-K3-mkk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="EsB-hA-aps"/>
+                    <constraint firstItem="VNt-vE-11A" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="HOI-U9-cGe"/>
+                    <constraint firstItem="guH-K3-mkk" firstAttribute="top" secondItem="VNt-vE-11A" secondAttribute="bottom" constant="40" id="HWB-wb-Ap9"/>
+                    <constraint firstItem="hJA-x7-ZkK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="JS8-tx-MPX"/>
+                    <constraint firstItem="hJA-x7-ZkK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="24" id="QH3-ki-eAr"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="guH-K3-mkk" secondAttribute="trailing" id="aGu-Mk-bkt"/>
+                    <constraint firstAttribute="trailing" secondItem="VNt-vE-11A" secondAttribute="trailing" constant="24" id="ony-2o-8ju"/>
+                    <constraint firstItem="VNt-vE-11A" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="80" id="q7e-PW-zbH"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="chartView" destination="VNt-vE-11A" id="gf7-vS-cnc"/>
+                <outlet property="titleLabel" destination="hJA-x7-ZkK" id="3Vr-6K-dOA"/>
+            </connections>
+            <point key="canvasLocation" x="309.4202898550725" y="176.11607142857142"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

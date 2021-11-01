@@ -11,6 +11,7 @@ import SDWebImage
 class WhatsNewViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     var dataProvider: CollaborationDataProvider?
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -69,12 +70,16 @@ class WhatsNewViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "WhatsNewCell", bundle: nil), forCellReuseIdentifier: "WhatsNewCell")
     }
     
     private func setUpNavigationItem() {
         navigationItem.title = "What’s New"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     @objc private func backPressed() {
@@ -115,13 +120,13 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
         let imageURL = dataProvider?.formImageURL(from: cellDataSource?.imageUrl) ?? ""
         let url = URL(string: imageURL)
         if imageURL.isEmptyOrWhitespace() {
-            cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+            cell?.mainImageView.image = UIImage(named: DefaultImageNames.whatsNewPlaceholder)
         } else if let url = url, imageURL.contains(".gif") {
             cell?.activityIndicator.startAnimating()
             cell?.mainImageView.sd_setImage(with: url, placeholderImage: nil, options: .refreshCached, completed: { img, err, cacheType, _ in
                 if let _ = err, (err! as NSError).code != 2002 {
                     cell?.activityIndicator.stopAnimating()
-                    cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+                    cell?.mainImageView.image = UIImage(named: DefaultImageNames.whatsNewPlaceholder)
                 } else if let _ = img {
                     cell?.activityIndicator.stopAnimating()
                 }
@@ -138,22 +143,12 @@ extension WhatsNewViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                 case .failure(let error):
                     if !error.isNotCurrentTask {
-                        cell?.mainImageView.image = UIImage(named: "whatsNewPlaceholder")
+                        cell?.mainImageView.image = UIImage(named: DefaultImageNames.whatsNewPlaceholder)
                     }
                 }
             })
         }
         return cell ?? UITableViewCell()
-    }
-        
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
-        return footer
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return footerHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -230,10 +225,9 @@ extension WhatsNewViewController : TappedLabelDelegate {
         if !tableView.dataHasChanged {
             UIView.setAnimationsEnabled(false)
             self.dispatchGroup.enter()
-            self.tableView.beginUpdates()
             cell.descriptionLabel.attributedText = self.getDescriptionText(for: cellIndex)
             cell.descriptionLabel.numberOfLines = 0
-            self.tableView.endUpdates()
+            self.tableView.reloadData()
             self.dispatchGroup.leave()
         } else {
             tableView.reloadData()
@@ -241,6 +235,11 @@ extension WhatsNewViewController : TappedLabelDelegate {
         }
         if !expandedRowsIndex.contains(cellIndex.row) {
             expandedRowsIndex.append(cellIndex.row)
+        }
+        if cell.bounds.height > self.tableView.frame.height {
+            self.tableView.scrollToRow(at: cellIndex, at: .top, animated: true)
+        } else {
+            self.tableView.scrollToRow(at: cellIndex, at: .none, animated: true)
         }
         UIView.setAnimationsEnabled(true)
     }

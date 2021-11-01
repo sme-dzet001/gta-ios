@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ApplicationStatusViewController" customModule="GTA" customModuleProvider="target">
             <connections>
+                <outlet property="headerSeparator" destination="upR-SW-rwg" id="YkX-mV-eEf"/>
                 <outlet property="tableView" destination="6cI-N1-an5" id="Fps-m3-4KQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,15 +22,25 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="6cI-N1-an5">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="45" width="414" height="851"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="upR-SW-rwg">
+                    <rect key="frame" x="0.0" y="44" width="414" height="1"/>
+                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="7bT-3m-dSJ"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="6cI-N1-an5" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="FXc-Ik-Cd2"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="6cI-N1-an5" secondAttribute="bottom" id="WOY-x1-P3a"/>
+                <constraint firstItem="upR-SW-rwg" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="7mV-e8-NZe"/>
+                <constraint firstItem="6cI-N1-an5" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="1" id="FXc-Ik-Cd2"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="upR-SW-rwg" secondAttribute="trailing" id="Hxa-hF-0Ha"/>
+                <constraint firstAttribute="bottom" secondItem="6cI-N1-an5" secondAttribute="bottom" id="WOY-x1-P3a"/>
+                <constraint firstItem="upR-SW-rwg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="cPO-52-pMp"/>
                 <constraint firstItem="6cI-N1-an5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="qec-4e-k4q"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6cI-N1-an5" secondAttribute="trailing" id="rme-WU-zvQ"/>
             </constraints>

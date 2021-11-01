@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TipsAndTricksViewController" customModule="GTA" customModuleProvider="target">
             <connections>
+                <outlet property="headerSeparator" destination="3GH-DQ-1Jq" id="biS-uN-k0g"/>
                 <outlet property="tableView" destination="Qvi-9F-Lei" id="1NJ-5u-8bo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,17 +21,27 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qvi-9F-Lei">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qvi-9F-Lei">
+                    <rect key="frame" x="0.0" y="45" width="414" height="851"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3GH-DQ-1Jq">
+                    <rect key="frame" x="0.0" y="44" width="414" height="1"/>
+                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="yuk-2x-Y2s"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="Qvi-9F-Lei" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="0M8-AR-5e6"/>
+                <constraint firstItem="Qvi-9F-Lei" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="0M8-AR-5e6"/>
+                <constraint firstItem="3GH-DQ-1Jq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Qzs-g8-K23"/>
+                <constraint firstItem="3GH-DQ-1Jq" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="X3U-jq-Nm7"/>
                 <constraint firstItem="Qvi-9F-Lei" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bfe-YS-jRu"/>
-                <constraint firstItem="Qvi-9F-Lei" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="kJZ-av-8ce"/>
+                <constraint firstItem="Qvi-9F-Lei" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="1" id="kJZ-av-8ce"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3GH-DQ-1Jq" secondAttribute="trailing" id="ne1-jI-IlU"/>
                 <constraint firstItem="Qvi-9F-Lei" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="trd-8O-bhj"/>
             </constraints>
             <point key="canvasLocation" x="31.884057971014496" y="70.982142857142847"/>

@@ -80,6 +80,7 @@ class GlobalAlertViewController: UIViewController {
     private func loadProductionGlobalAlertsData() {
         if let forceUpdateAlertDetails = dataProvider?.forceUpdateAlertDetails, forceUpdateAlertDetails {
             loadGlobalAlertsInProgress = true
+            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
             dataProvider?.getGlobalProductionIgnoringCache(alertID: productionAlertId, completion: {[weak self] dataWasChanged, errorCode, error in
                 DispatchQueue.main.async {
                     self?.dataProvider?.forceUpdateAlertDetails = false
@@ -141,7 +142,7 @@ class GlobalAlertViewController: UIViewController {
         if let start = alertData?.notificationDate {
             dataSource.append(["Notification Date" : start])
         }
-        if let duration = alertData?.estimatedDuration, alertData?.status != .closed {
+        if let duration = alertData?.estimatedDuration {
             dataSource.append(["Estimated Duration" : duration])
         }
         if let end = alertData?.endDate, alertData?.status == .closed {

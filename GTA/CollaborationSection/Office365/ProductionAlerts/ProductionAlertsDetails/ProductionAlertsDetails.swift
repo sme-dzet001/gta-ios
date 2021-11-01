@@ -16,6 +16,7 @@ class ProductionAlertsDetails: UIViewController {
     var dataProvider: MyAppsDataProvider?
     
     var alertData: ProductionAlertsRow?
+    private var lastError: ResponseError?
     private var dataSource: [[String : String]] = []
     private var heightObserver: NSKeyValueObservation?
     private var isPanModalShort: Bool = true
@@ -57,6 +58,7 @@ class ProductionAlertsDetails: UIViewController {
                                 NotificationCenter.default.post(name: Notification.Name(NotificationsNames.updateActiveProductionAlertStatus), object: nil, userInfo: ["alertId" : activeProductionAlertId])
                             }
                         }
+                        self?.lastError = error as? ResponseError
                         self?.dataProvider?.forceUpdateProductionAlerts = false
                         self?.dataProvider?.activeProductionAlertId = nil
                         self?.dataProvider?.activeProductionAlertAppName = nil
@@ -190,7 +192,8 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
             return createLoadingCell(withBottomSeparator: false)
         }
         guard dataSource.count > indexPath.row, let key = dataSource[indexPath.row].keys.first else {
-            return createErrorCell(with: "No data available")
+            guard let error = lastError else { return createErrorCell(with: "No data available") }
+            return createErrorCell(with: error.localizedDescription)
         }
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AlertDetailsHeaderCell", for: indexPath) as? AlertDetailsHeaderCell

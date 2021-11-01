@@ -12,11 +12,10 @@ class HelpDeskDataProvider {
     
     private var apiManager: APIManager = APIManager(accessToken: KeychainManager.getToken())
     private var cacheManager: CacheManager = CacheManager()
-    private var imageCacheManager: ImageCacheManager = ImageCacheManager()
     
     private(set) var quickHelpData = [QuickHelpRow]()
     private(set) var teamContactsData = [TeamContactsRow]()
-    private(set) var myTickets: [GSDTickets]?// = [GSDMyTicketsRow]()
+    private(set) var myTickets: [GSDTickets]?
     private var refreshTimer: Timer?
     
     var quickHelpDataIsEmpty: Bool {
@@ -467,58 +466,10 @@ class HelpDeskDataProvider {
     
     // MARK: - My Tickets related methods
     
-    /*
-    func getMyTickets(completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
-        getCachedResponse(for: .getSectionReport) {[weak self] (data, cachedError) in
-            let code = cachedError == nil ? 200 : 0
-            self?.handleMyTicketsSectionReport(data, code, cachedError, true, { (code, error, _) in
-                if error == nil {
-                    completion?(code, cachedError, true)
-                }
-                self?.apiManager.getSectionReport(completion: { [weak self] (reportResponse, errorCode, error) in
-                    self?.cacheData(reportResponse, path: .getSectionReport)
-                    if let _ = error {
-                        completion?(errorCode, ResponseError.serverError, false)
-                    } else {
-                        self?.handleMyTicketsSectionReport(reportResponse, errorCode, error, false, completion)
-                    }
-                })
-            })
-        }
-    }
-    
-    private func handleMyTicketsSectionReport(_ report: Data?, _ errorCode: Int, _ error: Error?, _ fromCache: Bool,
-                                            _ completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
-        let reportData = parseSectionReport(data: report)
-        let userEmail = KeychainManager.getUsername() ?? ""
-        let generationNumber = reportData?.data?.first { $0.id == APIManager.WidgetId.gsdTickets.rawValue }?.widgets?.first { $0.widgetId == APIManager.WidgetId.gsdTickets.rawValue }?.generationNumber
-        if let _ = generationNumber, generationNumber != 0 {
-            if fromCache {
-                getCachedResponse(for: .getGSDTickets(userEmail: userEmail)) {[weak self] (data, error) in
-                    self?.processMyTickets(data, error == nil ? 200 : 0, error, true, completion)
-                }
-                return
-            }
-            apiManager.getGSDTickets(generationNumber: generationNumber!, userEmail: userEmail, completion: { [weak self] (data, errorCode, error) in
-                self?.cacheData(data, path: .getGSDTickets(userEmail: userEmail))
-                self?.processMyTickets(data, errorCode, error, false, completion)
-            })
-        } else {
-            if error != nil || generationNumber == 0 {
-                myTickets = []
-                completion?(errorCode, error != nil ? ResponseError.commonError : ResponseError.noDataAvailable, fromCache)
-                return
-            }
-            completion?(errorCode, ResponseError.commonError, fromCache)
-        }
-    }
- */
     func getMyTickets(completion: ((_ errorCode: Int, _ error: Error?, _ dataWasChanged: Bool) -> Void)? = nil) {
         let userEmail = KeychainManager.getUsername() ?? ""
         getCachedResponse(for: .getGSDTickets(userEmail: userEmail)) {[weak self] (data, cachedError) in
             let code = cachedError == nil ? 200 : 0
-           // if cachedError == nil {
-                //self?.processMyTickets(data, code, cachedError, completion)
             self?.processMyTickets(data, code, cachedError, {[weak self] code, error, dataWasChanged in
                 if error == nil, code == 200 {
                     completion?(code, error, dataWasChanged)
@@ -532,8 +483,6 @@ class HelpDeskDataProvider {
                     }
                 })
             })
-                //completion?(code, cachedError, true)
-            //}
         }
     }
     

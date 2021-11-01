@@ -18,6 +18,7 @@ enum MetricsPeriod {
 class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var lastUpdateDate: Date?
@@ -59,6 +60,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         getProductionAlerts()
         getMyApps()
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
@@ -69,6 +71,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         }
         tableView.reloadData()
         self.navigationController?.navigationBar.barTintColor = UIColor(hex: 0xF9F9FB)
+        setUpNavigationBarForStatusScreen()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -76,6 +79,11 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         if dataProvider?.activeProductionAlertId != nil {
             showProductionAlertScreen()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setUpUIElementsForNewVersion()
     }
     
     private func getMyApps() {
@@ -129,7 +137,6 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         self.tableView.alpha = 0
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.addLoadingIndicator(activityIndicator)
-//        self.activityIndicator.hidesWhenStopped = true
         self.activityIndicator.startAnimating()
     }
     
@@ -156,12 +163,16 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         self.navigationItem.titleView?.accessibilityIdentifier = "AppsStatusTitleLabel"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
         self.navigationItem.leftBarButtonItem?.accessibilityIdentifier = "AppsStatusBackButton"
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
 
     private func setUpTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "SystemUpdatesCell", bundle: nil), forCellReuseIdentifier: "SystemUpdatesCell")
         tableView.register(UINib(nibName: "AppsServiceAlertCell", bundle: nil), forCellReuseIdentifier: "AppsServiceAlertCell")
         tableView.register(UINib(nibName: "ProductionAlertCounterCell", bundle: nil), forCellReuseIdentifier: "ProductionAlertCounterCell")
@@ -182,24 +193,11 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         let contactsData = UIImage(named: "contacts_icon")
         let tipsNtricksData = UIImage(named: "tips_n_tricks_icon")
         let alertIcon = UIImage(named: "notification")
-        
-        
-        let metricsData = MetricsData(
-            dailyData: [ChartData(legendTitle: "18/11/20", periodFullTitle: "18 November 2020", value: 85), ChartData(legendTitle: "17/11/20", periodFullTitle: "17 November 2020", value: 62), ChartData(legendTitle: "16/11/20", periodFullTitle: "16 November 2020", value: 105), ChartData(legendTitle: "15/11/20", periodFullTitle: "15 November 2020", value: 100), ChartData(legendTitle: "14/11/20", periodFullTitle: "14 November 2020", value: 70), ChartData(legendTitle: "13/11/20", periodFullTitle: "13 November 2020", value: 95), ChartData(legendTitle: "12/11/20", periodFullTitle: "12 November 2020", value: 100)],
-            weeklyData: [ChartData(legendTitle: "18 Nov W/E", periodFullTitle: "18 Nov W/E", value: 690), ChartData(legendTitle: "11 Nov W/E", periodFullTitle: "11 Nov W/E", value: 705), ChartData(legendTitle: "4 Nov W/E", periodFullTitle: "4 Nov W/E", value: 740), ChartData(legendTitle: "28 Oct W/E", periodFullTitle: "28 Oct W/E", value: 520), ChartData(legendTitle: "21 Oct W/E", periodFullTitle: "21 Oct W/E", value: 730), ChartData(legendTitle: "14 Oct W/E", periodFullTitle: "14 Oct W/E", value: 720), ChartData(legendTitle: "7 Oct W/E", periodFullTitle: "7 Oct W/E", value: 430)],
-            monthlyData: [ChartData(legendTitle: "11/2020", periodFullTitle: "November 2020", value: 5000), ChartData(legendTitle: "10/2020", periodFullTitle: "October 2020", value: 5450), ChartData(legendTitle: "9/2020", periodFullTitle: "September 2020", value: 5900), ChartData(legendTitle: "8/2020", periodFullTitle: "August 2020", value: 5300), ChartData(legendTitle: "7/2020", periodFullTitle: "July 2020", value: 4100), ChartData(legendTitle: "6/2020", periodFullTitle: "June 2020", value: 5100), ChartData(legendTitle: "5/2020", periodFullTitle: "May 2020", value: 2050)]
-        )
-        
-
-        
         var firstSection = [AppInfo(app_name: "Report Outages, System Issues", app_title: "Report Issue", imageData: bellData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Reset Account Access & login Assistance", app_title: "Login Help", imageData: loginHelpData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Description, wiki and support information", app_title: "About", imageData: aboutData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Get the most from the app", app_title: "Tips & Tricks", imageData: tipsNtricksData?.pngData(), appStatus: .none, app_is_active: true), AppInfo(app_name: "Key Contacts and Member Profiles", app_title: "Contacts", imageData: contactsData?.pngData(), appStatus: .none, app_is_active: true)]
-        
-//        let secondSection = [AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "Scheduled maintenance", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "System restore", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true), AppInfo(app_name: "08/15/20 – 06:15 +5 GMT", app_title: "AWS outage reported", appImageData: AppsImageData(app_icon: "", imageData: nil, imageStatus: .loaded), appStatus: .none, app_is_active: true)]
-//
         if productionAlertsSectionAvailable {
             firstSection.insert(AppInfo(app_name: "", app_title: "Production Alerts", imageData: alertIcon?.pngData(), appStatus: .none, app_is_active: true), at: 0)
         }
-        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: firstSection, metricsData: nil)/*, AppsDataSource(sectionName: "System Updates", description: nil, cellData: secondSection), AppsDataSource(sectionName: "Stats", description: nil, cellData: [], metricsData: metricsData)*/]
+        dataSource = [AppsDataSource(sectionName: nil, description: nil, cellData: firstSection)]
     }
 
     @objc private func backPressed() {
@@ -233,7 +231,6 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         aboutScreen.detailsDataResponseError = detailsDataResponseError
         self.detailsDataDelegate = aboutScreen
         aboutScreen.appTitle = appTitle
-        //aboutScreen.appImageUrl = appImageUrl
         navigationController?.pushViewController(aboutScreen, animated: true)
     }
     
@@ -290,16 +287,6 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let metricsData = dataSource[section].metricsData {
-            switch selectedMetricsPeriod {
-            case .daily:
-                return metricsData.dailyData.count
-            case .weekly:
-                return metricsData.weeklyData.count
-            case .monthly:
-                return metricsData.monthlyData.count
-            }
-        }
         return dataSource[section].cellData.count
     }
     
@@ -311,14 +298,7 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             statusHeader.systemStatusHeader.accessibilityIdentifier = "AppsStatusLabel"
             statusHeader.dateLabel.accessibilityIdentifier = "AppsStatusDateLabel"
             statusHeader.appStatusDescription.accessibilityIdentifier = "AppsStatusDescription"
-            //dataProvider?.formatDateString(dateString: appLastUpdateDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS")
             return statusHeader
-        } else if let metricsData = dataSource[section].metricsData {
-            let metricStatsHeader = MetricStatsHeader.instanceFromNib()
-            metricStatsHeader.delegate = self
-            metricStatsHeader.setUpHeaderData(selectedPeriod: selectedMetricsPeriod)
-            metricStatsHeader.setChartData(selectedPeriod: selectedMetricsPeriod, data: metricsData)
-            return metricStatsHeader
         }
         let header = AppsTableViewHeader.instanceFromNib()
         header.descriptionLabel.text = dataSource[section].description
@@ -332,46 +312,31 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
                 return self.view.frame.height / 2.5
             }
             return self.view.frame.height / 3
-        } else if let _ = dataSource[section].metricsData {
-            return 380
         }
         return 60
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
-        return footer
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return footerHeight
-    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
-//        switch indexPath.section {
-//        case 1:
-//            return 80
-//        default:
-//            return UITableView.automaticDimension
-//        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dataArray = dataSource[indexPath.section].cellData
         if indexPath.section == 0, indexPath.row == 0, productionAlertsSectionAvailable {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProductionAlertCounterCell", for: indexPath) as? ProductionAlertCounterCell
-            //let totalCount = alertsData?.data?.filter({$0?.isRead == false}).count ?? 0
             cell?.setAlert(alertCount: alertsCount == 0 ? nil : alertsCount, setTap: false)
-            //cell?.updatesNumberLabel.text = totalCount == 0 ? nil : totalCount
             cell?.cellTitle.text = "Production Alerts"
             return cell ?? UITableViewCell()
         }
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
-            cell.separator.isHidden = false//indexPath.row == dataArray.count - 1
-            let isDisabled = indexPath.row < 4 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty || appDetailsData == nil)
-            cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, error: indexPath.row == 3 ? nil : detailsDataResponseError)
+            cell.separator.isHidden = false
+            var isDisabled = false
+            if indexPath.row < (productionAlertsSectionAvailable ? 3 : 2) && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty || appDetailsData == nil) {
+                isDisabled = true
+            } else if indexPath.row == (productionAlertsSectionAvailable ? 3 : 2), (appDetailsData?.appSupportPolicy == nil && appDetailsData?.appDescription == nil && appDetailsData?.appWikiUrl == nil && appDetailsData?.appJiraSupportUrl == nil) {
+                isDisabled = true
+            }
+            cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, index: indexPath.row, alerts: productionAlertsSectionAvailable, error: indexPath.row == 3 ? nil : detailsDataResponseError)
             cell.iconImageView.accessibilityIdentifier = "AppsStatusDescription"
             cell.descriptionLabel.accessibilityIdentifier = "AppsStatusSubtitleLabel"
             cell.mainLabel.accessibilityIdentifier = "AppsStatusTitleLabel"
@@ -380,19 +345,6 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
             if let error = detailsDataResponseError as? ResponseError, error == .noDataAvailable, values.isEmpty {
                 cell.setMainLabelAtCenter()
             }
-            return cell
-        }
-        if let metricsData = dataSource[indexPath.section].metricsData, let cell = tableView.dequeueReusableCell(withIdentifier: "MetricStatsCell", for: indexPath) as? MetricStatsCell {
-            var metricsDataSource = [ChartData]()
-            switch selectedMetricsPeriod {
-            case .daily:
-                metricsDataSource = metricsData.dailyData
-            case .weekly:
-                metricsDataSource = metricsData.weeklyData
-            case .monthly:
-                metricsDataSource = metricsData.monthlyData
-            }
-            cell.setUpCell(with: metricsDataSource[indexPath.row], hideSeparator: indexPath.row == metricsDataSource.count - 1)
             return cell
         }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "SystemUpdatesCell", for: indexPath) as? SystemUpdatesCell {
@@ -410,7 +362,9 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         }
         let commandBase = productionAlertsSectionAvailable ? 3 : 2
         if indexPath.row == commandBase, (appDetailsData != nil) {
-            showAboutScreen()
+            if appDetailsData?.appSupportPolicy != nil || appDetailsData?.appDescription != nil || appDetailsData?.appWikiUrl != nil || appDetailsData?.appJiraSupportUrl != nil {
+                showAboutScreen()
+            }
         } else if indexPath.row == commandBase + 1 {
             showTipsAndTricks()
         } else if indexPath.row == commandBase + 2 {
@@ -420,17 +374,6 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         }
     }
     
-}
-
-extension ApplicationStatusViewController: MetricStatsHeaderDelegate {
-    func periodWasChanged(_ header: MetricStatsHeader, to period: MetricsPeriod) {
-        selectedMetricsPeriod = period
-        let sectionIndexToReload = 2
-        let indexPaths = tableView.visibleCells.compactMap { tableView.indexPath(for: $0) }.filter { $0.section == sectionIndexToReload
-        }
-        header.setChartData(selectedPeriod: period, data: dataSource[sectionIndexToReload].metricsData)
-        tableView.reloadRows(at: indexPaths, with: .none)
-    }
 }
 
 extension ApplicationStatusViewController: MFMailComposeViewControllerDelegate {

@@ -38,7 +38,7 @@ class GlobalAlertBannerView: UIView {
             closeButton.isHidden = false
         case .activeAlert:
             closeButton.isHidden = true
-            parentView.backgroundColor = UIColor(hex: 0xCC0000,alpha: 0.8)
+            parentView.backgroundColor = UIColor(hex: 0xCC0000)
             alertImageView.image = UIImage(named: "global_alert_on")
         case .closed:
             parentView.backgroundColor = UIColor(hex: 0x34C759)

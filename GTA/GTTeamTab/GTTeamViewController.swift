@@ -15,7 +15,6 @@ class GTTeamViewController: UIViewController {
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
     var dataProvider = GTTeamDataProvider()
-    //private var lastUpdateDate: Date?
     private var appContactsData: GTTeamResponse? {
         return dataProvider.GTTeamContactsData
     }
@@ -30,20 +29,14 @@ class GTTeamViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         addErrorLabel(errorLabel)
         navigationController?.navigationBar.barTintColor = UIColor.white
-       // if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
         loadContactsData()
-        //}
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     private func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "AppContactCell", bundle: nil), forCellReuseIdentifier: "AppContactCell")
     }
     
@@ -56,8 +49,6 @@ class GTTeamViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
-                    //self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                    //self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
                     self?.tableView.alpha = 1
                     if dataWasChanged { self?.tableView.reloadData() }
@@ -88,16 +79,6 @@ extension GTTeamViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.appContactsData?.data?.rows?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: (tableView.frame.width * 0.133) + 24 ))
-        return footer
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let footerHeight = (tableView.frame.width * 0.133) + 24
-        return footerHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
