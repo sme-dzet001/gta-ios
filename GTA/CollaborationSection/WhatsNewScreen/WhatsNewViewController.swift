@@ -72,11 +72,14 @@ class WhatsNewViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "WhatsNewCell", bundle: nil), forCellReuseIdentifier: "WhatsNewCell")
+        tableView.accessibilityIdentifier = "WhatsNewViewControllerTableView"
     }
     
     private func setUpNavigationItem() {
         navigationItem.title = "What’s New"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
+        navigationItem.titleView?.accessibilityIdentifier = "WhatsNewViewControllerTitleView"
+        navigationItem.leftBarButtonItem?.accessibilityIdentifier = "WhatsNewViewControllerBackButton"
         if #available(iOS 15.0, *) {
             headerSeparator.isHidden = false
         }

@@ -78,6 +78,7 @@ class AuthViewController: UIViewController {
     private func setAccessibilityIdentifiers() {
         backButton.accessibilityIdentifier = "PinCodeScreenBackButton"
         continueButton.accessibilityIdentifier = "LoginScreenContinueButton"
+        logoutButton.accessibilityIdentifier = "PinCodeLogoutButton"
     }
     
     private func setUpScreen() {

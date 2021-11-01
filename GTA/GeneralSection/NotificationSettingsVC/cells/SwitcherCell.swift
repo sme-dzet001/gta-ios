@@ -22,6 +22,13 @@ class SwitcherCell: UITableViewCell {
         switchControl.bottomAnchor.constraint(equalTo: switchView.bottomAnchor).isActive = true
         switchControl.leadingAnchor.constraint(equalTo: switchView.leadingAnchor).isActive = true
         switchControl.trailingAnchor.constraint(equalTo: switchView.trailingAnchor).isActive = true
+        
+        setAccessibilityIdentifiers()
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        label.accessibilityIdentifier = "SwitcherCellLabel"
+        switchControl.accessibilityIdentifier = "SwitcherCellSwitchControl"
     }
     
 }
