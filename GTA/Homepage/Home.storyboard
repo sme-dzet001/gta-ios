@@ -196,7 +196,7 @@
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                             </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rwc-F4-LiA">
-                                <rect key="frame" x="0.0" y="248" width="414" height="648"/>
+                                <rect key="frame" x="0.0" y="234" width="414" height="662"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="0.0"/>
@@ -219,7 +219,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ks6-d7-mSt" firstAttribute="centerY" secondItem="WOX-S5-YeY" secondAttribute="centerY" id="0NB-tH-vxV"/>
-                            <constraint firstItem="Rwc-F4-LiA" firstAttribute="top" secondItem="ufF-lF-v1i" secondAttribute="bottom" constant="24" id="75K-vt-S0k"/>
+                            <constraint firstItem="Rwc-F4-LiA" firstAttribute="top" secondItem="ufF-lF-v1i" secondAttribute="bottom" constant="10" id="75K-vt-S0k"/>
                             <constraint firstItem="ks6-d7-mSt" firstAttribute="centerX" secondItem="9CN-qS-fad" secondAttribute="centerX" id="BOw-ou-pXv"/>
                             <constraint firstItem="ks6-d7-mSt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9CN-qS-fad" secondAttribute="leading" constant="16" id="ESf-I2-ERA"/>
                             <constraint firstItem="Rwc-F4-LiA" firstAttribute="trailing" secondItem="9CN-qS-fad" secondAttribute="trailing" id="EX1-Ao-SZr"/>
@@ -255,7 +255,7 @@
             <objects>
                 <viewController id="cOz-ym-DTz" customClass="PagingViewController" customModule="Parchment" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="54f-80-uqO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="648"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="662"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="bgm-eN-w8S"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
