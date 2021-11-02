@@ -25,6 +25,8 @@ public class KeychainManager: NSObject {
     static let usernameKey = "UsernameKey"
     static let tokenKey = "tokenKey"
     static let tokenExpirationDateKey = "tokenExpirationDateKey"
+    static let chatBotTokenKey = "chatBotTokenKey"
+    static let chatBottokenExpirationDateKey = "chatBottokenExpirationDateKey"
     static let cachePasswordKey = "CachePasswordKey"
     static let pushNotificationTokenKey = "PushNotificationTokenKey"
     static let pushNotificationTokenSentKey = "PushNotificationTokenSentKey"
@@ -150,6 +152,91 @@ public class KeychainManager: NSObject {
         let query = [
             kSecClass as String       : kSecClassGenericPassword as String,
             kSecAttrAccount as String : tokenExpirationDateKey ] as [String : Any]
+        
+        SecItemDelete(query as CFDictionary)
+    }
+    
+    class func getChatBotToken() -> String? {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword,
+            kSecAttrAccount as String : chatBotTokenKey,
+            kSecReturnData as String  : kCFBooleanTrue!,
+            kSecMatchLimit as String  : kSecMatchLimitOne ] as [String : Any]
+        
+        var dataTypeRef :AnyObject?
+        let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
+        
+        if status == errSecSuccess {
+            if let retrievedData = dataTypeRef as? Data {
+                guard let res = String(data: retrievedData, encoding: .utf8) else { return nil }
+                return res
+            }
+        } else {
+            return nil
+        }
+        return nil
+    }
+    
+    class func saveChatBotToken(token: String) -> OSStatus?{
+        deleteChatBotToken()
+        guard let dataToStore = token.data(using: .utf8) else { return nil }
+        let query = [
+            kSecClass as String             : kSecClassGenericPassword as String,
+            kSecAttrAccessible as String    : kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+            kSecAttrAccount as String       : chatBotTokenKey,
+            kSecValueData as String         : dataToStore ] as [String : Any]
+        
+        return SecItemAdd(query as CFDictionary, nil)
+    }
+    
+    class func deleteChatBotToken() {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword as String,
+            kSecAttrAccount as String : chatBotTokenKey ] as [String : Any]
+        
+        SecItemDelete(query as CFDictionary)
+    }
+    
+    class func getChatBotTokenExpirationDate() -> Date? {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword,
+            kSecAttrAccount as String : chatBottokenExpirationDateKey,
+            kSecReturnData as String  : kCFBooleanTrue!,
+            kSecMatchLimit as String  : kSecMatchLimitOne ] as [String : Any]
+        
+        var dataTypeRef :AnyObject?
+        let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
+        
+        if status == errSecSuccess {
+            if let retrievedData = dataTypeRef as? Data {
+                guard let res = String(data: retrievedData, encoding: .utf8) else { return nil }
+                if let timeIntervalSince1970 = Double(res) {
+                    return Date(timeIntervalSince1970: timeIntervalSince1970)
+                }
+            }
+        } else {
+            return nil
+        }
+        return nil
+    }
+    
+    class func saveChatBotTokenExpirationDate(tokenExpirationDate: Double) -> OSStatus?{
+        deleteChatBotTokenExpirationDate()
+        let tokenExpirationDateString = "\(tokenExpirationDate)"
+        guard let dataToStore = tokenExpirationDateString.data(using: .utf8) else { return nil }
+        let query = [
+            kSecClass as String             : kSecClassGenericPassword as String,
+            kSecAttrAccessible as String    : kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+            kSecAttrAccount as String       : chatBottokenExpirationDateKey,
+            kSecValueData as String         : dataToStore ] as [String : Any]
+        
+        return SecItemAdd(query as CFDictionary, nil)
+    }
+    
+    class func deleteChatBotTokenExpirationDate() {
+        let query = [
+            kSecClass as String       : kSecClassGenericPassword as String,
+            kSecAttrAccount as String : chatBottokenExpirationDateKey ] as [String : Any]
         
         SecItemDelete(query as CFDictionary)
     }

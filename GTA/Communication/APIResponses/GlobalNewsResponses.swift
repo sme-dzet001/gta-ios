@@ -209,6 +209,16 @@ struct NewsFeedData: Codable, Equatable {
     var rows: [NewsFeedRow?]?
 }
 
+struct NewsContentData: Codable, Equatable {
+    var body: String?
+    var type: NewsDataTypes?
+    
+    enum NewsDataTypes: String, Codable, Equatable {
+        case text = "text"
+        case image = "image"
+    }
+}
+
 struct NewsFeedRow: Codable, Equatable {
     var values: [QuantumValue?]?
     var indexes: [String : Int] = [:]
@@ -281,9 +291,15 @@ struct NewsFeedRow: Codable, Equatable {
         return byLine
     }
     
-    var newsBody: String? {
-        guard let valuesArr = values, let index = indexes["body"], valuesArr.count > index else { return nil }
-        return valuesArr[index]?.stringValue
+    var newsContent: [NewsContentData]? {
+        guard let valuesArr = values, let index = indexes["content"], valuesArr.count > index else { return nil }
+        guard let jsonData = valuesArr[index]?.stringValue?.data(using: .utf8) else { return nil }
+        do {
+            return try DataParser.parse(data: jsonData)
+        } catch {
+            
+            return nil
+        }
     }
     
     var isPostDateExist: Bool {

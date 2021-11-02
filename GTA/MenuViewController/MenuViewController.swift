@@ -31,6 +31,7 @@ class MenuViewController: UIViewController {
         MenuItems(name: "Collaboration", image: UIImage(named: "collaboration_tab_icon")),
         MenuItems(name: "General", image: UIImage(named: "general_tab_icon")),
         MenuItems(name: "Global Technology Team", image: UIImage(named: "team_contacts_icon")),
+        MenuItems(name: "How Do I?", image: UIImage(named: "chat_bot_icon")),
         MenuItems(name: "Logout", image: UIImage(named: "logout")),
     ]
     var dataProvider = MenuViewControllerDataProvider()
@@ -41,6 +42,7 @@ class MenuViewController: UIViewController {
         }
     }
     weak var delegate: TabBarChangeIndexDelegate?
+    weak var chatBotDelegate: ChatBotDelegate?
     weak var tabBar: UITabBarController?
     
     var officeLoadingError: String?
@@ -244,7 +246,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.setupCell(text: text, image: image, globalAlertsBadge: globalAlertsBadges, productionAlertBadge: productionAlertBadges, indexPath: indexPath)
             
-            guard let index = selectedTabIdx, index <= menuItems.count - 2, index == indexPath.row else { return cell }
+            guard let index = selectedTabIdx, index <= menuItems.count - 3, index == indexPath.row else { return cell }
             cell.selectCell(color: redColor)
             
             return cell
@@ -268,7 +270,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.officeErrorLabel.isHidden = true
                 cell.officeAddressLabel.accessibilityIdentifier = "HomeScreenOfficeAddressLabel"
                 cell.officeLabel.textColor = .black
-                guard let index = selectedTabIdx, index > menuItems.count - 2 else { return cell }
+                guard let index = selectedTabIdx, index > menuItems.count - 3 else { return cell }
                 cell.officeLabel.textColor = redColor
                 
                 return cell
@@ -283,7 +285,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.officeErrorLabel.isHidden = false
                     cell.officeLabel.textColor = .black
                     
-                    guard let index = selectedTabIdx, index > menuItems.count - 2 else { return cell }
+                    guard let index = selectedTabIdx, index > menuItems.count - 3 else { return cell }
                     cell.officeLabel.textColor = redColor
                     
                     return cell
@@ -311,6 +313,11 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 closeAction()
                 return
             }
+            if indexPath.row == menuItems.count - 2 {
+                closeAction()
+                chatBotDelegate?.showChatBot()
+                return
+            }
             selectedTabIdx = indexPath.row
             delegate?.changeToIndex(index: indexPath.row)
         } else if indexPath.section == 2 {
@@ -320,8 +327,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 office.selectedOfficeUIUpdateDelegate = self
                 office.title = dataProvider.userOffice?.officeName
             }
-            selectedTabIdx = menuItems.count - 1
-            delegate?.changeToIndex(index: menuItems.count - 1)
+            selectedTabIdx = menuItems.count - 2
+            delegate?.changeToIndex(index: menuItems.count - 2)
         }
         tableView.reloadData()
         closeAction()
@@ -351,4 +358,8 @@ extension MenuViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDel
             self.tableView.reloadData()
         }
     }
+}
+
+protocol ChatBotDelegate: AnyObject {
+    func showChatBot()
 }

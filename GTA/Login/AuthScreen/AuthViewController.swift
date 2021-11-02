@@ -28,8 +28,9 @@ class AuthViewController: UIViewController {
     private var usmLogoutWebView: WKWebView!
     private var continueButtonY: CGFloat?
     weak var delegate: AuthentificationPassed?
+    weak var loginDelegate: LoginSaverDelegate?
     private var dataProvider: LoginDataProvider = LoginDataProvider()
-    
+    var appKeyWindow: UIWindow?
     var isSignUp: Bool = KeychainManager.getPin() == nil
     
     override func viewDidLoad() {
@@ -42,6 +43,10 @@ class AuthViewController: UIViewController {
             box.backwardDelegate = self
             box.accessibilityIdentifier = "PinCodeScreenPinBox\(index)"
         }
+
+        let loginVC = navigationController?.viewControllers.first(where: { $0 is LoginViewController }) as? LoginViewController
+        loginDelegate = loginVC
+        
         setAccessibilityIdentifiers()
     }
     
@@ -73,6 +78,7 @@ class AuthViewController: UIViewController {
     private func setAccessibilityIdentifiers() {
         backButton.accessibilityIdentifier = "PinCodeScreenBackButton"
         continueButton.accessibilityIdentifier = "LoginScreenContinueButton"
+        logoutButton.accessibilityIdentifier = "PinCodeLogoutButton"
     }
     
     private func setUpScreen() {
@@ -92,6 +98,10 @@ class AuthViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        screenWillHide()
+    }
+    
+    private func screenWillHide() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
@@ -137,10 +147,14 @@ class AuthViewController: UIViewController {
         let context = LAContext()
         var error: NSError?
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Authenticate with Biometrics"
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) {
-                [weak self] success, authenticationError in
-                self?.checkAuthentification(isSuccess: success, error: authenticationError as NSError?)
+            let additionalTime = context.biometryType == .faceID ? 0.5 : 0
+            DispatchQueue.main.asyncAfter(deadline: .now() + additionalTime) { [weak self] in
+                let reason = "Authenticate with Biometrics"
+                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
+                    DispatchQueue.main.async {
+                        self?.checkAuthentification(isSuccess: success, error: authenticationError as NSError?)
+                    }
+                }
             }
         }
     }
@@ -189,12 +203,20 @@ class AuthViewController: UIViewController {
     
     private func authentificatePassed() {
         hideKeyboard()
+        loginDelegate?.saveLoginMail()
         delegate?.isAuthentificationPassed = true
+        if let navController = self.appKeyWindow?.rootViewController as? UINavigationController, navController.rootViewController is MainViewController, !isSignUp {
+            appKeyWindow?.windowLevel = UIWindow.Level.statusBar + 1
+            screenWillHide()
+            appKeyWindow?.makeKeyAndVisible()
+            return
+        }
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController")
         let navController = UINavigationController(rootViewController: mainViewController)
         navController.isNavigationBarHidden = true
         navController.isToolbarHidden = true
+        screenWillHide()
         self.view.window?.rootViewController = navController
     }
     
@@ -373,4 +395,8 @@ extension AuthViewController: UITextFieldDelegate, BackwardDelegate {
 protocol AuthentificationPassed: AnyObject {
     var isAuthentificationPassed: Bool? {get set}
     var isAuthentificationScreenShown: Bool? {get set}
+}
+
+protocol LoginSaverDelegate: AnyObject {
+    func saveLoginMail()
 }

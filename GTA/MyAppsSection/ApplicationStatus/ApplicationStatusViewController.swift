@@ -330,8 +330,13 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         }
         if indexPath.section == 0, let cell = tableView.dequeueReusableCell(withIdentifier: "AppsServiceAlertCell", for: indexPath) as? AppsServiceAlertCell {
             cell.separator.isHidden = false
-            let isDisabled = indexPath.row < 4 && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty || appDetailsData == nil)
-            cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, error: indexPath.row == 3 ? nil : detailsDataResponseError)
+            var isDisabled = false
+            if indexPath.row < (productionAlertsSectionAvailable ? 3 : 2) && (appDetailsData?.appSupportEmail == nil || (appDetailsData?.appSupportEmail ?? "").isEmpty || appDetailsData == nil) {
+                isDisabled = true
+            } else if indexPath.row == (productionAlertsSectionAvailable ? 3 : 2), (appDetailsData?.appSupportPolicy == nil && appDetailsData?.appDescription == nil && appDetailsData?.appWikiUrl == nil && appDetailsData?.appJiraSupportUrl == nil) {
+                isDisabled = true
+            }
+            cell.setUpCell(with: dataArray[indexPath.row], isNeedCornerRadius: indexPath.row == 0, isDisabled: isDisabled, index: indexPath.row, alerts: productionAlertsSectionAvailable, error: indexPath.row == 3 ? nil : detailsDataResponseError)
             cell.iconImageView.accessibilityIdentifier = "AppsStatusDescription"
             cell.descriptionLabel.accessibilityIdentifier = "AppsStatusSubtitleLabel"
             cell.mainLabel.accessibilityIdentifier = "AppsStatusTitleLabel"
@@ -357,7 +362,9 @@ extension ApplicationStatusViewController: UITableViewDelegate, UITableViewDataS
         }
         let commandBase = productionAlertsSectionAvailable ? 3 : 2
         if indexPath.row == commandBase, (appDetailsData != nil) {
-            showAboutScreen()
+            if appDetailsData?.appSupportPolicy != nil || appDetailsData?.appDescription != nil || appDetailsData?.appWikiUrl != nil || appDetailsData?.appJiraSupportUrl != nil {
+                showAboutScreen()
+            }
         } else if indexPath.row == commandBase + 1 {
             showTipsAndTricks()
         } else if indexPath.row == commandBase + 2 {

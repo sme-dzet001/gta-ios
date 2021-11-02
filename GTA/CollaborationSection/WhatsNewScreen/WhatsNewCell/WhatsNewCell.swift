@@ -27,6 +27,7 @@ class WhatsNewCell: UITableViewCell {
         let tap = UITapGestureRecognizer(target: self, action: #selector(showMoreDidTapped(gesture:)))
         tap.cancelsTouchesInView = false
         self.descriptionLabel.addGestureRecognizer(tap)
+        setAccessibilityIdentifiers()
     }
     
     override func prepareForReuse() {
@@ -37,6 +38,13 @@ class WhatsNewCell: UITableViewCell {
         self.mainImageView.sd_cancelCurrentImageLoad()
         //self.mainImageView.clear()
         self.layoutIfNeeded()
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        mainImageView.accessibilityIdentifier = "WhatsNewCellImageView"
+        titleLabel.accessibilityIdentifier = "WhatsNewCellTitleLabel"
+        subtitleLabel.accessibilityIdentifier = "WhatsNewCellSubtitleLabel"
+        descriptionLabel.accessibilityIdentifier = "WhatsNewCellDescriptionLabel"
     }
     
     func setDate(_ date: String?) {

@@ -19,29 +19,31 @@ class ActiveUsersByFunctionCell: UITableViewCell, VerticalBarChartDataChangedDel
     }
     
     func setUpBarChartView(with chartStructure: ChartStructure?) {
-        guard let chartData = chartStructure else { return }
-        titleLabel.text = chartData.title
-        let width = calculateBarWidth(barCount: chartData.values.count)
-        let yValues: [BarChartDataEntry] = getValues(with: chartData.values, width: width)
-        guard !yValues.isEmpty else { return }
-        let set = BarChartDataSet(entries: yValues, label: nil)
-        set.drawIconsEnabled = true
-        set.colors = getBarColors(for: yValues.count)
-        let data = BarChartData(dataSet: set)
-        data.highlightEnabled = false
-        data.setDrawValues(false)
-        data.barWidth = width
-        let axisMaximum = Double(chartData.values.max() ?? 0.0).getAxisMaximum()
-        setUpAxis(axisMaximum: axisMaximum)
-        barChartView.scaleXEnabled = false
-        barChartView.scaleYEnabled = false
-        barChartView.pinchZoomEnabled = false
-        barChartView.data = data
-        barChartView.fitBars = true
-        barChartView.extraBottomOffset = 13
-        //barChartView.delegate = self
-        let stackLabels = chartData.legends
-        setUpChartLegend(for: yValues.count, labels: stackLabels)
+        DispatchQueue.main.async { [weak self] in
+            guard let chartData = chartStructure else { return }
+            self?.titleLabel.text = chartData.title
+            let width = self?.calculateBarWidth(barCount: chartData.values.count)
+            let yValues: [BarChartDataEntry] = self?.getValues(with: chartData.values, width: width ?? 0) ?? []
+            guard !yValues.isEmpty else { return }
+            let set = BarChartDataSet(entries: yValues, label: nil)
+            set.drawIconsEnabled = true
+            set.colors = self?.getBarColors(for: yValues.count) ?? []
+            let data = BarChartData(dataSet: set)
+            data.highlightEnabled = false
+            data.setDrawValues(false)
+            data.barWidth = width ?? 1
+            let axisMaximum = Double(chartData.values.max() ?? 0.0).getAxisMaximum()
+            self?.setUpAxis(axisMaximum: axisMaximum)
+            self?.barChartView.scaleXEnabled = false
+            self?.barChartView.scaleYEnabled = false
+            self?.barChartView.pinchZoomEnabled = false
+            self?.barChartView.data = data
+            self?.barChartView.fitBars = true
+            self?.barChartView.extraBottomOffset = 13
+            //barChartView.delegate = self
+            let stackLabels = chartData.legends
+            self?.setUpChartLegend(for: yValues.count, labels: stackLabels)
+        }
     }
     
     private func setUpAxis(axisMaximum: Double) {

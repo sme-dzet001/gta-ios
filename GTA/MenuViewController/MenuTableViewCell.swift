@@ -27,11 +27,17 @@ class MenuTableViewCell: UITableViewCell {
         badgeImageView.layer.borderWidth = 2
         badgeImageView.layer.borderColor = UIColor.white.cgColor
         badgeImageView.layer.masksToBounds = true
+        
+        setAccessibilityIdentifiers()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        menuLabel.accessibilityIdentifier = "MenuTableViewCellMenuLabel"
     }
     
     func setupCell(text: String, image: UIImage?, globalAlertsBadge: Int, productionAlertBadge: Int, indexPath: IndexPath) {

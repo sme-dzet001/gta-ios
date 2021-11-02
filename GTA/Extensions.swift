@@ -8,6 +8,7 @@
 
 import UIKit
 import CommonCrypto
+import CryptoKit
 
 extension UIColor {
     convenience init(hex: Int) {
@@ -135,8 +136,6 @@ extension UILabel {
         let sizeConstraint = CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude)
 
         let attributes: [AnyHashable: Any] = [NSAttributedString.Key.font: font]
-        let attributedText = self.attributedText!// NSAttributedString(string: self.text!, attributes: attributes as? [NSAttributedString.Key : Any])
-        let boundingRect: CGRect = attributedText.boundingRect(with: sizeConstraint, options: .usesLineFragmentOrigin, context: nil)
 
         if (self.text?.count ?? 0) > 110 {
             var index: Int = 0
@@ -155,6 +154,18 @@ extension UILabel {
             return prev + coefficient
         }
         return self.attributedText!.string.count
+    }
+    
+    func setLineHeight(lineHeight: CGFloat) {
+        let text = self.text
+        if let text = text {
+            let attributeString = NSMutableAttributedString(string: text)
+            let style = NSMutableParagraphStyle()
+            
+            style.lineSpacing = lineHeight
+            attributeString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSMakeRange(0, attributeString.length))
+            self.attributedText = attributeString
+        }
     }
     
 }
@@ -217,6 +228,25 @@ extension UIView {
         gradient.name = "grad"
         self.layer.insertSublayer(gradient, at: 0)
     }
+    
+    func addBlurToView() {
+        if let gradientMaskLayer = self.layer.mask, gradientMaskLayer.name == "grad" {
+            return
+        }
+        let gradientMaskLayer = CAGradientLayer()
+        gradientMaskLayer.name = "grad"
+        gradientMaskLayer.frame = self.bounds
+        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
+        gradientMaskLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradientMaskLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+        self.layer.mask = gradientMaskLayer
+    }
+    
+    func screenshot() -> UIImage {
+        return UIGraphicsImageRenderer(size: bounds.size).image { _ in
+          drawHierarchy(in: CGRect(origin: .zero, size: bounds.size), afterScreenUpdates: true)
+        }
+      }
 }
 
 extension UINavigationController {
@@ -258,6 +288,55 @@ extension UITableView {
             }
         }
         return false
+    }
+    
+    func reloadRowsInSectionSafely(section: Int) {
+        var oldRowsIndexPathesArray: [IndexPath] = []
+        for row in 0..<numberOfRows(inSection: section) {
+            let indexPath = IndexPath(row: row, section: section)
+            oldRowsIndexPathesArray.append(indexPath)
+        }
+        let oldRowsCount = oldRowsIndexPathesArray.count
+        
+        let newRowsCount = dataSource!.tableView(self, numberOfRowsInSection: section)
+        if newRowsCount == oldRowsCount {
+            if dataHasChanged {
+                reloadData()
+            } else {
+                UIView.performWithoutAnimation {
+                    reloadRows(at: oldRowsIndexPathesArray, with: .none)
+                }
+            }
+        } else if newRowsCount > oldRowsCount {
+            var newRowsIndexPathesArray: [IndexPath] = []
+            for row in oldRowsCount..<newRowsCount {
+                let indexPath = IndexPath(row: row, section: section)
+                newRowsIndexPathesArray.append(indexPath)
+            }
+            UIView.performWithoutAnimation {
+                beginUpdates()
+                reloadRows(at: oldRowsIndexPathesArray, with: .none)
+                insertRows(at: newRowsIndexPathesArray, with: .none)
+                endUpdates()
+            }
+        } else if newRowsCount < oldRowsCount {
+            var deletedRowsIndexPathesArray: [IndexPath] = []
+            for row in newRowsCount..<oldRowsCount {
+                let indexPath = IndexPath(row: row, section: section)
+                deletedRowsIndexPathesArray.append(indexPath)
+            }
+            var reloadedRowsIndexPathesArray: [IndexPath] = []
+            for row in 0..<newRowsCount {
+                let indexPath = IndexPath(row: row, section: section)
+                reloadedRowsIndexPathesArray.append(indexPath)
+            }
+            UIView.performWithoutAnimation {
+                beginUpdates()
+                reloadRows(at: reloadedRowsIndexPathesArray, with: .none)
+                deleteRows(at: deletedRowsIndexPathesArray, with: .none)
+                endUpdates()
+            }
+        }
     }
 }
 
@@ -758,6 +837,10 @@ extension String {
         return "\(Int(value))"
     }
     
+    var MD5: String {
+        let computed = Insecure.MD5.hash(data: self.data(using: .utf8)!)
+        return computed.map { String(format: "%02hhx", $0) }.joined()
+    }
 }
 
 extension Date {

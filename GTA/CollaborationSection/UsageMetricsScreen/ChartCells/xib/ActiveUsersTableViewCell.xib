@@ -61,36 +61,6 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Yn-Z8-g97" userLabel="Blur View Left">
-                        <rect key="frame" x="40" y="80" width="24" height="731"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="24" id="A1l-KI-77r"/>
-                        </constraints>
-                    </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BsJ-AY-HrL">
-                        <rect key="frame" x="0.0" y="837" width="702" height="8"/>
-                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="8" id="k6q-G5-VYe"/>
-                        </constraints>
-                    </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SMX-D2-blm" userLabel="Custom Vertical Axis View">
-                        <rect key="frame" x="0.0" y="80" width="40" height="731"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="mk6-H0-zZM">
-                                <rect key="frame" x="0.0" y="0.0" width="40" height="731"/>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="mk6-H0-zZM" firstAttribute="leading" secondItem="SMX-D2-blm" secondAttribute="leading" id="ROq-mC-6vK"/>
-                            <constraint firstAttribute="bottom" secondItem="mk6-H0-zZM" secondAttribute="bottom" id="SVZ-ho-YUn"/>
-                            <constraint firstAttribute="trailing" secondItem="mk6-H0-zZM" secondAttribute="trailing" id="bWH-hL-g1B"/>
-                            <constraint firstAttribute="width" constant="40" id="eBu-HV-V06"/>
-                            <constraint firstItem="mk6-H0-zZM" firstAttribute="top" secondItem="SMX-D2-blm" secondAttribute="top" id="pjf-dM-5Th"/>
-                        </constraints>
-                    </view>
                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Qm-ZN-8gF" customClass="ChartScrollView" customModule="GTA" customModuleProvider="target">
                         <rect key="frame" x="50" y="80" width="612" height="731"/>
                         <subviews>
@@ -120,6 +90,36 @@
                             <constraint firstAttribute="width" constant="24" id="xhF-8g-qPp"/>
                         </constraints>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Yn-Z8-g97" userLabel="Blur View Left">
+                        <rect key="frame" x="50" y="80" width="24" height="731"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="A1l-KI-77r"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BsJ-AY-HrL">
+                        <rect key="frame" x="0.0" y="837" width="702" height="8"/>
+                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="k6q-G5-VYe"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SMX-D2-blm" userLabel="Custom Vertical Axis View">
+                        <rect key="frame" x="0.0" y="80" width="40" height="731"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="mk6-H0-zZM">
+                                <rect key="frame" x="0.0" y="0.0" width="40" height="731"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="mk6-H0-zZM" firstAttribute="leading" secondItem="SMX-D2-blm" secondAttribute="leading" id="ROq-mC-6vK"/>
+                            <constraint firstAttribute="bottom" secondItem="mk6-H0-zZM" secondAttribute="bottom" id="SVZ-ho-YUn"/>
+                            <constraint firstAttribute="trailing" secondItem="mk6-H0-zZM" secondAttribute="trailing" id="bWH-hL-g1B"/>
+                            <constraint firstAttribute="width" constant="40" id="eBu-HV-V06"/>
+                            <constraint firstItem="mk6-H0-zZM" firstAttribute="top" secondItem="SMX-D2-blm" secondAttribute="top" id="pjf-dM-5Th"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="SMX-D2-blm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="2DK-gF-ECr"/>
@@ -131,7 +131,6 @@
                     <constraint firstItem="xOP-24-JOR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="Iq8-0Y-opc"/>
                     <constraint firstAttribute="trailing" secondItem="4Qm-ZN-8gF" secondAttribute="trailing" constant="40" id="JBg-y6-itM"/>
                     <constraint firstItem="YFc-be-nzW" firstAttribute="top" secondItem="4Qm-ZN-8gF" secondAttribute="top" id="KBQ-tO-Ccn"/>
-                    <constraint firstItem="2Yn-Z8-g97" firstAttribute="leading" secondItem="SMX-D2-blm" secondAttribute="trailing" id="Lgk-pT-isL"/>
                     <constraint firstItem="BsJ-AY-HrL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="PvR-iU-Msr"/>
                     <constraint firstItem="2Yn-Z8-g97" firstAttribute="top" secondItem="4Qm-ZN-8gF" secondAttribute="top" id="QeY-Kn-RRM"/>
                     <constraint firstItem="4Qm-ZN-8gF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="80" id="Sgg-Dr-Ir1"/>
@@ -145,6 +144,7 @@
                     <constraint firstItem="2Yn-Z8-g97" firstAttribute="bottom" secondItem="SMX-D2-blm" secondAttribute="bottom" id="fHv-7b-7QF"/>
                     <constraint firstItem="uVO-3k-vHf" firstAttribute="centerY" secondItem="OXg-F4-Ni3" secondAttribute="centerY" id="fnx-Qh-6PX"/>
                     <constraint firstItem="OXg-F4-Ni3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="32" id="vRZ-ah-NA6"/>
+                    <constraint firstItem="2Yn-Z8-g97" firstAttribute="leading" secondItem="4Qm-ZN-8gF" secondAttribute="leading" id="zzl-NW-4Rb"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
