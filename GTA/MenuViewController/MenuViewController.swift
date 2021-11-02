@@ -177,16 +177,16 @@ class MenuViewController: UIViewController {
                             }
                         } else {
                             self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                            self?.setTableViewHeight()
                             self?.tableView.reloadData()
+                            self?.setTableViewHeight()
                         }
                     }
                 }
             } else {
                 DispatchQueue.main.async {
                     self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                    self?.setTableViewHeight()
                     self?.tableView.reloadData()
+                    self?.setTableViewHeight()
                 }
             }
         })
