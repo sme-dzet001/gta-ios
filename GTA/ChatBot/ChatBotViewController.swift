@@ -14,8 +14,8 @@ class ChatBotViewController: UIViewController {
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var errorLabel: UILabel!
     
-    private var errorLabel: UILabel = UILabel()
     private var dataProvider: ChatBotDataProvider = ChatBotDataProvider()
     private var heightObserver: NSKeyValueObservation?
     private var canReloadWebView = true
@@ -30,18 +30,17 @@ class ChatBotViewController: UIViewController {
         setAccessibilityIdentifiers()
         NotificationCenter.default.addObserver(self, selector: #selector(dismissModal), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        setUpActivityIndicator()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if Reachability.isConnectedToNetwork() {
-            setUpActivityIndicator()
-            addErrorLabel(errorLabel)
             webView.navigationDelegate = self
             getChatBotToken()
         } else {
-            setErrorLabel(for: .commonError)
+            setErrorLabel()
         }
         
     }
@@ -89,8 +88,9 @@ class ChatBotViewController: UIViewController {
     }
     
     private func setErrorLabel(for error: ResponseError? = nil) {
+        let errorText = "Please verify your network connection and try again. If the error persists please try again later"
         activityIndicator.stopAnimating()
-        errorLabel.text = error?.localizedDescription ?? ResponseError.commonError.localizedDescription
+        errorLabel.text = error?.localizedDescription ?? errorText
         errorLabel.isHidden = false
     }
     
