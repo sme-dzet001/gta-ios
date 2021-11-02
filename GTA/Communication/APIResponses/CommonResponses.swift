@@ -52,13 +52,16 @@ struct SectionWidget: Codable, Equatable {
 struct ReportSection: Codable, Equatable {
     var title: String
     var sectionId: String
-    var id: String
+    var quantumId: QuantumValue
     var widgets: [SectionWidget]?
+    var id: String? {
+        quantumId.stringValue
+    }
     
     enum CodingKeys: String, CodingKey {
         case title = "title"
         case sectionId = "section_id"
-        case id = "_id"
+        case quantumId = "_id"
         case widgets = "widgets"
     }
     

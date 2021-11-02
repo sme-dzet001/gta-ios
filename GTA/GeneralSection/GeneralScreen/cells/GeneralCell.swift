@@ -15,9 +15,13 @@ class GeneralCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        setAccessibilityIdentifiers()
     }
 
-   
+    private func setAccessibilityIdentifiers() {
+        titleLabel.accessibilityIdentifier = "GeneralCellTitleLabel"
+        subtitleLabel.accessibilityIdentifier = "GeneralCellSubtitleLabel"
+    }
     
 }
