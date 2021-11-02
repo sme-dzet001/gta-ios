@@ -10,7 +10,7 @@ import UIKit
 class ServiceDeskContactsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    //@IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var headerSeparator: UIView!
     
     private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
@@ -46,12 +46,14 @@ class ServiceDeskContactsViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
         navigationItem.leftBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         navigationItem.leftBarButtonItem?.accessibilityIdentifier = "ServiceDeskContactsBackButton"
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     private func setUpTableView() {
-        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
+        tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "ServiceDeskContactCell", bundle: nil), forCellReuseIdentifier: "ServiceDeskContactCell")
         tableView.accessibilityIdentifier = "ServiceDeskContactsTableView"
     }

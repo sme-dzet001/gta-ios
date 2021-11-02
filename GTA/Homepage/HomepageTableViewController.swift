@@ -18,7 +18,6 @@ class HomepageTableViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var blurView: UIView!
     
-    private var expandedRowsIndex = [Int]()
     weak var newsShowDelegate: NewsShowDelegate?
     
     var dataProvider: HomeDataProvider?
@@ -29,7 +28,7 @@ class HomepageTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
-        tableView.accessibilityIdentifier = "HomeScreenTableView"
+        blurView.addBlurToView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,11 +40,6 @@ class HomepageTableViewController: UIViewController {
             activityIndicator.isHidden = true
             //tableView.reloadData()
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        expandedRowsIndex = []
     }
     
     private func setAccessibilityIdentifiers() {
@@ -72,24 +66,11 @@ class HomepageTableViewController: UIViewController {
         }
     }
     
-    private func addBlurToViewIfNeeded() {
-        if let gradientMaskLayer = blurView.layer.mask, gradientMaskLayer.name == "grad" {
-            return
-        }
-        let gradientMaskLayer = CAGradientLayer()
-        gradientMaskLayer.name = "grad"
-        gradientMaskLayer.frame = blurView.bounds
-        gradientMaskLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.withAlphaComponent(1.0).cgColor]
-        gradientMaskLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
-        gradientMaskLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
-        blurView.layer.mask = gradientMaskLayer
-    }
-    
     private func setUpTableView() {
-        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: "NewsTableViewCell")
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
+        tableView.contentInset = tableView.menuButtonContentInset
+        tableView.accessibilityIdentifier = "HomeScreenTableView"
     }
     
     func dataLoadingStarted() {
@@ -130,12 +111,7 @@ class HomepageTableViewController: UIViewController {
 extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if tableView.contentOffset.y > 0 {
-            addBlurToViewIfNeeded()
-            blurView.isHidden = false
-        } else {
-            blurView.isHidden = true
-        }
+        self.blurView.alpha = min(scrollView.contentOffset.y, 1)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -168,7 +144,8 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
                 cell?.pictureView.image = resData.image
             case .failure(let error):
                 if !error.isNotCurrentTask {
-                    cell?.pictureView.image = nil
+                    guard let defaultImage = UIImage(named: DefaultImageNames.whatsNewPlaceholder) else { return }
+                    cell?.pictureView.image = defaultImage
                 }
             }
         })
@@ -176,17 +153,12 @@ extension HomepageTableViewController: UITableViewDataSource, UITableViewDelegat
         cell?.byLabel.attributedText = getByLineText(byLine: cellDataSource.byLine)
         let newsDate = cellDataSource.postDate
         cell?.dateLabel.text = dataProvider.formatDateString(dateString: newsDate, initialDateFormat: "yyyy-MM-dd'T'HH:mm:ss")
-        let bodyDecoded = dataProvider.formNewsBody(from: cellDataSource.newsBody)
+        let bodyText = cellDataSource.newsContent?.first(where: { $0.type == .text })?.body
+        let bodyDecoded = dataProvider.formNewsBody(from: bodyText)
         bodyDecoded?.setFontFace(font: UIFont(name: "SFProText-Light", size: 16)!)
         cell?.bodyLabel.attributedText = bodyDecoded
         cell?.fullText = bodyDecoded
-        if !expandedRowsIndex.contains(indexPath.row) {
-            cell?.setCollapse()
-        } else {
-            cell?.bodyLabel.attributedText = bodyDecoded
-            cell?.bodyLabel.numberOfLines = 0
-            cell?.bodyLabel.sizeToFit()
-        }
+        cell?.setCollapse()
         cell?.titleLabel.accessibilityIdentifier = "HomeScreenCollectionTitleLabel"
         cell?.dateLabel.accessibilityIdentifier = "HomeScreenCollectionDateLabel"
         return cell ?? UITableViewCell()
@@ -220,20 +192,8 @@ extension HomepageTableViewController : TappedLabelDelegate {
         guard let cell = cell as? NewsTableViewCell else { return }
         guard let cellIndex = tableView.indexPath(for: cell) else { return }
         let dataSource = getDataSource()
-        guard dataSource.count > cellIndex.row else { return }
-        if cell.fullText?.length ?? 0 <= 600 {
-            guard !expandedRowsIndex.contains(cellIndex.row) else { return }
-            
-            expandedRowsIndex.append(cellIndex.row)
-            tableView.reloadData()
-            if cell.bounds.height > self.tableView.frame.height {
-                self.tableView.scrollToRow(at: cellIndex, at: .top, animated: true)
-            } else {
-                self.tableView.scrollToRow(at: cellIndex, at: .none, animated: true)
-            }
-        } else {
-            newsShowDelegate?.showArticleViewController(with: dataSource[cellIndex.row].newsBody)
-        }
+        let newsContent = dataSource[cellIndex.row]
+        newsShowDelegate?.showArticleViewController(with: newsContent)
     }
     
     func openUrl(_ url: URL) {

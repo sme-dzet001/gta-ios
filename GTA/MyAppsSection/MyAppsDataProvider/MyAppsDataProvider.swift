@@ -740,6 +740,12 @@ class MyAppsDataProvider {
     private func processAppProductionAlerts(appName: String, _ reportData: ReportDataResponse?, _ myAppsDataResponse: Data?, _ errorCode: Int, _ error: Error?, _ completion: ((_ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let queue = DispatchQueue(label: "processAppProductionAlertsQueue", qos: .userInteractive)
         queue.async {[weak self] in
+            if let error = error {
+                let errorMessage = ResponseError.generate(error: error)
+                completion?(errorCode, errorMessage)
+                return
+            }
+            
             var prodAlertsResponse: ProductionAlertsResponse?
             var retErr = error
             if let responseData = myAppsDataResponse {
@@ -825,8 +831,8 @@ class MyAppsDataProvider {
         guard let allAppsInfo = allAppsData?.myAppsStatus else { return nil }
         guard !allAppsInfo.isEmpty else { return nil }
         var response = allAppsInfo
-        var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [], metricsData: nil)
-        var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [], metricsData: nil)
+        var myAppsSection = AppsDataSource(sectionName: "My Apps", description: nil, cellData: [])
+        var otherAppsSection = AppsDataSource(sectionName: "Other Apps", description: "Request Access Permission", cellData: [])
         for (index, info) in allAppsData!.myAppsStatus.enumerated() {
             let appNameIndex = myAppsStatusData?.indexes["app name"] ?? 0
             response[index].appImage = formImageURL(from: response[index].appImage)

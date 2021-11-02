@@ -124,9 +124,8 @@ class HelpDeskViewController: UIViewController {
     }
 
     private func setUpTableView() {
-        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.rowHeight = 80
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
+        tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "HelpDeskCell", bundle: nil), forCellReuseIdentifier: "HelpDeskCell")
         tableView.register(UINib(nibName: "HelpDeskContactOptionCell", bundle: nil), forCellReuseIdentifier: "HelpDeskContactOptionCell")
         tableView.accessibilityIdentifier = "ServiceDeskTableView"

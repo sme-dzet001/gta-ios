@@ -17,7 +17,8 @@ class CollaborationCounterCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        setAccessibilityIdentifiers()
     }
     
     func setUpCell(with data: ContactsCellDataProtocol, isActive: Bool = true, isNeedCornerRadius: Bool = false) {
@@ -39,6 +40,11 @@ class CollaborationCounterCell: UITableViewCell {
             self.parentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         }
     }
+    
+    private func setAccessibilityIdentifiers() {
+        updatesNumberLabel.accessibilityIdentifier = "CollaborationCounterCellUpdatesNumberLabel"
+    }
+    
 }
 
 extension CollaborationCounterCell: TicketsNumberDelegate {

@@ -43,12 +43,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func dismissPanModalIfPresented(completion: @escaping (() -> Void)) {
         if let panModal = getTopViewController() as? PanModalPresentable {
             (panModal as? UIViewController)?.dismiss(animated: true, completion: completion)
+        } else if let menuVC = getTopViewController() as? MenuViewController {
+            menuVC.closeAction()
+            completion()
         } else {
             completion()
         }
     }
     
-    private func getTopViewController() -> UIViewController? {
+    func getTopViewController() -> UIViewController? {
         let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
         var topVC: UIViewController?
         if var VC = keyWindow?.rootViewController {

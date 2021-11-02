@@ -1,0 +1,141 @@
+//
+//  ChatBotViewController.swift
+//  GTA
+//
+//  Created by Kostiantyn Dzetsiuk on 05.10.2021.
+//
+
+import UIKit
+import WebKit
+import CryptoKit
+
+class ChatBotViewController: UIViewController {
+    
+    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    private var errorLabel: UILabel = UILabel()
+    private var dataProvider: ChatBotDataProvider = ChatBotDataProvider()
+    private var heightObserver: NSKeyValueObservation?
+    private var canReloadWebView = true
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setNeedsStatusBarAppearanceUpdate()
+        setAccessibilityIdentifiers()
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissModal), name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if Reachability.isConnectedToNetwork() {
+            setUpActivityIndicator()
+            addErrorLabel(errorLabel)
+            webView.navigationDelegate = self
+            getChatBotToken()
+        } else {
+            setErrorLabel(for: .commonError)
+        }
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        heightObserver?.invalidate()
+        heightObserver = nil
+    }
+    
+    private func setUpActivityIndicator() {
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+    }
+    
+    private func getChatBotToken() {
+        let username = KeychainManager.getUsername() ?? ""
+        let md5Username = username.MD5
+        dataProvider.getChatBotToken(userMail: md5Username) {[weak self] token, errorCode, error in
+            DispatchQueue.main.async {
+                if errorCode == 200 && error == nil {
+                    self?.setTokenAndLoadChatBot(token, md5Username)
+                } else {
+                    self?.setErrorLabel(for: error)
+                }
+            }
+        }
+    }
+    
+    private func setTokenAndLoadChatBot(_ token: String?, _ mail: String?) {
+        guard let token = token, let userID = mail, let path = Bundle.main.path(forResource: "frame", ofType: "html") else { return }
+        do {
+            let parameters = ["token: '" : token, "userID: '" : userID]
+            var htmlContent = try String(contentsOfFile: path) as NSString
+            for (key, value) in parameters {
+                let startRange = htmlContent.range(of: key, options: .backwards)
+                let location = startRange.location + startRange.length
+                let neededRange = NSMakeRange(location, 0)
+                htmlContent = htmlContent.replacingCharacters(in: neededRange, with: value) as NSString
+            }
+            self.webView.loadHTMLString(htmlContent as String, baseURL: nil)
+        } catch {
+            self.setErrorLabel()
+        }
+    }
+    
+    private func setErrorLabel(for error: ResponseError? = nil) {
+        activityIndicator.stopAnimating()
+        errorLabel.text = error?.localizedDescription ?? ResponseError.commonError.localizedDescription
+        errorLabel.isHidden = false
+    }
+    
+    private func setAccessibilityIdentifiers() {
+        closeButton.accessibilityIdentifier = "ChatBotCloseButton"
+    }
+    
+    @IBAction func closeButtonDidPressed(_ sender: UIButton) {
+        dismissModal()
+    }
+    
+    @objc private func dismissModal() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func keyboardDidShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
+            guard keyboardSize.height > 0 else { return }
+        
+            let offset = CGPoint(x: webView.scrollView.contentOffset.x, y: keyboardSize.height)
+            webView.scrollView.setContentOffset(offset, animated: true)
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.globalAlertWillShow), object: nil)
+    }
+}
+
+extension ChatBotViewController: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        activityIndicator.stopAnimating()
+        if canReloadWebView {
+            canReloadWebView = !canReloadWebView
+            getChatBotToken()
+            return
+        }
+        self.setErrorLabel(for: ResponseError.generate(error: error))
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        activityIndicator.stopAnimating()
+    }
+    
+    
+}

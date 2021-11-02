@@ -13,6 +13,7 @@ class HelpDeskHeader: UIView {
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var hoursOfOperationLabel: UILabel!
+    @IBOutlet weak var separatorHeight: NSLayoutConstraint!
     
     class func instanceFromNib() -> HelpDeskHeader {
         let header = UINib(nibName: "HelpDeskHeader", bundle: nil).instantiate(withOwner: self, options: nil).first as! HelpDeskHeader

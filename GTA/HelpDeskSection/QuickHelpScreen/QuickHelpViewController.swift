@@ -14,6 +14,8 @@ class QuickHelpViewController: UIViewController {
     @IBOutlet weak var navBarView: UIView!
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var headerSeparator: UIView!
+    
     private var errorLabel: UILabel = UILabel()
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var dataProvider: HelpDeskDataProvider?
@@ -174,12 +176,14 @@ class QuickHelpViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
         navigationItem.leftBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         navigationItem.leftBarButtonItem?.accessibilityIdentifier = "QuickHelpBackButton"
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     private func setUpTableView() {
-        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.register(UINib(nibName: "QuickHelpCell", bundle: nil), forCellReuseIdentifier: "QuickHelpCell")
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
+        tableView.contentInset = tableView.menuButtonContentInset
     }
     
     private func getHelpData() -> [QuickHelpDataProtocol] {

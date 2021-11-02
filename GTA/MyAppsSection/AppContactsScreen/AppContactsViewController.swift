@@ -14,6 +14,7 @@ class AppContactsViewController: UIViewController {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var titleStackView: UIStackView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var errorLabel: UILabel = UILabel()
@@ -86,12 +87,14 @@ class AppContactsViewController: UIViewController {
         self.navigationItem.titleView?.accessibilityIdentifier = "AppContactsTitle"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(self.backPressed))
         self.navigationItem.leftBarButtonItem?.accessibilityIdentifier = "AppContactsBackButton"
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     private func setUpTableView() {
-        let additionalSeparator: CGFloat = UIDevice.current.hasNotch ? 8 : 34
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (tableView.frame.width * 0.133) + additionalSeparator, right: 0)
+        tableView.contentInset = tableView.menuButtonContentInset
         tableView.register(UINib(nibName: "AppContactCell", bundle: nil), forCellReuseIdentifier: "AppContactCell")
     }
     
@@ -106,7 +109,6 @@ class AppContactsViewController: UIViewController {
                 self?.stopAnimation()
                 if error == nil && errorCode == 200 {
                     self?.lastUpdateDate = !fromCache ? Date().addingTimeInterval(60) : self?.lastUpdateDate
-                    //self?.appContactsData = contactsData
                     self?.errorLabel.isHidden = true
                     self?.tableView.alpha = 1
                     if dataWasChanged { self?.tableView.reloadData() }

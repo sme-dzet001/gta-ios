@@ -10,6 +10,7 @@ import UIKit
 class NotificationSettingsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerSeparator: UIView!
     
     var dataProvider: GeneralDataProvider?
     weak var delegate: NotificationStateUpdatedDelegate?
@@ -32,6 +33,7 @@ class NotificationSettingsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         getNotificationsData()
     }
     
@@ -76,6 +78,10 @@ class NotificationSettingsViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back_arrow"), style: .plain, target: self, action: #selector(backPressed))
         navigationItem.leftBarButtonItem?.tintColor = .black
         navigationItem.leftBarButtonItem?.customView?.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        navigationItem.titleView?.accessibilityIdentifier = "NotificationSettingsViewControllerTitleView"
+        if #available(iOS 15.0, *) {
+            headerSeparator.isHidden = false
+        }
     }
     
     @objc private func backPressed() {

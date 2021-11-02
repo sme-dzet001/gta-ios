@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +12,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UsageMetricsViewController" customModule="GTA" customModuleProvider="target">
             <connections>
                 <outlet property="appTextField" destination="Fxr-Bq-3Gw" id="GkS-wX-Gqo"/>
+                <outlet property="headerSeparator" destination="7Jx-TN-B2M" id="NZc-Ld-2fd"/>
                 <outlet property="tableView" destination="AS4-Kq-hCp" id="tvV-TA-59Z"/>
+                <outlet property="textFieldArrow" destination="yYk-F2-YmT" id="YDI-Xe-WUJ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="vtc-h4-MtR"/>
             </connections>
         </placeholder>
@@ -21,8 +23,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="294" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AS4-Kq-hCp" customClass="ChartTableView" customModule="GTA" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="119" width="414" height="777"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="294" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AS4-Kq-hCp">
+                    <rect key="frame" x="0.0" y="120" width="414" height="776"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="2c7-rY-yBS"/>
@@ -30,7 +32,7 @@
                     </connections>
                 </tableView>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fxr-Bq-3Gw" customClass="CustomTextField" customModule="GTA" customModuleProvider="target">
-                    <rect key="frame" x="24" y="68" width="366" height="46"/>
+                    <rect key="frame" x="24" y="69" width="366" height="46"/>
                     <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="L85-sv-s0G"/>
@@ -50,15 +52,34 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </textField>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Jx-TN-B2M">
+                    <rect key="frame" x="0.0" y="44" width="414" height="1"/>
+                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="EtV-u2-NtP"/>
+                    </constraints>
+                </view>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chart_appList_icon" translatesAutoresizingMaskIntoConstraints="NO" id="yYk-F2-YmT">
+                    <rect key="frame" x="349" y="79.5" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="8gS-yE-ck5"/>
+                        <constraint firstAttribute="width" constant="25" id="J0q-x0-lgp"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="Fxr-Bq-3Gw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="24" id="45F-Sq-vHM"/>
                 <constraint firstItem="AS4-Kq-hCp" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="7c1-ev-fgv"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="7Jx-TN-B2M" secondAttribute="trailing" id="Ejj-7g-iLZ"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Fxr-Bq-3Gw" secondAttribute="trailing" constant="24" id="FWi-Tg-5PB"/>
+                <constraint firstItem="7Jx-TN-B2M" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="GX7-TJ-2Rt"/>
                 <constraint firstItem="AS4-Kq-hCp" firstAttribute="top" secondItem="Fxr-Bq-3Gw" secondAttribute="bottom" constant="5" id="J7V-hv-xer"/>
-                <constraint firstItem="Fxr-Bq-3Gw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="24" id="Z7b-sO-IJ2"/>
+                <constraint firstItem="yYk-F2-YmT" firstAttribute="trailing" secondItem="Fxr-Bq-3Gw" secondAttribute="trailing" constant="-16" id="Nis-vF-C61"/>
+                <constraint firstItem="Fxr-Bq-3Gw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="25" id="Z7b-sO-IJ2"/>
+                <constraint firstItem="yYk-F2-YmT" firstAttribute="centerY" secondItem="Fxr-Bq-3Gw" secondAttribute="centerY" id="ecJ-mB-Tfy"/>
+                <constraint firstItem="7Jx-TN-B2M" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="hxm-ak-gQ7"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="AS4-Kq-hCp" secondAttribute="trailing" id="u1O-OZ-IcR"/>
                 <constraint firstAttribute="bottom" secondItem="AS4-Kq-hCp" secondAttribute="bottom" id="xow-wL-L9K"/>
             </constraints>
@@ -71,6 +92,7 @@
         </designable>
     </designables>
     <resources>
+        <image name="chart_appList_icon" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

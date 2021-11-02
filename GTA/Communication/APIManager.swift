@@ -54,7 +54,8 @@ class APIManager: NSObject, URLSessionDelegate {
         case getProductionAlerts(generationNumber: Int)
         case getCollaborationMetrics(generationNumber: Int)
         case getGlobalProductionAlerts(generationNumber: Int)
-        case getNewsFeed(generationNumber: Int)
+        case getNewsFeed
+        case getChatBotToken
         
         var endpoint: String {
             switch self {
@@ -85,7 +86,8 @@ class APIManager: NSObject, URLSessionDelegate {
                 case .getProductionAlerts(let generationNumber): return "/v3/widgets/production_alerts/data/\(generationNumber)/detailed"
                 case .getCollaborationMetrics(let generationNumber): return "/v3/widgets/collaboration_metrics/data/\(generationNumber)/detailed"
                 case .getGlobalProductionAlerts(let generationNumber): return "/v3/widgets/global_production_alerts/data/\(generationNumber)/detailed"
-                case .getNewsFeed(let generationNumber): return "/v3/widgets/news_feed/data/\(generationNumber)/detailed"
+                case .getNewsFeed: return "/v3/widgets/news_feed_v2/data/0/detailed"
+                case .getChatBotToken: return "/v3/chatbot/generate_token"
             }
         }
     }
@@ -151,9 +153,9 @@ class APIManager: NSObject, URLSessionDelegate {
         makeRequest(endpoint: .setCurrentPreferences, method: "POST", headers: requestHeaders, requestBodyParams: bodyParams, completion: completion)
     }
     
-    func getNewsFeedData(generationNumber: Int, completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+    func getNewsFeedData(completion: ((_ newsData: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
         let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? ""]
-        makeRequest(endpoint: .getNewsFeed(generationNumber: generationNumber), method: "POST", headers: requestHeaders, completion: completion)
+        makeRequest(endpoint: .getNewsFeed, method: "POST", headers: requestHeaders, completion: completion)
     }
     
     func loadImageData(from url: URL, completion: @escaping ((_ imageData: Data?, _ response: URLResponse?, _ error: Error?) -> Void)) {
@@ -301,6 +303,14 @@ class APIManager: NSObject, URLSessionDelegate {
         let requestHeaders = ["Content-Type": "application/json; charset=UTF-8", "Token-Type": "Bearer", "Access-Token": self.accessToken ?? ""]
         let requestBodyParams = ["s1": appGroup, "s2": appName]
         self.makeRequest(endpoint: .getCollaborationMetrics(generationNumber: generationNumber), method: "POST", headers: requestHeaders, requestBodyParams: requestBodyParams, completion: completion)
+    }
+    
+    //MARK: - Chat Bot methods
+    
+    func getChatBotToken(userEmail: String, completion: ((_ data: Data?, _ errorCode: Int, _ error: Error?) -> Void)? = nil) {
+        let requestHeaders = ["Token-Type": "Bearer", "Access-Token": accessToken ?? "", "Content-Type": "application/x-www-form-urlencoded"]
+        let requestBodyParams = ["user.id": "\(userEmail)"]
+        self.makeRequest(endpoint: .getChatBotToken, method: "POST", headers: requestHeaders, requestBodyParams: requestBodyParams, completion: completion)
     }
     
     //MARK: - Push notifications

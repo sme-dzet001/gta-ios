@@ -39,3 +39,7 @@ class ChartsFormatting {
     static let labelFont = UIFont(name: "SFProText-Regular", size: 10)
     static let horizontalBarOptimalHeight: CGFloat = 24
 }
+
+class DefaultImageNames {
+    static let whatsNewPlaceholder = "whatsNewPlaceholder"
+}
