@@ -10,6 +10,8 @@ import Foundation
 struct USMSettings {
     #if GTA
     static let usmBasicURL = "https://usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
+    #elseif GTADev
+    static let usmBasicURL = "https://uat-auth-console.sonymusic.com/oauth2/openid/v1/authorize"
     #else
     static let usmBasicURL = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
     #endif
