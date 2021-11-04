@@ -65,12 +65,12 @@ class AppTipsAndTricksViewController: UIViewController {
     }
     
     private func stopAnimation() {
-        DispatchQueue.main.async {
-            if let _ = self.pdfView.document {
-                self.pdfView.alpha = 1
+        DispatchQueue.main.async { [weak self] in
+            if let _ = self?.pdfView.document {
+                self?.pdfView.alpha = 1
             }
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.removeFromSuperview()
+            self?.activityIndicator.stopAnimating()
+            self?.activityIndicator.removeFromSuperview()
         }
     }
     
@@ -86,19 +86,19 @@ class AppTipsAndTricksViewController: UIViewController {
     }
     
     private func showErrorLabel(with text: String) {
-        DispatchQueue.main.async {
-            self.stopAnimation()
-            self.errorLabel.text = text
-            self.errorLabel.isHidden = false
+        DispatchQueue.main.async { [weak self] in
+            self?.stopAnimation()
+            self?.errorLabel.text = text
+            self?.errorLabel.isHidden = false
         }
     }
     
     private func showPDFView(with data: Data?) {
         guard let _ = data else { return }
-        DispatchQueue.main.async {
-            if data != self.documentData {
-                self.pdfView.document = PDFDocument(data: data!)
-                self.documentData = data
+        DispatchQueue.main.async { [weak self] in
+            if data != self?.documentData {
+                self?.pdfView.document = PDFDocument(data: data!)
+                self?.documentData = data
             }
         }
     }

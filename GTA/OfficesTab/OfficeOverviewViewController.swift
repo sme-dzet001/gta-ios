@@ -176,12 +176,12 @@ extension OfficeOverviewViewController: OfficeSelectionDelegate {
     }
     
     private func updateUIWithSelectedOffice() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             //self.selectedOfficeData = self.officeDataProvider?.userOffice
-            self.title = self.selectedOfficeData?.officeName
-            self.infoLabel.text = self.title
-            self.setDataSource()
-            self.tableView.reloadData()
+            self?.title = self?.selectedOfficeData?.officeName
+            self?.infoLabel.text = self?.title
+            self?.setDataSource()
+            self?.tableView.reloadData()
         }
     }
 }
