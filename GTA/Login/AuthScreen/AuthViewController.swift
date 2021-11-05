@@ -161,11 +161,11 @@ class AuthViewController: UIViewController {
     
     private func checkAuthentification(isSuccess: Bool, error: NSError?) {
         guard error?.code != -2 else { return }
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             if isSuccess {
-                self.authentificatePassed()
+                self?.authentificatePassed()
             } else {
-                self.showAuthenticationFailedAlert()
+                self?.showAuthenticationFailedAlert()
             }
         }
         guard isSuccess else { return }

@@ -127,7 +127,7 @@ extension GeneralViewController: WKNavigationDelegate {
     }
     
     private func logout(deleteToken: Bool = true) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
             UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
             KeychainManager.deleteUsername()
@@ -138,7 +138,7 @@ extension GeneralViewController: WKNavigationDelegate {
             KeychainManager.deleteTokenExpirationDate()
             CacheManager().clearCache()
             KeychainManager.deletePinData()
-            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+            if let sceneDelegate = self?.view.window?.windowScene?.delegate as? SceneDelegate {
                 sceneDelegate.startLoginFlow()
             }
         }

@@ -19,7 +19,7 @@ class MainViewController: UIViewController {
     private var usmLogoutWebView: WKWebView!
     let menuViewController = MenuViewController()
     var backgroundView: UIView?
-    var tabBar: CustomTabBarController?
+    weak var tabBar: CustomTabBarController?
     var transition = CircularTransition()
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return tabBar?.selectedViewController?.preferredStatusBarStyle ?? .default
@@ -155,11 +155,13 @@ extension MainViewController: TabBarChangeIndexDelegate {
     func changeToIndex(index: Int) {
         let isSameIndex = tabBar?.selectedIndex == index
         tabBar?.selectedIndex = index
+        tabBar?.navigationController?.view.layoutIfNeeded() // https://developer.apple.com/forums/thread/687805
         guard isSameIndex else { return }
         if index == 4 {
             let generalVC = tabBar?.moreNavigationController.viewControllers.first(where: {$0 is GeneralViewController})
-            guard let _ = generalVC else { return }
-            tabBar?.moreNavigationController.popToViewController(generalVC!, animated: true)
+            guard let generalVC = generalVC else { return }
+            tabBar?.moreNavigationController.popToViewController(generalVC, animated: true)
+            tabBar?.moreNavigationController.view.layoutIfNeeded() // https://developer.apple.com/forums/thread/687805
             return
         }
         let controller = tabBar?.viewControllers?[index] as? UINavigationController
@@ -191,7 +193,7 @@ extension MainViewController: WKNavigationDelegate {
     }
     
     private func logout(deleteToken: Bool = true) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
             UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
             KeychainManager.deleteUsername()
@@ -202,7 +204,7 @@ extension MainViewController: WKNavigationDelegate {
             KeychainManager.deleteTokenExpirationDate()
             CacheManager().clearCache()
             KeychainManager.deletePinData()
-            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+            if let sceneDelegate = self?.view.window?.windowScene?.delegate as? SceneDelegate {
                 sceneDelegate.startLoginFlow()
             }
         }

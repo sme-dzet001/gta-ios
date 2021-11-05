@@ -141,11 +141,11 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     }
     
     private func stopAnimation() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            self.tableView.alpha = 1
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.removeFromSuperview()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+            self?.tableView.alpha = 1
+            self?.activityIndicator.stopAnimating()
+            self?.activityIndicator.removeFromSuperview()
         }
     }
     

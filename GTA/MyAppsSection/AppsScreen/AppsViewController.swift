@@ -182,13 +182,14 @@ class AppsViewController: UIViewController {
     
     private func stopAnimation() {
         guard dataProvider.myAppsStatusData != nil || myAppsLoadingError != nil else { return }
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            self.errorLabel.isHidden = !(self.dataProvider.appsData.isEmpty && self.allAppsLoadingError != nil)
-            self.errorLabel.text = (self.allAppsLoadingError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-            self.tableView.alpha = !self.dataProvider.appsData.isEmpty ? 1 : 0
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.removeFromSuperview()
+        DispatchQueue.main.async { [weak self] in
+            guard let dataProvider = self?.dataProvider else { return }
+            self?.tableView.reloadData()
+            self?.errorLabel.isHidden = !(dataProvider.appsData.isEmpty && self?.allAppsLoadingError != nil)
+            self?.errorLabel.text = (self?.allAppsLoadingError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+            self?.tableView.alpha = !dataProvider.appsData.isEmpty ? 1 : 0
+            self?.activityIndicator.stopAnimating()
+            self?.activityIndicator.removeFromSuperview()
         }
     }
     
