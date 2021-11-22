@@ -9,7 +9,13 @@ import Foundation
 import UIKit
 
 class Constants {
-    static let ticketSupportEmail = "service.desk@2knzn4q0e9o8tlx4di2oeimin1goubnbotpk3fcky2mdc99t5w.7b-4cgzeaa.cs190.case.sandbox.salesforce.com"
+    static var ticketSupportEmail: String {
+        #if GTA
+        return "gta-app@k-1mklc87f853pykhy82hbwh6tmdr4h9faxa2b74x99if8tw3s3z.7-jlcaeao.na117.case.salesforce.com"
+        #else
+        return "gta-app@p-uwi73v2uj5on3cc4mbzmdizt0mgw04qxttkzz0m2cc4vec0yp.7h-9przeaq.cs201.case.sandbox.salesforce.com"
+        #endif
+    }
     static let sortingKey = "storedSortingType"
     static let filterKey = "storedFilterType"
     // MARK: Push notifications constants
