@@ -794,6 +794,10 @@ extension String {
         if let date = dateFormatterPrint.date(from: self) {
             return getUsageMetricStringDate(from: date)
         }
+        dateFormatterPrint.dateFormat = String.comapreDateFormat
+        if let date = dateFormatterPrint.date(from: self) {
+            return getUsageMetricStringDate(from: date)
+        }
         return ""
     }
     
