@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,6 +18,7 @@
             <connections>
                 <outlet property="activityIndicator" destination="VDm-Qi-PTI" id="DQI-IF-MoU"/>
                 <outlet property="closeButton" destination="XQ8-Vc-JYX" id="3pu-Xj-m0A"/>
+                <outlet property="errorLabel" destination="FrV-cB-ltT" id="697-PC-nMA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="e3X-NB-TzR" id="BxQ-6j-ATP"/>
             </connections>
@@ -62,26 +63,36 @@
                     </wkWebViewConfiguration>
                 </wkWebView>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="VDm-Qi-PTI">
-                    <rect key="frame" x="197" y="484.5" width="20" height="20"/>
+                    <rect key="frame" x="197" y="443" width="20" height="20"/>
                 </activityIndicatorView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FrV-cB-ltT">
+                    <rect key="frame" x="16" y="443" width="382" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="e3X-NB-TzR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="1Zy-pv-izt"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FrV-cB-ltT" secondAttribute="trailing" constant="16" id="7jw-Cg-XRR"/>
+                <constraint firstItem="VDm-Qi-PTI" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="8YI-Vz-oCD"/>
                 <constraint firstItem="Jjw-g7-NPH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="9" id="B7S-nf-8CM"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XQ8-Vc-JYX" secondAttribute="trailing" constant="30" id="D9j-b6-Myk"/>
                 <constraint firstItem="XQ8-Vc-JYX" firstAttribute="leading" secondItem="52o-dv-q9x" secondAttribute="trailing" constant="10" id="DVf-Gw-D79"/>
                 <constraint firstItem="Jjw-g7-NPH" firstAttribute="top" secondItem="52o-dv-q9x" secondAttribute="bottom" constant="16" id="HWJ-ya-WSd"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="e3X-NB-TzR" secondAttribute="trailing" id="LOS-JB-gcm"/>
                 <constraint firstItem="e3X-NB-TzR" firstAttribute="top" secondItem="Jjw-g7-NPH" secondAttribute="bottom" id="MsW-Wh-mau"/>
-                <constraint firstItem="VDm-Qi-PTI" firstAttribute="centerX" secondItem="e3X-NB-TzR" secondAttribute="centerX" id="QCT-gv-rib"/>
                 <constraint firstItem="52o-dv-q9x" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="X4f-Q1-Pev"/>
-                <constraint firstItem="VDm-Qi-PTI" firstAttribute="centerY" secondItem="e3X-NB-TzR" secondAttribute="centerY" id="X8y-wj-Xld"/>
+                <constraint firstItem="FrV-cB-ltT" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="cih-uM-UHc"/>
+                <constraint firstItem="FrV-cB-ltT" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="egX-nD-1Ji"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Jjw-g7-NPH" secondAttribute="trailing" constant="9" id="jAd-Is-1V1"/>
                 <constraint firstItem="XQ8-Vc-JYX" firstAttribute="centerY" secondItem="52o-dv-q9x" secondAttribute="centerY" id="kRC-nk-4nl"/>
+                <constraint firstItem="VDm-Qi-PTI" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="mVa-Gk-zUl"/>
                 <constraint firstItem="XQ8-Vc-JYX" firstAttribute="width" secondItem="XQ8-Vc-JYX" secondAttribute="height" multiplier="1:1" id="mZb-kH-Wnz"/>
                 <constraint firstItem="52o-dv-q9x" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="pFB-rN-uZy"/>
+                <constraint firstItem="FrV-cB-ltT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="y6S-FH-OUA"/>
                 <constraint firstAttribute="bottom" secondItem="e3X-NB-TzR" secondAttribute="bottom" id="yM9-Rh-UbX"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="95.758928571428569"/>

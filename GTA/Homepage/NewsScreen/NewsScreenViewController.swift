@@ -142,42 +142,30 @@ extension NewsScreenViewController: UITableViewDataSource, UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
-        let absoluteTop: CGFloat = 0;
-        let absoluteBottom: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height;
+        let absoluteTop: CGFloat = 0
         
         let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
-        let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
+        let isScrollingUp = scrollDiff < 0
         tableViewPosition = scrollView.contentOffset
         
-        if canAnimateHeader(scrollView) {
-            var newHeight = self.headerHeightConstraint.constant
-            if isScrollingDown {
-                newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
-            } else if isScrollingUp, scrollView.contentOffset.y <= CGPoint.zero.y {
-                newHeight = min(self.maxHeaderHeight, self.headerHeightConstraint.constant + abs(scrollDiff))
-            }
-            
-            if newHeight != self.headerHeightConstraint.constant {
-                self.headerHeightConstraint.constant = newHeight
-                self.setScrollPosition(position: self.previousScrollOffset)
-            }
-            
-            self.blurView.alpha = min(scrollView.contentOffset.y, 1)
-            self.previousScrollOffset = scrollView.contentOffset.y
-            self.updateHeader()
+        var newHeight = self.headerHeightConstraint.constant
+        if isScrollingDown {
+            newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
+        } else if isScrollingUp, scrollView.contentOffset.y < CGPoint.zero.y {
+            newHeight = min(self.maxHeaderHeight, self.headerHeightConstraint.constant + abs(scrollDiff))
         }
+        if newHeight != self.headerHeightConstraint.constant {
+            self.headerHeightConstraint.constant = newHeight
+            self.setScrollPosition(position: self.previousScrollOffset)
+        }
+        
+        self.blurView.alpha = min(scrollView.contentOffset.y, 1)
+        self.previousScrollOffset = scrollView.contentOffset.y
+        self.updateHeader()
     }
     
     func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
         expandHeader()
-    }
-    
-    func canAnimateHeader(_ scrollView: UIScrollView) -> Bool {
-        // Calculate the size of the scrollView when header is collapsed
-        let scrollViewMaxHeight = scrollView.frame.height + self.headerHeightConstraint.constant - minHeaderHeight
-        
-        // Make sure that when header is collapsed, there is still room to scroll
-        return scrollView.contentSize.height > scrollViewMaxHeight
     }
     
     func setScrollPosition(position: CGFloat) {

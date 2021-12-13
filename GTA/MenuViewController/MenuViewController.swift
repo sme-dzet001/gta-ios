@@ -177,16 +177,16 @@ class MenuViewController: UIViewController {
                             }
                         } else {
                             self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                            self?.setTableViewHeight()
                             self?.tableView.reloadData()
+                            self?.setTableViewHeight()
                         }
                     }
                 }
             } else {
                 DispatchQueue.main.async {
                     self?.officeLoadingError = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-                    self?.setTableViewHeight()
                     self?.tableView.reloadData()
+                    self?.setTableViewHeight()
                 }
             }
         })
@@ -345,17 +345,17 @@ extension MenuViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDel
     }
 
     func updateUIWithNewSelectedOffice() {
-        DispatchQueue.main.async {
-            self.officeLoadingIsEnabled = true
-            self.loadOfficesData()
+        DispatchQueue.main.async { [weak self] in
+            self?.officeLoadingIsEnabled = true
+            self?.loadOfficesData()
         }
      }
     
     private func updateUIWithSelectedOffice() {
-        DispatchQueue.main.async {
-            self.officeLoadingError = nil
-            self.setTableViewHeight()
-            self.tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.officeLoadingError = nil
+            self?.setTableViewHeight()
+            self?.tableView.reloadData()
         }
     }
 }

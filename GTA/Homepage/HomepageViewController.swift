@@ -81,8 +81,8 @@ class HomepageViewController: UIViewController {
     
     private var emergencyOutageLoaded: Bool = false {
         didSet {
-            DispatchQueue.main.async {
-                if self.navigationController?.topViewController is HomepageViewController, self.emergencyOutageLoaded {
+            DispatchQueue.main.async { [weak self] in
+                if self?.navigationController?.topViewController is HomepageViewController, let emergencyLoaded = self?.emergencyOutageLoaded, emergencyLoaded {
                     UIApplication.shared.applicationIconBadgeNumber = 0
                 }
             }
