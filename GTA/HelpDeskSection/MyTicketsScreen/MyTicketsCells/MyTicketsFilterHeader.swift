@@ -150,7 +150,7 @@ extension MyTicketsFilterHeader: UIPickerViewDelegate, UIPickerViewDataSource {
 enum FilterType: String {
     case all = "All"
     case closed = "Closed"
-    case new = "New"
+    case new = "Open"
 }
 
 enum SortType: String {

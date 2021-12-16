@@ -282,7 +282,7 @@ extension MyTicketsViewController: FilterSortingSelectionDelegate {
     }
 }
 
-enum TicketStatus {
+enum TicketStatus: String {
     case new
     case open
     case closed

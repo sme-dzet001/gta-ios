@@ -37,7 +37,7 @@ class TicketDescriptionCell: UITableViewCell {
         statusDateView.isHidden = data.closeDate == nil ? true : false
         switch data.status {
         case .new, .open:
-            statusLabel.text = data.status == .new ? "New" : "Open"
+            statusLabel.text = "Open"
             statusLabel.textColor = UIColor(hex: 0x34C759)
         case .closed:
             statusLabel.text = "Closed"
