@@ -29,7 +29,7 @@ class TicketCell: UITableViewCell {
         separatorUnderStatusDate.isHidden = data?.closeDate == nil ? true : false
         switch data?.status {
         case .new, .open:
-            statusLabel.text = data?.status == .new ? "New" : "Open"
+            statusLabel.text = "Open"
             statusDateStackView.isHidden = true
             //separatorUnderStatusDate.isHidden = true
             statusLabel.textColor = UIColor(hex: 0x34C759)

@@ -164,9 +164,6 @@ class HelpDeskDataProvider {
             if (helpDeskResponse.serviceDeskEmail ?? "").isEmpty {
                 missingHelpDeskFields.append("email")
             }
-            if (helpDeskResponse.teamsChatLink ?? "").isEmpty {
-                missingHelpDeskFields.append("teamsChat")
-            }
             if !missingHelpDeskFields.isEmpty {
                 retErr = ResponseError.missingFieldError(missingFields: missingHelpDeskFields)
             }

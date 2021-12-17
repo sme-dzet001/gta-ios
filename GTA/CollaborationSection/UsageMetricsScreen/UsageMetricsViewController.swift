@@ -241,9 +241,11 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
             guard let chart = data as? ChartStructure else { return UITableViewCell() }
             if chart.chartType == .line {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "ActiveUsersTableViewCell") as? ActiveUsersTableViewCell else { return UITableViewCell() }
+                cell.delegate = self
                 chartDimensionsDict[indexPath.row] = cell
                 cell.chartData = dataProvider?.activeUsersLineChartData
                 cell.updateData()
+                cell.setScrollPosition(to: chartPositions[indexPath.row])
                 return cell
             } else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "ActiveUsersByFunctionCell") as? ActiveUsersByFunctionCell else { return UITableViewCell() }
@@ -253,33 +255,14 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
             }
         case is TeamsByFunctionsLineChartData:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TeamsByFunctionsTableViewCell") as? TeamsByFunctionsTableViewCell else { return UITableViewCell() }
+            cell.delegate = self
             chartDimensionsDict[indexPath.row] = cell
             cell.chartsData = dataProvider?.teamsByFunctionsLineChartData
             cell.updateData()
+            cell.setScrollPosition(to: chartPositions[indexPath.row])
             return cell
         default:
             return UITableViewCell()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let activeUsersTableViewCell = cell as? ActiveUsersTableViewCell {
-            activeUsersTableViewCell.setScrollPosition(to: chartPositions[0])
-            
-        }
-        if let teamsByFunctionsTableViewCell = cell as? TeamsByFunctionsTableViewCell {
-            teamsByFunctionsTableViewCell.setScrollPosition(to: chartPositions[1])
-        }
-        
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let activeUsersTableViewCell = cell as? ActiveUsersTableViewCell {
-            chartPositions[0] = activeUsersTableViewCell.chartScrollView.contentOffset
-        }
-        
-        if let teamsByFunctionsTableViewCell = cell as? TeamsByFunctionsTableViewCell {
-            chartPositions[1] = teamsByFunctionsTableViewCell.chartScrollView.contentOffset
         }
     }
     
@@ -287,6 +270,18 @@ extension UsageMetricsViewController: UITableViewDataSource, UITableViewDelegate
         hideKeyboard()
     }
     
+}
+
+extension UsageMetricsViewController: ScrollableChartCellDelegate {
+    func scrollableChartCellDidScrolled(_ cell: UITableViewCell, with contentOffset: CGPoint) {
+        if let activeUsersTableViewCell = cell as? ActiveUsersTableViewCell, let indexPath = tableView.indexPath(for: activeUsersTableViewCell) {
+            chartPositions[indexPath.row] = contentOffset
+        }
+        
+        if let teamsByFunctionsTableViewCell = cell as? TeamsByFunctionsTableViewCell, let indexPath = tableView.indexPath(for: teamsByFunctionsTableViewCell) {
+            chartPositions[indexPath.row] = contentOffset
+        }
+    }
 }
 
 extension UsageMetricsViewController: UIPickerViewDelegate, UIPickerViewDataSource {

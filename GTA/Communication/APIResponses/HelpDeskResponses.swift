@@ -44,12 +44,6 @@ struct HelpDeskResponse: Codable {
         return returnedValue
     }
     
-    var teamsChatLink: String? {
-        guard let values = values, let index = indexes["service_teams_channel"], values.count > index else { return nil }
-        guard let returnedValue = values[index], !returnedValue.isEmpty else { return nil }
-        return returnedValue
-    }
-    
     var hoursOfOperation: String? {
         guard let values = values, let index = indexes["hours_of_operation"], values.count > index else { return nil }
         return values[index]
@@ -190,83 +184,83 @@ struct GSDStatusRow: Codable {
 }
 
 /*
-struct GSDMyTickets: Codable {
-    var meta: ResponseMetaData?
-    var data: [String : GSDMyTicketsData?]?
-}
-
-struct GSDMyTicketsData: Codable {
-    var data: GSDMyTicketsRows?
-}
-
-struct GSDMyTicketsRows: Codable {
-    var rows: [GSDMyTicketsRow?]?
-}
-
-struct GSDMyTicketsRow: Codable, Equatable {
-    var values: [QuantumValue?]?
-    var indexes: [String : Int] = [:]
-    var comments: [GSDTicketCommentsRow?]?
-    
-    enum CodingKeys: String, CodingKey {
-        case values = "values"
-    }
-    
-    var ticketNumber: String? {
-        guard let values = values, let index = indexes["ticket number"], values.count > index else { return nil }
-        return values[index]?.stringValue
-    }
-    
-    var requestorEmail: String? {
-        guard let values = values, let index = indexes["requestor email"], values.count > index else { return nil }
-        return values[index]?.stringValue
-    }
-    
-    var openDate: String? {
-        guard let values = values, let index = indexes["open date"], values.count > index else { return nil }
-        return values[index]?.stringValue
-    }
-    
-    var closeDate: String? {
-        guard let values = values, let index = indexes["close date"], values.count > index else { return nil }
-        return values[index]?.stringValue
-    }
-    
-    var subject: String? {
-        guard let values = values, let index = indexes["subject"], values.count > index else { return nil }
-        return values[index]?.stringValue
-    }
-    
-    var description: String? {
-        guard let values = values, let index = indexes["description"], values.count > index else { return nil }
-        return values[index]?.stringValue
-    }
-    
-    var owner: String? {
-        guard let values = values, let index = indexes["owner"], values.count > index else { return nil }
-        return values[index]?.stringValue
-    }
-    
-    var status: TicketStatus {
-        guard let values = values, let index = indexes["status"], values.count > index else { return .none }
-        switch values[index]?.stringValue?.lowercased() {
-        case "new":
-            return .new
-        case "closed":
-            return .closed
-        case "open":
-            return .open
-        default:
-            return .none
-        }
-    }
-    
-    static func == (lhs: GSDMyTicketsRow, rhs: GSDMyTicketsRow) -> Bool {
-        return lhs.ticketNumber == rhs.ticketNumber && lhs.openDate == rhs.openDate && lhs.closeDate == rhs.closeDate && lhs.owner == rhs.owner && lhs.status == rhs.status && lhs.description == rhs.description && lhs.subject == rhs.subject
-    }
-    
-}
-*/
+ struct GSDMyTickets: Codable {
+ var meta: ResponseMetaData?
+ var data: [String : GSDMyTicketsData?]?
+ }
+ 
+ struct GSDMyTicketsData: Codable {
+ var data: GSDMyTicketsRows?
+ }
+ 
+ struct GSDMyTicketsRows: Codable {
+ var rows: [GSDMyTicketsRow?]?
+ }
+ 
+ struct GSDMyTicketsRow: Codable, Equatable {
+ var values: [QuantumValue?]?
+ var indexes: [String : Int] = [:]
+ var comments: [GSDTicketCommentsRow?]?
+ 
+ enum CodingKeys: String, CodingKey {
+ case values = "values"
+ }
+ 
+ var ticketNumber: String? {
+ guard let values = values, let index = indexes["ticket number"], values.count > index else { return nil }
+ return values[index]?.stringValue
+ }
+ 
+ var requestorEmail: String? {
+ guard let values = values, let index = indexes["requestor email"], values.count > index else { return nil }
+ return values[index]?.stringValue
+ }
+ 
+ var openDate: String? {
+ guard let values = values, let index = indexes["open date"], values.count > index else { return nil }
+ return values[index]?.stringValue
+ }
+ 
+ var closeDate: String? {
+ guard let values = values, let index = indexes["close date"], values.count > index else { return nil }
+ return values[index]?.stringValue
+ }
+ 
+ var subject: String? {
+ guard let values = values, let index = indexes["subject"], values.count > index else { return nil }
+ return values[index]?.stringValue
+ }
+ 
+ var description: String? {
+ guard let values = values, let index = indexes["description"], values.count > index else { return nil }
+ return values[index]?.stringValue
+ }
+ 
+ var owner: String? {
+ guard let values = values, let index = indexes["owner"], values.count > index else { return nil }
+ return values[index]?.stringValue
+ }
+ 
+ var status: TicketStatus {
+ guard let values = values, let index = indexes["status"], values.count > index else { return .none }
+ switch values[index]?.stringValue?.lowercased() {
+ case "new":
+ return .new
+ case "closed":
+ return .closed
+ case "open":
+ return .open
+ default:
+ return .none
+ }
+ }
+ 
+ static func == (lhs: GSDMyTicketsRow, rhs: GSDMyTicketsRow) -> Bool {
+ return lhs.ticketNumber == rhs.ticketNumber && lhs.openDate == rhs.openDate && lhs.closeDate == rhs.closeDate && lhs.owner == rhs.owner && lhs.status == rhs.status && lhs.description == rhs.description && lhs.subject == rhs.subject
+ }
+ 
+ }
+ */
 
 struct GSDMyTickets: Codable  {
     var data: [GSDTickets?]?
@@ -293,17 +287,10 @@ struct GSDTickets: Codable, Equatable {
     }
     
     var status: TicketStatus {
-        guard let _ = ticketStatus else { return .none }
-        switch ticketStatus!.lowercased() {
-        case "new":
-            return .new
-        case "closed":
-            return .closed
-        case "open":
-            return .open
-        default:
-            return .none
-        }
+        guard let ticketStatus = ticketStatus,
+              let status = TicketStatus.init(rawValue: ticketStatus.lowercased())
+        else { return .none }
+        return status
     }
     
     enum CodingKeys: String, CodingKey {
