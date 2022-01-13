@@ -8,6 +8,10 @@
 import UIKit
 import Charts
 
+protocol ScrollableChartCellDelegate: AnyObject {
+    func scrollableChartCellDidScrolled(_ cell: UITableViewCell, with contentOffset: CGPoint)
+}
+
 class ChartScrollView : UIScrollView, UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
@@ -80,6 +84,8 @@ class TeamsByFunctionsTableViewCell: UITableViewCell {
     
     @IBOutlet var selectorBtns: [ChartDataSourceSelectionButton]!
     @IBOutlet weak var titleLabel: UILabel!
+    
+    weak var delegate: ScrollableChartCellDelegate?
     
     let chartViewGridWidth: CGFloat = 64
     let lineColor = UIColor(hex: 0x428DF7)
@@ -345,6 +351,7 @@ class TeamsByFunctionsTableViewCell: UITableViewCell {
 extension TeamsByFunctionsTableViewCell: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateBlurViews()
+        delegate?.scrollableChartCellDidScrolled(self, with: scrollView.contentOffset)
     }
 }
 

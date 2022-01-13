@@ -26,7 +26,7 @@ class HelpDeskViewController: UIViewController {
         let count = dataProvider.myTickets?.filter({$0.status != .closed}).count ?? 0
         return count > 0 ? count : nil
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpHeaderView()
@@ -144,11 +144,11 @@ class HelpDeskViewController: UIViewController {
         let aboutCellSubtitle = (dataResponse == nil && errorDesc != nil) ? errorDesc : "Overview of the mission, hours, etc."
         let phoneCellSubtitle = dataResponse?.serviceDeskPhoneNumber ?? errorDesc ?? "no phone number"
         let emailCellSubtitle = dataResponse?.serviceDeskEmail ?? errorDesc ?? "no email"
-        let teamsChatCellSubtitle = dataResponse?.teamsChatLink != nil ? "Teams mobile app is required" : (errorDesc ?? "no teams chat link")
+        let teamsChatCellSubtitle = "A web browser is required"
         helpDeskCellsData = [
             [HelpDeskCellData(imageName: "phone_call_icon", cellTitle: "Call", cellSubtitle: phoneCellSubtitle, updatesNumber: nil),
              HelpDeskCellData(imageName: "send_message_icon", cellTitle: "Send Message", cellSubtitle: emailCellSubtitle, updatesNumber: nil),
-             HelpDeskCellData(imageName: "teams_chat_icon", cellTitle: "Teams Chat", cellSubtitle: teamsChatCellSubtitle, updatesNumber: nil)],
+             HelpDeskCellData(imageName: "teams_chat_icon", cellTitle: "Chat with a Tech", cellSubtitle: teamsChatCellSubtitle, updatesNumber: nil)],
             [HelpDeskCellData(imageName: "quick_help_icon", cellTitle: "Quick Help", cellSubtitle: "Password Resets, MFA Help, etc.", updatesNumber: nil),
             HelpDeskCellData(imageName: "info_icon", cellTitle: "About", cellSubtitle: aboutCellSubtitle, updatesNumber: nil),
             HelpDeskCellData(imageName: "contacts_icon", cellTitle: "Service Desk Contacts", cellSubtitle: "Key Contacts and Member Profiles", updatesNumber: nil),
@@ -172,7 +172,7 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "HelpDeskContactOptionCell", for: indexPath) as? HelpDeskContactOptionCell {
                 let cellData = helpDeskCellsData[indexPath.section][indexPath.row]
-                let cellIsActive = cellData.cellSubtitle != nil && cellData.cellSubtitle != "Oops, something went wrong" && cellData.cellSubtitle != "no phone number" && cellData.cellSubtitle != "no email" && cellData.cellSubtitle != "no teams chat link"
+                let cellIsActive = cellData.cellSubtitle != nil && cellData.cellSubtitle != "Oops, something went wrong" && cellData.cellSubtitle != "no phone number" && cellData.cellSubtitle != "no email"
                 cell.setUpCell(with: cellData, isActive: cellIsActive)
                 cell.cellTitle.accessibilityIdentifier = "ServiceDeskContactCellTitleLabel"
                 cell.cellSubtitle.accessibilityIdentifier = "ServiceDeskContactCellSubtitleLabel"
@@ -231,8 +231,7 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
                 guard let email = sectionData[indexPath.row].cellSubtitle, email != "Oops, something went wrong", email != "no email" else { return }
                 makeEmailForAddress(email)
             case 2:
-                guard let msTeamsLink = sectionData[indexPath.row].cellSubtitle, msTeamsLink != "Oops, something went wrong", msTeamsLink != "no teams chat link" else { return }
-                openMSTeamsChat()
+                openTeamsChat()
             default:
                 return
             }
@@ -277,37 +276,11 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    private func openMSTeamsChat() {
-        if let chatLink = dataResponse?.teamsChatLink, let addressURL = URL(string: chatLink.replacingOccurrences(of: "https://", with: "msteams://").replacingOccurrences(of: "http://", with: "msteams://")) {
-            UIApplication.shared.open(addressURL, options: [:], completionHandler: { (isSuccess) in
-                if !isSuccess {
-                    self.needMSTeamsAppAlert()
-                }
-            })
-        } else if let addressURL = URL(string: "msteams://teams.microsoft.com/l/team/19%3a77f2b169349f449da4be0ebda3c44aee%40thread.tacv2/conversations?groupId=e7cf5b23-9d73-469f-8f4e-022835c554dd&tenantId=f0aff3b7-91a5-4aae-af71-c63e1dda2049") {
-            UIApplication.shared.open(addressURL, options: [:], completionHandler: { (isSuccess) in
-                if !isSuccess {
-                    self.needMSTeamsAppAlert()
-                }
-            })
-        }
+    private func openTeamsChat() {
+        let stringUrl = "https://sonymusicentertainment.sharepoint.com/sites/GlobalISTComms/SitePages/Chat.aspx"
+        guard let url = URL(string: stringUrl) else { return }
+        UIApplication.shared.open(url)
     }
-    
-    private func needMSTeamsAppAlert() {
-        let alert = UIAlertController(title: "Teams App Required", message: "Teams mobile app is required", preferredStyle: .alert)
-        let openAction = UIAlertAction(title: "Open App Store", style: .default, handler: { (_) in
-            if let url = URL(string: "itms-apps://apps.apple.com/ua/app/microsoft-teams/id1113153706") {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        })
-        openAction.accessibilityIdentifier = "ServiceDeskAlertOpenButton"
-        alert.addAction(openAction)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        cancelAction.accessibilityIdentifier = "ServiceDeskAlertCancelButton"
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true, completion: nil)
-    }
-    
 }
 
 struct HelpDeskCellData: ContactsCellDataProtocol {
