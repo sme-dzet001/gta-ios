@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_GTAStageVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_GTAStageVersionString[];
+FOUNDATION_EXPORT double Pods_GTAUatVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_GTAUatVersionString[];
 

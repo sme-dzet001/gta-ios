@@ -21,7 +21,7 @@ target 'GTA' do
   shared_pods
 end
 
-target 'GTAStage' do
+target 'GTAUat' do
   shared_pods
 end
 
