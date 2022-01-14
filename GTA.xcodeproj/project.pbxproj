@@ -261,6 +261,8 @@
 		23FD630E27918A4200797459 /* AppContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C907E0D725D4382500FB0B55 /* AppContactCell.xib */; };
 		23FD630F27918A4200797459 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540537E926E7AA6800388BF3 /* MenuViewController.xib */; };
 		23FD631027918A4200797459 /* Office365ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F35861C25FD23FF0003658D /* Office365ViewController.xib */; };
+		23FD631A2791C70500797459 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23FD63192791C70500797459 /* GoogleService-Info.plist */; };
+		23FD631B2791C70500797459 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23FD63192791C70500797459 /* GoogleService-Info.plist */; };
 		540537EA26E7AA6800388BF3 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540537E826E7AA6800388BF3 /* MenuViewController.swift */; };
 		540537EC26E7AA6800388BF3 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540537E826E7AA6800388BF3 /* MenuViewController.swift */; };
 		540537ED26E7AA6800388BF3 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540537E826E7AA6800388BF3 /* MenuViewController.swift */; };
@@ -1803,6 +1805,7 @@
 		1FAB3DE18CB14E8FE44BBD45 /* Pods-GTATests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.release.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.release.xcconfig"; sourceTree = "<group>"; };
 		23FD631627918A4200797459 /* GTAUat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTAUat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FD631727918A4300797459 /* GTAUat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GTAUat-Info.plist"; path = "/Users/vahebazikan/Desktop/Swift/GTA/GTAUat-Info.plist"; sourceTree = "<absolute>"; };
+		23FD63192791C70500797459 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		540537E826E7AA6800388BF3 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		540537E926E7AA6800388BF3 /* MenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		540537F926E7C1BB00388BF3 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -2170,6 +2173,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23FD63182791C6A700797459 /* GTAUat */ = {
+			isa = PBXGroup;
+			children = (
+				23FD63192791C70500797459 /* GoogleService-Info.plist */,
+			);
+			path = GTAUat;
+			sourceTree = "<group>";
+		};
 		540537E726E7AA0900388BF3 /* MenuViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -3109,6 +3120,7 @@
 		9FCFA2AF259E143100E893D2 /* GooglePlists */ = {
 			isa = PBXGroup;
 			children = (
+				23FD63182791C6A700797459 /* GTAUat */,
 				9F825FCE25ED4DD3002A4560 /* GTA */,
 				9FCFA2B0259E143600E893D2 /* GTAStage */,
 				9F343A6B269DE3480071362D /* GTADev */,
@@ -3673,6 +3685,7 @@
 				23FD62CD27918A4200797459 /* AppsServiceAlertCell.xib in Resources */,
 				23FD62CE27918A4200797459 /* AboutHeaderCell.xib in Resources */,
 				23FD62CF27918A4200797459 /* Office365AppCell.xib in Resources */,
+				23FD631B2791C70500797459 /* GoogleService-Info.plist in Resources */,
 				23FD62D027918A4200797459 /* SF-Pro-Display-Regular.otf in Resources */,
 				23FD62D127918A4200797459 /* Apps.storyboard in Resources */,
 				23FD62D227918A4200797459 /* HelpReportScreenViewController.xib in Resources */,
@@ -4131,6 +4144,7 @@
 				9FE173D225914D3F00E2C481 /* AboutSupportCell.xib in Resources */,
 				659A5AF4255404F100E13B77 /* SF-Pro-Text-Medium.otf in Resources */,
 				9F35862D25FD37BF0003658D /* Office365AppCell.xib in Resources */,
+				23FD631A2791C70500797459 /* GoogleService-Info.plist in Resources */,
 				659A5ABA255401ED00E13B77 /* Assets.xcassets in Resources */,
 				9FA2C6A32628CFC900EC5BE3 /* Apps.storyboard in Resources */,
 				9F5B10602567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */,
