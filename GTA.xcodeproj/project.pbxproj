@@ -1801,7 +1801,6 @@
 		1D1F098F0306211A72349753 /* Pods_GTAUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTAUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FAB3DE18CB14E8FE44BBD45 /* Pods-GTATests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.release.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.release.xcconfig"; sourceTree = "<group>"; };
 		23FD631627918A4200797459 /* GTAUat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTAUat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		23FD631727918A4300797459 /* GTAUat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GTAUat-Info.plist"; path = "/Users/vahebazikan/Desktop/Swift/GTA/GTAUat-Info.plist"; sourceTree = "<absolute>"; };
 		23FD63192791C70500797459 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		540537E826E7AA6800388BF3 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		540537E926E7AA6800388BF3 /* MenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
@@ -1925,7 +1924,6 @@
 		9F3028432681E68B009A3096 /* AlertPopoverCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertPopoverCell.xib; sourceTree = "<group>"; };
 		9F3028442681E68B009A3096 /* AlertPopoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertPopoverViewController.xib; sourceTree = "<group>"; };
 		9F33F6EF260A3C4000470A47 /* QA-GTAStage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QA-GTAStage.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F33F6F0260A3C4000470A47 /* QA-GTAStage-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QA-GTAStage-Info.plist"; path = "/Users/kostiantyndzetsiuk/Documents/gta-ios/QA-GTAStage-Info.plist"; sourceTree = "<absolute>"; };
 		9F343A6C269DE3750071362D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9F343A8626A1CE2F0071362D /* ActiveUsersByFunctionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveUsersByFunctionCell.swift; sourceTree = "<group>"; };
 		9F343A8E26A1CE3B0071362D /* ActiveUsersByFunctionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActiveUsersByFunctionCell.xib; sourceTree = "<group>"; };
@@ -2042,6 +2040,8 @@
 		A506C40D0CCD2C3AB7647FC7 /* Pods_GTATests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GTATests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0F7A82E361E6D4AECE61B77 /* Pods-QA-GTAStage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QA-GTAStage.release.xcconfig"; path = "Target Support Files/Pods-QA-GTAStage/Pods-QA-GTAStage.release.xcconfig"; sourceTree = "<group>"; };
 		C77809119CC2C3CE50314584 /* Pods-GTATests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTATests.debug.xcconfig"; path = "Target Support Files/Pods-GTATests/Pods-GTATests.debug.xcconfig"; sourceTree = "<group>"; };
+		C82408E92796F437009CCD69 /* QA-GTAStage-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QA-GTAStage-Info.plist"; sourceTree = "<group>"; };
+		C82409012796F5E6009CCD69 /* GTAUat-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GTAUat-Info.plist"; sourceTree = "<group>"; };
 		C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContactsViewController.swift; sourceTree = "<group>"; };
 		C907E0BF25D437BF00FB0B55 /* AppContactsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppContactsViewController.xib; sourceTree = "<group>"; };
 		C907E0D625D4382500FB0B55 /* AppContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContactCell.swift; sourceTree = "<group>"; };
@@ -3103,12 +3103,12 @@
 		9FCFA2AE259E141300E893D2 /* Plists */ = {
 			isa = PBXGroup;
 			children = (
+				C82409012796F5E6009CCD69 /* GTAUat-Info.plist */,
 				9FCFA2AF259E143100E893D2 /* GooglePlists */,
 				659A5ABE255401ED00E13B77 /* Info.plist */,
 				9F819AA7255C1572007C1739 /* GTAStage-Info.plist */,
 				9F819AD1255C1646007C1739 /* GTADev-Info.plist */,
-				23FD631727918A4300797459 /* GTAUat-Info.plist */,
-				9F33F6F0260A3C4000470A47 /* QA-GTAStage-Info.plist */,
+				C82408E92796F437009CCD69 /* QA-GTAStage-Info.plist */,
 			);
 			path = Plists;
 			sourceTree = "<group>";
@@ -5880,7 +5880,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H9636WUCU4;
-				INFOPLIST_FILE = "GTAUat-Info.plist";
+				INFOPLIST_FILE = "GTA/Plists/GTAUat-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5905,7 +5905,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H9636WUCU4;
-				INFOPLIST_FILE = "GTAUat-Info.plist";
+				INFOPLIST_FILE = "GTA/Plists/GTAUat-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -6319,7 +6319,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H9636WUCU4;
-				INFOPLIST_FILE = "QA-GTAStage-Info.plist";
+				INFOPLIST_FILE = "GTA/Plists/QA-GTAStage-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -6342,7 +6342,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H9636WUCU4;
-				INFOPLIST_FILE = "QA-GTAStage-Info.plist";
+				INFOPLIST_FILE = "GTA/Plists/QA-GTAStage-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
