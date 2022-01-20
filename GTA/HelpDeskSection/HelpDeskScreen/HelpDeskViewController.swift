@@ -103,23 +103,24 @@ class HelpDeskViewController: UIViewController {
     }
     
     private func stopAnimation() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            self.tableView.alpha = 1
-            self.activityIndicator.stopAnimating()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+            self?.tableView.alpha = 1
+            self?.activityIndicator.stopAnimating()
         }
     }
     
     private func setUpHeaderView() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let headerView = self?.headerView, let response = self?.statusResponse else { return }
             let header = HelpDeskHeader.instanceFromNib()
             header.accessibilityIdentifier = "ServiceDeskHeaderView"
             header.titleLabel.accessibilityIdentifier = "ServiceDeskHeaderViewTitleLabel"
             header.hoursOfOperationLabel.accessibilityIdentifier = "ServiceDeskHeaderHoursOfOperationLabel"
             header.statusLabel.accessibilityIdentifier = "ServiceDeskHeaderStatusLabel"
-            self.headerView.addSubview(header)
-            header.pinEdges(to: self.headerView)
-            header.setStatus(statusData: self.statusResponse)
+            headerView.addSubview(header)
+            header.pinEdges(to: headerView)
+            header.setStatus(statusData: response)
         }
     }
 

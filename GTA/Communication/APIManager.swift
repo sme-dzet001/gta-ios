@@ -20,7 +20,7 @@ class APIManager: NSObject, URLSessionDelegate {
     #elseif QA_GTAStage
     let baseUrl = "https://gtaautotest.smedsp.com:8888"
     #else
-    let baseUrl = "https://gtastageapi.smedsp.com:8888"
+    let baseUrl = "https://gtauatapi.smedsp.com:8888"
     #endif
     private let accessToken: String?
     

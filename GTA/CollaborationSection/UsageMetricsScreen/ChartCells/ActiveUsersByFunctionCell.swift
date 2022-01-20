@@ -89,6 +89,7 @@ class ActiveUsersByFunctionCell: UITableViewCell, VerticalBarChartDataChangedDel
     }
     
     private func setUpChartLegend(for count: Int, labels: [String]) {
+        guard let chartData = barChartView.data else { return }
         var entries = [LegendEntry]()
         let colors = getBarColors(for: count)
         for index in 0..<count where labels.count > index {
@@ -98,7 +99,7 @@ class ActiveUsersByFunctionCell: UITableViewCell, VerticalBarChartDataChangedDel
         barChartView.legend.font = UIFont(name: "SFProText-Regular", size: 10) ?? barChartView.leftAxis.labelFont
         barChartView.legend.textColor = UIColor(hex: 0xAEAEB2)
         
-        barChartView.legendRenderer.computeLegend(data: barChartView.data!)
+        barChartView.legendRenderer.computeLegend(data: chartData)
         barChartView.legend.verticalAlignment = .bottom
         if count >= 4 {
             //let space = ((barChartView.frame.width - barChartView.legend.neededWidth) / CGFloat(4)) - 12

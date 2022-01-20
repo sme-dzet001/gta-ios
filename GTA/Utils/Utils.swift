@@ -10,6 +10,8 @@ import Foundation
 struct USMSettings {
     #if GTA
     static let usmBasicURL = "https://usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
+    #elseif GTADev
+    static let usmBasicURL = "https://uat-auth-console.sonymusic.com/oauth2/openid/v1/authorize"
     #else
     static let usmBasicURL = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
     #endif
@@ -24,10 +26,10 @@ struct USMSettings {
     static let usmInternalRedirectURL = "https://gta.smedsp.com/charts-ui2/#/auth/processor"
     static let usmLogoutURL = "https://gtaapi.smedsp.com:8888/logout/oauth2"
     #else
-    static let usmRedirectURL = "https://gtastageapi.smedsp.com:8888/validate"
-    static let usmClientID = "NVdmOTlSc2txN3ByUmozbVNQSGs"
-    static let usmInternalRedirectURL = "https://gtastage.smedsp.com/charts-ui2/#/auth/processor"
-    static let usmLogoutURL = "https://gtastageapi.smedsp.com:8888/logout/oauth2"
+    static let usmRedirectURL = "https://gtauatapi.smedsp.com:8888/validate"
+    static let usmClientID = "clJ6Jnl5MjVYd0QzK1haQmJ4Kko"
+    static let usmInternalRedirectURL = "https://gtauatapi.smedsp.com/charts-ui2/#/auth/processor"
+    static let usmLogoutURL = "https://gtauatapi.smedsp.com:8888/logout/oauth2"
     #endif
 }
 

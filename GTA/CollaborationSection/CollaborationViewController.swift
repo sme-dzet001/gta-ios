@@ -122,10 +122,10 @@ class CollaborationViewController: UIViewController {
     }
     
     private func setUpHeaderView() {
-        DispatchQueue.main.async {
-            let header = self.headerTitleView
-            self.headerView.addSubview(header)
-            header.pinEdges(to: self.headerView)
+        DispatchQueue.main.async { [weak self] in
+            guard let headerTitle = self?.headerTitleView, let headerView = self?.headerView else { return }
+            headerView.addSubview(headerTitle)
+            headerTitle.pinEdges(to: headerView)
         }
     }
     

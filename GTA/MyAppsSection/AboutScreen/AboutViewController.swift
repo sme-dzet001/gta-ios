@@ -94,14 +94,14 @@ class AboutViewController: UIViewController, DetailsDataDelegate {
         detailsDataResponseError = error
         details = detailsData
         configureDataSource()
-        DispatchQueue.main.async {
-            if let _ = self.details {
-                self.errorLabel.isHidden = true
+        DispatchQueue.main.async { [weak self] in
+            if let _ = self?.details {
+                self?.errorLabel.isHidden = true
             } else {
-                self.errorLabel.isHidden = error == nil
+                self?.errorLabel.isHidden = error == nil
             }
-            self.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
-            self.tableView.reloadData()
+            self?.errorLabel.text = (error as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
+            self?.tableView.reloadData()
         }
     }
     

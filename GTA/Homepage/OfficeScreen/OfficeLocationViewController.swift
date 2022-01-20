@@ -116,13 +116,13 @@ class OfficeLocationViewController: UIViewController {
     }
     
     @IBAction func backButtonDidPressed(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.3) {
-            self.backArrow.alpha = 0
-            self.backButtonLeading.constant = 60
-            self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.backArrow.alpha = 0
+            self?.backButtonLeading.constant = 60
+            self?.view.layoutIfNeeded()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.navigationController?.popWithFadeAnimation()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.navigationController?.popWithFadeAnimation()
         }
     }
     

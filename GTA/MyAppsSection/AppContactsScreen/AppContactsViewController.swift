@@ -34,7 +34,6 @@ class AppContactsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.accessibilityIdentifier = "AppContactsTableView"
-        setUpNavigationItem()
         setUpTableView()
         setUpNavigationItem()
     }

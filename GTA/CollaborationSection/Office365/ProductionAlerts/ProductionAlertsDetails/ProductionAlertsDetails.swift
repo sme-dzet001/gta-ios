@@ -19,6 +19,7 @@ class ProductionAlertsDetails: UIViewController {
     private var lastError: ResponseError?
     private var dataSource: [[String : String]] = []
     private var heightObserver: NSKeyValueObservation?
+    private var isPanModalShort: Bool = true
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -99,7 +100,7 @@ class ProductionAlertsDetails: UIViewController {
     private func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableView.automaticDimension
+        //tableView.rowHeight = UITableView.automaticDimension
         tableView.register(UINib(nibName: "AlertDetailsHeaderCell", bundle: nil), forCellReuseIdentifier: "AlertDetailsHeaderCell")
         tableView.register(UINib(nibName: "AlertDetailsCell", bundle: nil), forCellReuseIdentifier: "AlertDetailsCell")
     }
@@ -172,6 +173,18 @@ extension ProductionAlertsDetails: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (dataSource.count > 0) ? dataSource.count : 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if loadProductionAlertsInProgress {
+            let neededHeight = isPanModalShort ? initialHeight : self.view.frame.height
+            return neededHeight - 109
+        }
+        guard dataSource.count > indexPath.row, let _ = dataSource[indexPath.row].keys.first else {
+            let neededHeight = isPanModalShort ? initialHeight : self.view.frame.height
+            return neededHeight - 109
+        }
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -248,12 +261,15 @@ extension ProductionAlertsDetails: PanModalPresentable {
     func willTransition(to state: PanModalPresentationController.PresentationState) {
         switch state {
         case .shortForm:
+            isPanModalShort = true
             UIView.animate(withDuration: 0.2) {
                 self.blurView.alpha = 1
             }
         default:
-            return
+            isPanModalShort = false
         }
+        guard dataSource.count == 0 else { return }
+        self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
     }
     
 }

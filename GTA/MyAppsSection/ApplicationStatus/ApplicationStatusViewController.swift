@@ -60,7 +60,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: false)
         getProductionAlerts()
         getMyApps()
         if lastUpdateDate == nil || Date() >= lastUpdateDate ?? Date() {
@@ -141,11 +141,11 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
     }
     
     private func stopAnimation() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            self.tableView.alpha = 1
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.removeFromSuperview()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+            self?.tableView.alpha = 1
+            self?.activityIndicator.stopAnimating()
+            self?.activityIndicator.removeFromSuperview()
         }
     }
     

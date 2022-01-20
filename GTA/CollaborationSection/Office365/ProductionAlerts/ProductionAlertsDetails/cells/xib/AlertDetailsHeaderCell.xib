@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,23 +19,23 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AlertDetailsHeaderCell" rowHeight="87" id="trY-BI-4gn" customClass="AlertDetailsHeaderCell" customModule="GTA" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="621" height="87"/>
+            <rect key="frame" x="0.0" y="0.0" width="821" height="87"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="trY-BI-4gn" id="kRp-7X-R7e">
-                <rect key="frame" x="0.0" y="0.0" width="621" height="87"/>
+                <rect key="frame" x="0.0" y="0.0" width="821" height="87"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="DPSX-16933" textAlignment="natural" lineBreakMode="clip" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHC-1l-m0K">
-                        <rect key="frame" x="24" y="5" width="90" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="GTAS-1693" lineBreakMode="clip" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHC-1l-m0K">
+                        <rect key="frame" x="24" y="5" width="80" height="17"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="90" id="3Vn-FV-moJ"/>
+                            <constraint firstAttribute="width" constant="80" id="3Vn-FV-moJ"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHQ-gu-uWt">
-                        <rect key="frame" x="117" y="5" width="407" height="77"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHQ-gu-uWt">
+                        <rect key="frame" x="320" y="5" width="181.5" height="77"/>
                         <string key="text">GRPS/MMT/Gold Downtime.
 Weds 10th Feb, 2020 6am
 EST/12pm CEST</string>
@@ -44,9 +44,9 @@ EST/12pm CEST</string>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Closed" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyW-bg-Ycp">
-                        <rect key="frame" x="527" y="5" width="70" height="17"/>
+                        <rect key="frame" x="747" y="5" width="50" height="17"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="JHR-mi-mrG"/>
+                            <constraint firstAttribute="width" constant="50" id="JHR-mi-mrG"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="14"/>
                         <color key="textColor" systemColor="systemGreenColor"/>
@@ -58,9 +58,10 @@ EST/12pm CEST</string>
                     <constraint firstAttribute="trailing" secondItem="IyW-bg-Ycp" secondAttribute="trailing" constant="24" id="Bpt-sB-7Ze"/>
                     <constraint firstItem="IyW-bg-Ycp" firstAttribute="top" secondItem="kRp-7X-R7e" secondAttribute="top" constant="5" id="FRG-Ua-DRD"/>
                     <constraint firstItem="aHC-1l-m0K" firstAttribute="top" secondItem="kRp-7X-R7e" secondAttribute="top" constant="5" id="Jds-3n-cog"/>
-                    <constraint firstItem="FHQ-gu-uWt" firstAttribute="leading" secondItem="aHC-1l-m0K" secondAttribute="trailing" constant="3" id="PU0-Zg-1wR"/>
-                    <constraint firstItem="IyW-bg-Ycp" firstAttribute="leading" secondItem="FHQ-gu-uWt" secondAttribute="trailing" constant="3" id="Poa-fX-oxy"/>
+                    <constraint firstItem="FHQ-gu-uWt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aHC-1l-m0K" secondAttribute="trailing" constant="12" id="PU0-Zg-1wR"/>
+                    <constraint firstItem="IyW-bg-Ycp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FHQ-gu-uWt" secondAttribute="trailing" constant="12" id="Poa-fX-oxy"/>
                     <constraint firstItem="FHQ-gu-uWt" firstAttribute="top" secondItem="kRp-7X-R7e" secondAttribute="top" constant="5" id="TQZ-XT-CDR"/>
+                    <constraint firstItem="FHQ-gu-uWt" firstAttribute="centerX" secondItem="kRp-7X-R7e" secondAttribute="centerX" id="Vll-0M-U3o"/>
                     <constraint firstItem="aHC-1l-m0K" firstAttribute="leading" secondItem="kRp-7X-R7e" secondAttribute="leading" constant="24" id="hir-vM-I9R"/>
                 </constraints>
             </tableViewCellContentView>
@@ -74,7 +75,7 @@ EST/12pm CEST</string>
                 <outlet property="alertTitleLabel" destination="FHQ-gu-uWt" id="s1T-yg-d0s"/>
                 <outlet property="statusLabel" destination="IyW-bg-Ycp" id="hGq-CY-cYp"/>
             </connections>
-            <point key="canvasLocation" x="-494.92753623188412" y="33.816964285714285"/>
+            <point key="canvasLocation" x="-350" y="33.816964285714285"/>
         </tableViewCell>
     </objects>
     <resources>
