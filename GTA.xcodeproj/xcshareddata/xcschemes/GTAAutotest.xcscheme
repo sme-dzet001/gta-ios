@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9F33F644260A3C4000470A47"
-               BuildableName = "QA-GTAStage.app"
-               BlueprintName = "QA-GTAStage"
+               BuildableName = "GTAAutotest.app"
+               BlueprintName = "GTAAutotest"
                ReferencedContainer = "container:GTA.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9F33F644260A3C4000470A47"
-            BuildableName = "QA-GTAStage.app"
-            BlueprintName = "QA-GTAStage"
+            BuildableName = "GTAAutotest.app"
+            BlueprintName = "GTAAutotest"
             ReferencedContainer = "container:GTA.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9F33F644260A3C4000470A47"
-            BuildableName = "QA-GTAStage.app"
-            BlueprintName = "QA-GTAStage"
+            BuildableName = "GTAAutotest.app"
+            BlueprintName = "GTAAutotest"
             ReferencedContainer = "container:GTA.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

@@ -78,7 +78,7 @@ class LoginViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let usmLoginScreen = storyboard.instantiateViewController(withIdentifier: "LoginUSMViewController") as? LoginUSMViewController {
             usmLoginScreen.emailAddress = emailText
-            #if QA_GTAStage
+            #if GTAAutotest
             let token = String(emailTextField.text?.split(separator: " ").last ?? "")
             usmLoginScreen.token = token != emailText ? token : ""
             #endif
