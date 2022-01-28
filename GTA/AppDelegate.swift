@@ -7,7 +7,9 @@
 
 import UIKit
 import CoreData
+#if !GTAAutotest
 import Firebase
+#endif
 import UserNotifications
 import PanModal
 
@@ -20,7 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let navBarTitleAttributes = [NSAttributedString.Key.font: navBarTitleFont]
             UINavigationBar.appearance().titleTextAttributes = navBarTitleAttributes
         }
+        #if !GTAAutotest
         FirebaseApp.configure()
+        #endif
         registerForPushNotifications()
         return true
     }

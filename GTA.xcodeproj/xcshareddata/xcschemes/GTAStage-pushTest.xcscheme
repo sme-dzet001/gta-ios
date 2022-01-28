@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9F33F644260A3C4000470A47"
-               BuildableName = "QA-GTAStage.app"
-               BlueprintName = "QA-GTAStage"
+               BlueprintIdentifier = "65437F732665568000B2F38A"
+               BuildableName = "GTAStage-pushTest.app"
+               BlueprintName = "GTAStage-pushTest"
                ReferencedContainer = "container:GTA.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,9 +44,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9F33F644260A3C4000470A47"
-            BuildableName = "QA-GTAStage.app"
-            BlueprintName = "QA-GTAStage"
+            BlueprintIdentifier = "65437F732665568000B2F38A"
+            BuildableName = "GTAStage-pushTest.app"
+            BlueprintName = "GTAStage-pushTest"
             ReferencedContainer = "container:GTA.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,9 +61,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9F33F644260A3C4000470A47"
-            BuildableName = "QA-GTAStage.app"
-            BlueprintName = "QA-GTAStage"
+            BlueprintIdentifier = "65437F732665568000B2F38A"
+            BuildableName = "GTAStage-pushTest.app"
+            BlueprintName = "GTAStage-pushTest"
             ReferencedContainer = "container:GTA.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
