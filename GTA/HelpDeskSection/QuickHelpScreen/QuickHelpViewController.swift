@@ -29,8 +29,8 @@ class QuickHelpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.accessibilityIdentifier = "QuickHelpTableView"
-        setUpNavigationItem()
         setUpTableView()
+        setUpNavigationItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -182,6 +182,7 @@ class QuickHelpViewController: UIViewController {
     }
     
     private func setUpTableView() {
+        //should be called before any other setup which may affect layout and trigger table view reloading
         tableView.register(UINib(nibName: "QuickHelpCell", bundle: nil), forCellReuseIdentifier: "QuickHelpCell")
         tableView.contentInset = tableView.menuButtonContentInset
     }
