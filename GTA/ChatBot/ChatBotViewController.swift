@@ -137,5 +137,32 @@ extension ChatBotViewController: WKNavigationDelegate {
         activityIndicator.stopAnimating()
     }
     
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+        let url = navigationAction.request.url?.absoluteString
+        let url_elements = url!.components(separatedBy: ":")
+        
+        if navigationAction.navigationType == .linkActivated {
+            if url_elements[0] == "mailto" || url_elements[0] == "tel" {
+                openCustomApp(urlScheme: "\(url_elements[0]):", additional_info: url_elements[1])
+                decisionHandler(.cancel)
+                return
+            }
+            if url_elements[0] == "https" {
+                openCustomApp(urlScheme: "\(url_elements[0])://", additional_info: url_elements[1])
+                decisionHandler(.cancel)
+                return
+            }
+        }
+        
+        decisionHandler(.allow)
+    }
     
+    private func openCustomApp(urlScheme:String, additional_info:String){
+        if let url = URL(string:"\(urlScheme)" + "\(additional_info)") {
+            let application: UIApplication = UIApplication.shared
+            if application.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
+    }
 }
