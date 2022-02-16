@@ -147,7 +147,7 @@ extension ChatBotViewController: WKNavigationDelegate {
                 decisionHandler(.cancel)
                 return
             }
-            if url_elements[0] == "https" {
+            if url_elements[0] == "http" || url_elements[0] == "https" {
                 openCustomApp(urlScheme: "\(url_elements[0])://", additional_info: url_elements[1])
                 decisionHandler(.cancel)
                 return
