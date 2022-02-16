@@ -31,6 +31,7 @@ class QuickHelpViewController: UIViewController {
         tableView.accessibilityIdentifier = "QuickHelpTableView"
         setUpTableView()
         setUpNavigationItem()
+        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
