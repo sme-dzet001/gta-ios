@@ -269,7 +269,7 @@ class ApplicationStatusViewController: UIViewController, SendEmailDelegate {
         reportScreen.appName = appName
         let reportIssueTypes = ["Navigation issues", "Slow app work", "No connection", "Missing data", "App crash", "App freeze", "Other"]
         let loginIssueTypes = ["Invalid credentials error", "Forgot password", "2FA issue", "Other"]
-        reportScreen.pickerDataSource = indexPath.row == 0 ? reportIssueTypes : loginIssueTypes
+        reportScreen.pickerDataSource = indexPath.row == (productionAlertsSectionAvailable ? 1 : 0) ? reportIssueTypes : loginIssueTypes
         presentPanModal(reportScreen)
     }
     
