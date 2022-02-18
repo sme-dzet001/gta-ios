@@ -184,6 +184,7 @@ class AppsViewController: UIViewController {
         guard dataProvider.myAppsStatusData != nil || myAppsLoadingError != nil else { return }
         DispatchQueue.main.async { [weak self] in
             guard let dataProvider = self?.dataProvider else { return }
+            self?.dismiss(animated: false)
             self?.tableView.reloadData()
             self?.errorLabel.isHidden = !(dataProvider.appsData.isEmpty && self?.allAppsLoadingError != nil)
             self?.errorLabel.text = (self?.allAppsLoadingError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
