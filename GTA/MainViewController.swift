@@ -154,16 +154,11 @@ extension MainViewController: TabBarChangeIndexDelegate {
     
     func changeToIndex(index: Int) {
         let isSameIndex = tabBar?.selectedIndex == index
+        tabBar?.moreNavigationController.popToRootViewController(animated: false)
+        tabBar?.moreNavigationController.view.layoutIfNeeded() // https://developer.apple.com/forums/thread/687805
         tabBar?.selectedIndex = index
         tabBar?.navigationController?.view.layoutIfNeeded() // https://developer.apple.com/forums/thread/687805
         guard isSameIndex else { return }
-        if index == 4 {
-            let generalVC = tabBar?.moreNavigationController.viewControllers.first(where: {$0 is GeneralViewController})
-            guard let generalVC = generalVC else { return }
-            tabBar?.moreNavigationController.popToViewController(generalVC, animated: true)
-            tabBar?.moreNavigationController.view.layoutIfNeeded() // https://developer.apple.com/forums/thread/687805
-            return
-        }
         let controller = tabBar?.viewControllers?[index] as? UINavigationController
         controller?.popToRootViewController(animated: true)
     }
