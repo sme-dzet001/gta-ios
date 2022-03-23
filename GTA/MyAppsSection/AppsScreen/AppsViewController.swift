@@ -186,11 +186,17 @@ class AppsViewController: UIViewController {
         return topVC is MenuViewController
     }
     
+    private var isProductionAlertDisplayed: Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        guard let topVC = appDelegate.getTopViewController() else { return false }
+        return topVC is ProductionAlertsDetails
+    }
+    
     private func stopAnimation() {
         guard dataProvider.myAppsStatusData != nil || myAppsLoadingError != nil else { return }
         DispatchQueue.main.async { [weak self] in
             guard let dataProvider = self?.dataProvider else { return }
-            if !(self?.isMainMenuDisplayed ?? false) {
+            if !(self?.isMainMenuDisplayed ?? false) && !(self?.isProductionAlertDisplayed ?? false) {
                 self?.dismiss(animated: false)
             }
             self?.tableView.reloadData()
