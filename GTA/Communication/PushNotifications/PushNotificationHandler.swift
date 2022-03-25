@@ -24,15 +24,14 @@ class PushNotificationHandler {
             switch state {
             case .displayed:
                 NotificationCenter.default.post(name: displayedNotificationName, object: nil)
-                break
             case .userResponseReceived:
-                if oldValue == .displayed {let payloadDict = userDefaultsValue as? [String : Any]
+                if oldValue == .displayed {
+                    let payloadDict = userDefaultsValue as? [String : Any]
                     NotificationCenter.default.post(name: userResponseReceivedNotificationName, object: nil, userInfo: payloadDict)
                 } else {
                     UserDefaults.standard.setValue(userDefaultsValue, forKey: userDefaultsKey)
                     UserDefaults.standard.synchronize()
                 }
-                break
             default:
                 break
             }

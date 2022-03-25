@@ -1083,20 +1083,6 @@ extension UNNotification {
             return pushType == Constants.pushTypeEmergencyOutage
         }
     }
-    
-    var isProductionAlert: Bool {
-        get {
-            guard let pushType = pushType else { return false }
-            return pushType == Constants.pushTypeProductionAlert
-        }
-    }
-    
-    var isGlobalProductionAlert: Bool {
-        get {
-            guard let pushType = pushType else { return false }
-            return pushType == Constants.pushTypeGlobalProductionAlert
-        }
-    }
 }
 
 extension Double {
