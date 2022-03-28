@@ -187,8 +187,7 @@ class AppsViewController: UIViewController {
     }
     
     private var isProductionAlertDisplayed: Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        guard let topVC = appDelegate.getTopViewController() else { return false }
+        guard let topVC = self.navigationController?.visibleViewController else { return false }
         return topVC is ProductionAlertsDetails
     }
     
