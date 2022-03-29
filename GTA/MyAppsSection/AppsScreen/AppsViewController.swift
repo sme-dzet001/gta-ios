@@ -180,11 +180,19 @@ class AppsViewController: UIViewController {
         self.activityIndicator.startAnimating()
     }
     
+    private var isMainMenuDisplayed: Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        guard let topVC = appDelegate.getTopViewController() else { return false }
+        return topVC is MenuViewController
+    }
+    
     private func stopAnimation() {
         guard dataProvider.myAppsStatusData != nil || myAppsLoadingError != nil else { return }
         DispatchQueue.main.async { [weak self] in
             guard let dataProvider = self?.dataProvider else { return }
-            self?.dismiss(animated: false)
+            if !(self?.isMainMenuDisplayed ?? false) {
+                self?.dismiss(animated: false)
+            }
             self?.tableView.reloadData()
             self?.errorLabel.isHidden = !(dataProvider.appsData.isEmpty && self?.allAppsLoadingError != nil)
             self?.errorLabel.text = (self?.allAppsLoadingError as? ResponseError)?.localizedDescription ?? "Oops, something went wrong"
