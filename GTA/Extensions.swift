@@ -1062,24 +1062,25 @@ extension UNNotification {
         return payloadDict[Constants.pushTypeKey] as? String
     }
     
+    var displayedNotificationName: Notification.Name? {
+        let notificationNamesMap = [Constants.pushTypeEmergencyOutage : Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), Constants.pushTypeProductionAlert : Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), Constants.pushTypeGlobalProductionAlert : Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed)]
+        return notificationNamesMap[pushType ?? ""]
+    }
+    
+    var responseReceivedNotificationName: Notification.Name? {
+        let notificationNamesMap = [Constants.pushTypeEmergencyOutage : Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), Constants.pushTypeProductionAlert : Notification.Name(NotificationsNames.productionAlertNotificationReceived), Constants.pushTypeGlobalProductionAlert : Notification.Name(NotificationsNames.globalProductionAlertNotificationReceived)]
+        return notificationNamesMap[pushType ?? ""]
+    }
+    
+    var userDefaultsKey: String? {
+        let userDefaultsKeysMap = [Constants.pushTypeEmergencyOutage : "emergencyOutageNotificationReceived", Constants.pushTypeProductionAlert : "productionAlertNotificationReceived", Constants.pushTypeGlobalProductionAlert : "globalProductionAlertNotificationReceived"]
+        return userDefaultsKeysMap[pushType ?? ""]
+    }
+    
     var isEmergencyOutage: Bool {
         get {
             guard let pushType = pushType else { return false }
             return pushType == Constants.pushTypeEmergencyOutage
-        }
-    }
-    
-    var isProductionAlert: Bool {
-        get {
-            guard let pushType = pushType else { return false }
-            return pushType == Constants.pushTypeProductionAlert
-        }
-    }
-    
-    var isGlobalProductionAlert: Bool {
-        get {
-            guard let pushType = pushType else { return false }
-            return pushType == Constants.pushTypeGlobalProductionAlert
         }
     }
 }

@@ -1433,6 +1433,12 @@
 		9FFB81A626A1E26A00674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
 		9FFB81A726A1E26B00674872 /* UsageMetricsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658BEF47268FA01200D4FD2C /* UsageMetricsViewController.xib */; };
 		BE32B14D207CF66D861279B6 /* Pods_QA_GTAStage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6788248BB1F3486905BD1736 /* Pods_QA_GTAStage.framework */; };
+		C87932E727EA33BC00274A8E /* PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87932E627EA33BC00274A8E /* PushNotificationHandler.swift */; };
+		C87932E827EA33BC00274A8E /* PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87932E627EA33BC00274A8E /* PushNotificationHandler.swift */; };
+		C87932E927EA33BC00274A8E /* PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87932E627EA33BC00274A8E /* PushNotificationHandler.swift */; };
+		C87932EA27EA33BC00274A8E /* PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87932E627EA33BC00274A8E /* PushNotificationHandler.swift */; };
+		C87932EB27EA33BC00274A8E /* PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87932E627EA33BC00274A8E /* PushNotificationHandler.swift */; };
+		C87932EC27EA33BC00274A8E /* PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87932E627EA33BC00274A8E /* PushNotificationHandler.swift */; };
 		C907E0C025D437BF00FB0B55 /* AppContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */; };
 		C907E0C225D437BF00FB0B55 /* AppContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */; };
 		C907E0C325D437BF00FB0B55 /* AppContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C907E0BF25D437BF00FB0B55 /* AppContactsViewController.xib */; };
@@ -1793,6 +1799,7 @@
 		C80714CE27A2D3AD00F0475D /* GTAAutotest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GTAAutotest.entitlements; sourceTree = "<group>"; };
 		C82408E92796F437009CCD69 /* GTAAutotest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GTAAutotest-Info.plist"; sourceTree = "<group>"; };
 		C82409012796F5E6009CCD69 /* GTAUat-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GTAUat-Info.plist"; sourceTree = "<group>"; };
+		C87932E627EA33BC00274A8E /* PushNotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationHandler.swift; sourceTree = "<group>"; };
 		C907E0BE25D437BF00FB0B55 /* AppContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContactsViewController.swift; sourceTree = "<group>"; };
 		C907E0BF25D437BF00FB0B55 /* AppContactsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppContactsViewController.xib; sourceTree = "<group>"; };
 		C907E0D625D4382500FB0B55 /* AppContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContactCell.swift; sourceTree = "<group>"; };
@@ -2165,10 +2172,10 @@
 		65D29080256C0D7E001B658A /* Communication */ = {
 			isa = PBXGroup;
 			children = (
-				65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */,
 				9F9D9CF6258A063800DC4231 /* NetworkManager.swift */,
 				65D29082256C0DA6001B658A /* APIManager.swift */,
 				9F9D9CDA2589006E00DC4231 /* SessionExpiredHandler.swift */,
+				C87932E527EA30C300274A8E /* PushNotifications */,
 				9F753AAA259B864400AE6EC2 /* APIRequest */,
 				C9D035922578095A0068441F /* APIResponses */,
 			);
@@ -2905,6 +2912,15 @@
 				658BF0C2268FF30000D4FD2C /* ChartsDataStructures.swift */,
 			);
 			path = ChartsDataStructures;
+			sourceTree = "<group>";
+		};
+		C87932E527EA30C300274A8E /* PushNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				65FADE5926546D1100B7A969 /* PushNotificationsManager.swift */,
+				C87932E627EA33BC00274A8E /* PushNotificationHandler.swift */,
+			);
+			path = PushNotifications;
 			sourceTree = "<group>";
 		};
 		C907E0CB25D437DD00FB0B55 /* AppContactsScreen */ = {
@@ -4442,6 +4458,7 @@
 				23FD627627918A4200797459 /* NewTicketViewController.swift in Sources */,
 				23FD627727918A4200797459 /* HomeDataProvider.swift in Sources */,
 				23FD627827918A4200797459 /* Extensions.swift in Sources */,
+				C87932E927EA33BC00274A8E /* PushNotificationHandler.swift in Sources */,
 				23FD627927918A4200797459 /* MenuTableViewCell.swift in Sources */,
 				23FD627A27918A4200797459 /* GlobalAlertCell.swift in Sources */,
 				23FD627B27918A4200797459 /* SystemUpdatesCell.swift in Sources */,
@@ -4631,6 +4648,7 @@
 				54D59C232695DFF90037A9B1 /* TeamChatUsersViewController.swift in Sources */,
 				65437CAB2665387600B2F38A /* GlobalAlertDetailsHeaderCell.swift in Sources */,
 				65437CAC2665387600B2F38A /* CustomTextField.swift in Sources */,
+				C87932EC27EA33BC00274A8E /* PushNotificationHandler.swift in Sources */,
 				65437CAD2665387600B2F38A /* AppTipsAndTricksViewController.swift in Sources */,
 				541F3AC726E906EF007F7C43 /* OfficeOverviewViewController.swift in Sources */,
 			);
@@ -4743,6 +4761,7 @@
 				65437E59266539BF00B2F38A /* NewTicketViewController.swift in Sources */,
 				65437E5A266539BF00B2F38A /* HomeDataProvider.swift in Sources */,
 				65437E5B266539BF00B2F38A /* SystemUpdatesCell.swift in Sources */,
+				C87932EB27EA33BC00274A8E /* PushNotificationHandler.swift in Sources */,
 				540537FF26E7C1BB00388BF3 /* MenuTableViewCell.swift in Sources */,
 				65437E5C266539BF00B2F38A /* GlobalAlertCell.swift in Sources */,
 				65437E5D266539BF00B2F38A /* SystemStatusHeader.swift in Sources */,
@@ -4894,6 +4913,7 @@
 				9FB9C1512631A46900BA753D /* NewTicketViewController.swift in Sources */,
 				C9D035A52578100D0068441F /* HomeDataProvider.swift in Sources */,
 				9F895B28255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,
+				C87932E727EA33BC00274A8E /* PushNotificationHandler.swift in Sources */,
 				540537FB26E7C1BB00388BF3 /* MenuTableViewCell.swift in Sources */,
 				9F2C82502657CE02004407B4 /* GlobalAlertCell.swift in Sources */,
 				9F895B34255C337B004489C6 /* SystemStatusHeader.swift in Sources */,
@@ -5071,6 +5091,7 @@
 				9F33F68E260A3C4000470A47 /* MainViewController.swift in Sources */,
 				9FA83E70262739DB009A0BAD /* TicketDescriptionCell.swift in Sources */,
 				9FB9C16A2631C04E00BA753D /* NoCommentsCell.swift in Sources */,
+				C87932EA27EA33BC00274A8E /* PushNotificationHandler.swift in Sources */,
 				9FC12E0B26691FC90029D387 /* Reachability.swift in Sources */,
 				9F33F68F260A3C4000470A47 /* UserLocationManager.swift in Sources */,
 				9F33F690260A3C4000470A47 /* OfficeInfoCell.swift in Sources */,
@@ -5213,6 +5234,7 @@
 				9FB9C1532631A46900BA753D /* NewTicketViewController.swift in Sources */,
 				C9D035A72578100D0068441F /* HomeDataProvider.swift in Sources */,
 				9F819ABD255C1646007C1739 /* Extensions.swift in Sources */,
+				C87932E827EA33BC00274A8E /* PushNotificationHandler.swift in Sources */,
 				540537FD26E7C1BB00388BF3 /* MenuTableViewCell.swift in Sources */,
 				9F2C82522657CE02004407B4 /* GlobalAlertCell.swift in Sources */,
 				9F895B2A255C2E38004489C6 /* SystemUpdatesCell.swift in Sources */,

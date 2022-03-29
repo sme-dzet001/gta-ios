@@ -15,6 +15,8 @@ import PanModal
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    private var activeNotificationHandlers: [Int : PushNotificationHandler] = [:]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -100,46 +102,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        if notification.isEmergencyOutage {
-            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationDisplayed), object: nil)
-            //completionHandler([.alert, .sound])
-            //return
-        }
-        if notification.isProductionAlert {
-            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.productionAlertNotificationDisplayed), object: nil)
-        }
-        if notification.isGlobalProductionAlert {
-            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalProductionAlertNotificationDisplayed), object: nil)
+        if let displayedNotificationName = notification.displayedNotificationName, let responseReceivedNotificationName = notification.responseReceivedNotificationName, let userDefaultsKey = notification.userDefaultsKey {
+            let notificationHandler = PushNotificationHandler(displayedNotificationName: displayedNotificationName, userResponseReceivedNotificationName: responseReceivedNotificationName, userDefaultsKey: userDefaultsKey, userDefaultsValue: notification.isEmergencyOutage ? true : notification.payloadDict)
+            notificationHandler.state = .displayed
+            activeNotificationHandlers[notification.hashValue] = notificationHandler
         }
         completionHandler([.alert, .sound, .badge])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let topViewController = getTopViewController()
-        var appIsInTray = false
-        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-            appIsInTray = sceneDelegate.appIsInTray
-        }
-        if topViewController == nil || topViewController is LoginViewController || topViewController is AuthViewController || appIsInTray {
-            if response.notification.isEmergencyOutage {
-                UserDefaults.standard.setValue(true, forKey: "emergencyOutageNotificationReceived")
-            }
-            if response.notification.isProductionAlert {
-                UserDefaults.standard.setValue(response.notification.payloadDict, forKey: "productionAlertNotificationReceived")
-            }
-            if response.notification.isGlobalProductionAlert {
-                UserDefaults.standard.setValue(response.notification.payloadDict, forKey: "globalProductionAlertNotificationReceived")
-            }
-            return
-        }
-        if response.notification.isEmergencyOutage {
-            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.emergencyOutageNotificationReceived), object: nil)
-        }
-        if response.notification.isProductionAlert {
-            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.productionAlertNotificationReceived), object: nil, userInfo: response.notification.payloadDict)
-        }
-        if response.notification.isGlobalProductionAlert {
-            NotificationCenter.default.post(name: Notification.Name(NotificationsNames.globalProductionAlertNotificationReceived), object: nil, userInfo: response.notification.payloadDict)
+        if let displayedNotificationName = response.notification.displayedNotificationName, let responseReceivedNotificationName = response.notification.responseReceivedNotificationName, let userDefaultsKey = response.notification.userDefaultsKey {
+            let notificationHandler = activeNotificationHandlers[response.notification.hashValue] ?? PushNotificationHandler(displayedNotificationName: displayedNotificationName, userResponseReceivedNotificationName: responseReceivedNotificationName, userDefaultsKey: userDefaultsKey, userDefaultsValue: response.notification.isEmergencyOutage ? true : response.notification.payloadDict)
+            notificationHandler.state = .userResponseReceived
+            activeNotificationHandlers[response.notification.hashValue] = notificationHandler
         }
         completionHandler()
     }
