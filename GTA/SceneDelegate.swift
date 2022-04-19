@@ -159,18 +159,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthentificationPassed 
     }
 
     func startLoginFlow(sessionExpired: Bool = false) {
-        UserDefaults.standard.set(false, forKey: "userLoggedIn")
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
-        UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
-        loginViewController.sessionExpired = sessionExpired
-        let navController = UINavigationController(rootViewController: loginViewController as UIViewController)
-        navController.isNavigationBarHidden = true
-        navController.isToolbarHidden = true
-        window?.windowLevel = UIWindow.Level.statusBar + 1
-        window?.rootViewController = navController
-        window?.makeKeyAndVisible()
+        NotificationCenter.default.post(name: Notification.Name(NotificationsNames.loggedOut), object: nil)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            UserDefaults.standard.set(false, forKey: "userLoggedIn")
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            UserDefaults.standard.setValue(nil, forKeyPath: Constants.sortingKey)
+            UserDefaults.standard.setValue(nil, forKeyPath: Constants.filterKey)
+            loginViewController.sessionExpired = sessionExpired
+            let navController = UINavigationController(rootViewController: loginViewController as UIViewController)
+            navController.isNavigationBarHidden = true
+            navController.isToolbarHidden = true
+            self.window?.windowLevel = UIWindow.Level.statusBar + 1
+            self.window?.rootViewController = navController
+            self.window?.makeKeyAndVisible()
+        }
     }
     
     func hideContent() {

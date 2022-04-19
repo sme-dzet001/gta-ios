@@ -25,6 +25,10 @@ class MainViewController: UIViewController {
         return tabBar?.selectedViewController?.preferredStatusBarStyle ?? .default
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.loggedOut), object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,6 +40,8 @@ class MainViewController: UIViewController {
         usmLogoutWebView.navigationDelegate = self
         configureMenuButton()
         configureMenuVC()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loggedOut), name: Notification.Name(NotificationsNames.loggedOut), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,6 +113,10 @@ class MainViewController: UIViewController {
         menuButton.layer.shadowRadius = 3
         menuButton.layer.shadowOpacity = 0.3
         menuButton.layer.cornerRadius = menuButton.frame.width / 2
+    }
+    
+    @objc func loggedOut() {
+        tabBar?.viewControllers = []
     }
     
     private func logoutAlert() {

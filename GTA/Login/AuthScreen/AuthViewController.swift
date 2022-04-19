@@ -303,6 +303,8 @@ extension AuthViewController: WKNavigationDelegate {
     }
     
     private func logout(deleteToken: Bool = true) {
+        let isUserLoggedIn = UserDefaults.standard.bool(forKey: "userLoggedIn")
+        guard isUserLoggedIn else { return } //to prevent extra call of startLoginFlow()
         KeychainManager.deletePushNotificationTokenSent()
         KeychainManager.deleteUsername()
         if deleteToken {
