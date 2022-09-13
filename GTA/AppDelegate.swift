@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if !GTAAutotest
         FirebaseApp.configure()
         #endif
+        #if GTAGSD
+        return true
+        #endif
         registerForPushNotifications()
         return true
     }

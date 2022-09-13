@@ -11,6 +11,8 @@ protocol TabBarChangeIndexDelegate: AnyObject {
     func changeToIndex(index: Int)
     func closeButtonPressed()
     func logoutButtonPressed()
+    func menuItemWasSelected(vcToSelect: UIViewController?)
+    func moveToRootVC()
 }
 
 class MenuViewController: UIViewController {
@@ -35,15 +37,8 @@ class MenuViewController: UIViewController {
         MenuItems(name: "Logout", image: UIImage(named: "logout")),
     ]
     var dataProvider = MenuViewControllerDataProvider()
-    var selectedTabIdx: Int? {
-        didSet {
-            guard oldValue != selectedTabIdx, let _ = tableView else { return }
-            tableView.reloadData()
-        }
-    }
     weak var delegate: TabBarChangeIndexDelegate?
     weak var chatBotDelegate: ChatBotDelegate?
-    weak var tabBar: UITabBarController?
     
     var officeLoadingError: String?
     var officeLoadingIsEnabled = true
@@ -61,6 +56,13 @@ class MenuViewController: UIViewController {
     }
     
     let redColor = UIColor(red: 0.8, green: 0, blue: 0, alpha: 1)
+    
+    var selectedItemIndexPath: IndexPath? {
+        didSet {
+            guard oldValue != selectedItemIndexPath, let _ = tableView else { return }
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,6 +149,10 @@ class MenuViewController: UIViewController {
         panModalNavigationController.forceOfficeSelection = true
 
         presentPanModal(panModalNavigationController)
+    }
+    
+    func selectMenuItem(at indexPath: IndexPath) {
+        tableView(tableView, didSelectRowAt: indexPath)
     }
 
     private func loadOfficesData() {
@@ -246,7 +252,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.setupCell(text: text, image: image, globalAlertsBadge: globalAlertsBadges, productionAlertBadge: productionAlertBadges, indexPath: indexPath)
             
-            guard let index = selectedTabIdx, index <= menuItems.count - 3, index == indexPath.row else { return cell }
+            guard let selectedIndexPath = selectedItemIndexPath, selectedIndexPath.section == 0, selectedIndexPath.row <= menuItems.count - 3, selectedIndexPath.row == indexPath.row else { return cell }
             cell.selectCell(color: redColor)
             
             return cell
@@ -270,7 +276,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.officeErrorLabel.isHidden = true
                 cell.officeAddressLabel.accessibilityIdentifier = "HomeScreenOfficeAddressLabel"
                 cell.officeLabel.textColor = .black
-                guard let index = selectedTabIdx, index > menuItems.count - 3 else { return cell }
+                guard let section = selectedItemIndexPath?.section, indexPath.section == section else { return cell }
                 cell.officeLabel.textColor = redColor
                 
                 return cell
@@ -285,7 +291,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.officeErrorLabel.isHidden = false
                     cell.officeLabel.textColor = .black
                     
-                    guard let index = selectedTabIdx, index > menuItems.count - 3 else { return cell }
+                    guard let selectedIndexPath = selectedItemIndexPath, selectedIndexPath.section == 2, selectedIndexPath.row > menuItems.count - 3 else { return cell }
                     cell.officeLabel.textColor = redColor
                     
                     return cell
@@ -318,21 +324,60 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
                 chatBotDelegate?.showChatBot()
                 return
             }
-            selectedTabIdx = indexPath.row
-            delegate?.changeToIndex(index: indexPath.row)
-        } else if indexPath.section == 2 {
-            if let office = tabBar?.viewControllers?.first(where: { $0 is OfficeOverviewViewController }) as? OfficeOverviewViewController {
-                office.officeDataProvider = dataProvider
-                //office.selectedOfficeData = dataProvider.userOffice
-                office.selectedOfficeUIUpdateDelegate = self
-                office.title = dataProvider.userOffice?.officeName
+            if selectedItemIndexPath == indexPath {
+                delegate?.moveToRootVC()
+                closeAction()
+                return
             }
-            selectedTabIdx = menuItems.count - 2
-            delegate?.changeToIndex(index: menuItems.count - 2)
+            let vcToSelect = instantiateVC(for: indexPath)
+            selectedItemIndexPath = indexPath
+            delegate?.menuItemWasSelected(vcToSelect: vcToSelect)
+        } else if indexPath.section == 2 {
+            if selectedItemIndexPath == indexPath {
+                delegate?.moveToRootVC()
+                closeAction()
+                return
+            }
+            let vcToSelect = instantiateVC(for: indexPath) as? OfficeOverviewViewController
+            vcToSelect?.officeDataProvider = dataProvider
+            vcToSelect?.selectedOfficeUIUpdateDelegate = self
+            vcToSelect?.title = dataProvider.userOffice?.officeName
+            selectedItemIndexPath = indexPath
+            delegate?.menuItemWasSelected(vcToSelect: vcToSelect)
         }
         tableView.reloadData()
         closeAction()
     }
+    
+    private func instantiateVC(for indexPath: IndexPath) -> UIViewController? {
+        guard selectedItemIndexPath != indexPath else { return nil }
+        switch (indexPath.section, indexPath.row) {
+        case (0, 0):
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
+            return storyBoard.instantiateInitialViewController()
+        case (0, 1):
+            let storyBoard: UIStoryboard = UIStoryboard(name: "HelpDesk", bundle: nil)
+            return storyBoard.instantiateInitialViewController()
+        case (0, 2):
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Apps", bundle: nil)
+            return storyBoard.instantiateInitialViewController()
+        case (0, 3):
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Collaboration", bundle: nil)
+            return storyBoard.instantiateInitialViewController()
+        case (0, 4):
+            let storyBoard: UIStoryboard = UIStoryboard(name: "GeneralScreen", bundle: nil)
+            return storyBoard.instantiateInitialViewController()
+        case (0, 5):
+            let storyBoard: UIStoryboard = UIStoryboard(name: "GTTeamStoryboard", bundle: nil)
+            return storyBoard.instantiateInitialViewController()
+        case (2, 0):
+            let storyBoard: UIStoryboard = UIStoryboard(name: "OfficeStoryboard", bundle: nil)
+            return storyBoard.instantiateInitialViewController()
+        default:
+            return nil
+        }
+    }
+    
 }
 
 extension MenuViewController: OfficeSelectionDelegate, SelectedOfficeUIUpdateDelegate {

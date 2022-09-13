@@ -21,8 +21,9 @@ class MainViewController: UIViewController {
     var backgroundView: UIView?
     weak var tabBar: CustomTabBarController?
     var transition = CircularTransition()
+    private(set) var currentScreenNavVc: UINavigationController?
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return tabBar?.selectedViewController?.preferredStatusBarStyle ?? .default
+        return currentScreenNavVc?.topViewController?.preferredStatusBarStyle ?? .default
     }
     
     deinit {
@@ -40,7 +41,11 @@ class MainViewController: UIViewController {
         usmLogoutWebView.navigationDelegate = self
         configureMenuButton()
         configureMenuVC()
-        
+        var row = 0
+        #if GTAGSD
+        row = 1
+        #endif
+        menuViewController.selectMenuItem(at: IndexPath(row: row, section: 0))
         NotificationCenter.default.addObserver(self, selector: #selector(loggedOut), name: Notification.Name(NotificationsNames.loggedOut), object: nil)
     }
     
@@ -70,7 +75,7 @@ class MainViewController: UIViewController {
     
     @IBAction func menuButtonAction(_ sender: UIButton) {
         addBackground()
-        menuViewController.selectedTabIdx = tabBar?.selectedIndex
+        //menuViewController.selectedTabIdx = tabBar?.selectedIndex
         present(menuViewController, animated: true, completion: nil)
     }
  
@@ -78,7 +83,6 @@ class MainViewController: UIViewController {
         menuViewController.delegate = self
         menuViewController.chatBotDelegate = self
         menuViewController.transitioningDelegate = self
-        menuViewController.tabBar = tabBar
         menuViewController.modalPresentationStyle = .overCurrentContext
         menuViewController.view.frame = self.view.bounds
     }
@@ -152,6 +156,40 @@ extension MainViewController: UINavigationControllerDelegate {
 }
 
 extension MainViewController: TabBarChangeIndexDelegate {
+    func menuItemWasSelected(vcToSelect: UIViewController?) {
+        guard let vc = vcToSelect else { return }
+        setCurrentScreen(vc: vc)
+    }
+    
+    private func setCurrentScreen(vc: UIViewController) {
+        currentScreenNavVc?.willMove(toParent: nil)
+        currentScreenNavVc?.view.removeFromSuperview()
+        currentScreenNavVc?.removeFromParent()
+        var navVC: UINavigationController
+        if let nav = vc as? UINavigationController {
+            navVC = nav
+        } else {
+            navVC = UINavigationController(rootViewController: vc)
+            navVC.isNavigationBarHidden = true
+        }
+        navVC.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        currentScreenNavVc = navVC
+        addChild(navVC)
+        containerView.addSubview(navVC.view)
+        NSLayoutConstraint.activate([
+            navVC.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            navVC.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            navVC.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            navVC.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+        navVC.didMove(toParent: self)
+    }
+    
+    func moveToRootVC() {
+        currentScreenNavVc?.popToRootViewController(animated: true)
+    }
+    
     func logoutButtonPressed() {
         DispatchQueue.main.async { [weak self] in
             self?.logoutAlert()
@@ -242,7 +280,7 @@ extension MainViewController: UIViewControllerTransitioningDelegate {
 
 extension MainViewController: TabBarIndexChanged {
     func changeIndex(index: Int) {
-        menuViewController.selectedTabIdx = index
+        //menuViewController.selectedTabIdx = index
     }
 }
 
