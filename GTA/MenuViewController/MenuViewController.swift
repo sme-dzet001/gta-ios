@@ -8,14 +8,18 @@
 import UIKit
 
 protocol TabBarChangeIndexDelegate: AnyObject {
-    func changeToIndex(index: Int)
     func closeButtonPressed()
     func logoutButtonPressed()
     func menuItemWasSelected(vcToSelect: UIViewController?)
     func moveToRootVC()
 }
 
-class MenuViewController: UIViewController {
+protocol AlertBadgeDelegate: AnyObject {
+    var globalAlertsBadges: Int { get set }
+    var productionAlertBadges: Int { get set }
+}
+
+class MenuViewController: UIViewController, AlertBadgeDelegate {
 
     struct MenuItems {
         var name: String
@@ -354,7 +358,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         switch (indexPath.section, indexPath.row) {
         case (0, 0):
             let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
-            return storyBoard.instantiateInitialViewController()
+            let homePageVC = storyBoard.instantiateInitialViewController() as? HomepageViewController
+            homePageVC?.badgeDelegate = self
+            return homePageVC
         case (0, 1):
             let storyBoard: UIStoryboard = UIStoryboard(name: "HelpDesk", bundle: nil)
             return storyBoard.instantiateInitialViewController()

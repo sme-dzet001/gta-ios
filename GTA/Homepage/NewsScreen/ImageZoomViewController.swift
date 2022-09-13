@@ -41,9 +41,7 @@ class ImageZoomViewController: UIViewController {
     }
     
     private func menuButton(enable: Bool) {
-        guard let tabBar = self.tabBarController?.navigationController else { return }
-        guard let mainVC = tabBar.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
-        mainVC.menuButton.alpha = enable ? 1 : 0
+        NotificationCenter.default.post(name: Notification.Name(NotificationsNames.handleMenuButtonAppearance), object: nil, userInfo: ["enable" : enable])
     }
     
 }

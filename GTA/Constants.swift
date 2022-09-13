@@ -36,6 +36,7 @@ class NotificationsNames {
     static let productionAlertNotificationDisplayed = "productionAlertNotificationDisplayed"
     static let globalProductionAlertNotificationDisplayed = "globalProductionAlertNotificationDisplayed"
     static let updateActiveProductionAlertStatus = "updateActiveProductionAlertStatus"
+    static let handleMenuButtonAppearance = "handleMenuButtonAppearance"
     static let loggedOut = "loggedOut"
 }
 

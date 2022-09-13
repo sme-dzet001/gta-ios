@@ -20,6 +20,7 @@ class AppsViewController: UIViewController {
     private var allAppsLastUpdateDate: Date?
     private var allAppsLoadingError: Error?
     private var myAppsLoadingError: Error?
+    weak var badgeDelegate: AlertBadgeDelegate?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -157,8 +158,7 @@ class AppsViewController: UIViewController {
                         self.tableView.reloadData()
                     }
                     self.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: count > 0 ? "\(count)" : nil)
-                    guard let mainVC = self.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
-                    mainVC.menuViewController.productionAlertBadges = count
+                    self.badgeDelegate?.productionAlertBadges = count
                 }
             }
         }

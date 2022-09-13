@@ -19,7 +19,7 @@ class MainViewController: UIViewController {
     private var usmLogoutWebView: WKWebView!
     let menuViewController = MenuViewController()
     var backgroundView: UIView?
-    weak var tabBar: CustomTabBarController?
+    //weak var tabBar: CustomTabBarController?
     var transition = CircularTransition()
     private(set) var currentScreenNavVc: UINavigationController?
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -28,6 +28,7 @@ class MainViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.loggedOut), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(NotificationsNames.handleMenuButtonAppearance), object: nil)
     }
     
     override func viewDidLoad() {
@@ -47,6 +48,7 @@ class MainViewController: UIViewController {
         #endif
         menuViewController.selectMenuItem(at: IndexPath(row: row, section: 0))
         NotificationCenter.default.addObserver(self, selector: #selector(loggedOut), name: Notification.Name(NotificationsNames.loggedOut), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleMenuButtonAppearance), name: Notification.Name(NotificationsNames.handleMenuButtonAppearance), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,14 +66,6 @@ class MainViewController: UIViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "embedTabBar" {
-            tabBar = segue.destination as? CustomTabBarController
-            tabBar?.indexDelegate = self
-            tabBar?.tabBar.isHidden = true
-            tabBar?.setSelectedTabAccordingToPendingAlert()
-        }
-    }
     
     @IBAction func menuButtonAction(_ sender: UIButton) {
         addBackground()
@@ -119,8 +113,14 @@ class MainViewController: UIViewController {
         menuButton.layer.cornerRadius = menuButton.frame.width / 2
     }
     
+    @objc private func handleMenuButtonAppearance(notification: NSNotification) {
+        guard let userInfo = notification.userInfo as? [String : Any] else { return }
+        guard let enable = userInfo["enable"] as? Bool else { return }
+        menuButton.alpha = enable ? 1 : 0
+    }
+    
     @objc func loggedOut() {
-        tabBar?.viewControllers = []
+        currentScreenNavVc = nil
     }
     
     private func logoutAlert() {
@@ -167,6 +167,8 @@ extension MainViewController: TabBarChangeIndexDelegate {
         currentScreenNavVc?.removeFromParent()
         var navVC: UINavigationController
         if let nav = vc as? UINavigationController {
+            let appsVC = nav.rootViewController as? AppsViewController
+            appsVC?.badgeDelegate = menuViewController
             navVC = nav
         } else {
             navVC = UINavigationController(rootViewController: vc)
@@ -200,16 +202,6 @@ extension MainViewController: TabBarChangeIndexDelegate {
         clearBackground()
     }
     
-    func changeToIndex(index: Int) {
-        let isSameIndex = tabBar?.selectedIndex == index
-        tabBar?.moreNavigationController.popToRootViewController(animated: false)
-        tabBar?.moreNavigationController.view.layoutIfNeeded() // https://developer.apple.com/forums/thread/687805
-        tabBar?.selectedIndex = index
-        tabBar?.navigationController?.view.layoutIfNeeded() // https://developer.apple.com/forums/thread/687805
-        guard isSameIndex else { return }
-        let controller = tabBar?.viewControllers?[index] as? UINavigationController
-        controller?.popToRootViewController(animated: true)
-    }
 }
 
 extension MainViewController: WKNavigationDelegate {

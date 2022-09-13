@@ -25,6 +25,7 @@ class HomepageViewController: UIViewController {
     @IBOutlet weak var emergencyOutageBannerViewHeight: NSLayoutConstraint!
     @IBOutlet weak var globalProductionAlertBannerViewHeight: NSLayoutConstraint!
     
+    weak var badgeDelegate: AlertBadgeDelegate?
     private var newsTabs: [HomepageTableViewController] = []
     
     private var dataProvider: HomeDataProvider = HomeDataProvider()
@@ -268,15 +269,14 @@ class HomepageViewController: UIViewController {
                 if error == nil && errorCode == 200 {
                     self?.emergencyOutageLoaded = dataWasChanged && !isFromCache
                     self?.updateBannerViews()
-                    guard let mainVC = self?.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
                     if let data = self?.dataProvider.globalAlertsData {
                         switch data.status {
                         case .inProgress:
-                            mainVC.menuViewController.globalAlertsBadges = 1
+                            self?.badgeDelegate?.globalAlertsBadges = 1
                             self?.tabBarController?.addAlertItemBadge(atIndex: 0)
                         default:
                             if let self = self, !self.hasActiveGlobalProdAlerts {
-                                mainVC.menuViewController.globalAlertsBadges = 0
+                                self.badgeDelegate?.globalAlertsBadges = 0
                                 self.tabBarController?.removeItemBadge(atIndex: 0)
                             }
                         }
@@ -325,8 +325,8 @@ class HomepageViewController: UIViewController {
                             let eventFinished = data.closeDate.timeIntervalSince1970 + 3600 > Date().timeIntervalSince1970
                             if eventStarted || eventFinished {
                                 self?.tabBarController?.addAlertItemBadge(atIndex: 0)
-                                guard let mainVC = self?.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
-                                mainVC.menuViewController.globalAlertsBadges = 1
+                                //guard let mainVC = self?.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
+                                self?.badgeDelegate?.globalAlertsBadges = 1
                             }
                         default:
                             return
@@ -405,8 +405,8 @@ class HomepageViewController: UIViewController {
         dataProvider.getProductionAlerts {[weak self] _, _, count in
             DispatchQueue.main.async {
                 self?.tabBarController?.addProductionAlertsItemBadge(atIndex: 2, value: count > 0 ? "\(count)" : nil)
-                guard let mainVC = self?.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
-                mainVC.menuViewController.productionAlertBadges = count
+                //guard let mainVC = self?.tabBarController?.navigationController?.viewControllers.first(where: { $0 is MainViewController}) as? MainViewController else {return}
+                self?.badgeDelegate?.productionAlertBadges = count
             }
         }
     }
