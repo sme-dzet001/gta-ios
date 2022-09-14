@@ -8,19 +8,20 @@
 import Foundation
 
 struct USMSettings {
-    #if GTA
+    #if GTA || HelpDeskProd
     static let usmBasicURL = "https://usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
-    #elseif GTADev
+    #elseif GTADev || HelpDeskDev
     static let usmBasicURL = "https://uat-auth-console.sonymusic.com/oauth2/openid/v1/authorize"
     #else
     static let usmBasicURL = "https://uat-usm.smeanalyticsportal.com/oauth2/openid/v1/authorize"
     #endif
-    #if GTADev
+    
+    #if GTADev || HelpDeskDev
     static let usmRedirectURL = "https://gtadev.smedsp.com:8888/validate"
     static let usmClientID = "bkYjQ2hKUFJkejY/YytrY3RLUlA"
     static let usmInternalRedirectURL = "https://gtadev.smedsp.com/charts-ui2/#/auth/processor"
     static let usmLogoutURL = "https://gtadev.smedsp.com:8888/logout/oauth2"
-    #elseif GTA
+    #elseif GTA || HelpDeskProd
     static let usmRedirectURL = "https://gtaapi.smedsp.com:8888/validate"
     static let usmClientID = "MmRCOFFZcT9nKlpxeFNnRjY9MnI"
     static let usmInternalRedirectURL = "https://gta.smedsp.com/charts-ui2/#/auth/processor"
