@@ -19,13 +19,19 @@ class HelpDeskViewController: UIViewController {
     var dataResponse: HelpDeskResponse?
     private var statusResponse: HelpDeskStatus = HelpDeskStatus()
     var helpDeskResponseError: Error?
-    
+    weak var logoutDelegate: LogoutDelegate?
     private var helpDeskCellsData: [[HelpDeskCellData]] = []
     weak var ticketsNumberDelegate: TicketsNumberDelegate?
     private var numberOfTickets: Int? {
         let count = dataProvider.myTickets?.filter({$0.status != .closed}).count ?? 0
         return count > 0 ? count : nil
     }
+    
+    #if HelpDeskUAT || HelpDeskDev || HelpDeskProd
+    private var isNeedLogoutView: Bool = true
+    #else
+    private var isNeedLogoutView: Bool = false
+    #endif
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +40,7 @@ class HelpDeskViewController: UIViewController {
         //setHelpDeskCellsData()
         navigationController?.setNavigationBarBottomShadowColor(UIColor(hex: 0xF2F2F7))
         setUpUIElementsForNewVersion()
+        addLogoutViewIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +62,21 @@ class HelpDeskViewController: UIViewController {
                 //if dataWasChanged { self?.ticketsNumberDelegate?.ticketNumberUpdated(self?.numberOfTickets) }
             }
         }
+    }
+    
+    private func addLogoutViewIfNeeded() {
+        guard isNeedLogoutView else { return }
+        let logoutView = LogoutView.instanceFromNib()
+        logoutView.translatesAutoresizingMaskIntoConstraints = false
+        logoutView.setUpView()
+        logoutView.logoutDelegate = self
+        self.view.addSubview(logoutView)
+        NSLayoutConstraint.activate([
+            logoutView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            logoutView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            logoutView.heightAnchor.constraint(equalToConstant: 80),
+            logoutView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 10)
+        ])
     }
     
     private func activateStatusRefresh() {
@@ -283,6 +305,12 @@ extension HelpDeskViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension HelpDeskViewController: LogoutDelegate {
+    func logoutDidPressed() {
+        logoutDelegate?.logoutDidPressed()
+    }
+}
+
 struct HelpDeskCellData: ContactsCellDataProtocol {
     var imageName: String?
     var cellTitle: String?
@@ -309,4 +337,6 @@ protocol TicketsNumberDelegate: AnyObject {
     func ticketNumberUpdated(_ number: Int?)
 }
 
-
+protocol LogoutDelegate: AnyObject {
+    func logoutDidPressed()
+}

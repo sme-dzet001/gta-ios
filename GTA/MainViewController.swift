@@ -156,6 +156,12 @@ extension MainViewController: UINavigationControllerDelegate {
     }
 }
 
+extension MainViewController: LogoutDelegate {
+    func logoutDidPressed() {
+        logoutButtonPressed()
+    }
+}
+
 extension MainViewController: TabBarChangeIndexDelegate {
     func menuItemWasSelected(vcToSelect: UIViewController?) {
         guard let vc = vcToSelect else { return }
@@ -170,6 +176,8 @@ extension MainViewController: TabBarChangeIndexDelegate {
         if let nav = vc as? UINavigationController {
             let appsVC = nav.rootViewController as? AppsViewController
             appsVC?.badgeDelegate = menuViewController
+            let helpDeskVC = nav.rootViewController as? HelpDeskViewController
+            helpDeskVC?.logoutDelegate = self
             navVC = nav
         } else {
             navVC = UINavigationController(rootViewController: vc)

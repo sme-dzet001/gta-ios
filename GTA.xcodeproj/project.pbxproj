@@ -9,6 +9,18 @@
 /* Begin PBXBuildFile section */
 		0F60E8099D47AA409E5FA992 /* Pods_GTAUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F686CC751F70D91022BE65 /* Pods_GTAUITests.framework */; };
 		126DDF2B8BE19833DE76CF74 /* Pods_GTATests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8D9826C7EFA807CC097002A /* Pods_GTATests.framework */; };
+		1671B3A428D1F75000C95F5B /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1671B3A328D1F75000C95F5B /* LogoutView.xib */; };
+		1671B3A528D1F75000C95F5B /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1671B3A328D1F75000C95F5B /* LogoutView.xib */; };
+		1671B3A628D1F75000C95F5B /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1671B3A328D1F75000C95F5B /* LogoutView.xib */; };
+		1671B3A728D1F84E00C95F5B /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCA18828D1EF2D007B235F /* LogoutView.swift */; };
+		1671B3A828D1F84E00C95F5B /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCA18828D1EF2D007B235F /* LogoutView.swift */; };
+		1671B3A928D1F84F00C95F5B /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCA18828D1EF2D007B235F /* LogoutView.swift */; };
+		1671B3AA28D1F85500C95F5B /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1671B3A328D1F75000C95F5B /* LogoutView.xib */; };
+		1671B3AB28D1F85500C95F5B /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1671B3A328D1F75000C95F5B /* LogoutView.xib */; };
+		1671B3AC28D1F85600C95F5B /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1671B3A328D1F75000C95F5B /* LogoutView.xib */; };
+		1671B3AD28D1F85600C95F5B /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1671B3A328D1F75000C95F5B /* LogoutView.xib */; };
+		1671B3AE28D1F85700C95F5B /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1671B3A328D1F75000C95F5B /* LogoutView.xib */; };
+		1671B3AF28D1F85800C95F5B /* LogoutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1671B3A328D1F75000C95F5B /* LogoutView.xib */; };
 		16A1EBDC28D072F900BFC6CB /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
 		16A1EBDD28D072F900BFC6CB /* CollaborationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547566C25FA4AE6002C45C4 /* CollaborationDataProvider.swift */; };
 		16A1EBDE28D072F900BFC6CB /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
@@ -770,6 +782,12 @@
 		16CCA17E28D1CFF1007B235F /* GeneralScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3AC937264D371A004074C8 /* GeneralScreen.storyboard */; };
 		16CCA17F28D1CFF1007B235F /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 540537E926E7AA6800388BF3 /* MenuViewController.xib */; };
 		16CCA18028D1CFF1007B235F /* AboutSupportPolicyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FA8E8FA25B054C6007D3B9F /* AboutSupportPolicyCell.xib */; };
+		16CCA18928D1EF2D007B235F /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCA18828D1EF2D007B235F /* LogoutView.swift */; };
+		16CCA18A28D1EF2D007B235F /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCA18828D1EF2D007B235F /* LogoutView.swift */; };
+		16CCA18B28D1EF2D007B235F /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCA18828D1EF2D007B235F /* LogoutView.swift */; };
+		16CCA18C28D1EF2D007B235F /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCA18828D1EF2D007B235F /* LogoutView.swift */; };
+		16CCA18D28D1EF2D007B235F /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCA18828D1EF2D007B235F /* LogoutView.swift */; };
+		16CCA18E28D1EF2E007B235F /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCA18828D1EF2D007B235F /* LogoutView.swift */; };
 		23FD621227918A4200797459 /* UsageMetricsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653E78E8261FC58700CABB4C /* UsageMetricsViewController.swift */; };
 		23FD621327918A4200797459 /* CollaborationDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547566C25FA4AE6002C45C4 /* CollaborationDataProvider.swift */; };
 		23FD621427918A4200797459 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C8240265534A5004407B4 /* Preferences.swift */; };
@@ -2315,12 +2333,14 @@
 /* Begin PBXFileReference section */
 		082E738CA10EAA7C286D4032 /* Pods-GTADev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTADev.release.xcconfig"; path = "Target Support Files/Pods-GTADev/Pods-GTADev.release.xcconfig"; sourceTree = "<group>"; };
 		0E652C1E19121BFF92D8DC47 /* Pods-GTAUat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAUat.debug.xcconfig"; path = "Target Support Files/Pods-GTAUat/Pods-GTAUat.debug.xcconfig"; sourceTree = "<group>"; };
+		1671B3A328D1F75000C95F5B /* LogoutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LogoutView.xib; sourceTree = "<group>"; };
 		16A1ECE128D072F900BFC6CB /* HelpDeskUAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelpDeskUAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16A1ECE228D072F900BFC6CB /* HelpDeskUAT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "HelpDeskUAT-Info.plist"; path = "/Users/dzet001kostiantyndzetsiuk/Documents/gta-ios/HelpDeskUAT-Info.plist"; sourceTree = "<absolute>"; };
 		16CCA07C28D1CF98007B235F /* HelpDeskProd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelpDeskProd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16CCA07D28D1CF99007B235F /* HelpDeskProd-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "HelpDeskProd-Info.plist"; path = "/Users/dzet001kostiantyndzetsiuk/Documents/gta-ios/HelpDeskProd-Info.plist"; sourceTree = "<absolute>"; };
 		16CCA18628D1CFF1007B235F /* HelpDeskDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelpDeskDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16CCA18728D1CFF2007B235F /* HelpDeskDev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "HelpDeskDev-Info.plist"; path = "/Users/dzet001kostiantyndzetsiuk/Documents/gta-ios/HelpDeskDev-Info.plist"; sourceTree = "<absolute>"; };
+		16CCA18828D1EF2D007B235F /* LogoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutView.swift; sourceTree = "<group>"; };
 		17B508A0899C10081A0C4822 /* Pods-GTAUat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GTAUat.release.xcconfig"; path = "Target Support Files/Pods-GTAUat/Pods-GTAUat.release.xcconfig"; sourceTree = "<group>"; };
 		23FD631627918A4200797459 /* GTAUat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTAUat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FD63192791C70500797459 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -3756,6 +3776,7 @@
 				C91F70892562FEC5002F17B1 /* HelpDeskCell.swift */,
 				C9EC9E9725756BA400315AAE /* HelpDeskContactOptionCell.swift */,
 				C9EC9EA525756C0300315AAE /* HelpDeskHeader.swift */,
+				16CCA18828D1EF2D007B235F /* LogoutView.swift */,
 				C9EC9EA425756BB600315AAE /* xib's */,
 			);
 			path = HelpDeskCells;
@@ -3941,6 +3962,7 @@
 				C91F708A2562FEC5002F17B1 /* HelpDeskCell.xib */,
 				C9EC9E9825756BA400315AAE /* HelpDeskContactOptionCell.xib */,
 				C9EC9EB325756C1400315AAE /* HelpDeskHeader.xib */,
+				1671B3A328D1F75000C95F5B /* LogoutView.xib */,
 			);
 			path = "xib's";
 			sourceTree = "<group>";
@@ -4313,6 +4335,7 @@
 				16A1ECC428D072F900BFC6CB /* SF-Pro-Text-Bold.ttf in Resources */,
 				16A1ECC528D072F900BFC6CB /* GeneralCell.xib in Resources */,
 				16A1ECC628D072F900BFC6CB /* AppContactsViewController.xib in Resources */,
+				1671B3A528D1F75000C95F5B /* LogoutView.xib in Resources */,
 				16A1ECC728D072F900BFC6CB /* ArticleViewController.xib in Resources */,
 				16A1ECC828D072F900BFC6CB /* Main.storyboard in Resources */,
 				16A1ECC928D072F900BFC6CB /* NewsCollectionViewCell.xib in Resources */,
@@ -4428,6 +4451,7 @@
 				16CCA05F28D1CF98007B235F /* SF-Pro-Text-Bold.ttf in Resources */,
 				16CCA06028D1CF98007B235F /* GeneralCell.xib in Resources */,
 				16CCA06128D1CF98007B235F /* SystemUpdatesCell.xib in Resources */,
+				1671B3A428D1F75000C95F5B /* LogoutView.xib in Resources */,
 				16CCA06228D1CF98007B235F /* AppsTableViewHeader.xib in Resources */,
 				16CCA06328D1CF98007B235F /* ArticleViewController.xib in Resources */,
 				16CCA06428D1CF98007B235F /* Main.storyboard in Resources */,
@@ -4543,6 +4567,7 @@
 				16CCA16928D1CFF1007B235F /* TicketDetailsViewController.xib in Resources */,
 				16CCA16A28D1CFF1007B235F /* ArticleViewController.xib in Resources */,
 				16CCA16B28D1CFF1007B235F /* Main.storyboard in Resources */,
+				1671B3A628D1F75000C95F5B /* LogoutView.xib in Resources */,
 				16CCA16C28D1CFF1007B235F /* Office365AppCell.xib in Resources */,
 				16CCA16D28D1CFF1007B235F /* NewsCollectionViewCell.xib in Resources */,
 				16CCA16E28D1CFF1007B235F /* UsageMetricsViewController.xib in Resources */,
@@ -4658,6 +4683,7 @@
 				23FD62F927918A4200797459 /* SF-Pro-Text-Bold.ttf in Resources */,
 				23FD62FA27918A4200797459 /* GeneralCell.xib in Resources */,
 				23FD62FB27918A4200797459 /* AppContactsViewController.xib in Resources */,
+				1671B3AC28D1F85600C95F5B /* LogoutView.xib in Resources */,
 				23FD62FC27918A4200797459 /* ArticleViewController.xib in Resources */,
 				23FD62FD27918A4200797459 /* Main.storyboard in Resources */,
 				23FD62FE27918A4200797459 /* NewsCollectionViewCell.xib in Resources */,
@@ -4773,6 +4799,7 @@
 				541F3ABF26E8FE8E007F7C43 /* OfficeStoryboard.storyboard in Resources */,
 				65437CF22665387600B2F38A /* SecondTicketDetailsViewController.xib in Resources */,
 				65437CF32665387600B2F38A /* AppContactCell.xib in Resources */,
+				1671B3AF28D1F85800C95F5B /* LogoutView.xib in Resources */,
 				65437CF42665387600B2F38A /* TicketDetailsViewController.xib in Resources */,
 				65437CF52665387600B2F38A /* ArticleViewController.xib in Resources */,
 				65437CF62665387600B2F38A /* Main.storyboard in Resources */,
@@ -4888,6 +4915,7 @@
 				65437EC1266539BF00B2F38A /* SF-Pro-Text-Bold.ttf in Resources */,
 				65437EC2266539BF00B2F38A /* GeneralCell.xib in Resources */,
 				65437EC3266539BF00B2F38A /* SystemUpdatesCell.xib in Resources */,
+				1671B3AE28D1F85700C95F5B /* LogoutView.xib in Resources */,
 				65437EC4266539BF00B2F38A /* AppsTableViewHeader.xib in Resources */,
 				65437EC5266539BF00B2F38A /* ArticleViewController.xib in Resources */,
 				65437EC6266539BF00B2F38A /* Main.storyboard in Resources */,
@@ -5003,6 +5031,7 @@
 				9F6435DA261F22F5000D94A4 /* SF-Pro-Text-Bold.ttf in Resources */,
 				9F3AC943264D3E3D004074C8 /* GeneralCell.xib in Resources */,
 				9F895B2B255C2E38004489C6 /* SystemUpdatesCell.xib in Resources */,
+				1671B3AA28D1F85500C95F5B /* LogoutView.xib in Resources */,
 				9F895AED255C22D7004489C6 /* AppsTableViewHeader.xib in Resources */,
 				9F78D07E256530CD00BCD38F /* ArticleViewController.xib in Resources */,
 				659A5AB8255401EA00E13B77 /* Main.storyboard in Resources */,
@@ -5132,6 +5161,7 @@
 				540767C4270DDA61005EFD65 /* TeamsByFunctionsTableViewCell.xib in Resources */,
 				9F33F6DB260A3C4000470A47 /* TicketDetailsViewController.xib in Resources */,
 				9F6435DD261F22F6000D94A4 /* SF-Pro-Text-Bold.ttf in Resources */,
+				1671B3AD28D1F85600C95F5B /* LogoutView.xib in Resources */,
 				9F3028332681D228009A3096 /* ProductionAlertsViewController.xib in Resources */,
 				9F33F6DC260A3C4000470A47 /* AppContactsViewController.xib in Resources */,
 				9F33F6DD260A3C4000470A47 /* ArticleViewController.xib in Resources */,
@@ -5247,6 +5277,7 @@
 				9F5B10622567BE48000A3CFD /* TicketDetailsViewController.xib in Resources */,
 				9F78D080256530CE00BCD38F /* ArticleViewController.xib in Resources */,
 				9F819ACC255C1646007C1739 /* Main.storyboard in Resources */,
+				1671B3AB28D1F85500C95F5B /* LogoutView.xib in Resources */,
 				9F35862F25FD37BF0003658D /* Office365AppCell.xib in Resources */,
 				9F78CFEA2564138800BCD38F /* NewsCollectionViewCell.xib in Resources */,
 				658BEF4A268FA01200D4FD2C /* UsageMetricsViewController.xib in Resources */,
@@ -5758,6 +5789,7 @@
 				16A1EC1B28D072F900BFC6CB /* MyAppsDataProvider.swift in Sources */,
 				16A1EC1C28D072F900BFC6CB /* ChatBotViewController.swift in Sources */,
 				16A1EC1D28D072F900BFC6CB /* SceneDelegate.swift in Sources */,
+				16CCA18D28D1EF2D007B235F /* LogoutView.swift in Sources */,
 				16A1EC1E28D072F900BFC6CB /* ActiveUsersTableViewCell.swift in Sources */,
 				16A1EC1F28D072F900BFC6CB /* GeneralCell.swift in Sources */,
 				16A1EC2028D072F900BFC6CB /* AlertDetailsCell.swift in Sources */,
@@ -5910,6 +5942,7 @@
 				16CC9FB628D1CF98007B235F /* AppsViewController.swift in Sources */,
 				16CC9FB728D1CF98007B235F /* ChatBotViewController.swift in Sources */,
 				16CC9FB828D1CF98007B235F /* GeneralCell.swift in Sources */,
+				16CCA18C28D1EF2D007B235F /* LogoutView.swift in Sources */,
 				16CC9FB928D1CF98007B235F /* ActiveUsersTableViewCell.swift in Sources */,
 				16CC9FBA28D1CF98007B235F /* LoginDataProvider.swift in Sources */,
 				16CC9FBB28D1CF98007B235F /* AlertDetailsCell.swift in Sources */,
@@ -6062,6 +6095,7 @@
 				16CCA0C028D1CFF1007B235F /* MyAppsDataProvider.swift in Sources */,
 				16CCA0C128D1CFF1007B235F /* ChatBotViewController.swift in Sources */,
 				16CCA0C228D1CFF1007B235F /* SceneDelegate.swift in Sources */,
+				16CCA18E28D1EF2E007B235F /* LogoutView.swift in Sources */,
 				16CCA0C328D1CFF1007B235F /* ActiveUsersTableViewCell.swift in Sources */,
 				16CCA0C428D1CFF1007B235F /* GeneralCell.swift in Sources */,
 				16CCA0C528D1CFF1007B235F /* AlertDetailsCell.swift in Sources */,
@@ -6214,6 +6248,7 @@
 				23FD625127918A4200797459 /* MyAppsDataProvider.swift in Sources */,
 				23FD625227918A4200797459 /* ChatBotViewController.swift in Sources */,
 				23FD625327918A4200797459 /* SceneDelegate.swift in Sources */,
+				1671B3A728D1F84E00C95F5B /* LogoutView.swift in Sources */,
 				23FD625427918A4200797459 /* ActiveUsersTableViewCell.swift in Sources */,
 				23FD625527918A4200797459 /* GeneralCell.swift in Sources */,
 				23FD625627918A4200797459 /* AlertDetailsCell.swift in Sources */,
@@ -6377,6 +6412,7 @@
 				65437C792665387600B2F38A /* AppsViewController.swift in Sources */,
 				540767C0270DDA61005EFD65 /* TeamsByFunctionsTableViewCell.swift in Sources */,
 				65437C7A2665387600B2F38A /* AnimatedCollectionViewLayout.swift in Sources */,
+				16CCA18B28D1EF2D007B235F /* LogoutView.swift in Sources */,
 				65437C7B2665387600B2F38A /* ServiceDeskContactCell.swift in Sources */,
 				65437C7C2665387600B2F38A /* GeneralDataProvider.swift in Sources */,
 				65437C7D2665387600B2F38A /* NotificationSettingsViewController.swift in Sources */,
@@ -6517,6 +6553,7 @@
 				65437E3C266539BF00B2F38A /* AppsViewController.swift in Sources */,
 				9F8E6324270C6CB5008A7180 /* ChatBotViewController.swift in Sources */,
 				65437E3D266539BF00B2F38A /* GeneralCell.swift in Sources */,
+				16CCA18A28D1EF2D007B235F /* LogoutView.swift in Sources */,
 				540767DE270F0D88005EFD65 /* ActiveUsersTableViewCell.swift in Sources */,
 				65437E3E266539BF00B2F38A /* LoginDataProvider.swift in Sources */,
 				9F3028112681D228009A3096 /* AlertDetailsCell.swift in Sources */,
@@ -6669,6 +6706,7 @@
 				9F895AF3255C22D7004489C6 /* AppsViewController.swift in Sources */,
 				9F8E6320270C6CB4008A7180 /* ChatBotViewController.swift in Sources */,
 				9F3AC93F264D3E3D004074C8 /* GeneralCell.swift in Sources */,
+				1671B3A928D1F84F00C95F5B /* LogoutView.swift in Sources */,
 				540767DA270F0D88005EFD65 /* ActiveUsersTableViewCell.swift in Sources */,
 				9F0D269F2577AF75002CC2C2 /* LoginDataProvider.swift in Sources */,
 				9F30280D2681D228009A3096 /* AlertDetailsCell.swift in Sources */,
@@ -6790,6 +6828,7 @@
 				9F3028092681D228009A3096 /* ProductionAlertCell.swift in Sources */,
 				9F33F650260A3C4000470A47 /* APIRequest.swift in Sources */,
 				9F33F651260A3C4000470A47 /* MyTicketsViewController.swift in Sources */,
+				16CCA18928D1EF2D007B235F /* LogoutView.swift in Sources */,
 				54076802270F3D97005EFD65 /* NewsScreenViewController.swift in Sources */,
 				9F33F652260A3C4000470A47 /* CollaborationResponses.swift in Sources */,
 				9F33F654260A3C4000470A47 /* InfoArticleCell.swift in Sources */,
@@ -6990,6 +7029,7 @@
 				9F8164BA257FA817001507BF /* MyAppsDataProvider.swift in Sources */,
 				9F8E6322270C6CB5008A7180 /* ChatBotViewController.swift in Sources */,
 				9F819ABC255C1646007C1739 /* SceneDelegate.swift in Sources */,
+				1671B3A828D1F84E00C95F5B /* LogoutView.swift in Sources */,
 				540767DC270F0D88005EFD65 /* ActiveUsersTableViewCell.swift in Sources */,
 				9F3AC941264D3E3D004074C8 /* GeneralCell.swift in Sources */,
 				9F30280F2681D228009A3096 /* AlertDetailsCell.swift in Sources */,

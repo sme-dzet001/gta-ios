@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="U2u-gK-I4T" customClass="LogoutView" customModule="GTA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="562" height="175"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p2x-ph-GOt">
+                    <rect key="frame" x="20" y="79" width="140" height="30"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logout" translatesAutoresizingMaskIntoConstraints="NO" id="Sb5-5q-I7R">
+                            <rect key="frame" x="0.0" y="3" width="30" height="24"/>
+                            <color key="tintColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="Kvb-bG-ypn"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.60000002384185791" translatesAutoresizingMaskIntoConstraints="NO" id="443-d4-6hp">
+                            <rect key="frame" x="40" y="5" width="52.666666666666657" height="20"/>
+                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="Sb5-5q-I7R" firstAttribute="centerY" secondItem="p2x-ph-GOt" secondAttribute="centerY" id="61d-rT-rJq"/>
+                        <constraint firstAttribute="height" constant="30" id="IU0-Mr-wcj"/>
+                        <constraint firstItem="443-d4-6hp" firstAttribute="leading" secondItem="Sb5-5q-I7R" secondAttribute="trailing" constant="10" id="Mb2-Pb-4Yq"/>
+                        <constraint firstAttribute="width" constant="140" id="XNz-sA-G8t"/>
+                        <constraint firstItem="443-d4-6hp" firstAttribute="centerY" secondItem="p2x-ph-GOt" secondAttribute="centerY" id="l4z-mn-FNG"/>
+                        <constraint firstItem="Sb5-5q-I7R" firstAttribute="leading" secondItem="p2x-ph-GOt" secondAttribute="leading" id="lMt-QS-CEh"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MCI-3d-2cl">
+                    <rect key="frame" x="506" y="85.666666666666671" width="36" height="17"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="QXU-QU-kSV"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="p2x-ph-GOt" firstAttribute="leading" secondItem="QXU-QU-kSV" secondAttribute="leading" constant="20" id="fFV-11-41p"/>
+                <constraint firstItem="MCI-3d-2cl" firstAttribute="centerY" secondItem="QXU-QU-kSV" secondAttribute="centerY" id="ff8-mA-mow"/>
+                <constraint firstItem="QXU-QU-kSV" firstAttribute="trailing" secondItem="MCI-3d-2cl" secondAttribute="trailing" constant="20" id="gz4-W2-3Ls"/>
+                <constraint firstItem="p2x-ph-GOt" firstAttribute="centerY" secondItem="QXU-QU-kSV" secondAttribute="centerY" id="k3N-KL-sFp"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="logoutView" destination="p2x-ph-GOt" id="EAH-2I-sSh"/>
+                <outlet property="softwareVersionLabel" destination="MCI-3d-2cl" id="HRh-Yn-jSW"/>
+            </connections>
+            <point key="canvasLocation" x="-153.84615384615384" y="173.10426540284359"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="logout" width="24" height="24"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
