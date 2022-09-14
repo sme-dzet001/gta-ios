@@ -13,9 +13,9 @@ class APIManager: NSObject, URLSessionDelegate {
     private var sessionExpiredHandler: SessionExpiredHandler = SessionExpiredHandler()
     private var networkManager: NetworkManager = NetworkManager()
     
-    #if GTADev
+    #if GTADev || HelpDeskDev
     let baseUrl = "https://gtadev.smedsp.com:8888"
-    #elseif GTA
+    #elseif GTA || HelpDeskProd
     let baseUrl = "https://gtaapi.smedsp.com:8888"
     #elseif GTAAutotest
     let baseUrl = "https://gtaautotest.smedsp.com:8888"

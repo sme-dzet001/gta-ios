@@ -12,7 +12,7 @@ def shared_pods
   pod 'Firebase/Crashlytics'
   pod 'Kingfisher'
   pod 'SDWebImage'
-  pod 'Charts'
+  pod 'Charts', :git => 'https://github.com/danielgindi/Charts.git'
   pod 'Parchment'
   pod 'Hero' 
 end
@@ -30,6 +30,18 @@ target 'GTADev' do
 end
 
 target 'QA-GTAStage' do
+  shared_pods
+end
+
+target 'HelpDeskUAT' do
+  shared_pods
+end
+
+target 'HelpDeskProd' do
+  shared_pods
+end
+
+target 'HelpDeskDev' do
   shared_pods
 end
 

@@ -35,7 +35,7 @@ class TeamChatUsersCell: UITableViewCell {
     }
     
     private func setData(_ values: [BarChartDataEntry]) {
-        let dataSet = BarChartDataSet(entries: values, label: nil)
+        let dataSet = BarChartDataSet(entries: values, label: "")
         dataSet.setColor(UIColor(hex: 0x428DF7))
         dataSet.valueFont = ChartsFormatting.labelFont ?? .systemFont(ofSize: 10)
         
@@ -49,8 +49,8 @@ class TeamChatUsersCell: UITableViewCell {
     private func setChartView(_ activeUsers: [TeamsChatUserDataEntry]) {
         // Chart
         chartView.isUserInteractionEnabled = false
-        chartView.chartDescription?.enabled = false
-        chartView.chartDescription?.text = nil
+        chartView.chartDescription.enabled = false
+        chartView.chartDescription.text = nil
         chartView.drawBarShadowEnabled = false
         chartView.drawBordersEnabled = false
         chartView.setScaleEnabled(false)

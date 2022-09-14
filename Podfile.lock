@@ -1,8 +1,9 @@
 PODS:
   - AdvancedPageControl (0.9.0)
-  - Charts (3.6.0):
-    - Charts/Core (= 3.6.0)
-  - Charts/Core (3.6.0)
+  - Charts (4.1.0):
+    - Charts/Core (= 4.1.0)
+  - Charts/Core (4.1.0):
+    - SwiftAlgorithms (~> 1.0)
   - Firebase/CoreOnly (8.10.0):
     - FirebaseCore (= 8.10.0)
   - Firebase/Crashlytics (8.10.0):
@@ -53,10 +54,11 @@ PODS:
   - SDWebImage (5.12.2):
     - SDWebImage/Core (= 5.12.2)
   - SDWebImage/Core (5.12.2)
+  - SwiftAlgorithms (1.0.0)
 
 DEPENDENCIES:
   - AdvancedPageControl
-  - Charts
+  - Charts (from `https://github.com/danielgindi/Charts.git`)
   - Firebase/Crashlytics
   - Hero
   - Kingfisher
@@ -68,7 +70,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AdvancedPageControl
-    - Charts
     - Firebase
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -84,10 +85,20 @@ SPEC REPOS:
     - PromisesObjC
     - RNCryptor
     - SDWebImage
+    - SwiftAlgorithms
+
+EXTERNAL SOURCES:
+  Charts:
+    :git: https://github.com/danielgindi/Charts.git
+
+CHECKOUT OPTIONS:
+  Charts:
+    :commit: 203700608a6e956e591e7387d77423fa3fea6947
+    :git: https://github.com/danielgindi/Charts.git
 
 SPEC CHECKSUMS:
   AdvancedPageControl: 39e3b32b00b2d324c534f8e17cc6c5be9abe84b7
-  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
+  Charts: 354f86803d11d9c35de280587fef50d1af063978
   Firebase: 44213362f1dcc52555b935dc925ed35ac55f1b20
   FirebaseCore: 04186597c095da37d90ff9fd3e53bc61a1ff2440
   FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
@@ -103,7 +114,8 @@ SPEC CHECKSUMS:
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
   SDWebImage: 240e5c12b592fb1268c1d03b8c90d90e8c2ffe82
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
 
-PODFILE CHECKSUM: 77559528668eafad46bcded43ea46b80f57b6d78
+PODFILE CHECKSUM: 506831951a45500507f0c1f802e9084b6b7e50e5
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.3

@@ -18,7 +18,7 @@ class ChartScrollView : UIScrollView, UIGestureRecognizerDelegate {
     }
 }
 
-class LineChartXValueFormatter: NSObject, IAxisValueFormatter {
+class LineChartXValueFormatter: NSObject, AxisValueFormatter {
     var xLabels: [String] = []
     
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {

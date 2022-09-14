@@ -43,8 +43,9 @@ class MainViewController: UIViewController {
         configureMenuButton()
         configureMenuVC()
         var row = 0
-        #if GTAGSD
+        #if HelpDeskUAT || HelpDeskDev || HelpDeskProd
         row = 1
+        menuButton.isHidden = true
         #endif
         menuViewController.selectMenuItem(at: IndexPath(row: row, section: 0))
         NotificationCenter.default.addObserver(self, selector: #selector(loggedOut), name: Notification.Name(NotificationsNames.loggedOut), object: nil)
@@ -173,6 +174,7 @@ extension MainViewController: TabBarChangeIndexDelegate {
         } else {
             navVC = UINavigationController(rootViewController: vc)
             navVC.isNavigationBarHidden = true
+            navVC.navigationBar.tintColor = .black
         }
         navVC.view.translatesAutoresizingMaskIntoConstraints = false
         

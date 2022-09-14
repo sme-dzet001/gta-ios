@@ -25,11 +25,11 @@ class ActiveUsersByFunctionCell: UITableViewCell, VerticalBarChartDataChangedDel
             let width = self?.calculateBarWidth(barCount: chartData.values.count)
             let yValues: [BarChartDataEntry] = self?.getValues(with: chartData.values, width: width ?? 0) ?? []
             guard !yValues.isEmpty else { return }
-            let set = BarChartDataSet(entries: yValues, label: nil)
+            let set = BarChartDataSet(entries: yValues, label: "")
             set.drawIconsEnabled = true
             set.colors = self?.getBarColors(for: yValues.count) ?? []
+            set.highlightEnabled = false
             let data = BarChartData(dataSet: set)
-            data.highlightEnabled = false
             data.setDrawValues(false)
             data.barWidth = width ?? 1
             let axisMaximum = Double(chartData.values.max() ?? 0.0).getAxisMaximum()
@@ -55,7 +55,7 @@ class ActiveUsersByFunctionCell: UITableViewCell, VerticalBarChartDataChangedDel
         barChartView.leftAxis.valueFormatter = BarChartLeftAxisValueFormatter()
         barChartView.rightAxis.drawGridLinesEnabled = false
         barChartView.leftAxis.labelTextColor = UIColor(hex: 0xAEAEB2)
-        barChartView.chartDescription?.enabled = false
+        barChartView.chartDescription.enabled = false
         barChartView.xAxis.drawLabelsEnabled = false
         barChartView.rightAxis.drawLabelsEnabled = false
         barChartView.leftAxis.gridAntialiasEnabled = false
@@ -93,7 +93,14 @@ class ActiveUsersByFunctionCell: UITableViewCell, VerticalBarChartDataChangedDel
         var entries = [LegendEntry]()
         let colors = getBarColors(for: count)
         for index in 0..<count where labels.count > index {
-            entries.append(LegendEntry(label: labels[index], form: .circle, formSize: 12, formLineWidth: 0, formLineDashPhase: 0, formLineDashLengths: nil, formColor: colors[index]))
+            let entry = LegendEntry(label: labels[index])
+            entry.form = .circle
+            entry.formSize = 12
+            entry.formLineWidth = 0
+            entry.formLineDashPhase = 0
+            entry.formLineDashLengths = nil
+            entry.formColor = colors[index]
+            entries.append(entry)
         }
         barChartView.legend.setCustom(entries: entries)
         barChartView.legend.font = UIFont(name: "SFProText-Regular", size: 10) ?? barChartView.leftAxis.labelFont
@@ -140,7 +147,7 @@ extension ActiveUsersByFunctionCell: ChartDimensions {
 }
 
 
-class BarChartLeftAxisValueFormatter: NSObject, IAxisValueFormatter {
+class BarChartLeftAxisValueFormatter: NSObject, AxisValueFormatter {
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         return String.convertBigValueToString(value: value, for: true)
     }
