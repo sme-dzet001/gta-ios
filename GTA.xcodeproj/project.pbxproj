@@ -7163,7 +7163,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtauat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.servicedeskuat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "GTA Uat Provisioning Profile";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = HelpDeskUAT;
@@ -7188,7 +7188,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtauat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.servicedeskuat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "GTA Uat Provisioning Profile";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = HelpDeskUAT;
@@ -7213,7 +7213,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.servicedesk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = HelpDeskProd;
@@ -7237,7 +7237,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.servicedesk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = HelpDeskProd;
@@ -7262,7 +7262,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtadev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.servicedeskdev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "GTA Dev Development Profile";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = HelpDeskDev;
@@ -7286,7 +7286,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.gtadev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonymusic.servicedeskdev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "GTA Dev Development Profile";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = HelpDeskDev;
