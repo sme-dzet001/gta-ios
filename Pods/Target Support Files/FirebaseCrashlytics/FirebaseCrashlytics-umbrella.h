@@ -12,7 +12,9 @@
 
 #import "FIRCrashlytics.h"
 #import "FIRCrashlyticsReport.h"
+#import "FirebaseCrashlytics 2.h"
 #import "FirebaseCrashlytics.h"
+#import "FIRExceptionModel 2.h"
 #import "FIRExceptionModel.h"
 #import "FIRStackFrame.h"
 

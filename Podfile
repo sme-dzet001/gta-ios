@@ -29,10 +29,6 @@ target 'GTADev' do
   shared_pods
 end
 
-target 'QA-GTAStage' do
-  shared_pods
-end
-
 target 'HelpDeskUAT' do
   shared_pods
 end
