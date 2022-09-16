@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServiceDeskAboutViewController" customModule="GTA" customModuleProvider="target">
             <connections>
                 <outlet property="headerSeparator" destination="wuR-o2-9vJ" id="0ZV-e6-mhm"/>
+                <outlet property="softwareVersionLabel" destination="d4I-Zb-Bxy" id="SgN-C1-meK"/>
                 <outlet property="tableView" destination="Nsg-ao-oT3" id="rjX-7M-Eha"/>
+                <outlet property="versionView" destination="OcR-Zd-pzV" id="8KN-w1-uVn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,15 +29,32 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Nsg-ao-oT3">
-                    <rect key="frame" x="0.0" y="45" width="414" height="851"/>
+                    <rect key="frame" x="0.0" y="49" width="414" height="847"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="jJm-jM-t4C"/>
                         <outlet property="delegate" destination="-1" id="tuX-gh-aGW"/>
                     </connections>
                 </tableView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OcR-Zd-pzV">
+                    <rect key="frame" x="0.0" y="816" width="414" height="80"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4I-Zb-Bxy">
+                            <rect key="frame" x="189" y="31.5" width="36" height="17"/>
+                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                            <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="5oL-ni-B0N"/>
+                        <constraint firstItem="d4I-Zb-Bxy" firstAttribute="centerX" secondItem="OcR-Zd-pzV" secondAttribute="centerX" id="CBJ-Md-Pkl"/>
+                        <constraint firstItem="d4I-Zb-Bxy" firstAttribute="centerY" secondItem="OcR-Zd-pzV" secondAttribute="centerY" id="GGf-z5-680"/>
+                    </constraints>
+                </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wuR-o2-9vJ">
-                    <rect key="frame" x="0.0" y="44" width="414" height="1"/>
+                    <rect key="frame" x="0.0" y="48" width="414" height="1"/>
                     <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="CTs-Oz-MNR"/>
@@ -43,9 +67,12 @@
                 <constraint firstItem="wuR-o2-9vJ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="2la-w7-Vnw"/>
                 <constraint firstItem="Nsg-ao-oT3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="1" id="Ciy-fS-A0H"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Nsg-ao-oT3" secondAttribute="trailing" id="JaD-LQ-fh3"/>
+                <constraint firstItem="OcR-Zd-pzV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="KEt-YS-Sw9"/>
                 <constraint firstItem="wuR-o2-9vJ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Ox6-rd-03H"/>
                 <constraint firstItem="wuR-o2-9vJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="VW6-3w-pfN"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="OcR-Zd-pzV" secondAttribute="trailing" id="ihZ-o5-Slw"/>
                 <constraint firstItem="Nsg-ao-oT3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="nih-hM-AHD"/>
+                <constraint firstItem="OcR-Zd-pzV" firstAttribute="bottom" secondItem="Nsg-ao-oT3" secondAttribute="bottom" id="qlT-1O-ziO"/>
                 <constraint firstAttribute="bottom" secondItem="Nsg-ao-oT3" secondAttribute="bottom" id="uCD-0Z-sKa"/>
             </constraints>
             <point key="canvasLocation" x="-196" y="64"/>

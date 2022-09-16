@@ -11,16 +11,24 @@ class ServiceDeskAboutViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerSeparator: UIView!
+    @IBOutlet weak var softwareVersionLabel: UILabel!
+    @IBOutlet weak var versionView: UIView!
     
     private var errorLabel: UILabel = UILabel()
     var dataProvider: HelpDeskDataProvider?
     var aboutData: (imageUrl: String?, desc: String?)?
     
+    #if HelpDeskUAT || HelpDeskDev || HelpDeskProd
+    private var isNeedVersionView: Bool = true
+    #else
+    private var isNeedVersionView: Bool = false
+    #endif
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationItem()
         setUpTableView()
-        
+        setVersionIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +56,15 @@ class ServiceDeskAboutViewController: UIViewController {
         if #available(iOS 15.0, *) {
             headerSeparator.isHidden = false
         }
+    }
+    
+    private func setVersionIfNeeded() {
+        guard isNeedVersionView else { return }
+        let dictionary = Bundle.main.infoDictionary!
+        let version = dictionary["CFBundleShortVersionString"] as! String
+        let build = dictionary["CFBundleVersion"] as! String
+        softwareVersionLabel.text = String(format: "Version \(version) (\(build))")
+        versionView.isHidden = false
     }
     
     private func setUpTableView() {
